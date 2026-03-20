@@ -1,0 +1,665 @@
+---
+export const prerender = true;
+---
+
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Werkbank — Co-Working & Ateliers | Trier-Euren</title>
+  <meta name="description" content="Werkbank — Co-Working & Ateliers in Trier-Euren. 240m2, 18 Arbeitsplaetze, 24/7 Zugang." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'IBM Plex Sans', sans-serif;
+      color: #1A1A1A;
+      background-color: #F2F0ED;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'IBM Plex Mono', monospace;
+      line-height: 1.2;
+      font-weight: 600;
+    }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(242, 240, 237, 0.95);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-bottom: 1px solid #333333;
+      padding: 0 2rem;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .navbar-logo {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: #333333;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .navbar-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .navbar-links a {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: #333333;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s ease;
+    }
+
+    .navbar-links a:hover {
+      color: #C75B39;
+    }
+
+    /* ===== MOBILE NAV ===== */
+    .mobile-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+
+    .mobile-toggle span {
+      display: block;
+      width: 20px;
+      height: 1.5px;
+      background: #333333;
+      margin: 5px 0;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 56px;
+      left: 0;
+      right: 0;
+      background: rgba(242, 240, 237, 0.98);
+      border-bottom: 1px solid #333333;
+      padding: 1.5rem 2rem;
+      z-index: 99;
+    }
+
+    .mobile-menu.active {
+      display: block;
+    }
+
+    .mobile-menu a {
+      display: block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #333333;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid rgba(51, 51, 51, 0.1);
+    }
+
+    .mobile-menu a:last-child {
+      border-bottom: none;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      padding: 10rem 2rem 6rem;
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+    }
+
+    .hero-grid-bg {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(51, 51, 51, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(51, 51, 51, 0.06) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .hero-headline {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 700;
+      color: #333333;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    .hero-accent-line {
+      width: 60px;
+      height: 2px;
+      background: #C75B39;
+    }
+
+    .hero-specs {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.8rem;
+      color: #666666;
+      letter-spacing: 0.05em;
+      line-height: 2;
+    }
+
+    .hero-specs span {
+      display: inline;
+    }
+
+    .hero-specs .spec-divider {
+      margin: 0 0.5rem;
+      color: #C75B39;
+    }
+
+    .hero-cta {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #C75B39;
+      letter-spacing: 0.05em;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: gap 0.3s ease;
+    }
+
+    .hero-cta:hover {
+      gap: 0.75rem;
+    }
+
+    .hero-image-wrapper {
+      position: relative;
+    }
+
+    .hero-image {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      border: 1px solid #333333;
+    }
+
+    .hero-image-label {
+      position: absolute;
+      bottom: -1.5rem;
+      right: 0;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      color: #999999;
+      letter-spacing: 0.05em;
+    }
+
+    /* ===== SECTION SHARED ===== */
+    .section {
+      padding: 6rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: #999999;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #333333;
+      margin-bottom: 3rem;
+      letter-spacing: -0.01em;
+    }
+
+    .section-divider {
+      width: 100%;
+      height: 1px;
+      background: #333333;
+      margin-bottom: 6rem;
+      max-width: 1100px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ===== RAEUME (WORKSPACE CARDS) ===== */
+    .raeume-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+
+    .raum-card {
+      background: #FFFFFF;
+      border: 1px solid rgba(51, 51, 51, 0.15);
+      padding: 2.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .raum-card-header {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .raum-name {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #333333;
+    }
+
+    .raum-price {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #C75B39;
+    }
+
+    .raum-desc {
+      font-size: 0.9rem;
+      color: #555555;
+      line-height: 1.7;
+    }
+
+    .raum-specs {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-top: auto;
+    }
+
+    .raum-specs li {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.7rem;
+      color: #777777;
+      letter-spacing: 0.03em;
+      padding-left: 1rem;
+      position: relative;
+    }
+
+    .raum-specs li::before {
+      content: '--';
+      position: absolute;
+      left: 0;
+      color: #C75B39;
+    }
+
+    /* ===== MEMBERS ===== */
+    .members-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3rem;
+    }
+
+    .member {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .member-name {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #333333;
+    }
+
+    .member-role {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: #C75B39;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .member-quote {
+      font-size: 0.9rem;
+      color: #555555;
+      line-height: 1.6;
+      font-style: italic;
+    }
+
+    .member-quote::before {
+      content: '"';
+      color: #C75B39;
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 700;
+      font-style: normal;
+    }
+
+    .member-quote::after {
+      content: '"';
+      color: #C75B39;
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 700;
+      font-style: normal;
+    }
+
+    /* ===== FOOTER / CONTACT ===== */
+    .footer {
+      padding: 4rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      border-top: 1px solid #333333;
+    }
+
+    .footer-text {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      color: #777777;
+      letter-spacing: 0.05em;
+      text-align: center;
+      line-height: 2;
+    }
+
+    .footer-text .footer-sep {
+      margin: 0 0.75rem;
+      color: rgba(51, 51, 51, 0.3);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .navbar-links {
+        display: none;
+      }
+
+      .mobile-toggle {
+        display: block;
+      }
+
+      .hero-inner {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+
+      .hero {
+        padding: 8rem 1.5rem 4rem;
+        min-height: auto;
+      }
+
+      .raeume-grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+
+      .raum-card {
+        border-bottom: none;
+      }
+
+      .raum-card:last-child {
+        border-bottom: 1px solid rgba(51, 51, 51, 0.15);
+      }
+
+      .members-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+
+      .section {
+        padding: 4rem 1.5rem;
+      }
+
+      .section-divider {
+        margin-bottom: 4rem;
+        margin-left: 1.5rem;
+        margin-right: 1.5rem;
+      }
+
+      .footer-text {
+        font-size: 0.7rem;
+      }
+
+      .footer-text .footer-sep {
+        display: none;
+      }
+
+      .footer-text span {
+        display: block;
+        margin-bottom: 0.25rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-headline {
+        font-size: 1.75rem;
+      }
+
+      .hero {
+        padding: 7rem 1rem 3rem;
+      }
+
+      .section {
+        padding: 3rem 1rem;
+      }
+
+      .raum-card {
+        padding: 2rem 1.25rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="/#hero" class="navbar-logo">WERKBANK</a>
+    <ul class="navbar-links">
+      <li><a href="/#raeume">Raeume</a></li>
+      <li><a href="/#community">Community</a></li>
+      <li><a href="/#kontakt">Kontakt</a></li>
+    </ul>
+    <button class="mobile-toggle" aria-label="Menu" onclick="document.querySelector('.mobile-menu').classList.toggle('active')">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <div class="mobile-menu">
+    <a href="/#raeume" onclick="this.parentElement.classList.remove('active')">Raeume</a>
+    <a href="/#community" onclick="this.parentElement.classList.remove('active')">Community</a>
+    <a href="/#kontakt" onclick="this.parentElement.classList.remove('active')">Kontakt</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-grid-bg"></div>
+    <div class="hero-inner">
+      <div class="hero-content">
+        <h1 class="hero-headline">RAUM FUR<br/>GUTE ARBEIT.</h1>
+        <div class="hero-accent-line"></div>
+        <p class="hero-specs">
+          <span>240m2</span>
+          <span class="spec-divider">/</span>
+          <span>18 Arbeitsplaetze</span>
+          <span class="spec-divider">/</span>
+          <span>24/7 Zugang</span>
+          <span class="spec-divider">/</span>
+          <span>Gigabit</span>
+        </p>
+        <a href="/#kontakt" class="hero-cta">Besichtigung vereinbaren &rarr;</a>
+      </div>
+      <div class="hero-image-wrapper">
+        <img
+          src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=900&q=80&auto=format"
+          alt="Werkbank Co-Working Space in Trier-Euren"
+          class="hero-image"
+          loading="eager"
+        />
+        <span class="hero-image-label">Trier-Euren, 2024</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIVIDER -->
+  <div class="section-divider" style="margin-left: 2rem; margin-right: 2rem;"></div>
+
+  <!-- DIE RAEUME -->
+  <section class="section" id="raeume">
+    <p class="section-label">01 / Angebot</p>
+    <h2 class="section-title">Die Raeume</h2>
+    <div class="raeume-grid">
+
+      <div class="raum-card">
+        <div class="raum-card-header">
+          <h3 class="raum-name">Flex Desk</h3>
+          <span class="raum-price">ab 15 EUR / Tag</span>
+        </div>
+        <p class="raum-desc">Tageweise buchen, hinsetzen, loslegen. Kein Vertrag, keine Mindestlaufzeit.</p>
+        <ul class="raum-specs">
+          <li>Freie Platzwahl</li>
+          <li>Gigabit WLAN + LAN</li>
+          <li>Drucker / Scanner</li>
+          <li>Kueche + Kaffee inkl.</li>
+          <li>Meetingraum buchbar</li>
+        </ul>
+      </div>
+
+      <div class="raum-card">
+        <div class="raum-card-header">
+          <h3 class="raum-name">Fixed Desk</h3>
+          <span class="raum-price">199 EUR / Monat</span>
+        </div>
+        <p class="raum-desc">Dein fester Platz. Eigener Rollcontainer, 24/7 Zugang, Post-Adresse inklusive.</p>
+        <ul class="raum-specs">
+          <li>Fester Arbeitsplatz, 6m2</li>
+          <li>Rollcontainer abschliessbar</li>
+          <li>24/7 Zugang per Chip</li>
+          <li>Geschaeftsadresse + Post</li>
+          <li>1x Meetingraum / Woche</li>
+        </ul>
+      </div>
+
+      <div class="raum-card">
+        <div class="raum-card-header">
+          <h3 class="raum-name">Atelier</h3>
+          <span class="raum-price">ab 350 EUR / Monat</span>
+        </div>
+        <p class="raum-desc">Abschliessbarer Raum fuer Kreative, die Platz und Ruhe brauchen. 15-30m2.</p>
+        <ul class="raum-specs">
+          <li>15-30m2, abschliessbar</li>
+          <li>Eigener Stromanschluss</li>
+          <li>Waende frei gestaltbar</li>
+          <li>Lastenaufzug im Gebaeude</li>
+          <li>Alle Desk-Leistungen inkl.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- DIVIDER -->
+  <div class="section-divider" style="margin-left: 2rem; margin-right: 2rem;"></div>
+
+  <!-- WER HIER ARBEITET -->
+  <section class="section" id="community">
+    <p class="section-label">02 / Community</p>
+    <h2 class="section-title">Wer hier arbeitet</h2>
+    <div class="members-grid">
+
+      <div class="member">
+        <span class="member-role">Grafikdesign</span>
+        <h3 class="member-name">Lena Schuster</h3>
+        <p class="member-quote">Ich brauchte einen Ort, der nicht nach Home-Office riecht. Hier kann ich denken.</p>
+      </div>
+
+      <div class="member">
+        <span class="member-role">Keramik</span>
+        <h3 class="member-name">Tom Weiler</h3>
+        <p class="member-quote">Das Atelier hat Betonboden und einen Lastenaufzug. Mehr brauche ich nicht.</p>
+      </div>
+
+      <div class="member">
+        <span class="member-role">Software-Entwicklung</span>
+        <h3 class="member-name">Marie Hoffmann</h3>
+        <p class="member-quote">Gigabit, Ruhe, guter Kaffee. Um 23 Uhr bin ich manchmal die Einzige hier.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer" id="kontakt">
+    <p class="footer-text">
+      <span>Trier-Euren</span>
+      <span class="footer-sep">/</span>
+      <span>Am Industriehafen 4</span>
+      <span class="footer-sep">/</span>
+      <span>0651 -- 780 33 20</span>
+    </p>
+  </footer>
+
+</body>
+</html>

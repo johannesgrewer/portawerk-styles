@@ -1,0 +1,993 @@
+---
+export const prerender = true;
+---
+
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Olivia — Feinkost & Olivenoel | Trier Altstadt</title>
+  <meta name="description" content="Olivia — Feinkost & Olivenoel in der Trierer Altstadt. Handverlesene Spezialitaeten aus dem Mittelmeerraum. Seit 2018." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #B5651D;
+      --secondary: #F5EDD6;
+      --accent: #6B7F3B;
+      --bg: #FAF6EE;
+      --text: #3D2B1F;
+      --primary-light: #c97a2e;
+      --primary-dark: #8f4f15;
+      --accent-light: #8a9e52;
+      --accent-dark: #4f5e2b;
+      --warm-shadow: rgba(61, 43, 31, 0.1);
+      --warm-shadow-lg: rgba(61, 43, 31, 0.15);
+      --border-subtle: #e6dcc8;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Source Sans 3', 'Source Sans Pro', sans-serif;
+      color: var(--text);
+      background-color: var(--bg);
+      line-height: 1.75;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Libre Baskerville', Georgia, serif;
+      line-height: 1.25;
+      color: var(--text);
+    }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1.25rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background-color 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .navbar.scrolled {
+      background-color: rgba(250, 246, 238, 0.96);
+      box-shadow: 0 2px 24px var(--warm-shadow);
+    }
+
+    .navbar-logo {
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.15;
+    }
+
+    .navbar-logo-name {
+      font-family: 'Libre Baskerville', Georgia, serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: 0.01em;
+    }
+
+    .navbar-logo-sub {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--primary);
+      opacity: 0.8;
+    }
+
+    .navbar-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .navbar-links a {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      transition: color 0.3s ease;
+    }
+
+    .navbar-links a:hover {
+      color: var(--primary);
+    }
+
+    .navbar-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+
+    .navbar-toggle span {
+      width: 24px;
+      height: 2px;
+      background-color: var(--text);
+      transition: all 0.3s ease;
+    }
+
+    /* ===== HERO — INGREDIENT STILL LIFE ===== */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 55% 45%;
+      align-items: center;
+      padding: 7rem 0 4rem 0;
+      background-color: var(--bg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Subtle texture background */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 80% 20%, rgba(181, 101, 29, 0.04) 0%, transparent 60%),
+                  radial-gradient(ellipse at 20% 80%, rgba(107, 127, 59, 0.03) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .hero-image-col {
+      position: relative;
+      padding: 2rem 0 2rem 4rem;
+      z-index: 1;
+    }
+
+    .hero-image-wrapper {
+      position: relative;
+    }
+
+    .hero-image-wrapper img {
+      width: 100%;
+      height: 580px;
+      object-fit: cover;
+      border-radius: 16px;
+      box-shadow: 12px 16px 48px rgba(61, 43, 31, 0.18),
+                  0 4px 12px rgba(61, 43, 31, 0.08);
+    }
+
+    /* Decorative frame accent */
+    .hero-image-wrapper::after {
+      content: '';
+      position: absolute;
+      top: -12px;
+      right: -12px;
+      width: 120px;
+      height: 120px;
+      border-top: 2px solid var(--primary);
+      border-right: 2px solid var(--primary);
+      border-radius: 0 16px 0 0;
+      opacity: 0.35;
+      pointer-events: none;
+    }
+
+    .hero-text-col {
+      position: relative;
+      padding: 2rem 4rem 2rem 3.5rem;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .hero-headline {
+      font-family: 'Libre Baskerville', Georgia, serif;
+      font-size: 3.6rem;
+      font-weight: 700;
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: 2rem;
+    }
+
+    .hero-headline span {
+      display: block;
+    }
+
+    .hero-headline .word-accent {
+      color: var(--primary);
+    }
+
+    /* Olive branch SVG decoration */
+    .hero-olive-branch {
+      width: 140px;
+      height: auto;
+      margin: 1.5rem 0 2rem 0;
+      opacity: 0.5;
+    }
+
+    .hero-info {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--primary);
+      font-weight: 600;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-info-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background-color: var(--primary);
+      opacity: 0.5;
+      display: inline-block;
+    }
+
+    .hero-cta-group {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .hero-cta-link {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--primary);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding-bottom: 2px;
+      border-bottom: 1.5px solid transparent;
+      transition: border-color 0.3s ease, color 0.3s ease;
+    }
+
+    .hero-cta-link:hover {
+      border-bottom-color: var(--primary);
+    }
+
+    .hero-cta-link svg {
+      width: 16px;
+      height: 16px;
+      transition: transform 0.3s ease;
+    }
+
+    .hero-cta-link:hover svg {
+      transform: translateX(3px);
+    }
+
+    /* ===== SECTION 2 — PRODUCT SPOTLIGHTS ===== */
+    .products {
+      padding: 6rem 4rem;
+      background-color: var(--secondary);
+      position: relative;
+    }
+
+    .products::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border-subtle), transparent);
+    }
+
+    .products-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .products-label {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+
+    .products-title {
+      font-family: 'Libre Baskerville', Georgia, serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .product-card {
+      background-color: var(--bg);
+      border-radius: 12px;
+      padding: 2rem 1.5rem;
+      position: relative;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px var(--warm-shadow);
+    }
+
+    .product-card-icon {
+      width: 36px;
+      height: 36px;
+      margin-bottom: 1.25rem;
+      color: var(--primary);
+    }
+
+    .product-card-origin {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .product-card-name {
+      font-family: 'Libre Baskerville', Georgia, serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+      line-height: 1.3;
+    }
+
+    .product-card-desc {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.9rem;
+      color: var(--text);
+      opacity: 0.75;
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+    }
+
+    .product-card-price {
+      font-family: 'Libre Baskerville', Georgia, serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .product-card-unit {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 400;
+      color: var(--text);
+      opacity: 0.5;
+      margin-left: 0.25rem;
+    }
+
+    /* ===== SECTION 3 — DIE REISE ===== */
+    .journey {
+      padding: 6rem 4rem;
+      background-color: var(--bg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .journey::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border-subtle), transparent);
+    }
+
+    .journey-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .journey-label {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+
+    .journey-title {
+      font-family: 'Libre Baskerville', Georgia, serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    /* Timeline track */
+    .journey-timeline {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 0;
+      max-width: 1000px;
+      margin: 0 auto 4rem auto;
+      position: relative;
+    }
+
+    /* Horizontal connecting line */
+    .journey-timeline::before {
+      content: '';
+      position: absolute;
+      top: 28px;
+      left: 12%;
+      right: 12%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--secondary), var(--primary), var(--accent), var(--primary), var(--secondary));
+      opacity: 0.35;
+      z-index: 0;
+    }
+
+    .journey-stop {
+      flex: 1;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      padding: 0 1rem;
+    }
+
+    .journey-stop-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background-color: var(--primary);
+      margin: 0 auto 1.25rem auto;
+      position: relative;
+      box-shadow: 0 0 0 4px var(--bg), 0 0 0 6px rgba(181, 101, 29, 0.2);
+    }
+
+    /* Arrow between stops */
+    .journey-stop-arrow {
+      position: absolute;
+      top: 4px;
+      right: -8px;
+      color: var(--primary);
+      opacity: 0.3;
+    }
+
+    .journey-stop-arrow svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .journey-stop-location {
+      font-family: 'Libre Baskerville', Georgia, serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.35rem;
+    }
+
+    .journey-stop-product {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.85rem;
+      color: var(--text);
+      opacity: 0.7;
+      line-height: 1.5;
+    }
+
+    /* Quote */
+    .journey-quote {
+      max-width: 700px;
+      margin: 0 auto 4rem auto;
+      text-align: center;
+      position: relative;
+      padding: 2.5rem 3rem;
+    }
+
+    .journey-quote::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 2px;
+      background-color: var(--primary);
+      opacity: 0.3;
+    }
+
+    .journey-quote-text {
+      font-family: 'Libre Baskerville', Georgia, serif;
+      font-size: 1.35rem;
+      font-style: italic;
+      color: var(--text);
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+
+    .journey-quote-author {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--primary);
+      letter-spacing: 0.08em;
+    }
+
+    /* Contact footer */
+    .journey-contact {
+      text-align: center;
+      padding-top: 2.5rem;
+      border-top: 1px solid var(--border-subtle);
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .journey-contact-address {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.95rem;
+      color: var(--text);
+      opacity: 0.7;
+      line-height: 1.8;
+    }
+
+    .journey-contact-phone {
+      font-family: 'Libre Baskerville', Georgia, serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-top: 0.5rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .journey-contact-phone svg {
+      width: 18px;
+      height: 18px;
+      opacity: 0.6;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      .hero {
+        grid-template-columns: 1fr;
+        min-height: auto;
+        padding: 6rem 0 3rem 0;
+      }
+
+      .hero-image-col {
+        padding: 0 2rem;
+        order: 1;
+      }
+
+      .hero-image-wrapper img {
+        height: 400px;
+      }
+
+      .hero-text-col {
+        padding: 2.5rem 2rem 1rem 2rem;
+        order: 2;
+      }
+
+      .hero-headline {
+        font-size: 2.8rem;
+      }
+
+      .products {
+        padding: 4rem 2rem;
+      }
+
+      .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+      }
+
+      .journey {
+        padding: 4rem 2rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 1rem 1.5rem;
+      }
+
+      .navbar-links {
+        display: none;
+      }
+
+      .navbar-toggle {
+        display: flex;
+      }
+
+      .navbar.open .navbar-links {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: rgba(250, 246, 238, 0.98);
+        backdrop-filter: blur(12px);
+        padding: 1.5rem 2rem;
+        gap: 1.25rem;
+        box-shadow: 0 8px 24px var(--warm-shadow);
+      }
+
+      .hero {
+        padding-top: 5rem;
+      }
+
+      .hero-image-col {
+        padding: 0 1.25rem;
+      }
+
+      .hero-image-wrapper img {
+        height: 320px;
+        border-radius: 12px;
+      }
+
+      .hero-image-wrapper::after {
+        display: none;
+      }
+
+      .hero-text-col {
+        padding: 2rem 1.25rem 1rem 1.25rem;
+      }
+
+      .hero-headline {
+        font-size: 2.2rem;
+      }
+
+      .hero-olive-branch {
+        width: 100px;
+      }
+
+      .products-grid {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+      }
+
+      .products-title {
+        font-size: 1.8rem;
+      }
+
+      /* Stack timeline vertically */
+      .journey-timeline {
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+      }
+
+      .journey-timeline::before {
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        right: auto;
+        width: 2px;
+        height: 100%;
+        transform: translateX(-50%);
+        background: linear-gradient(180deg, var(--secondary), var(--primary), var(--accent), var(--primary), var(--secondary));
+      }
+
+      .journey-stop {
+        padding: 0;
+      }
+
+      .journey-stop-dot {
+        margin-bottom: 0.75rem;
+      }
+
+      .journey-quote {
+        padding: 2rem 1.5rem;
+      }
+
+      .journey-quote-text {
+        font-size: 1.15rem;
+      }
+
+      .journey-title {
+        font-size: 1.8rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-headline {
+        font-size: 1.85rem;
+      }
+
+      .hero-info {
+        font-size: 0.75rem;
+        letter-spacing: 0.1em;
+      }
+
+      .hero-cta-group {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+
+      .product-card {
+        padding: 1.5rem 1.25rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar" id="navbar">
+    <a href="#" class="navbar-logo">
+      <span class="navbar-logo-name">Olivia</span>
+      <span class="navbar-logo-sub">Feinkost & Olivenoel</span>
+    </a>
+    <ul class="navbar-links" id="navLinks">
+      <li><a href="#sortiment">Sortiment</a></li>
+      <li><a href="#reise">Die Reise</a></li>
+      <li><a href="#kontakt">Kontakt</a></li>
+    </ul>
+    <button class="navbar-toggle" id="navToggle" aria-label="Menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <!-- ===== HERO — INGREDIENT STILL LIFE ===== -->
+  <section class="hero">
+    <div class="hero-image-col">
+      <div class="hero-image-wrapper">
+        <img
+          src="https://images.unsplash.com/photo-1474979266404-7f28db35019f?w=900&q=80&auto=format"
+          alt="Mediterrane Zutaten — Olivenoel, frische Kraeuter und Gemuese auf Holztisch"
+          loading="eager"
+        />
+      </div>
+    </div>
+    <div class="hero-text-col">
+      <div class="hero-info">
+        <span>Seit 2018</span>
+        <span class="hero-info-dot"></span>
+        <span>Trier Altstadt</span>
+        <span class="hero-info-dot"></span>
+        <span>Di-Sa 10-19 Uhr</span>
+      </div>
+      <h1 class="hero-headline">
+        <span>Mittelmeer</span>
+        <span class="word-accent">fuer</span>
+        <span>jeden</span>
+        <span>Tag.</span>
+      </h1>
+
+      <!-- Olive branch SVG illustration -->
+      <svg class="hero-olive-branch" viewBox="0 0 200 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 38 C40 38, 60 25, 100 25 C140 25, 160 32, 190 20" stroke="#6B7F3B" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <ellipse cx="45" cy="30" rx="10" ry="6" transform="rotate(-20 45 30)" fill="#6B7F3B" opacity="0.25"/>
+        <ellipse cx="70" cy="24" rx="10" ry="6" transform="rotate(-10 70 24)" fill="#6B7F3B" opacity="0.3"/>
+        <ellipse cx="100" cy="22" rx="11" ry="6.5" transform="rotate(5 100 22)" fill="#6B7F3B" opacity="0.25"/>
+        <ellipse cx="130" cy="24" rx="10" ry="6" transform="rotate(12 130 24)" fill="#6B7F3B" opacity="0.3"/>
+        <ellipse cx="158" cy="22" rx="10" ry="6" transform="rotate(18 158 22)" fill="#6B7F3B" opacity="0.25"/>
+        <!-- Small olives -->
+        <circle cx="55" cy="34" r="3.5" fill="#6B7F3B" opacity="0.4"/>
+        <circle cx="115" cy="27" r="3" fill="#6B7F3B" opacity="0.35"/>
+        <circle cx="170" cy="24" r="3.5" fill="#6B7F3B" opacity="0.4"/>
+        <!-- Leaf veins -->
+        <line x1="38" y1="30" x2="52" y2="30" stroke="#6B7F3B" stroke-width="0.5" opacity="0.3"/>
+        <line x1="63" y1="24" x2="77" y2="24" stroke="#6B7F3B" stroke-width="0.5" opacity="0.3"/>
+        <line x1="93" y1="22" x2="107" y2="22" stroke="#6B7F3B" stroke-width="0.5" opacity="0.3"/>
+        <line x1="123" y1="24" x2="137" y2="24" stroke="#6B7F3B" stroke-width="0.5" opacity="0.3"/>
+        <line x1="151" y1="22" x2="165" y2="22" stroke="#6B7F3B" stroke-width="0.5" opacity="0.3"/>
+      </svg>
+
+      <div class="hero-cta-group">
+        <a href="#sortiment" class="hero-cta-link">
+          Sortiment entdecken
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </a>
+        <a href="#kontakt" class="hero-cta-link">
+          Kontakt
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SECTION 2 — WAS WIR LIEBEN ===== -->
+  <section class="products" id="sortiment">
+    <div class="products-header">
+      <p class="products-label">Handverlesen</p>
+      <h2 class="products-title">Was wir lieben</h2>
+    </div>
+    <div class="products-grid">
+
+      <!-- Koroneiki Olivenoel -->
+      <div class="product-card">
+        <svg class="product-card-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18 4C18 4 10 10 10 20C10 26 13.5 32 18 32C22.5 32 26 26 26 20C26 10 18 4 18 4Z" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M18 14V26" stroke="currentColor" stroke-width="1" opacity="0.4" stroke-linecap="round"/>
+        </svg>
+        <p class="product-card-origin">Kreta, Griechenland</p>
+        <h3 class="product-card-name">Koroneiki Olivenoel</h3>
+        <p class="product-card-desc">Kaltgepresst, sortenrein. Grasig-fruchtig mit Pfeffernote im Abgang.</p>
+        <p class="product-card-price">ab 14,90 <span class="product-card-unit">/ 500 ml</span></p>
+      </div>
+
+      <!-- Burrata di Puglia -->
+      <div class="product-card">
+        <svg class="product-card-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="18" cy="18" r="12" stroke="currentColor" stroke-width="1.5" fill="none"/>
+          <circle cx="18" cy="18" r="6" stroke="currentColor" stroke-width="1" opacity="0.4" fill="none"/>
+          <circle cx="18" cy="18" r="2" fill="currentColor" opacity="0.3"/>
+        </svg>
+        <p class="product-card-origin">Puglia, Italien</p>
+        <h3 class="product-card-name">Burrata di Puglia</h3>
+        <p class="product-card-desc">Tagefrisch geliefert. Cremiger Kern aus Stracciatella und Sahne.</p>
+        <p class="product-card-price">6,50 <span class="product-card-unit">/ Stueck</span></p>
+      </div>
+
+      <!-- Pasta Secca -->
+      <div class="product-card">
+        <svg class="product-card-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <line x1="10" y1="6" x2="10" y2="30" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="15" y1="6" x2="15" y2="30" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="20" y1="6" x2="20" y2="30" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="25" y1="6" x2="25" y2="30" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M7 30 C7 30 10 33 17.5 33 C25 33 28 30 28 30" stroke="currentColor" stroke-width="1" opacity="0.4" stroke-linecap="round"/>
+        </svg>
+        <p class="product-card-origin">Gragnano, Italien</p>
+        <h3 class="product-card-name">Pasta Secca</h3>
+        <p class="product-card-desc">Bronze gezogen, langsam getrocknet. Raue Oberflaeche, die Sauce haelt.</p>
+        <p class="product-card-price">ab 4,20 <span class="product-card-unit">/ 500 g</span></p>
+      </div>
+
+      <!-- Flor de Sal -->
+      <div class="product-card">
+        <svg class="product-card-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8 28 L18 6 L28 28 Z" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linejoin="round"/>
+          <line x1="11" y1="22" x2="25" y2="22" stroke="currentColor" stroke-width="1" opacity="0.4"/>
+          <circle cx="18" cy="16" r="1.5" fill="currentColor" opacity="0.3"/>
+        </svg>
+        <p class="product-card-origin">Algarve, Portugal</p>
+        <h3 class="product-card-name">Flor de Sal</h3>
+        <p class="product-card-desc">Von Hand geschoepft. Zarte Flocken mit mildem, mineralischem Geschmack.</p>
+        <p class="product-card-price">8,90 <span class="product-card-unit">/ 150 g</span></p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== SECTION 3 — DIE REISE ===== -->
+  <section class="journey" id="reise">
+    <div class="journey-header">
+      <p class="journey-label">Herkunft</p>
+      <h2 class="journey-title">Die Reise</h2>
+    </div>
+
+    <!-- Horizontal timeline -->
+    <div class="journey-timeline">
+      <div class="journey-stop">
+        <div class="journey-stop-dot"></div>
+        <p class="journey-stop-location">Kreta</p>
+        <p class="journey-stop-product">Koroneiki Olivenoel,<br/>kaltgepresst</p>
+      </div>
+      <div class="journey-stop">
+        <div class="journey-stop-dot"></div>
+        <p class="journey-stop-location">Puglia</p>
+        <p class="journey-stop-product">Burrata, Mozzarella,<br/>Stracciatella</p>
+      </div>
+      <div class="journey-stop">
+        <div class="journey-stop-dot"></div>
+        <p class="journey-stop-location">Gragnano</p>
+        <p class="journey-stop-product">Pasta Secca,<br/>bronzegezogen</p>
+      </div>
+      <div class="journey-stop">
+        <div class="journey-stop-dot"></div>
+        <p class="journey-stop-location">Algarve</p>
+        <p class="journey-stop-product">Flor de Sal,<br/>handgeschoepft</p>
+      </div>
+    </div>
+
+    <!-- Quote -->
+    <blockquote class="journey-quote">
+      <p class="journey-quote-text">&bdquo;Ich kaufe nur, was ich selbst jeden Tag essen wuerde.&ldquo;</p>
+      <cite class="journey-quote-author">Marta, Gruenderin von Olivia</cite>
+    </blockquote>
+
+    <!-- Contact -->
+    <div class="journey-contact" id="kontakt">
+      <p class="journey-contact-address">
+        Olivia Feinkost<br/>
+        Fleischstrasse 12<br/>
+        54290 Trier
+      </p>
+      <a href="tel:+4965140128490" class="journey-contact-phone">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
+        </svg>
+        0651 — 401 284 90
+      </a>
+    </div>
+  </section>
+
+  <!-- ===== SCRIPTS ===== -->
+  <script>
+    // Navbar scroll effect
+    const navbar = document.getElementById('navbar');
+    let lastScroll = 0;
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.pageYOffset;
+      if (currentScroll > 40) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+      lastScroll = currentScroll;
+    });
+
+    // Mobile nav toggle
+    const navToggle = document.getElementById('navToggle');
+    const navElement = document.getElementById('navbar');
+    navToggle.addEventListener('click', () => {
+      navElement.classList.toggle('open');
+    });
+
+    // Close mobile nav on link click
+    const navLinks = document.querySelectorAll('.navbar-links a');
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        navElement.classList.remove('open');
+      });
+    });
+  </script>
+
+</body>
+</html>

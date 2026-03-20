@@ -1,0 +1,456 @@
+---
+export const prerender = true;
+---
+
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Atelier Blanc — Interior Design, Trier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --primary: #2C2C2C;
+      --secondary: #F8F6F3;
+      --accent: #9C8B7A;
+      --bg: #F8F6F3;
+      --text: #2C2C2C;
+      --font-display: "Cormorant", "Georgia", "Times New Roman", serif;
+      --font-body: "Jost", system-ui, -apple-system, sans-serif;
+    }
+
+    html {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      scroll-behavior: smooth;
+    }
+
+    body { overflow-x: hidden; }
+
+    ::selection { background: var(--accent); color: var(--secondary); }
+
+    img { display: block; max-width: 100%; }
+
+
+    /* ═══════════════════════════════════════════
+       HERO
+    ═══════════════════════════════════════════ */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 6rem 4rem;
+      gap: 4rem;
+    }
+
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-right: 2rem;
+    }
+
+    .hero-headline {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-size: clamp(3rem, 5.5vw, 5.5rem);
+      line-height: 1.15;
+      letter-spacing: 0.04em;
+      color: var(--primary);
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-line {
+      width: 60px;
+      height: 1px;
+      background: var(--accent);
+      margin-bottom: 2rem;
+    }
+
+    .hero-subtitle {
+      font-family: var(--font-body);
+      font-weight: 300;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    .hero-link {
+      font-family: var(--font-body);
+      font-weight: 400;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      color: var(--primary);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .hero-link:hover {
+      color: var(--accent);
+    }
+
+    .hero-image-wrapper {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    .hero-image {
+      width: 85%;
+      max-width: 480px;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+    }
+
+
+    /* ═══════════════════════════════════════════
+       PROJEKTE
+    ═══════════════════════════════════════════ */
+    .projekte {
+      padding: 8rem 4rem 6rem;
+    }
+
+    .section-label {
+      font-family: var(--font-body);
+      font-weight: 300;
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 4rem;
+    }
+
+    .projekte-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    .projekt-card {
+      position: relative;
+    }
+
+    .projekt-card:nth-child(2) {
+      margin-top: 4rem;
+    }
+
+    .projekt-image-wrapper {
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+
+    .projekt-image {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      transition: transform 0.8s cubic-bezier(0.25, 0, 0.15, 1);
+    }
+
+    .projekt-card:hover .projekt-image {
+      transform: scale(1.04);
+    }
+
+    .projekt-name {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: 1.35rem;
+      letter-spacing: 0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    .projekt-description {
+      font-family: var(--font-body);
+      font-weight: 300;
+      font-size: 0.8rem;
+      color: var(--accent);
+      line-height: 1.6;
+      margin-bottom: 0.35rem;
+    }
+
+    .projekt-year {
+      font-family: var(--font-body);
+      font-weight: 300;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      opacity: 0.7;
+    }
+
+
+    /* ═══════════════════════════════════════════
+       PHILOSOPHIE
+    ═══════════════════════════════════════════ */
+    .philosophie {
+      padding: 8rem 4rem 10rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .philosophie-text-column {
+      max-width: 500px;
+      text-align: center;
+    }
+
+    .philosophie-divider {
+      width: 40px;
+      height: 1px;
+      background: var(--accent);
+      margin: 0 auto 3.5rem;
+    }
+
+    .philosophie-quote {
+      font-family: var(--font-display);
+      font-weight: 300;
+      font-style: italic;
+      font-size: clamp(1.3rem, 2.2vw, 1.7rem);
+      line-height: 1.7;
+      letter-spacing: 0.01em;
+      color: var(--primary);
+      margin-bottom: 2.5rem;
+    }
+
+    .philosophie-attribution {
+      font-family: var(--font-body);
+      font-weight: 300;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 5rem;
+    }
+
+    .philosophie-contact {
+      font-family: var(--font-body);
+      font-weight: 300;
+      font-size: 0.8rem;
+      line-height: 2;
+      color: var(--accent);
+      text-align: center;
+    }
+
+    .philosophie-contact a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .philosophie-contact a:hover {
+      color: var(--primary);
+    }
+
+    .philosophie-note {
+      font-family: var(--font-body);
+      font-weight: 300;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      opacity: 0.6;
+      margin-top: 2rem;
+    }
+
+
+    /* ═══════════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════════ */
+    @media (max-width: 1024px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 5rem 3rem;
+        gap: 3rem;
+        min-height: auto;
+      }
+
+      .hero-content {
+        padding-right: 0;
+        order: 2;
+      }
+
+      .hero-image-wrapper {
+        order: 1;
+        justify-content: center;
+      }
+
+      .hero-image {
+        width: 70%;
+        max-width: 400px;
+      }
+
+      .projekte {
+        padding: 5rem 3rem 4rem;
+      }
+
+      .projekte-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+      }
+
+      .projekt-card:nth-child(2) {
+        margin-top: 3rem;
+      }
+
+      .projekt-card:nth-child(3) {
+        grid-column: 1 / -1;
+        max-width: 50%;
+      }
+
+      .philosophie {
+        padding: 5rem 3rem 7rem;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero {
+        padding: 4rem 1.5rem;
+        gap: 2.5rem;
+      }
+
+      .hero-headline {
+        font-size: 2.4rem;
+        margin-bottom: 1.8rem;
+      }
+
+      .hero-image {
+        width: 90%;
+      }
+
+      .projekte {
+        padding: 4rem 1.5rem 3rem;
+      }
+
+      .projekte-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .projekt-card:nth-child(2) {
+        margin-top: 0;
+      }
+
+      .projekt-card:nth-child(3) {
+        max-width: 100%;
+      }
+
+      .philosophie {
+        padding: 4rem 1.5rem 6rem;
+      }
+
+      .philosophie-text-column {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ════════════════════════════════════════════
+       HERO — Negative Space Mastery
+  ════════════════════════════════════════════ -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1 class="hero-headline">Raeume,<br />die atmen.</h1>
+      <div class="hero-line"></div>
+      <p class="hero-subtitle">Atelier Blanc &middot; Interior Design &middot; Trier</p>
+      <a href="#projekte" class="hero-link">Projekte ansehen &rarr;</a>
+    </div>
+    <div class="hero-image-wrapper">
+      <img
+        class="hero-image"
+        src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?w=900&q=80&auto=format"
+        alt="Minimalistisches Interior mit natuerlichem Licht"
+        loading="eager"
+      />
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════
+       PROJEKTE
+  ════════════════════════════════════════════ -->
+  <section class="projekte" id="projekte">
+    <p class="section-label">Projekte</p>
+    <div class="projekte-grid">
+
+      <div class="projekt-card">
+        <div class="projekt-image-wrapper">
+          <img
+            class="projekt-image"
+            src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80&auto=format"
+            alt="Villa am Moselufer — helles Wohnzimmer mit Flussblick"
+            loading="lazy"
+          />
+        </div>
+        <h3 class="projekt-name">Villa am Moselufer</h3>
+        <p class="projekt-description">Reduktion und Weite in 280 Quadratmetern am Wasser</p>
+        <span class="projekt-year">2024</span>
+      </div>
+
+      <div class="projekt-card">
+        <div class="projekt-image-wrapper">
+          <img
+            class="projekt-image"
+            src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80&auto=format"
+            alt="Loft Bahnhofsviertel — offener Grundriss mit Industriecharme"
+            loading="lazy"
+          />
+        </div>
+        <h3 class="projekt-name">Loft Bahnhofsviertel</h3>
+        <p class="projekt-description">Industriegeschichte trifft auf zeitlose Eleganz</p>
+        <span class="projekt-year">2023</span>
+      </div>
+
+      <div class="projekt-card">
+        <div class="projekt-image-wrapper">
+          <img
+            class="projekt-image"
+            src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&q=80&auto=format"
+            alt="Stadthaus Petrisberg — moderne Kueche mit Naturstein"
+            loading="lazy"
+          />
+        </div>
+        <h3 class="projekt-name">Stadthaus Petrisberg</h3>
+        <p class="projekt-description">Drei Generationen unter einem ruhigen Dach</p>
+        <span class="projekt-year">2023</span>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════
+       PHILOSOPHIE
+  ════════════════════════════════════════════ -->
+  <section class="philosophie">
+    <div class="philosophie-text-column">
+      <div class="philosophie-divider"></div>
+      <p class="philosophie-quote">
+        Wir gestalten keine Raeume.<br />
+        Wir hoeren zu, was ein Raum braucht.
+      </p>
+      <p class="philosophie-attribution">Anna Weber, Gruenderin</p>
+
+      <div class="philosophie-contact">
+        Atelier Blanc<br />
+        Neustrasse 12, 54290 Trier<br />
+        <a href="tel:+4965194820">+49 651 948 20</a>
+      </div>
+      <p class="philosophie-note">Termine nach Vereinbarung</p>
+    </div>
+  </section>
+
+</body>
+</html>
