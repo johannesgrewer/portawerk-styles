@@ -150,10 +150,7 @@ import { styles, categories } from "../data/styles";
     <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" id="modal-backdrop"></div>
     <div class="absolute inset-4 md:inset-8 lg:inset-12 bg-surface rounded-2xl overflow-hidden border border-border flex flex-col">
       <div class="flex items-center justify-between px-6 py-4 border-b border-border shrink-0">
-        <div>
-          <h3 id="modal-title" class="font-display font-bold"></h3>
-          <p id="modal-subtitle" class="text-text-muted text-xs mt-0.5"></p>
-        </div>
+        <h3 id="modal-title" class="font-display font-bold"></h3>
         <button id="modal-close" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-surface-hover transition-colors cursor-pointer">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
@@ -228,14 +225,16 @@ import { styles, categories } from "../data/styles";
 
     document.querySelectorAll('.style-card').forEach((card) => {
       card.addEventListener('click', () => {
+        const slug = card.dataset.slug;
         modalTitle.textContent = card.querySelector('h3').textContent;
-        modalSubtitle.textContent = card.querySelector('p').textContent;
+
+        // Load iframe
         modalContent.textContent = '';
-        const placeholder = document.createElement('div');
-        placeholder.className = 'flex items-center justify-center h-full text-sm';
-        placeholder.style.color = 'var(--color-text-muted)';
-        placeholder.textContent = 'Stil-Preview kommt bald...';
-        modalContent.appendChild(placeholder);
+        const iframe = document.createElement('iframe');
+        iframe.src = '/styles/' + slug;
+        iframe.style.cssText = 'width:100%;height:100%;border:none;display:block;';
+        modalContent.appendChild(iframe);
+
         modal.classList.remove('hidden');
         document.body.style.overflow = 'hidden';
       });
@@ -248,6 +247,8 @@ import { styles, categories } from "../data/styles";
     function closeModal() {
       modal.classList.add('hidden');
       document.body.style.overflow = '';
+      // Remove iframe to stop loading
+      modalContent.textContent = '';
     }
   </script>
 
