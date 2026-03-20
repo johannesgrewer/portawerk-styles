@@ -117,130 +117,220 @@ export const prerender = true;
       min-height: 100vh;
       display: flex;
       align-items: center;
-      justify-content: center;
       overflow: hidden;
-      padding: 6rem 1.5rem 4rem;
+      padding: 7rem 3rem 4rem;
+      background: #FFF8E7;
+      background-image:
+        radial-gradient(circle, rgba(232, 93, 38, 0.07) 1px, transparent 1px),
+        radial-gradient(circle, rgba(45, 106, 79, 0.05) 1px, transparent 1px);
+      background-size: 32px 32px, 48px 48px;
+      background-position: 0 0, 16px 16px;
     }
 
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-    }
-
-    .hero-bg img {
+    .hero-layout {
+      display: flex;
+      align-items: center;
+      gap: 4rem;
+      max-width: 1100px;
+      margin: 0 auto;
       width: 100%;
-      height: 100%;
-      object-fit: cover;
     }
 
-    .hero-bg::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        160deg,
-        rgba(44, 24, 16, 0.82) 0%,
-        rgba(232, 93, 38, 0.6) 50%,
-        rgba(44, 24, 16, 0.75) 100%
-      );
+    /* --- Text side --- */
+    .hero-text {
+      flex: 1;
+      min-width: 280px;
     }
 
-    .hero-content {
-      position: relative;
-      z-index: 1;
-      text-align: center;
-      max-width: 720px;
-    }
-
-    .hero-names {
-      font-family: 'Fredoka', sans-serif;
-      font-weight: 500;
-      font-size: 1.05rem;
-      color: rgba(255, 248, 231, 0.85);
-      margin-bottom: 1.2rem;
-      letter-spacing: 0.5px;
-    }
-
-    .hero-names span {
-      display: inline-block;
-      width: 5px;
-      height: 5px;
-      background: #FFC857;
-      border-radius: 50%;
-      margin: 0 0.6rem;
-      vertical-align: middle;
+    .hero-squiggle-arrow {
+      display: block;
+      width: 80px;
+      height: 40px;
+      margin-bottom: 1rem;
     }
 
     .hero h1 {
-      font-size: clamp(2.4rem, 6vw, 4.2rem);
-      color: #FFF8E7;
+      font-size: clamp(2.2rem, 5vw, 3.6rem);
+      color: #2C1810;
       font-weight: 700;
-      margin-bottom: 0.3rem;
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
     }
 
-    .hero-wavy-underline {
-      display: block;
-      width: 220px;
-      height: 14px;
-      margin: 0.3rem auto 1.8rem;
-      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 220 16'%3E%3Cpath d='M2 10 Q28 2 55 12 Q82 22 110 8 Q138 -4 165 12 Q192 22 218 8' stroke='%23FFC857' stroke-width='4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center;
-      background-size: contain;
+    .hero h1 .word-ramen {
+      color: #E85D26;
     }
 
-    .hero-badge {
+    .hero h1 .word-small {
+      font-size: 0.6em;
+      font-weight: 500;
+      color: #5a4a3f;
+      vertical-align: middle;
+    }
+
+    .hero h1 .word-herzen {
+      color: #2D6A4F;
+    }
+
+    .hero-info-badge {
       display: inline-block;
-      background: #2D6A4F;
-      color: #FFF8E7;
       font-family: 'Fredoka', sans-serif;
       font-weight: 600;
-      font-size: 0.88rem;
-      padding: 0.5rem 1.4rem;
+      font-size: 0.9rem;
+      color: #2C1810;
+      padding: 0.55rem 1.4rem;
+      border: 2.5px dashed #E85D26;
       border-radius: 50px;
-      margin-bottom: 2rem;
-      border: 2px dashed rgba(255, 248, 231, 0.3);
+      margin-bottom: 1.8rem;
+      background: rgba(255, 255, 255, 0.5);
     }
 
-    .hero-buttons {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .btn {
+    .hero-cta-link {
+      display: inline-block;
       font-family: 'Fredoka', sans-serif;
-      font-weight: 600;
-      font-size: 1.05rem;
-      padding: 0.85rem 2rem;
-      border-radius: 50px;
-      border: none;
-      cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: #E85D26;
+      animation: heroBounce 2s ease-in-out infinite;
     }
 
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
+    .hero-cta-link span {
+      display: inline-block;
+      transition: transform 0.2s;
     }
 
-    .btn-primary {
-      background: #FFC857;
-      color: #2C1810;
+    .hero-cta-link:hover span {
+      transform: translateY(3px);
     }
 
-    .btn-secondary {
-      background: transparent;
-      color: #FFF8E7;
-      border: 2.5px solid #FFF8E7;
+    @keyframes heroBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(6px); }
     }
 
-    .btn-secondary:hover {
-      background: #FFF8E7;
-      color: #2C1810;
+    /* --- Photo collage side --- */
+    .hero-collage {
+      flex: 1.1;
+      position: relative;
+      min-height: 460px;
+      min-width: 320px;
+    }
+
+    .polaroid {
+      position: absolute;
+      background: #fff;
+      box-shadow: 0 8px 30px rgba(44, 24, 16, 0.15), 0 2px 8px rgba(44, 24, 16, 0.08);
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+      cursor: default;
+    }
+
+    .polaroid img {
+      display: block;
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+
+    .polaroid:hover {
+      box-shadow: 0 14px 40px rgba(44, 24, 16, 0.22), 0 4px 12px rgba(44, 24, 16, 0.1);
+    }
+
+    /* Photo 1 — largest, center-right */
+    .polaroid-1 {
+      width: 300px;
+      padding: 12px 12px 40px 12px;
+      top: 30px;
+      right: 0;
+      transform: rotate(3deg);
+      z-index: 2;
+    }
+
+    .polaroid-1:hover {
+      transform: rotate(5deg) translateY(-6px);
+    }
+
+    .polaroid-1 img {
+      height: 220px;
+    }
+
+    .polaroid-caption {
+      position: absolute;
+      bottom: 10px;
+      left: 16px;
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 500;
+      font-size: 0.82rem;
+      color: #5a4a3f;
+      font-style: italic;
+    }
+
+    /* Photo 2 — medium, overlapping top-left */
+    .polaroid-2 {
+      width: 230px;
+      padding: 10px 10px 36px 10px;
+      top: -10px;
+      left: 10px;
+      transform: rotate(-5deg);
+      z-index: 3;
+    }
+
+    .polaroid-2:hover {
+      transform: rotate(-7deg) translateY(-6px);
+    }
+
+    .polaroid-2 img {
+      height: 170px;
+    }
+
+    /* Photo 3 — small, bottom-right */
+    .polaroid-3 {
+      width: 180px;
+      padding: 8px 8px 32px 8px;
+      bottom: 10px;
+      right: 20px;
+      transform: rotate(7deg);
+      z-index: 4;
+    }
+
+    .polaroid-3:hover {
+      transform: rotate(9deg) translateY(-6px);
+    }
+
+    .polaroid-3 img {
+      height: 130px;
+    }
+
+    /* --- Sticker decorations --- */
+    .sticker-frisch {
+      position: absolute;
+      top: -20px;
+      right: 50px;
+      width: 90px;
+      height: 90px;
+      z-index: 5;
+      transform: rotate(-12deg);
+      pointer-events: none;
+    }
+
+    .sticker-chili {
+      position: absolute;
+      bottom: 40px;
+      left: 40px;
+      z-index: 5;
+      font-size: 2.4rem;
+      transform: rotate(15deg);
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+      pointer-events: none;
+    }
+
+    .sticker-wave {
+      position: absolute;
+      bottom: -10px;
+      left: 130px;
+      width: 100px;
+      height: 30px;
+      z-index: 5;
+      pointer-events: none;
     }
 
     /* ===== SHARED SECTION ===== */
@@ -607,19 +697,81 @@ export const prerender = true;
         display: block;
       }
 
-      .hero h1 {
-        font-size: 2.2rem;
+      .hero {
+        padding: 6rem 1.25rem 3rem;
       }
 
-      .hero-buttons {
+      .hero-layout {
         flex-direction: column;
-        align-items: center;
+        gap: 2.5rem;
+        text-align: center;
       }
 
-      .btn {
+      .hero-text {
+        min-width: 0;
+      }
+
+      .hero-squiggle-arrow {
+        margin: 0 auto 1rem;
+      }
+
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .hero-collage {
+        min-height: 320px;
+        min-width: 0;
         width: 100%;
-        max-width: 280px;
-        justify-content: center;
+        max-width: 400px;
+        margin: 0 auto;
+      }
+
+      .polaroid-1 {
+        width: 220px;
+        right: 0;
+        top: 20px;
+      }
+
+      .polaroid-1 img {
+        height: 160px;
+      }
+
+      .polaroid-2 {
+        width: 170px;
+        left: 0;
+        top: -5px;
+      }
+
+      .polaroid-2 img {
+        height: 125px;
+      }
+
+      .polaroid-3 {
+        width: 140px;
+        bottom: 5px;
+        right: 10px;
+      }
+
+      .polaroid-3 img {
+        height: 100px;
+      }
+
+      .sticker-frisch {
+        width: 70px;
+        height: 70px;
+        right: 30px;
+      }
+
+      .sticker-chili {
+        font-size: 1.8rem;
+        left: 20px;
+        bottom: 20px;
+      }
+
+      .sticker-wave {
+        width: 70px;
+        left: 90px;
       }
 
       .ingredient-grid {
@@ -652,11 +804,55 @@ export const prerender = true;
       }
 
       .hero {
-        min-height: 92vh;
+        min-height: auto;
+        padding: 5.5rem 1rem 2.5rem;
       }
 
-      .hero-names {
-        font-size: 0.9rem;
+      .hero h1 {
+        font-size: 1.7rem;
+      }
+
+      .hero-info-badge {
+        font-size: 0.8rem;
+        padding: 0.45rem 1rem;
+      }
+
+      .hero-collage {
+        min-height: 260px;
+        max-width: 320px;
+      }
+
+      .polaroid-1 {
+        width: 180px;
+      }
+
+      .polaroid-1 img {
+        height: 130px;
+      }
+
+      .polaroid-2 {
+        width: 140px;
+      }
+
+      .polaroid-2 img {
+        height: 100px;
+      }
+
+      .polaroid-3 {
+        width: 110px;
+      }
+
+      .polaroid-3 img {
+        height: 80px;
+      }
+
+      .sticker-frisch {
+        width: 55px;
+        height: 55px;
+      }
+
+      .sticker-chili {
+        font-size: 1.4rem;
       }
 
       .schedule-grid {
@@ -692,24 +888,81 @@ export const prerender = true;
 
   <!-- HERO -->
   <section class="hero">
-    <div class="hero-bg">
-      <img
-        src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=1920&q=80&auto=format"
-        alt="Dampfende Ramen-Schale mit frischen Toppings"
-        loading="eager"
-      />
-    </div>
-    <div class="hero-content">
-      <div class="hero-names">
-        Minh &amp; Lisa <span></span> Viehmarktplatz Trier <span></span> Di&ndash;Sa ab 11:30
+    <div class="hero-layout">
+
+      <!-- Text side -->
+      <div class="hero-text">
+        <!-- Hand-drawn squiggle arrow pointing right -->
+        <svg class="hero-squiggle-arrow" viewBox="0 0 80 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 28 C16 10, 36 6, 52 18 C58 22, 64 20, 72 14" stroke="#E85D26" stroke-width="3" stroke-linecap="round" fill="none"/>
+          <path d="M64 10 L73 14 L66 20" stroke="#E85D26" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+
+        <h1>
+          <span class="word-ramen">Ramen,</span><br/>
+          <span class="word-small">die von</span><br/>
+          <span class="word-herzen">Herzen</span> kommt.
+        </h1>
+
+        <div class="hero-info-badge">
+          Minh &amp; Lisa &middot; Viehmarktplatz &middot; Di&ndash;Sa
+        </div>
+
+        <br/>
+
+        <a href="#zutaten" class="hero-cta-link">
+          Speisekarte <span>&darr;</span>
+        </a>
       </div>
-      <h1>Ramen, die von Herzen kommt.</h1>
-      <div class="hero-wavy-underline"></div>
-      <div class="hero-badge">Alles frisch. Alles handgemacht. Jeden Tag.</div>
-      <div class="hero-buttons">
-        <a href="#zutaten" class="btn btn-primary">Speisekarte</a>
-        <a href="#standorte" class="btn btn-secondary">Wo stehen wir?</a>
+
+      <!-- Photo collage side -->
+      <div class="hero-collage">
+
+        <!-- Photo 1: Ramen bowl (largest, center-right) -->
+        <div class="polaroid polaroid-1">
+          <img
+            src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=600&q=80&auto=format"
+            alt="Dampfende Tonkotsu Ramen"
+            loading="eager"
+          />
+          <span class="polaroid-caption">Unsere Tonkotsu &#x1F525;</span>
+        </div>
+
+        <!-- Photo 2: Cooking/steam (medium, top-left overlap) -->
+        <div class="polaroid polaroid-2">
+          <img
+            src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=400&q=80&auto=format"
+            alt="Kochen mit Dampf"
+            loading="eager"
+          />
+        </div>
+
+        <!-- Photo 3: Ingredients (small, bottom-right) -->
+        <div class="polaroid polaroid-3">
+          <img
+            src="https://images.unsplash.com/photo-1547592166-23ac45744acd?w=400&q=80&auto=format"
+            alt="Frische Zutaten"
+            loading="eager"
+          />
+        </div>
+
+        <!-- Sticker: FRISCH! stamp -->
+        <svg class="sticker-frisch" viewBox="0 0 90 90" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="45" cy="45" r="38" fill="none" stroke="#2D6A4F" stroke-width="3" stroke-dasharray="6 4"/>
+          <circle cx="45" cy="45" r="32" fill="none" stroke="#2D6A4F" stroke-width="1.5"/>
+          <text x="45" y="50" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="700" font-size="16" fill="#2D6A4F">FRISCH!</text>
+        </svg>
+
+        <!-- Sticker: chili pepper -->
+        <div class="sticker-chili">&#x1F336;&#xFE0F;</div>
+
+        <!-- Sticker: wavy doodle line -->
+        <svg class="sticker-wave" viewBox="0 0 100 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 20 Q15 6 30 16 Q45 26 60 12 Q75 0 95 16" stroke="#FFC857" stroke-width="3" stroke-linecap="round" fill="none"/>
+        </svg>
+
       </div>
+
     </div>
   </section>
 

@@ -153,219 +153,231 @@ export const prerender = true;
       position: relative;
       overflow: hidden;
       padding-top: 72px;
+      background: var(--bg);
     }
 
-    .hero-bg {
+    /* Floating organic blob shapes */
+    .hero-blob {
       position: absolute;
-      inset: 0;
+      border-radius: 50%;
+      pointer-events: none;
       z-index: 0;
     }
 
-    .hero-bg img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center 30%;
+    .hero-blob-1 {
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(124, 152, 133, 0.07) 0%, transparent 70%);
+      top: -120px;
+      right: -80px;
     }
 
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        160deg,
-        rgba(253, 251, 248, 0.95) 0%,
-        rgba(253, 251, 248, 0.88) 40%,
-        rgba(253, 251, 248, 0.6) 100%
-      );
-      z-index: 1;
+    .hero-blob-2 {
+      width: 450px;
+      height: 450px;
+      background: radial-gradient(circle, rgba(212, 165, 116, 0.06) 0%, transparent 70%);
+      bottom: -100px;
+      left: -120px;
     }
 
-    /* Floating organic shapes */
-    .hero-shape {
-      position: absolute;
-      border-radius: 50%;
-      z-index: 1;
-      pointer-events: none;
-    }
-
-    .hero-shape-1 {
-      width: 400px;
-      height: 400px;
-      background: radial-gradient(circle, rgba(124, 152, 133, 0.08) 0%, transparent 70%);
-      top: -100px;
-      right: -100px;
-    }
-
-    .hero-shape-2 {
+    .hero-blob-3 {
       width: 300px;
       height: 300px;
-      background: radial-gradient(circle, rgba(212, 165, 116, 0.1) 0%, transparent 70%);
-      bottom: -50px;
-      left: -80px;
-    }
-
-    .hero-shape-3 {
-      width: 200px;
-      height: 200px;
-      background: radial-gradient(circle, rgba(124, 152, 133, 0.06) 0%, transparent 70%);
-      top: 40%;
-      right: 20%;
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 80px 28px 80px;
-      width: 100%;
+      background: radial-gradient(circle, rgba(124, 152, 133, 0.05) 0%, transparent 70%);
+      top: 30%;
+      left: 40%;
     }
 
     .hero-inner {
-      max-width: 600px;
-    }
-
-    .hero-location {
-      display: inline-flex;
+      position: relative;
+      z-index: 1;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 80px 28px 100px;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
       align-items: center;
-      gap: 8px;
-      color: var(--primary);
-      font-size: 0.82rem;
-      font-weight: 500;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      margin-bottom: 28px;
+      gap: 60px;
     }
 
-    .hero-location svg {
-      width: 14px;
-      height: 14px;
-      opacity: 0.7;
+    /* --- Hero Text --- */
+    .hero-text {
+      opacity: 0;
+      transform: translateX(-40px);
+      animation: heroTextIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.2s forwards;
+    }
+
+    @keyframes heroTextIn {
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
     }
 
     .hero h1 {
-      font-size: clamp(3rem, 6vw, 4.5rem);
+      font-size: clamp(2.8rem, 5.5vw, 4.2rem);
       font-weight: 700;
       line-height: 1.05;
       letter-spacing: -0.035em;
       color: var(--text);
-      margin-bottom: 28px;
+      margin-bottom: 32px;
     }
 
-    .hero h1 em {
+    .hero h1 span {
+      display: block;
+    }
+
+    .hero h1 .hero-headline-accent {
       font-style: italic;
       font-weight: 300;
       color: var(--primary);
     }
 
-    .hero-details {
-      display: flex;
-      flex-direction: column;
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
       gap: 8px;
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      padding: 8px 20px;
+      border-radius: var(--radius-full);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.01em;
       margin-bottom: 40px;
     }
 
-    .hero-detail {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 1rem;
-      color: var(--text-light);
-    }
-
-    .hero-detail svg {
-      width: 18px;
-      height: 18px;
-      color: var(--primary);
-      flex-shrink: 0;
-      opacity: 0.7;
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
-      margin-bottom: 56px;
-    }
-
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: var(--primary);
-      color: var(--white);
-      padding: 16px 36px;
-      border-radius: var(--radius-full);
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.95rem;
-      border: none;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 20px rgba(124, 152, 133, 0.3);
-    }
-
-    .btn-primary:hover {
-      background: var(--primary-dark);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 30px rgba(124, 152, 133, 0.4);
-    }
-
-    .btn-secondary {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: var(--white);
-      color: var(--text);
-      padding: 16px 36px;
-      border-radius: var(--radius-full);
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 0.95rem;
-      border: 1.5px solid rgba(124, 152, 133, 0.2);
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: var(--shadow-soft);
-    }
-
-    .btn-secondary:hover {
-      border-color: var(--primary);
-      color: var(--primary);
-      transform: translateY(-2px);
-    }
-
-    .hero-trust {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .hero-trust-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: var(--white);
-      border: 1px solid rgba(124, 152, 133, 0.12);
-      padding: 8px 18px;
-      border-radius: var(--radius-full);
-      font-size: 0.82rem;
-      font-weight: 500;
-      color: var(--text);
-      box-shadow: var(--shadow-soft);
-    }
-
-    .hero-trust-pill svg {
-      width: 14px;
-      height: 14px;
-      color: var(--accent);
-    }
-
-    .trust-separator {
-      width: 4px;
-      height: 4px;
+    .hero-badge-dot {
+      display: inline-block;
+      width: 3px;
+      height: 3px;
       border-radius: 50%;
-      background: rgba(124, 152, 133, 0.3);
+      background: var(--primary);
+      opacity: 0.5;
+    }
+
+    .hero-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: var(--text);
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    .hero-link:hover {
+      color: var(--primary);
+    }
+
+    .hero-link-arrow {
+      display: inline-block;
+      transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .hero-link:hover .hero-link-arrow {
+      transform: translateX(6px);
+    }
+
+    /* --- Hero Photos --- */
+    .hero-photos {
+      position: relative;
+      height: 520px;
+    }
+
+    .hero-photo {
+      position: absolute;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(45, 52, 54, 0.10), 0 8px 24px rgba(45, 52, 54, 0.06);
+      opacity: 0;
+    }
+
+    .hero-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero-photo-1 {
+      width: 380px;
+      height: 460px;
+      top: 0;
+      right: 0;
+      transform: rotate(2deg) translateY(20px);
+      animation: photoOneIn 1s cubic-bezier(0.22, 1, 0.36, 1) 0.5s forwards;
+      z-index: 1;
+    }
+
+    @keyframes photoOneIn {
+      to {
+        opacity: 1;
+        transform: rotate(2deg) translateY(0);
+      }
+    }
+
+    .hero-photo-2 {
+      width: 240px;
+      height: 300px;
+      bottom: 0;
+      left: 20px;
+      transform: rotate(-3deg) translateY(20px);
+      animation: photoTwoIn 1s cubic-bezier(0.22, 1, 0.36, 1) 0.75s forwards;
+      z-index: 2;
+    }
+
+    @keyframes photoTwoIn {
+      to {
+        opacity: 1;
+        transform: rotate(-3deg) translateY(0);
+      }
+    }
+
+    .hero-est {
+      position: absolute;
+      bottom: 46px;
+      left: 280px;
+      z-index: 3;
+      font-family: 'DM Sans', sans-serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      opacity: 0;
+      animation: fadeIn 0.8s ease 1.2s forwards;
+      transform: rotate(-2deg);
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    /* --- Decorative SVG Curve --- */
+    .hero-curve {
+      position: absolute;
+      top: 50%;
+      left: -40px;
+      z-index: 0;
+      opacity: 0;
+      animation: fadeIn 1s ease 1s forwards;
+    }
+
+    .hero-curve path {
+      fill: none;
+      stroke: var(--primary);
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      opacity: 0.15;
+      stroke-dasharray: 300;
+      stroke-dashoffset: 300;
+      animation: drawLine 1.5s ease 1.2s forwards;
+    }
+
+    @keyframes drawLine {
+      to { stroke-dashoffset: 0; }
     }
 
     /* ==================== PHILOSOPHIE ==================== */
@@ -832,16 +844,75 @@ export const prerender = true;
         transform: rotate(-45deg) translate(5px, -5px);
       }
 
+      .hero-inner {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        padding: 50px 24px 60px;
+      }
+
+      .hero-text {
+        text-align: center;
+        transform: none;
+        opacity: 1;
+        animation: none;
+      }
+
       .hero h1 {
         font-size: 2.6rem;
       }
 
-      .hero-content {
-        padding: 50px 24px 60px;
+      .hero h1 span {
+        display: inline;
       }
 
-      .hero-trust {
-        gap: 8px;
+      .hero-badge {
+        margin-bottom: 28px;
+      }
+
+      .hero-photos {
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .hero-photo {
+        position: relative;
+        opacity: 1;
+        animation: none;
+      }
+
+      .hero-photo-1 {
+        width: 100%;
+        max-width: 380px;
+        height: 320px;
+        top: auto;
+        right: auto;
+        transform: none;
+      }
+
+      .hero-photo-2 {
+        width: 70%;
+        max-width: 260px;
+        height: 220px;
+        bottom: auto;
+        left: auto;
+        transform: none;
+      }
+
+      .hero-est {
+        position: relative;
+        bottom: auto;
+        left: auto;
+        opacity: 1;
+        animation: none;
+        transform: none;
+        text-align: center;
+      }
+
+      .hero-curve {
+        display: none;
       }
 
       .philosophie {
@@ -897,24 +968,12 @@ export const prerender = true;
         font-size: 2.2rem;
       }
 
-      .hero-actions {
-        flex-direction: column;
+      .hero-photo-1 {
+        height: 260px;
       }
 
-      .btn-primary,
-      .btn-secondary {
-        justify-content: center;
-        width: 100%;
-      }
-
-      .hero-trust {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-      }
-
-      .trust-separator {
-        display: none;
+      .hero-photo-2 {
+        height: 180px;
       }
 
       .philosophie-principles {
@@ -953,62 +1012,50 @@ export const prerender = true;
 
   <!-- HERO -->
   <section class="hero">
-    <div class="hero-bg">
-      <img
-        src="https://images.unsplash.com/photo-1545389336-cf090694435e?w=1920&q=80&auto=format"
-        alt="Yoga-Praxis in friedlicher Atmosphaere"
-        loading="eager"
-      />
-    </div>
-    <div class="hero-overlay"></div>
-    <div class="hero-shape hero-shape-1"></div>
-    <div class="hero-shape hero-shape-2"></div>
-    <div class="hero-shape hero-shape-3"></div>
+    <div class="hero-blob hero-blob-1"></div>
+    <div class="hero-blob hero-blob-2"></div>
+    <div class="hero-blob hero-blob-3"></div>
 
-    <div class="hero-content">
-      <div class="hero-inner">
-        <div class="hero-location">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          In der alten Muehle am Konzer Bach
+    <div class="hero-inner">
+      <div class="hero-text">
+        <h1>
+          <span>Finde</span>
+          <span>deine</span>
+          <span class="hero-headline-accent">Mitte.</span>
+        </h1>
+
+        <div class="hero-badge">
+          Konz <span class="hero-badge-dot"></span> Max 8 Teilnehmer <span class="hero-badge-dot"></span> Seit 2015
         </div>
 
-        <h1>Finde deine<br><em>Mitte.</em></h1>
+        <a href="#wochenplan" class="hero-link">
+          Kursplan ansehen <span class="hero-link-arrow">&rarr;</span>
+        </a>
+      </div>
 
-        <div class="hero-details">
-          <div class="hero-detail">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-            Kleine Gruppen, max. 8 Teilnehmer
-          </div>
-          <div class="hero-detail">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            Hatha, Vinyasa, Yin & Meditation
-          </div>
+      <div class="hero-photos">
+        <!-- Decorative curve connecting text to photos -->
+        <svg class="hero-curve" width="120" height="200" viewBox="0 0 120 200">
+          <path d="M0,100 C30,100 40,40 70,30 C100,20 110,60 120,80" />
+        </svg>
+
+        <div class="hero-photo hero-photo-1">
+          <img
+            src="https://images.unsplash.com/photo-1545389336-cf090694435e?w=900&q=80&auto=format"
+            alt="Yoga-Praxis in friedlicher Atmosphaere"
+            loading="eager"
+          />
         </div>
 
-        <div class="hero-actions">
-          <a href="#wochenplan" class="btn-primary">
-            Kursplan ansehen
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-          </a>
-          <a href="tel:+496501943210" class="btn-secondary">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-            Probestunde anfragen
-          </a>
+        <div class="hero-photo hero-photo-2">
+          <img
+            src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=600&q=80&auto=format"
+            alt="Nahaufnahme Meditation"
+            loading="eager"
+          />
         </div>
 
-        <div class="hero-trust">
-          <div class="hero-trust-pill">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            200+ Mitglieder
-          </div>
-          <div class="trust-separator"></div>
-          <div class="hero-trust-pill">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-            4.9 Google
-          </div>
-          <div class="trust-separator"></div>
-          <div class="hero-trust-pill">Seit 2015</div>
-        </div>
+        <span class="hero-est">est. 2015</span>
       </div>
     </div>
   </section>

@@ -128,224 +128,292 @@ export const prerender = true;
       position: relative;
       min-height: 100vh;
       display: flex;
-      align-items: center;
+      flex-direction: column;
+      justify-content: center;
       overflow: hidden;
-      background: #1A1A1A;
+      background: #F5F5F0;
+      /* CSS paper noise texture */
+      background-image:
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
     }
 
-    .hero-bg {
+    /* Registration marks — corner crosshairs */
+    .hero-reg-mark {
       position: absolute;
-      inset: 0;
-      z-index: 0;
-    }
-
-    .hero-bg img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: grayscale(40%) contrast(1.1);
-    }
-
-    .hero-bg::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        160deg,
-        rgba(26, 26, 26, 0.95) 0%,
-        rgba(26, 26, 26, 0.85) 40%,
-        rgba(255, 61, 0, 0.3) 100%
-      );
-    }
-
-    /* Geometric shapes */
-    .geo {
-      position: absolute;
-      z-index: 1;
+      width: 30px;
+      height: 30px;
+      z-index: 5;
       pointer-events: none;
-    }
-
-    .geo--rect-1 {
-      top: 10%;
-      right: -30px;
-      width: 350px;
-      height: 350px;
-      border: 8px solid #FF3D00;
-      transform: rotate(12deg);
       opacity: 0.25;
     }
 
-    .geo--rect-2 {
-      bottom: 15%;
-      right: 8%;
-      width: 180px;
-      height: 180px;
-      background: #FFD600;
-      transform: rotate(-8deg);
-      opacity: 0.12;
-    }
-
-    .geo--circle {
-      top: 20%;
-      right: 25%;
-      width: 100px;
-      height: 100px;
-      border: 6px solid #FFD600;
-      border-radius: 50%;
-      opacity: 0.2;
-    }
-
-    .geo--line {
-      top: 0;
-      left: 50%;
-      width: 4px;
-      height: 200px;
-      background: #FF3D00;
-      opacity: 0.15;
-      transform: rotate(25deg);
-    }
-
-    .geo--dot-grid {
-      bottom: 25%;
-      left: 3%;
-      width: 120px;
-      height: 120px;
-      background-image: radial-gradient(circle, #FF3D00 2px, transparent 2px);
-      background-size: 20px 20px;
-      opacity: 0.2;
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      padding: 10rem 2rem 5rem;
-      max-width: 1100px;
-      margin: 0 auto;
-      width: 100%;
-    }
-
-    .hero-label {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.75rem;
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.3em;
-      color: #FFD600;
-      margin-bottom: 2rem;
-    }
-
-    .hero-label::before {
-      content: '';
-      display: block;
-      width: 40px;
-      height: 3px;
-      background: #FFD600;
-    }
-
-    .hero-headline {
-      font-size: clamp(4rem, 12vw, 10rem);
-      font-weight: 700;
-      line-height: 0.9;
-      color: #F5F5F0;
-      text-transform: uppercase;
-      margin-bottom: 2rem;
-      letter-spacing: -0.03em;
-    }
-
-    .hero-headline .line {
-      display: block;
-    }
-
-    .hero-headline .line--accent {
-      color: #FF3D00;
-      -webkit-text-stroke: 0px;
-    }
-
-    .hero-headline .line--outline {
-      color: transparent;
-      -webkit-text-stroke: 3px #F5F5F0;
-    }
-
-    .hero-subtitle {
-      font-size: clamp(1.1rem, 2.2vw, 1.6rem);
-      color: rgba(245, 245, 240, 0.7);
-      max-width: 560px;
-      margin-bottom: 3rem;
-      line-height: 1.5;
-      font-weight: 400;
-    }
-
-    .hero-subtitle strong {
-      color: #F5F5F0;
-      font-weight: 600;
-    }
-
-    .btn-primary {
-      display: inline-block;
-      padding: 1.2rem 3rem;
-      background: #FF3D00;
-      color: #F5F5F0;
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 1rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      border: none;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
-      position: relative;
-    }
-
-    .btn-primary::after {
+    .hero-reg-mark::before,
+    .hero-reg-mark::after {
       content: '';
       position: absolute;
-      top: 6px;
-      left: 6px;
-      right: -6px;
-      bottom: -6px;
-      border: 3px solid #FFD600;
-      z-index: -1;
-      transition: transform 0.2s;
+      background: #1A1A1A;
     }
 
-    .btn-primary:hover {
-      background: #e03500;
-      transform: translate(-2px, -2px);
+    .hero-reg-mark::before {
+      top: 50%;
+      left: 0;
+      width: 100%;
+      height: 1.5px;
+      transform: translateY(-50%);
     }
 
-    .btn-primary:hover::after {
-      transform: translate(2px, 2px);
+    .hero-reg-mark::after {
+      left: 50%;
+      top: 0;
+      width: 1.5px;
+      height: 100%;
+      transform: translateX(-50%);
     }
 
-    .hero-stats {
-      display: flex;
-      gap: 3rem;
-      margin-top: 4rem;
-      padding-top: 2.5rem;
-      border-top: 2px solid rgba(245, 245, 240, 0.1);
+    .hero-reg-mark--tl { top: 5rem; left: 2rem; }
+    .hero-reg-mark--tr { top: 5rem; right: 2rem; }
+    .hero-reg-mark--bl { bottom: 7rem; left: 2rem; }
+    .hero-reg-mark--br { bottom: 7rem; right: 2rem; }
+
+    /* Halftone dot pattern in corner */
+    .hero-halftone {
+      position: absolute;
+      bottom: 10%;
+      right: 0;
+      width: clamp(150px, 20vw, 300px);
+      height: clamp(150px, 20vw, 300px);
+      background-image: radial-gradient(circle, #FF3D00 1.5px, transparent 1.5px);
+      background-size: 10px 10px;
+      opacity: 0.12;
+      pointer-events: none;
+      z-index: 1;
+      mask-image: radial-gradient(ellipse at bottom right, black 0%, transparent 70%);
+      -webkit-mask-image: radial-gradient(ellipse at bottom right, black 0%, transparent 70%);
     }
 
-    .hero-stat {
+    /* Stripe container behind the text */
+    .hero-stripes {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -55%);
+      width: 92vw;
+      max-width: 1400px;
+      height: clamp(9rem, 22vw, 18rem);
+      z-index: 1;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
     }
 
-    .hero-stat-number {
-      font-size: clamp(1.8rem, 3vw, 2.5rem);
-      font-weight: 700;
-      color: #FFD600;
-      line-height: 1;
+    .hero-stripe {
+      flex: 1;
+      transform: translateX(-110%);
+      animation: stripeSlideIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
     }
 
-    .hero-stat-label {
-      font-size: 0.75rem;
-      font-weight: 600;
+    .hero-stripe:nth-child(1) { background: #FF3D00; animation-delay: 0.1s; }
+    .hero-stripe:nth-child(2) { background: #FFD600; animation-delay: 0.2s; }
+    .hero-stripe:nth-child(3) { background: #1A1A1A; animation-delay: 0.3s; }
+    .hero-stripe:nth-child(4) { background: #FF3D00; animation-delay: 0.4s; }
+    .hero-stripe:nth-child(5) { background: #FFD600; animation-delay: 0.5s; }
+
+    @keyframes stripeSlideIn {
+      to { transform: translateX(0); }
+    }
+
+    /* Main title — the type IS the hero */
+    .hero-title-wrap {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 0 2rem;
+      margin-top: clamp(6rem, 10vh, 10rem);
+    }
+
+    .hero-title {
+      font-size: clamp(8rem, 20vw, 16rem);
+      font-weight: 700;
+      line-height: 0.85;
+      text-transform: uppercase;
+      letter-spacing: -0.04em;
+      color: #F5F5F0;
+      mix-blend-mode: difference;
+      position: relative;
+      cursor: default;
+      transition: color 0.3s;
+      opacity: 0;
+      animation: titlePunch 0.4s cubic-bezier(0.22, 1, 0.36, 1) 0.65s forwards;
+    }
+
+    .hero-title:hover {
+      color: #E8E8E0;
+    }
+
+    .hero-title .reg-symbol {
+      font-size: 0.18em;
+      vertical-align: super;
+      margin-left: 0.05em;
+      opacity: 0.6;
+    }
+
+    @keyframes titlePunch {
+      0% {
+        opacity: 0;
+        transform: scale(1.08);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    /* Subtitle — offset right */
+    .hero-subtitle-wrap {
+      position: relative;
+      z-index: 3;
+      max-width: 1400px;
+      width: 92vw;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1.4rem, 3vw, 2.4rem);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #1A1A1A;
+      text-align: right;
+      margin-top: clamp(0.5rem, 1.5vw, 1.5rem);
+      padding-right: 5%;
+      opacity: 0;
+      animation: fadeUp 0.5s ease 0.9s forwards;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Stamp element — rotated square */
+    .hero-stamp {
+      position: absolute;
+      top: clamp(5.5rem, 12vh, 9rem);
+      right: clamp(1.5rem, 5vw, 5rem);
+      z-index: 4;
+      width: clamp(80px, 10vw, 120px);
+      height: clamp(80px, 10vw, 120px);
+      border: 3px solid #1A1A1A;
+      transform: rotate(12deg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      opacity: 0;
+      animation: fadeUp 0.5s ease 1.1s forwards;
+    }
+
+    .hero-stamp-text {
+      font-size: clamp(0.5rem, 1vw, 0.7rem);
+      font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.15em;
-      color: rgba(245, 245, 240, 0.5);
-      margin-top: 0.4rem;
+      line-height: 1.5;
+      color: #1A1A1A;
+    }
+
+    /* Bottom area: scattered stats + CTA */
+    .hero-bottom {
+      position: relative;
+      z-index: 3;
+      max-width: 1400px;
+      width: 92vw;
+      margin: 0 auto;
+      padding: clamp(3rem, 6vh, 6rem) 2rem clamp(5rem, 8vh, 7rem);
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+
+    .hero-scattered-stats {
+      display: flex;
+      align-items: flex-end;
+      gap: clamp(1.5rem, 4vw, 4rem);
+      flex-wrap: wrap;
+    }
+
+    .hero-stat-huge {
+      font-size: clamp(5rem, 12vw, 9rem);
+      font-weight: 700;
+      line-height: 0.85;
+      color: #1A1A1A;
+      opacity: 0.08;
+      letter-spacing: -0.03em;
+    }
+
+    .hero-stat-side {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-stat-side-label {
+      font-size: clamp(0.6rem, 1vw, 0.8rem);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: #1A1A1A;
+      opacity: 0.45;
+    }
+
+    .hero-stat-medium {
+      font-size: clamp(0.9rem, 1.8vw, 1.3rem);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #FF3D00;
+      margin-left: clamp(1rem, 3vw, 4rem);
+      align-self: flex-end;
+      margin-bottom: 0.6rem;
+    }
+
+    /* CTA link */
+    .hero-cta {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(0.85rem, 1.2vw, 1.1rem);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #1A1A1A;
+      text-decoration: none;
+      padding: 1rem 2.5rem;
+      border: 3px solid #1A1A1A;
+      position: relative;
+      overflow: hidden;
+      transition: color 0.3s;
+      z-index: 1;
+      display: inline-block;
+    }
+
+    .hero-cta::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: #1A1A1A;
+      transform: translateX(-101%);
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+      z-index: -1;
+    }
+
+    .hero-cta:hover {
+      color: #F5F5F0;
+    }
+
+    .hero-cta:hover::before {
+      transform: translateX(0);
     }
 
     /* Diagonal divider */
@@ -354,7 +422,7 @@ export const prerender = true;
       bottom: 0;
       left: 0;
       right: 0;
-      z-index: 3;
+      z-index: 6;
       height: 100px;
       overflow: hidden;
     }
@@ -727,34 +795,35 @@ export const prerender = true;
         display: flex;
       }
 
-      .hero-content {
-        padding: 8rem 1.5rem 5rem;
+      .hero-stamp {
+        top: auto;
+        bottom: auto;
+        right: 1.5rem;
+        top: 5.5rem;
+        width: 70px;
+        height: 70px;
       }
 
-      .hero-headline {
-        font-size: clamp(3rem, 14vw, 5rem);
-      }
-
-      .hero-headline .line--outline {
-        -webkit-text-stroke: 2px #F5F5F0;
-      }
-
-      .hero-stats {
-        flex-wrap: wrap;
-        gap: 2rem;
-      }
-
-      .geo--rect-1 {
-        width: 200px;
-        height: 200px;
-        top: 5%;
-        right: -50px;
-      }
-
-      .geo--rect-2,
-      .geo--circle,
-      .geo--line {
+      .hero-reg-mark--tl,
+      .hero-reg-mark--tr,
+      .hero-reg-mark--bl,
+      .hero-reg-mark--br {
         display: none;
+      }
+
+      .hero-halftone {
+        opacity: 0.08;
+      }
+
+      .hero-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+      }
+
+      .hero-stat-medium {
+        margin-left: 0;
       }
 
       .portfolio {
@@ -846,12 +915,18 @@ export const prerender = true;
     }
 
     @media (max-width: 480px) {
-      .hero-stats {
-        gap: 1.5rem;
+      .hero-stat-huge {
+        font-size: 4rem;
       }
 
-      .hero-stat-number {
-        font-size: 1.5rem;
+      .hero-subtitle {
+        padding-right: 0;
+        text-align: left;
+      }
+
+      .hero-stamp {
+        width: 60px;
+        height: 60px;
       }
 
       .portfolio-grid {
@@ -893,45 +968,51 @@ export const prerender = true;
 
   <!-- HERO -->
   <section class="hero">
-    <div class="hero-bg">
-      <img
-        src="https://images.unsplash.com/photo-1565793298595-6a879b1d9492?w=1920&q=80&auto=format"
-        alt="Siebdruck-Werkstatt mit Farben und Drucktisch"
-        loading="eager"
-      />
+    <!-- Registration marks -->
+    <div class="hero-reg-mark hero-reg-mark--tl"></div>
+    <div class="hero-reg-mark hero-reg-mark--tr"></div>
+    <div class="hero-reg-mark hero-reg-mark--bl"></div>
+    <div class="hero-reg-mark hero-reg-mark--br"></div>
+
+    <!-- Halftone dots -->
+    <div class="hero-halftone"></div>
+
+    <!-- Stamp -->
+    <div class="hero-stamp">
+      <span class="hero-stamp-text">Trier-Nord<br/>Seit 2020</span>
     </div>
-    <div class="geo geo--rect-1"></div>
-    <div class="geo geo--rect-2"></div>
-    <div class="geo geo--circle"></div>
-    <div class="geo geo--line"></div>
-    <div class="geo geo--dot-grid"></div>
-    <div class="hero-content">
-      <div class="hero-label">Siebdruck-Werkstatt / Trier-Nord</div>
-      <h1 class="hero-headline">
-        <span class="line">Druck.</span>
-        <span class="line line--accent">Farbe.</span>
-        <span class="line line--outline">Haltung.</span>
-      </h1>
-      <p class="hero-subtitle">
-        Wir drucken keine Massenware.<br />
-        <strong>Wir drucken das, woran du glaubst.</strong>
-      </p>
-      <a href="#prozess" class="btn-primary">Projekt anfragen</a>
-      <div class="hero-stats">
-        <div class="hero-stat">
-          <span class="hero-stat-number">847</span>
-          <span class="hero-stat-label">Drucke in 2025</span>
+
+    <!-- Colored stripes behind the text -->
+    <div class="hero-stripes">
+      <div class="hero-stripe"></div>
+      <div class="hero-stripe"></div>
+      <div class="hero-stripe"></div>
+      <div class="hero-stripe"></div>
+      <div class="hero-stripe"></div>
+    </div>
+
+    <!-- Main title -->
+    <div class="hero-title-wrap">
+      <h1 class="hero-title">Druckluft<span class="reg-symbol">&reg;</span></h1>
+    </div>
+
+    <!-- Subtitle -->
+    <div class="hero-subtitle-wrap">
+      <p class="hero-subtitle">Siebdruck mit Haltung.</p>
+    </div>
+
+    <!-- Scattered stats + CTA -->
+    <div class="hero-bottom">
+      <div class="hero-scattered-stats">
+        <span class="hero-stat-huge">847</span>
+        <div class="hero-stat-side">
+          <span class="hero-stat-side-label">Drucke 2025</span>
         </div>
-        <div class="hero-stat">
-          <span class="hero-stat-number">100%</span>
-          <span class="hero-stat-label">Handarbeit</span>
-        </div>
-        <div class="hero-stat">
-          <span class="hero-stat-number">2020</span>
-          <span class="hero-stat-label">Seit</span>
-        </div>
+        <span class="hero-stat-medium">100% Handarbeit</span>
       </div>
+      <a href="#prozess" class="hero-cta">Projekt anfragen &rarr;</a>
     </div>
+
     <div class="hero-divider"></div>
   </section>
 

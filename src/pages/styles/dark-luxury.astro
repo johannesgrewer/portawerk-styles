@@ -55,7 +55,7 @@ export const prerender = true;
       align-items: center;
       justify-content: space-between;
       padding: 1.75rem clamp(1.5rem, 5vw, 4rem);
-      background: linear-gradient(to bottom, rgba(12,12,12,0.9) 0%, rgba(12,12,12,0.4) 60%, transparent 100%);
+      background: transparent;
       transition: background 0.4s ease;
     }
 
@@ -79,6 +79,7 @@ export const prerender = true;
       display: flex;
       gap: 2.5rem;
       list-style: none;
+      align-items: center;
     }
 
     .nav-links a {
@@ -114,16 +115,15 @@ export const prerender = true;
       text-transform: uppercase;
       color: var(--gold);
       background: none;
-      border: 1px solid var(--gold);
-      padding: 0.6rem 1.5rem;
+      border: none;
+      padding: 0;
       cursor: pointer;
       text-decoration: none;
-      transition: background 0.3s ease, color 0.3s ease;
+      transition: color 0.3s ease;
     }
 
     .nav-cta:hover {
-      background: var(--gold);
-      color: var(--black);
+      color: var(--cream);
     }
 
     /* Mobile menu toggle */
@@ -146,165 +146,228 @@ export const prerender = true;
     }
 
     /* ═══════════════════════════════════════════
-       HERO
+       HERO — Cinematic Letterbox
     ═══════════════════════════════════════════ */
+
+    /* Film grain noise texture */
+    @keyframes grainShift {
+      0%, 100% { transform: translate(0, 0); }
+      10% { transform: translate(-2%, -3%); }
+      20% { transform: translate(3%, 1%); }
+      30% { transform: translate(-1%, 2%); }
+      40% { transform: translate(2%, -2%); }
+      50% { transform: translate(-3%, 3%); }
+      60% { transform: translate(1%, -1%); }
+      70% { transform: translate(-2%, 2%); }
+      80% { transform: translate(3%, -3%); }
+      90% { transform: translate(-1%, 1%); }
+    }
+
+    /* Staggered fade-in animations */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(1.03); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes lineGrow {
+      from { width: 0; }
+      to { width: 3rem; }
+    }
+
     .hero {
       position: relative;
-      min-height: 100vh;
-      min-height: 100dvh;
-      display: flex;
-      align-items: flex-end;
-      overflow: hidden;
-    }
-
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-    }
-
-    .hero-bg img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center 30%;
-      filter: brightness(0.25) saturate(0.7) contrast(1.1);
-      transform: scale(1.05);
-    }
-
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      background:
-        linear-gradient(180deg, rgba(12,12,12,0.6) 0%, rgba(12,12,12,0.1) 40%, rgba(12,12,12,0.5) 70%, rgba(12,12,12,0.95) 100%),
-        linear-gradient(90deg, rgba(12,12,12,0.7) 0%, transparent 60%);
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      max-width: 1200px;
+      padding: clamp(7rem, 14vh, 10rem) clamp(1.5rem, 5vw, 4rem) clamp(3rem, 6vh, 5rem);
+      max-width: 1400px;
       margin: 0 auto;
-      padding: 0 clamp(1.5rem, 5vw, 4rem);
-      padding-bottom: clamp(4rem, 10vh, 8rem);
-      width: 100%;
+      overflow: visible;
     }
 
+    /* Pre-heading label */
     .hero-label {
       font-family: var(--font-body);
-      font-size: 0.65rem;
+      font-size: 0.6rem;
       font-weight: 500;
-      letter-spacing: 0.3em;
+      letter-spacing: 0.35em;
       text-transform: uppercase;
       color: var(--gold);
-      margin-bottom: 2rem;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
+      margin-bottom: 1.25rem;
+      opacity: 0;
+      animation: fadeInUp 0.8s ease forwards;
+      animation-delay: 0.2s;
     }
 
-    .hero-label::before {
-      content: "";
-      display: block;
-      width: 2.5rem;
+    /* Gold horizontal rule */
+    .hero-rule {
+      width: 3rem;
       height: 1px;
       background: var(--gold);
+      border: none;
+      margin: 0 0 1.5rem 0;
+      opacity: 0;
+      animation: lineGrow 0.6s ease forwards, fadeIn 0.6s ease forwards;
+      animation-delay: 0.5s, 0.5s;
     }
 
+    /* Title — sits above and bleeds into the image */
     .hero-title {
       font-family: var(--font-display);
-      font-size: clamp(3.5rem, 8vw, 7rem);
+      font-size: clamp(3rem, 7vw, 5.5rem);
       font-weight: 400;
-      line-height: 1;
+      line-height: 1.05;
       letter-spacing: -0.02em;
       color: var(--cream);
-      margin-bottom: 2rem;
+      margin-bottom: -0.5em;
+      position: relative;
+      z-index: 3;
     }
+
+    .hero-title-line {
+      display: block;
+      opacity: 0;
+      animation: fadeInUp 0.7s ease forwards;
+    }
+
+    .hero-title-line:nth-child(1) { animation-delay: 0.7s; }
+    .hero-title-line:nth-child(2) { animation-delay: 0.95s; }
 
     .hero-title em {
       font-style: italic;
       color: var(--gold);
-      display: block;
+      font-size: 1.15em;
     }
 
-    .hero-meta {
+    /* Cinematic image frame */
+    .hero-frame {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 2.39 / 1;
+      overflow: hidden;
+      cursor: crosshair;
+      opacity: 0;
+      animation: scaleIn 1.2s ease forwards;
+      animation-delay: 1.2s;
+    }
+
+    .hero-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
+      filter: brightness(0.35) saturate(0.7) contrast(1.1);
+    }
+
+    /* Film grain overlay */
+    .hero-frame::after {
+      content: "";
+      position: absolute;
+      inset: -50%;
+      width: 200%;
+      height: 200%;
+      z-index: 2;
+      opacity: 0.06;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-size: 128px 128px;
+      pointer-events: none;
+      animation: grainShift 0.8s steps(4) infinite;
+    }
+
+    /* Subtle gradient overlay on image */
+    .hero-frame::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background:
+        linear-gradient(180deg, rgba(12,12,12,0.5) 0%, transparent 30%, transparent 70%, rgba(12,12,12,0.4) 100%),
+        linear-gradient(90deg, rgba(12,12,12,0.4) 0%, transparent 40%);
+      pointer-events: none;
+    }
+
+    /* Credits row — film-credits style below image */
+    .hero-credits {
       display: flex;
-      gap: 2.5rem;
-      margin-bottom: 2.5rem;
-      flex-wrap: wrap;
+      justify-content: flex-start;
+      gap: clamp(2rem, 5vw, 4rem);
+      padding-top: 1.75rem;
+      opacity: 0;
+      animation: fadeInUp 0.7s ease forwards;
+      animation-delay: 1.6s;
     }
 
-    .hero-meta-item {
-      font-size: 0.85rem;
+    .hero-credit {
+      display: flex;
+      align-items: baseline;
+      gap: 0.6rem;
+    }
+
+    .hero-credit-number {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+      font-weight: 400;
+      color: var(--cream);
+      line-height: 1;
+    }
+
+    .hero-credit-text {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
       font-weight: 300;
       color: var(--muted);
-      line-height: 1.5;
-      padding-left: 1rem;
-      border-left: 1px solid rgba(201,168,76,0.3);
+      letter-spacing: 0.02em;
+      line-height: 1.3;
     }
 
-    .hero-meta-item strong {
-      display: block;
-      font-weight: 500;
-      color: var(--cream);
-      font-size: 0.9rem;
+    .hero-credit-divider {
+      width: 1px;
+      height: 1.5rem;
+      background: rgba(201,168,76,0.25);
+      align-self: center;
     }
 
+    /* CTA text links — understated luxury */
     .hero-actions {
       display: flex;
-      gap: 1rem;
+      gap: 2.5rem;
       align-items: center;
-      flex-wrap: wrap;
+      padding-top: 2rem;
+      opacity: 0;
+      animation: fadeInUp 0.7s ease forwards;
+      animation-delay: 1.9s;
     }
 
-    .btn-gold {
+    .hero-link {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--cream);
+      text-decoration: none;
       display: inline-flex;
       align-items: center;
-      gap: 0.75rem;
-      font-family: var(--font-body);
-      font-size: 0.72rem;
-      font-weight: 500;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--black);
-      background: var(--gold);
-      border: 1px solid var(--gold);
-      padding: 1rem 2.25rem;
-      cursor: pointer;
-      text-decoration: none;
-      transition: background 0.3s ease, transform 0.2s ease;
+      gap: 0.6rem;
+      transition: color 0.3s ease;
     }
 
-    .btn-gold:hover { background: var(--gold-light); transform: translateY(-1px); }
+    .hero-link:hover { color: var(--gold); }
 
-    .btn-gold svg {
+    .hero-link svg {
       width: 14px;
       height: 14px;
       transition: transform 0.3s ease;
     }
 
-    .btn-gold:hover svg { transform: translateX(3px); }
-
-    .btn-ghost {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.75rem;
-      font-family: var(--font-body);
-      font-size: 0.72rem;
-      font-weight: 500;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--cream);
-      background: none;
-      border: 1px solid rgba(245,240,232,0.15);
-      padding: 1rem 2.25rem;
-      cursor: pointer;
-      text-decoration: none;
-      transition: border-color 0.3s ease, color 0.3s ease;
-    }
-
-    .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+    .hero-link:hover svg { transform: translateX(4px); }
 
     /* ═══════════════════════════════════════════
        SECTION SHARED
@@ -761,18 +824,37 @@ export const prerender = true;
     }
 
     @media (max-width: 768px) {
-      .nav-links,
-      .nav-cta { display: none; }
+      .nav-links { display: none; }
 
       .nav-toggle { display: flex; }
 
-      .hero { align-items: flex-end; }
-
-      .hero-title {
-        font-size: clamp(2.75rem, 10vw, 4rem);
+      .hero {
+        padding-top: clamp(6rem, 12vh, 8rem);
       }
 
-      .hero-meta { flex-direction: column; gap: 1.25rem; }
+      .hero-title {
+        font-size: clamp(2.5rem, 10vw, 3.5rem);
+        margin-bottom: -0.3em;
+      }
+
+      .hero-frame {
+        aspect-ratio: 16 / 9;
+      }
+
+      .hero-credits {
+        flex-wrap: wrap;
+        gap: 1.25rem;
+      }
+
+      .hero-credit-divider {
+        display: none;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
 
       .wine-grid {
         grid-template-columns: 1fr;
@@ -810,15 +892,13 @@ export const prerender = true;
     }
 
     @media (max-width: 480px) {
-      .hero-actions {
+      .hero-credits {
         flex-direction: column;
-        align-items: stretch;
+        gap: 1rem;
       }
 
-      .btn-gold,
-      .btn-ghost {
-        justify-content: center;
-        text-align: center;
+      .hero-credit-number {
+        font-size: 1.3rem;
       }
     }
   </style>
@@ -832,7 +912,6 @@ export const prerender = true;
       <li><a href="#weinkarte">Weinkarte</a></li>
       <li><a href="#abende">Abende</a></li>
     </ul>
-    <a href="#abende" class="nav-cta">Reservieren</a>
     <button class="nav-toggle" aria-label="Menu">
       <span></span>
       <span></span>
@@ -840,9 +919,15 @@ export const prerender = true;
     </button>
   </nav>
 
-  <!-- ═══ HERO ═══ -->
+  <!-- ═══ HERO — Cinematic Letterbox ═══ -->
   <section class="hero">
-    <div class="hero-bg">
+    <div class="hero-label">Weinbar & Lounge — Trier Altstadt</div>
+    <hr class="hero-rule" />
+    <h1 class="hero-title">
+      <span class="hero-title-line">Wein ist</span>
+      <span class="hero-title-line"><em>Emotion.</em></span>
+    </h1>
+    <div class="hero-frame">
       <img
         src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=1920&q=80&auto=format"
         alt="Dunkle Weinbar-Atmosphaere mit warmem Licht"
@@ -850,31 +935,31 @@ export const prerender = true;
         fetchpriority="high"
       />
     </div>
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-      <div class="hero-label">Weinbar & Lounge — Trier Altstadt</div>
-      <h1 class="hero-title">Wein ist<em>Emotion.</em></h1>
-      <div class="hero-meta">
-        <div class="hero-meta-item">
-          <strong>200+ Positionen</strong>
-          aus 6 Laendern
-        </div>
-        <div class="hero-meta-item">
-          <strong>Jeden Abend</strong>
-          ab 18 Uhr geoeffnet
-        </div>
-        <div class="hero-meta-item">
-          <strong>Seit 2019</strong>
-          in den Gewoelben der Altstadt
-        </div>
+    <div class="hero-credits">
+      <div class="hero-credit">
+        <span class="hero-credit-number">200+</span>
+        <span class="hero-credit-text">Positionen<br />aus 6 Laendern</span>
       </div>
-      <div class="hero-actions">
-        <a href="#weinkarte" class="btn-gold">
-          Weinkarte entdecken
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-        </a>
-        <a href="#abende" class="btn-ghost">Tisch reservieren</a>
+      <div class="hero-credit-divider"></div>
+      <div class="hero-credit">
+        <span class="hero-credit-number">18h</span>
+        <span class="hero-credit-text">Jeden Abend<br />geoeffnet</span>
       </div>
+      <div class="hero-credit-divider"></div>
+      <div class="hero-credit">
+        <span class="hero-credit-number">2019</span>
+        <span class="hero-credit-text">In den Gewoelben<br />der Altstadt</span>
+      </div>
+    </div>
+    <div class="hero-actions">
+      <a href="#weinkarte" class="hero-link">
+        Weinkarte entdecken
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+      <a href="#abende" class="hero-link">
+        Tisch reservieren
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
     </div>
   </section>
 

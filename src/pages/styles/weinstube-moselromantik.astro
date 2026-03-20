@@ -66,17 +66,29 @@ export const prerender = true;
     }
 
     .nav-logo {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.6rem;
-      font-weight: 600;
-      color: var(--secondary);
       text-decoration: none;
-      letter-spacing: 0.02em;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
       transition: color 0.4s ease;
     }
 
-    .nav.scrolled .nav-logo {
-      color: var(--primary);
+    .nav-logo-name {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: 0.02em;
+    }
+
+    .nav-logo-sub {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 0.65rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      opacity: 0.7;
     }
 
     .nav-links {
@@ -88,18 +100,14 @@ export const prerender = true;
     .nav-links a {
       font-family: 'Lora', Georgia, serif;
       font-size: 0.9rem;
-      color: var(--secondary);
+      color: var(--text);
       text-decoration: none;
       letter-spacing: 0.04em;
       transition: color 0.3s ease;
     }
 
-    .nav.scrolled .nav-links a {
-      color: var(--text);
-    }
-
     .nav-links a:hover {
-      color: var(--accent);
+      color: var(--primary);
     }
 
     .nav-toggle {
@@ -115,176 +123,239 @@ export const prerender = true;
     .nav-toggle span {
       width: 24px;
       height: 2px;
-      background-color: var(--secondary);
+      background-color: var(--text);
       transition: background-color 0.4s ease;
     }
 
-    .nav.scrolled .nav-toggle span {
-      background-color: var(--text);
-    }
-
-    /* ============ HERO ============ */
+    /* ============ HERO — EDITORIAL MAGAZINE SPREAD ============ */
     .hero {
       position: relative;
       min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: grid;
+      grid-template-columns: 40% 60%;
+      background-color: var(--background);
       overflow: hidden;
     }
 
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-    }
-
-    .hero-bg img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center 40%;
-    }
-
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        to bottom,
-        rgba(44, 24, 16, 0.25) 0%,
-        rgba(114, 47, 55, 0.4) 40%,
-        rgba(44, 24, 16, 0.7) 100%
-      );
-      z-index: 1;
-    }
-
-    .hero-content {
+    /* Left column — text */
+    .hero-text {
       position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 4rem 6rem 4rem;
       z-index: 2;
-      text-align: center;
-      max-width: 800px;
-      padding: 2rem;
     }
 
-    .hero-vine-ornament {
-      display: block;
-      color: var(--accent);
+    /* Watermark "1968" behind text */
+    .hero-watermark {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 2.2rem;
-      margin-bottom: 1.5rem;
-      opacity: 0.7;
-      letter-spacing: 0.3em;
+      font-size: 18rem;
+      font-weight: 700;
+      color: var(--primary);
+      opacity: 0.04;
+      pointer-events: none;
+      z-index: 0;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      user-select: none;
+    }
+
+    .hero-label {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--primary);
+      font-weight: 600;
+      margin-bottom: 2rem;
+      position: relative;
+      z-index: 1;
     }
 
     .hero-title {
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: clamp(2.8rem, 6vw, 4.8rem);
+      font-size: clamp(2.4rem, 4.5vw, 3.8rem);
       font-weight: 400;
-      font-style: italic;
-      color: #fff;
+      color: var(--text);
       line-height: 1.15;
-      margin-bottom: 1.8rem;
+      margin-bottom: 2rem;
       letter-spacing: -0.01em;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      font-size: 1.08em;
+    }
+
+    /* Ornamental divider */
+    .hero-divider {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-divider::before,
+    .hero-divider::after {
+      content: '';
+      flex: 0 0 40px;
+      height: 1px;
+      background-color: var(--accent);
+      opacity: 0.5;
+    }
+
+    .hero-divider::after {
+      flex: 1;
+    }
+
+    .hero-divider-ornament {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--accent);
+      opacity: 0.6;
+    }
+
+    .hero-divider-ornament svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+
+    .hero-divider-diamond {
+      width: 6px;
+      height: 6px;
+      background-color: var(--accent);
+      transform: rotate(45deg);
+      flex-shrink: 0;
+      opacity: 0.6;
     }
 
     .hero-meta {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1rem;
-      color: var(--accent);
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      margin-bottom: 0.6rem;
-      font-weight: 500;
-    }
-
-    .hero-hours {
       font-family: 'Lora', Georgia, serif;
-      font-size: 0.95rem;
-      color: rgba(245, 237, 224, 0.75);
+      font-size: 0.9rem;
+      color: var(--text);
+      opacity: 0.6;
+      line-height: 1.8;
       margin-bottom: 2.5rem;
-      font-weight: 400;
-      font-style: italic;
+      position: relative;
+      z-index: 1;
     }
 
-    .hero-cta-group {
+    .hero-meta span {
+      opacity: 0.4;
+      margin: 0 0.3em;
+    }
+
+    .hero-links {
       display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
+      gap: 2rem;
+      position: relative;
+      z-index: 1;
     }
 
-    .btn {
+    .hero-link {
       font-family: 'Cormorant Garamond', Georgia, serif;
       font-size: 1rem;
       font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 0.9rem 2.2rem;
-      border: none;
-      cursor: pointer;
+      letter-spacing: 0.06em;
+      color: var(--primary);
       text-decoration: none;
-      transition: all 0.3s ease;
-      display: inline-block;
+      position: relative;
+      padding-bottom: 2px;
     }
 
-    .btn-primary {
-      background-color: var(--primary);
-      color: #fff;
-      border: 2px solid var(--primary);
-    }
-
-    .btn-primary:hover {
-      background-color: var(--primary-dark);
-      border-color: var(--primary-dark);
-    }
-
-    .btn-outline {
-      background-color: transparent;
-      color: var(--secondary);
-      border: 2px solid rgba(245, 237, 224, 0.5);
-    }
-
-    .btn-outline:hover {
-      background-color: rgba(245, 237, 224, 0.1);
-      border-color: var(--secondary);
-    }
-
-    .hero-border-top,
-    .hero-border-bottom {
+    .hero-link::after {
+      content: '';
       position: absolute;
-      left: 2rem;
-      right: 2rem;
+      left: 0;
+      bottom: 0;
+      width: 0;
       height: 1px;
-      background: linear-gradient(to right, transparent, var(--accent), transparent);
-      z-index: 2;
-      opacity: 0.3;
+      background-color: var(--primary);
+      transition: width 0.35s ease;
     }
 
-    .hero-border-top {
-      top: 5rem;
+    .hero-link:hover::after {
+      width: 100%;
     }
 
-    .hero-border-bottom {
-      bottom: 3.5rem;
+    .hero-link-arrow {
+      display: inline-block;
+      transition: transform 0.3s ease;
+      margin-left: 0.3em;
     }
 
-    .hero-scroll-hint {
+    .hero-link:hover .hero-link-arrow {
+      transform: translateX(3px);
+    }
+
+    /* Right column — photo */
+    .hero-photo {
+      position: relative;
+      padding: 3rem 3rem 3rem 0;
+      display: flex;
+      align-items: stretch;
+    }
+
+    .hero-photo-frame {
+      position: relative;
+      flex: 1;
+      border: 6px solid var(--secondary);
+      box-shadow: 0 8px 40px rgba(44, 24, 16, 0.12);
+      overflow: hidden;
+    }
+
+    .hero-photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
+      display: block;
+      filter: sepia(0.12) saturate(1.05) brightness(0.97);
+    }
+
+    /* Warm color overlay on photo */
+    .hero-photo-frame::after {
+      content: '';
       position: absolute;
-      bottom: 1.2rem;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 2;
-      color: rgba(245, 237, 224, 0.4);
-      font-size: 0.72rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      animation: scrollBounce 2s ease-in-out infinite;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(139, 105, 20, 0.04) 0%,
+        rgba(44, 24, 16, 0.08) 100%
+      );
+      pointer-events: none;
     }
 
-    @keyframes scrollBounce {
-      0%, 100% { transform: translateX(-50%) translateY(0); }
-      50% { transform: translateX(-50%) translateY(6px); }
+    /* Overlaid season card on photo */
+    .hero-season-card {
+      position: absolute;
+      bottom: 4.5rem;
+      right: 1.5rem;
+      background-color: rgba(245, 237, 224, 0.94);
+      backdrop-filter: blur(6px);
+      padding: 0.7rem 1.2rem;
+      z-index: 3;
+      box-shadow: 0 4px 16px rgba(44, 24, 16, 0.12);
+    }
+
+    .hero-season-card p {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--primary);
+      font-weight: 600;
     }
 
     /* ============ SECTIONS GENERAL ============ */
@@ -746,21 +817,58 @@ export const prerender = true;
         padding: 4rem 1.5rem;
       }
 
-      .hero-cta-group {
-        flex-direction: column;
+      .hero {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+
+      .hero-photo {
+        order: -1;
+        padding: 1rem 1rem 0 1rem;
+        max-height: 55vh;
+      }
+
+      .hero-photo-frame {
+        border-width: 4px;
+      }
+
+      .hero-text {
+        padding: 2.5rem 1.5rem 3rem 1.5rem;
+        text-align: center;
         align-items: center;
       }
 
-      .btn {
-        width: 100%;
-        max-width: 280px;
+      .hero-watermark {
+        font-size: 10rem;
+      }
+
+      .hero-title {
+        font-size: clamp(2rem, 7vw, 2.8rem);
+      }
+
+      .hero-divider {
+        justify-content: center;
+      }
+
+      .hero-divider::before {
+        flex: 0 0 30px;
+      }
+
+      .hero-divider::after {
+        flex: 0 0 30px;
+      }
+
+      .hero-meta {
         text-align: center;
       }
 
-      .hero-border-top,
-      .hero-border-bottom {
-        left: 1rem;
-        right: 1rem;
+      .hero-links {
+        justify-content: center;
+      }
+
+      .hero-season-card {
+        bottom: 1.5rem;
+        right: 0.5rem;
       }
 
       .familie-quote {
@@ -776,8 +884,11 @@ export const prerender = true;
 
 <body>
   <!-- Navigation -->
-  <nav class="nav" id="mainNav">
-    <a href="#" class="nav-logo">Rebstock</a>
+  <nav class="nav scrolled" id="mainNav">
+    <a href="#" class="nav-logo">
+      <span class="nav-logo-name">Rebstock</span>
+      <span class="nav-logo-sub">Strau&szlig;wirtschaft</span>
+    </a>
     <ul class="nav-links" id="navLinks">
       <li><a href="#karte">Karte</a></li>
       <li><a href="#familie">Die Familie</a></li>
@@ -789,29 +900,41 @@ export const prerender = true;
     </button>
   </nav>
 
-  <!-- Hero -->
+  <!-- Hero — Editorial Magazine Spread -->
   <section class="hero">
-    <div class="hero-bg">
-      <img
-        src="https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?w=1920&q=80&auto=format"
-        alt="Weinberge an der Mosel im warmen Abendlicht"
-        loading="eager"
-      />
-    </div>
-    <div class="hero-overlay"></div>
-    <div class="hero-border-top"></div>
-    <div class="hero-content">
-      <span class="hero-vine-ornament">&mdash;&nbsp;&nbsp;&loz;&nbsp;&nbsp;&mdash;</span>
-      <h1 class="hero-title">Wo die Mosel<br />den Wein k&uuml;sst.</h1>
-      <p class="hero-meta">Strau&szlig;wirtschaft Rebstock &middot; Longuich &middot; Seit 1968</p>
-      <p class="hero-hours">Ge&ouml;ffnet M&auml;rz bis Oktober &middot; Mi&ndash;So ab 16 Uhr</p>
-      <div class="hero-cta-group">
-        <a href="#karte" class="btn btn-primary">Weinkarte</a>
-        <a href="#familie" class="btn btn-outline">Anfahrt</a>
+    <!-- Left: Text Column -->
+    <div class="hero-text">
+      <div class="hero-watermark">1968</div>
+      <p class="hero-label">Strau&szlig;wirtschaft &middot; Longuich an der Mosel</p>
+      <h1 class="hero-title">Wo die Mosel<br />den Wein <em>k&uuml;sst.</em></h1>
+      <div class="hero-divider">
+        <span class="hero-divider-ornament">
+          <svg viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><path d="M9 2C9 2 7 5.5 4.5 7C2 8.5 1 9 1 9s1 .5 3.5 2C7 12.5 9 16 9 16s2-3.5 4.5-5C16 9.5 17 9 17 9s-1-.5-3.5-2C11 5.5 9 2 9 2z" fill-opacity="0.5"/></svg>
+        </span>
+        <span class="hero-divider-diamond"></span>
+        <span class="hero-divider-ornament">
+          <svg viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><path d="M9 2C9 2 7 5.5 4.5 7C2 8.5 1 9 1 9s1 .5 3.5 2C7 12.5 9 16 9 16s2-3.5 4.5-5C16 9.5 17 9 17 9s-1-.5-3.5-2C11 5.5 9 2 9 2z" fill-opacity="0.5"/></svg>
+        </span>
+      </div>
+      <p class="hero-meta">Familie Schommer <span>&middot;</span> Seit 1968 <span>&middot;</span> Mi&ndash;So ab 16 Uhr <span>&middot;</span> M&auml;rz bis Oktober</p>
+      <div class="hero-links">
+        <a href="#karte" class="hero-link">Weinkarte <span class="hero-link-arrow">&rarr;</span></a>
+        <a href="#familie" class="hero-link">Anfahrt <span class="hero-link-arrow">&rarr;</span></a>
       </div>
     </div>
-    <div class="hero-border-bottom"></div>
-    <div class="hero-scroll-hint">&darr;</div>
+    <!-- Right: Photo Column -->
+    <div class="hero-photo">
+      <div class="hero-photo-frame">
+        <img
+          src="https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?w=1000&q=80&auto=format"
+          alt="Weingl&auml;ser und Trauben im warmen Licht"
+          loading="eager"
+        />
+      </div>
+      <div class="hero-season-card">
+        <p>Ge&ouml;ffnet &middot; M&auml;rz bis Oktober</p>
+      </div>
+    </div>
   </section>
 
   <!-- Saisonale Karte -->
@@ -987,13 +1110,13 @@ export const prerender = true;
   </div>
 
   <script>
-    // Navbar scroll effect
+    // Navbar scroll effect — shadow on scroll
     const nav = document.getElementById('mainNav');
     window.addEventListener('scroll', () => {
       if (window.scrollY > 60) {
         nav.classList.add('scrolled');
       } else {
-        nav.classList.remove('scrolled');
+        nav.classList.add('scrolled');
       }
     });
 
