@@ -1,12 +1,12 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg: #0A0A0A;
-  --color-surface: #141414;
-  --color-surface-hover: #1A1A1A;
-  --color-border: #2A2A2A;
-  --color-text: #F5F5F5;
-  --color-text-muted: #888888;
+  --color-bg: #FDFAF6;
+  --color-surface: #F0EBE3;
+  --color-surface-hover: #E8E2D8;
+  --color-border: #DDD7CE;
+  --color-text: #1B1B1B;
+  --color-text-muted: #6B6360;
   --color-accent: #0E4D52;
   --color-accent-light: #1A7A82;
   --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
@@ -32,7 +32,7 @@ body {
 
 ::selection {
   background: var(--color-accent);
-  color: white;
+  color: #FDFAF6;
 }
 
 /* Scrollbar */
