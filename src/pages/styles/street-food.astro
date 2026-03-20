@@ -8,7 +8,7 @@ export const prerender = true;
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
   <title>Feuertopf — Ramen & Bowls | Viehmarktplatz Trier</title>
-  <meta name="description" content="Feuertopf — Ramen & Bowls am Viehmarktplatz in Trier. Heiß. Frisch. Ehrlich." />
+  <meta name="description" content="Feuertopf — Ramen & Bowls am Viehmarktplatz in Trier. Minh & Lisa kochen mit Herz, Dampf und 18-Stunden-Brühe." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet" />
@@ -29,7 +29,7 @@ export const prerender = true;
       font-family: 'Nunito', sans-serif;
       color: #2C1810;
       background-color: #FFF8E7;
-      line-height: 1.6;
+      line-height: 1.7;
       overflow-x: hidden;
     }
 
@@ -44,7 +44,6 @@ export const prerender = true;
       color: inherit;
     }
 
-    /* ===== TYPOGRAPHY ===== */
     h1, h2, h3, h4 {
       font-family: 'Fredoka', sans-serif;
       line-height: 1.2;
@@ -60,7 +59,7 @@ export const prerender = true;
       background: rgba(255, 248, 231, 0.92);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
-      border-bottom: 3px solid #E85D26;
+      border-bottom: 3px dashed #E85D26;
       padding: 0.75rem 1.5rem;
       display: flex;
       align-items: center;
@@ -77,7 +76,7 @@ export const prerender = true;
       gap: 0.5rem;
     }
 
-    .navbar-logo span {
+    .navbar-logo-fire {
       font-size: 1.6rem;
     }
 
@@ -92,8 +91,8 @@ export const prerender = true;
       font-weight: 500;
       font-size: 1rem;
       color: #2C1810;
-      padding: 0.3rem 0.6rem;
-      border-radius: 8px;
+      padding: 0.35rem 0.8rem;
+      border-radius: 50px;
       transition: background 0.2s, color 0.2s;
     }
 
@@ -140,9 +139,10 @@ export const prerender = true;
       position: absolute;
       inset: 0;
       background: linear-gradient(
-        135deg,
-        rgba(232, 93, 38, 0.85) 0%,
-        rgba(44, 24, 16, 0.7) 100%
+        160deg,
+        rgba(44, 24, 16, 0.82) 0%,
+        rgba(232, 93, 38, 0.6) 50%,
+        rgba(44, 24, 16, 0.75) 100%
       );
     }
 
@@ -150,7 +150,42 @@ export const prerender = true;
       position: relative;
       z-index: 1;
       text-align: center;
-      max-width: 700px;
+      max-width: 720px;
+    }
+
+    .hero-names {
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 500;
+      font-size: 1.05rem;
+      color: rgba(255, 248, 231, 0.85);
+      margin-bottom: 1.2rem;
+      letter-spacing: 0.5px;
+    }
+
+    .hero-names span {
+      display: inline-block;
+      width: 5px;
+      height: 5px;
+      background: #FFC857;
+      border-radius: 50%;
+      margin: 0 0.6rem;
+      vertical-align: middle;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.4rem, 6vw, 4.2rem);
+      color: #FFF8E7;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+    }
+
+    .hero-wavy-underline {
+      display: block;
+      width: 220px;
+      height: 14px;
+      margin: 0.3rem auto 1.8rem;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 220 16'%3E%3Cpath d='M2 10 Q28 2 55 12 Q82 22 110 8 Q138 -4 165 12 Q192 22 218 8' stroke='%23FFC857' stroke-width='4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center;
+      background-size: contain;
     }
 
     .hero-badge {
@@ -159,36 +194,11 @@ export const prerender = true;
       color: #FFF8E7;
       font-family: 'Fredoka', sans-serif;
       font-weight: 600;
-      font-size: 0.9rem;
-      padding: 0.4rem 1.2rem;
+      font-size: 0.88rem;
+      padding: 0.5rem 1.4rem;
       border-radius: 50px;
-      margin-bottom: 1.5rem;
-      letter-spacing: 0.5px;
-    }
-
-    .hero h1 {
-      font-size: clamp(2.4rem, 6vw, 4rem);
-      color: #FFF8E7;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-    }
-
-    .hero-underline {
-      display: block;
-      width: 180px;
-      height: 12px;
-      margin: 0 auto 1.5rem;
-      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 15'%3E%3Cpath d='M2 8 Q50 2 100 10 Q150 18 198 6' stroke='%23FFC857' stroke-width='4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center;
-      background-size: contain;
-    }
-
-    .hero p {
-      font-size: 1.15rem;
-      color: rgba(255, 248, 231, 0.9);
       margin-bottom: 2rem;
-      max-width: 500px;
-      margin-left: auto;
-      margin-right: auto;
+      border: 2px dashed rgba(255, 248, 231, 0.3);
     }
 
     .hero-buttons {
@@ -214,7 +224,7 @@ export const prerender = true;
 
     .btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
     }
 
     .btn-primary {
@@ -225,7 +235,7 @@ export const prerender = true;
     .btn-secondary {
       background: transparent;
       color: #FFF8E7;
-      border: 2px solid #FFF8E7;
+      border: 2.5px solid #FFF8E7;
     }
 
     .btn-secondary:hover {
@@ -233,28 +243,20 @@ export const prerender = true;
       color: #2C1810;
     }
 
-    .btn-form {
-      background: #E85D26;
-      color: #FFF8E7;
-      width: 100%;
-      justify-content: center;
-      font-size: 1.1rem;
-      padding: 1rem;
-    }
-
-    .btn-form:hover {
-      background: #d04e1c;
-    }
-
-    /* ===== SECTION SHARED ===== */
+    /* ===== SHARED SECTION ===== */
     .section {
       padding: 5rem 1.5rem;
+    }
+
+    .section-inner {
+      max-width: 1000px;
+      margin: 0 auto;
     }
 
     .section-title {
       font-size: clamp(1.8rem, 4vw, 2.6rem);
       text-align: center;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.3rem;
       color: #2C1810;
     }
 
@@ -263,7 +265,7 @@ export const prerender = true;
       font-size: 1.05rem;
       color: #5a4a3f;
       margin-bottom: 3rem;
-      max-width: 550px;
+      max-width: 520px;
       margin-left: auto;
       margin-right: auto;
     }
@@ -277,87 +279,128 @@ export const prerender = true;
       background-size: contain;
     }
 
-    /* ===== SPEISEKARTE ===== */
-    .menu-section {
+    /* ===== ZUTATEN SECTION ===== */
+    .zutaten-section {
       background: #FFF8E7;
     }
 
-    .menu-grid {
+    .ingredient-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(2, 1fr);
       gap: 1.5rem;
-      max-width: 1000px;
-      margin: 0 auto;
+      margin-bottom: 3.5rem;
     }
 
-    .menu-card {
+    .ingredient-card {
       background: #ffffff;
-      border-radius: 20px;
-      padding: 1.8rem;
-      border: 2px solid transparent;
-      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
-      position: relative;
+      border-radius: 24px;
       overflow: hidden;
+      border: 2px solid transparent;
+      transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
     }
 
-    .menu-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, #E85D26, #FFC857);
-      border-radius: 20px 20px 0 0;
-    }
-
-    .menu-card:hover {
+    .ingredient-card:hover {
       transform: translateY(-4px);
       border-color: #E85D26;
-      box-shadow: 0 8px 30px rgba(232, 93, 38, 0.12);
+      box-shadow: 0 12px 36px rgba(232, 93, 38, 0.1);
     }
 
-    .menu-card-icon {
-      font-size: 2.2rem;
-      margin-bottom: 0.75rem;
+    .ingredient-card-img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
     }
 
-    .menu-card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 0.5rem;
+    .ingredient-card-body {
+      padding: 1.5rem;
     }
 
-    .menu-card h3 {
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: #2C1810;
-    }
-
-    .menu-card-price {
+    .ingredient-card-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background: #E85D26;
+      color: #FFF8E7;
       font-family: 'Fredoka', sans-serif;
       font-weight: 700;
-      font-size: 1.2rem;
-      color: #E85D26;
-      white-space: nowrap;
+      font-size: 0.85rem;
+      border-radius: 50%;
+      margin-bottom: 0.6rem;
     }
 
-    .menu-card p {
+    .ingredient-card h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #2C1810;
+      margin-bottom: 0.4rem;
+    }
+
+    .ingredient-card p {
       font-size: 0.95rem;
       color: #5a4a3f;
-      line-height: 1.5;
+      line-height: 1.6;
     }
 
-    .menu-card-tag {
+    /* ===== KARTE (Speisekarte) ===== */
+    .menu-transition {
+      text-align: center;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #2C1810;
+      margin-bottom: 1.5rem;
+    }
+
+    .menu-transition span {
+      color: #E85D26;
+    }
+
+    .menu-list {
+      max-width: 520px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 1.8rem 2rem;
+      border: 2.5px dashed #E85D26;
+    }
+
+    .menu-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.8rem 0;
+      border-bottom: 1px dotted rgba(44, 24, 16, 0.15);
+    }
+
+    .menu-item:last-child {
+      border-bottom: none;
+    }
+
+    .menu-item-name {
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 600;
+      font-size: 1.05rem;
+      color: #2C1810;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .menu-item-emoji {
+      font-size: 1.2rem;
+    }
+
+    .menu-item-tag {
       display: inline-block;
-      margin-top: 0.75rem;
-      padding: 0.2rem 0.7rem;
-      border-radius: 50px;
-      font-size: 0.78rem;
+      font-size: 0.65rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.5px;
+      padding: 0.15rem 0.5rem;
+      border-radius: 50px;
+      vertical-align: middle;
     }
 
     .tag-vegan {
@@ -370,212 +413,161 @@ export const prerender = true;
       color: #E85D26;
     }
 
-    .tag-classic {
-      background: #fff3cd;
-      color: #856404;
+    .menu-item-price {
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #E85D26;
+      white-space: nowrap;
     }
 
-    .tag-drink {
-      background: #d1ecf1;
-      color: #0c5460;
-    }
-
-    /* ===== STANDORT & KONTAKT ===== */
-    .contact-section {
+    /* ===== STANDORTE SECTION ===== */
+    .standorte-section {
       background: #2C1810;
       color: #FFF8E7;
       position: relative;
       overflow: hidden;
     }
 
-    .contact-section::before {
+    .standorte-section::before {
       content: '';
       position: absolute;
-      top: -60px;
+      top: -50px;
       left: 0;
       right: 0;
-      height: 80px;
+      height: 70px;
       background: #FFF8E7;
       border-radius: 0 0 50% 50%;
     }
 
-    .contact-section .section-title {
+    .standorte-section .section-title {
       color: #FFF8E7;
     }
 
-    .contact-section .section-subtitle {
+    .standorte-section .section-subtitle {
       color: rgba(255, 248, 231, 0.7);
     }
 
-    .contact-section .squiggle {
+    .standorte-section .squiggle {
       background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 12'%3E%3Cpath d='M2 6 Q15 2 30 8 Q45 14 60 6 Q75 -2 90 8 Q105 14 118 6' stroke='%23FFC857' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center;
       background-size: contain;
     }
 
-    .contact-grid {
+    .schedule-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-      max-width: 1000px;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+
+    .schedule-card {
+      background: rgba(255, 248, 231, 0.06);
+      border-radius: 20px;
+      padding: 1.3rem 1rem;
+      text-align: center;
+      border: 2px solid rgba(255, 248, 231, 0.08);
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .schedule-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(255, 200, 87, 0.3);
+    }
+
+    .schedule-card-day {
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: #FFC857;
+      margin-bottom: 0.6rem;
+    }
+
+    .schedule-card-pin {
+      font-size: 1.4rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .schedule-card-location {
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: #FFF8E7;
+      margin-bottom: 0.3rem;
+    }
+
+    .schedule-card-time {
+      font-size: 0.82rem;
+      color: rgba(255, 248, 231, 0.6);
+    }
+
+    .schedule-card-badge {
+      display: inline-block;
+      margin-top: 0.5rem;
+      background: #E85D26;
+      color: #FFF8E7;
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 600;
+      font-size: 0.7rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 50px;
+      letter-spacing: 0.3px;
+    }
+
+    .standort-color-di { border-top: 3px solid #E85D26; }
+    .standort-color-mi { border-top: 3px solid #FFC857; }
+    .standort-color-do { border-top: 3px solid #2D6A4F; }
+    .standort-color-fr { border-top: 3px solid #E85D26; }
+    .standort-color-sa { border-top: 3px solid #FFC857; }
+
+    /* ===== CONTACT FOOTER AREA ===== */
+    .standort-contact {
+      text-align: center;
+      max-width: 500px;
       margin: 0 auto;
     }
 
-    .contact-info {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
-
-    .info-block {
-      background: rgba(255, 248, 231, 0.08);
-      border-radius: 16px;
-      padding: 1.5rem;
-      border: 1px solid rgba(255, 248, 231, 0.1);
-    }
-
-    .info-block-icon {
-      font-size: 1.5rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .info-block h3 {
+    .standort-instagram {
+      font-family: 'Fredoka', sans-serif;
       font-size: 1.1rem;
       font-weight: 600;
-      margin-bottom: 0.4rem;
-      color: #FFC857;
+      color: rgba(255, 248, 231, 0.85);
+      margin-bottom: 0.6rem;
     }
 
-    .info-block p {
-      font-size: 0.95rem;
-      color: rgba(255, 248, 231, 0.8);
-      line-height: 1.6;
-    }
-
-    .info-block a {
+    .standort-instagram a {
       color: #FFC857;
       text-decoration: underline;
       text-decoration-style: wavy;
-      text-underline-offset: 3px;
+      text-underline-offset: 4px;
       transition: color 0.2s;
     }
 
-    .info-block a:hover {
+    .standort-instagram a:hover {
       color: #E85D26;
     }
 
-    .instagram-cta {
-      background: linear-gradient(135deg, #E85D26, #d04e1c);
-      border-radius: 16px;
-      padding: 1.5rem;
-      text-align: center;
-    }
-
-    .instagram-cta .insta-icon {
-      font-size: 2rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .instagram-cta h3 {
-      font-size: 1.15rem;
-      color: #FFF8E7;
-      margin-bottom: 0.3rem;
-    }
-
-    .instagram-cta p {
-      font-size: 0.9rem;
-      color: rgba(255, 248, 231, 0.85);
-      margin-bottom: 0.75rem;
-    }
-
-    .instagram-cta a {
-      font-family: 'Fredoka', sans-serif;
-      font-weight: 600;
-      font-size: 1.05rem;
-      color: #FFC857;
-    }
-
-    /* ===== CATERING FORM ===== */
-    .catering-form {
-      background: rgba(255, 248, 231, 0.06);
-      border-radius: 20px;
-      padding: 2rem;
-      border: 1px solid rgba(255, 248, 231, 0.1);
-    }
-
-    .catering-form h3 {
-      font-family: 'Fredoka', sans-serif;
-      font-size: 1.3rem;
-      color: #FFC857;
-      margin-bottom: 0.3rem;
-    }
-
-    .catering-form > p {
-      font-size: 0.9rem;
-      color: rgba(255, 248, 231, 0.65);
-      margin-bottom: 1.5rem;
-    }
-
-    .form-group {
-      margin-bottom: 1rem;
-    }
-
-    .form-group label {
-      display: block;
-      font-family: 'Fredoka', sans-serif;
-      font-weight: 500;
-      font-size: 0.9rem;
-      margin-bottom: 0.3rem;
-      color: rgba(255, 248, 231, 0.85);
-    }
-
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      width: 100%;
-      padding: 0.7rem 1rem;
-      border-radius: 12px;
-      border: 2px solid rgba(255, 248, 231, 0.15);
-      background: rgba(255, 248, 231, 0.05);
-      color: #FFF8E7;
-      font-family: 'Nunito', sans-serif;
+    .standort-phone {
       font-size: 0.95rem;
-      transition: border-color 0.2s;
+      color: rgba(255, 248, 231, 0.6);
+      margin-bottom: 2rem;
     }
 
-    .form-group input::placeholder,
-    .form-group textarea::placeholder {
-      color: rgba(255, 248, 231, 0.35);
+    .standort-phone a {
+      color: rgba(255, 248, 231, 0.8);
+      text-decoration: underline;
+      text-underline-offset: 3px;
     }
 
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
-      outline: none;
-      border-color: #E85D26;
-    }
-
-    .form-group select {
-      appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23FFF8E7' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 1rem center;
-      cursor: pointer;
-    }
-
-    .form-group select option {
-      background: #2C1810;
-      color: #FFF8E7;
-    }
-
-    .form-group textarea {
-      resize: vertical;
-      min-height: 90px;
-    }
-
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
+    .standort-signoff {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #FFC857;
+      padding: 1.2rem 2rem;
+      background: rgba(255, 200, 87, 0.08);
+      border-radius: 50px;
+      display: inline-block;
+      border: 2px dashed rgba(255, 200, 87, 0.2);
     }
 
     /* ===== FOOTER ===== */
@@ -592,18 +584,6 @@ export const prerender = true;
       font-weight: 600;
     }
 
-    /* ===== DEKO ELEMENTE ===== */
-    .deko-dots {
-      position: absolute;
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      background: radial-gradient(circle, #FFC857 2px, transparent 2px);
-      background-size: 16px 16px;
-      opacity: 0.15;
-      pointer-events: none;
-    }
-
     /* ===== RESPONSIVE ===== */
     @media (max-width: 768px) {
       .navbar-links {
@@ -616,7 +596,7 @@ export const prerender = true;
         flex-direction: column;
         padding: 1rem 1.5rem;
         gap: 0.5rem;
-        border-bottom: 3px solid #E85D26;
+        border-bottom: 3px dashed #E85D26;
       }
 
       .navbar-links.open {
@@ -642,20 +622,27 @@ export const prerender = true;
         justify-content: center;
       }
 
-      .menu-grid {
+      .ingredient-grid {
         grid-template-columns: 1fr;
       }
 
-      .contact-grid {
-        grid-template-columns: 1fr;
+      .schedule-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.8rem;
       }
 
-      .form-row {
-        grid-template-columns: 1fr;
+      .schedule-card:last-child {
+        grid-column: 1 / -1;
+        max-width: 280px;
+        margin: 0 auto;
       }
 
       .section {
         padding: 3.5rem 1.25rem;
+      }
+
+      .menu-list {
+        padding: 1.4rem 1.2rem;
       }
     }
 
@@ -665,7 +652,23 @@ export const prerender = true;
       }
 
       .hero {
-        min-height: 90vh;
+        min-height: 92vh;
+      }
+
+      .hero-names {
+        font-size: 0.9rem;
+      }
+
+      .schedule-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .schedule-card:last-child {
+        max-width: 100%;
+      }
+
+      .ingredient-card-img {
+        height: 150px;
       }
     }
   </style>
@@ -676,15 +679,14 @@ export const prerender = true;
   <!-- NAVBAR -->
   <nav class="navbar">
     <a href="#" class="navbar-logo">
-      <span>🍜</span> Feuertopf
+      <span class="navbar-logo-fire">&#x1F525;</span> Feuertopf
     </a>
     <button class="mobile-toggle" aria-label="Menu" onclick="document.querySelector('.navbar-links').classList.toggle('open')">
-      ☰
+      &#9776;
     </button>
     <ul class="navbar-links">
-      <li><a href="#speisekarte" onclick="this.closest('.navbar-links').classList.remove('open')">Speisekarte</a></li>
-      <li><a href="#standort" onclick="this.closest('.navbar-links').classList.remove('open')">Standort</a></li>
-      <li><a href="#kontakt" onclick="this.closest('.navbar-links').classList.remove('open')">Catering</a></li>
+      <li><a href="#zutaten" onclick="this.closest('.navbar-links').classList.remove('open')">Zutaten</a></li>
+      <li><a href="#standorte" onclick="this.closest('.navbar-links').classList.remove('open')">Standorte</a></li>
     </ul>
   </nav>
 
@@ -693,167 +695,194 @@ export const prerender = true;
     <div class="hero-bg">
       <img
         src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=1920&q=80&auto=format"
-        alt="Dampfende Ramen-Schale mit frischen Zutaten"
+        alt="Dampfende Ramen-Schale mit frischen Toppings"
         loading="eager"
       />
     </div>
     <div class="hero-content">
-      <div class="hero-badge">Ramen & Bowls aus Trier</div>
+      <div class="hero-names">
+        Minh &amp; Lisa <span></span> Viehmarktplatz Trier <span></span> Di&ndash;Sa ab 11:30
+      </div>
       <h1>Ramen, die von Herzen kommt.</h1>
-      <div class="hero-underline"></div>
-      <p>Frische Zutaten, ehrliche Rezepte und Bruehe, die stundenlang koecht. Jeden Tag am Viehmarktplatz.</p>
+      <div class="hero-wavy-underline"></div>
+      <div class="hero-badge">Alles frisch. Alles handgemacht. Jeden Tag.</div>
       <div class="hero-buttons">
-        <a href="#speisekarte" class="btn btn-primary">🍜 Speisekarte</a>
-        <a href="#standort" class="btn btn-secondary">📍 Wo stehen wir?</a>
+        <a href="#zutaten" class="btn btn-primary">Speisekarte</a>
+        <a href="#standorte" class="btn btn-secondary">Wo stehen wir?</a>
       </div>
     </div>
   </section>
 
-  <!-- SPEISEKARTE -->
-  <section class="section menu-section" id="speisekarte">
-    <h2 class="section-title">Unsere Karte</h2>
-    <div class="squiggle"></div>
-    <p class="section-subtitle">Alles frisch zubereitet — von Minh & Lisa, mit Liebe und ordentlich Dampf.</p>
+  <!-- UNSERE ZUTATEN -->
+  <section class="section zutaten-section" id="zutaten">
+    <div class="section-inner">
+      <h2 class="section-title">Woher das Gute kommt</h2>
+      <div class="squiggle"></div>
+      <p class="section-subtitle">Keine Tricks. Keine Abkürzungen. Nur Zutaten, hinter denen wir stehen.</p>
 
-    <div class="menu-grid">
+      <div class="ingredient-grid">
 
-      <div class="menu-card">
-        <div class="menu-card-icon">🍜</div>
-        <div class="menu-card-header">
-          <h3>Tonkotsu Ramen</h3>
-          <span class="menu-card-price">12,50 €</span>
+        <div class="ingredient-card">
+          <img
+            class="ingredient-card-img"
+            src="https://images.unsplash.com/photo-1547592180-85f173990554?w=600&q=80&auto=format"
+            alt="Kochende Brühe mit Gewürzen"
+            loading="lazy"
+          />
+          <div class="ingredient-card-body">
+            <div class="ingredient-card-number">1</div>
+            <h3>Die Brühe</h3>
+            <p>18 Stunden. Schweineknochen, Ingwer, Knoblauch. Wir kochen sie über Nacht, damit du den Unterschied schmeckst.</p>
+          </div>
         </div>
-        <p>18h Schweineknochen-Bruehe, Chashu, Ajitama-Ei, Fruehlingszwiebeln, Nori.</p>
-        <span class="menu-card-tag tag-classic">Klassiker</span>
+
+        <div class="ingredient-card">
+          <img
+            class="ingredient-card-img"
+            src="https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?w=600&q=80&auto=format"
+            alt="Frische Ramen-Nudeln"
+            loading="lazy"
+          />
+          <div class="ingredient-card-body">
+            <div class="ingredient-card-number">2</div>
+            <h3>Die Nudeln</h3>
+            <p>Frisch. Jeden Morgen. Von der Nudelmanufaktur in Ehrang. 3 Minuten Fahrzeit, null Kompromisse.</p>
+          </div>
+        </div>
+
+        <div class="ingredient-card">
+          <img
+            class="ingredient-card-img"
+            src="https://images.unsplash.com/photo-1540420773420-3366772f4999?w=600&q=80&auto=format"
+            alt="Frisches saisonales Gemüse"
+            loading="lazy"
+          />
+          <div class="ingredient-card-body">
+            <div class="ingredient-card-number">3</div>
+            <h3>Das Gemüse</h3>
+            <p>Saisonal vom Markt. Was gerade wächst, landet in der Bowl. Im Winter Kürbis, im Sommer Edamame.</p>
+          </div>
+        </div>
+
+        <div class="ingredient-card">
+          <img
+            class="ingredient-card-img"
+            src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=600&q=80&auto=format"
+            alt="Chiliöl und Gewürze"
+            loading="lazy"
+          />
+          <div class="ingredient-card-body">
+            <div class="ingredient-card-number">4</div>
+            <h3>Die Gewürze</h3>
+            <p>Minhs Mutter schickt das Chiliöl aus Saigon. Ernsthaft.</p>
+          </div>
+        </div>
+
       </div>
 
-      <div class="menu-card">
-        <div class="menu-card-icon">🥬</div>
-        <div class="menu-card-header">
-          <h3>Miso Veggie Bowl</h3>
-          <span class="menu-card-price">11,00 €</span>
-        </div>
-        <p>Cremige Miso-Bruehe, Tofu, Pak Choi, Mais, Sesam, Shiitake.</p>
-        <span class="menu-card-tag tag-vegan">Vegan</span>
-      </div>
+      <!-- Speisekarte -->
+      <div class="menu-transition">Und dann? <span>&#8594;</span> Unsere Karte:</div>
 
-      <div class="menu-card">
-        <div class="menu-card-icon">🌶️</div>
-        <div class="menu-card-header">
-          <h3>Spicy Kimchi Ramen</h3>
-          <span class="menu-card-price">13,00 €</span>
+      <div class="menu-list">
+        <div class="menu-item">
+          <span class="menu-item-name">
+            <span class="menu-item-emoji">&#x1F35C;</span>
+            Tonkotsu Ramen
+          </span>
+          <span class="menu-item-price">12,50&euro;</span>
         </div>
-        <p>Feurige Kimchi-Bruehe, Schweinebauch, fermentiertes Kimchi, Chili-Oel, Ei.</p>
-        <span class="menu-card-tag tag-spicy">Scharf</span>
-      </div>
-
-      <div class="menu-card">
-        <div class="menu-card-icon">🫘</div>
-        <div class="menu-card-header">
-          <h3>Edamame</h3>
-          <span class="menu-card-price">4,50 €</span>
+        <div class="menu-item">
+          <span class="menu-item-name">
+            <span class="menu-item-emoji">&#x1F96C;</span>
+            Miso Veggie Bowl
+            <span class="menu-item-tag tag-vegan">Vegan</span>
+          </span>
+          <span class="menu-item-price">11,00&euro;</span>
         </div>
-        <p>Mit Meersalz und einem Hauch Sesamoel. Der perfekte Snack zum Start.</p>
-        <span class="menu-card-tag tag-vegan">Vegan</span>
-      </div>
-
-      <div class="menu-card">
-        <div class="menu-card-icon">🍵</div>
-        <div class="menu-card-header">
-          <h3>Matcha Limo</h3>
-          <span class="menu-card-price">3,50 €</span>
+        <div class="menu-item">
+          <span class="menu-item-name">
+            <span class="menu-item-emoji">&#x1F336;&#xFE0F;</span>
+            Spicy Kimchi Ramen
+            <span class="menu-item-tag tag-spicy">Scharf</span>
+          </span>
+          <span class="menu-item-price">13,00&euro;</span>
         </div>
-        <p>Haugemachte Limonade mit Matcha, Limette und Minze. Eiskalt serviert.</p>
-        <span class="menu-card-tag tag-drink">Getraenk</span>
+        <div class="menu-item">
+          <span class="menu-item-name">
+            <span class="menu-item-emoji">&#x1FAD8;</span>
+            Edamame
+            <span class="menu-item-tag tag-vegan">Vegan</span>
+          </span>
+          <span class="menu-item-price">4,50&euro;</span>
+        </div>
+        <div class="menu-item">
+          <span class="menu-item-name">
+            <span class="menu-item-emoji">&#x1F375;</span>
+            Matcha Limo
+          </span>
+          <span class="menu-item-price">3,50&euro;</span>
+        </div>
       </div>
 
     </div>
   </section>
 
-  <!-- STANDORT & KONTAKT -->
-  <section class="section contact-section" id="standort">
-    <h2 class="section-title">Hier findest du uns</h2>
-    <div class="squiggle"></div>
-    <p class="section-subtitle">Komm vorbei oder schreib uns — wir freuen uns auf dich!</p>
+  <!-- WO STEHEN WIR -->
+  <section class="section standorte-section" id="standorte">
+    <div class="section-inner">
+      <h2 class="section-title">Diese Woche findest du uns hier</h2>
+      <div class="squiggle"></div>
+      <p class="section-subtitle">Der Truck rollt. Hier sind unsere festen Spots.</p>
 
-    <div class="contact-grid">
+      <div class="schedule-grid">
 
-      <!-- Linke Spalte: Infos -->
-      <div class="contact-info">
-
-        <div class="info-block">
-          <div class="info-block-icon">📍</div>
-          <h3>Standort</h3>
-          <p>Viehmarktplatz, 54290 Trier<br>Direkt neben den Thermenresten</p>
+        <div class="schedule-card standort-color-di">
+          <div class="schedule-card-day">Di</div>
+          <div class="schedule-card-pin">&#x1F4CD;</div>
+          <div class="schedule-card-location">Viehmarktplatz</div>
+          <div class="schedule-card-time">11:30 &ndash; 20:00</div>
         </div>
 
-        <div class="info-block">
-          <div class="info-block-icon">🕐</div>
-          <h3>Oeffnungszeiten</h3>
-          <p>Dienstag — Samstag<br>11:30 — 20:00 Uhr<br><em style="font-size: 0.85rem; opacity: 0.6;">Sonntag & Montag: Ruhetag</em></p>
+        <div class="schedule-card standort-color-mi">
+          <div class="schedule-card-day">Mi</div>
+          <div class="schedule-card-pin">&#x1F393;</div>
+          <div class="schedule-card-location">Uni Campus</div>
+          <div class="schedule-card-time">11:00 &ndash; 15:00</div>
         </div>
 
-        <div class="info-block">
-          <div class="info-block-icon">📞</div>
-          <h3>Kontakt</h3>
-          <p>
-            Telefon: <a href="tel:+4917644556677">0176 — 44 55 66 77</a><br>
-            Minh & Lisa freuen sich auf euch!
-          </p>
+        <div class="schedule-card standort-color-do">
+          <div class="schedule-card-day">Do</div>
+          <div class="schedule-card-pin">&#x1F4CD;</div>
+          <div class="schedule-card-location">Viehmarktplatz</div>
+          <div class="schedule-card-time">11:30 &ndash; 20:00</div>
         </div>
 
-        <div class="instagram-cta">
-          <div class="insta-icon">📸</div>
-          <h3>Folge uns fuer taegliche Standort-Updates!</h3>
-          <p>Stories, Specials & Behind the Scenes</p>
-          <a href="#">@feuertopf.trier</a>
+        <div class="schedule-card standort-color-fr">
+          <div class="schedule-card-day">Fr</div>
+          <div class="schedule-card-pin">&#x1F31F;</div>
+          <div class="schedule-card-location">Viehmarktplatz</div>
+          <div class="schedule-card-time">11:30 &ndash; 21:00</div>
+          <div class="schedule-card-badge">Late Night!</div>
+        </div>
+
+        <div class="schedule-card standort-color-sa">
+          <div class="schedule-card-day">Sa</div>
+          <div class="schedule-card-pin">&#x1F6D2;</div>
+          <div class="schedule-card-location">Wochenmarkt Hauptmarkt</div>
+          <div class="schedule-card-time">10:00 &ndash; 16:00</div>
         </div>
 
       </div>
 
-      <!-- Rechte Spalte: Catering-Formular -->
-      <div id="kontakt">
-        <div class="catering-form">
-          <h3>🎉 Catering-Anfrage</h3>
-          <p>Ramen fuer dein Event? Schreib uns — wir kommen mit dem Truck!</p>
-
-          <form action="#" method="post">
-            <div class="form-row">
-              <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" id="name" name="name" placeholder="Dein Name" required />
-              </div>
-              <div class="form-group">
-                <label for="email">E-Mail</label>
-                <input type="email" id="email" name="email" placeholder="deine@mail.de" required />
-              </div>
-            </div>
-
-            <div class="form-row">
-              <div class="form-group">
-                <label for="event-type">Art des Events</label>
-                <select id="event-type" name="event-type" required>
-                  <option value="" disabled selected>Bitte waehlen</option>
-                  <option value="firmenfeier">Firmenfeier</option>
-                  <option value="geburtstag">Geburtstag</option>
-                  <option value="hochzeit">Hochzeit</option>
-                  <option value="festival">Festival / Markt</option>
-                  <option value="sonstiges">Sonstiges</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="guests">Anzahl Gaeste</label>
-                <input type="number" id="guests" name="guests" placeholder="ca. 50" min="10" />
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="message">Nachricht</label>
-              <textarea id="message" name="message" placeholder="Erzaehl uns von deinem Event..."></textarea>
-            </div>
-
-            <button type="submit" class="btn btn-form">Anfrage absenden 🚀</button>
-          </form>
+      <div class="standort-contact">
+        <div class="standort-instagram">
+          Folg uns auf Instagram für tägliche Updates: <a href="#">@feuertopf.trier</a>
+        </div>
+        <div class="standort-phone">
+          Oder ruf an: <a href="tel:+4917644556677">0176 &mdash; 44 55 66 77</a>
+        </div>
+        <div class="standort-signoff">
+          Bis gleich. Wir haben schon aufgedreht. &#x1F525;
         </div>
       </div>
 
@@ -862,7 +891,7 @@ export const prerender = true;
 
   <!-- FOOTER -->
   <footer class="footer">
-    <p>© 2026 <span>Feuertopf</span> — Ramen & Bowls am Viehmarktplatz, Trier. Heiß. Frisch. Ehrlich.</p>
+    <p>&copy; 2026 <span>Feuertopf</span> &mdash; Ramen &amp; Bowls, Trier. Jeden Tag mit Dampf.</p>
     <p style="margin-top: 0.4rem; font-size: 0.8rem;">Ein Webdesign-Stil von <span>PortaWerk</span></p>
   </footer>
 

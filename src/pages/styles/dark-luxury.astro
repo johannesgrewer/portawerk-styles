@@ -7,7 +7,7 @@ export const prerender = true;
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
-  <title>Maison Noir — Weinbar & Lounge</title>
+  <title>Maison Noir — Weinbar & Lounge, Trier</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
@@ -17,13 +17,14 @@ export const prerender = true;
     :root {
       --gold: #C9A84C;
       --gold-light: #D4B96A;
+      --gold-dim: rgba(201,168,76,0.15);
       --black: #0C0C0C;
       --charcoal: #1A1A1A;
-      --charcoal-light: #252525;
+      --charcoal-light: #222222;
       --cream: #F5F0E8;
       --muted: #8B8178;
-      --font-display: "Playfair Display", Georgia, serif;
-      --font-body: "Inter", system-ui, sans-serif;
+      --font-display: "Playfair Display", Georgia, "Times New Roman", serif;
+      --font-body: "Inter", system-ui, -apple-system, sans-serif;
     }
 
     html {
@@ -31,17 +32,128 @@ export const prerender = true;
       color: var(--cream);
       font-family: var(--font-body);
       -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
       scroll-behavior: smooth;
     }
 
+    body { overflow-x: hidden; }
+
     ::selection { background: var(--gold); color: var(--black); }
 
-    /* ═══ HERO ═══ */
+    img { display: block; max-width: 100%; }
+
+    /* ═══════════════════════════════════════════
+       NAV
+    ═══════════════════════════════════════════ */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.75rem clamp(1.5rem, 5vw, 4rem);
+      background: linear-gradient(to bottom, rgba(12,12,12,0.9) 0%, rgba(12,12,12,0.4) 60%, transparent 100%);
+      transition: background 0.4s ease;
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--cream);
+      text-decoration: none;
+    }
+
+    .nav-logo span {
+      color: var(--gold);
+      font-style: italic;
+      text-transform: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(245,240,232,0.5);
+      text-decoration: none;
+      transition: color 0.3s ease;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--gold);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-cta {
+      font-family: var(--font-body);
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      background: none;
+      border: 1px solid var(--gold);
+      padding: 0.6rem 1.5rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .nav-cta:hover {
+      background: var(--gold);
+      color: var(--black);
+    }
+
+    /* Mobile menu toggle */
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .nav-toggle span {
+      display: block;
+      width: 22px;
+      height: 1px;
+      background: var(--cream);
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    /* ═══════════════════════════════════════════
+       HERO
+    ═══════════════════════════════════════════ */
     .hero {
       position: relative;
       min-height: 100vh;
+      min-height: 100dvh;
       display: flex;
-      align-items: center;
+      align-items: flex-end;
       overflow: hidden;
     }
 
@@ -55,20 +167,18 @@ export const prerender = true;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center;
-      filter: brightness(0.3) saturate(0.8);
+      object-position: center 30%;
+      filter: brightness(0.25) saturate(0.7) contrast(1.1);
+      transform: scale(1.05);
     }
 
     .hero-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(
-        to right,
-        rgba(12,12,12,0.95) 0%,
-        rgba(12,12,12,0.6) 50%,
-        rgba(12,12,12,0.3) 100%
-      );
       z-index: 1;
+      background:
+        linear-gradient(180deg, rgba(12,12,12,0.6) 0%, rgba(12,12,12,0.1) 40%, rgba(12,12,12,0.5) 70%, rgba(12,12,12,0.95) 100%),
+        linear-gradient(90deg, rgba(12,12,12,0.7) 0%, transparent 60%);
     }
 
     .hero-content {
@@ -77,51 +187,68 @@ export const prerender = true;
       max-width: 1200px;
       margin: 0 auto;
       padding: 0 clamp(1.5rem, 5vw, 4rem);
+      padding-bottom: clamp(4rem, 10vh, 8rem);
       width: 100%;
     }
 
     .hero-label {
       font-family: var(--font-body);
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       font-weight: 500;
-      letter-spacing: 0.25em;
+      letter-spacing: 0.3em;
       text-transform: uppercase;
       color: var(--gold);
-      margin-bottom: 1.5rem;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
     }
 
-    .hero-label span {
-      display: inline-block;
-      width: 2rem;
+    .hero-label::before {
+      content: "";
+      display: block;
+      width: 2.5rem;
       height: 1px;
       background: var(--gold);
-      vertical-align: middle;
-      margin-right: 0.75rem;
     }
 
     .hero-title {
       font-family: var(--font-display);
-      font-size: clamp(3rem, 7vw, 6rem);
+      font-size: clamp(3.5rem, 8vw, 7rem);
       font-weight: 400;
-      line-height: 1.05;
+      line-height: 1;
       letter-spacing: -0.02em;
       color: var(--cream);
-      max-width: 10ch;
-      margin-bottom: 1.5rem;
+      margin-bottom: 2rem;
     }
 
     .hero-title em {
       font-style: italic;
       color: var(--gold);
+      display: block;
     }
 
-    .hero-subtitle {
-      font-size: 1.05rem;
-      font-weight: 300;
-      line-height: 1.7;
-      color: var(--muted);
-      max-width: 38ch;
+    .hero-meta {
+      display: flex;
+      gap: 2.5rem;
       margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-meta-item {
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.5;
+      padding-left: 1rem;
+      border-left: 1px solid rgba(201,168,76,0.3);
+    }
+
+    .hero-meta-item strong {
+      display: block;
+      font-weight: 500;
+      color: var(--cream);
+      font-size: 0.9rem;
     }
 
     .hero-actions {
@@ -134,269 +261,215 @@ export const prerender = true;
     .btn-gold {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.75rem;
       font-family: var(--font-body);
-      font-size: 0.8rem;
+      font-size: 0.72rem;
       font-weight: 500;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
       color: var(--black);
       background: var(--gold);
-      border: none;
-      padding: 0.9rem 2rem;
+      border: 1px solid var(--gold);
+      padding: 1rem 2.25rem;
       cursor: pointer;
       text-decoration: none;
-      transition: background 0.3s;
+      transition: background 0.3s ease, transform 0.2s ease;
     }
 
-    .btn-gold:hover { background: var(--gold-light); }
+    .btn-gold:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+    .btn-gold svg {
+      width: 14px;
+      height: 14px;
+      transition: transform 0.3s ease;
+    }
+
+    .btn-gold:hover svg { transform: translateX(3px); }
 
     .btn-ghost {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.75rem;
       font-family: var(--font-body);
-      font-size: 0.8rem;
+      font-size: 0.72rem;
       font-weight: 500;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
       color: var(--cream);
       background: none;
-      border: 1px solid rgba(245,240,232,0.2);
-      padding: 0.9rem 2rem;
+      border: 1px solid rgba(245,240,232,0.15);
+      padding: 1rem 2.25rem;
       cursor: pointer;
       text-decoration: none;
-      transition: border-color 0.3s, color 0.3s;
+      transition: border-color 0.3s ease, color 0.3s ease;
     }
 
     .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
 
-    /* Nav */
-    .nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 50;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1.5rem clamp(1.5rem, 5vw, 4rem);
-      background: linear-gradient(to bottom, rgba(12,12,12,0.8), transparent);
-    }
-
-    .nav-logo {
-      font-family: var(--font-display);
-      font-size: 1.25rem;
-      font-weight: 400;
-      letter-spacing: 0.05em;
-      color: var(--cream);
-      text-decoration: none;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
-    }
-
-    .nav-links a {
-      font-size: 0.75rem;
-      font-weight: 400;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--muted);
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-
-    .nav-links a:hover { color: var(--gold); }
-
-    /* ═══ ABOUT ═══ */
-    .about {
-      padding: clamp(4rem, 10vw, 8rem) clamp(1.5rem, 5vw, 4rem);
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: clamp(2rem, 5vw, 5rem);
-      align-items: center;
-    }
-
-    .about-image {
-      position: relative;
-      aspect-ratio: 3/4;
-      overflow: hidden;
-    }
-
-    .about-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: brightness(0.85) saturate(0.9);
-    }
-
-    .about-image-frame {
-      position: absolute;
-      inset: 1rem;
-      border: 1px solid rgba(201,168,76,0.3);
-      pointer-events: none;
-    }
-
-    .about-label {
-      font-size: 0.7rem;
+    /* ═══════════════════════════════════════════
+       SECTION SHARED
+    ═══════════════════════════════════════════ */
+    .section-label {
+      font-family: var(--font-body);
+      font-size: 0.65rem;
       font-weight: 500;
-      letter-spacing: 0.25em;
+      letter-spacing: 0.3em;
       text-transform: uppercase;
       color: var(--gold);
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
     }
 
-    .about-title {
+    .section-label::before {
+      content: "";
+      display: block;
+      width: 2rem;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .section-title {
       font-family: var(--font-display);
-      font-size: clamp(2rem, 4vw, 3rem);
+      font-size: clamp(2rem, 4.5vw, 3.5rem);
       font-weight: 400;
-      line-height: 1.2;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
       color: var(--cream);
-      margin-bottom: 1.5rem;
-    }
-
-    .about-text {
-      font-size: 0.95rem;
-      font-weight: 300;
-      line-height: 1.8;
-      color: var(--muted);
       margin-bottom: 1rem;
     }
 
-    .about-divider {
+    .gold-rule {
       width: 3rem;
       height: 1px;
       background: var(--gold);
-      margin: 2rem 0;
+      border: none;
+      margin: 0;
     }
 
-    .about-signature {
-      font-family: var(--font-display);
-      font-style: italic;
-      font-size: 1.1rem;
-      color: var(--gold);
-    }
-
-    /* ═══ CONTACT / RESERVE ═══ */
-    .reserve {
-      padding: clamp(4rem, 10vw, 8rem) clamp(1.5rem, 5vw, 4rem);
-      background: var(--charcoal);
-    }
-
-    .reserve-inner {
+    /* ═══════════════════════════════════════════
+       WEINKARTE / EMPFEHLUNGEN
+    ═══════════════════════════════════════════ */
+    .weinkarte {
+      padding: clamp(5rem, 12vw, 9rem) clamp(1.5rem, 5vw, 4rem);
       max-width: 1200px;
       margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: clamp(2rem, 5vw, 5rem);
     }
 
-    .reserve-info {
-      display: flex;
-      flex-direction: column;
+    .weinkarte-header {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto 4rem;
+    }
+
+    .weinkarte-header .section-label {
       justify-content: center;
     }
 
-    .reserve-label {
-      font-size: 0.7rem;
-      font-weight: 500;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 1.5rem;
+    .weinkarte-header .section-label::before { display: none; }
+
+    .weinkarte-header .section-label::after {
+      content: "";
+      display: block;
+      width: 2rem;
+      height: 1px;
+      background: var(--gold);
     }
 
-    .reserve-title {
-      font-family: var(--font-display);
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 400;
-      line-height: 1.2;
-      color: var(--cream);
-      margin-bottom: 1.5rem;
+    .weinkarte-header .section-title {
+      margin-bottom: 1.25rem;
     }
 
-    .reserve-text {
+    .weinkarte-subtitle {
       font-size: 0.95rem;
       font-weight: 300;
       line-height: 1.8;
       color: var(--muted);
-      margin-bottom: 2rem;
     }
 
-    .reserve-details {
+    .wine-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(201,168,76,0.1);
+      margin-bottom: 4rem;
+    }
+
+    .wine-card {
+      background: var(--charcoal);
+      padding: clamp(2rem, 3vw, 3rem);
       display: flex;
       flex-direction: column;
-      gap: 1.25rem;
+      position: relative;
+      transition: background 0.4s ease;
     }
 
-    .reserve-detail {
-      display: flex;
-      gap: 1rem;
-      align-items: flex-start;
-    }
+    .wine-card:hover { background: var(--charcoal-light); }
 
-    .reserve-detail-icon {
-      width: 20px;
-      height: 20px;
-      color: var(--gold);
-      flex-shrink: 0;
-      margin-top: 2px;
-    }
-
-    .reserve-detail-label {
-      font-size: 0.7rem;
-      font-weight: 500;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 0.25rem;
-    }
-
-    .reserve-detail-value {
-      font-size: 0.9rem;
-      color: var(--cream);
-      font-weight: 300;
-    }
-
-    .reserve-form {
-      background: var(--black);
-      padding: clamp(2rem, 4vw, 3rem);
-      border: 1px solid rgba(201,168,76,0.15);
-    }
-
-    .reserve-form h3 {
+    .wine-card-number {
       font-family: var(--font-display);
-      font-size: 1.3rem;
+      font-size: 3.5rem;
       font-weight: 400;
-      color: var(--cream);
-      margin-bottom: 2rem;
+      color: rgba(201,168,76,0.08);
+      line-height: 1;
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
     }
 
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
+    .wine-card-region {
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
       margin-bottom: 1rem;
     }
 
-    .form-field {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
+    .wine-card-name {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 400;
+      line-height: 1.3;
+      color: var(--cream);
+      margin-bottom: 0.5rem;
     }
 
-    .form-field.full { grid-column: 1 / -1; }
+    .wine-card-grape {
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
 
-    .form-field label {
+    .wine-card-divider {
+      width: 2rem;
+      height: 1px;
+      background: rgba(201,168,76,0.3);
+      margin-bottom: 1.5rem;
+    }
+
+    .wine-card-note {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: rgba(245,240,232,0.6);
+      flex-grow: 1;
+      margin-bottom: 2rem;
+    }
+
+    .wine-card-price {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding-top: 1.25rem;
+      border-top: 1px solid rgba(245,240,232,0.06);
+    }
+
+    .wine-card-price-glass,
+    .wine-card-price-bottle {
       font-size: 0.7rem;
       font-weight: 500;
       letter-spacing: 0.1em;
@@ -404,187 +477,595 @@ export const prerender = true;
       color: var(--muted);
     }
 
-    .form-field input,
-    .form-field select,
-    .form-field textarea {
-      font-family: var(--font-body);
-      font-size: 0.9rem;
+    .wine-card-price-glass span,
+    .wine-card-price-bottle span {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 1.1rem;
       color: var(--cream);
+      margin-top: 0.25rem;
+      letter-spacing: 0;
+      text-transform: none;
+    }
+
+    /* Sommeliere Quote */
+    .quote-block {
+      display: flex;
+      align-items: flex-start;
+      gap: clamp(2rem, 4vw, 3.5rem);
+      padding: 3rem 0;
+      border-top: 1px solid rgba(201,168,76,0.1);
+      border-bottom: 1px solid rgba(201,168,76,0.1);
+    }
+
+    .quote-mark {
+      font-family: var(--font-display);
+      font-size: 6rem;
+      line-height: 0.8;
+      color: rgba(201,168,76,0.2);
+      flex-shrink: 0;
+      user-select: none;
+    }
+
+    .quote-content {
+      padding-top: 0.5rem;
+    }
+
+    .quote-text {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: clamp(1.1rem, 2vw, 1.4rem);
+      line-height: 1.7;
+      color: var(--cream);
+      margin-bottom: 1.5rem;
+    }
+
+    .quote-author {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .quote-author-role {
+      font-size: 0.8rem;
+      font-weight: 300;
+      letter-spacing: 0;
+      text-transform: none;
+      color: var(--muted);
+      margin-top: 0.25rem;
+    }
+
+    /* ═══════════════════════════════════════════
+       ABENDE & EVENTS
+    ═══════════════════════════════════════════ */
+    .events {
       background: var(--charcoal);
-      border: 1px solid rgba(245,240,232,0.1);
-      padding: 0.75rem 1rem;
-      outline: none;
-      transition: border-color 0.3s;
+      padding: clamp(5rem, 12vw, 9rem) clamp(1.5rem, 5vw, 4rem);
     }
 
-    .form-field input:focus,
-    .form-field select:focus,
-    .form-field textarea:focus {
-      border-color: var(--gold);
+    .events-inner {
+      max-width: 1200px;
+      margin: 0 auto;
     }
 
-    .form-field textarea { resize: vertical; min-height: 80px; }
-
-    .form-submit {
-      margin-top: 1.5rem;
-      width: 100%;
+    .events-header {
+      max-width: 500px;
+      margin-bottom: 4rem;
     }
 
-    /* ═══ RESPONSIVE ═══ */
+    .events-header .section-title {
+      margin-bottom: 1rem;
+    }
+
+    .events-subtitle {
+      font-size: 0.9rem;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--muted);
+    }
+
+    .events-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: clamp(1rem, 2vw, 1.5rem);
+      margin-bottom: 4rem;
+    }
+
+    .event-card {
+      background: var(--black);
+      border: 1px solid rgba(245,240,232,0.04);
+      padding: clamp(2rem, 3vw, 2.75rem);
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.4s ease, transform 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .event-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .event-card:hover {
+      border-color: rgba(201,168,76,0.2);
+      transform: translateY(-3px);
+    }
+
+    .event-card:hover::before { opacity: 1; }
+
+    .event-card-schedule {
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid rgba(245,240,232,0.06);
+    }
+
+    .event-card-title {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: var(--cream);
+      margin-bottom: 1rem;
+      line-height: 1.3;
+    }
+
+    .event-card-desc {
+      font-size: 0.88rem;
+      font-weight: 300;
+      line-height: 1.75;
+      color: var(--muted);
+      flex-grow: 1;
+      margin-bottom: 2rem;
+    }
+
+    .event-card-detail {
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: var(--cream);
+      padding-top: 1.25rem;
+      border-top: 1px solid rgba(245,240,232,0.06);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .event-card-price {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      color: var(--gold);
+    }
+
+    .event-card-tag {
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: rgba(245,240,232,0.04);
+      padding: 0.35rem 0.75rem;
+    }
+
+    /* Contact bar */
+    .contact-bar {
+      border-top: 1px solid rgba(201,168,76,0.12);
+      padding-top: 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+
+    .contact-bar-left {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .contact-bar-label {
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.25rem;
+    }
+
+    .contact-bar-address {
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: var(--cream);
+      line-height: 1.6;
+    }
+
+    .contact-bar-right {
+      display: flex;
+      gap: 3rem;
+      align-items: flex-end;
+    }
+
+    .contact-bar-item {
+      text-align: right;
+    }
+
+    .contact-bar-item-label {
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
+    }
+
+    .contact-bar-item-value {
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: var(--cream);
+    }
+
+    .contact-bar-item-value a {
+      color: var(--cream);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .contact-bar-item-value a:hover { color: var(--gold); }
+
+    /* ═══════════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════════ */
+    .footer {
+      background: var(--black);
+      padding: 2.5rem clamp(1.5rem, 5vw, 4rem);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(245,240,232,0.04);
+    }
+
+    .footer-brand {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      color: rgba(245,240,232,0.3);
+    }
+
+    .footer-hours {
+      font-size: 0.75rem;
+      font-weight: 300;
+      color: rgba(245,240,232,0.25);
+      letter-spacing: 0.05em;
+    }
+
+    /* ═══════════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════════ */
+    @media (max-width: 1024px) {
+      .wine-grid { grid-template-columns: 1fr 1fr; }
+      .wine-card:last-child { grid-column: 1 / -1; }
+      .events-grid { grid-template-columns: 1fr 1fr; }
+      .event-card:last-child { grid-column: 1 / -1; }
+    }
+
     @media (max-width: 768px) {
-      .nav-links { display: none; }
-      .about-grid { grid-template-columns: 1fr; }
-      .about-image { max-height: 400px; }
-      .reserve-inner { grid-template-columns: 1fr; }
-      .form-row { grid-template-columns: 1fr; }
+      .nav-links,
+      .nav-cta { display: none; }
+
+      .nav-toggle { display: flex; }
+
+      .hero { align-items: flex-end; }
+
+      .hero-title {
+        font-size: clamp(2.75rem, 10vw, 4rem);
+      }
+
+      .hero-meta { flex-direction: column; gap: 1.25rem; }
+
+      .wine-grid {
+        grid-template-columns: 1fr;
+        gap: 1px;
+      }
+
+      .wine-card:last-child { grid-column: auto; }
+
+      .wine-card-number { display: none; }
+
+      .quote-block { flex-direction: column; gap: 0; }
+      .quote-mark { font-size: 4rem; margin-bottom: -0.5rem; }
+
+      .events-grid { grid-template-columns: 1fr; }
+      .event-card:last-child { grid-column: auto; }
+
+      .contact-bar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .contact-bar-right {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.5rem;
+      }
+
+      .contact-bar-item { text-align: left; }
+
+      .footer {
+        flex-direction: column;
+        gap: 0.75rem;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .btn-gold,
+      .btn-ghost {
+        justify-content: center;
+        text-align: center;
+      }
     }
   </style>
 </head>
 <body>
-  <!-- Nav -->
+
+  <!-- ═══ NAV ═══ -->
   <nav class="nav">
-    <a href="#" class="nav-logo">Maison Noir</a>
+    <a href="#" class="nav-logo">Maison <span>Noir</span></a>
     <ul class="nav-links">
-      <li><a href="#about">Geschichte</a></li>
-      <li><a href="#reserve">Reservieren</a></li>
+      <li><a href="#weinkarte">Weinkarte</a></li>
+      <li><a href="#abende">Abende</a></li>
     </ul>
+    <a href="#abende" class="nav-cta">Reservieren</a>
+    <button class="nav-toggle" aria-label="Menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
   </nav>
 
-  <!-- Hero -->
+  <!-- ═══ HERO ═══ -->
   <section class="hero">
     <div class="hero-bg">
       <img
         src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=1920&q=80&auto=format"
-        alt="Weinbar Atmosphaere"
+        alt="Dunkle Weinbar-Atmosphaere mit warmem Licht"
         loading="eager"
+        fetchpriority="high"
       />
     </div>
     <div class="hero-overlay"></div>
     <div class="hero-content">
-      <div class="hero-label"><span></span>Weinbar & Lounge — Trier</div>
-      <h1 class="hero-title">Wein ist <em>Emotion.</em></h1>
-      <p class="hero-subtitle">
-        Handverlesene Weine aus kleinen Weingutern, serviert in einer
-        Atmosphare, die zum Verweilen einladt. Jeden Abend ab 18 Uhr.
-      </p>
+      <div class="hero-label">Weinbar & Lounge — Trier Altstadt</div>
+      <h1 class="hero-title">Wein ist<em>Emotion.</em></h1>
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <strong>200+ Positionen</strong>
+          aus 6 Laendern
+        </div>
+        <div class="hero-meta-item">
+          <strong>Jeden Abend</strong>
+          ab 18 Uhr geoeffnet
+        </div>
+        <div class="hero-meta-item">
+          <strong>Seit 2019</strong>
+          in den Gewoelben der Altstadt
+        </div>
+      </div>
       <div class="hero-actions">
-        <a href="#reserve" class="btn-gold">Tisch reservieren</a>
-        <a href="#about" class="btn-ghost">Unsere Geschichte</a>
+        <a href="#weinkarte" class="btn-gold">
+          Weinkarte entdecken
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+        <a href="#abende" class="btn-ghost">Tisch reservieren</a>
       </div>
     </div>
   </section>
 
-  <!-- About -->
-  <section class="about" id="about">
-    <div class="about-grid">
-      <div class="about-image">
-        <img
-          src="https://images.unsplash.com/photo-1543007630-9710e4a00a20?w=800&q=80&auto=format"
-          alt="Weinsortiment"
-          loading="lazy"
-        />
-        <div class="about-image-frame"></div>
-      </div>
-      <div>
-        <div class="about-label">Unsere Geschichte</div>
-        <h2 class="about-title">Wo jeder Schluck eine Geschichte erzahlt</h2>
-        <p class="about-text">
-          Maison Noir entstand aus einer einfachen Uberzeugung: Guter Wein verdient
-          einen besonderen Rahmen. In den historischen Gewolben der Trierer Altstadt
-          haben wir einen Ort geschaffen, an dem Zeit keine Rolle spielt.
-        </p>
-        <p class="about-text">
-          Unsere Karte wechselt monatlich. Wir arbeiten ausschliesslich mit
-          Winzern, die wir personlich kennen — von der Mosel, aus dem Burgund
-          und den Hugeln der Toskana.
-        </p>
-        <div class="about-divider"></div>
-        <div class="about-signature">— Lukas & Marie, Grunderjahr 2019</div>
-      </div>
+  <!-- ═══ WEINKARTE ═══ -->
+  <section class="weinkarte" id="weinkarte">
+    <div class="weinkarte-header">
+      <div class="section-label">Unsere Empfehlungen</div>
+      <h2 class="section-title">Was wir gerade lieben</h2>
+      <p class="weinkarte-subtitle">
+        Drei Weine, die uns diese Saison nicht loslassen.
+        Handverlesen von unserer Sommeliere Marie.
+      </p>
     </div>
-  </section>
 
-  <!-- Reservation -->
-  <section class="reserve" id="reserve">
-    <div class="reserve-inner">
-      <div class="reserve-info">
-        <div class="reserve-label">Reservierung</div>
-        <h2 class="reserve-title">Ihr Abend beginnt hier</h2>
-        <p class="reserve-text">
-          Reservieren Sie Ihren Tisch und lassen Sie sich von unserer
-          Sommelier-Auswahl uberraschen. Fur Gruppen ab 8 Personen
-          bieten wir private Weinproben in unserem Gewolbekeller an.
+    <div class="wine-grid">
+      <!-- Wine 1 -->
+      <div class="wine-card">
+        <div class="wine-card-number">01</div>
+        <div class="wine-card-region">Mosel, Deutschland</div>
+        <h3 class="wine-card-name">Schieferberg Riesling Kabinett 2022</h3>
+        <div class="wine-card-grape">Riesling</div>
+        <div class="wine-card-divider"></div>
+        <p class="wine-card-note">
+          Schiefer und Zitrusbluete, dann ein Hauch Pfirsich,
+          der minutenlang nachklingt. Leichtfuessig und dabei unendlich tief.
         </p>
-        <div class="reserve-details">
-          <div class="reserve-detail">
-            <svg class="reserve-detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-            <div>
-              <div class="reserve-detail-label">Offnungszeiten</div>
-              <div class="reserve-detail-value">Di — Sa, 18:00 — 00:00 Uhr</div>
-            </div>
+        <div class="wine-card-price">
+          <div class="wine-card-price-glass">
+            Glas
+            <span>8,50 &euro;</span>
           </div>
-          <div class="reserve-detail">
-            <svg class="reserve-detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            <div>
-              <div class="reserve-detail-label">Adresse</div>
-              <div class="reserve-detail-value">Fleischstrasse 12, 54290 Trier</div>
-            </div>
-          </div>
-          <div class="reserve-detail">
-            <svg class="reserve-detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-            <div>
-              <div class="reserve-detail-label">Telefon</div>
-              <div class="reserve-detail-value">0651 — 999 88 77</div>
-            </div>
+          <div class="wine-card-price-bottle">
+            Flasche
+            <span>34 &euro;</span>
           </div>
         </div>
       </div>
 
-      <div class="reserve-form">
-        <h3>Tisch reservieren</h3>
-        <form>
-          <div class="form-row">
-            <div class="form-field">
-              <label for="name">Name</label>
-              <input type="text" id="name" placeholder="Ihr Name" />
-            </div>
-            <div class="form-field">
-              <label for="guests">Personen</label>
-              <select id="guests">
-                <option>2 Personen</option>
-                <option>3 Personen</option>
-                <option>4 Personen</option>
-                <option>5 Personen</option>
-                <option>6+ Personen</option>
-              </select>
-            </div>
+      <!-- Wine 2 -->
+      <div class="wine-card">
+        <div class="wine-card-number">02</div>
+        <div class="wine-card-region">Bordeaux, Frankreich</div>
+        <h3 class="wine-card-name">Chateau Beaumont 2019</h3>
+        <div class="wine-card-grape">Cabernet Sauvignon, Merlot</div>
+        <div class="wine-card-divider"></div>
+        <p class="wine-card-note">
+          Dunkle Kirschen, Tabak, ein lederner Unterton.
+          Ein Wein, der sich anfuehlt wie ein langer Abend
+          am Kamin — warm, ruhig, vollkommen.
+        </p>
+        <div class="wine-card-price">
+          <div class="wine-card-price-glass">
+            Glas
+            <span>11 &euro;</span>
           </div>
-          <div class="form-row">
-            <div class="form-field">
-              <label for="date">Datum</label>
-              <input type="date" id="date" />
-            </div>
-            <div class="form-field">
-              <label for="time">Uhrzeit</label>
-              <select id="time">
-                <option>18:00</option>
-                <option>18:30</option>
-                <option>19:00</option>
-                <option>19:30</option>
-                <option>20:00</option>
-                <option>20:30</option>
-                <option>21:00</option>
-              </select>
-            </div>
+          <div class="wine-card-price-bottle">
+            Flasche
+            <span>46 &euro;</span>
           </div>
-          <div class="form-field full">
-            <label for="message">Anmerkungen</label>
-            <textarea id="message" placeholder="Allergien, Anlass, besondere Wunsche..."></textarea>
+        </div>
+      </div>
+
+      <!-- Wine 3 -->
+      <div class="wine-card">
+        <div class="wine-card-number">03</div>
+        <div class="wine-card-region">Toskana, Italien</div>
+        <h3 class="wine-card-name">Tenuta di Trinoro 2020</h3>
+        <div class="wine-card-grape">Cabernet Franc, Merlot, Petit Verdot</div>
+        <div class="wine-card-divider"></div>
+        <p class="wine-card-note">
+          Opulent und wild zugleich. Brombeere, schwarzer Pfeffer,
+          mediterranes Gestruepp nach dem Regen. Fuer besondere Abende.
+        </p>
+        <div class="wine-card-price">
+          <div class="wine-card-price-glass">
+            Glas
+            <span>18 &euro;</span>
           </div>
-          <button type="button" class="btn-gold form-submit">Reservierung anfragen</button>
-        </form>
+          <div class="wine-card-price-bottle">
+            Flasche
+            <span>89 &euro;</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sommeliere Quote -->
+    <div class="quote-block">
+      <div class="quote-mark">&ldquo;</div>
+      <div class="quote-content">
+        <p class="quote-text">
+          Ich suche Weine, die eine Geschichte erzaehlen &mdash;
+          nicht die, die am lautesten schreien.
+        </p>
+        <div class="quote-author">
+          Marie Lehmann
+          <div class="quote-author-role">Sommeliere, Maison Noir</div>
+        </div>
       </div>
     </div>
   </section>
+
+  <!-- ═══ ABENDE & EVENTS ═══ -->
+  <section class="events" id="abende">
+    <div class="events-inner">
+      <div class="events-header">
+        <div class="section-label">Erleben</div>
+        <h2 class="section-title">Unsere Abende</h2>
+        <p class="events-subtitle">
+          Wein trinken kann jeder. Wir machen Abende daraus &mdash;
+          mit Menschen, Musik und Geschichten hinter jedem Glas.
+        </p>
+      </div>
+
+      <div class="events-grid">
+        <!-- Event 1 -->
+        <div class="event-card">
+          <div class="event-card-schedule">Jeden ersten Freitag</div>
+          <h3 class="event-card-title">Blind Tasting</h3>
+          <p class="event-card-desc">
+            Sechs Weine, keine Etiketten, keine Vorurteile.
+            Nur Nase, Gaumen und die eigene Intuition.
+            Wer am naechsten dran ist, gewinnt eine Flasche.
+          </p>
+          <div class="event-card-detail">
+            <span>6 Weine, inkl. Brot & Kaese</span>
+            <span class="event-card-price">49 &euro;</span>
+          </div>
+        </div>
+
+        <!-- Event 2 -->
+        <div class="event-card">
+          <div class="event-card-schedule">Jeden Mittwoch</div>
+          <h3 class="event-card-title">Jazz & Wein</h3>
+          <p class="event-card-desc">
+            Live Jazz ab 20 Uhr. Wechselnde Trios und Quartette
+            aus der Region. Der Eintritt ist frei &mdash; das
+            Weinglas nicht. Aber dafuer sind Sie ja hier.
+          </p>
+          <div class="event-card-detail">
+            <span>Ab 20 Uhr, Live Musik</span>
+            <span class="event-card-tag">Eintritt frei</span>
+          </div>
+        </div>
+
+        <!-- Event 3 -->
+        <div class="event-card">
+          <div class="event-card-schedule">Unregelmaessig</div>
+          <h3 class="event-card-title">Winzer zu Gast</h3>
+          <p class="event-card-desc">
+            Der Winzer erzaehlt, wir trinken. Keine Powerpoints,
+            keine Floskeln &mdash; echte Geschichten aus dem Weinberg.
+            Naechster Termin: 12. April mit Weingut Clemens Busch.
+          </p>
+          <div class="event-card-detail">
+            <span>Naechster Termin: 12.04.</span>
+            <span class="event-card-price">39 &euro;</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact bar -->
+      <div class="contact-bar">
+        <div class="contact-bar-left">
+          <div class="contact-bar-label">Besuchen Sie uns</div>
+          <div class="contact-bar-address">
+            Fleischstrasse 12<br />
+            54290 Trier
+          </div>
+        </div>
+        <div class="contact-bar-right">
+          <div class="contact-bar-item">
+            <div class="contact-bar-item-label">Telefon</div>
+            <div class="contact-bar-item-value">
+              <a href="tel:+49651999887">0651 &mdash; 999 88 77</a>
+            </div>
+          </div>
+          <div class="contact-bar-item">
+            <div class="contact-bar-item-label">Oeffnungszeiten</div>
+            <div class="contact-bar-item-value">Di &mdash; Sa, 18:00 &mdash; 00:00</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="footer">
+    <div class="footer-brand">Maison Noir &mdash; Trier</div>
+    <div class="footer-hours">Di &mdash; Sa, ab 18 Uhr</div>
+  </footer>
+
 </body>
 </html>

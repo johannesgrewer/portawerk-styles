@@ -7,8 +7,8 @@ export const prerender = true;
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
-  <title>Druckluft — Siebdruck mit Haltung</title>
-  <meta name="description" content="Druckluft ist eine Siebdruck-Werkstatt in Trier-Nord. Textildruck, Poster, Workshops. Seit 2020." />
+  <title>Druckluft — Siebdruck mit Haltung | Trier-Nord</title>
+  <meta name="description" content="Druckluft ist eine Siebdruck-Werkstatt in Trier-Nord. Handgemachter Textildruck, Poster, Branding. Seit 2020." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -53,32 +53,52 @@ export const prerender = true;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1.25rem 2rem;
-      background: rgba(26, 26, 26, 0.95);
-      backdrop-filter: blur(8px);
+      padding: 1rem 2rem;
+      background: #1A1A1A;
+      border-bottom: 4px solid #FF3D00;
     }
 
     .nav-logo {
-      font-size: 1.5rem;
+      font-size: 1.6rem;
       font-weight: 700;
-      color: #FF3D00;
+      color: #F5F5F0;
       text-transform: uppercase;
-      letter-spacing: 0.15em;
+      letter-spacing: 0.2em;
+    }
+
+    .nav-logo span {
+      color: #FF3D00;
     }
 
     .nav-links {
       display: flex;
-      gap: 2rem;
+      gap: 2.5rem;
       list-style: none;
     }
 
     .nav-links a {
       color: #F5F5F0;
-      font-weight: 600;
-      font-size: 0.875rem;
+      font-weight: 700;
+      font-size: 0.8rem;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.15em;
       transition: color 0.2s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 3px;
+      background: #FF3D00;
+      transition: width 0.3s;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
     }
 
     .nav-links a:hover {
@@ -97,7 +117,7 @@ export const prerender = true;
 
     .nav-burger span {
       display: block;
-      width: 28px;
+      width: 30px;
       height: 3px;
       background: #F5F5F0;
       transition: transform 0.3s, opacity 0.3s;
@@ -110,6 +130,7 @@ export const prerender = true;
       display: flex;
       align-items: center;
       overflow: hidden;
+      background: #1A1A1A;
     }
 
     .hero-bg {
@@ -122,357 +143,531 @@ export const prerender = true;
       width: 100%;
       height: 100%;
       object-fit: cover;
+      filter: grayscale(40%) contrast(1.1);
     }
 
     .hero-bg::after {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, rgba(26, 26, 26, 0.92) 0%, rgba(26, 26, 26, 0.6) 100%);
+      background: linear-gradient(
+        160deg,
+        rgba(26, 26, 26, 0.95) 0%,
+        rgba(26, 26, 26, 0.85) 40%,
+        rgba(255, 61, 0, 0.3) 100%
+      );
     }
 
-    .hero-geometric {
+    /* Geometric shapes */
+    .geo {
       position: absolute;
       z-index: 1;
+      pointer-events: none;
     }
 
-    .hero-geometric--1 {
-      top: -80px;
-      right: -60px;
-      width: 400px;
-      height: 400px;
+    .geo--rect-1 {
+      top: 10%;
+      right: -30px;
+      width: 350px;
+      height: 350px;
       border: 8px solid #FF3D00;
-      transform: rotate(15deg);
-      opacity: 0.4;
+      transform: rotate(12deg);
+      opacity: 0.25;
     }
 
-    .hero-geometric--2 {
-      bottom: 60px;
-      left: -40px;
-      width: 200px;
-      height: 200px;
+    .geo--rect-2 {
+      bottom: 15%;
+      right: 8%;
+      width: 180px;
+      height: 180px;
       background: #FFD600;
-      transform: rotate(-12deg);
-      opacity: 0.15;
+      transform: rotate(-8deg);
+      opacity: 0.12;
     }
 
-    .hero-geometric--3 {
-      top: 30%;
-      right: 10%;
-      width: 120px;
-      height: 120px;
+    .geo--circle {
+      top: 20%;
+      right: 25%;
+      width: 100px;
+      height: 100px;
       border: 6px solid #FFD600;
       border-radius: 50%;
-      opacity: 0.3;
+      opacity: 0.2;
+    }
+
+    .geo--line {
+      top: 0;
+      left: 50%;
+      width: 4px;
+      height: 200px;
+      background: #FF3D00;
+      opacity: 0.15;
+      transform: rotate(25deg);
+    }
+
+    .geo--dot-grid {
+      bottom: 25%;
+      left: 3%;
+      width: 120px;
+      height: 120px;
+      background-image: radial-gradient(circle, #FF3D00 2px, transparent 2px);
+      background-size: 20px 20px;
+      opacity: 0.2;
     }
 
     .hero-content {
       position: relative;
       z-index: 2;
-      padding: 8rem 2rem 4rem;
-      max-width: 900px;
-      margin-left: 6%;
+      padding: 10rem 2rem 5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      width: 100%;
     }
 
-    .hero-tagline {
-      display: inline-block;
-      font-size: 0.875rem;
-      font-weight: 600;
+    .hero-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.75rem;
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.25em;
+      letter-spacing: 0.3em;
       color: #FFD600;
-      margin-bottom: 1.5rem;
-      padding: 0.5rem 1rem;
-      border: 2px solid #FFD600;
+      margin-bottom: 2rem;
+    }
+
+    .hero-label::before {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 3px;
+      background: #FFD600;
     }
 
     .hero-headline {
-      font-size: clamp(3.5rem, 10vw, 8rem);
+      font-size: clamp(4rem, 12vw, 10rem);
       font-weight: 700;
-      line-height: 0.95;
+      line-height: 0.9;
       color: #F5F5F0;
       text-transform: uppercase;
-      margin-bottom: 1.5rem;
+      margin-bottom: 2rem;
+      letter-spacing: -0.03em;
     }
 
-    .hero-headline span {
+    .hero-headline .line {
+      display: block;
+    }
+
+    .hero-headline .line--accent {
       color: #FF3D00;
+      -webkit-text-stroke: 0px;
+    }
+
+    .hero-headline .line--outline {
+      color: transparent;
+      -webkit-text-stroke: 3px #F5F5F0;
     }
 
     .hero-subtitle {
-      font-size: clamp(1.1rem, 2vw, 1.5rem);
-      color: rgba(245, 245, 240, 0.75);
-      max-width: 520px;
-      margin-bottom: 2.5rem;
-      line-height: 1.6;
+      font-size: clamp(1.1rem, 2.2vw, 1.6rem);
+      color: rgba(245, 245, 240, 0.7);
+      max-width: 560px;
+      margin-bottom: 3rem;
+      line-height: 1.5;
+      font-weight: 400;
+    }
+
+    .hero-subtitle strong {
+      color: #F5F5F0;
+      font-weight: 600;
     }
 
     .btn-primary {
       display: inline-block;
-      padding: 1.1rem 2.5rem;
+      padding: 1.2rem 3rem;
       background: #FF3D00;
       color: #F5F5F0;
       font-family: 'Space Grotesk', sans-serif;
       font-size: 1rem;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.15em;
       border: none;
       cursor: pointer;
-      transition: background 0.2s, transform 0.2s;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+      position: relative;
+    }
+
+    .btn-primary::after {
+      content: '';
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      right: -6px;
+      bottom: -6px;
+      border: 3px solid #FFD600;
+      z-index: -1;
+      transition: transform 0.2s;
     }
 
     .btn-primary:hover {
       background: #e03500;
-      transform: translateY(-2px);
+      transform: translate(-2px, -2px);
     }
 
-    .hero-skew-bar {
+    .btn-primary:hover::after {
+      transform: translate(2px, 2px);
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 3rem;
+      margin-top: 4rem;
+      padding-top: 2.5rem;
+      border-top: 2px solid rgba(245, 245, 240, 0.1);
+    }
+
+    .hero-stat {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hero-stat-number {
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      font-weight: 700;
+      color: #FFD600;
+      line-height: 1;
+    }
+
+    .hero-stat-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: rgba(245, 245, 240, 0.5);
+      margin-top: 0.4rem;
+    }
+
+    /* Diagonal divider */
+    .hero-divider {
       position: absolute;
       bottom: 0;
       left: 0;
       right: 0;
-      height: 80px;
-      background: #F5F5F0;
-      transform: skewY(-2deg);
-      transform-origin: bottom left;
       z-index: 3;
+      height: 100px;
+      overflow: hidden;
     }
 
-    /* ===== SERVICES ===== */
-    .services {
-      padding: 6rem 2rem 8rem;
+    .hero-divider::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: -5%;
+      width: 110%;
+      height: 100%;
+      background: #F5F5F0;
+      transform: skewY(-2.5deg);
+      transform-origin: bottom left;
+    }
+
+    /* ===== PORTFOLIO / LETZTE ARBEITEN ===== */
+    .portfolio {
+      padding: 4rem 2rem 8rem;
       max-width: 1200px;
       margin: 0 auto;
     }
 
     .section-label {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.3em;
       color: #FF3D00;
-      margin-bottom: 1rem;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 30px;
+      height: 3px;
+      background: #FF3D00;
     }
 
     .section-headline {
-      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
       font-weight: 700;
       text-transform: uppercase;
-      line-height: 1.05;
+      line-height: 0.95;
       margin-bottom: 4rem;
+      letter-spacing: -0.02em;
     }
 
-    .services-grid {
+    .section-headline span {
+      color: #FF3D00;
+    }
+
+    .portfolio-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
+      grid-template-columns: repeat(12, 1fr);
+      grid-template-rows: auto auto auto;
+      gap: 1.25rem;
     }
 
-    .service-card {
+    .portfolio-tile {
       position: relative;
+      overflow: hidden;
+      cursor: pointer;
       background: #1A1A1A;
-      color: #F5F5F0;
-      padding: 2.5rem 2rem;
-      border: 3px solid #1A1A1A;
-      transition: border-color 0.3s, transform 0.3s;
     }
 
-    .service-card:hover {
-      border-color: #FF3D00;
-      transform: translateY(-4px);
+    .portfolio-tile:nth-child(1) {
+      grid-column: 1 / 8;
+      grid-row: 1 / 3;
     }
 
-    .service-card:nth-child(2) {
-      background: #FF3D00;
-      border-color: #FF3D00;
+    .portfolio-tile:nth-child(2) {
+      grid-column: 8 / 13;
+      grid-row: 1 / 2;
     }
 
-    .service-card:nth-child(2):hover {
-      border-color: #FFD600;
+    .portfolio-tile:nth-child(3) {
+      grid-column: 8 / 13;
+      grid-row: 2 / 3;
     }
 
-    .service-number {
-      font-size: 4rem;
-      font-weight: 700;
-      line-height: 1;
-      color: rgba(245, 245, 240, 0.15);
-      margin-bottom: 1.5rem;
+    .portfolio-tile:nth-child(4) {
+      grid-column: 1 / 5;
+      grid-row: 3 / 4;
     }
 
-    .service-card:nth-child(2) .service-number {
-      color: rgba(26, 26, 26, 0.2);
+    .portfolio-tile:nth-child(5) {
+      grid-column: 5 / 9;
+      grid-row: 3 / 4;
     }
 
-    .service-title {
-      font-size: 1.5rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      margin-bottom: 1rem;
-      letter-spacing: 0.05em;
+    .portfolio-tile:nth-child(6) {
+      grid-column: 9 / 13;
+      grid-row: 3 / 4;
     }
 
-    .service-desc {
-      font-size: 0.95rem;
-      line-height: 1.7;
-      color: rgba(245, 245, 240, 0.7);
-      margin-bottom: 2rem;
+    .portfolio-tile img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s, filter 0.5s;
+      display: block;
+      min-height: 220px;
     }
 
-    .service-card:nth-child(2) .service-desc {
-      color: rgba(245, 245, 240, 0.85);
+    .portfolio-tile:nth-child(1) img {
+      min-height: 460px;
     }
 
-    .service-price {
-      font-size: 0.85rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      padding-top: 1.5rem;
-      border-top: 2px solid rgba(245, 245, 240, 0.15);
+    .portfolio-tile:hover img {
+      transform: scale(1.05);
+      filter: brightness(0.5);
     }
 
-    .service-card:nth-child(2) .service-price {
-      border-top-color: rgba(26, 26, 26, 0.2);
-    }
-
-    .service-price em {
-      font-style: normal;
-      color: #FFD600;
-    }
-
-    .service-card:nth-child(2) .service-price em {
-      color: #1A1A1A;
-    }
-
-    /* ===== CONTACT ===== */
-    .contact {
-      background: #1A1A1A;
-      color: #F5F5F0;
-      padding: 6rem 2rem 4rem;
-      position: relative;
-    }
-
-    .contact-skew-top {
+    .portfolio-overlay {
       position: absolute;
-      top: -40px;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1.5rem;
+      opacity: 0;
+      transition: opacity 0.4s;
+      background: linear-gradient(0deg, rgba(26, 26, 26, 0.9) 0%, transparent 60%);
+    }
+
+    .portfolio-tile:hover .portfolio-overlay {
+      opacity: 1;
+    }
+
+    .portfolio-tag {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: #1A1A1A;
+      background: #FFD600;
+      padding: 0.3rem 0.75rem;
+      margin-bottom: 0.75rem;
+      align-self: flex-start;
+    }
+
+    .portfolio-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #F5F5F0;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .portfolio-meta {
+      font-size: 0.8rem;
+      color: rgba(245, 245, 240, 0.6);
+      margin-top: 0.25rem;
+    }
+
+    .portfolio-number {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: rgba(255, 61, 0, 0.35);
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .portfolio-tile:nth-child(1) .portfolio-number {
+      font-size: 5rem;
+    }
+
+    /* ===== PROZESS ===== */
+    .process {
+      background: #1A1A1A;
+      color: #F5F5F0;
+      padding: 6rem 2rem 5rem;
+      position: relative;
+    }
+
+    .process-skew-top {
+      position: absolute;
+      top: -50px;
       left: 0;
       right: 0;
-      height: 80px;
+      height: 100px;
       background: #1A1A1A;
-      transform: skewY(2deg);
+      transform: skewY(2.5deg);
       z-index: 1;
     }
 
-    .contact-inner {
+    .process-inner {
       position: relative;
       z-index: 2;
       max-width: 1200px;
       margin: 0 auto;
     }
 
-    .contact-manifesto {
-      font-size: clamp(1.5rem, 3.5vw, 2.5rem);
-      font-weight: 700;
-      text-transform: uppercase;
-      line-height: 1.2;
-      margin-bottom: 4rem;
-      max-width: 700px;
-      border-left: 6px solid #FF3D00;
-      padding-left: 1.5rem;
-    }
-
-    .contact-manifesto span {
-      color: #FF3D00;
-    }
-
-    .contact-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-    }
-
-    .contact-form {
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-    }
-
-    .form-group label {
-      display: block;
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      color: rgba(245, 245, 240, 0.5);
-      margin-bottom: 0.5rem;
-    }
-
-    .form-group input,
-    .form-group textarea {
-      width: 100%;
-      padding: 1rem;
-      background: rgba(245, 245, 240, 0.08);
-      border: 2px solid rgba(245, 245, 240, 0.12);
-      color: #F5F5F0;
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 1rem;
-      transition: border-color 0.2s;
-      outline: none;
-    }
-
-    .form-group input:focus,
-    .form-group textarea:focus {
-      border-color: #FF3D00;
-    }
-
-    .form-group textarea {
-      min-height: 140px;
-      resize: vertical;
-    }
-
-    .contact-info {
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-    }
-
-    .contact-block h3 {
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
+    .process .section-label {
       color: #FFD600;
-      margin-bottom: 0.75rem;
     }
 
-    .contact-block p,
-    .contact-block a {
-      font-size: 1rem;
-      line-height: 1.8;
-      color: rgba(245, 245, 240, 0.7);
+    .process .section-label::before {
+      background: #FFD600;
     }
 
-    .contact-block a:hover {
+    .process .section-headline {
+      color: #F5F5F0;
+      margin-bottom: 5rem;
+    }
+
+    .process .section-headline span {
       color: #FF3D00;
     }
 
-    .hours-table {
-      width: 100%;
-      border-collapse: collapse;
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      position: relative;
     }
 
-    .hours-table td {
-      padding: 0.4rem 0;
-      font-size: 0.95rem;
-      color: rgba(245, 245, 240, 0.7);
-      border-bottom: 1px solid rgba(245, 245, 240, 0.06);
+    .process-steps::before {
+      content: '';
+      position: absolute;
+      top: 40px;
+      left: 12.5%;
+      right: 12.5%;
+      height: 3px;
+      background: repeating-linear-gradient(
+        90deg,
+        #FF3D00 0px,
+        #FF3D00 12px,
+        transparent 12px,
+        transparent 20px
+      );
+      opacity: 0.4;
     }
 
-    .hours-table td:last-child {
-      text-align: right;
-      font-weight: 600;
+    .process-step {
+      text-align: center;
+      padding: 0 1.5rem;
+      position: relative;
+    }
+
+    .process-step-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 80px;
+      height: 80px;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #1A1A1A;
+      background: #FF3D00;
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .process-step:nth-child(even) .process-step-number {
+      background: #FFD600;
+    }
+
+    .process-step-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.75rem;
       color: #F5F5F0;
+    }
+
+    .process-step-desc {
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: rgba(245, 245, 240, 0.6);
+    }
+
+    /* CTA bar */
+    .process-cta {
+      margin-top: 5rem;
+      padding-top: 3rem;
+      border-top: 3px solid rgba(245, 245, 240, 0.08);
+      text-align: center;
+    }
+
+    .process-cta-text {
+      font-size: clamp(1.4rem, 3vw, 2.2rem);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      line-height: 1.3;
+    }
+
+    .process-cta-text span {
+      color: #FF3D00;
+    }
+
+    .process-cta-text a {
+      color: #FFD600;
+      text-decoration: none;
+      border-bottom: 3px solid #FFD600;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .process-cta-text a:hover {
+      color: #FF3D00;
+      border-color: #FF3D00;
     }
 
     /* ===== FOOTER ===== */
@@ -480,12 +675,13 @@ export const prerender = true;
       background: #111;
       padding: 2rem;
       text-align: center;
+      border-top: 4px solid #FF3D00;
     }
 
     .footer p {
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       color: rgba(245, 245, 240, 0.3);
-      letter-spacing: 0.1em;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
     }
 
@@ -494,15 +690,18 @@ export const prerender = true;
     }
 
     /* ===== RESPONSIVE ===== */
-    @media (max-width: 900px) {
-      .services-grid {
-        grid-template-columns: 1fr;
-        max-width: 500px;
+    @media (max-width: 1024px) {
+      .process-steps {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 3rem 1rem;
       }
 
-      .contact-grid {
-        grid-template-columns: 1fr;
-        gap: 3rem;
+      .process-steps::before {
+        display: none;
+      }
+
+      .portfolio-tile:nth-child(1) img {
+        min-height: 350px;
       }
     }
 
@@ -513,10 +712,11 @@ export const prerender = true;
         top: 100%;
         left: 0;
         right: 0;
-        background: rgba(26, 26, 26, 0.98);
+        background: #1A1A1A;
         flex-direction: column;
         padding: 1.5rem 2rem;
         gap: 1.25rem;
+        border-top: 2px solid #FF3D00;
       }
 
       .nav-links.open {
@@ -528,27 +728,148 @@ export const prerender = true;
       }
 
       .hero-content {
-        margin-left: 0;
-        padding: 7rem 1.5rem 4rem;
+        padding: 8rem 1.5rem 5rem;
       }
 
-      .hero-geometric--1 {
-        width: 250px;
-        height: 250px;
-        top: -50px;
+      .hero-headline {
+        font-size: clamp(3rem, 14vw, 5rem);
+      }
+
+      .hero-headline .line--outline {
+        -webkit-text-stroke: 2px #F5F5F0;
+      }
+
+      .hero-stats {
+        flex-wrap: wrap;
+        gap: 2rem;
+      }
+
+      .geo--rect-1 {
+        width: 200px;
+        height: 200px;
+        top: 5%;
         right: -50px;
       }
 
-      .hero-geometric--3 {
+      .geo--rect-2,
+      .geo--circle,
+      .geo--line {
         display: none;
       }
 
-      .services {
-        padding: 4rem 1.5rem 5rem;
+      .portfolio {
+        padding: 3rem 1.5rem 5rem;
       }
 
-      .contact {
-        padding: 5rem 1.5rem 3rem;
+      .portfolio-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+      }
+
+      .portfolio-tile:nth-child(1) {
+        grid-column: 1 / 3;
+        grid-row: auto;
+      }
+
+      .portfolio-tile:nth-child(2) {
+        grid-column: 1 / 2;
+        grid-row: auto;
+      }
+
+      .portfolio-tile:nth-child(3) {
+        grid-column: 2 / 3;
+        grid-row: auto;
+      }
+
+      .portfolio-tile:nth-child(4) {
+        grid-column: 1 / 3;
+        grid-row: auto;
+      }
+
+      .portfolio-tile:nth-child(5) {
+        grid-column: 1 / 2;
+        grid-row: auto;
+      }
+
+      .portfolio-tile:nth-child(6) {
+        grid-column: 2 / 3;
+        grid-row: auto;
+      }
+
+      .portfolio-tile:nth-child(1) img {
+        min-height: 280px;
+      }
+
+      .portfolio-tile img {
+        min-height: 180px;
+      }
+
+      .portfolio-overlay {
+        opacity: 1;
+      }
+
+      .portfolio-number {
+        font-size: 2.5rem;
+      }
+
+      .portfolio-tile:nth-child(1) .portfolio-number {
+        font-size: 3rem;
+      }
+
+      .process {
+        padding: 5rem 1.5rem 4rem;
+      }
+
+      .process-steps {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+
+      .process-step {
+        text-align: left;
+        padding: 0;
+        display: flex;
+        gap: 1.25rem;
+        align-items: flex-start;
+      }
+
+      .process-step-number {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+        flex-shrink: 0;
+      }
+
+      .process-step-content {
+        flex: 1;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-stats {
+        gap: 1.5rem;
+      }
+
+      .hero-stat-number {
+        font-size: 1.5rem;
+      }
+
+      .portfolio-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .portfolio-tile:nth-child(1),
+      .portfolio-tile:nth-child(2),
+      .portfolio-tile:nth-child(3),
+      .portfolio-tile:nth-child(4),
+      .portfolio-tile:nth-child(5),
+      .portfolio-tile:nth-child(6) {
+        grid-column: 1 / -1;
+      }
+
+      .portfolio-tile img,
+      .portfolio-tile:nth-child(1) img {
+        min-height: 220px;
       }
     }
   </style>
@@ -558,10 +879,10 @@ export const prerender = true;
 
   <!-- NAV -->
   <nav class="nav">
-    <a href="#" class="nav-logo">Druckluft</a>
+    <a href="#" class="nav-logo">Druck<span>luft</span></a>
     <ul class="nav-links" id="navLinks">
-      <li><a href="#leistungen">Leistungen</a></li>
-      <li><a href="#kontakt">Kontakt</a></li>
+      <li><a href="#arbeiten">Arbeiten</a></li>
+      <li><a href="#prozess">Prozess</a></li>
     </ul>
     <button class="nav-burger" id="navBurger" aria-label="Menu">
       <span></span>
@@ -575,129 +896,203 @@ export const prerender = true;
     <div class="hero-bg">
       <img
         src="https://images.unsplash.com/photo-1565793298595-6a879b1d9492?w=1920&q=80&auto=format"
-        alt="Siebdruck-Werkstatt mit Farbsieben"
+        alt="Siebdruck-Werkstatt mit Farben und Drucktisch"
         loading="eager"
       />
     </div>
-    <div class="hero-geometric hero-geometric--1"></div>
-    <div class="hero-geometric hero-geometric--2"></div>
-    <div class="hero-geometric hero-geometric--3"></div>
+    <div class="geo geo--rect-1"></div>
+    <div class="geo geo--rect-2"></div>
+    <div class="geo geo--circle"></div>
+    <div class="geo geo--line"></div>
+    <div class="geo geo--dot-grid"></div>
     <div class="hero-content">
-      <div class="hero-tagline">Siebdruck-Werkstatt / Trier-Nord</div>
+      <div class="hero-label">Siebdruck-Werkstatt / Trier-Nord</div>
       <h1 class="hero-headline">
-        Druck.<br />
-        Farbe.<br />
-        <span>Haltung.</span>
+        <span class="line">Druck.</span>
+        <span class="line line--accent">Farbe.</span>
+        <span class="line line--outline">Haltung.</span>
       </h1>
       <p class="hero-subtitle">
-        Wir drucken, was andere nicht trauen. Handgemachter Siebdruck
-        fuer Leute mit Meinung. Seit 2020.
+        Wir drucken keine Massenware.<br />
+        <strong>Wir drucken das, woran du glaubst.</strong>
       </p>
-      <a href="#kontakt" class="btn-primary">Projekt anfragen</a>
+      <a href="#prozess" class="btn-primary">Projekt anfragen</a>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="hero-stat-number">847</span>
+          <span class="hero-stat-label">Drucke in 2025</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-number">100%</span>
+          <span class="hero-stat-label">Handarbeit</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-number">2020</span>
+          <span class="hero-stat-label">Seit</span>
+        </div>
+      </div>
     </div>
-    <div class="hero-skew-bar"></div>
+    <div class="hero-divider"></div>
   </section>
 
-  <!-- SERVICES -->
-  <section class="services" id="leistungen">
-    <p class="section-label">Was wir machen</p>
+  <!-- PORTFOLIO / LETZTE ARBEITEN -->
+  <section class="portfolio" id="arbeiten">
+    <p class="section-label">Siebdruck-Projekte</p>
     <h2 class="section-headline">
-      Drei Wege,<br />deine Idee auf<br />Material zu bringen.
+      Was zuletzt<br />vom Tisch <span>ging.</span>
     </h2>
-    <div class="services-grid">
+    <div class="portfolio-grid">
 
-      <div class="service-card">
-        <div class="service-number">01</div>
-        <h3 class="service-title">Textildruck</h3>
-        <p class="service-desc">
-          T-Shirts, Hoodies, Beutel. Vom Einzelstueck bis zur Kleinserie.
-          Hochwertige Farben, die auch nach 50 Waeschen noch halten.
-        </p>
-        <p class="service-price">Ab <em>18 EUR</em> / Stueck</p>
+      <div class="portfolio-tile">
+        <span class="portfolio-number">01</span>
+        <img
+          src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=800&q=80&auto=format"
+          alt="Festival T-Shirts im Siebdruck"
+          loading="lazy"
+        />
+        <div class="portfolio-overlay">
+          <span class="portfolio-tag">Textildruck</span>
+          <span class="portfolio-title">Moselrock Festival 2025</span>
+          <span class="portfolio-meta">500 Festival-Shirts, 3 Farben</span>
+        </div>
       </div>
 
-      <div class="service-card">
-        <div class="service-number">02</div>
-        <h3 class="service-title">Poster & Prints</h3>
-        <p class="service-desc">
-          Kunstdrucke, Plakate, limitierte Editionen. Handgezogen
-          auf schwerem Papier. Jeder Druck ein Original.
-        </p>
-        <p class="service-price">Ab <em>35 EUR</em> / Druck</p>
+      <div class="portfolio-tile">
+        <span class="portfolio-number">02</span>
+        <img
+          src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600&q=80&auto=format"
+          alt="Branding-Material auf Tisch"
+          loading="lazy"
+        />
+        <div class="portfolio-overlay">
+          <span class="portfolio-tag">Branding</span>
+          <span class="portfolio-title">Cafe Karls</span>
+          <span class="portfolio-meta">Schuerzen + Postkarten</span>
+        </div>
       </div>
 
-      <div class="service-card">
-        <div class="service-number">03</div>
-        <h3 class="service-title">Workshops</h3>
-        <p class="service-desc">
-          Siebdruck lernen in der Werkstatt. 4 Stunden, eigenes Motiv,
-          alles inklusive. Fuer Anfaenger und Fortgeschrittene.
-        </p>
-        <p class="service-price">Ab <em>89 EUR</em> / Person</p>
+      <div class="portfolio-tile">
+        <span class="portfolio-number">03</span>
+        <img
+          src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&q=80&auto=format"
+          alt="Handgedruckte Poster"
+          loading="lazy"
+        />
+        <div class="portfolio-overlay">
+          <span class="portfolio-tag">Poster</span>
+          <span class="portfolio-title">Demo-Plakate Trier</span>
+          <span class="portfolio-meta">200 Siebdruck-Poster, 2 Farben</span>
+        </div>
+      </div>
+
+      <div class="portfolio-tile">
+        <span class="portfolio-number">04</span>
+        <img
+          src="https://images.unsplash.com/photo-1607344645866-009c320b63e0?w=600&q=80&auto=format"
+          alt="Custom Einladungskarten"
+          loading="lazy"
+        />
+        <div class="portfolio-overlay">
+          <span class="portfolio-tag">Papeterie</span>
+          <span class="portfolio-title">Hochzeit Mueller/Schmidt</span>
+          <span class="portfolio-meta">Custom Einladungen + Save the Dates</span>
+        </div>
+      </div>
+
+      <div class="portfolio-tile">
+        <span class="portfolio-number">05</span>
+        <img
+          src="https://images.unsplash.com/photo-1586075010923-2dd4570fb338?w=600&q=80&auto=format"
+          alt="Bedruckte Jutebeutel"
+          loading="lazy"
+        />
+        <div class="portfolio-overlay">
+          <span class="portfolio-tag">Textildruck</span>
+          <span class="portfolio-title">Unverpackt Trier</span>
+          <span class="portfolio-meta">300 Jutebeutel, Bio-Farbe</span>
+        </div>
+      </div>
+
+      <div class="portfolio-tile">
+        <span class="portfolio-number">06</span>
+        <img
+          src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=600&q=80&auto=format"
+          alt="Limitierte Kunstdrucke"
+          loading="lazy"
+        />
+        <div class="portfolio-overlay">
+          <span class="portfolio-tag">Kunstdruck</span>
+          <span class="portfolio-title">Edition Druckluft #4</span>
+          <span class="portfolio-meta">50 Prints, limitiert + nummeriert</span>
+        </div>
       </div>
 
     </div>
   </section>
 
-  <!-- CONTACT -->
-  <section class="contact" id="kontakt">
-    <div class="contact-skew-top"></div>
-    <div class="contact-inner">
-      <p class="contact-manifesto">
-        Kein Massenprodukt. Kein Algorithmus.<br />
-        Nur <span>Farbe, Rakel und Haltung.</span>
-      </p>
-      <div class="contact-grid">
+  <!-- PROZESS -->
+  <section class="process" id="prozess">
+    <div class="process-skew-top"></div>
+    <div class="process-inner">
+      <p class="section-label">So lauft das</p>
+      <h2 class="section-headline">
+        Vom Kopf<br />aufs <span>Shirt.</span>
+      </h2>
+      <div class="process-steps">
 
-        <form class="contact-form" onsubmit="event.preventDefault()">
-          <div class="form-group">
-            <label for="contactName">Name</label>
-            <input type="text" id="contactName" placeholder="Dein Name" required />
-          </div>
-          <div class="form-group">
-            <label for="contactEmail">E-Mail</label>
-            <input type="email" id="contactEmail" placeholder="name@beispiel.de" required />
-          </div>
-          <div class="form-group">
-            <label for="contactMessage">Nachricht</label>
-            <textarea id="contactMessage" placeholder="Was hast du vor?"></textarea>
-          </div>
-          <button type="submit" class="btn-primary">Abschicken</button>
-        </form>
-
-        <div class="contact-info">
-          <div class="contact-block">
-            <h3>Adresse</h3>
-            <p>
-              Druckluft Siebdruck-Werkstatt<br />
-              Domfreihof 1a<br />
-              54290 Trier
+        <div class="process-step">
+          <div class="process-step-number">01</div>
+          <div class="process-step-content">
+            <h3 class="process-step-title">Idee</h3>
+            <p class="process-step-desc">
+              Du kommst mit einer Skizze, einem Logo oder nur einer Idee. Serviette reicht.
             </p>
-          </div>
-          <div class="contact-block">
-            <h3>Kontakt</h3>
-            <p>
-              <a href="tel:+4906517105590">0651 — 710 55 90</a><br />
-              <a href="mailto:hallo@druckluft-trier.de">hallo@druckluft-trier.de</a>
-            </p>
-          </div>
-          <div class="contact-block">
-            <h3>Oeffnungszeiten</h3>
-            <table class="hours-table">
-              <tr><td>Montag — Freitag</td><td>10 — 18 Uhr</td></tr>
-              <tr><td>Samstag</td><td>11 — 15 Uhr</td></tr>
-              <tr><td>Sonntag</td><td>Geschlossen</td></tr>
-            </table>
           </div>
         </div>
 
+        <div class="process-step">
+          <div class="process-step-number">02</div>
+          <div class="process-step-content">
+            <h3 class="process-step-title">Reinzeichnung</h3>
+            <p class="process-step-desc">
+              Wir machen daraus eine druckfaehige Vorlage. Farben, Groesse, Material — alles abgestimmt.
+            </p>
+          </div>
+        </div>
+
+        <div class="process-step">
+          <div class="process-step-number">03</div>
+          <div class="process-step-content">
+            <h3 class="process-step-title">Sieb & Farbe</h3>
+            <p class="process-step-desc">
+              Handarbeit am Drucktisch. Jede Farbe ein eigener Durchgang. Kein Digitaldruck, kein Shortcut.
+            </p>
+          </div>
+        </div>
+
+        <div class="process-step">
+          <div class="process-step-number">04</div>
+          <div class="process-step-content">
+            <h3 class="process-step-title">Abholung</h3>
+            <p class="process-step-desc">
+              In 5–7 Werktagen. Oder du schaust beim Drucken zu — Kaffee gibt's gratis.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="process-cta">
+        <p class="process-cta-text">
+          Bock? <span>&rarr;</span> <a href="tel:+4906517105590">0651 — 710 55 90</a> oder <a href="mailto:druckluft@mail.de">druckluft@mail.de</a>
+        </p>
       </div>
     </div>
   </section>
 
   <!-- FOOTER -->
   <footer class="footer">
-    <p>&copy; 2020 — 2026 <span>Druckluft</span>. Siebdruck mit Haltung.</p>
+    <p>&copy; 2020 — 2026 <span>Druckluft</span>. Trier-Nord. Handgemacht.</p>
   </footer>
 
   <script>
@@ -706,7 +1101,6 @@ export const prerender = true;
     burger.addEventListener('click', () => {
       navLinks.classList.toggle('open');
     });
-    // Close menu on link click
     navLinks.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', () => {
         navLinks.classList.remove('open');

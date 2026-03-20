@@ -8,10 +8,10 @@ export const prerender = true;
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
   <title>Lichtblick — Yoga & Meditation in Konz</title>
-  <meta name="description" content="Dein Raum für innere Ruhe. Yoga, Meditation und Achtsamkeit in Konz bei Trier. Hatha, Vinyasa, Yin Yoga und mehr." />
+  <meta name="description" content="Dein Raum fuer innere Ruhe. Yoga, Meditation und Achtsamkeit in Konz bei Trier." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400&display=swap" rel="stylesheet" />
 
   <style>
     *, *::before, *::after {
@@ -23,23 +23,25 @@ export const prerender = true;
     :root {
       --primary: #7C9885;
       --primary-dark: #6a8573;
+      --primary-light: rgba(124, 152, 133, 0.10);
       --secondary: #F7F3EE;
       --accent: #D4A574;
       --accent-light: #e4c4a0;
       --bg: #FDFBF8;
       --text: #2D3436;
       --text-light: #636e72;
+      --text-muted: #9ca3a8;
       --white: #ffffff;
-      --shadow-soft: 0 2px 16px rgba(0, 0, 0, 0.06);
-      --shadow-medium: 0 4px 24px rgba(0, 0, 0, 0.08);
-      --radius: 16px;
-      --radius-sm: 10px;
+      --shadow-soft: 0 2px 20px rgba(124, 152, 133, 0.08);
+      --shadow-medium: 0 8px 40px rgba(124, 152, 133, 0.12);
+      --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.05);
+      --radius: 20px;
+      --radius-lg: 28px;
+      --radius-sm: 14px;
       --radius-full: 9999px;
     }
 
-    html {
-      scroll-behavior: smooth;
-    }
+    html { scroll-behavior: smooth; }
 
     body {
       font-family: 'DM Sans', sans-serif;
@@ -48,19 +50,20 @@ export const prerender = true;
       line-height: 1.7;
       font-size: 16px;
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
 
-    /* ===================== NAV ===================== */
+    /* ==================== NAV ==================== */
     .nav {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
       z-index: 100;
-      background: rgba(253, 251, 248, 0.85);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(124, 152, 133, 0.1);
+      background: rgba(253, 251, 248, 0.82);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(124, 152, 133, 0.08);
       transition: box-shadow 0.3s ease;
     }
 
@@ -69,9 +72,9 @@ export const prerender = true;
     }
 
     .nav-inner {
-      max-width: 1200px;
+      max-width: 1120px;
       margin: 0 auto;
-      padding: 0 24px;
+      padding: 0 28px;
       height: 72px;
       display: flex;
       align-items: center;
@@ -79,7 +82,7 @@ export const prerender = true;
     }
 
     .nav-logo {
-      font-size: 1.35rem;
+      font-size: 1.3rem;
       font-weight: 600;
       color: var(--primary);
       text-decoration: none;
@@ -93,17 +96,16 @@ export const prerender = true;
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 32px;
+      gap: 36px;
       list-style: none;
     }
 
     .nav-links a {
       text-decoration: none;
       color: var(--text-light);
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-weight: 500;
       transition: color 0.2s ease;
-      position: relative;
     }
 
     .nav-links a:hover {
@@ -113,7 +115,7 @@ export const prerender = true;
     .nav-links .nav-cta {
       background: var(--primary);
       color: var(--white);
-      padding: 10px 22px;
+      padding: 10px 24px;
       border-radius: var(--radius-full);
       font-weight: 500;
       transition: background 0.2s ease, transform 0.2s ease;
@@ -143,7 +145,7 @@ export const prerender = true;
       transition: all 0.3s ease;
     }
 
-    /* ===================== HERO ===================== */
+    /* ==================== HERO ==================== */
     .hero {
       min-height: 100vh;
       display: flex;
@@ -170,84 +172,118 @@ export const prerender = true;
       position: absolute;
       inset: 0;
       background: linear-gradient(
-        135deg,
-        rgba(253, 251, 248, 0.92) 0%,
-        rgba(253, 251, 248, 0.78) 50%,
-        rgba(253, 251, 248, 0.55) 100%
+        160deg,
+        rgba(253, 251, 248, 0.95) 0%,
+        rgba(253, 251, 248, 0.88) 40%,
+        rgba(253, 251, 248, 0.6) 100%
       );
       z-index: 1;
+    }
+
+    /* Floating organic shapes */
+    .hero-shape {
+      position: absolute;
+      border-radius: 50%;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .hero-shape-1 {
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(124, 152, 133, 0.08) 0%, transparent 70%);
+      top: -100px;
+      right: -100px;
+    }
+
+    .hero-shape-2 {
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(212, 165, 116, 0.1) 0%, transparent 70%);
+      bottom: -50px;
+      left: -80px;
+    }
+
+    .hero-shape-3 {
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(124, 152, 133, 0.06) 0%, transparent 70%);
+      top: 40%;
+      right: 20%;
     }
 
     .hero-content {
       position: relative;
       z-index: 2;
-      max-width: 1200px;
+      max-width: 1120px;
       margin: 0 auto;
-      padding: 80px 24px 60px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 64px;
-      align-items: center;
+      padding: 80px 28px 80px;
+      width: 100%;
     }
 
-    .hero-text {
-      max-width: 540px;
+    .hero-inner {
+      max-width: 600px;
     }
 
-    .hero-badge {
+    .hero-location {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: var(--white);
-      border: 1px solid rgba(124, 152, 133, 0.2);
-      padding: 6px 16px;
-      border-radius: var(--radius-full);
-      font-size: 0.8rem;
-      font-weight: 500;
       color: var(--primary);
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
       margin-bottom: 28px;
-      box-shadow: var(--shadow-soft);
     }
 
-    .hero-badge::before {
-      content: '';
-      width: 6px;
-      height: 6px;
-      background: var(--primary);
-      border-radius: 50%;
-      animation: pulse-dot 2s ease-in-out infinite;
-    }
-
-    @keyframes pulse-dot {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.4; }
+    .hero-location svg {
+      width: 14px;
+      height: 14px;
+      opacity: 0.7;
     }
 
     .hero h1 {
-      font-size: clamp(2.8rem, 5vw, 4rem);
+      font-size: clamp(3rem, 6vw, 4.5rem);
       font-weight: 700;
-      line-height: 1.1;
-      letter-spacing: -0.03em;
+      line-height: 1.05;
+      letter-spacing: -0.035em;
       color: var(--text);
-      margin-bottom: 20px;
+      margin-bottom: 28px;
     }
 
     .hero h1 em {
-      font-style: normal;
+      font-style: italic;
+      font-weight: 300;
       color: var(--primary);
     }
 
-    .hero-subtitle {
-      font-size: 1.1rem;
+    .hero-details {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 40px;
+    }
+
+    .hero-detail {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1rem;
       color: var(--text-light);
-      line-height: 1.7;
-      margin-bottom: 36px;
-      max-width: 440px;
+    }
+
+    .hero-detail svg {
+      width: 18px;
+      height: 18px;
+      color: var(--primary);
+      flex-shrink: 0;
+      opacity: 0.7;
     }
 
     .hero-actions {
       display: flex;
-      gap: 16px;
+      gap: 14px;
       flex-wrap: wrap;
       margin-bottom: 56px;
     }
@@ -255,312 +291,143 @@ export const prerender = true;
     .btn-primary {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       background: var(--primary);
       color: var(--white);
-      padding: 15px 32px;
+      padding: 16px 36px;
       border-radius: var(--radius-full);
       text-decoration: none;
       font-weight: 600;
       font-size: 0.95rem;
       border: none;
       cursor: pointer;
-      transition: all 0.25s ease;
-      box-shadow: 0 4px 16px rgba(124, 152, 133, 0.3);
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(124, 152, 133, 0.3);
     }
 
     .btn-primary:hover {
       background: var(--primary-dark);
       transform: translateY(-2px);
-      box-shadow: 0 6px 24px rgba(124, 152, 133, 0.4);
+      box-shadow: 0 8px 30px rgba(124, 152, 133, 0.4);
     }
 
-    .btn-ghost {
+    .btn-secondary {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      background: transparent;
+      gap: 10px;
+      background: var(--white);
       color: var(--text);
-      padding: 15px 32px;
+      padding: 16px 36px;
       border-radius: var(--radius-full);
       text-decoration: none;
       font-weight: 500;
       font-size: 0.95rem;
-      border: 1.5px solid rgba(45, 52, 54, 0.2);
+      border: 1.5px solid rgba(124, 152, 133, 0.2);
       cursor: pointer;
-      transition: all 0.25s ease;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow-soft);
     }
 
-    .btn-ghost:hover {
+    .btn-secondary:hover {
       border-color: var(--primary);
       color: var(--primary);
-      background: rgba(124, 152, 133, 0.05);
+      transform: translateY(-2px);
     }
 
     .hero-trust {
       display: flex;
-      gap: 40px;
+      align-items: center;
+      gap: 12px;
       flex-wrap: wrap;
     }
 
-    .trust-item {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .trust-value {
-      font-size: 1.25rem;
-      font-weight: 700;
-      color: var(--text);
-    }
-
-    .trust-label {
-      font-size: 0.78rem;
-      color: var(--text-light);
-      font-weight: 400;
-    }
-
-    .hero-image-card {
-      position: relative;
-      border-radius: 24px;
-      overflow: hidden;
-      box-shadow: var(--shadow-medium);
-      aspect-ratio: 3 / 4;
-      max-height: 520px;
-      justify-self: center;
-    }
-
-    .hero-image-card img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .hero-image-float {
-      position: absolute;
-      bottom: 24px;
-      left: 24px;
-      right: 24px;
-      background: rgba(255, 255, 255, 0.92);
-      backdrop-filter: blur(12px);
-      border-radius: var(--radius);
-      padding: 16px 20px;
-      display: flex;
+    .hero-trust-pill {
+      display: inline-flex;
       align-items: center;
-      gap: 14px;
-    }
-
-    .hero-image-float-icon {
-      width: 40px;
-      height: 40px;
-      background: var(--primary);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--white);
-      font-size: 1.1rem;
-      flex-shrink: 0;
-    }
-
-    .hero-image-float-text strong {
-      display: block;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--text);
-    }
-
-    .hero-image-float-text span {
-      font-size: 0.78rem;
-      color: var(--text-light);
-    }
-
-    /* ===================== SECTION BASE ===================== */
-    .section {
-      padding: 100px 24px;
-    }
-
-    .section-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .section-header {
-      text-align: center;
-      max-width: 560px;
-      margin: 0 auto 56px;
-    }
-
-    .section-tag {
-      display: inline-block;
-      font-size: 0.78rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--primary);
-      margin-bottom: 12px;
-    }
-
-    .section-title {
-      font-size: clamp(1.8rem, 3.5vw, 2.4rem);
-      font-weight: 700;
-      line-height: 1.2;
-      letter-spacing: -0.02em;
-      margin-bottom: 16px;
-    }
-
-    .section-desc {
-      font-size: 1rem;
-      color: var(--text-light);
-      line-height: 1.7;
-    }
-
-    /* ===================== KURSE ===================== */
-    .kurse {
-      background: var(--secondary);
-    }
-
-    .kurse-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 24px;
-    }
-
-    .kurs-card {
-      background: var(--white);
-      border-radius: var(--radius);
-      padding: 32px 28px;
-      box-shadow: var(--shadow-soft);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .kurs-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-medium);
-    }
-
-    .kurs-icon {
-      width: 52px;
-      height: 52px;
-      background: linear-gradient(135deg, var(--secondary), rgba(124, 152, 133, 0.12));
-      border-radius: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-      margin-bottom: 20px;
-    }
-
-    .kurs-card h3 {
-      font-size: 1.15rem;
-      font-weight: 600;
-      margin-bottom: 10px;
-      letter-spacing: -0.01em;
-    }
-
-    .kurs-card p {
-      font-size: 0.88rem;
-      color: var(--text-light);
-      line-height: 1.6;
-      margin-bottom: 20px;
-    }
-
-    .kurs-meta {
-      display: flex;
-      flex-direction: column;
       gap: 6px;
-    }
-
-    .kurs-meta-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.8rem;
-      color: var(--text-light);
-    }
-
-    .kurs-meta-icon {
-      width: 16px;
-      height: 16px;
-      flex-shrink: 0;
-      opacity: 0.6;
-    }
-
-    .kurs-level {
-      display: inline-block;
-      margin-top: 16px;
-      padding: 4px 12px;
+      background: var(--white);
+      border: 1px solid rgba(124, 152, 133, 0.12);
+      padding: 8px 18px;
       border-radius: var(--radius-full);
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.03em;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text);
+      box-shadow: var(--shadow-soft);
     }
 
-    .level-beginner {
-      background: rgba(124, 152, 133, 0.12);
-      color: var(--primary);
-    }
-
-    .level-all {
-      background: rgba(212, 165, 116, 0.15);
+    .hero-trust-pill svg {
+      width: 14px;
+      height: 14px;
       color: var(--accent);
     }
 
-    .level-advanced {
-      background: rgba(45, 52, 54, 0.08);
-      color: var(--text-light);
+    .trust-separator {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: rgba(124, 152, 133, 0.3);
     }
 
-    /* ===================== KONTAKT ===================== */
-    .kontakt {
-      background: var(--bg);
+    /* ==================== PHILOSOPHIE ==================== */
+    .philosophie {
+      padding: 120px 28px;
+      background: var(--secondary);
+      position: relative;
+      overflow: hidden;
     }
 
-    .kontakt-grid {
+    .philosophie-shape {
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(124, 152, 133, 0.06) 0%, transparent 70%);
+      top: -150px;
+      right: -200px;
+      pointer-events: none;
+    }
+
+    .philosophie-inner {
+      max-width: 1120px;
+      margin: 0 auto;
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 64px;
-      align-items: start;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 80px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
     }
 
-    .kontakt-info {
-      padding-top: 8px;
+    .philosophie-image {
+      position: relative;
     }
 
-    .kontakt-info h3 {
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin-bottom: 8px;
-      letter-spacing: -0.02em;
+    .philosophie-image img {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-medium);
     }
 
-    .kontakt-info > p {
-      color: var(--text-light);
-      font-size: 0.95rem;
-      margin-bottom: 32px;
-      line-height: 1.7;
-    }
-
-    .kontakt-details {
+    .philosophie-image-badge {
+      position: absolute;
+      bottom: -20px;
+      right: -20px;
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      box-shadow: var(--shadow-card);
       display: flex;
-      flex-direction: column;
-      gap: 20px;
-      margin-bottom: 36px;
+      align-items: center;
+      gap: 14px;
+      max-width: 240px;
     }
 
-    .kontakt-detail {
-      display: flex;
-      gap: 16px;
-      align-items: flex-start;
-    }
-
-    .kontakt-detail-icon {
+    .philosophie-image-badge-icon {
       width: 44px;
       height: 44px;
-      background: var(--secondary);
+      background: var(--primary-light);
       border-radius: 12px;
       display: flex;
       align-items: center;
@@ -568,169 +435,307 @@ export const prerender = true;
       flex-shrink: 0;
     }
 
-    .kontakt-detail-icon svg {
-      width: 20px;
-      height: 20px;
+    .philosophie-image-badge-icon svg {
+      width: 22px;
+      height: 22px;
       color: var(--primary);
     }
 
-    .kontakt-detail-text strong {
+    .philosophie-image-badge-text {
+      font-size: 0.82rem;
+      line-height: 1.4;
+    }
+
+    .philosophie-image-badge-text strong {
       display: block;
-      font-size: 0.88rem;
       font-weight: 600;
-      margin-bottom: 2px;
+      color: var(--text);
     }
 
-    .kontakt-detail-text span,
-    .kontakt-detail-text a {
-      font-size: 0.85rem;
-      color: var(--text-light);
-      text-decoration: none;
-      line-height: 1.6;
-    }
-
-    .kontakt-detail-text a:hover {
-      color: var(--primary);
-    }
-
-    .kontakt-hours {
-      background: var(--secondary);
-      border-radius: var(--radius);
-      padding: 24px;
-    }
-
-    .kontakt-hours h4 {
-      font-size: 0.9rem;
-      font-weight: 600;
-      margin-bottom: 12px;
-    }
-
-    .kontakt-hours-row {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.85rem;
-      padding: 6px 0;
-      border-bottom: 1px solid rgba(124, 152, 133, 0.08);
-    }
-
-    .kontakt-hours-row:last-child {
-      border-bottom: none;
-    }
-
-    .kontakt-hours-day {
+    .philosophie-image-badge-text span {
       color: var(--text-light);
     }
 
-    .kontakt-hours-time {
-      font-weight: 500;
+    .philosophie-text {
+      max-width: 520px;
     }
 
-    /* FORM */
-    .kontakt-form {
-      background: var(--white);
-      border-radius: 20px;
-      padding: 40px;
-      box-shadow: var(--shadow-medium);
-    }
-
-    .kontakt-form h3 {
-      font-size: 1.2rem;
+    .philosophie-tag {
+      display: inline-block;
+      font-size: 0.75rem;
       font-weight: 600;
-      margin-bottom: 6px;
-    }
-
-    .kontakt-form > p {
-      font-size: 0.85rem;
-      color: var(--text-light);
-      margin-bottom: 28px;
-    }
-
-    .form-group {
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
       margin-bottom: 20px;
     }
 
-    .form-group label {
-      display: block;
-      font-size: 0.82rem;
-      font-weight: 500;
-      margin-bottom: 6px;
-      color: var(--text);
+    .philosophie-text h2 {
+      font-size: clamp(1.8rem, 3vw, 2.2rem);
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.025em;
+      margin-bottom: 24px;
     }
 
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      width: 100%;
-      padding: 12px 16px;
-      border: 1.5px solid rgba(45, 52, 54, 0.12);
-      border-radius: var(--radius-sm);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.9rem;
-      color: var(--text);
-      background: var(--bg);
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
-      outline: none;
+    .philosophie-quote {
+      font-size: 1.05rem;
+      color: var(--text-light);
+      line-height: 1.8;
+      margin-bottom: 20px;
+      font-style: italic;
+      border-left: 3px solid var(--accent);
+      padding-left: 20px;
     }
 
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(124, 152, 133, 0.12);
+    .philosophie-body {
+      font-size: 0.95rem;
+      color: var(--text-light);
+      line-height: 1.8;
+      margin-bottom: 48px;
     }
 
-    .form-group input::placeholder,
-    .form-group textarea::placeholder {
-      color: #b2bec3;
-    }
-
-    .form-group textarea {
-      resize: vertical;
-      min-height: 100px;
-    }
-
-    .form-row {
+    .philosophie-principles {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(3, 1fr);
       gap: 16px;
     }
 
-    .form-submit {
-      width: 100%;
-      padding: 15px;
-      background: var(--primary);
-      color: var(--white);
-      border: none;
-      border-radius: var(--radius-sm);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.95rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      margin-top: 4px;
-    }
-
-    .form-submit:hover {
-      background: var(--primary-dark);
-      box-shadow: 0 4px 16px rgba(124, 152, 133, 0.3);
-    }
-
-    .form-hint {
-      font-size: 0.75rem;
-      color: var(--text-light);
-      margin-top: 16px;
+    .principle-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 24px 20px;
       text-align: center;
+      box-shadow: var(--shadow-soft);
+      transition: transform 0.3s ease;
     }
 
-    /* ===================== FOOTER ===================== */
+    .principle-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .principle-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--primary-light);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 14px;
+    }
+
+    .principle-icon svg {
+      width: 22px;
+      height: 22px;
+      color: var(--primary);
+    }
+
+    .principle-card h4 {
+      font-size: 0.88rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      letter-spacing: -0.01em;
+    }
+
+    .principle-card p {
+      font-size: 0.78rem;
+      color: var(--text-light);
+      line-height: 1.5;
+    }
+
+    /* ==================== WOCHENPLAN ==================== */
+    .wochenplan {
+      padding: 120px 28px;
+      background: var(--bg);
+    }
+
+    .wochenplan-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .wochenplan-header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+
+    .wochenplan-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--primary);
+      margin-bottom: 16px;
+    }
+
+    .wochenplan-header h2 {
+      font-size: clamp(1.8rem, 3vw, 2.2rem);
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.025em;
+      margin-bottom: 12px;
+    }
+
+    .wochenplan-header p {
+      font-size: 0.95rem;
+      color: var(--text-light);
+      max-width: 440px;
+      margin: 0 auto;
+    }
+
+    /* Schedule Grid */
+    .schedule-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+      margin-bottom: 56px;
+    }
+
+    .schedule-day {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 24px 20px;
+      box-shadow: var(--shadow-soft);
+      min-height: 180px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .schedule-day-name {
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(124, 152, 133, 0.1);
+    }
+
+    .schedule-slot {
+      margin-bottom: 16px;
+      padding: 14px;
+      border-radius: var(--radius-sm);
+      background: var(--bg);
+      transition: transform 0.2s ease;
+    }
+
+    .schedule-slot:last-child {
+      margin-bottom: 0;
+    }
+
+    .schedule-slot:hover {
+      transform: scale(1.02);
+    }
+
+    .schedule-time {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+      letter-spacing: 0.02em;
+    }
+
+    .schedule-class {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .schedule-level {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.72rem;
+      font-weight: 500;
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+    }
+
+    .schedule-level::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+
+    .level-einsteiger {
+      background: rgba(124, 152, 133, 0.1);
+      color: var(--primary-dark);
+    }
+
+    .level-einsteiger::before {
+      background: var(--primary);
+    }
+
+    .level-mittel {
+      background: rgba(212, 165, 116, 0.15);
+      color: #b8895a;
+    }
+
+    .level-mittel::before {
+      background: var(--accent);
+    }
+
+    .level-alle {
+      background: rgba(124, 152, 133, 0.08);
+      color: var(--text-light);
+    }
+
+    .level-alle::before {
+      background: var(--text-muted);
+    }
+
+    /* CTA line */
+    .wochenplan-cta {
+      text-align: center;
+      background: var(--secondary);
+      border-radius: var(--radius-lg);
+      padding: 48px 40px;
+    }
+
+    .wochenplan-cta-phone {
+      font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .wochenplan-cta-phone a {
+      color: var(--primary);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .wochenplan-cta-phone a:hover {
+      color: var(--primary-dark);
+    }
+
+    .wochenplan-cta-sub {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      margin-bottom: 0;
+    }
+
+    .wochenplan-cta-note {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 20px;
+      font-style: italic;
+    }
+
+    /* ==================== FOOTER ==================== */
     .footer {
       background: var(--text);
       color: rgba(255, 255, 255, 0.7);
-      padding: 48px 24px 32px;
+      padding: 48px 28px 32px;
     }
 
     .footer-inner {
-      max-width: 1200px;
+      max-width: 1120px;
       margin: 0 auto;
       display: flex;
       justify-content: space-between;
@@ -756,7 +761,7 @@ export const prerender = true;
     }
 
     .footer-links a {
-      color: rgba(255, 255, 255, 0.5);
+      color: rgba(255, 255, 255, 0.45);
       text-decoration: none;
       font-size: 0.82rem;
       transition: color 0.2s ease;
@@ -768,18 +773,22 @@ export const prerender = true;
 
     .footer-copy {
       font-size: 0.78rem;
-      color: rgba(255, 255, 255, 0.35);
+      color: rgba(255, 255, 255, 0.3);
       width: 100%;
       text-align: center;
       margin-top: 24px;
       padding-top: 24px;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
     }
 
-    /* ===================== MOBILE ===================== */
+    /* ==================== MOBILE ==================== */
     @media (max-width: 1024px) {
-      .kurse-grid {
-        grid-template-columns: repeat(2, 1fr);
+      .schedule-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .philosophie-principles {
+        grid-template-columns: repeat(3, 1fr);
       }
     }
 
@@ -823,45 +832,53 @@ export const prerender = true;
         transform: rotate(-45deg) translate(5px, -5px);
       }
 
-      .hero-content {
-        grid-template-columns: 1fr;
-        padding: 40px 24px 60px;
-        gap: 40px;
-      }
-
-      .hero-image-card {
-        max-height: 360px;
-        width: 100%;
-      }
-
       .hero h1 {
-        font-size: 2.4rem;
+        font-size: 2.6rem;
+      }
+
+      .hero-content {
+        padding: 50px 24px 60px;
       }
 
       .hero-trust {
-        gap: 28px;
+        gap: 8px;
       }
 
-      .kurse-grid {
+      .philosophie {
+        padding: 80px 24px;
+      }
+
+      .philosophie-inner {
         grid-template-columns: 1fr;
-        gap: 16px;
+        gap: 48px;
       }
 
-      .kontakt-grid {
-        grid-template-columns: 1fr;
-        gap: 40px;
+      .philosophie-image {
+        max-width: 400px;
+        margin: 0 auto;
       }
 
-      .kontakt-form {
-        padding: 28px;
+      .philosophie-image-badge {
+        right: -10px;
+        bottom: -16px;
       }
 
-      .form-row {
-        grid-template-columns: 1fr;
+      .philosophie-principles {
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 12px;
       }
 
-      .section {
-        padding: 64px 24px;
+      .wochenplan {
+        padding: 80px 24px;
+      }
+
+      .schedule-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+
+      .wochenplan-cta {
+        padding: 36px 24px;
       }
 
       .footer-inner {
@@ -877,7 +894,7 @@ export const prerender = true;
 
     @media (max-width: 480px) {
       .hero h1 {
-        font-size: 2rem;
+        font-size: 2.2rem;
       }
 
       .hero-actions {
@@ -885,14 +902,31 @@ export const prerender = true;
       }
 
       .btn-primary,
-      .btn-ghost {
+      .btn-secondary {
         justify-content: center;
         width: 100%;
       }
 
       .hero-trust {
         flex-direction: column;
-        gap: 16px;
+        align-items: flex-start;
+        gap: 8px;
+      }
+
+      .trust-separator {
+        display: none;
+      }
+
+      .philosophie-principles {
+        grid-template-columns: 1fr;
+      }
+
+      .schedule-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .schedule-day {
+        min-height: auto;
       }
     }
   </style>
@@ -905,12 +939,11 @@ export const prerender = true;
     <div class="nav-inner">
       <a href="#" class="nav-logo">licht<span>blick</span></a>
       <ul class="nav-links" id="navLinks">
-        <li><a href="#kurse">Kurse</a></li>
-        <li><a href="#ueber">Über mich</a></li>
-        <li><a href="#kontakt">Kontakt</a></li>
-        <li><a href="#kontakt" class="nav-cta">Probestunde buchen</a></li>
+        <li><a href="#philosophie">Sarah</a></li>
+        <li><a href="#wochenplan">Wochenplan</a></li>
+        <li><a href="tel:+496501943210" class="nav-cta">Anrufen</a></li>
       </ul>
-      <button class="nav-toggle" id="navToggle" aria-label="Menü öffnen">
+      <button class="nav-toggle" id="navToggle" aria-label="Menu oeffnen">
         <span></span>
         <span></span>
         <span></span>
@@ -923,258 +956,194 @@ export const prerender = true;
     <div class="hero-bg">
       <img
         src="https://images.unsplash.com/photo-1545389336-cf090694435e?w=1920&q=80&auto=format"
-        alt="Yoga-Praxis in friedlicher Atmosphäre"
+        alt="Yoga-Praxis in friedlicher Atmosphaere"
         loading="eager"
       />
     </div>
     <div class="hero-overlay"></div>
+    <div class="hero-shape hero-shape-1"></div>
+    <div class="hero-shape hero-shape-2"></div>
+    <div class="hero-shape hero-shape-3"></div>
+
     <div class="hero-content">
-      <div class="hero-text">
-        <div class="hero-badge">Yoga & Meditation in Konz</div>
-        <h1>Finde deine <em>Mitte.</em></h1>
-        <p class="hero-subtitle">
-          Ein Ort, an dem du durchatmen kannst. Ich begleite dich mit Yoga, Meditation und Achtsamkeit — in deinem Tempo, auf deinem Weg.
-        </p>
+      <div class="hero-inner">
+        <div class="hero-location">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          In der alten Muehle am Konzer Bach
+        </div>
+
+        <h1>Finde deine<br><em>Mitte.</em></h1>
+
+        <div class="hero-details">
+          <div class="hero-detail">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+            Kleine Gruppen, max. 8 Teilnehmer
+          </div>
+          <div class="hero-detail">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Hatha, Vinyasa, Yin & Meditation
+          </div>
+        </div>
+
         <div class="hero-actions">
-          <a href="#kontakt" class="btn-primary">
-            Probestunde buchen
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          <a href="#wochenplan" class="btn-primary">
+            Kursplan ansehen
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
           </a>
-          <a href="#kurse" class="btn-ghost">Kursplan ansehen</a>
+          <a href="tel:+496501943210" class="btn-secondary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            Probestunde anfragen
+          </a>
         </div>
+
         <div class="hero-trust">
-          <div class="trust-item">
-            <span class="trust-value">200+</span>
-            <span class="trust-label">Mitglieder</span>
+          <div class="hero-trust-pill">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            200+ Mitglieder
           </div>
-          <div class="trust-item">
-            <span class="trust-value">4.9 ★</span>
-            <span class="trust-label">Google Bewertung</span>
+          <div class="trust-separator"></div>
+          <div class="hero-trust-pill">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            4.9 Google
           </div>
-          <div class="trust-item">
-            <span class="trust-value">Seit 2015</span>
-            <span class="trust-label">in Konz</span>
-          </div>
+          <div class="trust-separator"></div>
+          <div class="hero-trust-pill">Seit 2015</div>
         </div>
       </div>
-      <div class="hero-image-card">
+    </div>
+  </section>
+
+  <!-- SARAH'S PHILOSOPHIE -->
+  <section class="philosophie" id="philosophie">
+    <div class="philosophie-shape"></div>
+    <div class="philosophie-inner">
+      <div class="philosophie-image">
         <img
-          src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800&q=80&auto=format"
+          src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&q=80&auto=format"
           alt="Sarah Meier bei der Yoga-Praxis"
-          loading="eager"
+          loading="lazy"
         />
-        <div class="hero-image-float">
-          <div class="hero-image-float-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        <div class="philosophie-image-badge">
+          <div class="philosophie-image-badge-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
           </div>
-          <div class="hero-image-float-text">
+          <div class="philosophie-image-badge-text">
             <strong>Sarah Meier</strong>
-            <span>Zertifizierte Yogalehrerin seit 2015</span>
+            <span>10 Jahre Physiotherapie, seit 2015 Yoga</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="philosophie-text">
+        <span class="philosophie-tag">Meine Philosophie</span>
+        <h2>Ich bin Sarah.</h2>
+        <p class="philosophie-quote">
+          Nach 10 Jahren als Physiotherapeutin habe ich gemerkt: Heilung beginnt nicht im Koerper — sondern im Atem.
+        </p>
+        <p class="philosophie-body">
+          Bei mir gibt es keine Akrobatik. Kein Instagram-Yoga. Nur du, deine Matte und die Stille. In der alten Muehle am Konzer Bach habe ich einen Raum geschaffen, in dem du ankommen darfst — ohne Leistungsdruck, ohne Vergleich. Ich passe jede Stunde an die Menschen an, die vor mir sitzen. Nicht umgekehrt.
+        </p>
+
+        <div class="philosophie-principles">
+          <div class="principle-card">
+            <div class="principle-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+            </div>
+            <h4>Kleine Gruppen</h4>
+            <p>Max. 8 Teilnehmer pro Stunde</p>
+          </div>
+          <div class="principle-card">
+            <div class="principle-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <h4>Alle Level</h4>
+            <p>Vom Anfaenger bis Erfahren</p>
+          </div>
+          <div class="principle-card">
+            <div class="principle-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            </div>
+            <h4>Individuell</h4>
+            <p>Jede Stunde wird angepasst</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- KURSE -->
-  <section class="section kurse" id="kurse">
-    <div class="section-inner">
-      <div class="section-header">
-        <span class="section-tag">Kursangebot</span>
-        <h2 class="section-title">Finde den Kurs, der zu dir passt</h2>
-        <p class="section-desc">
-          Ob sanfte Dehnung oder dynamischer Flow — jeder Kurs ist so gestaltet, dass du dich willkommen fühlst. Auch ohne Vorkenntnisse.
+  <!-- WOCHENPLAN -->
+  <section class="wochenplan" id="wochenplan">
+    <div class="wochenplan-inner">
+      <div class="wochenplan-header">
+        <span class="wochenplan-tag">Wochenplan</span>
+        <h2>Finde deine Stunde</h2>
+        <p>Alle Kurse finden in der alten Muehle statt. Matten und Decken sind da.</p>
+      </div>
+
+      <div class="schedule-grid">
+        <!-- Montag -->
+        <div class="schedule-day">
+          <div class="schedule-day-name">Montag</div>
+          <div class="schedule-slot">
+            <div class="schedule-time">9:00</div>
+            <div class="schedule-class">Hatha Yoga</div>
+            <span class="schedule-level level-einsteiger">Einsteiger</span>
+          </div>
+          <div class="schedule-slot">
+            <div class="schedule-time">18:30</div>
+            <div class="schedule-class">Vinyasa</div>
+            <span class="schedule-level level-mittel">Mittel</span>
+          </div>
+        </div>
+
+        <!-- Dienstag -->
+        <div class="schedule-day">
+          <div class="schedule-day-name">Dienstag</div>
+          <div class="schedule-slot">
+            <div class="schedule-time">10:00</div>
+            <div class="schedule-class">Meditation</div>
+            <span class="schedule-level level-alle">Alle Level</span>
+          </div>
+        </div>
+
+        <!-- Mittwoch -->
+        <div class="schedule-day">
+          <div class="schedule-day-name">Mittwoch</div>
+          <div class="schedule-slot">
+            <div class="schedule-time">9:00</div>
+            <div class="schedule-class">Yin Yoga</div>
+            <span class="schedule-level level-alle">Alle Level</span>
+          </div>
+        </div>
+
+        <!-- Donnerstag -->
+        <div class="schedule-day">
+          <div class="schedule-day-name">Donnerstag</div>
+          <div class="schedule-slot">
+            <div class="schedule-time">18:30</div>
+            <div class="schedule-class">Hatha Yoga</div>
+            <span class="schedule-level level-mittel">Mittel</span>
+          </div>
+        </div>
+
+        <!-- Freitag -->
+        <div class="schedule-day">
+          <div class="schedule-day-name">Freitag</div>
+          <div class="schedule-slot">
+            <div class="schedule-time">9:00</div>
+            <div class="schedule-class">Vinyasa Flow</div>
+            <span class="schedule-level level-alle">Alle Level</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="wochenplan-cta">
+        <p class="wochenplan-cta-phone">
+          Probestunde? Ruf einfach an: <a href="tel:+496501943210">06501 — 94 32 10</a>
         </p>
-      </div>
-      <div class="kurse-grid">
-
-        <div class="kurs-card">
-          <div class="kurs-icon">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#7C9885" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-          </div>
-          <h3>Hatha Yoga</h3>
-          <p>Klassische Haltungen, bewusste Atmung und Tiefenentspannung. Ideal für den Einstieg oder als ruhiger Ausgleich im Alltag.</p>
-          <div class="kurs-meta">
-            <div class="kurs-meta-item">
-              <svg class="kurs-meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-              Mo & Mi, 9:00 – 10:15
-            </div>
-            <div class="kurs-meta-item">
-              <svg class="kurs-meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              75 Minuten
-            </div>
-          </div>
-          <span class="kurs-level level-beginner">Einsteiger</span>
-        </div>
-
-        <div class="kurs-card">
-          <div class="kurs-icon">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#7C9885" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-          </div>
-          <h3>Vinyasa Flow</h3>
-          <p>Fließende Bewegungen im Atemrhythmus. Kräftigend, dynamisch und meditativ zugleich — für alle, die Bewegung lieben.</p>
-          <div class="kurs-meta">
-            <div class="kurs-meta-item">
-              <svg class="kurs-meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-              Di & Do, 18:00 – 19:15
-            </div>
-            <div class="kurs-meta-item">
-              <svg class="kurs-meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              75 Minuten
-            </div>
-          </div>
-          <span class="kurs-level level-all">Alle Level</span>
-        </div>
-
-        <div class="kurs-card">
-          <div class="kurs-icon">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#7C9885" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-          </div>
-          <h3>Meditation</h3>
-          <p>Geführte Meditationen für mehr Klarheit und Gelassenheit. Atemübungen, Body Scans und stille Sitzmeditation.</p>
-          <div class="kurs-meta">
-            <div class="kurs-meta-item">
-              <svg class="kurs-meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-              Fr, 7:30 – 8:15
-            </div>
-            <div class="kurs-meta-item">
-              <svg class="kurs-meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              45 Minuten
-            </div>
-          </div>
-          <span class="kurs-level level-beginner">Einsteiger</span>
-        </div>
-
-        <div class="kurs-card">
-          <div class="kurs-icon">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#7C9885" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          </div>
-          <h3>Yin Yoga</h3>
-          <p>Langes Halten, tiefes Loslassen. Yin Yoga wirkt auf Faszien und Gelenke — perfekt am Abend oder als Ausgleich zu intensivem Training.</p>
-          <div class="kurs-meta">
-            <div class="kurs-meta-item">
-              <svg class="kurs-meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-              Mi, 19:30 – 20:45
-            </div>
-            <div class="kurs-meta-item">
-              <svg class="kurs-meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              75 Minuten
-            </div>
-          </div>
-          <span class="kurs-level level-all">Alle Level</span>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- KONTAKT -->
-  <section class="section kontakt" id="kontakt">
-    <div class="section-inner">
-      <div class="section-header">
-        <span class="section-tag">Kontakt</span>
-        <h2 class="section-title">Ich freue mich auf dich</h2>
-        <p class="section-desc">
-          Schreib mir eine Nachricht oder ruf einfach an. Die erste Probestunde ist kostenlos und unverbindlich.
-        </p>
-      </div>
-      <div class="kontakt-grid">
-
-        <div class="kontakt-info">
-          <h3>Lichtblick</h3>
-          <p>Yoga & Meditation in Konz</p>
-
-          <div class="kontakt-details">
-            <div class="kontakt-detail">
-              <div class="kontakt-detail-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-              </div>
-              <div class="kontakt-detail-text">
-                <strong>Adresse</strong>
-                <span>Saarstraße 12<br>54329 Konz</span>
-              </div>
-            </div>
-
-            <div class="kontakt-detail">
-              <div class="kontakt-detail-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-              </div>
-              <div class="kontakt-detail-text">
-                <strong>Telefon</strong>
-                <a href="tel:+496501943210">06501 — 94 32 10</a>
-              </div>
-            </div>
-
-            <div class="kontakt-detail">
-              <div class="kontakt-detail-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-              </div>
-              <div class="kontakt-detail-text">
-                <strong>E-Mail</strong>
-                <a href="mailto:hallo@lichtblick-konz.de">hallo@lichtblick-konz.de</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="kontakt-hours">
-            <h4>Kurszeiten</h4>
-            <div class="kontakt-hours-row">
-              <span class="kontakt-hours-day">Montag & Mittwoch</span>
-              <span class="kontakt-hours-time">9:00 – 10:15</span>
-            </div>
-            <div class="kontakt-hours-row">
-              <span class="kontakt-hours-day">Dienstag & Donnerstag</span>
-              <span class="kontakt-hours-time">18:00 – 19:15</span>
-            </div>
-            <div class="kontakt-hours-row">
-              <span class="kontakt-hours-day">Mittwoch (Yin)</span>
-              <span class="kontakt-hours-time">19:30 – 20:45</span>
-            </div>
-            <div class="kontakt-hours-row">
-              <span class="kontakt-hours-day">Freitag</span>
-              <span class="kontakt-hours-time">7:30 – 8:15</span>
-            </div>
-            <div class="kontakt-hours-row">
-              <span class="kontakt-hours-day">Samstag & Sonntag</span>
-              <span class="kontakt-hours-time">Geschlossen</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="kontakt-form">
-          <h3>Probestunde anfragen</h3>
-          <p>Kostenlos und unverbindlich — ich melde mich innerhalb von 24 Stunden.</p>
-          <form action="#" method="POST">
-            <div class="form-row">
-              <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" id="name" name="name" placeholder="Dein Name" required />
-              </div>
-              <div class="form-group">
-                <label for="email">E-Mail</label>
-                <input type="email" id="email" name="email" placeholder="deine@email.de" required />
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="kurs">Gewünschter Kurs</label>
-              <select id="kurs" name="kurs" required>
-                <option value="" disabled selected>Kurs auswählen...</option>
-                <option value="hatha">Hatha Yoga — Mo & Mi, 9:00</option>
-                <option value="vinyasa">Vinyasa Flow — Di & Do, 18:00</option>
-                <option value="meditation">Meditation — Fr, 7:30</option>
-                <option value="yin">Yin Yoga — Mi, 19:30</option>
-                <option value="unsicher">Ich bin mir noch unsicher</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="nachricht">Nachricht <span style="font-weight: 400; color: #b2bec3;">(optional)</span></label>
-              <textarea id="nachricht" name="nachricht" placeholder="Erzähl mir gerne, was dich hierher führt..."></textarea>
-            </div>
-            <button type="submit" class="form-submit">Probestunde anfragen</button>
-            <p class="form-hint">Deine Daten werden vertraulich behandelt und nicht an Dritte weitergegeben.</p>
-          </form>
-        </div>
-
+        <p class="wochenplan-cta-sub">Kostenlos und unverbindlich — die erste Stunde geht auf mich.</p>
+        <p class="wochenplan-cta-note">Matten und Decken sind da. Bring einfach dich mit.</p>
       </div>
     </div>
   </section>
@@ -1184,12 +1153,12 @@ export const prerender = true;
     <div class="footer-inner">
       <div class="footer-logo">licht<span>blick</span></div>
       <ul class="footer-links">
-        <li><a href="#kurse">Kurse</a></li>
-        <li><a href="#kontakt">Kontakt</a></li>
+        <li><a href="#philosophie">Sarah</a></li>
+        <li><a href="#wochenplan">Wochenplan</a></li>
         <li><a href="#">Impressum</a></li>
         <li><a href="#">Datenschutz</a></li>
       </ul>
-      <p class="footer-copy">© 2026 Lichtblick — Yoga & Meditation in Konz. Dies ist eine Demo-Website.</p>
+      <p class="footer-copy">&copy; 2026 Lichtblick — Yoga & Meditation in Konz. Dies ist eine Demo-Website.</p>
     </div>
   </footer>
 

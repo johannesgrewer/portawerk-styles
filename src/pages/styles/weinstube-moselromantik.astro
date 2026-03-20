@@ -8,10 +8,10 @@ export const prerender = true;
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
   <title>Rebstock — Straußwirtschaft in Longuich an der Mosel</title>
-  <meta name="description" content="Rebstock — Straußwirtschaft der Familie Schommer in Longuich an der Mosel. Wein, wie er sein soll. Geöffnet März bis Oktober." />
+  <meta name="description" content="Rebstock — Straußwirtschaft der Familie Schommer in Longuich an der Mosel. Wein vom eigenen Weingut, hausgemachte Speisen. Geöffnet März bis Oktober." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet" />
 
   <style>
     *, *::before, *::after {
@@ -30,6 +30,7 @@ export const prerender = true;
       --primary-dark: #5a252c;
       --accent-light: #a47d1a;
       --border-subtle: #e2d5c3;
+      --warm-shadow: rgba(44, 24, 16, 0.08);
     }
 
     html {
@@ -61,7 +62,7 @@ export const prerender = true;
 
     .nav.scrolled {
       background-color: rgba(251, 247, 240, 0.97);
-      box-shadow: 0 2px 20px rgba(44, 24, 16, 0.08);
+      box-shadow: 0 2px 20px var(--warm-shadow);
     }
 
     .nav-logo {
@@ -150,8 +151,8 @@ export const prerender = true;
       inset: 0;
       background: linear-gradient(
         to bottom,
-        rgba(44, 24, 16, 0.35) 0%,
-        rgba(114, 47, 55, 0.5) 50%,
+        rgba(44, 24, 16, 0.25) 0%,
+        rgba(114, 47, 55, 0.4) 40%,
         rgba(44, 24, 16, 0.7) 100%
       );
       z-index: 1;
@@ -161,50 +162,48 @@ export const prerender = true;
       position: relative;
       z-index: 2;
       text-align: center;
-      max-width: 780px;
+      max-width: 800px;
       padding: 2rem;
     }
 
-    .hero-ornament {
-      display: inline-block;
+    .hero-vine-ornament {
+      display: block;
       color: var(--accent);
-      font-size: 1.8rem;
-      margin-bottom: 1rem;
-      opacity: 0.8;
-      letter-spacing: 0.5em;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 2.2rem;
+      margin-bottom: 1.5rem;
+      opacity: 0.7;
+      letter-spacing: 0.3em;
     }
 
     .hero-title {
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: clamp(2.8rem, 6vw, 4.5rem);
-      font-weight: 500;
+      font-size: clamp(2.8rem, 6vw, 4.8rem);
+      font-weight: 400;
+      font-style: italic;
       color: #fff;
       line-height: 1.15;
-      margin-bottom: 1.2rem;
+      margin-bottom: 1.8rem;
       letter-spacing: -0.01em;
     }
 
-    .hero-title em {
-      font-style: italic;
-      color: var(--secondary);
-    }
-
-    .hero-subtitle {
-      font-family: 'Lora', Georgia, serif;
-      font-size: 1.1rem;
-      color: rgba(245, 237, 224, 0.85);
-      margin-bottom: 0.5rem;
-      font-weight: 400;
-    }
-
-    .hero-family {
+    .hero-meta {
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 0.95rem;
+      font-size: 1rem;
       color: var(--accent);
-      letter-spacing: 0.12em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      margin-bottom: 2.5rem;
+      margin-bottom: 0.6rem;
       font-weight: 500;
+    }
+
+    .hero-hours {
+      font-family: 'Lora', Georgia, serif;
+      font-size: 0.95rem;
+      color: rgba(245, 237, 224, 0.75);
+      margin-bottom: 2.5rem;
+      font-weight: 400;
+      font-style: italic;
     }
 
     .hero-cta-group {
@@ -250,15 +249,34 @@ export const prerender = true;
       border-color: var(--secondary);
     }
 
+    .hero-border-top,
+    .hero-border-bottom {
+      position: absolute;
+      left: 2rem;
+      right: 2rem;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--accent), transparent);
+      z-index: 2;
+      opacity: 0.3;
+    }
+
+    .hero-border-top {
+      top: 5rem;
+    }
+
+    .hero-border-bottom {
+      bottom: 3.5rem;
+    }
+
     .hero-scroll-hint {
       position: absolute;
-      bottom: 2rem;
+      bottom: 1.2rem;
       left: 50%;
       transform: translateX(-50%);
       z-index: 2;
-      color: rgba(245, 237, 224, 0.5);
-      font-size: 0.75rem;
-      letter-spacing: 0.15em;
+      color: rgba(245, 237, 224, 0.4);
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
       font-family: 'Cormorant Garamond', Georgia, serif;
       animation: scrollBounce 2s ease-in-out infinite;
@@ -303,9 +321,10 @@ export const prerender = true;
       align-items: center;
       justify-content: center;
       gap: 1rem;
-      margin-top: 1.5rem;
+      margin-top: 1.2rem;
       color: var(--accent);
-      opacity: 0.6;
+      opacity: 0.5;
+      font-size: 0.9rem;
     }
 
     .section-divider::before,
@@ -316,315 +335,294 @@ export const prerender = true;
       background-color: var(--accent);
     }
 
-    .section-description {
-      font-size: 1.05rem;
-      color: var(--text);
-      max-width: 560px;
-      margin: 0 auto;
-      opacity: 0.8;
-    }
-
     .container {
       max-width: 1100px;
       margin: 0 auto;
     }
 
-    /* ============ WEINKARTE ============ */
-    .weinkarte {
+    /* ============ KARTE (WEINE + SPEISEN) ============ */
+    .karte {
       background-color: var(--secondary);
     }
 
-    .weinkarte-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
-    }
-
-    .wine-card {
-      background-color: var(--background);
-      padding: 2.5rem 2rem;
-      border: 1px solid var(--border-subtle);
-      text-align: center;
-      transition: box-shadow 0.3s ease, transform 0.3s ease;
-      position: relative;
-    }
-
-    .wine-card:hover {
-      box-shadow: 0 8px 30px rgba(44, 24, 16, 0.08);
-      transform: translateY(-3px);
-    }
-
-    .wine-card-icon {
-      font-size: 2rem;
-      color: var(--primary);
-      margin-bottom: 1rem;
-      opacity: 0.7;
-    }
-
-    .wine-card-category {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 0.75rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 0.5rem;
-      font-weight: 600;
-    }
-
-    .wine-card-name {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.6rem;
-      font-weight: 600;
-      color: var(--primary);
-      margin-bottom: 0.4rem;
-      line-height: 1.3;
-    }
-
-    .wine-card-grape {
-      font-family: 'Lora', Georgia, serif;
-      font-size: 0.85rem;
-      font-style: italic;
-      color: var(--accent);
-      margin-bottom: 1rem;
-    }
-
-    .wine-card-desc {
-      font-size: 0.92rem;
-      color: var(--text);
-      opacity: 0.75;
-      line-height: 1.6;
-      margin-bottom: 1.5rem;
-    }
-
-    .wine-card-price {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.3rem;
-      font-weight: 600;
-      color: var(--primary);
-    }
-
-    .wine-card-unit {
-      font-size: 0.8rem;
-      font-weight: 400;
-      color: var(--text);
-      opacity: 0.5;
-    }
-
-    .wine-card-badge {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      background-color: var(--primary);
-      color: #fff;
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 0.7rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 0.3rem 0.7rem;
-      font-weight: 600;
-    }
-
-    .weinkarte-note {
-      text-align: center;
-      margin-top: 3rem;
-      font-style: italic;
-      font-size: 0.95rem;
-      color: var(--text);
-      opacity: 0.6;
-    }
-
-    /* ============ BESUCH / KONTAKT ============ */
-    .besuch {
-      background-color: var(--background);
-    }
-
-    .besuch-grid {
+    .karte-columns {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 4rem;
     }
 
-    .besuch-info h3 {
+    .karte-column-title {
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.5rem;
+      font-size: 1.6rem;
       font-weight: 600;
       color: var(--primary);
-      margin-bottom: 1rem;
-      margin-top: 2rem;
+      margin-bottom: 0.3rem;
+      letter-spacing: 0.02em;
     }
 
-    .besuch-info h3:first-child {
-      margin-top: 0;
+    .karte-column-subtitle {
+      font-family: 'Lora', Georgia, serif;
+      font-size: 0.82rem;
+      font-style: italic;
+      color: var(--accent);
+      margin-bottom: 2rem;
     }
 
-    .besuch-info p {
-      font-size: 0.95rem;
-      line-height: 1.8;
-      opacity: 0.85;
-    }
-
-    .opening-hours {
-      list-style: none;
-      margin-top: 0.8rem;
-    }
-
-    .opening-hours li {
-      display: flex;
-      justify-content: space-between;
-      padding: 0.5rem 0;
+    .karte-item {
+      padding: 1.2rem 0;
       border-bottom: 1px solid var(--border-subtle);
-      font-size: 0.92rem;
     }
 
-    .opening-hours li:last-child {
+    .karte-item:last-child {
       border-bottom: none;
     }
 
-    .opening-hours .day {
-      font-weight: 500;
+    .karte-item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 0.2rem;
     }
 
-    .opening-hours .time {
+    .karte-item-name {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.3;
+    }
+
+    .karte-item-price {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.1rem;
+      font-weight: 600;
       color: var(--primary);
-      font-weight: 500;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
-    .season-badge {
+    .karte-item-grape {
+      font-family: 'Lora', Georgia, serif;
+      font-size: 0.82rem;
+      font-style: italic;
+      color: var(--accent);
+      margin-bottom: 0.3rem;
+    }
+
+    .karte-item-desc {
+      font-family: 'Lora', Georgia, serif;
+      font-size: 0.88rem;
+      color: var(--text);
+      opacity: 0.7;
+      line-height: 1.6;
+    }
+
+    .karte-item-badge {
       display: inline-block;
       background-color: var(--primary);
       color: #fff;
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 0.8rem;
+      font-size: 0.65rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      padding: 0.4rem 1rem;
+      padding: 0.15rem 0.5rem;
+      font-weight: 600;
+      margin-left: 0.5rem;
+      vertical-align: middle;
+      position: relative;
+      top: -1px;
+    }
+
+    .karte-note {
+      text-align: center;
+      margin-top: 3.5rem;
+      font-style: italic;
+      font-size: 0.92rem;
+      color: var(--text);
+      opacity: 0.6;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.7;
+    }
+
+    /* ============ FAMILIE ============ */
+    .familie {
+      background-color: var(--background);
+    }
+
+    .familie-content {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .familie-image-wrapper {
+      position: relative;
+    }
+
+    .familie-image-wrapper img {
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: sepia(0.15) saturate(0.9);
+    }
+
+    .familie-image-border {
+      position: absolute;
+      inset: -8px;
+      border: 1px solid var(--accent);
+      opacity: 0.3;
+      pointer-events: none;
+    }
+
+    .familie-story {
+      padding-top: 0.5rem;
+    }
+
+    .timeline {
+      margin-top: 2.5rem;
+      margin-bottom: 2.5rem;
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.4rem;
+      bottom: 0.4rem;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--accent), var(--border-subtle));
+    }
+
+    .timeline-entry {
+      position: relative;
+      margin-bottom: 1.8rem;
+    }
+
+    .timeline-entry:last-child {
+      margin-bottom: 0;
+    }
+
+    .timeline-entry::before {
+      content: '';
+      position: absolute;
+      left: -2rem;
+      top: 0.55rem;
+      width: 7px;
+      height: 7px;
+      background-color: var(--accent);
+      border-radius: 50%;
+      transform: translateX(-3px);
+    }
+
+    .timeline-year {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.15rem;
+    }
+
+    .timeline-text {
+      font-family: 'Lora', Georgia, serif;
+      font-size: 0.92rem;
+      color: var(--text);
+      opacity: 0.8;
+      line-height: 1.6;
+    }
+
+    .familie-quote {
+      background-color: var(--secondary);
+      padding: 2rem 2.2rem;
+      border-left: 3px solid var(--accent);
+      margin-top: 2.5rem;
+      margin-bottom: 2.5rem;
+      position: relative;
+    }
+
+    .familie-quote::before {
+      content: '\201E';
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 4rem;
+      color: var(--accent);
+      opacity: 0.3;
+      position: absolute;
+      top: -0.5rem;
+      left: 1rem;
+      line-height: 1;
+    }
+
+    .familie-quote p {
+      font-family: 'Lora', Georgia, serif;
+      font-style: italic;
+      font-size: 1.02rem;
+      line-height: 1.8;
+      color: var(--text);
+      opacity: 0.85;
+      position: relative;
+      z-index: 1;
+    }
+
+    .familie-quote-author {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 0.85rem;
+      color: var(--accent);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      margin-top: 0.8rem;
+      font-style: normal;
+      display: block;
+    }
+
+    .familie-kontakt {
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .familie-kontakt h3 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--primary);
       margin-bottom: 1rem;
+    }
+
+    .kontakt-details {
+      font-size: 0.92rem;
+      line-height: 2;
+      opacity: 0.8;
+    }
+
+    .kontakt-details strong {
+      color: var(--primary);
       font-weight: 600;
     }
 
-    .contact-detail {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.8rem;
-      margin-bottom: 0.8rem;
-      font-size: 0.95rem;
-    }
-
-    .contact-detail-icon {
-      color: var(--primary);
-      font-size: 1rem;
-      flex-shrink: 0;
-      margin-top: 0.15rem;
-    }
-
-    .contact-detail a {
+    .kontakt-details a {
       color: var(--primary);
       text-decoration: none;
       border-bottom: 1px solid transparent;
       transition: border-color 0.3s ease;
     }
 
-    .contact-detail a:hover {
+    .kontakt-details a:hover {
       border-bottom-color: var(--primary);
     }
 
-    .map-placeholder {
-      width: 100%;
-      height: 200px;
-      background-color: var(--secondary);
-      border: 1px solid var(--border-subtle);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-top: 1.5rem;
-      color: var(--text);
-      opacity: 0.4;
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1rem;
-      letter-spacing: 0.1em;
-    }
-
-    .family-story {
-      background-color: var(--secondary);
-      padding: 1.8rem;
-      margin-top: 2rem;
-      border-left: 3px solid var(--accent);
-    }
-
-    .family-story p {
-      font-style: italic;
-      font-size: 0.95rem;
-      line-height: 1.8;
-      opacity: 0.85;
-    }
-
-    /* ============ RESERVATION FORM ============ */
-    .reservation-form {
-      background-color: var(--secondary);
-      padding: 2.5rem;
-    }
-
-    .reservation-form h3 {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.5rem;
-      font-weight: 600;
-      color: var(--primary);
-      margin-bottom: 1.5rem;
-    }
-
-    .form-group {
-      margin-bottom: 1.2rem;
-    }
-
-    .form-group label {
-      display: block;
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 0.85rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text);
-      margin-bottom: 0.4rem;
-      font-weight: 600;
-    }
-
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      width: 100%;
-      padding: 0.75rem 1rem;
+    .anfahrt-hint {
       font-family: 'Lora', Georgia, serif;
-      font-size: 0.92rem;
+      font-style: italic;
+      font-size: 0.85rem;
       color: var(--text);
-      background-color: var(--background);
-      border: 1px solid var(--border-subtle);
-      outline: none;
-      transition: border-color 0.3s ease;
-    }
-
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
-      border-color: var(--primary);
-    }
-
-    .form-group textarea {
-      resize: vertical;
-      min-height: 80px;
-    }
-
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-    }
-
-    .form-submit {
-      margin-top: 1.5rem;
-    }
-
-    .form-submit .btn {
-      width: 100%;
-      text-align: center;
+      opacity: 0.55;
+      margin-top: 1rem;
+      line-height: 1.6;
     }
 
     /* ============ FOOTER ============ */
@@ -640,14 +638,15 @@ export const prerender = true;
       font-size: 1.8rem;
       font-weight: 600;
       color: var(--secondary);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.3rem;
     }
 
     .footer-tagline {
+      font-family: 'Cormorant Garamond', Georgia, serif;
       font-style: italic;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       margin-bottom: 1.5rem;
-      opacity: 0.7;
+      opacity: 0.6;
     }
 
     .footer-divider {
@@ -701,9 +700,18 @@ export const prerender = true;
 
     /* ============ RESPONSIVE ============ */
     @media (max-width: 900px) {
-      .besuch-grid {
+      .karte-columns {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .familie-content {
         grid-template-columns: 1fr;
         gap: 2.5rem;
+      }
+
+      .familie-image-wrapper {
+        max-width: 500px;
       }
     }
 
@@ -718,7 +726,7 @@ export const prerender = true;
         background-color: rgba(251, 247, 240, 0.98);
         padding: 1.5rem 2rem;
         gap: 1rem;
-        box-shadow: 0 4px 20px rgba(44, 24, 16, 0.1);
+        box-shadow: 0 4px 20px var(--warm-shadow);
       }
 
       .nav-links.open {
@@ -738,14 +746,6 @@ export const prerender = true;
         padding: 4rem 1.5rem;
       }
 
-      .weinkarte-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .form-row {
-        grid-template-columns: 1fr;
-      }
-
       .hero-cta-group {
         flex-direction: column;
         align-items: center;
@@ -756,6 +756,20 @@ export const prerender = true;
         max-width: 280px;
         text-align: center;
       }
+
+      .hero-border-top,
+      .hero-border-bottom {
+        left: 1rem;
+        right: 1rem;
+      }
+
+      .familie-quote {
+        padding: 1.5rem 1.5rem;
+      }
+
+      .timeline {
+        padding-left: 1.5rem;
+      }
     }
   </style>
 </head>
@@ -765,9 +779,8 @@ export const prerender = true;
   <nav class="nav" id="mainNav">
     <a href="#" class="nav-logo">Rebstock</a>
     <ul class="nav-links" id="navLinks">
-      <li><a href="#weinkarte">Weinkarte</a></li>
-      <li><a href="#besuch">Besuch</a></li>
-      <li><a href="#reservierung">Reservieren</a></li>
+      <li><a href="#karte">Karte</a></li>
+      <li><a href="#familie">Die Familie</a></li>
     </ul>
     <button class="nav-toggle" id="navToggle" aria-label="Navigation umschalten">
       <span></span>
@@ -786,202 +799,170 @@ export const prerender = true;
       />
     </div>
     <div class="hero-overlay"></div>
+    <div class="hero-border-top"></div>
     <div class="hero-content">
-      <div class="hero-ornament">~ ~ ~</div>
-      <h1 class="hero-title">Wo die Mosel<br />den <em>Wein</em> küsst.</h1>
-      <p class="hero-subtitle">Wein, wie er sein soll.</p>
-      <p class="hero-family">Familie Schommer, seit drei Generationen</p>
+      <span class="hero-vine-ornament">&mdash;&nbsp;&nbsp;&loz;&nbsp;&nbsp;&mdash;</span>
+      <h1 class="hero-title">Wo die Mosel<br />den Wein k&uuml;sst.</h1>
+      <p class="hero-meta">Strau&szlig;wirtschaft Rebstock &middot; Longuich &middot; Seit 1968</p>
+      <p class="hero-hours">Ge&ouml;ffnet M&auml;rz bis Oktober &middot; Mi&ndash;So ab 16 Uhr</p>
       <div class="hero-cta-group">
-        <a href="#weinkarte" class="btn btn-primary">Weinkarte ansehen</a>
-        <a href="#reservierung" class="btn btn-outline">Tisch reservieren</a>
+        <a href="#karte" class="btn btn-primary">Weinkarte</a>
+        <a href="#familie" class="btn btn-outline">Anfahrt</a>
       </div>
     </div>
-    <div class="hero-scroll-hint">Entdecken</div>
+    <div class="hero-border-bottom"></div>
+    <div class="hero-scroll-hint">&darr;</div>
   </section>
 
-  <!-- Weinkarte -->
-  <section class="section weinkarte" id="weinkarte">
+  <!-- Saisonale Karte -->
+  <section class="section karte" id="karte">
     <div class="container">
       <div class="section-header">
-        <p class="section-label">Aus unseren Weinbergen</p>
-        <h2 class="section-title">Weinkarte &amp; Genuss</h2>
-        <div class="section-divider">&diams;</div>
-        <p class="section-description" style="margin-top: 1rem;">
-          Unsere Weine wachsen auf Schieferböden direkt über der Mosel. Dazu servieren wir hausgemachte Kleinigkeiten aus der Region.
-        </p>
+        <p class="section-label">Vom eigenen Weingut</p>
+        <h2 class="section-title">Unsere Karte</h2>
+        <div class="section-divider">&loz;</div>
       </div>
 
-      <div class="weinkarte-grid">
-        <!-- Wein 1 -->
-        <div class="wine-card">
-          <div class="wine-card-badge">Hauswein</div>
-          <div class="wine-card-icon">&xi;</div>
-          <p class="wine-card-category">Weisswein</p>
-          <h3 class="wine-card-name">Longuicher Riesling</h3>
-          <p class="wine-card-grape">Riesling, trocken &middot; 2024</p>
-          <p class="wine-card-desc">
-            Frisch und mineralisch mit feiner Schiefernote. Aromen von grünem Apfel und Zitrus. Der Klassiker vom eigenen Weinberg.
-          </p>
-          <p class="wine-card-price">4,80 &euro; <span class="wine-card-unit">/ 0,2l</span></p>
+      <div class="karte-columns">
+        <!-- WEINE -->
+        <div>
+          <h3 class="karte-column-title">Weine</h3>
+          <p class="karte-column-subtitle">Alle vom eigenen Weingut &middot; Glas 0,2l</p>
+
+          <div class="karte-item">
+            <div class="karte-item-header">
+              <span class="karte-item-name">Longuicher Herrenberg Riesling <span class="karte-item-badge">Hauswein</span></span>
+              <span class="karte-item-price">4,50 / 18&thinsp;&euro;</span>
+            </div>
+            <p class="karte-item-grape">Riesling &middot; trocken</p>
+            <p class="karte-item-desc">Frisch, mineralisch, Schiefernote. Gr&uuml;ner Apfel, Zitrus. Der Klassiker.</p>
+          </div>
+
+          <div class="karte-item">
+            <div class="karte-item-header">
+              <span class="karte-item-name">Maximiner Klosterlay Sp&auml;tlese</span>
+              <span class="karte-item-price">5,50 / 22&thinsp;&euro;</span>
+            </div>
+            <p class="karte-item-grape">Riesling &middot; feinherb</p>
+            <p class="karte-item-desc">Goldgelb, reife Pfirsiche, ein Hauch Honig. Elegant und vielschichtig.</p>
+          </div>
+
+          <div class="karte-item">
+            <div class="karte-item-header">
+              <span class="karte-item-name">Dornfelder</span>
+              <span class="karte-item-price">4,00 / 16&thinsp;&euro;</span>
+            </div>
+            <p class="karte-item-grape">Dornfelder &middot; halbtrocken</p>
+            <p class="karte-item-desc">Samtig, dunkle Beeren. Kr&auml;ftig &mdash; passt perfekt zur Winzerplatte.</p>
+          </div>
+
+          <div class="karte-item">
+            <div class="karte-item-header">
+              <span class="karte-item-name">Winzergl&uuml;hwein <span class="karte-item-badge">Saisonal</span></span>
+              <span class="karte-item-price">3,50&thinsp;&euro;</span>
+            </div>
+            <p class="karte-item-grape">Hausmischung &middot; warm</p>
+            <p class="karte-item-desc">Mit Nelken und Zimt. Nur in der k&uuml;hlen Saison.</p>
+          </div>
         </div>
 
-        <!-- Wein 2 -->
-        <div class="wine-card">
-          <div class="wine-card-icon">&xi;</div>
-          <p class="wine-card-category">Weisswein</p>
-          <h3 class="wine-card-name">Maximiner Spätlese</h3>
-          <p class="wine-card-grape">Riesling, feinherb &middot; 2023</p>
-          <p class="wine-card-desc">
-            Goldgelb schimmernd, am Gaumen reife Pfirsiche und ein Hauch Honig. Elegant und vielschichtig.
-          </p>
-          <p class="wine-card-price">6,20 &euro; <span class="wine-card-unit">/ 0,2l</span></p>
-        </div>
+        <!-- SPEISEN -->
+        <div>
+          <h3 class="karte-column-title">Speisen</h3>
+          <p class="karte-column-subtitle">Hausgemacht &middot; aus der Region</p>
 
-        <!-- Wein 3 -->
-        <div class="wine-card">
-          <div class="wine-card-icon">&xi;</div>
-          <p class="wine-card-category">Rotwein</p>
-          <h3 class="wine-card-name">Dornfelder</h3>
-          <p class="wine-card-grape">Dornfelder, halbtrocken &middot; 2023</p>
-          <p class="wine-card-desc">
-            Samtig und vollmundig mit Aromen dunkler Beeren. Ein kräftiger Roter, der perfekt zur Winzerplatte passt.
-          </p>
-          <p class="wine-card-price">5,40 &euro; <span class="wine-card-unit">/ 0,2l</span></p>
-        </div>
+          <div class="karte-item">
+            <div class="karte-item-header">
+              <span class="karte-item-name">Winzerplatte f&uuml;r Zwei <span class="karte-item-badge">Empfehlung</span></span>
+              <span class="karte-item-price">18,50&thinsp;&euro;</span>
+            </div>
+            <p class="karte-item-desc">Schinken, K&auml;se, N&uuml;sse, frisches Brot vom Dorfb&auml;cker. Reichlich.</p>
+          </div>
 
-        <!-- Essen -->
-        <div class="wine-card">
-          <div class="wine-card-badge">Empfehlung</div>
-          <div class="wine-card-icon">&hearts;</div>
-          <p class="wine-card-category">Aus der Küche</p>
-          <h3 class="wine-card-name">Winzerplatte</h3>
-          <p class="wine-card-grape">Für 2 Personen</p>
-          <p class="wine-card-desc">
-            Hausmacher Schinken, Leberwurst, Harzer Käse, Schmalz, Gewürzgurken und frisches Bauernbrot. Die volle Moselromantik.
-          </p>
-          <p class="wine-card-price">16,50 &euro; <span class="wine-card-unit">/ Platte</span></p>
+          <div class="karte-item">
+            <div class="karte-item-header">
+              <span class="karte-item-name">Flammkuchen Classique</span>
+              <span class="karte-item-price">9,50&thinsp;&euro;</span>
+            </div>
+            <p class="karte-item-desc">Schmand, Speck, Zwiebeln. D&uuml;nn, knusprig, ehrlich.</p>
+          </div>
+
+          <div class="karte-item">
+            <div class="karte-item-header">
+              <span class="karte-item-name">Flammkuchen Ziegenk&auml;se</span>
+              <span class="karte-item-price">10,50&thinsp;&euro;</span>
+            </div>
+            <p class="karte-item-desc">Honig, Walnuss, Rucola. Die moderne Variante.</p>
+          </div>
+
+          <div class="karte-item">
+            <div class="karte-item-header">
+              <span class="karte-item-name">Hausgemachter Kuchen</span>
+              <span class="karte-item-price">3,80&thinsp;&euro;</span>
+            </div>
+            <p class="karte-item-desc">Wechselnd &mdash; frag nach! Immer frisch, immer gut.</p>
+          </div>
         </div>
       </div>
 
-      <p class="weinkarte-note">
-        Die vollständige Karte mit Flammkuchen, Federweißer (saisonal) und offenen Weinen erhalten Sie vor Ort.
+      <p class="karte-note">
+        Alle Weine vom eigenen Weingut.<br />
+        Probieren geht &uuml;ber Studieren.
       </p>
     </div>
   </section>
 
-  <!-- Besuch & Kontakt -->
-  <section class="section besuch" id="besuch">
+  <!-- Die Familie -->
+  <section class="section familie" id="familie">
     <div class="container">
       <div class="section-header">
-        <p class="section-label">Willkommen bei uns</p>
-        <h2 class="section-title">Besuchen Sie den Rebstock</h2>
-        <div class="section-divider">&diams;</div>
+        <p class="section-label">Unsere Geschichte</p>
+        <h2 class="section-title">Drei Generationen, ein Rebstock</h2>
+        <div class="section-divider">&loz;</div>
       </div>
 
-      <div class="besuch-grid">
-        <!-- Linke Seite: Infos -->
-        <div class="besuch-info">
-          <h3>Öffnungszeiten</h3>
-          <span class="season-badge">Saison: März bis Oktober</span>
-          <ul class="opening-hours">
-            <li>
-              <span class="day">Mittwoch &ndash; Freitag</span>
-              <span class="time">16:00 &ndash; 22:00</span>
-            </li>
-            <li>
-              <span class="day">Samstag</span>
-              <span class="time">14:00 &ndash; 23:00</span>
-            </li>
-            <li>
-              <span class="day">Sonn- &amp; Feiertage</span>
-              <span class="time">12:00 &ndash; 21:00</span>
-            </li>
-            <li>
-              <span class="day">Montag &amp; Dienstag</span>
-              <span class="time">Ruhetage</span>
-            </li>
-          </ul>
-
-          <h3>Anfahrt &amp; Kontakt</h3>
-          <div class="contact-detail">
-            <span class="contact-detail-icon">&#9906;</span>
-            <span>Maximinerstraße 12<br />54340 Longuich an der Mosel</span>
-          </div>
-          <div class="contact-detail">
-            <span class="contact-detail-icon">&#9742;</span>
-            <a href="tel:+496502003456">06502 &mdash; 34 56</a>
-          </div>
-
-          <div class="map-placeholder">
-            Kartenansicht &middot; Longuich an der Mosel
-          </div>
-
-          <div class="family-story">
-            <p>
-              Seit drei Generationen bewirtschaftet Familie Schommer die Steillagen über der Mosel. Was als kleine Straußwirtschaft mit ein paar Flaschen eigenem Wein begann, ist heute ein Ort, an dem Tradition und Genuss zusammenkommen &mdash; ehrlich, ohne Schnörkel, mit Liebe zum Wein.
-            </p>
-          </div>
+      <div class="familie-content">
+        <!-- Foto -->
+        <div class="familie-image-wrapper">
+          <img
+            src="https://images.unsplash.com/photo-1559581458-67c84d000717?w=800&q=80&auto=format"
+            alt="Weinreben im warmen Licht"
+            loading="lazy"
+          />
+          <div class="familie-image-border"></div>
         </div>
 
-        <!-- Rechte Seite: Reservierungsformular -->
-        <div id="reservierung">
-          <div class="reservation-form">
-            <h3>Tisch reservieren</h3>
-            <form action="#" method="POST">
-              <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" id="name" name="name" placeholder="Ihr Name" required />
-              </div>
+        <!-- Story -->
+        <div class="familie-story">
+          <div class="timeline">
+            <div class="timeline-entry">
+              <p class="timeline-year">1968</p>
+              <p class="timeline-text">Opa Heinrich pflanzt die ersten Reben an den Steilh&auml;ngen &uuml;ber Longuich. Riesling, was sonst.</p>
+            </div>
+            <div class="timeline-entry">
+              <p class="timeline-year">1989</p>
+              <p class="timeline-text">Vater Klaus er&ouml;ffnet die Strau&szlig;wirtschaft. Zwei Tische, ein paar Flaschen, Nachbarn als erste G&auml;ste.</p>
+            </div>
+            <div class="timeline-entry">
+              <p class="timeline-year">2015</p>
+              <p class="timeline-text">Marie und Thomas &uuml;bernehmen &mdash; mit neuen Ideen und altem Respekt. Flammkuchen kommt auf die Karte. Die Reben bleiben.</p>
+            </div>
+          </div>
 
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="date">Datum</label>
-                  <input type="date" id="date" name="date" required />
-                </div>
-                <div class="form-group">
-                  <label for="time">Uhrzeit</label>
-                  <select id="time" name="time" required>
-                    <option value="">Bitte wählen</option>
-                    <option value="12:00">12:00</option>
-                    <option value="14:00">14:00</option>
-                    <option value="16:00">16:00</option>
-                    <option value="17:00">17:00</option>
-                    <option value="18:00">18:00</option>
-                    <option value="19:00">19:00</option>
-                    <option value="20:00">20:00</option>
-                  </select>
-                </div>
-              </div>
+          <div class="familie-quote">
+            <p>Unser Wein w&auml;chst hier. Unser Essen kommt von hier. Und unsere G&auml;ste kommen immer wieder.</p>
+            <span class="familie-quote-author">&mdash; Marie Schommer</span>
+          </div>
 
-              <div class="form-row">
-                <div class="form-group">
-                  <label for="guests">Personen</label>
-                  <select id="guests" name="guests" required>
-                    <option value="">Anzahl</option>
-                    <option value="1">1 Person</option>
-                    <option value="2">2 Personen</option>
-                    <option value="3">3 Personen</option>
-                    <option value="4">4 Personen</option>
-                    <option value="5">5 Personen</option>
-                    <option value="6">6 Personen</option>
-                    <option value="7+">7+ Personen</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="phone">Telefon</label>
-                  <input type="tel" id="phone" name="phone" placeholder="Für Rückfragen" />
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label for="message">Anmerkungen</label>
-                <textarea id="message" name="message" placeholder="Allergien, besondere Wünsche..."></textarea>
-              </div>
-
-              <div class="form-submit">
-                <button type="submit" class="btn btn-primary">Reservierung anfragen</button>
-              </div>
-            </form>
+          <div class="familie-kontakt">
+            <h3>Besuchen Sie uns</h3>
+            <div class="kontakt-details">
+              <strong>Strau&szlig;wirtschaft Rebstock</strong><br />
+              Maximinerstra&szlig;e 12, 54340 Longuich an der Mosel<br />
+              Telefon: <a href="tel:+496502003456">06502 &mdash; 34 56</a><br />
+              Saison: M&auml;rz bis Oktober &middot; Mi&ndash;So ab 16 Uhr
+            </div>
+            <p class="anfahrt-hint">B53, Ausfahrt Longuich. Der Rebstock steht am Moselufer &mdash; Sie riechen den Flammkuchen schon von der Stra&szlig;e.</p>
           </div>
         </div>
       </div>
@@ -991,10 +972,10 @@ export const prerender = true;
   <!-- Footer -->
   <footer class="footer">
     <div class="footer-logo">Rebstock</div>
-    <p class="footer-tagline">Wein, wie er sein soll.</p>
+    <p class="footer-tagline">Wo die Mosel den Wein k&uuml;sst.</p>
     <div class="footer-divider"></div>
     <p class="footer-legal">
-      &copy; 2026 Straußwirtschaft Rebstock &middot; Familie Schommer &middot; Longuich an der Mosel<br />
+      &copy; 2026 Strau&szlig;wirtschaft Rebstock &middot; Familie Schommer &middot; Longuich an der Mosel<br />
       <a href="#">Impressum</a> &middot; <a href="#">Datenschutz</a>
     </p>
   </footer>
@@ -1002,7 +983,7 @@ export const prerender = true;
   <!-- Demo Banner -->
   <div class="demo-banner">
     Demo-Website &mdash; Stil: Weinstube / Moselromantik
-    <a href="/">Zurück zur Übersicht</a>
+    <a href="/">Zur&uuml;ck zur &Uuml;bersicht</a>
   </div>
 
   <script>

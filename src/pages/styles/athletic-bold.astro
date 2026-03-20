@@ -49,13 +49,8 @@ export const prerender = true;
       padding: 0 24px;
     }
 
-    .neon {
-      color: #E8FF00;
-    }
-
-    .accent-red {
-      color: #FF4136;
-    }
+    .neon { color: #E8FF00; }
+    .accent-red { color: #FF4136; }
 
     /* ── NAV ── */
     .nav {
@@ -144,7 +139,7 @@ export const prerender = true;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      filter: brightness(0.3) contrast(1.15);
+      filter: brightness(0.25) contrast(1.2) saturate(0.8);
     }
 
     .hero-bg::after {
@@ -152,24 +147,49 @@ export const prerender = true;
       position: absolute;
       inset: 0;
       background: linear-gradient(
-        135deg,
+        160deg,
         rgba(17, 17, 17, 0.95) 0%,
-        rgba(17, 17, 17, 0.5) 50%,
-        rgba(17, 17, 17, 0.8) 100%
+        rgba(17, 17, 17, 0.4) 40%,
+        rgba(17, 17, 17, 0.85) 100%
       );
     }
 
-    /* Diagonal slash accent */
+    /* Diagonal slash accents */
     .hero-slash {
       position: absolute;
       top: -10%;
       right: -5%;
       width: 45%;
       height: 130%;
-      background: linear-gradient(135deg, rgba(232, 255, 0, 0.06) 0%, transparent 60%);
+      background: linear-gradient(135deg, rgba(232, 255, 0, 0.07) 0%, transparent 50%);
       transform: skewX(-12deg);
       z-index: 1;
       pointer-events: none;
+    }
+
+    .hero-slash-2 {
+      position: absolute;
+      bottom: -20%;
+      left: -10%;
+      width: 50%;
+      height: 60%;
+      background: linear-gradient(45deg, rgba(255, 65, 54, 0.05) 0%, transparent 40%);
+      transform: skewX(8deg);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Angular clip on hero bottom */
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 80px;
+      background: #1A1A1A;
+      clip-path: polygon(0 60%, 100% 0, 100% 100%, 0 100%);
+      z-index: 3;
     }
 
     .hero-content {
@@ -177,17 +197,18 @@ export const prerender = true;
       z-index: 2;
       max-width: 1200px;
       margin: 0 auto;
-      padding: 120px 24px 80px;
+      padding: 140px 24px 120px;
+      width: 100%;
     }
 
     .hero-label {
       font-family: 'Inter', sans-serif;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       font-weight: 600;
       letter-spacing: 4px;
       text-transform: uppercase;
-      color: #E8FF00;
-      margin-bottom: 16px;
+      color: rgba(255, 255, 255, 0.5);
+      margin-bottom: 20px;
       display: inline-block;
       border-left: 3px solid #FF4136;
       padding-left: 12px;
@@ -195,23 +216,24 @@ export const prerender = true;
 
     .hero-headline {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(4rem, 10vw, 9rem);
-      line-height: 0.95;
+      font-size: clamp(4.5rem, 11vw, 10rem);
+      line-height: 0.92;
       letter-spacing: 4px;
       text-transform: uppercase;
-      margin-bottom: 32px;
+      margin-bottom: 24px;
     }
 
     .hero-headline .highlight {
       color: #E8FF00;
       position: relative;
       display: inline-block;
+      text-shadow: 0 0 40px rgba(232, 255, 0, 0.25);
     }
 
     .hero-headline .highlight::after {
       content: '';
       position: absolute;
-      bottom: 4px;
+      bottom: 6px;
       left: 0;
       width: 100%;
       height: 6px;
@@ -220,26 +242,28 @@ export const prerender = true;
     }
 
     .hero-sub {
-      font-size: 1.15rem;
-      color: rgba(255, 255, 255, 0.7);
-      max-width: 520px;
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.5);
+      max-width: 480px;
       margin-bottom: 40px;
-      line-height: 1.7;
+      line-height: 1.6;
+      letter-spacing: 0.5px;
     }
 
     .hero-cta {
       display: inline-block;
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.25rem;
+      font-size: 1.3rem;
       letter-spacing: 3px;
       text-transform: uppercase;
       background: #E8FF00;
       color: #111111;
-      padding: 18px 48px;
+      padding: 20px 56px;
       clip-path: polygon(0 0, 100% 0, 96% 100%, 4% 100%);
       transition: background 0.2s, transform 0.2s;
       cursor: pointer;
       border: none;
+      font-weight: 400;
     }
 
     .hero-cta:hover {
@@ -249,35 +273,39 @@ export const prerender = true;
 
     .hero-stats {
       display: flex;
-      gap: 48px;
+      gap: 40px;
       margin-top: 56px;
-      padding-top: 40px;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 32px;
+      border-top: 1px solid rgba(232, 255, 0, 0.15);
     }
 
-    .hero-stat-number {
+    .hero-stat {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+
+    .hero-stat-text {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 2.8rem;
-      color: #E8FF00;
-      line-height: 1;
-    }
-
-    .hero-stat-label {
-      font-size: 0.85rem;
-      color: rgba(255, 255, 255, 0.5);
+      font-size: 1.1rem;
+      letter-spacing: 3px;
       text-transform: uppercase;
-      letter-spacing: 2px;
-      margin-top: 4px;
+      color: #E8FF00;
     }
 
-    /* ── PROGRAMS ── */
-    .programs {
-      padding: 120px 0;
+    .hero-stat-separator {
+      color: rgba(255, 255, 255, 0.2);
+      font-size: 1.2rem;
+    }
+
+    /* ── SECTION 2: COMMUNITY ── */
+    .community {
+      padding: 100px 0 120px;
       position: relative;
       background: #1A1A1A;
     }
 
-    .programs::before {
+    .community::before {
       content: '';
       position: absolute;
       top: 0;
@@ -289,325 +317,301 @@ export const prerender = true;
 
     .section-label {
       font-family: 'Inter', sans-serif;
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       font-weight: 600;
       letter-spacing: 5px;
       text-transform: uppercase;
-      color: #E8FF00;
+      color: #FF4136;
       margin-bottom: 12px;
     }
 
     .section-title {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-size: clamp(2.8rem, 6vw, 4.5rem);
       letter-spacing: 3px;
       text-transform: uppercase;
       margin-bottom: 56px;
-      line-height: 1.05;
+      line-height: 1;
     }
 
-    .programs-grid {
+    .member-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 24px;
+      margin-bottom: 64px;
     }
 
-    .program-card {
+    .member-card {
       background: #111111;
-      border: 1px solid rgba(232, 255, 0, 0.12);
-      padding: 40px 32px;
+      border: 1px solid rgba(232, 255, 0, 0.08);
       position: relative;
       overflow: hidden;
       transition: border-color 0.3s, transform 0.3s;
-      clip-path: polygon(0 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%);
+      clip-path: polygon(0 0, 100% 0, 100% calc(100% - 24px), calc(100% - 24px) 100%, 0 100%);
     }
 
-    .program-card:hover {
-      border-color: #E8FF00;
+    .member-card:hover {
+      border-color: rgba(232, 255, 0, 0.3);
       transform: translateY(-4px);
     }
 
-    .program-card::before {
+    .member-card-img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      filter: grayscale(30%) contrast(1.1);
+      transition: filter 0.3s;
+    }
+
+    .member-card:hover .member-card-img {
+      filter: grayscale(0%) contrast(1.05);
+    }
+
+    .member-card-body {
+      padding: 28px 24px 32px;
+      position: relative;
+    }
+
+    .member-card-body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 24px;
+      width: 40px;
+      height: 3px;
+      background: #E8FF00;
+    }
+
+    .member-card-quote {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.85);
+      line-height: 1.6;
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+
+    .member-card-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #E8FF00;
+      margin-bottom: 4px;
+    }
+
+    .member-card-since {
+      font-size: 0.78rem;
+      color: rgba(255, 255, 255, 0.35);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    /* Community photo banner */
+    .community-banner {
+      position: relative;
+      overflow: hidden;
+      clip-path: polygon(0 8%, 100% 0, 100% 92%, 0 100%);
+    }
+
+    .community-banner img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      filter: brightness(0.4) contrast(1.2);
+    }
+
+    .community-banner-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(17, 17, 17, 0.5);
+    }
+
+    .community-banner-text {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      text-align: center;
+      color: #FFFFFF;
+      text-shadow: 0 0 60px rgba(232, 255, 0, 0.2);
+    }
+
+    .community-banner-text span {
+      color: #E8FF00;
+    }
+
+    /* ── SECTION 3: TAGESPLAN ── */
+    .schedule {
+      padding: 100px 0 120px;
+      position: relative;
+      background: #111111;
+    }
+
+    .schedule::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 80px;
+      background: #1A1A1A;
+      clip-path: polygon(0 0, 100% 0, 100% 40%, 0 100%);
+    }
+
+    /* WOD Preview */
+    .wod-preview {
+      background: linear-gradient(135deg, #1A1A1A 0%, rgba(232, 255, 0, 0.04) 100%);
+      border: 2px solid rgba(232, 255, 0, 0.2);
+      padding: 40px;
+      margin-bottom: 56px;
+      position: relative;
+      clip-path: polygon(0 0, calc(100% - 32px) 0, 100% 32px, 100% 100%, 32px 100%, 0 calc(100% - 32px));
+    }
+
+    .wod-preview::before {
       content: '';
       position: absolute;
       top: 0;
       left: 0;
       width: 4px;
       height: 100%;
-      background: #E8FF00;
+      background: #FF4136;
     }
 
-    .program-card-number {
+    .wod-label {
+      display: inline-block;
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 5rem;
-      color: rgba(232, 255, 0, 0.06);
-      position: absolute;
-      top: -8px;
-      right: 16px;
-      line-height: 1;
-    }
-
-    .program-card-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 2rem;
+      font-size: 0.9rem;
       letter-spacing: 3px;
       text-transform: uppercase;
-      margin-bottom: 8px;
-      color: #E8FF00;
-    }
-
-    .program-card-level {
-      display: inline-block;
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      padding: 4px 12px;
-      background: rgba(255, 65, 54, 0.15);
-      color: #FF4136;
-      border: 1px solid rgba(255, 65, 54, 0.3);
-      margin-bottom: 20px;
-    }
-
-    .program-card-desc {
-      font-size: 0.95rem;
-      color: rgba(255, 255, 255, 0.65);
-      line-height: 1.7;
-      margin-bottom: 24px;
-    }
-
-    .program-card-schedule {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.85rem;
-      color: rgba(255, 255, 255, 0.5);
-      padding-top: 20px;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-    }
-
-    .program-card-schedule .clock-icon {
-      color: #E8FF00;
-      font-size: 1rem;
-    }
-
-    /* ── PRICING + CONTACT ── */
-    .pricing-contact {
-      padding: 120px 0;
-      position: relative;
-      background: #111111;
-    }
-
-    .pricing-contact-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 64px;
-      align-items: start;
-    }
-
-    .pricing-cards {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .pricing-card {
-      background: #1A1A1A;
-      border: 1px solid rgba(232, 255, 0, 0.1);
-      padding: 32px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      transition: border-color 0.3s;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .pricing-card:hover {
-      border-color: #E8FF00;
-    }
-
-    .pricing-card.featured {
-      border-color: #E8FF00;
-      background: linear-gradient(135deg, #1A1A1A 0%, rgba(232, 255, 0, 0.04) 100%);
-    }
-
-    .pricing-card.featured::before {
-      content: 'BELIEBT';
-      position: absolute;
-      top: 12px;
-      right: -28px;
       background: #FF4136;
       color: #FFFFFF;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 0.75rem;
-      letter-spacing: 2px;
-      padding: 4px 32px;
-      transform: rotate(45deg);
+      padding: 6px 16px;
+      margin-bottom: 16px;
+      clip-path: polygon(0 0, 100% 0, 95% 100%, 5% 100%);
     }
 
-    .pricing-card-info h3 {
+    .wod-title {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.5rem;
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
       letter-spacing: 2px;
       text-transform: uppercase;
-      margin-bottom: 4px;
-    }
-
-    .pricing-card-info p {
-      font-size: 0.85rem;
-      color: rgba(255, 255, 255, 0.5);
-    }
-
-    .pricing-card-price {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 2.5rem;
       color: #E8FF00;
-      white-space: nowrap;
+      margin-bottom: 12px;
     }
 
-    .pricing-card-price span {
-      font-size: 1rem;
-      color: rgba(255, 255, 255, 0.4);
+    .wod-description {
+      font-size: 1.05rem;
+      color: rgba(255, 255, 255, 0.75);
+      line-height: 1.7;
+      margin-bottom: 16px;
     }
 
-    /* Quote */
-    .motivational-quote {
-      margin-top: 48px;
-      padding: 32px;
-      border-left: 4px solid #FF4136;
-      background: rgba(255, 65, 54, 0.05);
+    .wod-description strong {
+      color: #FFFFFF;
     }
 
-    .motivational-quote blockquote {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.6rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      line-height: 1.3;
-    }
-
-    .motivational-quote cite {
-      display: block;
-      margin-top: 12px;
-      font-style: normal;
-      font-family: 'Inter', sans-serif;
+    .wod-coach {
       font-size: 0.85rem;
       color: rgba(255, 255, 255, 0.4);
+      text-transform: uppercase;
+      letter-spacing: 2px;
     }
 
-    /* Contact side */
-    .contact-side h2 {
+    .wod-coach span {
+      color: #E8FF00;
+    }
+
+    /* Schedule Grid */
+    .schedule-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 2px;
+      background: rgba(232, 255, 0, 0.08);
+      border: 1px solid rgba(232, 255, 0, 0.12);
+      margin-bottom: 48px;
+    }
+
+    .schedule-day {
+      background: #1A1A1A;
+    }
+
+    .schedule-day-header {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 2.5rem;
+      font-size: 1.3rem;
       letter-spacing: 3px;
       text-transform: uppercase;
-      margin-bottom: 24px;
-    }
-
-    .contact-info {
-      margin-bottom: 32px;
-    }
-
-    .contact-info-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      margin-bottom: 16px;
-      font-size: 0.95rem;
-      color: rgba(255, 255, 255, 0.7);
-    }
-
-    .contact-info-item .icon {
+      text-align: center;
+      padding: 16px 8px;
+      background: rgba(232, 255, 0, 0.06);
       color: #E8FF00;
-      font-size: 1.1rem;
-      flex-shrink: 0;
-      margin-top: 2px;
+      border-bottom: 2px solid rgba(232, 255, 0, 0.15);
     }
 
-    .contact-info-item strong {
-      color: #FFFFFF;
-      display: block;
-      margin-bottom: 2px;
-    }
-
-    /* Form */
-    .contact-form {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .form-group {
+    .schedule-day-slots {
+      padding: 12px 10px;
       display: flex;
       flex-direction: column;
       gap: 6px;
+      min-height: 200px;
     }
 
-    .form-group label {
+    .schedule-slot {
+      display: flex;
+      flex-direction: column;
+      padding: 10px 8px;
+      background: rgba(17, 17, 17, 0.6);
+      border-left: 2px solid transparent;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .schedule-slot:hover {
+      border-left-color: #E8FF00;
+      background: rgba(232, 255, 0, 0.04);
+    }
+
+    .schedule-slot-time {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 0.95rem;
+      font-size: 1.05rem;
+      letter-spacing: 1px;
+      color: #E8FF00;
+      line-height: 1.2;
+    }
+
+    .schedule-slot-name {
+      font-size: 0.72rem;
+      color: rgba(255, 255, 255, 0.5);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 2px;
+    }
+
+    /* Contact line */
+    .schedule-contact {
+      text-align: center;
+      padding: 40px 24px;
+      background: rgba(232, 255, 0, 0.03);
+      border: 1px solid rgba(232, 255, 0, 0.08);
+      clip-path: polygon(2% 0, 98% 0, 100% 50%, 98% 100%, 2% 100%, 0 50%);
+    }
+
+    .schedule-contact p {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
       letter-spacing: 2px;
       text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.6);
+      color: rgba(255, 255, 255, 0.7);
     }
 
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      background: #1A1A1A;
-      border: 1px solid rgba(232, 255, 0, 0.15);
+    .schedule-contact p span {
+      color: #E8FF00;
+    }
+
+    .schedule-contact p strong {
       color: #FFFFFF;
-      padding: 14px 16px;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.95rem;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
-      border-color: #E8FF00;
-    }
-
-    .form-group textarea {
-      resize: vertical;
-      min-height: 100px;
-    }
-
-    .form-group select {
-      cursor: pointer;
-      appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='%23E8FF00'%3E%3Cpath d='M6 8L0 0h12z'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 16px center;
-    }
-
-    .form-group select option {
-      background: #1A1A1A;
-      color: #FFFFFF;
-    }
-
-    .form-submit {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.15rem;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      background: #E8FF00;
-      color: #111111;
-      border: none;
-      padding: 16px 40px;
-      cursor: pointer;
-      clip-path: polygon(0 0, 100% 0, 96% 100%, 4% 100%);
-      transition: background 0.2s, transform 0.2s;
-      align-self: flex-start;
-      margin-top: 8px;
-    }
-
-    .form-submit:hover {
-      background: #d4eb00;
-      transform: scale(1.03);
     }
 
     /* ── FOOTER ── */
@@ -631,20 +635,34 @@ export const prerender = true;
     }
 
     /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .schedule-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
     @media (max-width: 900px) {
-      .programs-grid {
+      .member-grid {
         grid-template-columns: 1fr;
         gap: 20px;
+        max-width: 500px;
       }
 
-      .pricing-contact-grid {
-        grid-template-columns: 1fr;
-        gap: 48px;
+      .schedule-grid {
+        grid-template-columns: repeat(2, 1fr);
       }
 
       .hero-stats {
         flex-wrap: wrap;
-        gap: 32px;
+        gap: 12px 24px;
+      }
+
+      .hero-stat-text {
+        font-size: 0.95rem;
+      }
+
+      .community-banner img {
+        height: 280px;
       }
     }
 
@@ -671,29 +689,59 @@ export const prerender = true;
       }
 
       .hero-content {
-        padding: 100px 20px 60px;
+        padding: 120px 20px 100px;
       }
 
       .hero-headline {
-        font-size: clamp(3rem, 12vw, 5rem);
+        font-size: clamp(3.2rem, 14vw, 5.5rem);
+      }
+
+      .hero::after {
+        height: 40px;
+      }
+
+      .community,
+      .schedule {
+        padding: 80px 0;
+      }
+
+      .schedule-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .schedule-day-slots {
+        min-height: auto;
+      }
+
+      .wod-preview {
+        padding: 28px 20px;
+        clip-path: none;
+      }
+
+      .community-banner {
+        clip-path: none;
+      }
+
+      .community-banner img {
+        height: 220px;
+      }
+
+      .community-banner-text {
+        font-size: clamp(1.8rem, 8vw, 3rem);
+        letter-spacing: 3px;
+      }
+
+      .schedule-contact {
+        clip-path: none;
       }
 
       .hero-stats {
-        gap: 24px;
-      }
-
-      .hero-stat-number {
-        font-size: 2rem;
-      }
-
-      .pricing-card {
         flex-direction: column;
-        align-items: flex-start;
-        gap: 12px;
+        gap: 8px;
       }
 
-      .motivational-quote blockquote {
-        font-size: 1.2rem;
+      .hero-stat-separator {
+        display: none;
       }
     }
   </style>
@@ -706,9 +754,8 @@ export const prerender = true;
     <div class="nav-inner">
       <a href="#" class="nav-logo">Iron Valley</a>
       <ul class="nav-links" id="navLinks">
-        <li><a href="#programs">Programme</a></li>
-        <li><a href="#pricing">Preise</a></li>
-        <li><a href="#contact">Kontakt</a></li>
+        <li><a href="#crew">Crew</a></li>
+        <li><a href="#schedule">Tagesplan</a></li>
       </ul>
       <button class="nav-burger" id="navBurger" aria-label="Menu">
         <span></span>
@@ -723,199 +770,247 @@ export const prerender = true;
     <div class="hero-bg">
       <img
         src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1920&q=80&auto=format"
-        alt="CrossFit Box Atmosphaere"
+        alt="CrossFit Box Atmosphaere — Hanteln, Ketten, raue Waende"
         loading="eager"
       />
     </div>
     <div class="hero-slash"></div>
+    <div class="hero-slash-2"></div>
     <div class="hero-content">
-      <span class="hero-label">CrossFit Box — Trier-Sued</span>
+      <span class="hero-label">CrossFit Box seit 2021 &middot; Trier-Sued, Industriegebiet</span>
       <h1 class="hero-headline">
-        <span class="highlight">Staerker</span><br />
+        <span class="highlight">St&auml;rker</span><br />
         als gestern.
       </h1>
       <p class="hero-sub">
-        Iron Valley ist deine CrossFit Box in Trier-Sued. Functional Training,
-        starke Community, echte Ergebnisse. Trainiere mit Coach Marc und
-        werde die beste Version von dir.
+        6 Tage die Woche. Kein Spiegel, kein Ego. Nur du, die Hantel und 147 Leute, die wollen, dass du durchziehst.
       </p>
-      <a href="#contact" class="hero-cta">Probetraining buchen</a>
+      <a href="#schedule" class="hero-cta">Kostenloses Probetraining</a>
       <div class="hero-stats">
-        <div>
-          <div class="hero-stat-number">150+</div>
-          <div class="hero-stat-label">Mitglieder</div>
+        <div class="hero-stat">
+          <span class="hero-stat-text">147 Mitglieder</span>
         </div>
-        <div>
-          <div class="hero-stat-number">12</div>
-          <div class="hero-stat-label">Coaches</div>
+        <span class="hero-stat-separator">&middot;</span>
+        <div class="hero-stat">
+          <span class="hero-stat-text">6 Coaches</span>
         </div>
-        <div>
-          <div class="hero-stat-number">6x</div>
-          <div class="hero-stat-label">Pro Woche</div>
-        </div>
-        <div>
-          <div class="hero-stat-number">800m&sup2;</div>
-          <div class="hero-stat-label">Trainingsflaeche</div>
+        <span class="hero-stat-separator">&middot;</span>
+        <div class="hero-stat">
+          <span class="hero-stat-text">6 Tage die Woche</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- PROGRAMS -->
-  <section class="programs" id="programs">
+  <!-- COMMUNITY -->
+  <section class="community" id="crew">
     <div class="container">
-      <span class="section-label">Was wir bieten</span>
-      <h2 class="section-title">Unsere Programme</h2>
-      <div class="programs-grid">
+      <span class="section-label">Mehr als ein Gym</span>
+      <h2 class="section-title">Die Valley Crew</h2>
+      <div class="member-grid">
 
-        <div class="program-card">
-          <span class="program-card-number">01</span>
-          <h3 class="program-card-title">WOD</h3>
-          <span class="program-card-level">Alle Level</span>
-          <p class="program-card-desc">
-            Workout of the Day — jeden Tag ein neues, intensives Programm.
-            Skalierbar fuer Einsteiger und Fortgeschrittene. Maximale Intensitaet,
-            maximale Ergebnisse.
-          </p>
-          <div class="program-card-schedule">
-            <span class="clock-icon">&#9201;</span>
-            Mo — Sa, 06:00 / 08:00 / 17:30 / 19:00
+        <div class="member-card">
+          <img
+            class="member-card-img"
+            src="https://images.unsplash.com/photo-1609899464926-209bc9a1506b?w=600&q=80&auto=format&fit=crop"
+            alt="Lisa — Mitglied seit 2022"
+            loading="lazy"
+          />
+          <div class="member-card-body">
+            <p class="member-card-quote">&bdquo;Vor Iron Valley: R&uuml;ckenschmerzen. Jetzt: Deadlift 120kg.&ldquo;</p>
+            <div class="member-card-name">Lisa, 34</div>
+            <div class="member-card-since">Mitglied seit 2022</div>
           </div>
         </div>
 
-        <div class="program-card">
-          <span class="program-card-number">02</span>
-          <h3 class="program-card-title">Olympic Lifting</h3>
-          <span class="program-card-level">Fortgeschritten</span>
-          <p class="program-card-desc">
-            Snatch, Clean &amp; Jerk — technisch sauber, progressiv aufgebaut.
-            Fokus auf Technik, Kraft und Mobilitaet unter Last. Kleine Gruppen,
-            individuelles Coaching.
-          </p>
-          <div class="program-card-schedule">
-            <span class="clock-icon">&#9201;</span>
-            Di &amp; Do, 18:00 / Sa, 10:00
+        <div class="member-card">
+          <img
+            class="member-card-img"
+            src="https://images.unsplash.com/photo-1567013127542-490d483063b2?w=600&q=80&auto=format&fit=crop"
+            alt="Osman — Mitglied seit 2021"
+            loading="lazy"
+          />
+          <div class="member-card-body">
+            <p class="member-card-quote">&bdquo;Ich kam f&uuml;r den Sport. Ich bleibe f&uuml;r die Leute.&ldquo;</p>
+            <div class="member-card-name">Osman, 28</div>
+            <div class="member-card-since">Mitglied seit 2021</div>
           </div>
         </div>
 
-        <div class="program-card">
-          <span class="program-card-number">03</span>
-          <h3 class="program-card-title">Mobility &amp; Recovery</h3>
-          <span class="program-card-level">Alle Level</span>
-          <p class="program-card-desc">
-            Beweglichkeit, Faszienarbeit, aktive Regeneration. Damit du
-            langfristig leistungsfaehig bleibst und Verletzungen vorbeugst.
-            Perfekte Ergaenzung zum WOD.
-          </p>
-          <div class="program-card-schedule">
-            <span class="clock-icon">&#9201;</span>
-            Mi &amp; Fr, 12:00 / So, 10:00
+        <div class="member-card">
+          <img
+            class="member-card-img"
+            src="https://images.unsplash.com/photo-1595078475328-1ab05d0a6a0e?w=600&q=80&auto=format&fit=crop"
+            alt="Petra — Mitglied seit 2023"
+            loading="lazy"
+          />
+          <div class="member-card-body">
+            <p class="member-card-quote">&bdquo;Mit 50 angefangen. Beste Entscheidung meines Lebens.&ldquo;</p>
+            <div class="member-card-name">Petra, 52</div>
+            <div class="member-card-since">Mitglied seit 2023</div>
           </div>
         </div>
 
+      </div>
+
+      <!-- Community banner -->
+      <div class="community-banner">
+        <img
+          src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=1200&q=80&auto=format"
+          alt="CrossFit Gruppe beim Training"
+          loading="lazy"
+        />
+        <div class="community-banner-overlay">
+          <div class="community-banner-text">Kein Ego. <span>Nur Einsatz.</span></div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- PRICING + CONTACT -->
-  <section class="pricing-contact" id="pricing">
+  <!-- TAGESPLAN -->
+  <section class="schedule" id="schedule">
     <div class="container">
-      <span class="section-label">Loslegen</span>
-      <h2 class="section-title">Preise &amp; Kontakt</h2>
-      <div class="pricing-contact-grid">
+      <span class="section-label">Wochenplan</span>
+      <h2 class="section-title">Heute im Valley</h2>
 
-        <!-- Left: Pricing -->
-        <div>
-          <div class="pricing-cards">
-            <div class="pricing-card">
-              <div class="pricing-card-info">
-                <h3>Probetraining</h3>
-                <p>Einmal reinschnuppern, unverbindlich</p>
-              </div>
-              <div class="pricing-card-price">Gratis</div>
-            </div>
-            <div class="pricing-card featured">
-              <div class="pricing-card-info">
-                <h3>Monatsmitgliedschaft</h3>
-                <p>Unlimitierte WODs &amp; Kurse, monatlich kuendbar</p>
-              </div>
-              <div class="pricing-card-price">79&euro; <span>/ Monat</span></div>
-            </div>
-            <div class="pricing-card">
-              <div class="pricing-card-info">
-                <h3>10er-Karte</h3>
-                <p>10 Sessions, flexibel einsetzbar, 6 Monate gueltig</p>
-              </div>
-              <div class="pricing-card-price">120&euro;</div>
-            </div>
-          </div>
+      <!-- WOD Preview -->
+      <div class="wod-preview">
+        <div class="wod-label">WOD des Tages</div>
+        <div class="wod-title">AMRAP 20 Minuten</div>
+        <p class="wod-description">
+          <strong>10 Power Cleans</strong> (60/40kg) &middot;
+          <strong>15 Box Jumps</strong> (60/50cm) &middot;
+          <strong>20 Wall Balls</strong> (9/6kg)
+        </p>
+        <div class="wod-coach">Coach: <span>Marc</span></div>
+      </div>
 
-          <div class="motivational-quote">
-            <blockquote>
-              &bdquo;Der Schmerz, den du heute fuehlst, ist die Staerke,
-              die du morgen hast.&ldquo;
-            </blockquote>
-            <cite>— Coach Marc, CrossFit Level 3 Trainer</cite>
+      <!-- Weekly Schedule Grid -->
+      <div class="schedule-grid">
+
+        <div class="schedule-day">
+          <div class="schedule-day-header">Mo</div>
+          <div class="schedule-day-slots">
+            <div class="schedule-slot">
+              <span class="schedule-slot-time">06:30</span>
+              <span class="schedule-slot-name">Open Box</span>
+            </div>
+            <div class="schedule-slot">
+              <span class="schedule-slot-time">09:00</span>
+              <span class="schedule-slot-name">WOD</span>
+            </div>
+            <div class="schedule-slot">
+              <span class="schedule-slot-time">17:30</span>
+              <span class="schedule-slot-name">WOD</span>
+            </div>
+            <div class="schedule-slot">
+              <span class="schedule-slot-time">19:00</span>
+              <span class="schedule-slot-name">Olympic Lifting</span>
+            </div>
           </div>
         </div>
 
-        <!-- Right: Contact -->
-        <div class="contact-side" id="contact">
-          <h2>Probetraining<br />buchen</h2>
-
-          <div class="contact-info">
-            <div class="contact-info-item">
-              <span class="icon">&#9906;</span>
-              <div>
-                <strong>Adresse</strong>
-                Iron Valley CrossFit<br />
-                Saarstrasse 42, 54290 Trier-Sued
-              </div>
+        <div class="schedule-day">
+          <div class="schedule-day-header">Di</div>
+          <div class="schedule-day-slots">
+            <div class="schedule-slot">
+              <span class="schedule-slot-time">06:30</span>
+              <span class="schedule-slot-name">Open Box</span>
             </div>
-            <div class="contact-info-item">
-              <span class="icon">&#9743;</span>
-              <div>
-                <strong>Telefon</strong>
-                0651 — 820 44 10
-              </div>
+            <div class="schedule-slot">
+              <span class="schedule-slot-time">09:00</span>
+              <span class="schedule-slot-name">WOD</span>
             </div>
-            <div class="contact-info-item">
-              <span class="icon">&#9201;</span>
-              <div>
-                <strong>Oeffnungszeiten</strong>
-                Mo — Fr: 06:00 — 21:00<br />
-                Sa: 08:00 — 14:00 | So: 10:00 — 13:00
-              </div>
+            <div class="schedule-slot">
+              <span class="schedule-slot-time">17:30</span>
+              <span class="schedule-slot-name">WOD</span>
+            </div>
+            <div class="schedule-slot">
+              <span class="schedule-slot-time">19:00</span>
+              <span class="schedule-slot-name">Mobility</span>
             </div>
           </div>
+        </div>
 
-          <form class="contact-form" onsubmit="event.preventDefault();">
-            <div class="form-group">
-              <label for="name">Name</label>
-              <input type="text" id="name" placeholder="Dein Name" required />
+        <div class="schedule-day">
+          <div class="schedule-day-header">Mi</div>
+          <div class="schedule-day-slots">
+            <div class="schedule-slot">
+              <span class="schedule-slot-time">06:30</span>
+              <span class="schedule-slot-name">Open Box</span>
             </div>
-            <div class="form-group">
-              <label for="email">E-Mail</label>
-              <input type="email" id="email" placeholder="deine@email.de" required />
+            <div class="schedule-slot">
+              <span class="schedule-slot-time">09:00</span>
+              <span class="schedule-slot-name">WOD</span>
             </div>
-            <div class="form-group">
-              <label for="interest">Interesse</label>
-              <select id="interest">
-                <option value="probetraining">Probetraining (gratis)</option>
-                <option value="mitgliedschaft">Monatsmitgliedschaft</option>
-                <option value="10er">10er-Karte</option>
-                <option value="frage">Allgemeine Frage</option>
-              </select>
+            <div class="schedule-slot">
+              <span class="schedule-slot-time">17:30</span>
+              <span class="schedule-slot-name">WOD</span>
             </div>
-            <div class="form-group">
-              <label for="message">Nachricht</label>
-              <textarea id="message" placeholder="Wann moechtest du starten?"></textarea>
+            <div class="schedule-slot">
+              <span class="schedule-slot-time">19:00</span>
+              <span class="schedule-slot-name">WOD</span>
             </div>
-            <button type="submit" class="form-submit">Jetzt anfragen</button>
-          </form>
+          </div>
+        </div>
+
+        <div class="schedule-day">
+          <div class="schedule-day-header">Do</div>
+          <div class="schedule-day-slots">
+            <div class="schedule-slot">
+              <span class="schedule-slot-time">06:30</span>
+              <span class="schedule-slot-name">Open Box</span>
+            </div>
+            <div class="schedule-slot">
+              <span class="schedule-slot-time">09:00</span>
+              <span class="schedule-slot-name">WOD</span>
+            </div>
+            <div class="schedule-slot">
+              <span class="schedule-slot-time">17:30</span>
+              <span class="schedule-slot-name">WOD</span>
+            </div>
+            <div class="schedule-slot">
+              <span class="schedule-slot-time">19:00</span>
+              <span class="schedule-slot-name">Olympic Lifting</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="schedule-day">
+          <div class="schedule-day-header">Fr</div>
+          <div class="schedule-day-slots">
+            <div class="schedule-slot">
+              <span class="schedule-slot-time">06:30</span>
+              <span class="schedule-slot-name">Open Box</span>
+            </div>
+            <div class="schedule-slot">
+              <span class="schedule-slot-time">09:00</span>
+              <span class="schedule-slot-name">WOD</span>
+            </div>
+            <div class="schedule-slot">
+              <span class="schedule-slot-time">17:30</span>
+              <span class="schedule-slot-name">WOD</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="schedule-day">
+          <div class="schedule-day-header">Sa</div>
+          <div class="schedule-day-slots">
+            <div class="schedule-slot">
+              <span class="schedule-slot-time">10:00</span>
+              <span class="schedule-slot-name">Team WOD</span>
+            </div>
+          </div>
         </div>
 
       </div>
+
+      <!-- Contact line -->
+      <div class="schedule-contact">
+        <p>Dein erster Tag? <span>&rarr;</span> <strong>0651 &mdash; 820 44 10</strong> <span>oder komm einfach vorbei.</span></p>
+      </div>
+
     </div>
   </section>
 
@@ -923,9 +1018,9 @@ export const prerender = true;
   <footer class="footer">
     <div class="container">
       <div class="footer-logo">Iron Valley</div>
-      <p>&copy; 2026 Iron Valley CrossFit — Trier-Sued. Alle Rechte vorbehalten.</p>
+      <p>&copy; 2026 Iron Valley CrossFit &mdash; Trier-Sued. Alle Rechte vorbehalten.</p>
       <p style="margin-top: 8px; color: rgba(255,255,255,0.2); font-size: 0.7rem;">
-        Demo-Website — Style: Athletic Bold | portawerk.de
+        Demo-Website &mdash; Style: Athletic Bold | portawerk.de
       </p>
     </div>
   </footer>
@@ -938,7 +1033,6 @@ export const prerender = true;
       burger.addEventListener('click', () => {
         navLinks.classList.toggle('open');
       });
-      // Close menu on link click
       navLinks.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', () => {
           navLinks.classList.remove('open');
