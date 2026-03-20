@@ -33,14 +33,14 @@ import { styles, categories } from "../data/styles";
   <!-- Main App -->
   <div id="app" class="hidden min-h-screen">
     <!-- Sidebar -->
-    <aside id="sidebar" class="fixed left-0 top-0 bottom-0 w-64 bg-surface border-r border-border overflow-y-auto z-40">
-      <div class="p-6 pb-4 border-b border-border">
-        <h1 class="font-display text-lg font-bold tracking-tight">Style Library</h1>
-        <p class="text-text-muted text-xs mt-1">PortaWerk</p>
+    <aside id="sidebar" class="sidebar fixed left-0 top-0 bottom-0 bg-surface border-r border-border overflow-y-auto z-40 overflow-x-hidden">
+      <div class="sidebar-header p-4 pb-3 border-b border-border">
+        <h1 class="sidebar-title font-display text-sm font-bold tracking-tight whitespace-nowrap">Style Library</h1>
+        <p class="sidebar-sub text-text-muted text-[10px] mt-0.5 whitespace-nowrap">PortaWerk</p>
       </div>
-      <nav class="p-4">
+      <nav class="p-2">
         <button
-          class="filter-btn active w-full text-left px-3 py-2 rounded-md text-sm font-medium transition-colors"
+          class="filter-btn active w-full text-left px-2 py-1.5 rounded-md text-xs font-medium transition-colors whitespace-nowrap"
           data-category="all"
         >
           Alle
@@ -50,7 +50,7 @@ import { styles, categories } from "../data/styles";
           const count = styles.filter((s) => s.category === cat).length;
           return (
             <button
-              class="filter-btn w-full text-left px-3 py-2 rounded-md text-sm transition-colors"
+              class="filter-btn w-full text-left px-2 py-1.5 rounded-md text-xs transition-colors whitespace-nowrap"
               data-category={cat}
             >
               {cat}
@@ -62,7 +62,7 @@ import { styles, categories } from "../data/styles";
     </aside>
 
     <!-- Content -->
-    <main class="ml-64 p-8">
+    <main class="main-content p-8">
       <div class="mb-8">
         <h2 id="category-title" class="font-display text-2xl font-bold">Alle Stile</h2>
         <p id="category-count" class="text-text-muted text-sm mt-1">{styles.length} Stile</p>
@@ -247,6 +247,35 @@ import { styles, categories } from "../data/styles";
   </script>
 
   <style>
+    /* Sidebar: collapsed by default, expands on hover */
+    .sidebar {
+      width: 48px;
+      transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .sidebar:hover {
+      width: 200px;
+    }
+
+    /* Hide text when collapsed */
+    .sidebar .sidebar-title,
+    .sidebar .sidebar-sub,
+    .sidebar .filter-btn {
+      opacity: 0;
+      transition: opacity 0.15s ease;
+    }
+    .sidebar:hover .sidebar-title,
+    .sidebar:hover .sidebar-sub,
+    .sidebar:hover .filter-btn {
+      opacity: 1;
+      transition: opacity 0.2s ease 0.1s;
+    }
+
+    /* Main content offset */
+    .main-content {
+      margin-left: 48px;
+      transition: margin-left 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
     .filter-btn {
       color: var(--color-text-muted);
     }
