@@ -1,0 +1,852 @@
+---
+export const prerender = true;
+---
+
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Zwischenzeilen — Buchhandlung & Lesungen | Trier</title>
+  <meta name="description" content="Zwischenzeilen — Unabhaengige Buchhandlung mit Lesungen in Trier. Handverlesene Literatur, Autorenlesungen, Poetry Slams." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;0,6..72,800;1,6..72,400;1,6..72,500&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Lora', Georgia, serif;
+      color: #1A1A1A;
+      background-color: #FFFFF0;
+      line-height: 1.7;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Newsreader', 'Times New Roman', serif;
+      line-height: 1.15;
+      font-weight: 700;
+    }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(255, 255, 240, 0.97);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border-bottom: 2px solid #1A1A1A;
+      padding: 0 2rem;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .navbar-logo {
+      font-family: 'Newsreader', serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #1A1A1A;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+    }
+
+    .navbar-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .navbar-links a {
+      font-family: 'Lora', serif;
+      font-size: 0.8rem;
+      color: #1A1A1A;
+      letter-spacing: 0.05em;
+      transition: color 0.2s;
+    }
+
+    .navbar-links a:hover {
+      color: #B22222;
+    }
+
+    /* Mobile menu */
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .menu-toggle span {
+      display: block;
+      width: 20px;
+      height: 1.5px;
+      background: #1A1A1A;
+      margin: 4px 0;
+      transition: all 0.3s;
+    }
+
+    /* ===== HERO — NEWSPAPER ABOVE THE FOLD ===== */
+    .hero {
+      padding-top: 48px;
+      min-height: 100vh;
+      border-bottom: 3px double #1A1A1A;
+    }
+
+    .masthead {
+      text-align: center;
+      padding: 2.5rem 2rem 0;
+      border-bottom: 3px solid #1A1A1A;
+    }
+
+    .masthead-rule-top {
+      width: 100%;
+      height: 1px;
+      background: #1A1A1A;
+      margin-bottom: 0.5rem;
+    }
+
+    .masthead-title {
+      font-family: 'Newsreader', serif;
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 800;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #1A1A1A;
+      line-height: 1;
+      margin-bottom: 0.35rem;
+    }
+
+    .masthead-subtitle {
+      font-family: 'Lora', serif;
+      font-size: 0.85rem;
+      font-style: italic;
+      color: #555;
+      letter-spacing: 0.15em;
+      margin-bottom: 0.5rem;
+    }
+
+    .masthead-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Lora', serif;
+      font-size: 0.7rem;
+      color: #666;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.5rem 0;
+      border-top: 1px solid #1A1A1A;
+    }
+
+    .hero-content {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 0;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem 2rem 3rem;
+    }
+
+    .hero-main {
+      padding-right: 2.5rem;
+      border-right: 1px solid #ccc;
+    }
+
+    .hero-headline {
+      font-family: 'Newsreader', serif;
+      font-size: clamp(2.8rem, 5vw, 4.2rem);
+      font-weight: 700;
+      line-height: 1.08;
+      margin-bottom: 1.5rem;
+      color: #1A1A1A;
+    }
+
+    .drop-cap {
+      color: #B22222;
+      font-size: 4.5rem;
+      float: left;
+      line-height: 0.75;
+      margin-right: 0.1em;
+      margin-top: 0.08em;
+      font-family: 'Newsreader', serif;
+      font-weight: 800;
+    }
+
+    .hero-body {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: #333;
+      columns: 2;
+      column-gap: 2rem;
+      column-rule: 1px solid #ddd;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-body p {
+      margin-bottom: 1rem;
+      text-align: justify;
+      hyphens: auto;
+    }
+
+    .hero-image-wrapper {
+      float: right;
+      width: 55%;
+      margin: 0 0 1rem 1.5rem;
+      border: 1px solid #ccc;
+      padding: 3px;
+      background: #fff;
+    }
+
+    .hero-image-wrapper img {
+      width: 100%;
+      display: block;
+      filter: grayscale(30%) contrast(1.05);
+    }
+
+    .hero-image-caption {
+      font-size: 0.65rem;
+      font-style: italic;
+      color: #888;
+      text-align: center;
+      padding-top: 4px;
+      font-family: 'Lora', serif;
+    }
+
+    .hero-link {
+      color: #B22222;
+      font-family: 'Newsreader', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      transition: opacity 0.2s;
+      clear: both;
+      display: inline-block;
+    }
+
+    .hero-link:hover {
+      opacity: 0.7;
+    }
+
+    .hero-sidebar {
+      padding-left: 2rem;
+      font-size: 0.85rem;
+    }
+
+    .sidebar-section {
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .sidebar-section:last-child {
+      border-bottom: none;
+    }
+
+    .sidebar-heading {
+      font-family: 'Newsreader', serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: #B22222;
+      margin-bottom: 0.75rem;
+    }
+
+    .sidebar-text {
+      font-family: 'Lora', serif;
+      font-size: 0.85rem;
+      line-height: 1.65;
+      color: #444;
+    }
+
+    .sidebar-text strong {
+      color: #1A1A1A;
+      font-weight: 600;
+    }
+
+    .sidebar-event-date {
+      font-family: 'Newsreader', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #1A1A1A;
+      line-height: 1.2;
+      margin-bottom: 0.3rem;
+    }
+
+    .sidebar-event-title {
+      font-family: 'Lora', serif;
+      font-size: 0.9rem;
+      font-style: italic;
+      color: #333;
+    }
+
+    /* ===== SECTION 2 — EMPFEHLUNGEN ===== */
+    .section-books {
+      padding: 4rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      border-bottom: 3px double #1A1A1A;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .section-header-rule {
+      width: 60px;
+      height: 2px;
+      background: #B22222;
+      margin: 0 auto 1rem;
+    }
+
+    .section-title {
+      font-family: 'Newsreader', serif;
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #1A1A1A;
+      margin-bottom: 0.3rem;
+    }
+
+    .section-subtitle {
+      font-family: 'Lora', serif;
+      font-size: 0.9rem;
+      font-style: italic;
+      color: #777;
+    }
+
+    .books-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 0;
+    }
+
+    .book-feature {
+      grid-row: 1 / 3;
+      padding-right: 2.5rem;
+      border-right: 1px solid #ccc;
+    }
+
+    .book-genre {
+      display: inline-block;
+      font-family: 'Newsreader', serif;
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: #B22222;
+      border: 1px solid #B22222;
+      padding: 0.15rem 0.6rem;
+      margin-bottom: 1rem;
+    }
+
+    .book-title {
+      font-family: 'Newsreader', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #1A1A1A;
+      margin-bottom: 0.2rem;
+      line-height: 1.2;
+    }
+
+    .book-author {
+      font-family: 'Lora', serif;
+      font-size: 0.95rem;
+      color: #666;
+      margin-bottom: 1.2rem;
+      font-style: italic;
+    }
+
+    .book-review {
+      font-family: 'Lora', serif;
+      font-size: 1rem;
+      line-height: 1.75;
+      color: #333;
+      font-style: italic;
+      margin-bottom: 1.5rem;
+      text-align: justify;
+    }
+
+    .pull-quote {
+      border-left: 3px solid #B22222;
+      padding: 1rem 0 1rem 1.5rem;
+      margin: 1.5rem 0;
+      font-family: 'Newsreader', serif;
+      font-size: 1.4rem;
+      font-weight: 500;
+      line-height: 1.4;
+      color: #1A1A1A;
+      font-style: italic;
+    }
+
+    .book-small {
+      padding-left: 2rem;
+      padding-bottom: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .book-small:first-of-type {
+      padding-top: 0;
+    }
+
+    .book-small:not(:last-child) {
+      border-bottom: 1px solid #ddd;
+    }
+
+    .book-small .book-title {
+      font-size: 1.2rem;
+      margin-bottom: 0.15rem;
+    }
+
+    .book-small .book-author {
+      font-size: 0.85rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .book-small .book-review {
+      font-size: 0.9rem;
+      line-height: 1.65;
+      margin-bottom: 0.75rem;
+    }
+
+    .accent-divider {
+      width: 40px;
+      height: 2px;
+      background: #B22222;
+      margin-bottom: 1.2rem;
+    }
+
+    /* ===== SECTION 3 — LESUNGEN ===== */
+    .section-events {
+      padding: 4rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .events-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      margin-bottom: 3rem;
+    }
+
+    .events-list {
+      padding-right: 2.5rem;
+      border-right: 1px solid #ccc;
+    }
+
+    .event-item {
+      padding: 1.5rem 0;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .event-item:first-child {
+      padding-top: 0;
+    }
+
+    .event-date {
+      font-family: 'Newsreader', serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: #B22222;
+      margin-bottom: 0.3rem;
+    }
+
+    .event-title {
+      font-family: 'Newsreader', serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #1A1A1A;
+      margin-bottom: 0.3rem;
+      line-height: 1.3;
+    }
+
+    .event-meta {
+      font-family: 'Lora', serif;
+      font-size: 0.8rem;
+      color: #777;
+      font-style: italic;
+    }
+
+    .owner-section {
+      padding-left: 2.5rem;
+    }
+
+    .owner-name {
+      font-family: 'Newsreader', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #1A1A1A;
+      margin-bottom: 0.15rem;
+    }
+
+    .owner-role {
+      font-family: 'Lora', serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: #B22222;
+      margin-bottom: 1rem;
+      letter-spacing: 0.05em;
+    }
+
+    .owner-text {
+      font-family: 'Lora', serif;
+      font-size: 0.95rem;
+      line-height: 1.75;
+      color: #444;
+      margin-bottom: 2rem;
+      text-align: justify;
+    }
+
+    .contact-line {
+      font-family: 'Lora', serif;
+      font-size: 0.85rem;
+      color: #555;
+      margin-bottom: 0.3rem;
+    }
+
+    .contact-line strong {
+      color: #1A1A1A;
+      font-weight: 600;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      border-top: 2px solid #1A1A1A;
+      padding: 1.5rem 2rem;
+      text-align: center;
+      font-family: 'Lora', serif;
+      font-size: 0.7rem;
+      color: #999;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 0 1.25rem;
+      }
+
+      .navbar-links {
+        display: none;
+        position: absolute;
+        top: 48px;
+        left: 0;
+        right: 0;
+        background: rgba(255, 255, 240, 0.98);
+        flex-direction: column;
+        padding: 1rem 1.5rem;
+        gap: 0.75rem;
+        border-bottom: 2px solid #1A1A1A;
+      }
+
+      .navbar-links.active {
+        display: flex;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      .masthead-title {
+        letter-spacing: 0.15em;
+      }
+
+      .masthead-meta {
+        flex-direction: column;
+        gap: 0.25rem;
+        text-align: center;
+      }
+
+      .hero-content {
+        grid-template-columns: 1fr;
+        padding: 1.5rem 1.25rem 2.5rem;
+      }
+
+      .hero-main {
+        padding-right: 0;
+        border-right: none;
+        margin-bottom: 2rem;
+        padding-bottom: 2rem;
+        border-bottom: 1px solid #ccc;
+      }
+
+      .hero-body {
+        columns: 1;
+      }
+
+      .hero-image-wrapper {
+        float: none;
+        width: 100%;
+        margin: 0 0 1.25rem 0;
+      }
+
+      .hero-sidebar {
+        padding-left: 0;
+      }
+
+      .books-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .book-feature {
+        grid-row: auto;
+        padding-right: 0;
+        border-right: none;
+        padding-bottom: 2rem;
+        margin-bottom: 2rem;
+        border-bottom: 1px solid #ccc;
+      }
+
+      .book-small {
+        padding-left: 0;
+      }
+
+      .events-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .events-list {
+        padding-right: 0;
+        border-right: none;
+        margin-bottom: 2.5rem;
+        padding-bottom: 2rem;
+        border-bottom: 1px solid #ccc;
+      }
+
+      .owner-section {
+        padding-left: 0;
+      }
+
+      .pull-quote {
+        font-size: 1.15rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .masthead {
+        padding: 1.5rem 1rem 0;
+      }
+
+      .hero-headline {
+        font-size: 2rem;
+      }
+
+      .drop-cap {
+        font-size: 3.2rem;
+      }
+
+      .section-books,
+      .section-events {
+        padding: 3rem 1.25rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="/#editorial" class="navbar-logo">Zwischenzeilen</a>
+    <ul class="navbar-links" id="navLinks">
+      <li><a href="#empfehlungen">Empfehlungen</a></li>
+      <li><a href="#lesungen">Lesungen</a></li>
+    </ul>
+    <button class="menu-toggle" id="menuToggle" aria-label="Menue oeffnen">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <!-- HERO — NEWSPAPER ABOVE THE FOLD -->
+  <section class="hero">
+    <div class="masthead">
+      <div class="masthead-rule-top"></div>
+      <h1 class="masthead-title">Zwischenzeilen</h1>
+      <p class="masthead-subtitle">Unabhaengige Buchhandlung &amp; Lesungen in Trier</p>
+      <div class="masthead-meta">
+        <span>Gegr. 2016</span>
+        <span>Trier, Nagelstrasse 12</span>
+        <span>Ausgabe Nr. 247</span>
+      </div>
+    </div>
+
+    <div class="hero-content">
+      <div class="hero-main">
+        <h2 class="hero-headline"><span class="drop-cap">L</span>esen ist leise Rebellion.</h2>
+        <div class="hero-body">
+          <div class="hero-image-wrapper">
+            <img src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=600&q=80&auto=format" alt="Buecherregale in der Buchhandlung Zwischenzeilen" loading="eager" />
+            <span class="hero-image-caption">Die Literaturecke im Erdgeschoss</span>
+          </div>
+          <p>In einer Zeit, in der Aufmerksamkeit zur Waehrung geworden ist, ist das Lesen eines Buches ein stiller Akt des Widerstands. Zwischenzeilen ist kein Laden, der Bestseller stapelt. Hier stehen Buecher, die man nicht auf der ersten Seite eines Algorithmus findet.</p>
+          <p>Seit 2016 kuratiere ich ein Sortiment, das ueberrascht, herausfordert und bewegt. Jedes Buch in diesen Regalen wurde gelesen, bevor es hierher kam. Jede Empfehlung ist persoenlich.</p>
+          <p>Dazu kommen Lesungen, Poetry Slams und Gespraeche mit Autorinnen und Autoren. Literatur ist hier kein Produkt. Sie ist Begegnung.</p>
+        </div>
+        <a href="#lesungen" class="hero-link">Veranstaltungen &rarr;</a>
+      </div>
+
+      <aside class="hero-sidebar">
+        <div class="sidebar-section">
+          <p class="sidebar-heading">Oeffnungszeiten</p>
+          <p class="sidebar-text">
+            <strong>Mo &ndash; Fr</strong> 10:00 &ndash; 19:00<br />
+            <strong>Sa</strong> 10:00 &ndash; 16:00<br />
+            <strong>So</strong> geschlossen
+          </p>
+        </div>
+        <div class="sidebar-section">
+          <p class="sidebar-heading">Adresse</p>
+          <p class="sidebar-text">
+            Nagelstrasse 12<br />
+            54290 Trier<br />
+            Ecke Brotstrasse
+          </p>
+        </div>
+        <div class="sidebar-section">
+          <p class="sidebar-heading">Naechste Lesung</p>
+          <p class="sidebar-event-date">14. April</p>
+          <p class="sidebar-event-title">Nora Bossong liest aus &bdquo;Reichskanzlerplatz&ldquo;</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- SECTION 2 — EMPFEHLUNGEN -->
+  <section class="section-books" id="empfehlungen">
+    <div class="section-header">
+      <div class="section-header-rule"></div>
+      <h2 class="section-title">Diese Woche empfohlen</h2>
+      <p class="section-subtitle">Handverlesen. Persoenlich gelesen. Ehrlich empfohlen.</p>
+    </div>
+
+    <div class="books-grid">
+      <!-- Feature Book -->
+      <div class="book-feature">
+        <span class="book-genre">Roman</span>
+        <h3 class="book-title">Das Licht am Ende</h3>
+        <p class="book-author">Tomas Gonzalez</p>
+        <p class="book-review">
+          Ein kolumbianischer Vater sitzt auf seiner Veranda und blickt aufs Meer. Er wartet auf Nachricht von seinen Soehnen, die mit dem Boot hinausgefahren sind. Gonzalez erzaehlt in einer Sprache von solcher Klarheit und Ruhe, dass die Katastrophe, die sich anbahnt, umso haerter trifft. Ein schmales Buch, das schwer wiegt.
+        </p>
+        <div class="pull-quote">
+          &bdquo;Man liest es in zwei Stunden und denkt zwei Wochen darueber nach.&ldquo;
+        </div>
+        <p class="book-review">
+          Selten gelingt es einem Autor, auf so wenigen Seiten eine ganze Welt zu entfalten &mdash; mit all ihrer Schoenheit und ihrer Grausamkeit. Gonzalez schreibt, als wuerde er mit geschlossenen Augen malen.
+        </p>
+      </div>
+
+      <!-- Small Book 1 -->
+      <div class="book-small">
+        <div class="accent-divider"></div>
+        <span class="book-genre">Sachbuch</span>
+        <h3 class="book-title">Verzauberte Welt</h3>
+        <p class="book-author">Philipp Blom</p>
+        <p class="book-review">
+          Blom fragt, wie wir in einer entzauberten Welt leben koennen &mdash; und ob es Wege zurueck gibt. Klug, anregend, ohne esoterischen Kitsch.
+        </p>
+      </div>
+
+      <!-- Small Book 2 -->
+      <div class="book-small">
+        <div class="accent-divider"></div>
+        <span class="book-genre">Lyrik</span>
+        <h3 class="book-title">Kaum Nacht</h3>
+        <p class="book-author">Anja Kampmann</p>
+        <p class="book-review">
+          Gedichte ueber Landschaften, Verlust und das, was zwischen den Woertern liegt. Kampmanns Sprache ist praezise und dabei voller Resonanzraeume.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3 — LESUNGEN -->
+  <section class="section-events" id="lesungen">
+    <div class="section-header">
+      <div class="section-header-rule"></div>
+      <h2 class="section-title">Lesungen</h2>
+      <p class="section-subtitle">Literatur lebt, wenn man ihr zuhoert.</p>
+    </div>
+
+    <div class="events-grid">
+      <div class="events-list">
+        <div class="event-item">
+          <p class="event-date">14. April 2026</p>
+          <h3 class="event-title">Nora Bossong liest aus &bdquo;Reichskanzlerplatz&ldquo;</h3>
+          <p class="event-meta">19:30 Uhr &middot; Eintritt 8,00 Euro &middot; Anmeldung empfohlen</p>
+        </div>
+        <div class="event-item">
+          <p class="event-date">28. April 2026</p>
+          <h3 class="event-title">Poetry Slam &mdash; Offene Buehne</h3>
+          <p class="event-meta">20:00 Uhr &middot; Eintritt 5,00 Euro &middot; Anmeldung zum Slamen bis 19:30</p>
+        </div>
+        <div class="event-item">
+          <p class="event-date">5. Mai 2026</p>
+          <h3 class="event-title">Kinderbuchlesung mit Anna Woltz</h3>
+          <p class="event-meta">15:00 Uhr &middot; Eintritt frei &middot; Ab 8 Jahren</p>
+        </div>
+      </div>
+
+      <div class="owner-section">
+        <h3 class="owner-name">Katharina Meier</h3>
+        <p class="owner-role">Inhaberin seit 2016</p>
+        <p class="owner-text">
+          Ich habe Zwischenzeilen gegruendet, weil ich an die Kraft des langsamen Lesens glaube. An Buecher, die man mit Bleistift liest. An Gespraeche ueber Literatur, die laenger dauern als ein Instagram-Reel. Dieser Laden ist mein Gegenvorschlag zur Dauerberieselung. Kommen Sie vorbei, blaettern Sie, bleiben Sie. Der Kaffee ist gratis.
+        </p>
+        <p class="contact-line"><strong>Adresse:</strong> Nagelstrasse 12, 54290 Trier</p>
+        <p class="contact-line"><strong>Telefon:</strong> 0651 / 43 67 890</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    Zwischenzeilen &mdash; Buchhandlung &amp; Lesungen &middot; Trier
+  </footer>
+
+  <script>
+    document.getElementById('menuToggle').addEventListener('click', function() {
+      document.getElementById('navLinks').classList.toggle('active');
+    });
+  </script>
+
+</body>
+</html>

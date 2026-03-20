@@ -1,0 +1,719 @@
+---
+export const prerender = true;
+---
+
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Volumen — Architekturbuero Trier</title>
+  <meta name="description" content="Volumen — Architekturbuero in Trier. Form folgt Haltung. Seit 2014." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Archivo', sans-serif;
+      color: #1A1A1A;
+      background-color: #FFFFFF;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Archivo', sans-serif;
+      line-height: 1.15;
+      font-weight: 700;
+    }
+
+    /* ===== GRID BACKGROUND ===== */
+    .grid-bg {
+      background-image:
+        linear-gradient(rgba(26, 26, 26, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(26, 26, 26, 0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 80px 60px;
+      position: relative;
+    }
+
+    .hero-inner {
+      display: flex;
+      align-items: center;
+      gap: 80px;
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .hero-text {
+      flex: 0 0 40%;
+      max-width: 40%;
+    }
+
+    .hero-firm-name {
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: #1A1A1A;
+      margin-bottom: 24px;
+    }
+
+    .hero-headline {
+      font-size: clamp(36px, 4vw, 56px);
+      font-weight: 500;
+      color: #1A1A1A;
+      margin-bottom: 16px;
+      letter-spacing: -0.01em;
+    }
+
+    .hero-meta {
+      font-size: 13px;
+      font-weight: 400;
+      color: #888888;
+      letter-spacing: 0.08em;
+      margin-bottom: 32px;
+    }
+
+    .hero-accent-line {
+      width: 48px;
+      height: 2px;
+      background-color: #E07A2F;
+      margin-bottom: 32px;
+    }
+
+    .hero-cta {
+      font-size: 14px;
+      font-weight: 600;
+      color: #E07A2F;
+      letter-spacing: 0.05em;
+      transition: letter-spacing 0.3s ease;
+      display: inline-block;
+    }
+
+    .hero-cta:hover {
+      letter-spacing: 0.12em;
+    }
+
+    /* ===== HERO IMAGE WITH MEASUREMENT LINES ===== */
+    .hero-image-wrap {
+      flex: 0 0 55%;
+      max-width: 55%;
+      position: relative;
+      padding: 28px;
+    }
+
+    .hero-image-wrap img {
+      width: 100%;
+      height: 520px;
+      object-fit: cover;
+      filter: saturate(0.5) contrast(1.05);
+      display: block;
+    }
+
+    /* Measurement lines — top */
+    .measure-top {
+      position: absolute;
+      top: 0;
+      left: 28px;
+      right: 28px;
+      height: 28px;
+    }
+
+    .measure-top::before {
+      content: '';
+      position: absolute;
+      bottom: 8px;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background-color: #1A1A1A;
+      opacity: 0.25;
+    }
+
+    .measure-top::after {
+      content: '';
+      position: absolute;
+      bottom: 8px;
+      left: 0;
+      width: 1px;
+      height: 10px;
+      background-color: #1A1A1A;
+      opacity: 0.25;
+      box-shadow: calc(100%) 0 0 0 rgba(26, 26, 26, 0.25);
+    }
+
+    /* Measurement lines — right */
+    .measure-right {
+      position: absolute;
+      top: 28px;
+      right: 0;
+      bottom: 28px;
+      width: 28px;
+    }
+
+    .measure-right::before {
+      content: '';
+      position: absolute;
+      left: 8px;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background-color: #1A1A1A;
+      opacity: 0.25;
+    }
+
+    .measure-right::after {
+      content: '';
+      position: absolute;
+      left: 8px;
+      top: 0;
+      height: 1px;
+      width: 10px;
+      background-color: #1A1A1A;
+      opacity: 0.25;
+      box-shadow: 0 calc(100%) 0 0 rgba(26, 26, 26, 0.25);
+    }
+
+    /* Measurement lines — bottom */
+    .measure-bottom {
+      position: absolute;
+      bottom: 0;
+      left: 28px;
+      right: 28px;
+      height: 28px;
+    }
+
+    .measure-bottom::before {
+      content: '';
+      position: absolute;
+      top: 8px;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background-color: #1A1A1A;
+      opacity: 0.25;
+    }
+
+    .measure-bottom::after {
+      content: '';
+      position: absolute;
+      top: 8px;
+      left: 0;
+      width: 1px;
+      height: 10px;
+      background-color: #1A1A1A;
+      opacity: 0.25;
+      box-shadow: calc(100%) 0 0 0 rgba(26, 26, 26, 0.25);
+    }
+
+    /* Measurement lines — left */
+    .measure-left {
+      position: absolute;
+      top: 28px;
+      left: 0;
+      bottom: 28px;
+      width: 28px;
+    }
+
+    .measure-left::before {
+      content: '';
+      position: absolute;
+      right: 8px;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background-color: #1A1A1A;
+      opacity: 0.25;
+    }
+
+    .measure-left::after {
+      content: '';
+      position: absolute;
+      right: 8px;
+      top: 0;
+      height: 1px;
+      width: 10px;
+      background-color: #1A1A1A;
+      opacity: 0.25;
+      box-shadow: 0 calc(100%) 0 0 rgba(26, 26, 26, 0.25);
+    }
+
+    /* Dimension labels */
+    .dim-label {
+      position: absolute;
+      font-size: 10px;
+      font-weight: 500;
+      color: rgba(26, 26, 26, 0.35);
+      letter-spacing: 0.05em;
+    }
+
+    .dim-label-top {
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .dim-label-right {
+      right: 2px;
+      top: 50%;
+      transform: translateY(-50%) rotate(90deg);
+    }
+
+    /* ===== SECTION SHARED ===== */
+    .section {
+      padding: 120px 60px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #E07A2F;
+      margin-bottom: 48px;
+    }
+
+    /* ===== PROJEKTE SECTION ===== */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      position: relative;
+    }
+
+    .project-card {
+      position: relative;
+      padding: 0 32px;
+      cursor: default;
+    }
+
+    /* Orange construction lines between columns */
+    .project-card:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 1px;
+      background-color: rgba(224, 122, 47, 0.25);
+    }
+
+    .project-card:first-child {
+      padding-left: 0;
+    }
+
+    .project-card:last-child {
+      padding-right: 0;
+    }
+
+    .project-image {
+      width: 100%;
+      height: 320px;
+      object-fit: cover;
+      filter: saturate(0.6) contrast(1.05);
+      margin-bottom: 24px;
+      transition: filter 0.4s ease;
+    }
+
+    .project-card:hover .project-image {
+      filter: saturate(0.8) contrast(1.05);
+    }
+
+    .project-title {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      position: relative;
+      display: inline-block;
+      padding-bottom: 6px;
+    }
+
+    .project-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: #E07A2F;
+      transition: width 0.4s ease;
+    }
+
+    .project-card:hover .project-title::after {
+      width: 100%;
+    }
+
+    .project-detail {
+      font-size: 12px;
+      color: #888888;
+      letter-spacing: 0.05em;
+      line-height: 1.8;
+    }
+
+    .project-detail span {
+      display: block;
+    }
+
+    /* ===== HALTUNG SECTION ===== */
+    .haltung-bg {
+      background-color: #F7F7F5;
+    }
+
+    .haltung-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 120px 60px;
+    }
+
+    .haltung-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      margin-bottom: 80px;
+    }
+
+    .haltung-statement {
+      font-size: clamp(24px, 2.5vw, 34px);
+      font-weight: 600;
+      line-height: 1.35;
+      color: #1A1A1A;
+      letter-spacing: -0.01em;
+    }
+
+    .principle-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .principle-list li {
+      display: flex;
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(26, 26, 26, 0.08);
+      font-size: 15px;
+      line-height: 1.5;
+      color: #1A1A1A;
+    }
+
+    .principle-list li:first-child {
+      border-top: 1px solid rgba(26, 26, 26, 0.08);
+    }
+
+    .principle-number {
+      font-size: 12px;
+      font-weight: 700;
+      color: #E07A2F;
+      letter-spacing: 0.05em;
+      flex-shrink: 0;
+      padding-top: 2px;
+    }
+
+    .principle-text {
+      font-weight: 500;
+    }
+
+    /* ===== FOOTER AREA ===== */
+    .haltung-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding-top: 48px;
+      border-top: 1px solid rgba(26, 26, 26, 0.08);
+    }
+
+    .founders {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1A1A1A;
+      margin-bottom: 4px;
+    }
+
+    .founders-role {
+      font-size: 12px;
+      color: #888888;
+      letter-spacing: 0.05em;
+    }
+
+    .contact-info {
+      text-align: right;
+      font-size: 13px;
+      color: #888888;
+      line-height: 1.8;
+    }
+
+    .contact-info a {
+      color: #888888;
+      transition: color 0.3s ease;
+    }
+
+    .contact-info a:hover {
+      color: #E07A2F;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      .hero {
+        padding: 60px 40px;
+      }
+
+      .hero-inner {
+        flex-direction: column;
+        gap: 48px;
+      }
+
+      .hero-text {
+        flex: none;
+        max-width: 100%;
+      }
+
+      .hero-image-wrap {
+        flex: none;
+        max-width: 100%;
+        width: 100%;
+      }
+
+      .hero-image-wrap img {
+        height: 400px;
+      }
+
+      .section {
+        padding: 80px 40px;
+      }
+
+      .haltung-inner {
+        padding: 80px 40px;
+      }
+
+      .projects-grid {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+
+      .project-card {
+        padding: 0;
+      }
+
+      .project-card:not(:last-child)::after {
+        display: none;
+      }
+
+      .haltung-grid {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+
+      .haltung-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 24px;
+      }
+
+      .contact-info {
+        text-align: left;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero {
+        padding: 48px 24px;
+        min-height: auto;
+        padding-top: 100px;
+      }
+
+      .hero-image-wrap {
+        padding: 20px;
+      }
+
+      .hero-image-wrap img {
+        height: 280px;
+      }
+
+      .section {
+        padding: 64px 24px;
+      }
+
+      .haltung-inner {
+        padding: 64px 24px;
+      }
+
+      .project-image {
+        height: 240px;
+      }
+
+      .hero-headline {
+        font-size: 28px;
+      }
+
+      .haltung-statement {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero grid-bg">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <p class="hero-firm-name">Volumen</p>
+        <h1 class="hero-headline">Form folgt Haltung.</h1>
+        <p class="hero-meta">Architekturbuero &middot; Trier &middot; Seit 2014</p>
+        <div class="hero-accent-line"></div>
+        <a href="#projekte" class="hero-cta">Projekte &rarr;</a>
+      </div>
+
+      <div class="hero-image-wrap">
+        <div class="measure-top">
+          <span class="dim-label dim-label-top">1280</span>
+        </div>
+        <div class="measure-right">
+          <span class="dim-label dim-label-right">720</span>
+        </div>
+        <div class="measure-bottom"></div>
+        <div class="measure-left"></div>
+        <img
+          src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=1000&q=80&auto=format"
+          alt="Architektur — moderne Fassade mit geometrischen Linien"
+          loading="eager"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PROJEKTE ===== -->
+  <section class="section" id="projekte">
+    <p class="section-label">Projekte</p>
+
+    <div class="projects-grid">
+      <div class="project-card">
+        <img
+          class="project-image"
+          src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80&auto=format"
+          alt="Wohnhaus M. — moderne Architektur"
+          loading="lazy"
+        />
+        <p class="project-title">Wohnhaus M.</p>
+        <div class="project-detail">
+          <span>Trier-Olewig</span>
+          <span>2022 &middot; 186 m&sup2;</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <img
+          class="project-image"
+          src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80&auto=format"
+          alt="Umbau Alte Muehle — Bestandssanierung"
+          loading="lazy"
+        />
+        <p class="project-title">Umbau Alte Muehle</p>
+        <div class="project-detail">
+          <span>Longuich, Mosel</span>
+          <span>2021 &middot; 340 m&sup2;</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <img
+          class="project-image"
+          src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80&auto=format"
+          alt="Buerogebaeude K. — Gewerbe-Neubau"
+          loading="lazy"
+        />
+        <p class="project-title">Buerogebaeude K.</p>
+        <div class="project-detail">
+          <span>Trier-Nord</span>
+          <span>2023 &middot; 720 m&sup2;</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== HALTUNG ===== -->
+  <section class="haltung-bg">
+    <div class="haltung-inner">
+      <p class="section-label">Haltung</p>
+
+      <div class="haltung-grid">
+        <div>
+          <p class="haltung-statement">
+            Wir entwerfen keine Gebaeude.<br />
+            Wir entwerfen Zusammenhaenge.
+          </p>
+        </div>
+
+        <div>
+          <ul class="principle-list">
+            <li>
+              <span class="principle-number">01</span>
+              <span class="principle-text">Bestand vor Neubau</span>
+            </li>
+            <li>
+              <span class="principle-number">02</span>
+              <span class="principle-text">Material ehrlich zeigen</span>
+            </li>
+            <li>
+              <span class="principle-number">03</span>
+              <span class="principle-text">Licht als Werkstoff</span>
+            </li>
+            <li>
+              <span class="principle-number">04</span>
+              <span class="principle-text">Jeder Quadratmeter zaehlt</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="haltung-footer">
+        <div>
+          <p class="founders">Sarah Hartmann & Jonas Beck</p>
+          <p class="founders-role">Gruender</p>
+        </div>
+        <div class="contact-info">
+          <span>Volumen Architekten GbR</span><br />
+          <span>Neustrasse 12, 54290 Trier</span><br />
+          <a href="tel:+4965194820">+49 651 948 20</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>

@@ -1,0 +1,669 @@
+---
+export const prerender = true;
+---
+
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Holzmann — Schreinerei & Moebelbau in Schweich</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@400;500;600;700;800;900&family=Karla:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --primary: #5C4033;
+      --secondary: #F0E8DC;
+      --accent: #B8860B;
+      --bg: #FAF5EE;
+      --text: #2C2016;
+      --font-display: 'Bitter', Georgia, serif;
+      --font-body: 'Karla', -apple-system, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img { display: block; max-width: 100%; height: auto; }
+
+    /* ── Navigation ── */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2.5rem;
+      background: rgba(250, 245, 238, 0.92);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(92, 64, 51, 0.1);
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--primary);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    .nav-burger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .nav-burger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--primary);
+      border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+
+    /* ── Hero — Workshop Bench ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: stretch;
+      padding-top: 60px;
+    }
+
+    .hero-image-col {
+      width: 45%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-image-col img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    /* Torn paper edge on the right side of the image */
+    .hero-image-col::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: -1px;
+      bottom: 0;
+      width: 60px;
+      background: var(--bg);
+      clip-path: polygon(
+        100% 0%, 100% 100%,
+        30% 100%, 45% 96%, 20% 92%, 50% 88%, 25% 84%,
+        55% 80%, 15% 76%, 40% 72%, 20% 68%, 60% 64%,
+        30% 60%, 50% 56%, 10% 52%, 45% 48%, 25% 44%,
+        55% 40%, 15% 36%, 50% 32%, 30% 28%, 60% 24%,
+        20% 20%, 45% 16%, 35% 12%, 55% 8%, 25% 4%, 40% 0%
+      );
+    }
+
+    .hero-text-col {
+      width: 55%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 4rem 5rem 4rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Wood grain texture SVG as background decoration */
+    .hero-text-col::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      opacity: 0.04;
+      background-image: url("data:image/svg+xml,%3Csvg width='200' height='800' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0c30 20 60 10 100 30s70 40 100 20v10c-30 20-60-10-100 20s-70 30-100 10z' fill='%235C4033' fill-opacity='0.5'/%3E%3Cpath d='M0 60c40 15 50 25 100 15s80-20 100 10v8c-20 30-60-5-100 25s-60 10-100-5z' fill='%235C4033' fill-opacity='0.3'/%3E%3Cpath d='M0 130c35 20 65 5 100 25s55 35 100 15v8c-45 20-55-15-100 20s-55 25-100 0z' fill='%235C4033' fill-opacity='0.4'/%3E%3Cpath d='M0 200c25 18 75 8 100 28s65 22 100 8v10c-35 14-65-12-100 18s-65 22-100-4z' fill='%235C4033' fill-opacity='0.3'/%3E%3Cpath d='M0 270c50 12 40 28 100 18s60-15 100 22v8c-40 18-60-18-100 12s-60 28-100-8z' fill='%235C4033' fill-opacity='0.5'/%3E%3Cpath d='M0 340c30 22 70 8 100 22s50 30 100 12v10c-50 18-50-22-100 15s-50 20-100-7z' fill='%235C4033' fill-opacity='0.3'/%3E%3Cpath d='M0 410c45 10 55 30 100 20s75-10 100 25v8c-25 15-75-20-100 10s-55 30-100-13z' fill='%235C4033' fill-opacity='0.4'/%3E%3Cpath d='M0 480c20 25 80 5 100 25s45 28 100 10v10c-55 18-45-22-100 15s-80 15-100-5z' fill='%235C4033' fill-opacity='0.3'/%3E%3Cpath d='M0 550c55 8 45 32 100 22s65-18 100 18v8c-35 20-65-12-100 22s-45 18-100-8z' fill='%235C4033' fill-opacity='0.5'/%3E%3Cpath d='M0 620c30 18 70 12 100 28s55 15 100 5v10c-45 10-55-20-100 12s-70 22-100-3z' fill='%235C4033' fill-opacity='0.3'/%3E%3Cpath d='M0 700c40 15 60 25 100 12s70-8 100 22v8c-30 15-70-15-100 18s-60 15-100-5z' fill='%235C4033' fill-opacity='0.4'/%3E%3C/svg%3E");
+      background-size: 200px auto;
+      background-repeat: repeat;
+      pointer-events: none;
+    }
+
+    .hero-headline {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      font-weight: 900;
+      line-height: 1.1;
+      color: var(--primary);
+      margin-bottom: 2rem;
+      position: relative;
+    }
+
+    .hero-headline span {
+      display: block;
+    }
+
+    .hero-headline span:nth-child(2) {
+      color: var(--accent);
+    }
+
+    .hero-subline {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--primary);
+      opacity: 0.7;
+      letter-spacing: 0.06em;
+      margin-bottom: 2.5rem;
+      position: relative;
+    }
+
+    .hero-subline::before {
+      content: '';
+      display: block;
+      width: 50px;
+      height: 2px;
+      background: var(--accent);
+      margin-bottom: 1.2rem;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--secondary);
+      background: var(--primary);
+      padding: 1rem 2.2rem;
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      transition: background 0.3s, transform 0.2s;
+      position: relative;
+      align-self: flex-start;
+    }
+
+    .hero-cta:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    /* ── Section: Was wir bauen ── */
+    .section {
+      padding: 6rem 2.5rem;
+    }
+
+    .section-dark {
+      background: var(--secondary);
+    }
+
+    .section-label {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      margin-bottom: 0.8rem;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1.15;
+      margin-bottom: 3.5rem;
+      max-width: 600px;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .project-card {
+      background: var(--bg);
+      border-left: 4px solid var(--accent);
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .section-dark .project-card {
+      background: #fff;
+    }
+
+    .project-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(44, 32, 22, 0.12);
+    }
+
+    .project-card-image {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+    }
+
+    .project-card-body {
+      padding: 1.8rem;
+    }
+
+    .project-card-title {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .project-card-material {
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: var(--text);
+      opacity: 0.7;
+      margin-bottom: 1rem;
+    }
+
+    .project-card-detail {
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--accent);
+      letter-spacing: 0.02em;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(92, 64, 51, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .project-card-price {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    /* ── Section: Die Werkstatt ── */
+    .werkstatt-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      align-items: center;
+    }
+
+    .werkstatt-image {
+      width: 100%;
+      height: 500px;
+      object-fit: cover;
+    }
+
+    .werkstatt-story {
+      font-family: var(--font-body);
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: var(--text);
+      opacity: 0.85;
+      margin-bottom: 2.5rem;
+    }
+
+    .werkstatt-values {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .werkstatt-value {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .werkstatt-value-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .werkstatt-value-icon svg {
+      width: 20px;
+      height: 20px;
+      fill: var(--secondary);
+    }
+
+    .werkstatt-value-text {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .werkstatt-contact {
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      color: var(--text);
+      opacity: 0.6;
+      line-height: 1.8;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(92, 64, 51, 0.12);
+    }
+
+    /* ── Footer ── */
+    .footer {
+      background: var(--primary);
+      color: var(--secondary);
+      padding: 3rem 2.5rem;
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+    }
+
+    .footer-text {
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      opacity: 0.5;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 1024px) {
+      .projects-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-burger { display: flex; }
+
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(250, 245, 238, 0.98);
+        backdrop-filter: blur(10px);
+        padding: 1.5rem 2.5rem;
+        gap: 1.2rem;
+        border-bottom: 1px solid rgba(92, 64, 51, 0.1);
+      }
+
+      .hero {
+        flex-direction: column;
+        min-height: auto;
+      }
+
+      .hero-image-col {
+        width: 100%;
+        height: 50vh;
+      }
+
+      .hero-image-col::after {
+        top: auto;
+        bottom: -1px;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: 40px;
+        clip-path: polygon(
+          0% 100%, 100% 100%,
+          100% 40%, 96% 55%, 92% 30%, 88% 60%, 84% 25%,
+          80% 50%, 76% 20%, 72% 55%, 68% 35%, 64% 60%,
+          60% 20%, 56% 50%, 52% 15%, 48% 45%, 44% 30%,
+          40% 55%, 36% 15%, 32% 50%, 28% 25%, 24% 60%,
+          20% 30%, 16% 50%, 12% 20%, 8% 55%, 4% 35%, 0% 45%
+        );
+      }
+
+      .hero-text-col {
+        width: 100%;
+        padding: 3rem 2rem;
+      }
+
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .werkstatt-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+
+      .werkstatt-image {
+        height: 300px;
+      }
+
+      .section {
+        padding: 4rem 1.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-headline {
+        font-size: 2.2rem;
+      }
+
+      .nav {
+        padding: 1rem 1.5rem;
+      }
+
+      .hero-text-col {
+        padding: 2.5rem 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <a href="#" class="nav-logo">Holzmann</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#projekte">Projekte</a></li>
+      <li><a href="#werkstatt">Werkstatt</a></li>
+      <li><a href="#kontakt">Kontakt</a></li>
+    </ul>
+    <button class="nav-burger" id="navBurger" aria-label="Menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <!-- Hero — Workshop Bench -->
+  <section class="hero">
+    <div class="hero-image-col">
+      <img
+        src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=800&q=80&auto=format"
+        alt="Handwerker-Haende bei der Holzbearbeitung"
+        loading="eager"
+      />
+    </div>
+    <div class="hero-text-col">
+      <h1 class="hero-headline">
+        <span>Massivholz.</span>
+        <span>Handarbeit.</span>
+        <span>Charakter.</span>
+      </h1>
+      <p class="hero-subline">Schreinerei Holzmann &middot; Schweich &middot; Seit 1987</p>
+      <a href="#werkstatt" class="hero-cta">Werkstatt besichtigen &rarr;</a>
+    </div>
+  </section>
+
+  <!-- Section 2 — Was wir bauen -->
+  <section class="section section-dark" id="projekte">
+    <div style="max-width: 1200px; margin: 0 auto;">
+      <p class="section-label">Projekte</p>
+      <h2 class="section-title">Was ich baue</h2>
+      <div class="projects-grid">
+
+        <!-- Esstisch Eiche -->
+        <div class="project-card">
+          <img
+            class="project-card-image"
+            src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&q=80&auto=format"
+            alt="Esstisch aus massiver Eiche"
+            loading="lazy"
+          />
+          <div class="project-card-body">
+            <h3 class="project-card-title">Esstisch Eiche</h3>
+            <p class="project-card-material">Massivholz, geoelt, Schweizer Kante. Fuer Familien gebaut, die zusammen essen.</p>
+            <div class="project-card-detail">
+              <span>6 Wochen Trocknungszeit</span>
+              <span class="project-card-price">ab 2.400 &euro;</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Einbaukueche Nussbaum -->
+        <div class="project-card">
+          <img
+            class="project-card-image"
+            src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&q=80&auto=format"
+            alt="Einbaukueche aus Nussbaumholz"
+            loading="lazy"
+          />
+          <div class="project-card-body">
+            <h3 class="project-card-title">Einbaukueche Nussbaum</h3>
+            <p class="project-card-material">Massanfertigung. Jede Schublade, jedes Fach -- auf den Raum zugeschnitten.</p>
+            <div class="project-card-detail">
+              <span>Handgehobelte Oberflaeche</span>
+              <span class="project-card-price">auf Anfrage</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Garderobe Altholz -->
+        <div class="project-card">
+          <img
+            class="project-card-image"
+            src="https://images.unsplash.com/photo-1540574163026-643ea20ade25?w=600&q=80&auto=format"
+            alt="Garderobe aus Altholz"
+            loading="lazy"
+          />
+          <div class="project-card-body">
+            <h3 class="project-card-title">Garderobe Altholz</h3>
+            <p class="project-card-material">Upcycling. Altes Scheunenholz, neue Form. Jedes Stueck ein Unikat.</p>
+            <div class="project-card-detail">
+              <span>Reclaimed Wood, handverlesen</span>
+              <span class="project-card-price">ab 890 &euro;</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3 — Die Werkstatt -->
+  <section class="section" id="werkstatt">
+    <div class="werkstatt-grid">
+      <img
+        class="werkstatt-image"
+        src="https://images.unsplash.com/photo-1504148455328-c376907d081c?w=800&q=80&auto=format"
+        alt="Holzwerkstatt mit Werkzeugen"
+        loading="lazy"
+      />
+      <div>
+        <p class="section-label">Seit 1987</p>
+        <h2 class="section-title">Die Werkstatt</h2>
+        <p class="werkstatt-story">
+          Gegruendet 1987 von Heinrich Holzmann. Heute fuehrt Sohn Markus die Werkstatt -- mit denselben Werkzeugen und derselben Ueberzeugung: Gutes Holz braucht gute Haende.
+        </p>
+        <div class="werkstatt-values">
+          <div class="werkstatt-value">
+            <div class="werkstatt-value-icon">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            </div>
+            <span class="werkstatt-value-text">Regionales Holz</span>
+          </div>
+          <div class="werkstatt-value">
+            <div class="werkstatt-value-icon">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 11h-2V9h2m-4 2h-2V9h2m-4 2H7V9h2m10 6v-2H5v2h2v4h2v-4h2v4h2v-4h2v4h2v-4h1zm1-8H4l8-6 8 6z"/></svg>
+            </div>
+            <span class="werkstatt-value-text">Traditionelle Verbindungen</span>
+          </div>
+          <div class="werkstatt-value">
+            <div class="werkstatt-value-icon">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
+            </div>
+            <span class="werkstatt-value-text">Lebenslange Garantie</span>
+          </div>
+        </div>
+        <div class="werkstatt-contact" id="kontakt">
+          Schreinerei Holzmann<br />
+          Bruckenstrasse 14, 54338 Schweich<br />
+          Tel. 06502 / 93 14 20
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-logo">Holzmann</div>
+    <p class="footer-text">Schreinerei & Moebelbau &middot; Schweich an der Mosel</p>
+  </footer>
+
+  <script>
+    document.getElementById('navBurger')?.addEventListener('click', () => {
+      document.getElementById('navLinks')?.classList.toggle('open');
+    });
+  </script>
+
+</body>
+</html>

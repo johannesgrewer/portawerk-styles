@@ -1,0 +1,1131 @@
+---
+export const prerender = true;
+---
+
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Schallgold — Vinyl & Kaffee | Neustraße, Trier</title>
+  <meta name="description" content="Schallgold — Vinyl & Kaffee in der Neustraße, Trier. Platten drehen, Kaffee trinken. Di–Sa 11–20 Uhr." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #8B4513;
+      --secondary: #F5E6C8;
+      --accent: #C4451C;
+      --bg: #F9F1E4;
+      --text: #2B1F14;
+      --primary-light: #A0592A;
+      --accent-dark: #9E3716;
+      --border: #D9C9A8;
+      --shadow: rgba(43, 31, 20, 0.12);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Crimson Text', Georgia, serif;
+      color: var(--text);
+      background-color: var(--bg);
+      line-height: 1.75;
+      font-size: 17px;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      position: relative;
+    }
+
+    /* Paper grain texture overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 256px 256px;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Syne', sans-serif;
+      line-height: 1.15;
+      font-weight: 700;
+    }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 0.9rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background-color 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .navbar.scrolled {
+      background-color: rgba(249, 241, 228, 0.96);
+      box-shadow: 0 2px 16px var(--shadow);
+      backdrop-filter: blur(8px);
+    }
+
+    .navbar-logo {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .navbar-logo svg {
+      width: 22px;
+      height: 22px;
+      flex-shrink: 0;
+    }
+
+    .navbar-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .navbar-links a {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text);
+      transition: color 0.3s ease;
+      position: relative;
+    }
+
+    .navbar-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width 0.3s ease;
+    }
+
+    .navbar-links a:hover {
+      color: var(--accent);
+    }
+
+    .navbar-links a:hover::after {
+      width: 100%;
+    }
+
+    /* Mobile burger */
+    .burger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .burger span {
+      width: 24px;
+      height: 2px;
+      background: var(--text);
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      display: block;
+    }
+
+    .burger.active span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    .burger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .burger.active span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    /* Mobile nav overlay */
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 99;
+      background: rgba(249, 241, 228, 0.98);
+      backdrop-filter: blur(12px);
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .mobile-nav.open {
+      display: flex;
+    }
+
+    .mobile-nav a {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      transition: color 0.3s ease;
+    }
+
+    .mobile-nav a:hover {
+      color: var(--accent);
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 8rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      display: flex;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .hero-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .hero-headline {
+      font-size: clamp(2.8rem, 5.5vw, 4.5rem);
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-headline .dot {
+      color: var(--accent);
+    }
+
+    .hero-meta {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--primary);
+      margin-bottom: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+    }
+
+    .hero-meta .separator {
+      opacity: 0.4;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--accent);
+      border: 2px solid var(--accent);
+      padding: 0.85rem 1.8rem;
+      transition: all 0.3s ease;
+      letter-spacing: 0.02em;
+    }
+
+    .hero-cta:hover {
+      background: var(--accent);
+      color: var(--secondary);
+    }
+
+    .hero-cta svg {
+      width: 16px;
+      height: 16px;
+      transition: transform 0.3s ease;
+    }
+
+    .hero-cta:hover svg {
+      transform: translateX(4px);
+    }
+
+    /* Record sleeve image */
+    .hero-sleeve {
+      flex-shrink: 0;
+      width: 420px;
+      height: 420px;
+      position: relative;
+      transform: rotate(1.5deg);
+    }
+
+    .hero-sleeve-frame {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      background: var(--secondary);
+      border: 6px solid var(--border);
+      box-shadow:
+        8px 12px 32px rgba(43, 31, 20, 0.2),
+        2px 3px 8px rgba(43, 31, 20, 0.1),
+        inset 0 0 0 1px rgba(43, 31, 20, 0.05);
+    }
+
+    /* Paper texture border effect */
+    .hero-sleeve-frame::before {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      border: 6px solid transparent;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 2px,
+        rgba(43, 31, 20, 0.02) 2px,
+        rgba(43, 31, 20, 0.02) 4px
+      );
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .hero-sleeve-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Wooden surface hint under the sleeve */
+    .hero-sleeve::after {
+      content: '';
+      position: absolute;
+      bottom: -14px;
+      left: 8px;
+      right: -4px;
+      height: 14px;
+      background: linear-gradient(
+        180deg,
+        rgba(43, 31, 20, 0.08) 0%,
+        transparent 100%
+      );
+      filter: blur(2px);
+      transform: rotate(-1.5deg);
+    }
+
+    /* ===== SECTION: STAFF PICKS ===== */
+    .section {
+      padding: 6rem 2rem;
+    }
+
+    .section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      margin-bottom: 3.5rem;
+    }
+
+    .section-label {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--primary);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+
+    .section-subtitle {
+      font-size: 1.1rem;
+      color: var(--primary-light);
+      margin-top: 0.75rem;
+      font-style: italic;
+    }
+
+    /* Staff Picks Grid */
+    .picks-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+
+    .pick-card {
+      background: var(--secondary);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      position: relative;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .pick-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 4px 8px 24px var(--shadow);
+    }
+
+    /* Slightly rotated cards for handwritten feel */
+    .pick-card:nth-child(1) { transform: rotate(-0.5deg); }
+    .pick-card:nth-child(2) { transform: rotate(0.3deg); }
+    .pick-card:nth-child(3) { transform: rotate(0.4deg); }
+    .pick-card:nth-child(4) { transform: rotate(-0.3deg); }
+    .pick-card:nth-child(1):hover { transform: rotate(-0.5deg) translateY(-3px); }
+    .pick-card:nth-child(2):hover { transform: rotate(0.3deg) translateY(-3px); }
+    .pick-card:nth-child(3):hover { transform: rotate(0.4deg) translateY(-3px); }
+    .pick-card:nth-child(4):hover { transform: rotate(-0.3deg) translateY(-3px); }
+
+    /* Tape/pin decoration */
+    .pick-card::before {
+      content: '';
+      position: absolute;
+      top: -6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 40px;
+      height: 12px;
+      background: rgba(139, 69, 19, 0.15);
+      border-radius: 1px;
+    }
+
+    .pick-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+    }
+
+    .pick-genre {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--bg);
+      background: var(--primary);
+      padding: 0.25rem 0.6rem;
+      display: inline-block;
+    }
+
+    .pick-year {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--primary);
+      opacity: 0.7;
+    }
+
+    .pick-artist {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+    }
+
+    .pick-album {
+      font-size: 1.05rem;
+      font-style: italic;
+      color: var(--primary-light);
+      margin-top: 0.2rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .pick-review {
+      font-size: 0.95rem;
+      color: var(--text);
+      line-height: 1.6;
+      margin-bottom: 1rem;
+      opacity: 0.85;
+    }
+
+    .pick-coffee {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--primary);
+      padding-top: 0.8rem;
+      border-top: 1px dashed var(--border);
+    }
+
+    .pick-coffee svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+      opacity: 0.7;
+    }
+
+    /* ===== SECTION: DER LADEN ===== */
+    .about-section {
+      background: var(--secondary);
+      position: relative;
+    }
+
+    .about-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        var(--border),
+        transparent
+      );
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .about-story {
+      grid-column: 1 / -1;
+    }
+
+    .about-story p {
+      font-size: 1.15rem;
+      line-height: 1.85;
+      max-width: 720px;
+    }
+
+    .about-story p + p {
+      margin-top: 1rem;
+    }
+
+    .profile-card {
+      padding: 2rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      position: relative;
+    }
+
+    .profile-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.2rem;
+    }
+
+    .profile-icon svg {
+      width: 24px;
+      height: 24px;
+      color: var(--secondary);
+    }
+
+    .profile-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 0.2rem;
+    }
+
+    .profile-role {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .profile-bio {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--text);
+      opacity: 0.85;
+    }
+
+    /* Info block */
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 3rem;
+      padding-top: 3rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .info-block h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--primary);
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .info-block h3 svg {
+      width: 16px;
+      height: 16px;
+      opacity: 0.7;
+    }
+
+    .info-block p,
+    .info-block address {
+      font-style: normal;
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--text);
+      opacity: 0.85;
+    }
+
+    .listening-event {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      margin-top: 2rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .listening-icon {
+      width: 40px;
+      height: 40px;
+      flex-shrink: 0;
+      background: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .listening-icon svg {
+      width: 20px;
+      height: 20px;
+      color: var(--secondary);
+    }
+
+    .listening-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+    }
+
+    .listening-desc {
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: var(--text);
+      opacity: 0.8;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      padding: 3rem 2rem;
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-logo {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-text {
+      font-size: 0.85rem;
+      color: var(--primary);
+      opacity: 0.7;
+    }
+
+    /* ===== DIVIDER LINE ===== */
+    .divider {
+      max-width: 1100px;
+      margin: 0 auto;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .hero-inner {
+        flex-direction: column-reverse;
+        gap: 2.5rem;
+        text-align: center;
+      }
+
+      .hero-sleeve {
+        width: 300px;
+        height: 300px;
+      }
+
+      .hero-meta {
+        justify-content: center;
+      }
+
+      .hero-cta {
+        margin: 0 auto;
+      }
+
+      .picks-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .pick-card:nth-child(n) {
+        transform: none;
+      }
+
+      .pick-card:nth-child(n):hover {
+        transform: translateY(-3px);
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .info-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .navbar-links {
+        display: none;
+      }
+
+      .burger {
+        display: flex;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .hero {
+        padding: 6rem 1.2rem 3rem;
+      }
+
+      .hero-sleeve {
+        width: 260px;
+        height: 260px;
+      }
+
+      .hero-headline {
+        font-size: 2.2rem;
+      }
+
+      .section {
+        padding: 4rem 1.2rem;
+      }
+
+      .section-title {
+        font-size: 1.8rem;
+      }
+
+      .pick-card {
+        padding: 1.5rem;
+      }
+
+      .profile-card {
+        padding: 1.5rem;
+      }
+
+      .listening-event {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <a href="#" class="navbar-logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <circle cx="12" cy="12" r="3"/>
+        <line x1="12" y1="2" x2="12" y2="5"/>
+        <line x1="12" y1="19" x2="12" y2="22"/>
+      </svg>
+      Schallgold
+    </a>
+    <ul class="navbar-links">
+      <li><a href="#picks">Staff Picks</a></li>
+      <li><a href="#laden">Der Laden</a></li>
+      <li><a href="#kontakt">Kontakt</a></li>
+    </ul>
+    <button class="burger" id="burger" aria-label="Navigation oeffnen">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile Nav -->
+  <div class="mobile-nav" id="mobileNav">
+    <a href="#picks" onclick="closeMobileNav()">Staff Picks</a>
+    <a href="#laden" onclick="closeMobileNav()">Der Laden</a>
+    <a href="#kontakt" onclick="closeMobileNav()">Kontakt</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <h1 class="hero-headline">
+          Platten<br/>drehen<span class="dot">.</span><br/>
+          Kaffee<br/>trinken<span class="dot">.</span>
+        </h1>
+        <div class="hero-meta">
+          <span>Seit 2021</span>
+          <span class="separator">&middot;</span>
+          <span>Neustrasse, Trier</span>
+          <span class="separator">&middot;</span>
+          <span>Di&ndash;Sa 11&ndash;20 Uhr</span>
+        </div>
+        <a href="#picks" class="hero-cta">
+          Was laeuft gerade
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </a>
+      </div>
+
+      <div class="hero-sleeve">
+        <div class="hero-sleeve-frame">
+          <img
+            src="https://images.unsplash.com/photo-1483412033650-1015ddeb83d1?w=900&q=80&auto=format"
+            alt="Plattenregal im Schallgold"
+            loading="eager"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: STAFF PICKS -->
+  <section class="section" id="picks">
+    <div class="section-inner">
+      <div class="section-header">
+        <div class="section-label">Unsere Empfehlungen</div>
+        <h2 class="section-title">Was laeuft gerade</h2>
+        <p class="section-subtitle">Vier Platten, die diese Woche auf dem Teller lagen &mdash; von Ben handzerlegt.</p>
+      </div>
+
+      <div class="picks-grid">
+
+        <!-- Pick 1: Chet Baker -->
+        <div class="pick-card">
+          <div class="pick-top">
+            <span class="pick-genre">Jazz</span>
+            <span class="pick-year">1954</span>
+          </div>
+          <div class="pick-artist">Chet Baker</div>
+          <div class="pick-album">Chet Baker Sings</div>
+          <p class="pick-review">Stimme wie ein Sonnenuntergang im November. Leise, verletzlich, perfekt zu schwarzem Kaffee.</p>
+          <div class="pick-coffee">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 8h1a4 4 0 1 1 0 8h-1"/>
+              <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V8z"/>
+              <line x1="6" y1="2" x2="6" y2="4"/>
+              <line x1="10" y1="2" x2="10" y2="4"/>
+              <line x1="14" y1="2" x2="14" y2="4"/>
+            </svg>
+            Dazu: Espresso, schwarz
+          </div>
+        </div>
+
+        <!-- Pick 2: Khruangbin -->
+        <div class="pick-card">
+          <div class="pick-top">
+            <span class="pick-genre">Funk</span>
+            <span class="pick-year">2018</span>
+          </div>
+          <div class="pick-artist">Khruangbin</div>
+          <div class="pick-album">Con Todo El Mundo</div>
+          <p class="pick-review">Psychedelischer Funk mit globalem Einschlag. Klingt wie eine Plattensammlung auf Weltreise.</p>
+          <div class="pick-coffee">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 8h1a4 4 0 1 1 0 8h-1"/>
+              <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V8z"/>
+              <line x1="6" y1="2" x2="6" y2="4"/>
+              <line x1="10" y1="2" x2="10" y2="4"/>
+              <line x1="14" y1="2" x2="14" y2="4"/>
+            </svg>
+            Dazu: Cold Brew mit Tonic
+          </div>
+        </div>
+
+        <!-- Pick 3: Nina Simone -->
+        <div class="pick-card">
+          <div class="pick-top">
+            <span class="pick-genre">Soul</span>
+            <span class="pick-year">1965</span>
+          </div>
+          <div class="pick-artist">Nina Simone</div>
+          <div class="pick-album">Pastel Blues</div>
+          <p class="pick-review">Tiefe, Wut, Zartheit &mdash; alles auf einer Platte. Dieses Album vertraegt keine halbe Aufmerksamkeit.</p>
+          <div class="pick-coffee">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 8h1a4 4 0 1 1 0 8h-1"/>
+              <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V8z"/>
+              <line x1="6" y1="2" x2="6" y2="4"/>
+              <line x1="10" y1="2" x2="10" y2="4"/>
+              <line x1="14" y1="2" x2="14" y2="4"/>
+            </svg>
+            Dazu: Filterkaffee, hell geroestet
+          </div>
+        </div>
+
+        <!-- Pick 4: Nils Frahm -->
+        <div class="pick-card">
+          <div class="pick-top">
+            <span class="pick-genre">Ambient</span>
+            <span class="pick-year">2018</span>
+          </div>
+          <div class="pick-artist">Nils Frahm</div>
+          <div class="pick-album">All Melody</div>
+          <p class="pick-review">Klaviertasten verschwimmen mit Synthesizern. Augen zu, Kopfhoerer auf, abtauchen.</p>
+          <div class="pick-coffee">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 8h1a4 4 0 1 1 0 8h-1"/>
+              <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V8z"/>
+              <line x1="6" y1="2" x2="6" y2="4"/>
+              <line x1="10" y1="2" x2="10" y2="4"/>
+              <line x1="14" y1="2" x2="14" y2="4"/>
+            </svg>
+            Dazu: Oat Milk Latte
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- SECTION: DER LADEN -->
+  <section class="section about-section" id="laden">
+    <div class="section-inner">
+      <div class="section-header">
+        <div class="section-label">Ueber uns</div>
+        <h2 class="section-title">Der Laden</h2>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-story">
+          <p>
+            Was passiert, wenn ein DJ und eine Barista merken, dass die besten Gespraeche immer zwischen zwei Platten und einer Tasse Kaffee stattfinden? Sie machen einen Laden auf. Seit 2021 steht Schallgold in der Neustrasse &mdash; ein Ort, an dem secondhand Vinyl auf frisch geroesteten Kaffee trifft. Kein Konzept aus dem Lehrbuch, sondern gewachsen aus dem, was Ben und Mara am besten koennen.
+          </p>
+          <p>
+            Der Laden hat Holzboeden, die knarzen, Regale voller Platten, die man anfassen darf, und eine Siebtraeger-Maschine, die morgens als erstes warm wird. Wer reinkommt, darf blaettern, hoeren, bleiben. Kein Kaufzwang, keine Eile.
+          </p>
+        </div>
+
+        <!-- Ben -->
+        <div class="profile-card">
+          <div class="profile-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <circle cx="12" cy="12" r="3"/>
+              <line x1="12" y1="2" x2="12" y2="5"/>
+              <line x1="12" y1="19" x2="12" y2="22"/>
+            </svg>
+          </div>
+          <div class="profile-name">Ben</div>
+          <div class="profile-role">Die Platten</div>
+          <p class="profile-bio">
+            15 Jahre hinter Turntables, 4.000 Platten im Keller, null Interesse an Spotify-Algorithmen. Ben kuratiert den Bestand &mdash; von Krautrock bis japanischem City Pop. Sein Credo: jede Platte muss eine Geschichte erzaehlen.
+          </p>
+        </div>
+
+        <!-- Mara -->
+        <div class="profile-card">
+          <div class="profile-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 8h1a4 4 0 1 1 0 8h-1"/>
+              <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V8z"/>
+              <line x1="6" y1="2" x2="6" y2="4"/>
+              <line x1="10" y1="2" x2="10" y2="4"/>
+              <line x1="14" y1="2" x2="14" y2="4"/>
+            </svg>
+          </div>
+          <div class="profile-name">Mara</div>
+          <div class="profile-role">Der Kaffee</div>
+          <p class="profile-bio">
+            Ausgebildete Barista, vorher sechs Jahre in Berliner Spezialitaeten-Cafes. Mara roestet nicht selbst, aber sie weiss genau, von wem sie kauft: kleine Roestereien, direkte Handelsbeziehungen, saisonale Sorten. Der Kaffee hier schmeckt nie gleich &mdash; und das ist Absicht.
+          </p>
+        </div>
+      </div>
+
+      <!-- Info Grid -->
+      <div class="info-grid" id="kontakt">
+        <div class="info-block">
+          <h3>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+            Oeffnungszeiten
+          </h3>
+          <p>
+            Dienstag &ndash; Samstag<br/>
+            11:00 &ndash; 20:00 Uhr<br/>
+            Sonntag &amp; Montag geschlossen
+          </p>
+        </div>
+
+        <div class="info-block">
+          <h3>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+            Adresse
+          </h3>
+          <address>
+            Schallgold<br/>
+            Neustrasse 12<br/>
+            54290 Trier
+          </address>
+        </div>
+
+        <div class="info-block">
+          <h3>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            Kontakt
+          </h3>
+          <p>
+            hallo@schallgold.de<br/>
+            0651 / 999 88 77
+          </p>
+        </div>
+      </div>
+
+      <!-- Listening Event -->
+      <div class="listening-event">
+        <div class="listening-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+          </svg>
+        </div>
+        <div>
+          <div class="listening-title">Vinyl-Listening &mdash; Freitags ab 19 Uhr</div>
+          <p class="listening-desc">
+            Jede Woche legt jemand anderes auf. Keine DJ-Sets &mdash; ganze Alben, von Anfang bis Ende. Dazu Kaffee oder Naturwein. Eintritt frei, Plaetze begrenzt.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-logo">Schallgold</div>
+    <p class="footer-text">Vinyl &amp; Kaffee &middot; Neustrasse, Trier &middot; Seit 2021</p>
+  </footer>
+
+  <script>
+    // Navbar scroll effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 40) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    // Mobile navigation
+    const burger = document.getElementById('burger');
+    const mobileNav = document.getElementById('mobileNav');
+
+    burger.addEventListener('click', function() {
+      burger.classList.toggle('active');
+      mobileNav.classList.toggle('open');
+      document.body.style.overflow = mobileNav.classList.contains('open') ? 'hidden' : '';
+    });
+
+    function closeMobileNav() {
+      burger.classList.remove('active');
+      mobileNav.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  </script>
+
+</body>
+</html>
