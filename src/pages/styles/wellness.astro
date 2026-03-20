@@ -14,6 +14,7 @@ export const prerender = true;
   <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:ital,wght@0,400;0,500;0,700;1,400&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400&display=swap" rel="stylesheet" />
 
   <style>
+    html { overflow-x: hidden; }
     /* ===== RESET & BASE ===== */
     *, *::before, *::after {
       margin: 0;
@@ -158,6 +159,22 @@ export const prerender = true;
     .hero-link:hover {
       color: var(--accent);
       border-color: var(--primary);
+    }
+
+    /* ===================================================
+       HERO DIVIDER LINE — grows left to right on load
+    =================================================== */
+    .hero-divider {
+      width: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--accent), transparent);
+      margin: 2.5rem auto 0;
+      animation: lineGrow 1.8s cubic-bezier(0.4, 0, 0.2, 1) 1.3s both;
+    }
+
+    @keyframes lineGrow {
+      from { width: 0; opacity: 0; }
+      to   { width: clamp(120px, 30vw, 280px); opacity: 1; }
     }
 
 
@@ -333,6 +350,27 @@ export const prerender = true;
 
 
     /* ===================================================
+       SCROLL REVEAL
+    =================================================== */
+    .scroll-reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .scroll-reveal.in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Staggered treatment cards */
+    .treatment-card.scroll-reveal:nth-child(1) { transition-delay: 0s; }
+    .treatment-card.scroll-reveal:nth-child(2) { transition-delay: 0.1s; }
+    .treatment-card.scroll-reveal:nth-child(3) { transition-delay: 0.2s; }
+    .treatment-card.scroll-reveal:nth-child(4) { transition-delay: 0.3s; }
+
+
+    /* ===================================================
        ANIMATIONS
     =================================================== */
     @keyframes fadeInUp {
@@ -344,6 +382,12 @@ export const prerender = true;
         opacity: 1;
         transform: translateY(0);
       }
+    }
+
+    /* Breathing animation on hero headline — very subtle */
+    @keyframes breatheHeadline {
+      0%, 100% { transform: scale(1); }
+      50%       { transform: scale(1.002); }
     }
 
     @keyframes breathe {
@@ -364,7 +408,7 @@ export const prerender = true;
     }
 
     .hero-headline {
-      animation: fadeInUp 1s ease 0.5s both;
+      animation: fadeInUp 1s ease 0.5s both, breatheHeadline 4s ease-in-out 1.5s infinite;
     }
 
     .hero-subline {
@@ -486,17 +530,19 @@ export const prerender = true;
     </p>
 
     <a href="#leistungen" class="hero-link">Leistungen ansehen &rarr;</a>
+
+    <div class="hero-divider"></div>
   </section>
 
 
   <!-- ===== SECTION 2 — Wie ich arbeite ===== -->
   <section class="treatments" id="leistungen">
-    <p class="section-label">Leistungen</p>
-    <h2 class="section-title">Wie ich arbeite</h2>
+    <p class="section-label scroll-reveal">Leistungen</p>
+    <h2 class="section-title scroll-reveal">Wie ich arbeite</h2>
 
     <div class="treatments-grid">
 
-      <div class="treatment-card">
+      <div class="treatment-card scroll-reveal">
         <div class="treatment-icon">
           <svg viewBox="0 0 44 44" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
             <circle cx="22" cy="14" r="4" />
@@ -510,7 +556,7 @@ export const prerender = true;
         <p class="treatment-desc">Traditionelle Chinesische Medizin</p>
       </div>
 
-      <div class="treatment-card">
+      <div class="treatment-card scroll-reveal">
         <div class="treatment-icon">
           <svg viewBox="0 0 44 44" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
             <path d="M22 36V20" />
@@ -526,7 +572,7 @@ export const prerender = true;
         <p class="treatment-desc">Heilpflanzen & Tinkturen</p>
       </div>
 
-      <div class="treatment-card">
+      <div class="treatment-card scroll-reveal">
         <div class="treatment-icon">
           <svg viewBox="0 0 44 44" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
             <path d="M12 28c0-6 4-10 10-14" />
@@ -542,7 +588,7 @@ export const prerender = true;
         <p class="treatment-desc">Faszienarbeit & Mobilisation</p>
       </div>
 
-      <div class="treatment-card">
+      <div class="treatment-card scroll-reveal">
         <div class="treatment-icon">
           <svg viewBox="0 0 44 44" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
             <ellipse cx="22" cy="18" rx="10" ry="7" />
@@ -562,7 +608,7 @@ export const prerender = true;
 
   <!-- ===== SECTION 3 — Ueber mich ===== -->
   <section class="about">
-    <div class="about-inner">
+    <div class="about-inner scroll-reveal">
 
       <div class="about-portrait-wrap">
         <div class="about-portrait-ring"></div>
@@ -594,6 +640,25 @@ export const prerender = true;
 
     </div>
   </section>
+
+  <script>
+    // ===== INTERSECTION OBSERVER — scroll reveal =====
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+    );
+
+    document.querySelectorAll('.scroll-reveal').forEach((el) => {
+      revealObserver.observe(el);
+    });
+  </script>
 
 </body>
 </html>

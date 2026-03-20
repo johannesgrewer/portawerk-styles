@@ -14,6 +14,7 @@ export const prerender = true;
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 
   <style>
+    html { overflow-x: hidden; }
     /* ===== RESET & BASE ===== */
     *, *::before, *::after {
       margin: 0;
@@ -43,6 +44,22 @@ export const prerender = true;
     a {
       text-decoration: none;
       color: inherit;
+    }
+
+    /* ===== CURSOR DOT ===== */
+    #cursor-dot {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 10px;
+      height: 10px;
+      background: #FF5722;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.15s ease, opacity 0.3s ease;
+      opacity: 0;
     }
 
     /* ===== HERO ===== */
@@ -222,6 +239,9 @@ export const prerender = true;
       text-decoration: none;
       color: inherit;
       transition: background-color 0.3s ease;
+      /* perspective for tilt effect */
+      transform-style: preserve-3d;
+      perspective: 800px;
     }
 
     .case-item:first-child {
@@ -409,6 +429,28 @@ export const prerender = true;
       font-style: italic;
     }
 
+    /* ===== SCROLL REVEAL ===== */
+    .animate-up {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+
+    .animate-up.in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Staggered delays for case items */
+    .case-item.animate-up:nth-child(1) { transition-delay: 0s; }
+    .case-item.animate-up:nth-child(2) { transition-delay: 0.1s; }
+    .case-item.animate-up:nth-child(3) { transition-delay: 0.2s; }
+
+    /* Staggered delays for team members */
+    .team-member.animate-up:nth-child(1) { transition-delay: 0s; }
+    .team-member.animate-up:nth-child(2) { transition-delay: 0.1s; }
+    .team-member.animate-up:nth-child(3) { transition-delay: 0.2s; }
+
     /* ===== RESPONSIVE ===== */
     @media (max-width: 900px) {
       .case-item {
@@ -454,9 +496,17 @@ export const prerender = true;
         gap: 0.5rem;
       }
     }
+
+    /* Hide cursor dot on touch devices */
+    @media (hover: none) {
+      #cursor-dot { display: none; }
+    }
   </style>
 </head>
 <body>
+
+  <!-- ===== CURSOR DOT ===== -->
+  <div id="cursor-dot"></div>
 
   <!-- ===== HERO ===== -->
   <section class="hero" id="top">
@@ -508,10 +558,10 @@ export const prerender = true;
 
   <!-- ===== ARBEITEN ===== -->
   <section class="section" id="arbeiten">
-    <div class="section-label">Arbeiten</div>
+    <div class="section-label animate-up">Arbeiten</div>
 
     <div class="case-list">
-      <div class="case-item">
+      <div class="case-item animate-up">
         <div class="case-image-wrapper">
           <img
             class="case-image"
@@ -531,7 +581,7 @@ export const prerender = true;
         </div>
       </div>
 
-      <div class="case-item">
+      <div class="case-item animate-up">
         <div class="case-image-wrapper">
           <img
             class="case-image"
@@ -551,7 +601,7 @@ export const prerender = true;
         </div>
       </div>
 
-      <div class="case-item">
+      <div class="case-item animate-up">
         <div class="case-image-wrapper">
           <img
             class="case-image"
@@ -575,26 +625,26 @@ export const prerender = true;
 
   <!-- ===== TEAM ===== -->
   <section class="team-section" id="team">
-    <div class="section-label">Wer wir sind</div>
+    <div class="section-label animate-up">Wer wir sind</div>
 
-    <p class="team-intro">Drei Leute, ein Raum, guter Kaffee.</p>
+    <p class="team-intro animate-up">Drei Leute, ein Raum, guter Kaffee.</p>
 
     <div class="team-grid">
-      <div class="team-member">
+      <div class="team-member animate-up">
         <div class="team-avatar">J</div>
         <h4 class="team-name">Jan</h4>
         <span class="team-role">Design</span>
         <p class="team-bio">Denkt in Rastern und Proportionen. Mag Weissraum mehr als die meisten Menschen. Zustaendig fuer alles, was man sieht.</p>
       </div>
 
-      <div class="team-member">
+      <div class="team-member animate-up">
         <div class="team-avatar">L</div>
         <h4 class="team-name">Lisa</h4>
         <span class="team-role">Entwicklung</span>
         <p class="team-bio">Baut, was Jan zeichnet. Performance-besessen. Findet, dass jede Website unter einer Sekunde laden sollte.</p>
       </div>
 
-      <div class="team-member">
+      <div class="team-member animate-up">
         <div class="team-avatar">T</div>
         <h4 class="team-name">Tom</h4>
         <span class="team-role">Strategie</span>
@@ -602,11 +652,107 @@ export const prerender = true;
       </div>
     </div>
 
-    <div class="contact-bar">
+    <div class="contact-bar animate-up">
       <span class="contact-bar-text">Trier &middot; <a href="mailto:info@pixelschmiede.de">info@pixelschmiede.de</a> &middot; Kein Formular, einfach schreiben.</span>
       <span class="contact-motto">Show, don't tell.</span>
     </div>
   </section>
+
+  <script>
+    // ===== INTERSECTION OBSERVER — animate-up =====
+    const slideObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            slideObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+    );
+
+    document.querySelectorAll('.animate-up').forEach((el) => {
+      slideObserver.observe(el);
+    });
+
+
+    // ===== CURSOR DOT FOLLOWER =====
+    const cursorDot = document.getElementById('cursor-dot');
+    let cursorX = 0;
+    let cursorY = 0;
+    let dotX = 0;
+    let dotY = 0;
+    let cursorVisible = false;
+    let rafId = null;
+
+    document.addEventListener('mousemove', (e) => {
+      cursorX = e.clientX;
+      cursorY = e.clientY;
+
+      if (!cursorVisible) {
+        cursorVisible = true;
+        cursorDot.style.opacity = '1';
+      }
+
+      if (!rafId) {
+        rafId = requestAnimationFrame(animateCursor);
+      }
+    });
+
+    document.addEventListener('mouseleave', () => {
+      cursorDot.style.opacity = '0';
+      cursorVisible = false;
+    });
+
+    function animateCursor() {
+      // 150ms lag via lerp (lower = more lag)
+      const lerpFactor = 0.12;
+      dotX += (cursorX - dotX) * lerpFactor;
+      dotY += (cursorY - dotY) * lerpFactor;
+
+      cursorDot.style.left = dotX + 'px';
+      cursorDot.style.top = dotY + 'px';
+
+      const distX = Math.abs(cursorX - dotX);
+      const distY = Math.abs(cursorY - dotY);
+
+      if (distX > 0.1 || distY > 0.1) {
+        rafId = requestAnimationFrame(animateCursor);
+      } else {
+        rafId = null;
+      }
+    }
+
+
+    // ===== CARD TILT on hover =====
+    const caseItems = document.querySelectorAll('.case-item');
+
+    caseItems.forEach((card) => {
+      card.addEventListener('mouseenter', () => {
+        card.style.transition = 'transform 0.15s ease, background-color 0.3s ease';
+      });
+
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        const relX = (e.clientX - centerX) / (rect.width / 2);
+        const relY = (e.clientY - centerY) / (rect.height / 2);
+
+        // Max tilt: 2deg — subtle, not cheesy
+        const tiltX = relY * -2;
+        const tiltY = relX * 2;
+
+        card.style.transform = `perspective(800px) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+      });
+
+      card.addEventListener('mouseleave', () => {
+        card.style.transition = 'transform 0.4s ease, background-color 0.3s ease';
+        card.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg)';
+      });
+    });
+  </script>
 
 </body>
 </html>

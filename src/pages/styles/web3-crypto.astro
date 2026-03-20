@@ -12,6 +12,8 @@ export const prerender = true;
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
   <style>
+    html { overflow-x: hidden; }
+    body { overflow-x: hidden; max-width: 100%; }
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
@@ -40,6 +42,27 @@ export const prerender = true;
     body { overflow-x: hidden; }
 
     ::selection { background: var(--primary); color: var(--bg); }
+
+    /* ═══════════════════════════════════════════
+       CRYPTO-REVEAL ANIMATION
+    ═══════════════════════════════════════════ */
+    .crypto-reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease,
+                  transform 0.7s ease,
+                  box-shadow 0.7s ease;
+    }
+
+    .crypto-reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Glow variant for cards on reveal */
+    .crypto-reveal.glow-on-reveal.visible {
+      box-shadow: 0 0 32px rgba(168, 85, 247, 0.15), 0 0 8px rgba(34, 211, 238, 0.08);
+    }
 
     /* ═══════════════════════════════════════════
        MESH GRADIENT BACKGROUND
@@ -74,6 +97,51 @@ export const prerender = true;
           radial-gradient(ellipse 50% 90% at 20% 60%, rgba(34, 211, 238, 0.15) 0%, transparent 60%),
           radial-gradient(ellipse 80% 60% at 60% 80%, rgba(168, 85, 247, 0.06) 0%, transparent 70%);
       }
+    }
+
+    /* ═══════════════════════════════════════════
+       SCANLINE OVERLAY ON HERO
+    ═══════════════════════════════════════════ */
+    .hero-scanline {
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 3px,
+        rgba(168, 85, 247, 0.018) 3px,
+        rgba(168, 85, 247, 0.018) 4px
+      );
+      pointer-events: none;
+      z-index: 1;
+      animation: scanlineScroll 8s linear infinite;
+    }
+
+    @keyframes scanlineScroll {
+      0%   { background-position: 0 0; }
+      100% { background-position: 0 400px; }
+    }
+
+    /* Subtle horizontal sweep gradient on hero */
+    .hero-sweep {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        105deg,
+        transparent 0%,
+        rgba(168, 85, 247, 0.04) 30%,
+        rgba(34, 211, 238, 0.04) 60%,
+        transparent 100%
+      );
+      background-size: 200% 200%;
+      pointer-events: none;
+      z-index: 1;
+      animation: sweepMove 6s ease-in-out infinite alternate;
+    }
+
+    @keyframes sweepMove {
+      0%   { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
     }
 
     .content-wrapper {
@@ -233,6 +301,8 @@ export const prerender = true;
       color: var(--text);
       text-align: center;
       margin-bottom: 1rem;
+      position: relative;
+      z-index: 2;
     }
 
     .hero-tagline {
@@ -243,6 +313,61 @@ export const prerender = true;
       text-align: center;
       margin-bottom: 2.5rem;
       letter-spacing: 0.05em;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* ═══════════════════════════════════════════
+       BLOCK HEIGHT COUNTER
+    ═══════════════════════════════════════════ */
+    .block-height-display {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+      padding: 0.6rem 1.25rem;
+      border: 1px solid rgba(34, 211, 238, 0.25);
+      border-radius: 4px;
+      background: rgba(15, 11, 30, 0.6);
+      position: relative;
+      z-index: 2;
+    }
+
+    .block-height-label {
+      font-family: var(--font-display);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .block-height-value {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--accent);
+      min-width: 7ch;
+      text-align: right;
+      transition: color 0.2s ease;
+    }
+
+    .block-height-value.tick {
+      color: var(--primary);
+    }
+
+    .block-height-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 8px var(--glow-cyan);
+      animation: pulse-dot 2s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.7); }
     }
 
     .hero-data {
@@ -251,6 +376,8 @@ export const prerender = true;
       flex-wrap: wrap;
       justify-content: center;
       margin-bottom: 3rem;
+      position: relative;
+      z-index: 2;
     }
 
     .data-point {
@@ -284,6 +411,7 @@ export const prerender = true;
       border: none;
       cursor: pointer;
       transition: all 0.3s;
+      z-index: 2;
     }
 
     .cta-button::before {
@@ -365,12 +493,13 @@ export const prerender = true;
       padding: 2rem 1.75rem;
       position: relative;
       overflow: hidden;
-      transition: border-color 0.3s, transform 0.3s;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
     }
 
     .service-card:hover {
-      border-color: rgba(168, 85, 247, 0.3);
+      border-color: rgba(168, 85, 247, 0.4);
       transform: translateY(-4px);
+      box-shadow: 0 8px 32px rgba(168, 85, 247, 0.2), 0 0 0 1px rgba(34, 211, 238, 0.08);
     }
 
     .service-card::before {
@@ -527,6 +656,12 @@ export const prerender = true;
       background: var(--bg-card);
       border: 1px solid rgba(168, 85, 247, 0.1);
       border-radius: 4px;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .founder:hover {
+      border-color: rgba(168, 85, 247, 0.3);
+      box-shadow: 0 4px 24px rgba(168, 85, 247, 0.12);
     }
 
     .founder-avatar {
@@ -597,6 +732,22 @@ export const prerender = true;
       letter-spacing: 0.1em;
       opacity: 0.6;
       margin-top: 0.5rem;
+    }
+
+    /* ═══════════════════════════════════════════
+       MATRIX CANVAS
+    ═══════════════════════════════════════════ */
+    #matrix-canvas {
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      width: 180px;
+      height: 240px;
+      opacity: 0.18;
+      pointer-events: none;
+      z-index: 0;
+      mask-image: linear-gradient(to top left, rgba(0,0,0,0.8) 0%, transparent 70%);
+      -webkit-mask-image: linear-gradient(to top left, rgba(0,0,0,0.8) 0%, transparent 70%);
     }
 
     /* ═══════════════════════════════════════════
@@ -691,6 +842,11 @@ export const prerender = true;
         gap: 1.25rem;
         padding: 1.5rem;
       }
+
+      #matrix-canvas {
+        width: 100px;
+        height: 160px;
+      }
     }
 
     @media (max-width: 480px) {
@@ -711,6 +867,7 @@ export const prerender = true;
 </head>
 <body>
 
+<canvas id="matrix-canvas"></canvas>
 <div class="mesh-bg"></div>
 
 <div class="content-wrapper">
@@ -727,59 +884,69 @@ export const prerender = true;
 
   <!-- HERO -->
   <section class="hero">
-    <div class="hex-container">
+    <div class="hero-scanline"></div>
+    <div class="hero-sweep"></div>
+
+    <div class="hex-container crypto-reveal">
       <div class="hex-glow"></div>
       <div class="hex-inner">
         <span class="hex-monogram">CF</span>
       </div>
     </div>
 
-    <h1 class="hero-title">Chainforge</h1>
-    <p class="hero-tagline">Building trust. On chain.</p>
+    <h1 class="hero-title crypto-reveal">Chainforge</h1>
+    <p class="hero-tagline crypto-reveal">Building trust. On chain.</p>
 
-    <div class="hero-data">
+    <!-- Live Block Height Counter -->
+    <div class="block-height-display crypto-reveal">
+      <span class="block-height-dot"></span>
+      <span class="block-height-label">Block #</span>
+      <span class="block-height-value" id="block-height-counter">19847321</span>
+    </div>
+
+    <div class="hero-data crypto-reveal">
       <span class="data-point">Since <strong>2022</strong></span>
       <span class="data-point"><strong>14</strong> Projects</span>
       <span class="data-point">Smart Contract <strong>Audit</strong></span>
     </div>
 
-    <a href="#kontakt" class="cta-button">Let's talk &rarr;</a>
+    <a href="#kontakt" class="cta-button crypto-reveal">Let's talk &rarr;</a>
   </section>
 
   <!-- SERVICES -->
   <section id="services">
-    <p class="section-label">// Services</p>
-    <h2 class="section-title">Was wir bauen</h2>
+    <p class="section-label crypto-reveal">// Services</p>
+    <h2 class="section-title crypto-reveal">Was wir bauen</h2>
 
     <div class="services-grid">
-      <div class="service-card">
+      <div class="service-card crypto-reveal glow-on-reveal">
         <p class="service-label">Audit</p>
         <h3 class="service-title">Smart Contract Audit</h3>
         <p class="service-desc">Sicherheit fuer deinen Code. Statische Analyse, manuelle Review und formale Verifikation deiner Contracts.</p>
       </div>
 
-      <div class="service-card">
+      <div class="service-card crypto-reveal glow-on-reveal">
         <p class="service-label">Design</p>
         <h3 class="service-title">Token Design</h3>
         <p class="service-desc">Von der Idee zum Launch. Tokenomics, Smart Contract Development und Deployment auf der Chain deiner Wahl.</p>
       </div>
 
-      <div class="service-card">
+      <div class="service-card crypto-reveal glow-on-reveal">
         <p class="service-label">Strategie</p>
         <h3 class="service-title">DeFi Consulting</h3>
         <p class="service-desc">Protokoll-Strategie und Integration. Yield-Optimierung, Liquidity Design und Cross-Chain-Architektur.</p>
       </div>
     </div>
 
-    <p class="services-note">Alle Audits nach OWASP & SWC Registry Standards.</p>
+    <p class="services-note crypto-reveal">Alle Audits nach OWASP & SWC Registry Standards.</p>
   </section>
 
   <!-- TRACK RECORD -->
   <section id="track-record">
-    <p class="section-label">// Track Record</p>
-    <h2 class="section-title">On-Chain History</h2>
+    <p class="section-label crypto-reveal">// Track Record</p>
+    <h2 class="section-title crypto-reveal">On-Chain History</h2>
 
-    <div class="terminal">
+    <div class="terminal crypto-reveal">
       <div class="terminal-header">
         <span class="terminal-dot"></span>
         <span class="terminal-dot"></span>
@@ -808,7 +975,7 @@ export const prerender = true;
       </div>
     </div>
 
-    <div class="founder" id="kontakt">
+    <div class="founder crypto-reveal glow-on-reveal" id="kontakt">
       <div class="founder-avatar">
         <div class="founder-avatar-inner">
           <span class="founder-initials">AK</span>
@@ -833,6 +1000,100 @@ export const prerender = true;
   </footer>
 
 </div>
+
+<script>
+  // ===== INTERSECTION OBSERVER — CRYPTO-REVEAL WITH STAGGER =====
+  (function initCryptoReveal() {
+    const elements = document.querySelectorAll('.crypto-reveal');
+
+    const observer = new IntersectionObserver((entries) => {
+      // Sort by vertical position for natural top-to-bottom stagger
+      const visible = entries.filter(e => e.isIntersecting);
+      visible
+        .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)
+        .forEach((entry, index) => {
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, index * 100);
+          observer.unobserve(entry.target);
+        });
+    }, {
+      threshold: 0.12,
+      rootMargin: '0px 0px -30px 0px'
+    });
+
+    elements.forEach(el => observer.observe(el));
+  })();
+
+  // ===== LIVE BLOCK HEIGHT COUNTER =====
+  (function initBlockCounter() {
+    const counterEl = document.getElementById('block-height-counter');
+    if (!counterEl) return;
+
+    let currentHeight = 19847321;
+
+    function incrementBlock() {
+      // Ethereum averages ~12s/block, simulate with occasional multi-block jumps
+      const jump = Math.random() < 0.3 ? 2 : 1;
+      currentHeight += jump;
+      counterEl.textContent = currentHeight.toLocaleString('en-US').replace(/,/g, '_');
+
+      // Flash color on update
+      counterEl.classList.add('tick');
+      setTimeout(() => counterEl.classList.remove('tick'), 300);
+    }
+
+    setInterval(incrementBlock, 2000);
+  })();
+
+  // ===== MATRIX RAIN CANVAS =====
+  (function initMatrixRain() {
+    const canvas = document.getElementById('matrix-canvas');
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+
+    function resize() {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+    }
+    resize();
+
+    const chars = '01アイウエオカキクケコABCDEF0123456789<>{}[]|#';
+    const fontSize = 10;
+    const columns = Math.floor(canvas.width / fontSize);
+    const drops = Array.from({ length: columns }, () => Math.random() * -50);
+
+    function drawMatrix() {
+      // Semi-transparent fade to create trail
+      ctx.fillStyle = 'rgba(11, 7, 24, 0.08)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.font = `${fontSize}px "Space Mono", monospace`;
+
+      drops.forEach((y, i) => {
+        const char = chars[Math.floor(Math.random() * chars.length)];
+
+        // Leading character is brighter (cyan), rest purple
+        if (y * fontSize < canvas.height * 0.15) {
+          ctx.fillStyle = '#22D3EE';
+        } else {
+          ctx.fillStyle = '#A855F7';
+        }
+
+        ctx.fillText(char, i * fontSize, y * fontSize);
+
+        // Reset drop when it goes off screen, with random delay
+        if (y * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i] += 0.5;
+      });
+    }
+
+    setInterval(drawMatrix, 50);
+  })();
+</script>
 
 </body>
 </html>

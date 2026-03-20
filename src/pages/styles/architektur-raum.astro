@@ -14,6 +14,7 @@ export const prerender = true;
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
   <style>
+    html { overflow-x: hidden; }
     /* ===== RESET & BASE ===== */
     *, *::before, *::after {
       margin: 0;
@@ -58,6 +59,19 @@ export const prerender = true;
       background-size: 40px 40px;
     }
 
+    /* ===== GRID REVEAL ANIMATION ===== */
+    .grid-reveal {
+      opacity: 0;
+      transform: scale(0.98);
+      transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+                  transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .grid-reveal.revealed {
+      opacity: 1;
+      transform: scale(1);
+    }
+
     /* ===== HERO ===== */
     .hero {
       min-height: 100vh;
@@ -65,6 +79,55 @@ export const prerender = true;
       align-items: center;
       padding: 80px 60px;
       position: relative;
+      overflow: hidden;
+    }
+
+    /* ===== HERO GRID OVERLAY — draws in on load ===== */
+    .hero-grid-overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    /* Horizontal lines */
+    .hero-grid-overlay::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(
+        rgba(26, 26, 26, 0.055) 1px,
+        transparent 1px
+      );
+      background-size: 100% 60px;
+      /* Draw in from top — clip-path height animates 0→100% */
+      clip-path: inset(0 0 100% 0);
+      animation: gridDrawH 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.2s forwards;
+    }
+
+    /* Vertical lines */
+    .hero-grid-overlay::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(
+        90deg,
+        rgba(26, 26, 26, 0.055) 1px,
+        transparent 1px
+      );
+      background-size: 60px 100%;
+      /* Draw in from left */
+      clip-path: inset(0 100% 0 0);
+      animation: gridDrawV 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.5s forwards;
+    }
+
+    @keyframes gridDrawH {
+      to { clip-path: inset(0 0 0% 0); }
+    }
+
+    @keyframes gridDrawV {
+      to { clip-path: inset(0 0% 0 0); }
     }
 
     .hero-inner {
@@ -74,6 +137,8 @@ export const prerender = true;
       max-width: 1400px;
       margin: 0 auto;
       width: 100%;
+      position: relative;
+      z-index: 1;
     }
 
     .hero-text {
@@ -88,6 +153,9 @@ export const prerender = true;
       text-transform: uppercase;
       color: #1A1A1A;
       margin-bottom: 24px;
+      opacity: 0;
+      transform: translateY(12px);
+      animation: heroFadeUp 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.8s forwards;
     }
 
     .hero-headline {
@@ -96,6 +164,9 @@ export const prerender = true;
       color: #1A1A1A;
       margin-bottom: 16px;
       letter-spacing: -0.01em;
+      opacity: 0;
+      transform: translateY(12px);
+      animation: heroFadeUp 0.7s cubic-bezier(0.4, 0, 0.2, 1) 1.0s forwards;
     }
 
     .hero-meta {
@@ -104,6 +175,9 @@ export const prerender = true;
       color: #888888;
       letter-spacing: 0.08em;
       margin-bottom: 32px;
+      opacity: 0;
+      transform: translateY(12px);
+      animation: heroFadeUp 0.7s cubic-bezier(0.4, 0, 0.2, 1) 1.15s forwards;
     }
 
     .hero-accent-line {
@@ -111,6 +185,13 @@ export const prerender = true;
       height: 2px;
       background-color: #E07A2F;
       margin-bottom: 32px;
+      transform-origin: left;
+      transform: scaleX(0);
+      animation: accentLineGrow 0.6s cubic-bezier(0.4, 0, 0.2, 1) 1.3s forwards;
+    }
+
+    @keyframes accentLineGrow {
+      to { transform: scaleX(1); }
     }
 
     .hero-cta {
@@ -120,10 +201,16 @@ export const prerender = true;
       letter-spacing: 0.05em;
       transition: letter-spacing 0.3s ease;
       display: inline-block;
+      opacity: 0;
+      animation: heroFadeUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) 1.45s forwards;
     }
 
     .hero-cta:hover {
       letter-spacing: 0.12em;
+    }
+
+    @keyframes heroFadeUp {
+      to { opacity: 1; transform: translateY(0); }
     }
 
     /* ===== HERO IMAGE WITH MEASUREMENT LINES ===== */
@@ -132,6 +219,8 @@ export const prerender = true;
       max-width: 55%;
       position: relative;
       padding: 28px;
+      opacity: 0;
+      animation: heroFadeUp 0.9s cubic-bezier(0.4, 0, 0.2, 1) 0.9s forwards;
     }
 
     .hero-image-wrap img {
@@ -307,6 +396,37 @@ export const prerender = true;
       margin-bottom: 48px;
     }
 
+    /* ===== STATS BAR ===== */
+    .stats-bar {
+      display: flex;
+      gap: 64px;
+      margin-bottom: 80px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid rgba(26, 26, 26, 0.08);
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .stat-number {
+      font-size: 2.8rem;
+      font-weight: 800;
+      color: #1A1A1A;
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      font-weight: 500;
+      color: #888888;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
     /* ===== PROJEKTE SECTION ===== */
     .projects-grid {
       display: grid;
@@ -319,6 +439,12 @@ export const prerender = true;
       position: relative;
       padding: 0 32px;
       cursor: default;
+      /* Hover lift */
+      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .project-card:hover {
+      transform: translateY(-6px);
     }
 
     /* Orange construction lines between columns */
@@ -330,6 +456,8 @@ export const prerender = true;
       bottom: 0;
       width: 1px;
       background-color: rgba(224, 122, 47, 0.25);
+      /* Don't shift with the card hover */
+      transition: none;
     }
 
     .project-card:first-child {
@@ -340,17 +468,39 @@ export const prerender = true;
       padding-right: 0;
     }
 
+    .project-image-wrap {
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+
     .project-image {
       width: 100%;
       height: 320px;
       object-fit: cover;
       filter: saturate(0.6) contrast(1.05);
-      margin-bottom: 24px;
-      transition: filter 0.4s ease;
+      transition: filter 0.4s ease, transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      display: block;
     }
 
     .project-card:hover .project-image {
-      filter: saturate(0.8) contrast(1.05);
+      filter: saturate(0.85) contrast(1.05);
+      transform: scale(1.03);
+    }
+
+    /* Shadow reveal on hover */
+    .project-image-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      box-shadow: inset 0 -60px 40px -20px rgba(26, 26, 26, 0.18);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+    }
+
+    .project-card:hover .project-image-wrap::after {
+      opacity: 1;
     }
 
     .project-title {
@@ -547,6 +697,11 @@ export const prerender = true;
       .contact-info {
         text-align: left;
       }
+
+      .stats-bar {
+        gap: 40px;
+        flex-wrap: wrap;
+      }
     }
 
     @media (max-width: 640px) {
@@ -583,6 +738,14 @@ export const prerender = true;
       .haltung-statement {
         font-size: 22px;
       }
+
+      .stats-bar {
+        gap: 28px;
+      }
+
+      .stat-number {
+        font-size: 2rem;
+      }
     }
   </style>
 </head>
@@ -590,6 +753,9 @@ export const prerender = true;
 
   <!-- ===== HERO ===== -->
   <section class="hero grid-bg">
+    <!-- Animated grid overlay — draws itself in on load -->
+    <div class="hero-grid-overlay" aria-hidden="true"></div>
+
     <div class="hero-inner">
       <div class="hero-text">
         <p class="hero-firm-name">Volumen</p>
@@ -619,16 +785,34 @@ export const prerender = true;
 
   <!-- ===== PROJEKTE ===== -->
   <section class="section" id="projekte">
-    <p class="section-label">Projekte</p>
+    <p class="section-label grid-reveal">Projekte</p>
+
+    <!-- Stats row -->
+    <div class="stats-bar grid-reveal">
+      <div class="stat-item">
+        <span class="stat-number"><span class="count-up" data-target="12">0</span></span>
+        <span class="stat-label">Realisierte Projekte</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number"><span class="count-up" data-target="8">0</span></span>
+        <span class="stat-label">Jahre Erfahrung</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number"><span class="count-up" data-target="1246">0</span></span>
+        <span class="stat-label">m² geplant</span>
+      </div>
+    </div>
 
     <div class="projects-grid">
-      <div class="project-card">
-        <img
-          class="project-image"
-          src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80&auto=format"
-          alt="Wohnhaus M. — moderne Architektur"
-          loading="lazy"
-        />
+      <div class="project-card grid-reveal">
+        <div class="project-image-wrap">
+          <img
+            class="project-image"
+            src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80&auto=format"
+            alt="Wohnhaus M. — moderne Architektur"
+            loading="lazy"
+          />
+        </div>
         <p class="project-title">Wohnhaus M.</p>
         <div class="project-detail">
           <span>Trier-Olewig</span>
@@ -636,13 +820,15 @@ export const prerender = true;
         </div>
       </div>
 
-      <div class="project-card">
-        <img
-          class="project-image"
-          src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80&auto=format"
-          alt="Umbau Alte Muehle — Bestandssanierung"
-          loading="lazy"
-        />
+      <div class="project-card grid-reveal">
+        <div class="project-image-wrap">
+          <img
+            class="project-image"
+            src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80&auto=format"
+            alt="Umbau Alte Muehle — Bestandssanierung"
+            loading="lazy"
+          />
+        </div>
         <p class="project-title">Umbau Alte Muehle</p>
         <div class="project-detail">
           <span>Longuich, Mosel</span>
@@ -650,13 +836,15 @@ export const prerender = true;
         </div>
       </div>
 
-      <div class="project-card">
-        <img
-          class="project-image"
-          src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80&auto=format"
-          alt="Buerogebaeude K. — Gewerbe-Neubau"
-          loading="lazy"
-        />
+      <div class="project-card grid-reveal">
+        <div class="project-image-wrap">
+          <img
+            class="project-image"
+            src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80&auto=format"
+            alt="Buerogebaeude K. — Gewerbe-Neubau"
+            loading="lazy"
+          />
+        </div>
         <p class="project-title">Buerogebaeude K.</p>
         <div class="project-detail">
           <span>Trier-Nord</span>
@@ -669,17 +857,17 @@ export const prerender = true;
   <!-- ===== HALTUNG ===== -->
   <section class="haltung-bg">
     <div class="haltung-inner">
-      <p class="section-label">Haltung</p>
+      <p class="section-label grid-reveal">Haltung</p>
 
       <div class="haltung-grid">
-        <div>
+        <div class="grid-reveal">
           <p class="haltung-statement">
             Wir entwerfen keine Gebaeude.<br />
             Wir entwerfen Zusammenhaenge.
           </p>
         </div>
 
-        <div>
+        <div class="grid-reveal">
           <ul class="principle-list">
             <li>
               <span class="principle-number">01</span>
@@ -701,7 +889,7 @@ export const prerender = true;
         </div>
       </div>
 
-      <div class="haltung-footer">
+      <div class="haltung-footer grid-reveal">
         <div>
           <p class="founders">Sarah Hartmann & Jonas Beck</p>
           <p class="founders-role">Gruender</p>
@@ -714,6 +902,57 @@ export const prerender = true;
       </div>
     </div>
   </section>
+
+  <script>
+    // ===== INTERSECTION OBSERVER: .grid-reveal =====
+    const gridRevealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          // Stagger siblings by their index among all .grid-reveal elements
+          const allRevealEls = Array.from(document.querySelectorAll('.grid-reveal'));
+          const elIndex = allRevealEls.indexOf(entry.target);
+          // Small stagger within view groups — cap at 3 to avoid long waits
+          const staggerDelay = (elIndex % 4) * 80;
+          setTimeout(() => {
+            entry.target.classList.add('revealed');
+          }, staggerDelay);
+          gridRevealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.grid-reveal').forEach(el => gridRevealObserver.observe(el));
+
+    // ===== COUNT-UP ANIMATION =====
+    function animateCountUp(el) {
+      const target = parseInt(el.dataset.target, 10);
+      const duration = target > 100 ? 1400 : 900;
+      const startTime = performance.now();
+
+      function tick(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        // Ease-out quart for a precise, architectural feel
+        const eased = 1 - Math.pow(1 - progress, 4);
+        el.textContent = Math.round(eased * target);
+        if (progress < 1) requestAnimationFrame(tick);
+        else el.textContent = target;
+      }
+
+      requestAnimationFrame(tick);
+    }
+
+    const countObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCountUp(entry.target);
+          countObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('.count-up').forEach(el => countObserver.observe(el));
+  </script>
 
 </body>
 </html>

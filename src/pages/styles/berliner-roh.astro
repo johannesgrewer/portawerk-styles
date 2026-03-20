@@ -14,11 +14,18 @@ export const prerender = true;
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
 
   <style>
+    html { overflow-x: hidden; }
     /* ===== RESET & BASE ===== */
     *, *::before, *::after {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+    }
+
+    :root {
+      --mouse-x: 0;
+      --mouse-y: 0;
+      --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     html {
@@ -31,6 +38,50 @@ export const prerender = true;
       background-color: #F2F0ED;
       line-height: 1.6;
       overflow-x: hidden;
+    }
+
+    /* ===== CONCRETE NOISE OVERLAY ===== */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 256px 256px;
+    }
+
+    /* ===== STAGGERED REVEAL ANIMATIONS ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.8s var(--ease-smooth), transform 0.8s var(--ease-smooth);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-d1 { transition-delay: 0.1s; }
+    .reveal-d2 { transition-delay: 0.2s; }
+    .reveal-d3 { transition-delay: 0.3s; }
+    .reveal-d4 { transition-delay: 0.4s; }
+    .reveal-d5 { transition-delay: 0.5s; }
+    .reveal-d6 { transition-delay: 0.6s; }
+
+    /* ===== STAGGER-IN (horizontal slide from left) ===== */
+    .stagger-in {
+      opacity: 0;
+      transform: translateX(-20px);
+      transition: opacity 0.6s var(--ease-smooth), transform 0.6s var(--ease-smooth);
+    }
+
+    .stagger-in.revealed {
+      opacity: 1;
+      transform: translateX(0);
     }
 
     img {
@@ -90,7 +141,7 @@ export const prerender = true;
       color: #333333;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      transition: color 0.2s ease;
+      transition: color 0.3s var(--ease-smooth);
     }
 
     .navbar-links a:hover {
@@ -158,12 +209,17 @@ export const prerender = true;
 
     .hero-grid-bg {
       position: absolute;
-      inset: 0;
+      inset: -20px;
       background-image:
         linear-gradient(rgba(51, 51, 51, 0.06) 1px, transparent 1px),
         linear-gradient(90deg, rgba(51, 51, 51, 0.06) 1px, transparent 1px);
       background-size: 40px 40px;
       pointer-events: none;
+      transform: translate(
+        calc(var(--mouse-x) * 8px),
+        calc(var(--mouse-y) * 8px)
+      );
+      transition: transform 0.6s var(--ease-smooth);
     }
 
     .hero-inner {
@@ -191,6 +247,24 @@ export const prerender = true;
       color: #333333;
       letter-spacing: -0.02em;
       line-height: 1.1;
+    }
+
+    /* Typewriter cursor on headline */
+    .typewriter-target {
+      display: inline;
+    }
+
+    .typewriter-cursor {
+      display: inline-block;
+      color: #C75B39;
+      font-weight: 400;
+      animation: cursorBlink 1s step-end infinite;
+      margin-left: 1px;
+    }
+
+    @keyframes cursorBlink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
     }
 
     .hero-accent-line {
@@ -225,7 +299,7 @@ export const prerender = true;
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      transition: gap 0.3s ease;
+      transition: gap 0.3s var(--ease-smooth);
     }
 
     .hero-cta:hover {
@@ -234,6 +308,7 @@ export const prerender = true;
 
     .hero-image-wrapper {
       position: relative;
+      overflow: hidden;
     }
 
     .hero-image {
@@ -241,6 +316,12 @@ export const prerender = true;
       aspect-ratio: 4 / 3;
       object-fit: cover;
       border: 1px solid #333333;
+      animation: kenBurns 20s ease-in-out infinite alternate;
+    }
+
+    @keyframes kenBurns {
+      0% { transform: scale(1) translate(0, 0); }
+      100% { transform: scale(1.06) translate(-1%, -0.5%); }
     }
 
     .hero-image-label {
@@ -280,12 +361,71 @@ export const prerender = true;
 
     .section-divider {
       width: 100%;
-      height: 1px;
-      background: #333333;
-      margin-bottom: 6rem;
       max-width: 1100px;
       margin-left: auto;
       margin-right: auto;
+      margin-bottom: 0;
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+
+    .section-divider::before,
+    .section-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #333333;
+    }
+
+    .section-divider .divider-symbol {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.7rem;
+      color: #999999;
+      padding: 0 1rem;
+      letter-spacing: 0;
+      line-height: 1;
+    }
+
+    /* ===== MARQUEE ===== */
+    .marquee-wrap {
+      overflow: hidden;
+      border-top: 1px solid #333333;
+      border-bottom: 1px solid #333333;
+      background: #F2F0ED;
+      padding: 1rem 0;
+      margin: 0;
+    }
+
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      animation: marqueeScroll 22s linear infinite;
+    }
+
+    .marquee-track:hover {
+      animation-play-state: paused;
+    }
+
+    .marquee-item {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #333333;
+      padding: 0 2rem;
+      white-space: nowrap;
+    }
+
+    .marquee-item .marquee-dot {
+      color: #C75B39;
+      margin-left: 2rem;
+    }
+
+    @keyframes marqueeScroll {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
     }
 
     /* ===== RAEUME (WORKSPACE CARDS) ===== */
@@ -302,6 +442,30 @@ export const prerender = true;
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: box-shadow 0.4s var(--ease-smooth);
+    }
+
+    .raum-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: #C75B39;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.5s var(--ease-smooth);
+    }
+
+    .raum-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .raum-card:hover {
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
     }
 
     .raum-card-header {
@@ -354,6 +518,43 @@ export const prerender = true;
       color: #C75B39;
     }
 
+    /* ===== PLAETZE COUNTER BAR ===== */
+    .counter-bar {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem 4rem;
+      display: flex;
+      gap: 4rem;
+      align-items: flex-start;
+    }
+
+    .counter-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .counter-number {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #333333;
+      line-height: 1;
+    }
+
+    .counter-number .count-val {
+      display: inline-block;
+    }
+
+    .counter-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      font-weight: 500;
+      color: #999999;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
     /* ===== MEMBERS ===== */
     .members-grid {
       display: grid;
@@ -388,22 +589,27 @@ export const prerender = true;
       color: #555555;
       line-height: 1.6;
       font-style: italic;
+      position: relative;
+      padding-left: 2rem;
     }
 
-    .member-quote::before {
-      content: '"';
-      color: #C75B39;
+    .member-quote .quote-mark {
+      position: absolute;
+      left: 0;
+      top: -0.15em;
       font-family: 'IBM Plex Mono', monospace;
+      font-size: 3rem;
       font-weight: 700;
       font-style: normal;
+      color: #C75B39;
+      line-height: 1;
+      opacity: 0;
+      transition: opacity 0.6s var(--ease-smooth);
+      transition-delay: 0.4s;
     }
 
-    .member-quote::after {
-      content: '"';
-      color: #C75B39;
-      font-family: 'IBM Plex Mono', monospace;
-      font-weight: 700;
-      font-style: normal;
+    .member-quote.visible .quote-mark {
+      opacity: 1;
     }
 
     /* ===== FOOTER / CONTACT ===== */
@@ -471,9 +677,15 @@ export const prerender = true;
       }
 
       .section-divider {
-        margin-bottom: 4rem;
+        margin-bottom: 0;
         margin-left: 1.5rem;
         margin-right: 1.5rem;
+      }
+
+      .counter-bar {
+        padding: 0 1.5rem 3rem;
+        gap: 2.5rem;
+        flex-wrap: wrap;
       }
 
       .footer-text {
@@ -505,6 +717,11 @@ export const prerender = true;
 
       .raum-card {
         padding: 2rem 1.25rem;
+      }
+
+      .counter-bar {
+        padding: 0 1rem 2.5rem;
+        gap: 2rem;
       }
     }
   </style>
@@ -538,9 +755,11 @@ export const prerender = true;
     <div class="hero-grid-bg"></div>
     <div class="hero-inner">
       <div class="hero-content">
-        <h1 class="hero-headline">RAUM FUR<br/>GUTE ARBEIT.</h1>
-        <div class="hero-accent-line"></div>
-        <p class="hero-specs">
+        <h1 class="hero-headline reveal">
+          <span id="typewriter-headline" class="typewriter-target"></span><span class="typewriter-cursor">_</span><br/>GUTE ARBEIT.
+        </h1>
+        <div class="hero-accent-line reveal reveal-d1"></div>
+        <p class="hero-specs reveal reveal-d2">
           <span>240m2</span>
           <span class="spec-divider">/</span>
           <span>18 Arbeitsplaetze</span>
@@ -549,9 +768,9 @@ export const prerender = true;
           <span class="spec-divider">/</span>
           <span>Gigabit</span>
         </p>
-        <a href="/#kontakt" class="hero-cta">Besichtigung vereinbaren &rarr;</a>
+        <a href="/#kontakt" class="hero-cta reveal reveal-d3">Besichtigung vereinbaren &rarr;</a>
       </div>
-      <div class="hero-image-wrapper">
+      <div class="hero-image-wrapper reveal reveal-d2">
         <img
           src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=900&q=80&auto=format"
           alt="Werkbank Co-Working Space in Trier-Euren"
@@ -563,19 +782,43 @@ export const prerender = true;
     </div>
   </section>
 
-  <!-- DIVIDER -->
-  <div class="section-divider" style="margin-left: 2rem; margin-right: 2rem;"></div>
+  <!-- MARQUEE DIVIDER -->
+  <div class="marquee-wrap">
+    <div class="marquee-track" aria-hidden="true">
+      <!-- Two identical sets so the loop is seamless -->
+      <span class="marquee-item">CO-WORKING<span class="marquee-dot">·</span></span>
+      <span class="marquee-item">ATELIER<span class="marquee-dot">·</span></span>
+      <span class="marquee-item">24/7 ZUGANG<span class="marquee-dot">·</span></span>
+      <span class="marquee-item">DRUCKER<span class="marquee-dot">·</span></span>
+      <span class="marquee-item">HIGHSPEED-WLAN<span class="marquee-dot">·</span></span>
+      <span class="marquee-item">KUECHE<span class="marquee-dot">·</span></span>
+      <span class="marquee-item">EVENTS<span class="marquee-dot">·</span></span>
+      <span class="marquee-item">MEETINGRAUM<span class="marquee-dot">·</span></span>
+      <span class="marquee-item">POSTADRESSE<span class="marquee-dot">·</span></span>
+      <span class="marquee-item">COMMUNITY<span class="marquee-dot">·</span></span>
+      <span class="marquee-item">CO-WORKING<span class="marquee-dot">·</span></span>
+      <span class="marquee-item">ATELIER<span class="marquee-dot">·</span></span>
+      <span class="marquee-item">24/7 ZUGANG<span class="marquee-dot">·</span></span>
+      <span class="marquee-item">DRUCKER<span class="marquee-dot">·</span></span>
+      <span class="marquee-item">HIGHSPEED-WLAN<span class="marquee-dot">·</span></span>
+      <span class="marquee-item">KUECHE<span class="marquee-dot">·</span></span>
+      <span class="marquee-item">EVENTS<span class="marquee-dot">·</span></span>
+      <span class="marquee-item">MEETINGRAUM<span class="marquee-dot">·</span></span>
+      <span class="marquee-item">POSTADRESSE<span class="marquee-dot">·</span></span>
+      <span class="marquee-item">COMMUNITY<span class="marquee-dot">·</span></span>
+    </div>
+  </div>
 
   <!-- DIE RAEUME -->
   <section class="section" id="raeume">
-    <p class="section-label">01 / Angebot</p>
-    <h2 class="section-title">Die Raeume</h2>
+    <p class="section-label stagger-in" data-delay="0">01 / Angebot</p>
+    <h2 class="section-title stagger-in" data-delay="100">Die Raeume</h2>
     <div class="raeume-grid">
 
-      <div class="raum-card">
+      <div class="raum-card stagger-in" data-delay="150">
         <div class="raum-card-header">
           <h3 class="raum-name">Flex Desk</h3>
-          <span class="raum-price">ab 15 EUR / Tag</span>
+          <span class="raum-price">ab <span class="count-up" data-target="15">0</span> EUR / Tag</span>
         </div>
         <p class="raum-desc">Tageweise buchen, hinsetzen, loslegen. Kein Vertrag, keine Mindestlaufzeit.</p>
         <ul class="raum-specs">
@@ -587,10 +830,10 @@ export const prerender = true;
         </ul>
       </div>
 
-      <div class="raum-card">
+      <div class="raum-card stagger-in" data-delay="250">
         <div class="raum-card-header">
           <h3 class="raum-name">Fixed Desk</h3>
-          <span class="raum-price">199 EUR / Monat</span>
+          <span class="raum-price"><span class="count-up" data-target="199">0</span> EUR / Monat</span>
         </div>
         <p class="raum-desc">Dein fester Platz. Eigener Rollcontainer, 24/7 Zugang, Post-Adresse inklusive.</p>
         <ul class="raum-specs">
@@ -602,10 +845,10 @@ export const prerender = true;
         </ul>
       </div>
 
-      <div class="raum-card">
+      <div class="raum-card stagger-in" data-delay="350">
         <div class="raum-card-header">
           <h3 class="raum-name">Atelier</h3>
-          <span class="raum-price">ab 350 EUR / Monat</span>
+          <span class="raum-price">ab <span class="count-up" data-target="350">0</span> EUR / Monat</span>
         </div>
         <p class="raum-desc">Abschliessbarer Raum fuer Kreative, die Platz und Ruhe brauchen. 15-30m2.</p>
         <ul class="raum-specs">
@@ -620,31 +863,53 @@ export const prerender = true;
     </div>
   </section>
 
+  <!-- PLAETZE COUNTER BAR -->
+  <div class="counter-bar">
+    <div class="counter-item">
+      <div class="counter-number">
+        <span class="count-up count-large" data-target="18">0</span>
+      </div>
+      <span class="counter-label">Plaetze frei</span>
+    </div>
+    <div class="counter-item">
+      <div class="counter-number">
+        <span class="count-up count-large" data-target="240">0</span><span style="font-family:'IBM Plex Mono',monospace;font-size:1.2rem;font-weight:500;color:#999;">m²</span>
+      </div>
+      <span class="counter-label">Flaeche gesamt</span>
+    </div>
+    <div class="counter-item">
+      <div class="counter-number">
+        <span class="count-up count-large" data-target="24">0</span><span style="font-family:'IBM Plex Mono',monospace;font-size:1.2rem;font-weight:500;color:#999;">/7</span>
+      </div>
+      <span class="counter-label">Zugang</span>
+    </div>
+  </div>
+
   <!-- DIVIDER -->
-  <div class="section-divider" style="margin-left: 2rem; margin-right: 2rem;"></div>
+  <div class="section-divider" style="margin-left: 2rem; margin-right: 2rem; margin-bottom: 6rem;"><span class="divider-symbol">+</span></div>
 
   <!-- WER HIER ARBEITET -->
   <section class="section" id="community">
-    <p class="section-label">02 / Community</p>
-    <h2 class="section-title">Wer hier arbeitet</h2>
+    <p class="section-label reveal">02 / Community</p>
+    <h2 class="section-title reveal reveal-d1">Wer hier arbeitet</h2>
     <div class="members-grid">
 
-      <div class="member">
+      <div class="member reveal reveal-d1">
         <span class="member-role">Grafikdesign</span>
         <h3 class="member-name">Lena Schuster</h3>
-        <p class="member-quote">Ich brauchte einen Ort, der nicht nach Home-Office riecht. Hier kann ich denken.</p>
+        <p class="member-quote"><span class="quote-mark">"</span>Ich brauchte einen Ort, der nicht nach Home-Office riecht. Hier kann ich denken.</p>
       </div>
 
-      <div class="member">
+      <div class="member reveal reveal-d3">
         <span class="member-role">Keramik</span>
         <h3 class="member-name">Tom Weiler</h3>
-        <p class="member-quote">Das Atelier hat Betonboden und einen Lastenaufzug. Mehr brauche ich nicht.</p>
+        <p class="member-quote"><span class="quote-mark">"</span>Das Atelier hat Betonboden und einen Lastenaufzug. Mehr brauche ich nicht.</p>
       </div>
 
-      <div class="member">
+      <div class="member reveal reveal-d5">
         <span class="member-role">Software-Entwicklung</span>
         <h3 class="member-name">Marie Hoffmann</h3>
-        <p class="member-quote">Gigabit, Ruhe, guter Kaffee. Um 23 Uhr bin ich manchmal die Einzige hier.</p>
+        <p class="member-quote"><span class="quote-mark">"</span>Gigabit, Ruhe, guter Kaffee. Um 23 Uhr bin ich manchmal die Einzige hier.</p>
       </div>
 
     </div>
@@ -660,6 +925,101 @@ export const prerender = true;
       <span>0651 -- 780 33 20</span>
     </p>
   </footer>
+
+  <script>
+    // ===== MOUSE PARALLAX ON HERO GRID =====
+    const heroGridBg = document.querySelector('.hero-grid-bg');
+    document.addEventListener('mousemove', (e) => {
+      const x = (e.clientX / window.innerWidth - 0.5);
+      const y = (e.clientY / window.innerHeight - 0.5);
+      document.documentElement.style.setProperty('--mouse-x', x.toFixed(3));
+      document.documentElement.style.setProperty('--mouse-y', y.toFixed(3));
+    });
+
+    // ===== TYPEWRITER EFFECT ON HERO HEADLINE =====
+    const typewriterTarget = document.getElementById('typewriter-headline');
+    const typewriterCursor = document.querySelector('.typewriter-cursor');
+    const typewriterText = 'RAUM FUR';
+    let typewriterIndex = 0;
+
+    function typeNextChar() {
+      if (typewriterIndex <= typewriterText.length) {
+        typewriterTarget.textContent = typewriterText.slice(0, typewriterIndex);
+        typewriterIndex++;
+        // Slow start, speed up to feel mechanical
+        const delay = typewriterIndex === 1 ? 600 : 90 + Math.random() * 40;
+        setTimeout(typeNextChar, delay);
+      }
+      // Cursor keeps blinking via CSS after typing completes
+    }
+
+    // Start typewriter after a short page-load pause
+    setTimeout(typeNextChar, 400);
+
+    // ===== INTERSECTION OBSERVER: .reveal =====
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          // Also trigger quote-mark animation
+          const quote = entry.target.querySelector('.member-quote');
+          if (quote) quote.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // Trigger member quotes individually too
+    document.querySelectorAll('.member-quote').forEach(el => revealObserver.observe(el));
+
+    // ===== INTERSECTION OBSERVER: .stagger-in =====
+    const staggerObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const delay = parseInt(entry.target.dataset.delay || '0', 10);
+          setTimeout(() => {
+            entry.target.classList.add('revealed');
+          }, delay);
+          staggerObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.stagger-in').forEach(el => staggerObserver.observe(el));
+
+    // ===== COUNT-UP ANIMATION =====
+    function animateCountUp(el) {
+      const target = parseInt(el.dataset.target, 10);
+      const isLarge = el.classList.contains('count-large');
+      const duration = isLarge ? 1200 : 800;
+      const startTime = performance.now();
+
+      function tick(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        // Ease-out cubic
+        const eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.round(eased * target);
+        if (progress < 1) requestAnimationFrame(tick);
+        else el.textContent = target;
+      }
+
+      requestAnimationFrame(tick);
+    }
+
+    const countObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCountUp(entry.target);
+          countObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.4 });
+
+    document.querySelectorAll('.count-up').forEach(el => countObserver.observe(el));
+  </script>
 
 </body>
 </html>

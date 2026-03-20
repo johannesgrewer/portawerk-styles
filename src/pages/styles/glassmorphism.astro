@@ -12,6 +12,8 @@ export const prerender = true;
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
+    html { overflow-x: hidden; }
+    body { overflow-x: hidden; max-width: 100%; }
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
@@ -538,9 +540,285 @@ export const prerender = true;
 
       .nav { padding: 1rem 1.25rem; }
     }
+
+    /* ═══════════════════════════════════════════
+       SCANLINE OVERLAY
+    ═══════════════════════════════════════════ */
+    .scanlines {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(255, 255, 255, 0.015) 2px,
+        rgba(255, 255, 255, 0.015) 4px
+      );
+    }
+
+    /* ═══════════════════════════════════════════
+       FLOATING PARTICLES
+    ═══════════════════════════════════════════ */
+    .particles {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 0 6px rgba(79, 70, 229, 0.3);
+      animation: particleFloat linear infinite;
+    }
+
+    .particle:nth-child(1) { left: 5%; top: 10%; animation-duration: 22s; animation-delay: 0s; }
+    .particle:nth-child(2) { left: 15%; top: 80%; animation-duration: 18s; animation-delay: -3s; width: 2px; height: 2px; }
+    .particle:nth-child(3) { left: 25%; top: 30%; animation-duration: 25s; animation-delay: -7s; }
+    .particle:nth-child(4) { left: 35%; top: 60%; animation-duration: 20s; animation-delay: -2s; width: 4px; height: 4px; box-shadow: 0 0 8px rgba(6, 182, 212, 0.4); }
+    .particle:nth-child(5) { left: 45%; top: 15%; animation-duration: 28s; animation-delay: -10s; width: 2px; height: 2px; }
+    .particle:nth-child(6) { left: 55%; top: 70%; animation-duration: 19s; animation-delay: -5s; }
+    .particle:nth-child(7) { left: 65%; top: 45%; animation-duration: 24s; animation-delay: -8s; width: 4px; height: 4px; }
+    .particle:nth-child(8) { left: 75%; top: 20%; animation-duration: 21s; animation-delay: -1s; box-shadow: 0 0 8px rgba(6, 182, 212, 0.4); }
+    .particle:nth-child(9) { left: 85%; top: 55%; animation-duration: 26s; animation-delay: -6s; width: 2px; height: 2px; }
+    .particle:nth-child(10) { left: 92%; top: 35%; animation-duration: 23s; animation-delay: -4s; }
+    .particle:nth-child(11) { left: 10%; top: 50%; animation-duration: 27s; animation-delay: -9s; width: 2px; height: 2px; }
+    .particle:nth-child(12) { left: 50%; top: 90%; animation-duration: 17s; animation-delay: -12s; box-shadow: 0 0 8px rgba(79, 70, 229, 0.5); }
+
+    @keyframes particleFloat {
+      0% { transform: translateY(0) translateX(0); opacity: 0; }
+      10% { opacity: 1; }
+      45% { transform: translateY(-40vh) translateX(20px); }
+      55% { transform: translateY(-50vh) translateX(-15px); }
+      90% { opacity: 1; }
+      100% { transform: translateY(-100vh) translateX(10px); opacity: 0; }
+    }
+
+    /* ═══════════════════════════════════════════
+       CHROMATIC ABERRATION — HERO TITLE
+    ═══════════════════════════════════════════ */
+    .hero-title {
+      text-shadow:
+        -1.5px 0 rgba(79, 70, 229, 0.35),
+        1.5px 0 rgba(6, 182, 212, 0.35);
+    }
+
+    /* ═══════════════════════════════════════════
+       GLASS CARD HOVER — LIGHT SWEEP + BLUR INCREASE
+    ═══════════════════════════════════════════ */
+    .metric-card,
+    .service-card,
+    .trust-item {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .metric-card::after,
+    .service-card::after,
+    .trust-item::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        105deg,
+        transparent 40%,
+        rgba(255, 255, 255, 0.06) 45%,
+        rgba(255, 255, 255, 0.12) 50%,
+        rgba(255, 255, 255, 0.06) 55%,
+        transparent 60%
+      );
+      transform: translateX(-100%);
+      transition: transform 0.6s ease;
+      pointer-events: none;
+      border-radius: inherit;
+    }
+
+    .metric-card:hover::after,
+    .service-card:hover::after,
+    .trust-item:hover::after {
+      transform: translateX(100%);
+    }
+
+    .metric-card:hover,
+    .service-card:hover,
+    .trust-item:hover {
+      backdrop-filter: blur(32px);
+      -webkit-backdrop-filter: blur(32px);
+    }
+
+    /* ═══════════════════════════════════════════
+       CTA — ROTATING CONIC GRADIENT BORDER
+    ═══════════════════════════════════════════ */
+    .hero-cta {
+      position: relative;
+      z-index: 1;
+      background: var(--bg) !important;
+      background-image: none !important;
+      background-clip: unset !important;
+      border: none !important;
+    }
+
+    .hero-cta::before {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      border-radius: 14px;
+      background: conic-gradient(
+        from var(--cta-angle, 0deg),
+        var(--primary),
+        var(--accent),
+        var(--primary),
+        var(--accent),
+        var(--primary)
+      );
+      z-index: -1;
+      animation: rotateBorder 3s linear infinite;
+    }
+
+    .hero-cta::after {
+      content: "";
+      position: absolute;
+      inset: 2px;
+      border-radius: 10px;
+      background: var(--bg);
+      z-index: -1;
+    }
+
+    @property --cta-angle {
+      syntax: "<angle>";
+      initial-value: 0deg;
+      inherits: false;
+    }
+
+    @keyframes rotateBorder {
+      to { --cta-angle: 360deg; }
+    }
+
+    /* ═══════════════════════════════════════════
+       SERVICE CARDS — STAGGERED ENTRANCE
+    ═══════════════════════════════════════════ */
+    .service-card {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                  background 0.3s ease,
+                  border-color 0.3s ease;
+    }
+
+    .service-card.visible { opacity: 1; transform: translateY(0); }
+    .service-card:nth-child(1) { transition-delay: 0s; }
+    .service-card:nth-child(2) { transition-delay: 0.15s; }
+    .service-card:nth-child(3) { transition-delay: 0.3s; }
+
+    /* ═══════════════════════════════════════════
+       SVG ICON — PULSE GLOW ON HOVER
+    ═══════════════════════════════════════════ */
+    .service-icon svg {
+      transition: filter 0.3s ease, transform 0.3s ease;
+    }
+
+    .service-card:hover .service-icon svg {
+      filter: drop-shadow(0 0 6px var(--glow-accent)) drop-shadow(0 0 12px rgba(6, 182, 212, 0.3));
+      animation: iconPulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes iconPulse {
+      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 6px var(--glow-accent)); }
+      50% { transform: scale(1.08); filter: drop-shadow(0 0 12px var(--glow-accent)) drop-shadow(0 0 20px rgba(6, 182, 212, 0.25)); }
+    }
+
+    /* ═══════════════════════════════════════════
+       TRUST ITEMS — STAGGERED ENTRANCE
+    ═══════════════════════════════════════════ */
+    .trust-item {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                  border-color 0.3s ease;
+    }
+
+    .trust-item.visible { opacity: 1; transform: translateY(0); }
+    .trust-item:nth-child(1) { transition-delay: 0s; }
+    .trust-item:nth-child(2) { transition-delay: 0.1s; }
+    .trust-item:nth-child(3) { transition-delay: 0.2s; }
+    .trust-item:nth-child(4) { transition-delay: 0.3s; }
+
+    /* ═══════════════════════════════════════════
+       TYPING CURSOR — QUOTE
+    ═══════════════════════════════════════════ */
+    .quote-text::after {
+      content: "\201C";
+      /* cursor blinks after closing quote */
+    }
+
+    .quote-cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1.1em;
+      background: var(--accent);
+      margin-left: 4px;
+      vertical-align: text-bottom;
+      animation: cursorBlink 0.8s steps(2) infinite;
+    }
+
+    @keyframes cursorBlink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* ═══════════════════════════════════════════
+       HERO CONTENT — FADE-IN
+    ═══════════════════════════════════════════ */
+    .hero-badge,
+    .hero-title,
+    .hero-subtitle,
+    .hero-metrics,
+    .hero-cta {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: heroFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .hero-badge { animation-delay: 0.1s; }
+    .hero-title { animation-delay: 0.25s; }
+    .hero-subtitle { animation-delay: 0.4s; }
+    .hero-metrics { animation-delay: 0.55s; }
+    .hero-cta { animation-delay: 0.7s; }
+
+    @keyframes heroFadeIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
 <body>
+
+  <!-- SCANLINE OVERLAY -->
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <!-- FLOATING PARTICLES -->
+  <div class="particles" aria-hidden="true">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
 
   <!-- NAV -->
   <nav class="nav">
@@ -659,7 +937,7 @@ export const prerender = true;
       </div>
 
       <div class="quote-block">
-        <p class="quote-text">Wir glauben daran, dass gute IT unsichtbar ist. Sie soll einfach funktionieren — zuverlässig, sicher und ohne dass Sie darüber nachdenken müssen.</p>
+        <p class="quote-text">Wir glauben daran, dass gute IT unsichtbar ist. Sie soll einfach funktionieren — zuverlässig, sicher und ohne dass Sie darüber nachdenken müssen.<span class="quote-cursor" aria-hidden="true"></span></p>
         <p class="quote-author">Thomas Kiefer</p>
         <p class="quote-role">Geschäftsführer, CloudBase</p>
       </div>
@@ -675,6 +953,161 @@ export const prerender = true;
   <footer class="footer">
     <p>CloudBase IT & Cloud Services — Trier</p>
   </footer>
+
+  <script>
+    // ═══════════════════════════════════════════
+    // PARALLAX ORBS — respond to mouse movement
+    // ═══════════════════════════════════════════
+    (function() {
+      var orbs = document.querySelectorAll('.hero-orb');
+      var parallaxStrengths = [0.03, 0.02, 0.015];
+
+      document.addEventListener('mousemove', function(event) {
+        var centerX = window.innerWidth / 2;
+        var centerY = window.innerHeight / 2;
+        var deltaX = (event.clientX - centerX) / centerX;
+        var deltaY = (event.clientY - centerY) / centerY;
+
+        orbs.forEach(function(orb, index) {
+          var strength = parallaxStrengths[index] || 0.02;
+          var moveX = deltaX * strength * 100;
+          var moveY = deltaY * strength * 100;
+          orb.style.translate = moveX + 'px ' + moveY + 'px';
+        });
+      });
+    })();
+
+    // ═══════════════════════════════════════════
+    // SCROLL-TRIGGERED VISIBILITY (service cards, trust items)
+    // ═══════════════════════════════════════════
+    (function() {
+      var scrollTargets = document.querySelectorAll('.service-card, .trust-item');
+
+      var scrollObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            scrollObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+
+      scrollTargets.forEach(function(element) {
+        scrollObserver.observe(element);
+      });
+    })();
+
+    // ═══════════════════════════════════════════
+    // COUNT-UP ANIMATION for metric values
+    // ═══════════════════════════════════════════
+    (function() {
+      var metricValues = document.querySelectorAll('.metric-value');
+
+      function animateCountUp(element) {
+        var originalText = element.textContent.trim();
+        var alreadyAnimated = element.getAttribute('data-animated');
+        if (alreadyAnimated) return;
+        element.setAttribute('data-animated', 'true');
+
+        // "99.9%" — animate number from 0 to 99.9
+        if (originalText.includes('99.9')) {
+          var duration = 1800;
+          var startTime = performance.now();
+          function stepPercent(currentTime) {
+            var elapsed = currentTime - startTime;
+            var progress = Math.min(elapsed / duration, 1);
+            var easedProgress = 1 - Math.pow(1 - progress, 3);
+            var currentValue = (easedProgress * 99.9).toFixed(1);
+            element.textContent = currentValue + '%';
+            if (progress < 1) requestAnimationFrame(stepPercent);
+          }
+          requestAnimationFrame(stepPercent);
+        }
+        // "< 2h" — animate from 10 down to 2
+        else if (originalText.includes('2h') || originalText.includes('2 h')) {
+          var duration2 = 1200;
+          var startTime2 = performance.now();
+          function stepHours(currentTime) {
+            var elapsed = currentTime - startTime2;
+            var progress = Math.min(elapsed / duration2, 1);
+            var easedProgress = 1 - Math.pow(1 - progress, 3);
+            var currentVal = Math.round(10 - easedProgress * 8);
+            element.textContent = '< ' + currentVal + 'h';
+            if (progress < 1) requestAnimationFrame(stepHours);
+            else element.textContent = '< 2h';
+          }
+          requestAnimationFrame(stepHours);
+        }
+        // "Seit 2019" — animate year from 2000 to 2019
+        else if (originalText.includes('2019')) {
+          var duration3 = 1500;
+          var startTime3 = performance.now();
+          function stepYear(currentTime) {
+            var elapsed = currentTime - startTime3;
+            var progress = Math.min(elapsed / duration3, 1);
+            var easedProgress = 1 - Math.pow(1 - progress, 3);
+            var currentYear = Math.round(2000 + easedProgress * 19);
+            element.textContent = 'Seit ' + currentYear;
+            if (progress < 1) requestAnimationFrame(stepYear);
+          }
+          requestAnimationFrame(stepYear);
+        }
+      }
+
+      var metricObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            animateCountUp(entry.target);
+            metricObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.5 });
+
+      metricValues.forEach(function(element) {
+        metricObserver.observe(element);
+      });
+    })();
+
+    // ═══════════════════════════════════════════
+    // TYPING EFFECT — Quote text
+    // ═══════════════════════════════════════════
+    (function() {
+      var quoteText = document.querySelector('.quote-text');
+      if (!quoteText) return;
+
+      var cursor = quoteText.querySelector('.quote-cursor');
+      var fullText = 'Wir glauben daran, dass gute IT unsichtbar ist. Sie soll einfach funktionieren \u2014 zuverl\u00e4ssig, sicher und ohne dass Sie dar\u00fcber nachdenken m\u00fcssen.';
+      var charIndex = 0;
+
+      // Clear text initially, keep cursor
+      quoteText.textContent = '';
+      quoteText.appendChild(cursor);
+
+      var quoteObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            startTyping();
+            quoteObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.3 });
+
+      quoteObserver.observe(quoteText);
+
+      function startTyping() {
+        function typeChar() {
+          if (charIndex < fullText.length) {
+            quoteText.textContent = fullText.substring(0, charIndex + 1);
+            quoteText.appendChild(cursor);
+            charIndex++;
+            var delay = 18 + Math.random() * 22;
+            setTimeout(typeChar, delay);
+          }
+        }
+        typeChar();
+      }
+    })();
+  </script>
 
 </body>
 </html>

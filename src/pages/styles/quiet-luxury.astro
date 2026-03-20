@@ -12,6 +12,7 @@ export const prerender = true;
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
+    html { overflow-x: hidden; }
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
@@ -22,6 +23,16 @@ export const prerender = true;
       --text: #2C2C2C;
       --font-display: "Cormorant", "Georgia", "Times New Roman", serif;
       --font-body: "Jost", system-ui, -apple-system, sans-serif;
+
+      /* Spacing scale — 8px base */
+      --space-xs: 0.5rem;    /* 8px */
+      --space-sm: 1rem;      /* 16px */
+      --space-md: 1.5rem;    /* 24px */
+      --space-lg: 2rem;      /* 32px */
+      --space-xl: 3rem;      /* 48px */
+      --space-2xl: 4rem;     /* 64px */
+      --space-3xl: 5rem;     /* 80px */
+      --space-4xl: 8rem;     /* 128px */
     }
 
     html {
@@ -32,13 +43,73 @@ export const prerender = true;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       scroll-behavior: smooth;
+      scroll-padding-top: var(--space-4xl);
     }
 
-    body { overflow-x: hidden; }
+    body {
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Faint linen texture — CSS noise at 2% opacity */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.02;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 256px 256px;
+    }
 
     ::selection { background: var(--accent); color: var(--secondary); }
 
     img { display: block; max-width: 100%; }
+
+
+    /* ═══════════════════════════════════════════
+       ANIMATIONS — Subtle, barely perceptible
+    ═══════════════════════════════════════════ */
+
+    /* Ken Burns — very slow zoom on hero image */
+    @keyframes kenBurns {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.04); }
+      100% { transform: scale(1); }
+    }
+
+    /* Accent line draw */
+    @keyframes lineReveal {
+      from { transform: scaleX(0); }
+      to { transform: scaleX(1); }
+    }
+
+    /* Word fade in */
+    @keyframes wordFadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Section fade in on scroll */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Scroll-triggered reveal class */
+    .reveal {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.9s cubic-bezier(0.25, 0, 0.15, 1),
+                  transform 0.9s cubic-bezier(0.25, 0, 0.15, 1);
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
 
     /* ═══════════════════════════════════════════
@@ -67,14 +138,26 @@ export const prerender = true;
       line-height: 1.15;
       letter-spacing: 0.04em;
       color: var(--primary);
-      margin-bottom: 2.5rem;
+      margin-bottom: var(--space-xl);
     }
+
+    .hero-headline .word {
+      display: inline-block;
+      opacity: 0;
+      animation: wordFadeIn 0.8s cubic-bezier(0.25, 0, 0.15, 1) forwards;
+    }
+
+    .hero-headline .word:nth-child(1) { animation-delay: 0.1s; }
+    .hero-headline .word:nth-child(2) { animation-delay: 0.3s; }
+    .hero-headline .word:nth-child(3) { animation-delay: 0.5s; }
 
     .hero-line {
       width: 60px;
       height: 1px;
       background: var(--accent);
-      margin-bottom: 2rem;
+      margin-bottom: var(--space-lg);
+      transform-origin: left center;
+      animation: lineReveal 1.6s cubic-bezier(0.25, 0, 0.15, 1) 0.4s both;
     }
 
     .hero-subtitle {
@@ -94,17 +177,30 @@ export const prerender = true;
       letter-spacing: 0.08em;
       color: var(--primary);
       text-decoration: none;
-      transition: color 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4em;
+      transition: color 0.5s cubic-bezier(0.25, 0, 0.15, 1);
+    }
+
+    .hero-link .arrow {
+      display: inline-block;
+      transition: transform 0.5s cubic-bezier(0.33, 1, 0.68, 1);
     }
 
     .hero-link:hover {
       color: var(--accent);
     }
 
+    .hero-link:hover .arrow {
+      transform: translateX(6px);
+    }
+
     .hero-image-wrapper {
       display: flex;
       justify-content: flex-end;
       align-items: center;
+      overflow: hidden;
     }
 
     .hero-image {
@@ -112,6 +208,8 @@ export const prerender = true;
       max-width: 480px;
       aspect-ratio: 3 / 4;
       object-fit: cover;
+      animation: kenBurns 20s cubic-bezier(0.25, 0, 0.15, 1) infinite;
+      cursor: crosshair;
     }
 
 
@@ -149,18 +247,35 @@ export const prerender = true;
 
     .projekt-image-wrapper {
       overflow: hidden;
-      margin-bottom: 1.5rem;
+      margin-bottom: var(--space-md);
+      position: relative;
+      cursor: crosshair;
+    }
+
+    /* Warm overlay on hover */
+    .projekt-image-wrapper::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(156, 139, 122, 0);
+      transition: background 0.7s cubic-bezier(0.25, 0, 0.15, 1);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .projekt-card:hover .projekt-image-wrapper::after {
+      background: rgba(156, 139, 122, 0.08);
     }
 
     .projekt-image {
       width: 100%;
       aspect-ratio: 3 / 4;
       object-fit: cover;
-      transition: transform 0.8s cubic-bezier(0.25, 0, 0.15, 1);
+      transition: transform 1s cubic-bezier(0.25, 0, 0.15, 1);
     }
 
     .projekt-card:hover .projekt-image {
-      transform: scale(1.04);
+      transform: scale(1.03);
     }
 
     .projekt-name {
@@ -209,7 +324,20 @@ export const prerender = true;
       width: 40px;
       height: 1px;
       background: var(--accent);
-      margin: 0 auto 3.5rem;
+      margin: 0 auto var(--space-xl);
+      transform-origin: center;
+      transform: scaleX(0);
+      transition: transform 1.4s cubic-bezier(0.25, 0, 0.15, 1);
+    }
+
+    /* Override generic .reveal for the divider — uses scaleX instead of translateY */
+    .philosophie-divider.reveal {
+      opacity: 1;
+      transform: scaleX(0);
+    }
+
+    .philosophie-divider.is-visible {
+      transform: scaleX(1);
     }
 
     .philosophie-quote {
@@ -220,7 +348,20 @@ export const prerender = true;
       line-height: 1.7;
       letter-spacing: 0.01em;
       color: var(--primary);
-      margin-bottom: 2.5rem;
+      margin-bottom: var(--space-xl);
+    }
+
+    /* Elegant drop cap on first letter */
+    .philosophie-quote::first-letter {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-style: normal;
+      font-size: 3.2em;
+      float: left;
+      line-height: 0.8;
+      margin-right: 0.08em;
+      margin-top: 0.05em;
+      color: var(--accent);
     }
 
     .philosophie-attribution {
@@ -230,7 +371,7 @@ export const prerender = true;
       letter-spacing: 0.15em;
       text-transform: uppercase;
       color: var(--accent);
-      margin-bottom: 5rem;
+      margin-bottom: var(--space-3xl);
     }
 
     .philosophie-contact {
@@ -362,10 +503,10 @@ export const prerender = true;
   ════════════════════════════════════════════ -->
   <section class="hero">
     <div class="hero-content">
-      <h1 class="hero-headline">Raeume,<br />die atmen.</h1>
+      <h1 class="hero-headline"><span class="word">Raeume,</span><br /><span class="word">die</span> <span class="word">atmen.</span></h1>
       <div class="hero-line"></div>
       <p class="hero-subtitle">Atelier Blanc &middot; Interior Design &middot; Trier</p>
-      <a href="#projekte" class="hero-link">Projekte ansehen &rarr;</a>
+      <a href="#projekte" class="hero-link">Projekte ansehen <span class="arrow">&rarr;</span></a>
     </div>
     <div class="hero-image-wrapper">
       <img
@@ -382,10 +523,10 @@ export const prerender = true;
        PROJEKTE
   ════════════════════════════════════════════ -->
   <section class="projekte" id="projekte">
-    <p class="section-label">Projekte</p>
+    <p class="section-label reveal">Projekte</p>
     <div class="projekte-grid">
 
-      <div class="projekt-card">
+      <div class="projekt-card reveal">
         <div class="projekt-image-wrapper">
           <img
             class="projekt-image"
@@ -399,7 +540,7 @@ export const prerender = true;
         <span class="projekt-year">2024</span>
       </div>
 
-      <div class="projekt-card">
+      <div class="projekt-card reveal">
         <div class="projekt-image-wrapper">
           <img
             class="projekt-image"
@@ -413,7 +554,7 @@ export const prerender = true;
         <span class="projekt-year">2023</span>
       </div>
 
-      <div class="projekt-card">
+      <div class="projekt-card reveal">
         <div class="projekt-image-wrapper">
           <img
             class="projekt-image"
@@ -436,21 +577,45 @@ export const prerender = true;
   ════════════════════════════════════════════ -->
   <section class="philosophie">
     <div class="philosophie-text-column">
-      <div class="philosophie-divider"></div>
-      <p class="philosophie-quote">
+      <div class="philosophie-divider reveal"></div>
+      <p class="philosophie-quote reveal">
         Wir gestalten keine Raeume.<br />
         Wir hoeren zu, was ein Raum braucht.
       </p>
-      <p class="philosophie-attribution">Anna Weber, Gruenderin</p>
+      <p class="philosophie-attribution reveal">Anna Weber, Gruenderin</p>
 
-      <div class="philosophie-contact">
+      <div class="philosophie-contact reveal">
         Atelier Blanc<br />
         Neustrasse 12, 54290 Trier<br />
         <a href="tel:+4965194820">+49 651 948 20</a>
       </div>
-      <p class="philosophie-note">Termine nach Vereinbarung</p>
+      <p class="philosophie-note reveal">Termine nach Vereinbarung</p>
     </div>
   </section>
+
+  <!-- Scroll reveal observer -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const revealElements = document.querySelectorAll(".reveal");
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        {
+          threshold: 0.15,
+          rootMargin: "0px 0px -40px 0px",
+        }
+      );
+
+      revealElements.forEach((el) => observer.observe(el));
+    });
+  </script>
 
 </body>
 </html>

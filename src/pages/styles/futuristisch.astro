@@ -12,6 +12,8 @@ export const prerender = true;
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Exo+2:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
   <style>
+    html { overflow-x: hidden; }
+    body { overflow-x: hidden; max-width: 100%; }
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
@@ -127,7 +129,7 @@ export const prerender = true;
     }
 
     /* ═══════════════════════════════════════════
-       SCAN-LINE OVERLAY
+       SCAN-LINE OVERLAY (static lines)
     ═══════════════════════════════════════════ */
     .scanlines {
       position: fixed;
@@ -144,6 +146,30 @@ export const prerender = true;
         rgba(0, 240, 255, 0.015) 2px,
         rgba(0, 240, 255, 0.015) 4px
       );
+    }
+
+    /* ═══════════════════════════════════════════
+       HERO SCAN SWEEP LINE
+    ═══════════════════════════════════════════ */
+    .hero-scan-line {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--primary), rgba(0,240,255,0.6), var(--primary), transparent);
+      box-shadow: 0 0 12px var(--glow-cyan), 0 0 30px rgba(0,240,255,0.2);
+      pointer-events: none;
+      z-index: 2;
+      top: 0;
+      opacity: 0;
+      animation: scanSweep 5s ease-in-out 2s infinite;
+    }
+
+    @keyframes scanSweep {
+      0%   { top: 0%;   opacity: 0; }
+      5%   { opacity: 1; }
+      95%  { opacity: 1; }
+      100% { top: 100%; opacity: 0; }
     }
 
     /* ═══════════════════════════════════════════
@@ -360,6 +386,37 @@ export const prerender = true;
     }
 
     /* ═══════════════════════════════════════════
+       SCROLL REVEAL — glowing entrance
+    ═══════════════════════════════════════════ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      filter: blur(4px);
+      transition: opacity 0.7s ease, transform 0.7s ease, filter 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+
+    /* Extra glow pulse on first appearance */
+    @keyframes glowEntrance {
+      0%   { box-shadow: 0 0 0 transparent; }
+      40%  { box-shadow: 0 0 30px var(--glow-cyan); }
+      100% { box-shadow: 0 0 0 transparent; }
+    }
+
+    .reveal.visible.glow-on-enter {
+      animation: glowEntrance 1s ease forwards;
+    }
+
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.35s; }
+
+    /* ═══════════════════════════════════════════
        SECTION SHARED
     ═══════════════════════════════════════════ */
     section {
@@ -568,6 +625,65 @@ export const prerender = true;
     }
 
     /* ═══════════════════════════════════════════
+       CHARGING PROGRESS BAR
+    ═══════════════════════════════════════════ */
+    .charge-bar-wrapper {
+      margin-bottom: 3rem;
+    }
+
+    .charge-bar-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .charge-bar-label .charge-percent {
+      color: var(--primary);
+      text-shadow: 0 0 8px var(--glow-cyan);
+    }
+
+    .charge-bar-track {
+      width: 100%;
+      height: 8px;
+      background: rgba(0, 240, 255, 0.06);
+      border: 1px solid rgba(0, 240, 255, 0.12);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .charge-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--primary), rgba(0, 240, 255, 0.7));
+      box-shadow: 0 0 12px var(--glow-cyan);
+      transition: width 1.8s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+
+    /* Animated shimmer on charge bar */
+    .charge-bar-fill::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 20px;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.5);
+      filter: blur(4px);
+      animation: chargeShimmer 1.2s ease-in-out infinite;
+    }
+
+    @keyframes chargeShimmer {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+
+    /* ═══════════════════════════════════════════
        SECTION 3 — VISION
     ═══════════════════════════════════════════ */
     .vision {
@@ -647,6 +763,70 @@ export const prerender = true;
     }
 
     .counter-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    /* CO2 live counter */
+    .co2-counter-wrapper {
+      background: var(--bg-card);
+      border: 1px solid rgba(0, 240, 255, 0.06);
+      padding: 1.5rem;
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+
+    .co2-counter-wrapper::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 3px;
+      height: 100%;
+      background: linear-gradient(180deg, #00F0FF, #00FF88);
+      box-shadow: 0 0 8px rgba(0, 255, 136, 0.4);
+    }
+
+    .co2-live-badge {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #00FF88;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .co2-live-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #00FF88;
+      box-shadow: 0 0 6px rgba(0, 255, 136, 0.8);
+      animation: livePulse 1s ease-in-out infinite;
+    }
+
+    @keyframes livePulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.7); }
+    }
+
+    #co2-value {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 2rem;
+      color: #00FF88;
+      text-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+      letter-spacing: 0.03em;
+      margin-bottom: 0.25rem;
+    }
+
+    .co2-label {
       font-family: var(--font-mono);
       font-size: 0.7rem;
       letter-spacing: 0.1em;
@@ -848,6 +1028,8 @@ export const prerender = true;
       .vision-quote { font-size: 1.1rem; }
 
       .counter-value { font-size: 1.5rem; }
+
+      #co2-value { font-size: 1.5rem; }
     }
   </style>
 </head>
@@ -878,6 +1060,9 @@ export const prerender = true;
 
   <!-- HERO -->
   <section class="hero" id="hero">
+    <!-- Animated scan-sweep line -->
+    <div class="hero-scan-line" aria-hidden="true"></div>
+
     <div class="hero-content">
 
       <!-- Glowing Ring with Bolt -->
@@ -925,14 +1110,25 @@ export const prerender = true;
   <section class="stations" id="stationen">
     <div class="section-inner">
 
-      <div class="section-label">Ladestationen</div>
-      <h2 class="section-title">Unsere <span>Charger</span></h2>
-      <p class="section-desc">Drei Ladeloesungen fuer jede Anforderung. Von der Schnellladesaeule bis zur privaten Wallbox -- gebaut fuer die Mobilitaet von morgen.</p>
+      <div class="section-label reveal">Ladestationen</div>
+      <h2 class="section-title reveal">Unsere <span>Charger</span></h2>
+      <p class="section-desc reveal">Drei Ladeloesungen fuer jede Anforderung. Von der Schnellladesaeule bis zur privaten Wallbox -- gebaut fuer die Mobilitaet von morgen.</p>
+
+      <!-- Charging progress bar -->
+      <div class="charge-bar-wrapper reveal">
+        <div class="charge-bar-label">
+          <span>// Netzauslastung Trier-Netz</span>
+          <span class="charge-percent" id="charge-percent">0%</span>
+        </div>
+        <div class="charge-bar-track">
+          <div class="charge-bar-fill" id="charge-bar-fill"></div>
+        </div>
+      </div>
 
       <div class="stations-grid">
 
         <!-- Card 1: NeoFast 150 -->
-        <div class="station-card">
+        <div class="station-card reveal reveal-delay-1">
           <div class="station-badge">DC Schnelllader</div>
           <h3 class="station-name">NeoFast 150</h3>
           <div class="station-type">150 kW // DC Fast Charging</div>
@@ -947,7 +1143,7 @@ export const prerender = true;
         </div>
 
         <!-- Card 2: NeoFlex 22 -->
-        <div class="station-card">
+        <div class="station-card reveal reveal-delay-2">
           <div class="station-badge">AC Workplace</div>
           <h3 class="station-name">NeoFlex 22</h3>
           <div class="station-type">22 kW // AC Destination Charging</div>
@@ -962,7 +1158,7 @@ export const prerender = true;
         </div>
 
         <!-- Card 3: NeoHome 11 -->
-        <div class="station-card">
+        <div class="station-card reveal reveal-delay-3">
           <div class="station-badge">Wallbox</div>
           <h3 class="station-name">NeoHome 11</h3>
           <div class="station-type">11 kW // Home Charging</div>
@@ -984,23 +1180,23 @@ export const prerender = true;
   <section class="vision" id="vision">
     <div class="section-inner">
 
-      <div class="section-label">Vision</div>
-      <h2 class="section-title">Trier wird <span>elektrisch</span>.</h2>
+      <div class="section-label reveal">Vision</div>
+      <h2 class="section-title reveal">Trier wird <span>elektrisch</span>.</h2>
 
       <div class="vision-content">
 
         <!-- Left: Manifesto -->
         <div>
-          <div class="vision-manifesto">
+          <div class="vision-manifesto reveal">
             <p>Ich glaube, dass <strong>Elektromobilitaet kein Luxus ist</strong> -- sondern Infrastruktur. Wie Strom aus der Steckdose. Wie Wasser aus dem Hahn. <span class="highlight">Laden muss so selbstverstaendlich sein wie Tanken.</span></p>
             <br />
             <p>Deshalb baue ich Ladestationen dort, wo Menschen leben, arbeiten und einkaufen. Nicht am Autobahnkreuz, sondern <strong>in der Nachbarschaft</strong>. In Trier. An der Mosel. In der Region.</p>
           </div>
 
-          <div class="vision-quote">Morgen beginnt nicht irgendwann. Morgen beginnt jetzt.</div>
+          <div class="vision-quote reveal">Morgen beginnt nicht irgendwann. Morgen beginnt jetzt.</div>
 
           <!-- Founder -->
-          <div class="founder">
+          <div class="founder reveal">
             <div class="founder-avatar">
               <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="#00F0FF" stroke-width="1.5" stroke-linecap="round"/>
@@ -1014,7 +1210,7 @@ export const prerender = true;
           </div>
 
           <!-- Contact -->
-          <div class="vision-contact">
+          <div class="vision-contact reveal">
             <a href="tel:+4965112345678">
               <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.362 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0122 16.92z" stroke="#00F0FF" stroke-width="1.5" stroke-linecap="round"/></svg>
               +49 651 123 456 78
@@ -1026,24 +1222,34 @@ export const prerender = true;
           </div>
         </div>
 
-        <!-- Right: Counters + Expansion -->
+        <!-- Right: Counters + CO2 live + Expansion -->
         <div>
+          <!-- CO2 live counter — first so it's prominent -->
+          <div class="co2-counter-wrapper reveal">
+            <div class="co2-live-badge">
+              <div class="co2-live-dot"></div>
+              LIVE // CO2 gespart seit Start
+            </div>
+            <div id="co2-value">1.247 kg</div>
+            <div class="co2-label">CO2 eingespart — wächst jede Sekunde</div>
+          </div>
+
           <div class="vision-counters">
-            <div class="counter-item">
+            <div class="counter-item reveal reveal-delay-1">
               <div class="counter-value">1.2 Mio</div>
               <div class="counter-label">kWh geladen seit 2022</div>
             </div>
-            <div class="counter-item">
+            <div class="counter-item reveal reveal-delay-2">
               <div class="counter-value">340 t</div>
-              <div class="counter-label">CO2 eingespart</div>
+              <div class="counter-label">CO2 eingespart gesamt</div>
             </div>
-            <div class="counter-item">
+            <div class="counter-item reveal reveal-delay-3">
               <div class="counter-value">2.800+</div>
               <div class="counter-label">Registrierte Nutzer</div>
             </div>
           </div>
 
-          <div style="background: var(--bg-card); border: 1px solid rgba(0, 240, 255, 0.06); padding: 2rem; position: relative;">
+          <div class="reveal" style="background: var(--bg-card); border: 1px solid rgba(0, 240, 255, 0.06); padding: 2rem; position: relative;">
             <div style="position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, var(--primary), var(--accent), transparent);"></div>
             <div style="font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem;">// Expansion 2026</div>
             <p style="font-size: 0.95rem; line-height: 1.7; color: var(--text-muted);">
@@ -1061,5 +1267,106 @@ export const prerender = true;
     <p class="footer-text"><span>Neovolt</span> // E-Mobilitat & Ladestationen // Trier, Deutschland // Demo-Website</p>
   </footer>
 
+<script>
+  // ── 1. IntersectionObserver: Scroll Reveals with glow entrance ────────────
+  const revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.1 }
+  );
+
+  document.querySelectorAll('.reveal').forEach((el) => revealObserver.observe(el));
+
+  // ── 2. Charging Progress Bar ──────────────────────────────────────────────
+  // Fills to 73% (simulated network load) when scrolled into view
+  const chargeBarFill = document.getElementById('charge-bar-fill');
+  const chargePercent = document.getElementById('charge-percent');
+  const TARGET_PERCENT = 73;
+  let chargeAnimated = false;
+
+  function animateChargeBar() {
+    if (chargeAnimated || !chargeBarFill || !chargePercent) return;
+    chargeAnimated = true;
+
+    const startTime = performance.now();
+    const duration = 1800;
+
+    function updateBar(currentTime) {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      // Ease-out quint
+      const eased = 1 - Math.pow(1 - progress, 5);
+      const current = Math.round(TARGET_PERCENT * eased);
+
+      chargeBarFill.style.width = current + '%';
+      chargePercent.textContent = current + '%';
+
+      if (progress < 1) {
+        requestAnimationFrame(updateBar);
+      }
+    }
+
+    requestAnimationFrame(updateBar);
+  }
+
+  const chargeBarWrapper = document.querySelector('.charge-bar-wrapper');
+  if (chargeBarWrapper) {
+    const chargeObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setTimeout(animateChargeBar, 400);
+            chargeObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+    chargeObserver.observe(chargeBarWrapper);
+  }
+
+  // ── 3. CO2 Live Counter ───────────────────────────────────────────────────
+  // Starts at 1247 kg and increments every second (~0.004 kg/s = ~340 kg/year realistic estimate)
+  const co2ValueEl = document.getElementById('co2-value');
+  let co2Kg = 1247.0;
+  const CO2_INCREMENT_PER_SECOND = 0.011; // ~340 t/year / 365 / 24 / 3600 * 1000 ~ 0.011 kg/s
+
+  function formatCO2(value) {
+    // Show as "1.247,8 kg" German format
+    if (value >= 1000) {
+      const thousands = Math.floor(value / 1000);
+      const remainder = (value % 1000).toFixed(1);
+      const paddedRemainder = remainder.padStart(5, '0');
+      return thousands + '.' + paddedRemainder + ' kg';
+    }
+    return value.toFixed(1) + ' kg';
+  }
+
+  if (co2ValueEl) {
+    // Start counter when visible
+    const co2Observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            co2Observer.unobserve(entry.target);
+            // Update every second
+            setInterval(() => {
+              co2Kg += CO2_INCREMENT_PER_SECOND;
+              co2ValueEl.textContent = formatCO2(co2Kg);
+            }, 1000);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+    co2Observer.observe(co2ValueEl);
+  }
+</script>
 </body>
 </html>

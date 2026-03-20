@@ -14,6 +14,7 @@ export const prerender = true;
   <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet" />
 
   <style>
+    html { overflow-x: hidden; }
     /* ===== RESET & BASE ===== */
     *, *::before, *::after {
       margin: 0;
@@ -47,6 +48,55 @@ export const prerender = true;
     h1, h2, h3, h4 {
       font-family: 'Comfortaa', cursive;
       line-height: 1.3;
+    }
+
+    /* ===== BOUNCE-IN ANIMATION ===== */
+    .bounce-in {
+      opacity: 0;
+      transform: scale(0.8) translateY(20px);
+      transition: opacity 0.6s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .bounce-in.visible {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+
+    /* ===== HERO TITLE WOBBLE ===== */
+    @keyframes wobble {
+      0%   { transform: rotate(0deg); }
+      20%  { transform: rotate(-2deg); }
+      40%  { transform: rotate(2deg); }
+      60%  { transform: rotate(-1.5deg); }
+      80%  { transform: rotate(1deg); }
+      100% { transform: rotate(0deg); }
+    }
+
+    .block-headline:hover {
+      animation: wobble 0.5s ease-in-out;
+      display: inline-block;
+      cursor: default;
+    }
+
+    /* ===== CONFETTI SPARKLES ===== */
+    .sparkle {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      animation: sparkle-burst 1.2s ease-out forwards;
+    }
+
+    @keyframes sparkle-burst {
+      0% {
+        opacity: 1;
+        transform: translate(0, 0) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(var(--tx), var(--ty)) scale(0.2);
+      }
     }
 
     /* ===== NAV ===== */
@@ -175,7 +225,7 @@ export const prerender = true;
       border-radius: 28px;
       box-shadow: 0 8px 32px rgba(61, 44, 34, 0.1), 0 2px 8px rgba(61, 44, 34, 0.06);
       position: relative;
-      transition: transform 0.4s ease;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
     }
 
     .block:hover {
@@ -191,6 +241,11 @@ export const prerender = true;
       margin-left: 0;
     }
 
+    .block--coral:hover {
+      transform: rotate(-1.5deg) translateY(-3px);
+      box-shadow: 0 12px 40px rgba(232, 115, 74, 0.4), 0 4px 12px rgba(61, 44, 34, 0.1);
+    }
+
     .block--sage {
       background: #5B8C5A;
       color: #fff;
@@ -200,6 +255,11 @@ export const prerender = true;
       margin-bottom: -14px;
     }
 
+    .block--sage:hover {
+      transform: rotate(1.2deg) translateY(-3px);
+      box-shadow: 0 12px 40px rgba(91, 140, 90, 0.4), 0 4px 12px rgba(61, 44, 34, 0.1);
+    }
+
     .block--yellow {
       background: #F5C85D;
       color: #3D2C22;
@@ -207,6 +267,11 @@ export const prerender = true;
       z-index: 1;
       margin-left: 1rem;
       padding: 2rem 3rem;
+    }
+
+    .block--yellow:hover {
+      transform: rotate(-0.5deg) translateY(-3px);
+      box-shadow: 0 12px 40px rgba(245, 200, 93, 0.5), 0 4px 12px rgba(61, 44, 34, 0.1);
     }
 
     .block--cream {
@@ -220,11 +285,17 @@ export const prerender = true;
       text-align: center;
     }
 
+    .block--cream:hover {
+      transform: rotate(0.3deg) translateY(-3px);
+      box-shadow: 0 12px 40px rgba(232, 115, 74, 0.15), 0 4px 12px rgba(61, 44, 34, 0.08);
+    }
+
     .block-headline {
       font-family: 'Comfortaa', cursive;
       font-size: clamp(1.8rem, 4vw, 2.8rem);
       font-weight: 700;
       line-height: 1.2;
+      display: inline-block;
     }
 
     .block-subtext {
@@ -287,6 +358,20 @@ export const prerender = true;
       padding: 3rem 2.5rem;
       position: relative;
       overflow: hidden;
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  box-shadow 0.35s ease;
+    }
+
+    .offerings-card:hover {
+      transform: scale(1.025) translateY(-4px);
+    }
+
+    .offerings-card--coral:hover {
+      box-shadow: 0 16px 48px rgba(232, 115, 74, 0.45);
+    }
+
+    .offerings-card--sage:hover {
+      box-shadow: 0 16px 48px rgba(91, 140, 90, 0.45);
     }
 
     .offerings-card--coral {
@@ -409,6 +494,13 @@ export const prerender = true;
       padding: 2rem 1.5rem;
       box-shadow: 0 4px 16px rgba(61, 44, 34, 0.06);
       text-align: center;
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  box-shadow 0.35s ease;
+    }
+
+    .about-detail-card:hover {
+      transform: scale(1.04) translateY(-3px);
+      box-shadow: 0 10px 32px rgba(91, 140, 90, 0.18);
     }
 
     .about-detail-card-icon {
@@ -571,18 +663,36 @@ export const prerender = true;
         transform: rotate(-1deg);
       }
 
+      .block--coral:hover {
+        transform: rotate(-1deg) translateY(-3px);
+      }
+
       .block--sage {
         margin-left: 1rem;
         transform: rotate(0.8deg);
       }
 
+      .block--sage:hover {
+        transform: rotate(0.8deg) translateY(-3px);
+      }
+
       .block--yellow {
         margin-left: 0.5rem;
         padding: 1.4rem 1.5rem;
+        transform: rotate(-0.5deg);
+      }
+
+      .block--yellow:hover {
+        transform: rotate(-0.5deg) translateY(-3px);
       }
 
       .block--cream {
         margin-left: 0;
+        transform: rotate(0.3deg);
+      }
+
+      .block--cream:hover {
+        transform: rotate(0.3deg) translateY(-3px);
       }
 
       .block-headline {
@@ -673,16 +783,16 @@ export const prerender = true;
     <div class="hero-bg-shape hero-bg-shape--3"></div>
 
     <div class="hero-composition">
-      <div class="block block--coral">
+      <div class="block block--coral bounce-in">
         <div class="block-headline">Kaffee f&uuml;r die Gro&szlig;en.</div>
       </div>
-      <div class="block block--sage">
+      <div class="block block--sage bounce-in">
         <div class="block-headline">Abenteuer f&uuml;r die Kleinen.</div>
       </div>
-      <div class="block block--yellow">
+      <div class="block block--yellow bounce-in">
         <div class="block-subtext">Elterncaf&eacute; &amp; Spielraum &middot; Trier &middot; Mo&ndash;Sa 9&ndash;18 Uhr</div>
       </div>
-      <div class="block block--cream">
+      <div class="block block--cream bounce-in">
         <a href="#angebot" class="cta-pill">Vorbeikommen</a>
       </div>
     </div>
@@ -690,11 +800,11 @@ export const prerender = true;
 
   <!-- SECTION 2 — BEI UNS GIBT'S -->
   <section class="offerings" id="angebot">
-    <h2 class="offerings-title">Bei uns gibt&rsquo;s</h2>
+    <h2 class="offerings-title bounce-in">Bei uns gibt&rsquo;s</h2>
     <div class="offerings-grid">
 
       <!-- Fuer die Grossen -->
-      <div class="offerings-card offerings-card--coral">
+      <div class="offerings-card offerings-card--coral bounce-in">
         <div class="offerings-card-deco"></div>
         <h3>F&uuml;r die Gro&szlig;en</h3>
         <ul class="offerings-list">
@@ -726,7 +836,7 @@ export const prerender = true;
       </div>
 
       <!-- Fuer die Kleinen -->
-      <div class="offerings-card offerings-card--sage">
+      <div class="offerings-card offerings-card--sage bounce-in">
         <div class="offerings-card-deco"></div>
         <h3>F&uuml;r die Kleinen</h3>
         <ul class="offerings-list">
@@ -763,29 +873,29 @@ export const prerender = true;
   <!-- SECTION 3 — UEBER UNS -->
   <section class="about" id="ueber-uns">
     <div class="about-inner">
-      <h2 class="about-title">&Uuml;ber uns</h2>
+      <h2 class="about-title bounce-in">&Uuml;ber uns</h2>
 
-      <div class="about-quote">
+      <div class="about-quote bounce-in">
         Zwei Kinder, null Orte wo beides ging: guter Kaffee UND gl&uuml;ckliche Kinder. Also haben wir selbst einen aufgemacht.
         <span class="about-quote-author">&mdash; Nina &amp; Paul, Gr&uuml;nder</span>
       </div>
 
       <div class="about-details">
-        <div class="about-detail-card">
+        <div class="about-detail-card bounce-in">
           <div class="about-detail-card-icon">
             <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
           </div>
           <h4>Fl&auml;che</h4>
           <p>160 m&sup2;, davon 80 m&sup2; Spielfl&auml;che</p>
         </div>
-        <div class="about-detail-card">
+        <div class="about-detail-card bounce-in">
           <div class="about-detail-card-icon">
             <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
           </div>
           <h4>Eintritt</h4>
           <p>5 &euro; / Kind &middot; Erwachsene frei</p>
         </div>
-        <div class="about-detail-card">
+        <div class="about-detail-card bounce-in">
           <div class="about-detail-card-icon">
             <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
           </div>
@@ -794,7 +904,7 @@ export const prerender = true;
         </div>
       </div>
 
-      <div class="about-info" id="kontakt">
+      <div class="about-info bounce-in" id="kontakt">
         <div class="about-info-item">
           <span>Adresse</span>
           <p>Kleine Burg 12, 54290 Trier</p>
@@ -815,6 +925,73 @@ export const prerender = true;
   <footer class="footer">
     <p><strong>Kleine Burg</strong> &middot; Elterncaf&eacute; &amp; Spielraum &middot; Trier</p>
   </footer>
+
+  <script>
+    // ===== CONFETTI SPARKLES ON PAGE LOAD =====
+    (function launchSparkles() {
+      const colors = ['#E8734A', '#5B8C5A', '#F5C85D', '#E8A87C', '#A8D5A2', '#F9E4B7'];
+      const centerX = window.innerWidth / 2;
+      const centerY = window.innerHeight / 2;
+      const count = 20;
+
+      for (let i = 0; i < count; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'sparkle';
+
+        const size = Math.random() * 12 + 6;
+        const angle = (i / count) * 2 * Math.PI + Math.random() * 0.5;
+        const distance = Math.random() * 220 + 80;
+        const tx = Math.cos(angle) * distance;
+        const ty = Math.sin(angle) * distance;
+        const delay = Math.random() * 0.3;
+        const color = colors[Math.floor(Math.random() * colors.length)];
+
+        dot.style.cssText = `
+          width: ${size}px;
+          height: ${size}px;
+          background: ${color};
+          left: ${centerX - size / 2}px;
+          top: ${centerY - size / 2}px;
+          --tx: ${tx}px;
+          --ty: ${ty}px;
+          animation-delay: ${delay}s;
+          animation-duration: ${0.9 + Math.random() * 0.5}s;
+        `;
+
+        document.body.appendChild(dot);
+
+        dot.addEventListener('animationend', () => dot.remove());
+      }
+    })();
+
+    // ===== INTERSECTION OBSERVER — BOUNCE-IN WITH STAGGER =====
+    (function initBounceIn() {
+      const elements = document.querySelectorAll('.bounce-in');
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+
+          // Group siblings for stagger: find index among visible .bounce-in in same parent
+          const parent = entry.target.parentElement;
+          const siblings = Array.from(parent.querySelectorAll('.bounce-in'));
+          const index = siblings.indexOf(entry.target);
+          const staggerDelay = index * 80; // ms per sibling
+
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, staggerDelay);
+
+          observer.unobserve(entry.target);
+        });
+      }, {
+        threshold: 0.15,
+        rootMargin: '0px 0px -40px 0px'
+      });
+
+      elements.forEach((el) => observer.observe(el));
+    })();
+  </script>
 
 </body>
 </html>

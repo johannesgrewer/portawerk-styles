@@ -12,6 +12,7 @@ export const prerender = true;
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
+    html { overflow-x: hidden; }
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
@@ -184,6 +185,53 @@ export const prerender = true;
       to { width: 3rem; }
     }
 
+    /* Gold shimmer on CTA hover */
+    @keyframes goldShimmer {
+      0% { background-position: -200% center; }
+      100% { background-position: 200% center; }
+    }
+
+    /* Particle float animation */
+    @keyframes particleFloat {
+      0% { transform: translateY(0) translateX(0) scale(1); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 0.6; }
+      100% { transform: translateY(-100vh) translateX(var(--drift, 20px)) scale(0.5); opacity: 0; }
+    }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
+    /* Hero particle container */
+    #hero-particles {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 4;
+      overflow: hidden;
+    }
+
+    .dust-particle {
+      position: absolute;
+      border-radius: 50%;
+      background: var(--gold);
+      opacity: 0;
+      animation: particleFloat var(--duration, 8s) var(--delay, 0s) ease-in infinite;
+    }
+
     .hero {
       position: relative;
       padding: clamp(7rem, 14vh, 10rem) clamp(1.5rem, 5vw, 4rem) clamp(3rem, 6vh, 5rem);
@@ -264,6 +312,7 @@ export const prerender = true;
       object-fit: cover;
       object-position: center 30%;
       filter: brightness(0.35) saturate(0.7) contrast(1.1);
+      will-change: transform;
     }
 
     /* Film grain overlay */
@@ -357,9 +406,35 @@ export const prerender = true;
       align-items: center;
       gap: 0.6rem;
       transition: color 0.3s ease;
+      position: relative;
+      overflow: hidden;
     }
 
     .hero-link:hover { color: var(--gold); }
+
+    /* Gold shimmer on hero-link hover */
+    .hero-link::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(201, 168, 76, 0.25) 40%,
+        rgba(212, 185, 106, 0.4) 50%,
+        rgba(201, 168, 76, 0.25) 60%,
+        transparent 100%
+      );
+      background-size: 200% 100%;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .hero-link:hover::after {
+      opacity: 1;
+      animation: goldShimmer 0.8s ease forwards;
+    }
 
     .hero-link svg {
       width: 14px;
@@ -469,6 +544,30 @@ export const prerender = true;
     }
 
     .wine-card:hover { background: var(--charcoal-light); }
+
+    /* Gold shimmer on wine card hover */
+    .wine-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        105deg,
+        transparent 0%,
+        rgba(201, 168, 76, 0.05) 40%,
+        rgba(212, 185, 106, 0.12) 50%,
+        rgba(201, 168, 76, 0.05) 60%,
+        transparent 100%
+      );
+      background-size: 200% 100%;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .wine-card:hover::after {
+      opacity: 1;
+      animation: goldShimmer 1s ease forwards;
+    }
 
     .wine-card-number {
       font-family: var(--font-display);
@@ -665,6 +764,30 @@ export const prerender = true;
     }
 
     .event-card:hover::before { opacity: 1; }
+
+    /* Gold shimmer on event card hover */
+    .event-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        105deg,
+        transparent 0%,
+        rgba(201, 168, 76, 0.04) 40%,
+        rgba(212, 185, 106, 0.09) 50%,
+        rgba(201, 168, 76, 0.04) 60%,
+        transparent 100%
+      );
+      background-size: 200% 100%;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .event-card:hover::after {
+      opacity: 1;
+      animation: goldShimmer 1s ease forwards;
+    }
 
     .event-card-schedule {
       font-size: 0.6rem;
@@ -921,14 +1044,18 @@ export const prerender = true;
 
   <!-- ═══ HERO — Cinematic Letterbox ═══ -->
   <section class="hero">
+    <!-- Gold dust particles injected by JS -->
+    <div id="hero-particles" aria-hidden="true"></div>
+
     <div class="hero-label">Weinbar & Lounge — Trier Altstadt</div>
     <hr class="hero-rule" />
     <h1 class="hero-title">
       <span class="hero-title-line">Wein ist</span>
       <span class="hero-title-line"><em>Emotion.</em></span>
     </h1>
-    <div class="hero-frame">
+    <div class="hero-frame" id="hero-frame">
       <img
+        id="hero-img"
         src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=1920&q=80&auto=format"
         alt="Dunkle Weinbar-Atmosphaere mit warmem Licht"
         loading="eager"
@@ -965,7 +1092,7 @@ export const prerender = true;
 
   <!-- ═══ WEINKARTE ═══ -->
   <section class="weinkarte" id="weinkarte">
-    <div class="weinkarte-header">
+    <div class="weinkarte-header reveal">
       <div class="section-label">Unsere Empfehlungen</div>
       <h2 class="section-title">Was wir gerade lieben</h2>
       <p class="weinkarte-subtitle">
@@ -976,7 +1103,7 @@ export const prerender = true;
 
     <div class="wine-grid">
       <!-- Wine 1 -->
-      <div class="wine-card">
+      <div class="wine-card reveal reveal-delay-1">
         <div class="wine-card-number">01</div>
         <div class="wine-card-region">Mosel, Deutschland</div>
         <h3 class="wine-card-name">Schieferberg Riesling Kabinett 2022</h3>
@@ -999,7 +1126,7 @@ export const prerender = true;
       </div>
 
       <!-- Wine 2 -->
-      <div class="wine-card">
+      <div class="wine-card reveal reveal-delay-2">
         <div class="wine-card-number">02</div>
         <div class="wine-card-region">Bordeaux, Frankreich</div>
         <h3 class="wine-card-name">Chateau Beaumont 2019</h3>
@@ -1023,7 +1150,7 @@ export const prerender = true;
       </div>
 
       <!-- Wine 3 -->
-      <div class="wine-card">
+      <div class="wine-card reveal reveal-delay-3">
         <div class="wine-card-number">03</div>
         <div class="wine-card-region">Toskana, Italien</div>
         <h3 class="wine-card-name">Tenuta di Trinoro 2020</h3>
@@ -1047,7 +1174,7 @@ export const prerender = true;
     </div>
 
     <!-- Sommeliere Quote -->
-    <div class="quote-block">
+    <div class="quote-block reveal">
       <div class="quote-mark">&ldquo;</div>
       <div class="quote-content">
         <p class="quote-text">
@@ -1065,7 +1192,7 @@ export const prerender = true;
   <!-- ═══ ABENDE & EVENTS ═══ -->
   <section class="events" id="abende">
     <div class="events-inner">
-      <div class="events-header">
+      <div class="events-header reveal">
         <div class="section-label">Erleben</div>
         <h2 class="section-title">Unsere Abende</h2>
         <p class="events-subtitle">
@@ -1076,7 +1203,7 @@ export const prerender = true;
 
       <div class="events-grid">
         <!-- Event 1 -->
-        <div class="event-card">
+        <div class="event-card reveal reveal-delay-1">
           <div class="event-card-schedule">Jeden ersten Freitag</div>
           <h3 class="event-card-title">Blind Tasting</h3>
           <p class="event-card-desc">
@@ -1091,7 +1218,7 @@ export const prerender = true;
         </div>
 
         <!-- Event 2 -->
-        <div class="event-card">
+        <div class="event-card reveal reveal-delay-2">
           <div class="event-card-schedule">Jeden Mittwoch</div>
           <h3 class="event-card-title">Jazz & Wein</h3>
           <p class="event-card-desc">
@@ -1106,7 +1233,7 @@ export const prerender = true;
         </div>
 
         <!-- Event 3 -->
-        <div class="event-card">
+        <div class="event-card reveal reveal-delay-3">
           <div class="event-card-schedule">Unregelmaessig</div>
           <h3 class="event-card-title">Winzer zu Gast</h3>
           <p class="event-card-desc">
@@ -1122,7 +1249,7 @@ export const prerender = true;
       </div>
 
       <!-- Contact bar -->
-      <div class="contact-bar">
+      <div class="contact-bar reveal">
         <div class="contact-bar-left">
           <div class="contact-bar-label">Besuchen Sie uns</div>
           <div class="contact-bar-address">
@@ -1152,5 +1279,92 @@ export const prerender = true;
     <div class="footer-hours">Di &mdash; Sa, ab 18 Uhr</div>
   </footer>
 
+<script>
+  // ── 1. IntersectionObserver: Scroll Reveals ──────────────────────────────
+  const revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.12 }
+  );
+
+  document.querySelectorAll('.reveal').forEach((el) => revealObserver.observe(el));
+
+  // ── 2. Hero Parallax ─────────────────────────────────────────────────────
+  const heroImg = document.getElementById('hero-img');
+  const heroFrame = document.getElementById('hero-frame');
+
+  if (heroImg && heroFrame) {
+    let ticking = false;
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const scrollY = window.scrollY;
+          const frameRect = heroFrame.getBoundingClientRect();
+          // Only apply parallax when frame is near viewport
+          if (frameRect.bottom > 0 && frameRect.top < window.innerHeight) {
+            const shift = scrollY * 0.22;
+            heroImg.style.transform = `translateY(${shift}px) scale(1.08)`;
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+  }
+
+  // ── 3. Gold Dust Particles ────────────────────────────────────────────────
+  const particleContainer = document.getElementById('hero-particles');
+
+  if (particleContainer) {
+    const PARTICLE_COUNT = 18;
+
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'dust-particle';
+
+      const size = Math.random() * 3 + 1; // 1–4px
+      const leftPos = Math.random() * 100; // 0–100%
+      const duration = Math.random() * 10 + 8; // 8–18s
+      const delay = Math.random() * 12; // 0–12s stagger
+      const drift = (Math.random() - 0.5) * 80; // -40 to +40px horizontal drift
+      const opacity = Math.random() * 0.5 + 0.2;
+
+      particle.style.cssText = `
+        width: ${size}px;
+        height: ${size}px;
+        left: ${leftPos}%;
+        bottom: -10px;
+        --duration: ${duration}s;
+        --delay: ${delay}s;
+        --drift: ${drift}px;
+        opacity: ${opacity};
+        box-shadow: 0 0 ${size * 2}px rgba(201, 168, 76, 0.6);
+      `;
+
+      particleContainer.appendChild(particle);
+    }
+  }
+
+  // ── 4. Nav scroll background ─────────────────────────────────────────────
+  const nav = document.querySelector('.nav');
+  if (nav) {
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) {
+        nav.style.background = 'rgba(12,12,12,0.92)';
+        nav.style.backdropFilter = 'blur(12px)';
+      } else {
+        nav.style.background = 'transparent';
+        nav.style.backdropFilter = 'none';
+      }
+    }, { passive: true });
+  }
+</script>
 </body>
 </html>
