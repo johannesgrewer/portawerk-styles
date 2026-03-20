@@ -1,0 +1,301 @@
+---
+export const prerender = true;
+---
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Elysée — Hochzeitsplanung & Eventdesign | Trier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Gilda+Display&family=Jost:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { overflow-x: hidden; }
+    body {
+      overflow-x: hidden;
+      background: #FAF6F1;
+      font-family: 'Jost', sans-serif;
+      min-height: 100vh;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.8rem 3rem;
+    }
+    .nav-logo {
+      font-family: 'Gilda Display', serif;
+      font-size: 1.5rem;
+      letter-spacing: 0.06em;
+      color: #F5EDE3;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.7rem;
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(245, 237, 227, 0.75);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: #C4956A; }
+
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Background photo */
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1519741497674-611481863552?w=1600&q=85&auto=format');
+      background-size: cover;
+      background-position: center;
+      animation: kenBurns 20s ease-in-out infinite alternate;
+    }
+    @keyframes kenBurns {
+      from { transform: scale(1.0) translate(0, 0); }
+      to   { transform: scale(1.06) translate(-1%, 0.5%); }
+    }
+
+    /* Dark overlay */
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(20, 14, 8, 0.35) 0%,
+        rgba(20, 14, 8, 0.55) 50%,
+        rgba(20, 14, 8, 0.65) 100%
+      );
+    }
+
+    /* Central card */
+    .hero-card {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: 4rem 5rem;
+      max-width: 680px;
+    }
+
+    /* Ornamental frame */
+    .ornament-top,
+    .ornament-bottom {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeIn 1s ease 0.3s forwards;
+    }
+    .ornament-bottom {
+      margin-bottom: 0;
+      margin-top: 2rem;
+      animation-delay: 1.8s;
+    }
+    .orn-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(196, 149, 106, 0.8), transparent);
+    }
+    .orn-diamond {
+      width: 6px; height: 6px;
+      background: #C4956A;
+      transform: rotate(45deg);
+      flex-shrink: 0;
+    }
+    .orn-dot {
+      width: 3px; height: 3px;
+      border-radius: 50%;
+      background: rgba(196, 149, 106, 0.6);
+      flex-shrink: 0;
+    }
+
+    .eyebrow {
+      font-size: 0.65rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: #C4956A;
+      margin-bottom: 1.8rem;
+      opacity: 0;
+      animation: fadeIn 0.8s ease 0.6s forwards;
+    }
+
+    .headline {
+      font-family: 'Gilda Display', serif;
+      font-size: clamp(3rem, 5.5vw, 6rem);
+      line-height: 1.1;
+      letter-spacing: 0.02em;
+      color: #F5EDE3;
+      margin-bottom: 1.4rem;
+    }
+    .headline .ln {
+      display: block;
+      opacity: 0;
+      animation: slideUp 0.9s ease forwards;
+    }
+    .headline .ln:nth-child(1) { animation-delay: 0.7s; }
+    .headline .ln:nth-child(2) { animation-delay: 0.95s; }
+
+    .divider-center {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+      margin: 1.6rem 0;
+      opacity: 0;
+      animation: fadeIn 0.8s ease 1.3s forwards;
+    }
+    .dc-line { width: 40px; height: 1px; background: rgba(196,149,106,0.7); }
+    .dc-diamond {
+      width: 5px; height: 5px;
+      background: #C4956A;
+      transform: rotate(45deg);
+    }
+
+    .tagline {
+      font-family: 'Gilda Display', serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      color: rgba(245, 237, 227, 0.75);
+      letter-spacing: 0.04em;
+      margin-bottom: 2.2rem;
+      opacity: 0;
+      animation: fadeIn 0.8s ease 1.5s forwards;
+    }
+
+    .cta-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+      opacity: 0;
+      animation: fadeIn 0.8s ease 1.7s forwards;
+    }
+    .btn-main {
+      border: 1px solid rgba(196, 149, 106, 0.8);
+      color: #F5EDE3;
+      padding: 0.85rem 2.2rem;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      background: transparent;
+      transition: all 0.35s;
+    }
+    .btn-main:hover {
+      background: rgba(196, 149, 106, 0.2);
+      border-color: #C4956A;
+    }
+    .btn-link {
+      font-size: 0.7rem;
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(245, 237, 227, 0.6);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .btn-link:hover { color: #C4956A; }
+
+    /* Corner decorations */
+    .corner {
+      position: absolute;
+      width: 40px; height: 40px;
+      opacity: 0.5;
+    }
+    .corner-tl { top: 1.5rem; left: 1.5rem; border-top: 1px solid #C4956A; border-left: 1px solid #C4956A; }
+    .corner-tr { top: 1.5rem; right: 1.5rem; border-top: 1px solid #C4956A; border-right: 1px solid #C4956A; }
+    .corner-bl { bottom: 1.5rem; left: 1.5rem; border-bottom: 1px solid #C4956A; border-left: 1px solid #C4956A; }
+    .corner-br { bottom: 1.5rem; right: 1.5rem; border-bottom: 1px solid #C4956A; border-right: 1px solid #C4956A; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <span class="nav-logo">Elysée</span>
+    <ul class="nav-links">
+      <li><a href="#">Leistungen</a></li>
+      <li><a href="#">Portfolio</a></li>
+      <li><a href="#">Über uns</a></li>
+      <li><a href="#">Kontakt</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+
+    <div class="hero-card">
+      <div class="corner corner-tl"></div>
+      <div class="corner corner-tr"></div>
+      <div class="corner corner-bl"></div>
+      <div class="corner corner-br"></div>
+
+      <div class="ornament-top">
+        <div class="orn-line"></div>
+        <div class="orn-dot"></div>
+        <div class="orn-diamond"></div>
+        <div class="orn-dot"></div>
+        <div class="orn-line"></div>
+      </div>
+
+      <p class="eyebrow">Hochzeitsplanung · Trier / Mosel</p>
+
+      <h1 class="headline">
+        <span class="ln">Euer Ja.</span>
+        <span class="ln">Unser Werk.</span>
+      </h1>
+
+      <div class="divider-center">
+        <div class="dc-line"></div>
+        <div class="dc-diamond"></div>
+        <div class="dc-line"></div>
+      </div>
+
+      <p class="tagline">Hochzeitsplanung & Eventdesign mit Liebe zum Detail.</p>
+
+      <div class="cta-row">
+        <a href="#" class="btn-main">Beratungsgespräch</a>
+        <a href="#" class="btn-link">Unsere Arbeit →</a>
+      </div>
+
+      <div class="ornament-bottom">
+        <div class="orn-line"></div>
+        <div class="orn-dot"></div>
+        <div class="orn-diamond"></div>
+        <div class="orn-dot"></div>
+        <div class="orn-line"></div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

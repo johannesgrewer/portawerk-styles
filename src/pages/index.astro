@@ -112,8 +112,8 @@ import { styles, categories } from "../data/styles";
                   </div>
                   {/* iframe: src set by JS when card enters viewport */}
                   <iframe
-                    class="lazy-iframe w-[1536px] h-[960px] pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500"
-                    style="transform: scale(0.3); transform-origin: top left;"
+                    class="lazy-iframe pointer-events-none absolute top-0 left-0 opacity-0 transition-opacity duration-500"
+                    style="width:1536px;height:960px;transform:scale(0.3);transform-origin:top left;"
                     data-src={`/styles/${style.slug}`}
                     tabindex="-1"
                   />

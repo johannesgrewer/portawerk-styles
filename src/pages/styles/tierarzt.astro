@@ -1,0 +1,398 @@
+---
+export const prerender = true;
+---
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Pfötchen — Tierarztpraxis & Tierpflege | Trier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Source+Serif+4:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { overflow-x: hidden; }
+    body {
+      overflow-x: hidden;
+      background: #F7FAF8;
+      color: #1A3D35;
+      font-family: 'Nunito', sans-serif;
+      min-height: 100vh;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.4rem 3rem;
+      background: rgba(247, 250, 248, 0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(45, 106, 90, 0.08);
+    }
+    .nav-logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .paw-icon {
+      width: 28px; height: 28px;
+      fill: #2D6A5A;
+    }
+    .nav-logo {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: 1.3rem;
+      letter-spacing: -0.01em;
+      color: #1A3D35;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: #2D6A5A;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: #E07A5F; }
+    .nav-cta {
+      background: #2D6A5A;
+      color: #F7FAF8 !important;
+      padding: 0.5rem 1.2rem;
+      border-radius: 100px;
+      transition: background 0.3s !important;
+    }
+    .nav-cta:hover { background: #1A3D35 !important; color: #F7FAF8 !important; }
+
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 55% 45%;
+      position: relative;
+    }
+
+    /* LEFT — photo */
+    .hero-visual {
+      position: relative;
+      padding: 5.5rem 3rem 3rem 4rem;
+      display: flex;
+      align-items: center;
+    }
+
+    .photo-wrap {
+      position: relative;
+      width: 100%;
+      max-width: 520px;
+    }
+    .photo-frame {
+      width: 100%;
+      aspect-ratio: 4/5;
+      border-radius: 48% 52% 40% 60% / 55% 45% 55% 45%;
+      overflow: hidden;
+      box-shadow: 0 30px 80px rgba(26, 61, 53, 0.12);
+      animation: gentleMorph 8s ease-in-out infinite;
+    }
+    @keyframes gentleMorph {
+      0%, 100% { border-radius: 48% 52% 40% 60% / 55% 45% 55% 45%; }
+      50%       { border-radius: 55% 45% 55% 45% / 40% 60% 42% 58%; }
+    }
+    .photo-frame img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+
+    /* Floating info card */
+    .info-card {
+      position: absolute;
+      bottom: 16%;
+      right: -20px;
+      background: #fff;
+      border-radius: 16px;
+      padding: 1.2rem 1.4rem;
+      box-shadow: 0 16px 48px rgba(26, 61, 53, 0.1);
+      min-width: 200px;
+      opacity: 0;
+      animation: floatIn 0.8s ease 1.3s forwards;
+    }
+    @keyframes floatIn {
+      from { opacity: 0; transform: translateX(16px) translateY(8px); }
+      to   { opacity: 1; transform: translateX(0) translateY(0); }
+    }
+    .card-row {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      margin-bottom: 0.6rem;
+    }
+    .card-row:last-child { margin-bottom: 0; }
+    .card-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #E07A5F;
+      flex-shrink: 0;
+    }
+    .card-dot.green { background: #2D6A5A; }
+    .card-text {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #1A3D35;
+    }
+    .card-sub {
+      font-size: 0.65rem;
+      color: #7A9E95;
+    }
+
+    /* Floating paw decorations */
+    .paw-float {
+      position: absolute;
+      opacity: 0.06;
+      animation: floatPaw 5s ease-in-out infinite;
+    }
+    .paw-float svg { fill: #2D6A5A; }
+    .paw-float-1 { top: 10%; right: 15%; width: 60px; animation-delay: 0s; }
+    .paw-float-2 { bottom: 25%; left: 5%; width: 40px; animation-delay: 1.5s; }
+    @keyframes floatPaw {
+      0%, 100% { transform: translateY(0) rotate(-10deg); }
+      50%       { transform: translateY(-10px) rotate(5deg); }
+    }
+
+    /* RIGHT — text */
+    .hero-text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 6rem 4rem 4rem 3rem;
+    }
+
+    .eyebrow {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #E07A5F;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: up 0.7s ease 0.2s forwards;
+    }
+
+    .headline {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2.8rem, 4vw, 4.5rem);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: #1A3D35;
+      margin-bottom: 1.4rem;
+    }
+    .headline .accent { color: #2D6A5A; }
+    .headline .ln {
+      display: block;
+      opacity: 0;
+      animation: up 0.7s ease forwards;
+    }
+    .headline .ln:nth-child(1) { animation-delay: 0.3s; }
+    .headline .ln:nth-child(2) { animation-delay: 0.48s; }
+    .headline .ln:nth-child(3) { animation-delay: 0.62s; }
+
+    .tagline-serif {
+      font-family: 'Source Serif 4', serif;
+      font-style: italic;
+      font-size: 1.05rem;
+      color: #4A7A70;
+      margin-bottom: 1.4rem;
+      opacity: 0;
+      animation: up 0.7s ease 0.8s forwards;
+    }
+
+    .desc {
+      font-family: 'Source Serif 4', serif;
+      font-size: 0.92rem;
+      line-height: 1.8;
+      color: #4A6B62;
+      max-width: 360px;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: up 0.7s ease 0.95s forwards;
+    }
+
+    .services {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: up 0.7s ease 1.1s forwards;
+    }
+    .service-item {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #2D6A5A;
+    }
+    .service-check {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: rgba(45, 106, 90, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .service-check::after {
+      content: '✓';
+      font-size: 0.6rem;
+      color: #2D6A5A;
+    }
+
+    .cta-row {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      opacity: 0;
+      animation: up 0.7s ease 1.25s forwards;
+    }
+    .btn-main {
+      background: #2D6A5A;
+      color: #F7FAF8;
+      border: none;
+      padding: 0.9rem 2rem;
+      border-radius: 100px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.3s;
+      box-shadow: 0 4px 20px rgba(45, 106, 90, 0.25);
+    }
+    .btn-main:hover {
+      background: #1A3D35;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(45, 106, 90, 0.3);
+    }
+    .phone {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #4A7A70;
+      text-decoration: none;
+    }
+    .phone:hover { color: #2D6A5A; }
+
+    @keyframes up {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-logo-wrap">
+      <svg class="paw-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="5" cy="8" rx="2.2" ry="3"/>
+        <ellipse cx="9.5" cy="5.5" rx="2" ry="2.8"/>
+        <ellipse cx="14.5" cy="5.5" rx="2" ry="2.8"/>
+        <ellipse cx="19" cy="8" rx="2.2" ry="3"/>
+        <path d="M12 22c-4 0-7-2.8-7-7 0-2.5 1.5-4.2 3.5-5 1-.4 2.3-.5 3.5-.5s2.5.1 3.5.5c2 .8 3.5 2.5 3.5 5 0 4.2-3 7-7 7z"/>
+      </svg>
+      <span class="nav-logo">Pfötchen</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#">Leistungen</a></li>
+      <li><a href="#">Team</a></li>
+      <li><a href="#">Notfall</a></li>
+      <li><a href="#" class="nav-cta">Termin buchen</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <!-- LEFT -->
+    <div class="hero-visual">
+      <div class="paw-float paw-float-1">
+        <svg viewBox="0 0 24 24"><ellipse cx="5" cy="8" rx="2.2" ry="3"/><ellipse cx="9.5" cy="5.5" rx="2" ry="2.8"/><ellipse cx="14.5" cy="5.5" rx="2" ry="2.8"/><ellipse cx="19" cy="8" rx="2.2" ry="3"/><path d="M12 22c-4 0-7-2.8-7-7 0-2.5 1.5-4.2 3.5-5 1-.4 2.3-.5 3.5-.5s2.5.1 3.5.5c2 .8 3.5 2.5 3.5 5 0 4.2-3 7-7 7z"/></svg>
+      </div>
+      <div class="paw-float paw-float-2">
+        <svg viewBox="0 0 24 24"><ellipse cx="5" cy="8" rx="2.2" ry="3"/><ellipse cx="9.5" cy="5.5" rx="2" ry="2.8"/><ellipse cx="14.5" cy="5.5" rx="2" ry="2.8"/><ellipse cx="19" cy="8" rx="2.2" ry="3"/><path d="M12 22c-4 0-7-2.8-7-7 0-2.5 1.5-4.2 3.5-5 1-.4 2.3-.5 3.5-.5s2.5.1 3.5.5c2 .8 3.5 2.5 3.5 5 0 4.2-3 7-7 7z"/></svg>
+      </div>
+
+      <div class="photo-wrap">
+        <div class="photo-frame">
+          <img
+            src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=900&q=80&auto=format"
+            alt="Hund bei der Tierarztpraxis Pfötchen Trier"
+            loading="eager"
+          />
+        </div>
+        <div class="info-card">
+          <div class="card-row">
+            <div class="card-dot green"></div>
+            <div>
+              <div class="card-text">Heute verfügbar</div>
+              <div class="card-sub">Kurztermine frei</div>
+            </div>
+          </div>
+          <div class="card-row">
+            <div class="card-dot"></div>
+            <div>
+              <div class="card-text">24h Notfalldienst</div>
+              <div class="card-sub">0651 / 123 45 67</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="hero-text">
+      <p class="eyebrow">Tierarztpraxis · Trier</p>
+
+      <h1 class="headline">
+        <span class="ln">Mit Liebe.</span>
+        <span class="ln">Mit <span class="accent">Kompetenz.</span></span>
+      </h1>
+
+      <p class="tagline-serif">Veterinärmedizin, die Tiere spüren.</p>
+
+      <p class="desc">
+        In der Pfötchen-Praxis behandeln wir jeden Patienten
+        wie unser eigenes Tier — mit Ruhe, Fachwissen und echter
+        Fürsorge.
+      </p>
+
+      <div class="services">
+        <div class="service-item">
+          <div class="service-check"></div>
+          Vorsorge & Impfungen
+        </div>
+        <div class="service-item">
+          <div class="service-check"></div>
+          Zahnpflege & Chirurgie
+        </div>
+        <div class="service-item">
+          <div class="service-check"></div>
+          Ernährungsberatung
+        </div>
+        <div class="service-item">
+          <div class="service-check"></div>
+          Notfallversorgung 24/7
+        </div>
+      </div>
+
+      <div class="cta-row">
+        <a href="#" class="btn-main">Termin buchen</a>
+        <a href="tel:+4965112345" class="phone">0651 / 123 45 67</a>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
