@@ -1,0 +1,672 @@
+---
+export const prerender = true;
+---
+
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Letterpress — Kalligrafie & Druckkunst | Trier</title>
+  <meta name="description" content="Letterpress — Kalligrafie und Druckkunst in Trier. Handsatz, Bleisatz, Buchdruck mit historischen Pressen." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,100;0,6..96,400;0,6..96,700;0,6..96,900;1,6..96,400;1,6..96,700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'EB Garamond', Georgia, serif;
+      color: #1A1A1A;
+      background-color: #FAF8F5;
+      line-height: 1.7;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(250, 248, 245, 0.97);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border-bottom: 1px solid #1A1A1A;
+      padding: 0 2rem;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .navbar-logo {
+      font-family: 'Bodoni Moda', serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #1A1A1A;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+    }
+
+    .navbar-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .navbar-links a {
+      font-family: 'EB Garamond', serif;
+      font-size: 0.85rem;
+      font-style: italic;
+      color: #1A1A1A;
+      letter-spacing: 0.05em;
+      transition: color 0.3s ease;
+    }
+
+    .navbar-links a:hover {
+      color: #8B0000;
+    }
+
+    .mobile-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      width: 24px;
+      height: 18px;
+      position: relative;
+      z-index: 110;
+    }
+
+    .mobile-toggle span {
+      display: block;
+      width: 100%;
+      height: 1.5px;
+      background: #1A1A1A;
+      position: absolute;
+      left: 0;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-toggle span:nth-child(1) { top: 0; }
+    .mobile-toggle span:nth-child(2) { top: 8px; }
+    .mobile-toggle span:nth-child(3) { top: 16px; }
+
+    .mobile-toggle.active span:nth-child(1) {
+      top: 8px;
+      transform: rotate(45deg);
+    }
+
+    .mobile-toggle.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .mobile-toggle.active span:nth-child(3) {
+      top: 8px;
+      transform: rotate(-45deg);
+    }
+
+    /* ===== HERO — TYPE SPECIMEN ===== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 8rem 2rem 4rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .specimen-stack {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      margin-bottom: 2rem;
+    }
+
+    .specimen-thin {
+      font-family: 'Bodoni Moda', serif;
+      font-weight: 100;
+      font-size: clamp(4rem, 10vw, 9rem);
+      line-height: 1.05;
+      letter-spacing: 0.08em;
+      color: #1A1A1A;
+      opacity: 0.4;
+    }
+
+    .specimen-regular {
+      font-family: 'Bodoni Moda', serif;
+      font-weight: 400;
+      font-size: clamp(4.5rem, 12vw, 11rem);
+      line-height: 1.0;
+      letter-spacing: 0.04em;
+      color: #1A1A1A;
+      opacity: 0.7;
+    }
+
+    .specimen-bold {
+      font-family: 'Bodoni Moda', serif;
+      font-weight: 900;
+      font-size: clamp(5rem, 14vw, 13rem);
+      line-height: 1.0;
+      letter-spacing: 0.02em;
+      color: #1A1A1A;
+    }
+
+    .hero-subtitle {
+      font-family: 'EB Garamond', serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: clamp(0.9rem, 1.8vw, 1.15rem);
+      letter-spacing: 0.15em;
+      color: #1A1A1A;
+      opacity: 0.6;
+      margin-top: 0.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-rule {
+      width: 120px;
+      height: 2px;
+      background: #8B0000;
+      border: none;
+      margin: 0 auto 2.5rem;
+    }
+
+    .hero-quote {
+      font-family: 'EB Garamond', serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: clamp(1.6rem, 3.5vw, 2.8rem);
+      line-height: 1.35;
+      color: #1A1A1A;
+      max-width: 600px;
+      margin: 0 auto 3.5rem;
+    }
+
+    .alphabet-specimen {
+      font-family: 'Bodoni Moda', serif;
+      font-weight: 400;
+      color: #1A1A1A;
+      letter-spacing: 0.06em;
+      line-height: 1.6;
+      max-width: 700px;
+      margin: 0 auto 3rem;
+    }
+
+    .alphabet-row-1 {
+      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      opacity: 0.5;
+    }
+
+    .alphabet-row-2 {
+      font-size: clamp(1rem, 1.8vw, 1.5rem);
+      opacity: 0.3;
+    }
+
+    .alphabet-row-3 {
+      font-size: clamp(0.75rem, 1.2vw, 1rem);
+      opacity: 0.15;
+    }
+
+    .hero-cta {
+      font-family: 'EB Garamond', serif;
+      font-style: italic;
+      font-size: 1.05rem;
+      color: #8B0000;
+      letter-spacing: 0.08em;
+      border-bottom: 1px solid #8B0000;
+      padding-bottom: 2px;
+      transition: opacity 0.3s ease;
+    }
+
+    .hero-cta:hover {
+      opacity: 0.6;
+    }
+
+    /* ===== SECTION: ARBEITEN ===== */
+    .arbeiten {
+      padding: 6rem 2rem 7rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: 'EB Garamond', serif;
+      font-style: italic;
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #8B0000;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: 'Bodoni Moda', serif;
+      font-weight: 700;
+      font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+      text-align: center;
+      color: #1A1A1A;
+      margin-bottom: 4rem;
+      letter-spacing: 0.02em;
+    }
+
+    .arbeiten-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3rem;
+    }
+
+    .arbeit-card {
+      border: 1px solid rgba(26, 26, 26, 0.12);
+      padding: 3rem 2rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+      transition: border-color 0.3s ease;
+    }
+
+    .arbeit-card:hover {
+      border-color: rgba(139, 0, 0, 0.3);
+    }
+
+    .arbeit-specimen {
+      font-family: 'Bodoni Moda', serif;
+      color: #1A1A1A;
+      line-height: 1.0;
+    }
+
+    .arbeit-specimen-large {
+      font-weight: 700;
+      font-size: clamp(5rem, 8vw, 7rem);
+      font-style: italic;
+    }
+
+    .arbeit-specimen-calligraphic {
+      font-weight: 400;
+      font-size: clamp(3rem, 5vw, 4.5rem);
+      font-style: italic;
+      letter-spacing: 0.04em;
+    }
+
+    .arbeit-specimen-name {
+      font-weight: 400;
+      font-size: clamp(1.2rem, 2vw, 1.6rem);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+    }
+
+    .arbeit-specimen-name-sub {
+      font-family: 'EB Garamond', serif;
+      font-style: italic;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      color: #1A1A1A;
+      opacity: 0.5;
+      margin-top: 0.3rem;
+    }
+
+    .arbeit-divider {
+      width: 30px;
+      height: 1px;
+      background: #8B0000;
+      border: none;
+    }
+
+    .arbeit-title {
+      font-family: 'EB Garamond', serif;
+      font-weight: 600;
+      font-size: 1.1rem;
+      letter-spacing: 0.08em;
+      color: #1A1A1A;
+    }
+
+    .arbeit-detail {
+      font-family: 'EB Garamond', serif;
+      font-style: italic;
+      font-size: 0.9rem;
+      color: #1A1A1A;
+      opacity: 0.5;
+      line-height: 1.5;
+    }
+
+    /* ===== SECTION: WERKSTATT ===== */
+    .werkstatt {
+      padding: 6rem 2rem 7rem;
+      background: #1A1A1A;
+      color: #FAF8F5;
+    }
+
+    .werkstatt-inner {
+      max-width: 750px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .werkstatt .section-label {
+      color: #8B0000;
+      opacity: 0.8;
+    }
+
+    .werkstatt .section-title {
+      color: #FAF8F5;
+      margin-bottom: 3rem;
+    }
+
+    .werkstatt-quote {
+      font-family: 'EB Garamond', serif;
+      font-style: italic;
+      font-size: clamp(1.2rem, 2.5vw, 1.7rem);
+      line-height: 1.7;
+      color: #FAF8F5;
+      opacity: 0.85;
+      margin-bottom: 3.5rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .werkstatt-rule {
+      width: 60px;
+      height: 1px;
+      background: #8B0000;
+      border: none;
+      margin: 0 auto 3rem;
+    }
+
+    .equipment-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .equipment-list li {
+      font-family: 'Bodoni Moda', serif;
+      font-weight: 400;
+      font-size: clamp(1rem, 1.8vw, 1.25rem);
+      letter-spacing: 0.1em;
+      color: #FAF8F5;
+      opacity: 0.7;
+    }
+
+    .equipment-list li span {
+      font-family: 'EB Garamond', serif;
+      font-style: italic;
+      font-size: 0.8rem;
+      opacity: 0.5;
+      display: block;
+      margin-top: 0.15rem;
+      letter-spacing: 0.05em;
+    }
+
+    .werkstatt-contact {
+      font-family: 'EB Garamond', serif;
+      font-style: italic;
+      font-size: 0.95rem;
+      color: #FAF8F5;
+      opacity: 0.5;
+      line-height: 1.8;
+    }
+
+    .werkstatt-contact a {
+      color: #FAF8F5;
+      border-bottom: 1px solid rgba(250, 248, 245, 0.3);
+      transition: border-color 0.3s ease;
+    }
+
+    .werkstatt-contact a:hover {
+      border-color: #8B0000;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      padding: 2.5rem 2rem;
+      text-align: center;
+      border-top: 1px solid rgba(26, 26, 26, 0.1);
+    }
+
+    .footer-text {
+      font-family: 'EB Garamond', serif;
+      font-style: italic;
+      font-size: 0.8rem;
+      color: #1A1A1A;
+      opacity: 0.35;
+      letter-spacing: 0.1em;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .navbar-links {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(250, 248, 245, 0.98);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2.5rem;
+        z-index: 105;
+      }
+
+      .navbar-links.active {
+        display: flex;
+      }
+
+      .navbar-links a {
+        font-size: 1.2rem;
+      }
+
+      .mobile-toggle {
+        display: block;
+      }
+
+      .hero {
+        padding: 7rem 1.5rem 3rem;
+        min-height: auto;
+      }
+
+      .arbeiten-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .arbeit-card {
+        padding: 2.5rem 1.5rem;
+      }
+
+      .werkstatt {
+        padding: 4rem 1.5rem 5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .specimen-thin {
+        font-size: 3rem;
+      }
+
+      .specimen-regular {
+        font-size: 3.8rem;
+      }
+
+      .specimen-bold {
+        font-size: 4.5rem;
+      }
+
+      .hero-quote {
+        font-size: 1.4rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="/#hero" class="navbar-logo">Letterpress</a>
+    <ul class="navbar-links" id="navLinks">
+      <li><a href="/#arbeiten" onclick="closeNav()">Arbeiten</a></li>
+      <li><a href="/#werkstatt" onclick="closeNav()">Werkstatt</a></li>
+      <li><a href="/#kontakt" onclick="closeNav()">Kontakt</a></li>
+    </ul>
+    <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <!-- HERO — TYPE SPECIMEN -->
+  <section class="hero" id="hero">
+    <div class="specimen-stack">
+      <div class="specimen-thin">Letterpress</div>
+      <div class="specimen-regular">Letterpress</div>
+      <div class="specimen-bold">Letterpress</div>
+    </div>
+
+    <p class="hero-subtitle">Kalligrafie & Druckkunst &middot; Trier</p>
+
+    <hr class="hero-rule" />
+
+    <p class="hero-quote">Jeder Buchstabe z&auml;hlt.</p>
+
+    <div class="alphabet-specimen">
+      <div class="alphabet-row-1">Aa Bb Cc Dd Ee Ff Gg Hh Ii</div>
+      <div class="alphabet-row-2">Jj Kk Ll Mm Nn Oo Pp Qq Rr</div>
+      <div class="alphabet-row-3">Ss Tt Uu Vv Ww Xx Yy Zz</div>
+    </div>
+
+    <a href="/#arbeiten" class="hero-cta">Arbeiten ansehen &rarr;</a>
+  </section>
+
+  <!-- SECTION: ARBEITEN -->
+  <section class="arbeiten" id="arbeiten">
+    <p class="section-label">Ausgew&auml;hlte Arbeiten</p>
+    <h2 class="section-title">Arbeiten</h2>
+
+    <div class="arbeiten-grid">
+
+      <!-- Hochzeitseinladung -->
+      <div class="arbeit-card">
+        <div class="arbeit-specimen arbeit-specimen-large">M</div>
+        <hr class="arbeit-divider" />
+        <h3 class="arbeit-title">Hochzeitseinladung</h3>
+        <p class="arbeit-detail">
+          Familie M&uuml;ller &amp; Weber<br />
+          Juni 2025
+        </p>
+      </div>
+
+      <!-- Weinetiketten -->
+      <div class="arbeit-card">
+        <div class="arbeit-specimen arbeit-specimen-calligraphic">Riesling</div>
+        <hr class="arbeit-divider" />
+        <h3 class="arbeit-title">Weinetiketten</h3>
+        <p class="arbeit-detail">
+          Weingut an der Mosel<br />
+          Handsatz, Bleibuchstaben
+        </p>
+      </div>
+
+      <!-- Visitenkarten -->
+      <div class="arbeit-card">
+        <div class="arbeit-specimen arbeit-specimen-name">Clara<br />Fontaine</div>
+        <p class="arbeit-specimen-name-sub">Schriftsetzerin &middot; Trier</p>
+        <hr class="arbeit-divider" />
+        <h3 class="arbeit-title">Visitenkarten</h3>
+        <p class="arbeit-detail">
+          Tiefpr&auml;gung auf<br />
+          B&uuml;ttenkarton, 600 g/m&sup2;
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECTION: WERKSTATT -->
+  <section class="werkstatt" id="werkstatt">
+    <div class="werkstatt-inner">
+      <p class="section-label">&Uuml;ber die Werkstatt</p>
+      <h2 class="section-title">Clara Fontaine</h2>
+
+      <p class="werkstatt-quote">
+        Gelernte Schriftsetzerin. Seit 2018 drucke ich in Trier
+        mit Bleilettern, die &auml;lter sind als ich.
+      </p>
+
+      <hr class="werkstatt-rule" />
+
+      <ul class="equipment-list">
+        <li>
+          Heidelberger Tiegel
+          <span>Baujahr 1962</span>
+        </li>
+        <li>
+          Korrex-Presse
+          <span>Handabzug, Andruck</span>
+        </li>
+        <li>
+          &Uuml;ber 200 Schriftk&auml;sten
+          <span>Blei- und Holzlettern</span>
+        </li>
+      </ul>
+
+      <div class="werkstatt-contact" id="kontakt">
+        <p>Clara Fontaine</p>
+        <p>Nagelstra&szlig;e 12, 54290 Trier</p>
+        <p><a href="mailto:hallo@letterpress-trier.de">hallo@letterpress-trier.de</a></p>
+        <p>Termine nach Vereinbarung</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p class="footer-text">Letterpress &middot; Trier &middot; Kalligrafie &amp; Druckkunst</p>
+  </footer>
+
+  <script>
+    const mobileToggle = document.getElementById('mobileToggle');
+    const navLinks = document.getElementById('navLinks');
+
+    mobileToggle.addEventListener('click', () => {
+      mobileToggle.classList.toggle('active');
+      navLinks.classList.toggle('active');
+    });
+
+    function closeNav() {
+      mobileToggle.classList.remove('active');
+      navLinks.classList.remove('active');
+    }
+  </script>
+
+</body>
+</html>
