@@ -94,39 +94,63 @@ import { styles, categories } from "../data/styles";
             class="style-card group cursor-pointer"
             data-category={style.category}
             data-slug={style.slug}
+            data-ready={style.ready ? "true" : "false"}
+            data-bg={style.colors.background}
+            data-primary={style.colors.primary}
+            data-secondary={style.colors.secondary}
+            data-accent={style.colors.accent}
+            data-text={style.colors.text}
+            data-name={style.business.name}
+            data-tagline={style.business.tagline}
           >
-            <!-- Hero Preview -->
-            <div class="relative aspect-[16/10] rounded-xl overflow-hidden border border-border bg-surface-hover mb-3 transition-all duration-300 group-hover:border-accent/40 group-hover:shadow-[0_8px_40px_rgba(14,77,82,0.1)]">
-              {style.ready ? (
-                <iframe
-                  src={`/styles/${style.slug}`}
-                  class="w-[1536px] h-[960px] origin-top-left pointer-events-none"
-                  style="transform: scale(0.3); transform-origin: top left;"
-                  loading="lazy"
-                  tabindex="-1"
-                />
-              ) : (
-                <div
-                  class="w-full h-full flex items-center justify-center"
-                  style={`background: ${style.colors.background};`}
-                >
-                  <div class="text-center px-6">
-                    <div
-                      class="text-3xl font-bold mb-2 font-display"
-                      style={`color: ${style.colors.primary};`}
-                    >
-                      {style.business.name}
-                    </div>
-                    <div
-                      class="text-sm opacity-60"
-                      style={`color: ${style.colors.text};`}
-                    >
-                      {style.business.tagline}
-                    </div>
-                    <div class="mt-4 inline-block px-3 py-1 rounded-full text-xs bg-black/5 text-text-muted">
-                      Coming Soon
-                    </div>
+            <!-- Color Placeholder (no iframe, no network) -->
+            <div class="card-preview relative aspect-[16/10] rounded-xl overflow-hidden border border-border mb-3 transition-all duration-300 group-hover:border-accent/40 group-hover:shadow-[0_8px_40px_rgba(14,77,82,0.1)]"
+              style={`background: ${style.colors.background};`}
+            >
+              <!-- Top accent bar -->
+              <div class="absolute top-0 left-0 right-0 h-1.5" style={`background: ${style.colors.primary};`}></div>
+
+              <!-- Fake nav dots -->
+              <div class="absolute top-3.5 left-4 flex gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full" style={`background: ${style.colors.primary}; opacity: 0.3;`}></span>
+                <span class="w-1.5 h-1.5 rounded-full" style={`background: ${style.colors.primary}; opacity: 0.3;`}></span>
+                <span class="w-1.5 h-1.5 rounded-full" style={`background: ${style.colors.primary}; opacity: 0.3;`}></span>
+              </div>
+
+              <!-- Business info centered -->
+              <div class="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
+                <div class="text-[11px] font-semibold tracking-[0.2em] uppercase mb-2 opacity-50" style={`color: ${style.colors.text};`}>
+                  {style.business.type}
+                </div>
+                <div class="text-2xl font-bold leading-tight mb-1.5" style={`color: ${style.colors.primary};`}>
+                  {style.business.name}
+                </div>
+                <div class="text-[11px] opacity-60 max-w-[160px] leading-relaxed" style={`color: ${style.colors.text};`}>
+                  {style.business.tagline}
+                </div>
+              </div>
+
+              <!-- Color palette dots bottom -->
+              <div class="absolute bottom-3 left-0 right-0 flex justify-center gap-1.5">
+                <span class="w-3 h-3 rounded-full border border-black/10" style={`background: ${style.colors.primary};`}></span>
+                <span class="w-3 h-3 rounded-full border border-black/10" style={`background: ${style.colors.secondary};`}></span>
+                <span class="w-3 h-3 rounded-full border border-black/10" style={`background: ${style.colors.accent};`}></span>
+                <span class="w-3 h-3 rounded-full border border-black/10" style={`background: ${style.colors.text};`}></span>
+              </div>
+
+              <!-- Hover overlay: "Ansehen" -->
+              {style.ready && (
+                <div class="card-hover-overlay absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                  <div class="flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold backdrop-blur-sm bg-black/30 text-white">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg>
+                    Ansehen
                   </div>
+                </div>
+              )}
+
+              {!style.ready && (
+                <div class="absolute bottom-8 left-0 right-0 flex justify-center">
+                  <span class="px-2 py-0.5 rounded text-[9px] font-medium bg-black/10" style={`color: ${style.colors.text}; opacity: 0.5;`}>Coming Soon</span>
                 </div>
               )}
             </div>
@@ -216,22 +240,47 @@ import { styles, categories } from "../data/styles";
       });
     });
 
-    // Modal
+    // Modal + Hover Preload
     const modal = document.getElementById('style-modal');
     const modalTitle = document.getElementById('modal-title');
-    const modalSubtitle = document.getElementById('modal-subtitle');
     const modalContent = document.getElementById('modal-content');
-    const modalPlaceholder = '<div class="flex items-center justify-center h-full text-text-muted text-sm">Stil-Preview kommt bald...</div>';
+
+    // Hidden container — iframes preload silently here
+    const preloadContainer = document.createElement('div');
+    preloadContainer.style.cssText = 'position:fixed;top:-9999px;left:-9999px;width:1px;height:1px;visibility:hidden;pointer-events:none;';
+    document.body.appendChild(preloadContainer);
+
+    const preloadCache = {}; // slug → iframe
+
+    function preloadStyle(slug) {
+      if (preloadCache[slug]) return;
+      const iframe = document.createElement('iframe');
+      iframe.src = '/styles/' + slug;
+      iframe.tabIndex = -1;
+      preloadContainer.appendChild(iframe);
+      preloadCache[slug] = iframe;
+    }
 
     document.querySelectorAll('.style-card').forEach((card) => {
-      card.addEventListener('click', () => {
-        const slug = card.dataset.slug;
-        modalTitle.textContent = card.querySelector('h3').textContent;
+      const slug = card.dataset.slug;
+      if (card.dataset.ready !== 'true') return;
 
-        // Load iframe
-        modalContent.textContent = '';
-        const iframe = document.createElement('iframe');
-        iframe.src = '/styles/' + slug;
+      // Hover → preload in background
+      card.addEventListener('mouseenter', () => preloadStyle(slug));
+
+      // Click → open modal, reuse preloaded iframe if available
+      card.addEventListener('click', () => {
+        modalTitle.textContent = card.querySelector('h3').textContent;
+        while (modalContent.firstChild) modalContent.removeChild(modalContent.firstChild);
+
+        let iframe;
+        if (preloadCache[slug]) {
+          iframe = preloadCache[slug];
+          delete preloadCache[slug];
+        } else {
+          iframe = document.createElement('iframe');
+          iframe.src = '/styles/' + slug;
+        }
         iframe.style.cssText = 'width:100%;height:100%;border:none;display:block;';
         modalContent.appendChild(iframe);
 
@@ -247,8 +296,7 @@ import { styles, categories } from "../data/styles";
     function closeModal() {
       modal.classList.add('hidden');
       document.body.style.overflow = '';
-      // Remove iframe to stop loading
-      modalContent.textContent = '';
+      while (modalContent.firstChild) modalContent.removeChild(modalContent.firstChild);
     }
   </script>
 
