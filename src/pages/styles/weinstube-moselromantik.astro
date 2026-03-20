@@ -1,0 +1,1035 @@
+---
+export const prerender = true;
+---
+
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Rebstock — Straußwirtschaft in Longuich an der Mosel</title>
+  <meta name="description" content="Rebstock — Straußwirtschaft der Familie Schommer in Longuich an der Mosel. Wein, wie er sein soll. Geöffnet März bis Oktober." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #722F37;
+      --secondary: #F5EDE0;
+      --accent: #8B6914;
+      --background: #FBF7F0;
+      --text: #2C1810;
+      --primary-light: #8a3a44;
+      --primary-dark: #5a252c;
+      --accent-light: #a47d1a;
+      --border-subtle: #e2d5c3;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Lora', Georgia, serif;
+      color: var(--text);
+      background-color: var(--background);
+      line-height: 1.7;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ============ NAVIGATION ============ */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background-color 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .nav.scrolled {
+      background-color: rgba(251, 247, 240, 0.97);
+      box-shadow: 0 2px 20px rgba(44, 24, 16, 0.08);
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--secondary);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: color 0.4s ease;
+    }
+
+    .nav.scrolled .nav-logo {
+      color: var(--primary);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'Lora', Georgia, serif;
+      font-size: 0.9rem;
+      color: var(--secondary);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      transition: color 0.3s ease;
+    }
+
+    .nav.scrolled .nav-links a {
+      color: var(--text);
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+
+    .nav-toggle span {
+      width: 24px;
+      height: 2px;
+      background-color: var(--secondary);
+      transition: background-color 0.4s ease;
+    }
+
+    .nav.scrolled .nav-toggle span {
+      background-color: var(--text);
+    }
+
+    /* ============ HERO ============ */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 40%;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(44, 24, 16, 0.35) 0%,
+        rgba(114, 47, 55, 0.5) 50%,
+        rgba(44, 24, 16, 0.7) 100%
+      );
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 780px;
+      padding: 2rem;
+    }
+
+    .hero-ornament {
+      display: inline-block;
+      color: var(--accent);
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      opacity: 0.8;
+      letter-spacing: 0.5em;
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(2.8rem, 6vw, 4.5rem);
+      font-weight: 500;
+      color: #fff;
+      line-height: 1.15;
+      margin-bottom: 1.2rem;
+      letter-spacing: -0.01em;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--secondary);
+    }
+
+    .hero-subtitle {
+      font-family: 'Lora', Georgia, serif;
+      font-size: 1.1rem;
+      color: rgba(245, 237, 224, 0.85);
+      margin-bottom: 0.5rem;
+      font-weight: 400;
+    }
+
+    .hero-family {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 0.95rem;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 2.5rem;
+      font-weight: 500;
+    }
+
+    .hero-cta-group {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.9rem 2.2rem;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: #fff;
+      border: 2px solid var(--primary);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-dark);
+      border-color: var(--primary-dark);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      color: var(--secondary);
+      border: 2px solid rgba(245, 237, 224, 0.5);
+    }
+
+    .btn-outline:hover {
+      background-color: rgba(245, 237, 224, 0.1);
+      border-color: var(--secondary);
+    }
+
+    .hero-scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      color: rgba(245, 237, 224, 0.5);
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      animation: scrollBounce 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollBounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* ============ SECTIONS GENERAL ============ */
+    .section {
+      padding: 6rem 2rem;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-label {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.8rem;
+      font-weight: 600;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 500;
+      color: var(--primary);
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    .section-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1.5rem;
+      color: var(--accent);
+      opacity: 0.6;
+    }
+
+    .section-divider::before,
+    .section-divider::after {
+      content: '';
+      width: 60px;
+      height: 1px;
+      background-color: var(--accent);
+    }
+
+    .section-description {
+      font-size: 1.05rem;
+      color: var(--text);
+      max-width: 560px;
+      margin: 0 auto;
+      opacity: 0.8;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* ============ WEINKARTE ============ */
+    .weinkarte {
+      background-color: var(--secondary);
+    }
+
+    .weinkarte-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .wine-card {
+      background-color: var(--background);
+      padding: 2.5rem 2rem;
+      border: 1px solid var(--border-subtle);
+      text-align: center;
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+      position: relative;
+    }
+
+    .wine-card:hover {
+      box-shadow: 0 8px 30px rgba(44, 24, 16, 0.08);
+      transform: translateY(-3px);
+    }
+
+    .wine-card-icon {
+      font-size: 2rem;
+      color: var(--primary);
+      margin-bottom: 1rem;
+      opacity: 0.7;
+    }
+
+    .wine-card-category {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .wine-card-name {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 0.4rem;
+      line-height: 1.3;
+    }
+
+    .wine-card-grape {
+      font-family: 'Lora', Georgia, serif;
+      font-size: 0.85rem;
+      font-style: italic;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .wine-card-desc {
+      font-size: 0.92rem;
+      color: var(--text);
+      opacity: 0.75;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .wine-card-price {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .wine-card-unit {
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: var(--text);
+      opacity: 0.5;
+    }
+
+    .wine-card-badge {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background-color: var(--primary);
+      color: #fff;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.7rem;
+      font-weight: 600;
+    }
+
+    .weinkarte-note {
+      text-align: center;
+      margin-top: 3rem;
+      font-style: italic;
+      font-size: 0.95rem;
+      color: var(--text);
+      opacity: 0.6;
+    }
+
+    /* ============ BESUCH / KONTAKT ============ */
+    .besuch {
+      background-color: var(--background);
+    }
+
+    .besuch-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+
+    .besuch-info h3 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 1rem;
+      margin-top: 2rem;
+    }
+
+    .besuch-info h3:first-child {
+      margin-top: 0;
+    }
+
+    .besuch-info p {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      opacity: 0.85;
+    }
+
+    .opening-hours {
+      list-style: none;
+      margin-top: 0.8rem;
+    }
+
+    .opening-hours li {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--border-subtle);
+      font-size: 0.92rem;
+    }
+
+    .opening-hours li:last-child {
+      border-bottom: none;
+    }
+
+    .opening-hours .day {
+      font-weight: 500;
+    }
+
+    .opening-hours .time {
+      color: var(--primary);
+      font-weight: 500;
+    }
+
+    .season-badge {
+      display: inline-block;
+      background-color: var(--primary);
+      color: #fff;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.4rem 1rem;
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+
+    .contact-detail {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.8rem;
+      margin-bottom: 0.8rem;
+      font-size: 0.95rem;
+    }
+
+    .contact-detail-icon {
+      color: var(--primary);
+      font-size: 1rem;
+      flex-shrink: 0;
+      margin-top: 0.15rem;
+    }
+
+    .contact-detail a {
+      color: var(--primary);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s ease;
+    }
+
+    .contact-detail a:hover {
+      border-bottom-color: var(--primary);
+    }
+
+    .map-placeholder {
+      width: 100%;
+      height: 200px;
+      background-color: var(--secondary);
+      border: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1.5rem;
+      color: var(--text);
+      opacity: 0.4;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1rem;
+      letter-spacing: 0.1em;
+    }
+
+    .family-story {
+      background-color: var(--secondary);
+      padding: 1.8rem;
+      margin-top: 2rem;
+      border-left: 3px solid var(--accent);
+    }
+
+    .family-story p {
+      font-style: italic;
+      font-size: 0.95rem;
+      line-height: 1.8;
+      opacity: 0.85;
+    }
+
+    /* ============ RESERVATION FORM ============ */
+    .reservation-form {
+      background-color: var(--secondary);
+      padding: 2.5rem;
+    }
+
+    .reservation-form h3 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text);
+      margin-bottom: 0.4rem;
+      font-weight: 600;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      font-family: 'Lora', Georgia, serif;
+      font-size: 0.92rem;
+      color: var(--text);
+      background-color: var(--background);
+      border: 1px solid var(--border-subtle);
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--primary);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-submit {
+      margin-top: 1.5rem;
+    }
+
+    .form-submit .btn {
+      width: 100%;
+      text-align: center;
+    }
+
+    /* ============ FOOTER ============ */
+    .footer {
+      background-color: var(--primary-dark);
+      color: rgba(245, 237, 224, 0.7);
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: var(--secondary);
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-tagline {
+      font-style: italic;
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+      opacity: 0.7;
+    }
+
+    .footer-divider {
+      width: 60px;
+      height: 1px;
+      background-color: var(--accent);
+      margin: 1.5rem auto;
+      opacity: 0.4;
+    }
+
+    .footer-legal {
+      font-size: 0.8rem;
+      opacity: 0.5;
+    }
+
+    .footer-legal a {
+      color: rgba(245, 237, 224, 0.7);
+      text-decoration: none;
+    }
+
+    .footer-legal a:hover {
+      color: var(--secondary);
+    }
+
+    /* ============ DEMO BANNER ============ */
+    .demo-banner {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 200;
+      background-color: var(--primary-dark);
+      color: var(--secondary);
+      text-align: center;
+      padding: 0.7rem 1rem;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+    }
+
+    .demo-banner a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+      margin-left: 0.5rem;
+    }
+
+    .demo-banner a:hover {
+      text-decoration: underline;
+    }
+
+    /* ============ RESPONSIVE ============ */
+    @media (max-width: 900px) {
+      .besuch-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        background-color: rgba(251, 247, 240, 0.98);
+        padding: 1.5rem 2rem;
+        gap: 1rem;
+        box-shadow: 0 4px 20px rgba(44, 24, 16, 0.1);
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+
+      .nav-links a {
+        color: var(--text);
+        font-size: 1rem;
+      }
+
+      .nav-toggle {
+        display: flex;
+      }
+
+      .section {
+        padding: 4rem 1.5rem;
+      }
+
+      .weinkarte-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-cta-group {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .btn {
+        width: 100%;
+        max-width: 280px;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navigation -->
+  <nav class="nav" id="mainNav">
+    <a href="#" class="nav-logo">Rebstock</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#weinkarte">Weinkarte</a></li>
+      <li><a href="#besuch">Besuch</a></li>
+      <li><a href="#reservierung">Reservieren</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="Navigation umschalten">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg">
+      <img
+        src="https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?w=1920&q=80&auto=format"
+        alt="Weinberge an der Mosel im warmen Abendlicht"
+        loading="eager"
+      />
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-ornament">~ ~ ~</div>
+      <h1 class="hero-title">Wo die Mosel<br />den <em>Wein</em> küsst.</h1>
+      <p class="hero-subtitle">Wein, wie er sein soll.</p>
+      <p class="hero-family">Familie Schommer, seit drei Generationen</p>
+      <div class="hero-cta-group">
+        <a href="#weinkarte" class="btn btn-primary">Weinkarte ansehen</a>
+        <a href="#reservierung" class="btn btn-outline">Tisch reservieren</a>
+      </div>
+    </div>
+    <div class="hero-scroll-hint">Entdecken</div>
+  </section>
+
+  <!-- Weinkarte -->
+  <section class="section weinkarte" id="weinkarte">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label">Aus unseren Weinbergen</p>
+        <h2 class="section-title">Weinkarte &amp; Genuss</h2>
+        <div class="section-divider">&diams;</div>
+        <p class="section-description" style="margin-top: 1rem;">
+          Unsere Weine wachsen auf Schieferböden direkt über der Mosel. Dazu servieren wir hausgemachte Kleinigkeiten aus der Region.
+        </p>
+      </div>
+
+      <div class="weinkarte-grid">
+        <!-- Wein 1 -->
+        <div class="wine-card">
+          <div class="wine-card-badge">Hauswein</div>
+          <div class="wine-card-icon">&xi;</div>
+          <p class="wine-card-category">Weisswein</p>
+          <h3 class="wine-card-name">Longuicher Riesling</h3>
+          <p class="wine-card-grape">Riesling, trocken &middot; 2024</p>
+          <p class="wine-card-desc">
+            Frisch und mineralisch mit feiner Schiefernote. Aromen von grünem Apfel und Zitrus. Der Klassiker vom eigenen Weinberg.
+          </p>
+          <p class="wine-card-price">4,80 &euro; <span class="wine-card-unit">/ 0,2l</span></p>
+        </div>
+
+        <!-- Wein 2 -->
+        <div class="wine-card">
+          <div class="wine-card-icon">&xi;</div>
+          <p class="wine-card-category">Weisswein</p>
+          <h3 class="wine-card-name">Maximiner Spätlese</h3>
+          <p class="wine-card-grape">Riesling, feinherb &middot; 2023</p>
+          <p class="wine-card-desc">
+            Goldgelb schimmernd, am Gaumen reife Pfirsiche und ein Hauch Honig. Elegant und vielschichtig.
+          </p>
+          <p class="wine-card-price">6,20 &euro; <span class="wine-card-unit">/ 0,2l</span></p>
+        </div>
+
+        <!-- Wein 3 -->
+        <div class="wine-card">
+          <div class="wine-card-icon">&xi;</div>
+          <p class="wine-card-category">Rotwein</p>
+          <h3 class="wine-card-name">Dornfelder</h3>
+          <p class="wine-card-grape">Dornfelder, halbtrocken &middot; 2023</p>
+          <p class="wine-card-desc">
+            Samtig und vollmundig mit Aromen dunkler Beeren. Ein kräftiger Roter, der perfekt zur Winzerplatte passt.
+          </p>
+          <p class="wine-card-price">5,40 &euro; <span class="wine-card-unit">/ 0,2l</span></p>
+        </div>
+
+        <!-- Essen -->
+        <div class="wine-card">
+          <div class="wine-card-badge">Empfehlung</div>
+          <div class="wine-card-icon">&hearts;</div>
+          <p class="wine-card-category">Aus der Küche</p>
+          <h3 class="wine-card-name">Winzerplatte</h3>
+          <p class="wine-card-grape">Für 2 Personen</p>
+          <p class="wine-card-desc">
+            Hausmacher Schinken, Leberwurst, Harzer Käse, Schmalz, Gewürzgurken und frisches Bauernbrot. Die volle Moselromantik.
+          </p>
+          <p class="wine-card-price">16,50 &euro; <span class="wine-card-unit">/ Platte</span></p>
+        </div>
+      </div>
+
+      <p class="weinkarte-note">
+        Die vollständige Karte mit Flammkuchen, Federweißer (saisonal) und offenen Weinen erhalten Sie vor Ort.
+      </p>
+    </div>
+  </section>
+
+  <!-- Besuch & Kontakt -->
+  <section class="section besuch" id="besuch">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label">Willkommen bei uns</p>
+        <h2 class="section-title">Besuchen Sie den Rebstock</h2>
+        <div class="section-divider">&diams;</div>
+      </div>
+
+      <div class="besuch-grid">
+        <!-- Linke Seite: Infos -->
+        <div class="besuch-info">
+          <h3>Öffnungszeiten</h3>
+          <span class="season-badge">Saison: März bis Oktober</span>
+          <ul class="opening-hours">
+            <li>
+              <span class="day">Mittwoch &ndash; Freitag</span>
+              <span class="time">16:00 &ndash; 22:00</span>
+            </li>
+            <li>
+              <span class="day">Samstag</span>
+              <span class="time">14:00 &ndash; 23:00</span>
+            </li>
+            <li>
+              <span class="day">Sonn- &amp; Feiertage</span>
+              <span class="time">12:00 &ndash; 21:00</span>
+            </li>
+            <li>
+              <span class="day">Montag &amp; Dienstag</span>
+              <span class="time">Ruhetage</span>
+            </li>
+          </ul>
+
+          <h3>Anfahrt &amp; Kontakt</h3>
+          <div class="contact-detail">
+            <span class="contact-detail-icon">&#9906;</span>
+            <span>Maximinerstraße 12<br />54340 Longuich an der Mosel</span>
+          </div>
+          <div class="contact-detail">
+            <span class="contact-detail-icon">&#9742;</span>
+            <a href="tel:+496502003456">06502 &mdash; 34 56</a>
+          </div>
+
+          <div class="map-placeholder">
+            Kartenansicht &middot; Longuich an der Mosel
+          </div>
+
+          <div class="family-story">
+            <p>
+              Seit drei Generationen bewirtschaftet Familie Schommer die Steillagen über der Mosel. Was als kleine Straußwirtschaft mit ein paar Flaschen eigenem Wein begann, ist heute ein Ort, an dem Tradition und Genuss zusammenkommen &mdash; ehrlich, ohne Schnörkel, mit Liebe zum Wein.
+            </p>
+          </div>
+        </div>
+
+        <!-- Rechte Seite: Reservierungsformular -->
+        <div id="reservierung">
+          <div class="reservation-form">
+            <h3>Tisch reservieren</h3>
+            <form action="#" method="POST">
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" placeholder="Ihr Name" required />
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="date">Datum</label>
+                  <input type="date" id="date" name="date" required />
+                </div>
+                <div class="form-group">
+                  <label for="time">Uhrzeit</label>
+                  <select id="time" name="time" required>
+                    <option value="">Bitte wählen</option>
+                    <option value="12:00">12:00</option>
+                    <option value="14:00">14:00</option>
+                    <option value="16:00">16:00</option>
+                    <option value="17:00">17:00</option>
+                    <option value="18:00">18:00</option>
+                    <option value="19:00">19:00</option>
+                    <option value="20:00">20:00</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="guests">Personen</label>
+                  <select id="guests" name="guests" required>
+                    <option value="">Anzahl</option>
+                    <option value="1">1 Person</option>
+                    <option value="2">2 Personen</option>
+                    <option value="3">3 Personen</option>
+                    <option value="4">4 Personen</option>
+                    <option value="5">5 Personen</option>
+                    <option value="6">6 Personen</option>
+                    <option value="7+">7+ Personen</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="phone">Telefon</label>
+                  <input type="tel" id="phone" name="phone" placeholder="Für Rückfragen" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="message">Anmerkungen</label>
+                <textarea id="message" name="message" placeholder="Allergien, besondere Wünsche..."></textarea>
+              </div>
+
+              <div class="form-submit">
+                <button type="submit" class="btn btn-primary">Reservierung anfragen</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-logo">Rebstock</div>
+    <p class="footer-tagline">Wein, wie er sein soll.</p>
+    <div class="footer-divider"></div>
+    <p class="footer-legal">
+      &copy; 2026 Straußwirtschaft Rebstock &middot; Familie Schommer &middot; Longuich an der Mosel<br />
+      <a href="#">Impressum</a> &middot; <a href="#">Datenschutz</a>
+    </p>
+  </footer>
+
+  <!-- Demo Banner -->
+  <div class="demo-banner">
+    Demo-Website &mdash; Stil: Weinstube / Moselromantik
+    <a href="/">Zurück zur Übersicht</a>
+  </div>
+
+  <script>
+    // Navbar scroll effect
+    const nav = document.getElementById('mainNav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    });
+
+    // Mobile nav toggle
+    const navToggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+    navToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+      nav.classList.add('scrolled');
+    });
+
+    // Close mobile nav on link click
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+      });
+    });
+  </script>
+</body>
+</html>

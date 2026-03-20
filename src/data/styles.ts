@@ -73,7 +73,7 @@ export const styles: StyleEntry[] = [
       display: "DM Sans",
       body: "DM Sans",
     },
-    ready: false,
+    ready: true,
   },
   {
     slug: "bold-graphic",
@@ -98,7 +98,7 @@ export const styles: StyleEntry[] = [
       display: "Space Grotesk",
       body: "Space Grotesk",
     },
-    ready: false,
+    ready: true,
   },
   {
     slug: "weinstube-moselromantik",
@@ -123,7 +123,7 @@ export const styles: StyleEntry[] = [
       display: "Cormorant Garamond",
       body: "Lora",
     },
-    ready: false,
+    ready: true,
   },
   {
     slug: "athletic-bold",
@@ -148,7 +148,7 @@ export const styles: StyleEntry[] = [
       display: "Bebas Neue",
       body: "Inter",
     },
-    ready: false,
+    ready: true,
   },
   {
     slug: "street-food",
@@ -173,7 +173,7 @@ export const styles: StyleEntry[] = [
       display: "Fredoka",
       body: "Nunito",
     },
-    ready: false,
+    ready: true,
   },
 ];
 
