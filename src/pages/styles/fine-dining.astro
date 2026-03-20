@@ -1,0 +1,478 @@
+---
+export const prerender = true;
+---
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grotte — Restaurant & Weinbegleitung</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      overflow-x: hidden;
+    }
+
+    body {
+      overflow-x: hidden;
+      background-color: #0E0C09;
+      color: #EDE8DF;
+      font-family: 'Raleway', sans-serif;
+    }
+
+    /* ── FILM GRAIN OVERLAY ── */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeBlend in='SourceGraphic' mode='multiply'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)' opacity='0.08'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 200px 200px;
+      pointer-events: none;
+      z-index: 999;
+      mix-blend-mode: overlay;
+      opacity: 0.6;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 700px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Ambient glow */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 40% at 50% 60%, rgba(212, 175, 55, 0.04) 0%, transparent 70%),
+        radial-gradient(ellipse 80% 60% at 50% 100%, rgba(139, 115, 85, 0.08) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* ── LETTERBOX IMAGE ── */
+    .image-container {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 40%;
+      display: block;
+      animation: kenBurns 30s ease-in-out infinite alternate;
+      will-change: transform;
+    }
+
+    @keyframes kenBurns {
+      0%   { transform: scale(1) translate(0, 0); }
+      33%  { transform: scale(1.05) translate(-1%, 0.5%); }
+      66%  { transform: scale(1.08) translate(1%, -0.5%); }
+      100% { transform: scale(1.04) translate(-0.5%, 1%); }
+    }
+
+    /* Vignette */
+    .vignette {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 85% 80% at 50% 50%, transparent 30%, rgba(14, 12, 9, 0.55) 70%, rgba(14, 12, 9, 0.92) 100%),
+        linear-gradient(to bottom, rgba(14, 12, 9, 0.65) 0%, rgba(14, 12, 9, 0.1) 25%, rgba(14, 12, 9, 0.1) 75%, rgba(14, 12, 9, 0.75) 100%);
+      z-index: 1;
+    }
+
+    /* Letterbox bars */
+    .letterbox-top,
+    .letterbox-bottom {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 14vh;
+      background: #0E0C09;
+      z-index: 2;
+    }
+
+    .letterbox-top { top: 0; }
+    .letterbox-bottom { bottom: 0; }
+
+    /* ── CONTENT ── */
+    .content {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 0 24px;
+      width: 100%;
+      max-width: 1100px;
+    }
+
+    /* Restaurant name — top */
+    .restaurant-name {
+      font-family: 'Raleway', sans-serif;
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.55em;
+      text-transform: uppercase;
+      color: #D4AF37;
+      margin-bottom: 32px;
+      opacity: 0;
+      transform: translateY(-12px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+
+    .restaurant-name.visible { opacity: 1; transform: translateY(0); }
+
+    /* Gold separator line above name */
+    .top-line {
+      width: 60px;
+      height: 1px;
+      background: linear-gradient(to right, transparent, #D4AF37, transparent);
+      margin: 0 auto 16px;
+      opacity: 0;
+      transition: opacity 0.8s 0.1s ease;
+    }
+
+    .top-line.visible { opacity: 1; }
+
+    /* Headline */
+    .headline {
+      font-family: 'Cormorant', serif;
+      font-size: clamp(52px, 7vw, 96px);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.05;
+      color: #EDE8DF;
+      margin-bottom: 40px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1s 0.25s ease, transform 1s 0.25s ease;
+    }
+
+    .headline.visible { opacity: 1; transform: translateY(0); }
+
+    .headline em {
+      font-style: normal;
+      color: #D4AF37;
+    }
+
+    /* Gold separator */
+    .gold-separator {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px;
+      opacity: 0;
+      transition: opacity 0.9s 0.5s ease;
+    }
+
+    .gold-separator.visible { opacity: 1; }
+
+    .gold-line {
+      height: 1px;
+      width: 120px;
+      background: linear-gradient(to right, transparent, #D4AF37);
+    }
+
+    .gold-line.right {
+      background: linear-gradient(to left, transparent, #D4AF37);
+    }
+
+    .gold-diamond {
+      width: 6px;
+      height: 6px;
+      background: #D4AF37;
+      transform: rotate(45deg);
+      flex-shrink: 0;
+    }
+
+    /* Opening info */
+    .opening-info {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.9s 0.65s ease, transform 0.9s 0.65s ease;
+    }
+
+    .opening-info.visible { opacity: 1; transform: translateY(0); }
+
+    .opening-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .opening-label {
+      font-family: 'Raleway', sans-serif;
+      font-size: 8px;
+      font-weight: 300;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: #8B7355;
+    }
+
+    .opening-value {
+      font-family: 'Cormorant', serif;
+      font-size: 15px;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      color: #EDE8DF;
+    }
+
+    .opening-divider {
+      width: 1px;
+      height: 28px;
+      background: rgba(212, 175, 55, 0.2);
+    }
+
+    /* Reservation CTA */
+    .cta-area {
+      margin-top: 36px;
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 0.9s 0.85s ease, transform 0.9s 0.85s ease;
+    }
+
+    .cta-area.visible { opacity: 1; transform: translateY(0); }
+
+    .cta-btn {
+      display: inline-block;
+      padding: 14px 40px;
+      border: 1px solid rgba(212, 175, 55, 0.5);
+      font-family: 'Raleway', sans-serif;
+      font-size: 9px;
+      font-weight: 400;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: #D4AF37;
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+      transition: color 0.4s ease, border-color 0.4s ease;
+    }
+
+    .cta-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(212, 175, 55, 0.08);
+      transform: translateX(-101%);
+      transition: transform 0.4s ease;
+    }
+
+    .cta-btn:hover::before { transform: translateX(0); }
+    .cta-btn:hover { border-color: #D4AF37; }
+
+    /* ── GOLD PARTICLES ── */
+    .particles-container {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      bottom: -10px;
+      width: 2px;
+      height: 2px;
+      background: #D4AF37;
+      border-radius: 50%;
+      opacity: 0;
+      animation: particleFloat linear infinite;
+    }
+
+    @keyframes particleFloat {
+      0%   { opacity: 0; transform: translateY(0) translateX(0) scale(1); }
+      10%  { opacity: 0.7; }
+      80%  { opacity: 0.3; }
+      100% { opacity: 0; transform: translateY(-85vh) translateX(var(--drift)) scale(0.4); }
+    }
+
+    /* ── SCROLL INDICATOR ── */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 16vh;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      z-index: 4;
+      opacity: 0;
+      transition: opacity 1s 1.2s ease;
+    }
+
+    .scroll-indicator.visible { opacity: 1; }
+
+    .scroll-text {
+      font-family: 'Raleway', sans-serif;
+      font-size: 8px;
+      font-weight: 300;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: rgba(212, 175, 55, 0.5);
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, rgba(212, 175, 55, 0.6), transparent);
+      animation: scrollPulse 2.2s ease-in-out infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%   { opacity: 0.3; transform: scaleY(0.8) translateY(-4px); }
+      50%  { opacity: 1; transform: scaleY(1.1) translateY(0); }
+      100% { opacity: 0.3; transform: scaleY(0.8) translateY(4px); }
+    }
+
+    /* ── CORNER DETAILS ── */
+    .corner {
+      position: absolute;
+      z-index: 3;
+      width: 40px;
+      height: 40px;
+      pointer-events: none;
+    }
+
+    .corner-tl { top: calc(14vh + 16px); left: 24px; border-top: 1px solid rgba(212, 175, 55, 0.25); border-left: 1px solid rgba(212, 175, 55, 0.25); }
+    .corner-tr { top: calc(14vh + 16px); right: 24px; border-top: 1px solid rgba(212, 175, 55, 0.25); border-right: 1px solid rgba(212, 175, 55, 0.25); }
+    .corner-bl { bottom: calc(14vh + 16px); left: 24px; border-bottom: 1px solid rgba(212, 175, 55, 0.25); border-left: 1px solid rgba(212, 175, 55, 0.25); }
+    .corner-br { bottom: calc(14vh + 16px); right: 24px; border-bottom: 1px solid rgba(212, 175, 55, 0.25); border-right: 1px solid rgba(212, 175, 55, 0.25); }
+
+    @media (max-width: 700px) {
+      .gold-line { width: 60px; }
+      .opening-info { gap: 16px; }
+      .letterbox-top, .letterbox-bottom { height: 10vh; }
+      .scroll-indicator { bottom: 12vh; }
+      .corner-tl, .corner-tr { top: calc(10vh + 12px); }
+      .corner-bl, .corner-br { bottom: calc(10vh + 12px); }
+    }
+  </style>
+</head>
+<body>
+  <main class="hero">
+    <!-- Background image -->
+    <div class="image-container">
+      <img
+        src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1400&q=80&auto=format"
+        alt="Grotte Fine Dining"
+        loading="eager"
+      />
+    </div>
+
+    <div class="vignette"></div>
+    <div class="letterbox-top"></div>
+    <div class="letterbox-bottom"></div>
+
+    <!-- Particles -->
+    <div class="particles-container" id="particlesContainer"></div>
+
+    <!-- Corner accents -->
+    <div class="corner corner-tl"></div>
+    <div class="corner corner-tr"></div>
+    <div class="corner corner-bl"></div>
+    <div class="corner corner-br"></div>
+
+    <!-- Content -->
+    <div class="content">
+      <div class="top-line animate-el"></div>
+      <p class="restaurant-name animate-el">Grotte &mdash; Trier</p>
+      <h1 class="headline animate-el">Essen als <em>Erlebnis.</em></h1>
+
+      <div class="gold-separator animate-el">
+        <div class="gold-line"></div>
+        <div class="gold-diamond"></div>
+        <div class="gold-line right"></div>
+      </div>
+
+      <div class="opening-info animate-el">
+        <div class="opening-item">
+          <span class="opening-label">Dienstag – Samstag</span>
+          <span class="opening-value">18:00 – 23:00</span>
+        </div>
+        <div class="opening-divider"></div>
+        <div class="opening-item">
+          <span class="opening-label">Weinbegleitung</span>
+          <span class="opening-value">ab 5 Personen</span>
+        </div>
+        <div class="opening-divider"></div>
+        <div class="opening-item">
+          <span class="opening-label">Tisch reservieren</span>
+          <span class="opening-value">+49 651 · · · · · ·</span>
+        </div>
+      </div>
+
+      <div class="cta-area animate-el">
+        <a href="#" class="cta-btn">Reservierung anfragen</a>
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="scroll-indicator animate-el">
+      <span class="scroll-text">Entdecken</span>
+      <div class="scroll-line"></div>
+    </div>
+  </main>
+
+  <script>
+    // Entrance animations
+    const elements = document.querySelectorAll('.animate-el');
+    requestAnimationFrame(() => {
+      elements.forEach((el, i) => {
+        setTimeout(() => {
+          el.classList.add('visible');
+        }, i * 120);
+      });
+    });
+
+    // Gold particles
+    const container = document.getElementById('particlesContainer');
+    const PARTICLE_COUNT = 15;
+
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
+      const particle = document.createElement('div');
+      particle.classList.add('particle');
+
+      const leftPct = 15 + Math.random() * 70;
+      const duration = 12 + Math.random() * 18;
+      const delay = Math.random() * 20;
+      const drift = (Math.random() - 0.5) * 80;
+      const size = 1 + Math.random() * 2.5;
+
+      particle.style.cssText = `
+        left: ${leftPct}%;
+        width: ${size}px;
+        height: ${size}px;
+        animation-duration: ${duration}s;
+        animation-delay: ${delay}s;
+        --drift: ${drift}px;
+      `;
+
+      container.appendChild(particle);
+    }
+  </script>
+</body>
+</html>

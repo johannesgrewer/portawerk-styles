@@ -1,0 +1,307 @@
+---
+export const prerender = true;
+---
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LINIE — Conceptstore & Modeatelier Trier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,700;1,6..96,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      overflow-x: hidden;
+      height: 100%;
+    }
+
+    body {
+      overflow-x: hidden;
+      height: 100%;
+      background: #F5F4F0;
+      color: #1A1A1A;
+      font-family: 'Jost', sans-serif;
+    }
+
+    .hero {
+      display: flex;
+      width: 100vw;
+      height: 100vh;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Vertical running text on far left edge */
+    .hero__vertical-label {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%) rotate(-90deg);
+      transform-origin: center center;
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #1A1A1A;
+      white-space: nowrap;
+      z-index: 10;
+      opacity: 0;
+      animation: fadeIn 0.8s ease forwards 3.2s;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      transform: rotate(180deg);
+      width: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Left panel */
+    .hero__left {
+      width: 45%;
+      height: 100%;
+      background: #F5F4F0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 5vh 4vw 5vh 3.5rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero__season {
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #1A1A1A;
+      opacity: 0;
+      transform: translateY(10px);
+      animation: riseIn 0.6s ease forwards 0.3s;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero__brand {
+      font-family: 'Bodoni Moda', serif;
+      font-weight: 700;
+      font-size: clamp(4.5rem, 9vw, 8.5rem);
+      line-height: 0.92;
+      letter-spacing: -0.02em;
+      color: #1A1A1A;
+      margin-bottom: 2rem;
+      overflow: hidden;
+    }
+
+    .hero__brand .letter {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(110%);
+      animation: letterRise 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .hero__tagline {
+      font-family: 'Bodoni Moda', serif;
+      font-style: italic;
+      font-size: clamp(1rem, 1.6vw, 1.35rem);
+      font-weight: 400;
+      color: #1A1A1A;
+      opacity: 0;
+      transform: translateY(8px);
+      animation: riseIn 0.7s ease forwards 1.8s;
+      margin-bottom: 2.5rem;
+      letter-spacing: 0.01em;
+    }
+
+    .hero__divider {
+      width: 100%;
+      height: 1px;
+      background: #1A1A1A;
+      opacity: 0;
+      transform: scaleX(0);
+      transform-origin: left center;
+      animation: expandLine 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards 2.2s;
+      margin-bottom: 1.2rem;
+    }
+
+    .hero__atelier {
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #1A1A1A;
+      opacity: 0;
+      transform: translateY(8px);
+      animation: riseIn 0.6s ease forwards 2.6s;
+    }
+
+    .hero__accent-dot {
+      display: inline-block;
+      width: 4px;
+      height: 4px;
+      background: #8B0000;
+      border-radius: 50%;
+      margin: 0 0.6em;
+      vertical-align: middle;
+    }
+
+    /* Right panel — image */
+    .hero__right {
+      width: 55%;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero__image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      filter: grayscale(100%);
+      animation: colorReveal 1.5s ease forwards 2s;
+    }
+
+    /* Thin left border/shadow between panels */
+    .hero__right::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: #F5F4F0;
+      z-index: 3;
+    }
+
+    /* Vertical accent line on the right panel */
+    .hero__image-label {
+      position: absolute;
+      right: 1.5rem;
+      bottom: 3rem;
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      font-size: 0.55rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(245, 244, 240, 0.75);
+      z-index: 4;
+      writing-mode: vertical-rl;
+      opacity: 0;
+      animation: fadeIn 0.8s ease forwards 3.4s;
+    }
+
+    /* Red accent mark */
+    .hero__red-mark {
+      position: absolute;
+      top: 5vh;
+      right: 0;
+      width: 3px;
+      height: 0;
+      background: #8B0000;
+      z-index: 5;
+      animation: growDown 1s cubic-bezier(0.22, 1, 0.36, 1) forwards 0.8s;
+    }
+
+    /* Issue number / editorial detail */
+    .hero__issue {
+      position: absolute;
+      bottom: 3rem;
+      left: 3.5rem;
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(26,26,26,0.35);
+      opacity: 0;
+      animation: fadeIn 0.8s ease forwards 3s;
+    }
+
+    /* ---- Keyframes ---- */
+
+    @keyframes riseIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    @keyframes letterRise {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes expandLine {
+      to { opacity: 1; transform: scaleX(1); }
+    }
+
+    @keyframes colorReveal {
+      to { filter: grayscale(0%); }
+    }
+
+    @keyframes growDown {
+      to { height: clamp(80px, 12vh, 140px); }
+    }
+  </style>
+</head>
+<body>
+  <section class="hero">
+
+    <!-- Far-left vertical label -->
+    <div class="hero__vertical-label" aria-hidden="true">Conceptstore &amp; Modeatelier</div>
+
+    <!-- Left content panel -->
+    <div class="hero__left">
+      <p class="hero__season">SS 26 <span class="hero__accent-dot"></span> Kollektion</p>
+
+      <h1 class="hero__brand" aria-label="LINIE">
+        <!-- Letters injected by JS for stagger -->
+      </h1>
+
+      <p class="hero__tagline">Weniger. Besser.</p>
+
+      <div class="hero__divider"></div>
+
+      <p class="hero__atelier">Atelier Trier</p>
+
+      <p class="hero__issue">No. 08 — 2026</p>
+    </div>
+
+    <!-- Right image panel -->
+    <div class="hero__right">
+      <img
+        class="hero__image"
+        src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=80&auto=format"
+        alt="Linie Modekollektion"
+        loading="eager"
+        decoding="async"
+      />
+      <div class="hero__red-mark"></div>
+      <p class="hero__image-label" aria-hidden="true">Frühjahr / Sommer</p>
+    </div>
+
+  </section>
+
+  <script>
+    // Stagger brand name letters
+    const brand = 'LINIE';
+    const brandEl = document.querySelector('.hero__brand');
+    const delays = [0.6, 0.75, 0.9, 1.05, 1.2];
+
+    brand.split('').forEach((char, i) => {
+      const span = document.createElement('span');
+      span.classList.add('letter');
+      span.textContent = char;
+      span.style.animationDelay = delays[i] + 's';
+      brandEl.appendChild(span);
+    });
+  </script>
+</body>
+</html>
