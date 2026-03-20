@@ -48,7 +48,7 @@ export const styles: StyleEntry[] = [
       display: "Playfair Display",
       body: "Inter",
     },
-    ready: false,
+    ready: true,
   },
   {
     slug: "scandinavian-soft",

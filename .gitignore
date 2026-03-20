@@ -33,3 +33,5 @@ screenshots/
 
 # jetbrains setting folder
 .idea/
+
+.vercel
