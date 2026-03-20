@@ -1,0 +1,859 @@
+---
+export const prerender = true;
+---
+
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Miteinander — Nachbarschaftsverein Trier-Sued</title>
+  <meta name="description" content="Miteinander — Nachbarschaftsverein in Trier-Sued. Repair Cafe, Nachbarschaftsgarten, Sprachcafe und mehr. Seit 2019." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Nunito+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Nunito Sans', sans-serif;
+      color: #1C1917;
+      background-color: #FFFBF5;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Outfit', sans-serif;
+      line-height: 1.2;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(255, 251, 245, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(28, 25, 23, 0.06);
+      padding: 0 2rem;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 1.35rem;
+      color: #2563EB;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-logo-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #EA580C;
+      display: inline-block;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #1C1917;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: #2563EB;
+    }
+
+    .nav-cta {
+      background: #2563EB;
+      color: #fff !important;
+      padding: 0.55rem 1.3rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .nav-cta:hover {
+      background: #1d4ed8;
+      transform: translateY(-1px);
+    }
+
+    /* Mobile menu */
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      width: 32px;
+      height: 32px;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .nav-toggle span {
+      display: block;
+      width: 24px;
+      height: 2.5px;
+      background: #1C1917;
+      border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+
+    @media (max-width: 768px) {
+      .nav-toggle {
+        display: flex;
+      }
+
+      .nav-links {
+        position: fixed;
+        top: 72px;
+        left: 0;
+        right: 0;
+        background: rgba(255, 251, 245, 0.98);
+        backdrop-filter: blur(12px);
+        flex-direction: column;
+        align-items: center;
+        padding: 2rem;
+        gap: 1.5rem;
+        transform: translateY(-120%);
+        transition: transform 0.3s ease;
+        border-bottom: 1px solid rgba(28, 25, 23, 0.08);
+      }
+
+      .nav-links.open {
+        transform: translateY(0);
+      }
+    }
+
+    /* ===== HERO — PEOPLE GRID ===== */
+    .hero {
+      min-height: 100vh;
+      padding: 120px 2rem 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      background: #FFFBF5;
+    }
+
+    .hero-inner {
+      max-width: 1100px;
+      width: 100%;
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 3rem;
+      min-height: 520px;
+    }
+
+    .hero-text {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-text h1 {
+      font-size: clamp(2.5rem, 5.5vw, 4.2rem);
+      font-weight: 800;
+      color: #1C1917;
+      margin-bottom: 1.2rem;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-text h1 span {
+      color: #2563EB;
+    }
+
+    .hero-subtitle {
+      font-size: 1.05rem;
+      color: #78716c;
+      margin-bottom: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+    }
+
+    .hero-subtitle .divider {
+      color: #d6d3d1;
+      margin: 0 0.2rem;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #EA580C;
+      color: #fff;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      padding: 0.9rem 2rem;
+      border-radius: 60px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(234, 88, 12, 0.25);
+    }
+
+    .hero-cta:hover {
+      background: #c2410c;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 28px rgba(234, 88, 12, 0.35);
+    }
+
+    /* People grid in hero */
+    .people-grid {
+      position: relative;
+      width: 100%;
+      height: 480px;
+      z-index: 1;
+    }
+
+    .people-grid .portrait {
+      position: absolute;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid #fff;
+      box-shadow: 0 8px 30px rgba(28, 25, 23, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .people-grid .portrait:hover {
+      transform: scale(1.08);
+      z-index: 10;
+    }
+
+    .portrait-1 {
+      width: 150px; height: 150px;
+      top: 0; left: 10%;
+    }
+
+    .portrait-2 {
+      width: 120px; height: 120px;
+      top: 30px; right: 5%;
+    }
+
+    .portrait-3 {
+      width: 170px; height: 170px;
+      top: 140px; left: 35%;
+      z-index: 3;
+    }
+
+    .portrait-4 {
+      width: 110px; height: 110px;
+      top: 180px; left: 5%;
+    }
+
+    .portrait-5 {
+      width: 140px; height: 140px;
+      top: 280px; right: 15%;
+    }
+
+    .portrait-6 {
+      width: 100px; height: 100px;
+      top: 340px; left: 25%;
+    }
+
+    /* Decorative dots */
+    .dot {
+      position: absolute;
+      border-radius: 50%;
+      z-index: 0;
+    }
+
+    .dot-blue-1 {
+      width: 18px; height: 18px;
+      background: #2563EB;
+      top: 60px; left: 2%;
+    }
+
+    .dot-orange-1 {
+      width: 12px; height: 12px;
+      background: #EA580C;
+      top: 120px; right: 2%;
+    }
+
+    .dot-blue-2 {
+      width: 10px; height: 10px;
+      background: #2563EB;
+      opacity: 0.5;
+      top: 300px; left: 0;
+    }
+
+    .dot-orange-2 {
+      width: 22px; height: 22px;
+      background: #EA580C;
+      opacity: 0.6;
+      top: 400px; right: 8%;
+    }
+
+    .dot-blue-3 {
+      width: 14px; height: 14px;
+      background: #2563EB;
+      opacity: 0.4;
+      bottom: 20px; left: 45%;
+    }
+
+    .dot-orange-3 {
+      width: 8px; height: 8px;
+      background: #EA580C;
+      top: 10px; left: 55%;
+    }
+
+    @media (max-width: 768px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 2rem;
+      }
+
+      .hero-subtitle {
+        justify-content: center;
+      }
+
+      .people-grid {
+        height: 320px;
+        order: -1;
+      }
+
+      .portrait-1 { width: 100px; height: 100px; top: 0; left: 5%; }
+      .portrait-2 { width: 85px; height: 85px; top: 10px; right: 5%; }
+      .portrait-3 { width: 120px; height: 120px; top: 80px; left: 30%; }
+      .portrait-4 { width: 75px; height: 75px; top: 130px; left: 2%; }
+      .portrait-5 { width: 95px; height: 95px; top: 190px; right: 10%; }
+      .portrait-6 { width: 70px; height: 70px; top: 220px; left: 20%; }
+    }
+
+    /* ===== SECTION: WAS WIR TUN ===== */
+    .section {
+      padding: 100px 2rem;
+    }
+
+    .section-initiatives {
+      background: #FFF7ED;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .section-label {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #EA580C;
+      margin-bottom: 0.8rem;
+    }
+
+    .section-header h2 {
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 800;
+      color: #1C1917;
+      letter-spacing: -0.02em;
+    }
+
+    .initiatives-grid {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+
+    .initiative-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 2rem;
+      transition: transform 0.3s, box-shadow 0.3s;
+      border: 1px solid rgba(28, 25, 23, 0.05);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .initiative-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      border-radius: 20px 20px 0 0;
+    }
+
+    .initiative-card:nth-child(1)::before { background: #2563EB; }
+    .initiative-card:nth-child(2)::before { background: #16a34a; }
+    .initiative-card:nth-child(3)::before { background: #EA580C; }
+    .initiative-card:nth-child(4)::before { background: #9333ea; }
+
+    .initiative-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(28, 25, 23, 0.08);
+    }
+
+    .initiative-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .initiative-card:nth-child(1) .initiative-icon {
+      background: #dbeafe;
+      color: #2563EB;
+    }
+    .initiative-card:nth-child(2) .initiative-icon {
+      background: #dcfce7;
+      color: #16a34a;
+    }
+    .initiative-card:nth-child(3) .initiative-icon {
+      background: #ffedd5;
+      color: #EA580C;
+    }
+    .initiative-card:nth-child(4) .initiative-icon {
+      background: #f3e8ff;
+      color: #9333ea;
+    }
+
+    .initiative-card h3 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: #1C1917;
+    }
+
+    .initiative-detail {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #78716c;
+      margin-bottom: 0.6rem;
+    }
+
+    .initiative-card p {
+      font-size: 0.98rem;
+      color: #57534e;
+      line-height: 1.65;
+    }
+
+    @media (max-width: 640px) {
+      .initiatives-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ===== SECTION: STIMMEN ===== */
+    .section-voices {
+      background: #FFFBF5;
+    }
+
+    .voices-grid {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .voice-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 2.2rem 1.8rem;
+      text-align: center;
+      border: 1px solid rgba(28, 25, 23, 0.05);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .voice-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(28, 25, 23, 0.08);
+    }
+
+    .voice-portrait {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 0 auto 1.2rem;
+      border: 3px solid #FFF7ED;
+      box-shadow: 0 4px 16px rgba(28, 25, 23, 0.08);
+    }
+
+    .voice-quote {
+      font-size: 1.05rem;
+      font-style: italic;
+      color: #44403c;
+      line-height: 1.7;
+      margin-bottom: 1.2rem;
+      position: relative;
+    }
+
+    .voice-quote::before {
+      content: '\201E';
+      font-family: 'Outfit', sans-serif;
+      font-size: 3rem;
+      color: #2563EB;
+      opacity: 0.3;
+      position: absolute;
+      top: -1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      line-height: 1;
+    }
+
+    .voice-name {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: #1C1917;
+    }
+
+    .voice-cta {
+      text-align: center;
+      margin-top: 3.5rem;
+    }
+
+    .voice-cta p {
+      font-size: 1.15rem;
+      color: #57534e;
+    }
+
+    .voice-cta a {
+      color: #2563EB;
+      font-weight: 700;
+      border-bottom: 2px solid #2563EB;
+      padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .voice-cta a:hover {
+      color: #EA580C;
+      border-color: #EA580C;
+    }
+
+    @media (max-width: 768px) {
+      .voices-grid {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+      }
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background: #1C1917;
+      color: #a8a29e;
+      text-align: center;
+      padding: 3rem 2rem;
+      font-size: 0.9rem;
+    }
+
+    .footer-name {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      color: #fff;
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .footer a {
+      color: #a8a29e;
+      transition: color 0.2s;
+    }
+
+    .footer a:hover {
+      color: #fff;
+    }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .hero-text {
+      animation: fadeInUp 0.8s ease forwards;
+    }
+
+    .people-grid .portrait {
+      opacity: 0;
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    .portrait-1 { animation-delay: 0.1s; }
+    .portrait-2 { animation-delay: 0.2s; }
+    .portrait-3 { animation-delay: 0.3s; }
+    .portrait-4 { animation-delay: 0.4s; }
+    .portrait-5 { animation-delay: 0.5s; }
+    .portrait-6 { animation-delay: 0.6s; }
+  </style>
+</head>
+
+<body>
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <a href="#" class="nav-logo">
+      <span class="nav-logo-dot"></span>
+      Miteinander
+    </a>
+    <button class="nav-toggle" aria-label="Menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="#initiativen">Initiativen</a></li>
+      <li><a href="#stimmen">Stimmen</a></li>
+      <li><a href="#mitmachen" class="nav-cta">Mitmachen</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO — PEOPLE GRID -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <h1>Gemeinsam<br>geht <span>mehr.</span></h1>
+        <div class="hero-subtitle">
+          <span>Nachbarschaftsverein Trier-Sued</span>
+          <span class="divider">&middot;</span>
+          <span>Seit 2019</span>
+          <span class="divider">&middot;</span>
+          <span>180 Mitglieder</span>
+        </div>
+        <a href="#mitmachen" class="hero-cta">Mitmachen &rarr;</a>
+      </div>
+      <div class="people-grid">
+        <!-- Diverse portraits from Unsplash -->
+        <img
+          src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=300&h=300&fit=crop&crop=face"
+          alt="Nachbarin laechelnd"
+          class="portrait portrait-1"
+          loading="eager"
+        />
+        <img
+          src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&crop=face"
+          alt="Nachbar Portrait"
+          class="portrait portrait-2"
+          loading="eager"
+        />
+        <img
+          src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=300&fit=crop&crop=face"
+          alt="Vereinsmitglied"
+          class="portrait portrait-3"
+          loading="eager"
+        />
+        <img
+          src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&h=300&fit=crop&crop=face"
+          alt="Mitglied im Garten"
+          class="portrait portrait-4"
+          loading="eager"
+        />
+        <img
+          src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=300&h=300&fit=crop&crop=face"
+          alt="Junge Nachbarin"
+          class="portrait portrait-5"
+          loading="eager"
+        />
+        <img
+          src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=300&h=300&fit=crop&crop=face"
+          alt="Nachbar beim Repair Cafe"
+          class="portrait portrait-6"
+          loading="eager"
+        />
+
+        <!-- Decorative dots -->
+        <span class="dot dot-blue-1"></span>
+        <span class="dot dot-orange-1"></span>
+        <span class="dot dot-blue-2"></span>
+        <span class="dot dot-orange-2"></span>
+        <span class="dot dot-blue-3"></span>
+        <span class="dot dot-orange-3"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: WAS WIR TUN -->
+  <section class="section section-initiatives" id="initiativen">
+    <div class="section-header">
+      <div class="section-label">Was wir tun</div>
+      <h2>Vier Initiativen, ein Ziel</h2>
+    </div>
+    <div class="initiatives-grid">
+
+      <div class="initiative-card fade-in">
+        <div class="initiative-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <h3>Repair Cafe</h3>
+        <div class="initiative-detail">Jeden 2. Samstag, Gemeindezentrum</div>
+        <p>Kaputt heisst nicht weg. Unsere Reparatur-Profis helfen bei Elektronik, Textilien und Moebeln — kostenlos und mit Kaffee.</p>
+      </div>
+
+      <div class="initiative-card fade-in">
+        <div class="initiative-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/></svg>
+        </div>
+        <h3>Nachbarschaftsgarten</h3>
+        <div class="initiative-detail">Hochbeete am Petrisberg</div>
+        <p>12 Hochbeete, eine Gemeinschaft. Hier waechst mehr als Gemuese — hier wachsen Freundschaften zwischen Generationen.</p>
+      </div>
+
+      <div class="initiative-card fade-in">
+        <div class="initiative-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 18a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2"/><rect width="18" height="18" x="3" y="4" rx="2"/><circle cx="12" cy="10" r="2"/><line x1="8" x2="8" y1="2" y2="4"/><line x1="16" x2="16" y1="2" y2="4"/></svg>
+        </div>
+        <h3>Sprachcafe</h3>
+        <div class="initiative-detail">Deutsch ueben bei Kaffee & Kuchen</div>
+        <p>Jeden Donnerstag treffen sich Menschen aus aller Welt, um gemeinsam Deutsch zu ueben. Ohne Druck, mit viel Kuchen.</p>
+      </div>
+
+      <div class="initiative-card fade-in">
+        <div class="initiative-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" x2="21" y1="6" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        </div>
+        <h3>Kinderflohmarkt</h3>
+        <div class="initiative-detail">4x im Jahr</div>
+        <p>Spielzeug, Kleidung, Buecher — von Familie zu Familie. Fair, guenstig und jedes Mal ein kleines Stadtteilfest.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECTION: STIMMEN -->
+  <section class="section section-voices" id="stimmen">
+    <div class="section-header">
+      <div class="section-label">Stimmen aus dem Verein</div>
+      <h2>Was unsere Nachbarn sagen</h2>
+    </div>
+    <div class="voices-grid">
+
+      <div class="voice-card fade-in">
+        <img
+          src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=200&h=200&fit=crop&crop=face"
+          alt="Maria, 67 Jahre"
+          class="voice-portrait"
+          loading="lazy"
+        />
+        <div class="voice-quote">
+          Seit ich hier bin, kenne ich endlich meine Nachbarn.
+        </div>
+        <div class="voice-name">Maria, 67</div>
+      </div>
+
+      <div class="voice-card fade-in">
+        <img
+          src="https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?w=200&h=200&fit=crop&crop=face"
+          alt="Yusuf, 34 Jahre"
+          class="voice-portrait"
+          loading="lazy"
+        />
+        <div class="voice-quote">
+          Das Repair Cafe hat meinen Staubsauger und mein Deutsch gerettet.
+        </div>
+        <div class="voice-name">Yusuf, 34</div>
+      </div>
+
+      <div class="voice-card fade-in">
+        <img
+          src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&h=200&fit=crop&crop=face"
+          alt="Lena, 28 Jahre"
+          class="voice-portrait"
+          loading="lazy"
+        />
+        <div class="voice-quote">
+          Mein Sohn liebt den Garten. Und ich den Kaffee danach.
+        </div>
+        <div class="voice-name">Lena, 28</div>
+      </div>
+
+    </div>
+
+    <div class="voice-cta fade-in" id="mitmachen">
+      <p>Mitmachen? <a href="mailto:verein@miteinander-trier.de">verein@miteinander-trier.de</a></p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-name">Miteinander e.V.</div>
+    <p>Nachbarschaftsverein Trier-Sued &middot; Gegr. 2019</p>
+    <p style="margin-top: 0.5rem;"><a href="mailto:verein@miteinander-trier.de">verein@miteinander-trier.de</a></p>
+    <p style="margin-top: 1.5rem; font-size: 0.8rem; opacity: 0.5;">Demo-Website &middot; portawerk.de</p>
+  </footer>
+
+  <!-- SCROLL ANIMATIONS -->
+  <script>
+    const observerOptions = { threshold: 0.15, rootMargin: '0px 0px -40px 0px' };
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

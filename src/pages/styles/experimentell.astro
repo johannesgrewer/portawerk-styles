@@ -1,0 +1,553 @@
+---
+export const prerender = true;
+---
+
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>STOERUNG — Galerie fuer Gegenwartskunst | Trier</title>
+  <meta name="description" content="STOERUNG — Galerie fuer Gegenwartskunst in Trier. Wir zeigen keine schoene Kunst. Wir zeigen Kunst die stoert." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Climate+Crisis&family=Azeret+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Azeret Mono', monospace;
+      color: #0A0A0A;
+      background-color: #FAFAFA;
+      line-height: 1.6;
+      overflow-x: hidden;
+      cursor: crosshair;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    ::selection {
+      background: #FF0040;
+      color: #FAFAFA;
+    }
+
+    /* ===== HERO — BROKEN GRID ===== */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      min-height: 600px;
+      overflow: hidden;
+      background: #FAFAFA;
+    }
+
+    .hero__title-left {
+      font-family: 'Climate Crisis', cursive;
+      font-size: clamp(4rem, 15vw, 18rem);
+      color: #0A0A0A;
+      position: absolute;
+      top: 6vh;
+      left: -0.5vw;
+      transform: rotate(-7deg);
+      z-index: 3;
+      line-height: 0.85;
+      letter-spacing: -0.03em;
+      user-select: none;
+    }
+
+    .hero__title-right {
+      font-family: 'Climate Crisis', cursive;
+      font-size: clamp(4rem, 15vw, 18rem);
+      color: #FF0040;
+      position: absolute;
+      bottom: 8vh;
+      right: -1vw;
+      transform: rotate(4deg);
+      z-index: 3;
+      line-height: 0.85;
+      letter-spacing: -0.03em;
+      user-select: none;
+    }
+
+    .hero__subtitle {
+      font-family: 'Azeret Mono', monospace;
+      font-size: clamp(0.65rem, 1.1vw, 0.95rem);
+      font-weight: 400;
+      color: #0A0A0A;
+      position: absolute;
+      top: 42%;
+      left: 55%;
+      transform: translate(-50%, -50%) rotate(2deg);
+      z-index: 4;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      opacity: 0.7;
+    }
+
+    .hero__diagonal {
+      position: absolute;
+      top: -20%;
+      left: 35%;
+      width: 3px;
+      height: 160%;
+      background: #FF0040;
+      transform: rotate(-35deg);
+      transform-origin: top center;
+      z-index: 2;
+    }
+
+    .hero__image-wrapper {
+      position: absolute;
+      top: 18%;
+      left: 8%;
+      width: clamp(250px, 35vw, 500px);
+      height: clamp(300px, 45vh, 550px);
+      overflow: hidden;
+      z-index: 1;
+      transform: rotate(-2deg);
+      border: 2px solid #0A0A0A;
+    }
+
+    .hero__image-wrapper img {
+      width: 120%;
+      height: 120%;
+      object-fit: cover;
+      object-position: center;
+      margin-left: -10%;
+      margin-top: -5%;
+      filter: grayscale(30%) contrast(1.15);
+      mix-blend-mode: multiply;
+    }
+
+    .hero__side-text {
+      font-family: 'Azeret Mono', monospace;
+      font-size: clamp(0.6rem, 0.9vw, 0.85rem);
+      font-weight: 500;
+      color: #0A0A0A;
+      position: absolute;
+      bottom: 15%;
+      left: 1.5rem;
+      transform: rotate(-90deg);
+      transform-origin: left bottom;
+      z-index: 5;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      opacity: 0.5;
+    }
+
+    .hero__noise {
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    /* ===== SECTION 2 — AKTUELL ===== */
+    .aktuell {
+      position: relative;
+      width: 100%;
+      min-height: 80vh;
+      padding: 6rem 2rem 4rem;
+      background: #F5F5F5;
+      overflow: hidden;
+    }
+
+    .aktuell__label {
+      font-family: 'Climate Crisis', cursive;
+      font-size: clamp(0.7rem, 1vw, 0.9rem);
+      color: #FF0040;
+      text-transform: uppercase;
+      letter-spacing: 0.4em;
+      position: absolute;
+      top: 2.5rem;
+      right: 2.5rem;
+      transform: rotate(90deg);
+      transform-origin: right top;
+    }
+
+    .aktuell__main {
+      position: relative;
+      width: 70%;
+      max-width: 900px;
+      background: #0A0A0A;
+      color: #FAFAFA;
+      padding: clamp(2rem, 5vw, 4rem);
+      transform: rotate(-0.8deg);
+      margin-left: -1rem;
+    }
+
+    .aktuell__main-accent {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 6px;
+      height: 100%;
+      background: #1400FF;
+    }
+
+    .aktuell__main h3 {
+      font-family: 'Climate Crisis', cursive;
+      font-size: clamp(1.5rem, 4vw, 3.5rem);
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      color: #FAFAFA;
+    }
+
+    .aktuell__main-artist {
+      font-family: 'Azeret Mono', monospace;
+      font-size: clamp(0.8rem, 1.2vw, 1rem);
+      font-weight: 600;
+      color: #1400FF;
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.05em;
+    }
+
+    .aktuell__main-dates {
+      font-family: 'Azeret Mono', monospace;
+      font-size: clamp(0.65rem, 0.9vw, 0.8rem);
+      color: rgba(250, 250, 250, 0.5);
+      letter-spacing: 0.1em;
+    }
+
+    .aktuell__secondary {
+      position: absolute;
+      bottom: 3rem;
+      right: 2rem;
+      width: clamp(180px, 22vw, 280px);
+      background: #FAFAFA;
+      border: 2px solid #FF0040;
+      padding: clamp(1rem, 2vw, 1.5rem);
+      transform: rotate(2.5deg);
+      z-index: 2;
+    }
+
+    .aktuell__secondary-label {
+      font-family: 'Azeret Mono', monospace;
+      font-size: 0.6rem;
+      font-weight: 700;
+      color: #FF0040;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      margin-bottom: 0.5rem;
+    }
+
+    .aktuell__secondary h4 {
+      font-family: 'Climate Crisis', cursive;
+      font-size: clamp(0.9rem, 1.5vw, 1.3rem);
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+      color: #0A0A0A;
+    }
+
+    .aktuell__secondary-info {
+      font-family: 'Azeret Mono', monospace;
+      font-size: 0.6rem;
+      color: rgba(10, 10, 10, 0.6);
+      letter-spacing: 0.05em;
+    }
+
+    .aktuell__overlap-text {
+      position: absolute;
+      bottom: 8rem;
+      right: clamp(14rem, 25vw, 22rem);
+      font-family: 'Azeret Mono', monospace;
+      font-size: clamp(5rem, 12vw, 10rem);
+      font-weight: 700;
+      color: rgba(20, 0, 255, 0.06);
+      z-index: 1;
+      user-select: none;
+      line-height: 0.8;
+      pointer-events: none;
+    }
+
+    /* ===== SECTION 3 — MANIFEST ===== */
+    .manifest {
+      position: relative;
+      width: 100%;
+      min-height: 70vh;
+      padding: 6rem 2rem 4rem;
+      background: #FAFAFA;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .manifest__text {
+      max-width: 600px;
+      margin-left: clamp(2rem, 10vw, 12rem);
+      font-family: 'Azeret Mono', monospace;
+      font-size: clamp(1.1rem, 2.2vw, 1.8rem);
+      line-height: 1.8;
+      color: #0A0A0A;
+    }
+
+    .manifest__text .struck {
+      text-decoration: line-through;
+      text-decoration-thickness: 3px;
+      opacity: 0.4;
+    }
+
+    .manifest__text .red {
+      color: #FF0040;
+      font-weight: 700;
+    }
+
+    .manifest__text .blue {
+      color: #1400FF;
+      font-weight: 700;
+    }
+
+    .manifest__divider {
+      width: 80px;
+      height: 3px;
+      background: #FF0040;
+      margin: 3rem 0 2rem;
+      margin-left: clamp(2rem, 10vw, 12rem);
+      transform: rotate(-3deg);
+    }
+
+    .manifest__info {
+      margin-left: clamp(2rem, 10vw, 12rem);
+      font-family: 'Azeret Mono', monospace;
+      font-size: clamp(0.65rem, 0.85vw, 0.8rem);
+      line-height: 2.2;
+      color: rgba(10, 10, 10, 0.6);
+      letter-spacing: 0.05em;
+    }
+
+    .manifest__info strong {
+      color: #0A0A0A;
+      font-weight: 600;
+    }
+
+    .manifest__closing {
+      margin-left: clamp(2rem, 10vw, 12rem);
+      margin-top: 2.5rem;
+      font-family: 'Azeret Mono', monospace;
+      font-size: clamp(0.7rem, 1vw, 0.85rem);
+      font-weight: 600;
+      color: #0A0A0A;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .manifest__bg-letter {
+      position: absolute;
+      top: -2rem;
+      right: 2rem;
+      font-family: 'Climate Crisis', cursive;
+      font-size: clamp(15rem, 35vw, 40rem);
+      color: rgba(255, 0, 64, 0.03);
+      line-height: 0.7;
+      user-select: none;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .manifest__text,
+    .manifest__divider,
+    .manifest__info,
+    .manifest__closing {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .hero__title-left {
+        font-size: clamp(3rem, 20vw, 6rem);
+        top: 4vh;
+        left: 0.5rem;
+        transform: rotate(-5deg);
+      }
+
+      .hero__title-right {
+        font-size: clamp(3rem, 20vw, 6rem);
+        bottom: 6vh;
+        right: 0.5rem;
+        transform: rotate(3deg);
+      }
+
+      .hero__subtitle {
+        font-size: 0.6rem;
+        top: 38%;
+        left: 50%;
+        letter-spacing: 0.08em;
+      }
+
+      .hero__image-wrapper {
+        width: 65vw;
+        height: 35vh;
+        top: 25%;
+        left: 5%;
+      }
+
+      .hero__side-text {
+        font-size: 0.55rem;
+        bottom: 8%;
+        left: 0.8rem;
+      }
+
+      .hero__diagonal {
+        left: 50%;
+        width: 2px;
+      }
+
+      .aktuell {
+        padding: 4rem 1.2rem 8rem;
+      }
+
+      .aktuell__main {
+        width: 95%;
+        margin-left: 0;
+        transform: rotate(0deg);
+        padding: 2rem 1.5rem;
+      }
+
+      .aktuell__secondary {
+        position: relative;
+        bottom: auto;
+        right: auto;
+        width: 75%;
+        margin-top: 2rem;
+        margin-left: auto;
+        transform: rotate(1.5deg);
+      }
+
+      .aktuell__overlap-text {
+        display: none;
+      }
+
+      .aktuell__label {
+        top: 1.5rem;
+        right: 1.5rem;
+      }
+
+      .manifest {
+        padding: 4rem 1.2rem 3rem;
+      }
+
+      .manifest__text {
+        margin-left: 1rem;
+        font-size: 1rem;
+      }
+
+      .manifest__divider,
+      .manifest__info,
+      .manifest__closing {
+        margin-left: 1rem;
+      }
+    }
+
+    /* ===== GLITCH ANIMATION ===== */
+    @keyframes glitch-shift {
+      0%, 100% { transform: translate(0); }
+      20% { transform: translate(-2px, 1px); }
+      40% { transform: translate(2px, -1px); }
+      60% { transform: translate(-1px, -2px); }
+      80% { transform: translate(1px, 2px); }
+    }
+
+    .hero__title-left:hover,
+    .hero__title-right:hover {
+      animation: glitch-shift 0.3s ease-in-out;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ===== HERO — BROKEN GRID ===== -->
+  <section class="hero">
+    <div class="hero__noise"></div>
+
+    <span class="hero__title-left">STOR</span>
+    <span class="hero__title-right">UNG</span>
+
+    <span class="hero__subtitle">Galerie fur Gegenwartskunst &middot; Trier</span>
+
+    <div class="hero__diagonal"></div>
+
+    <div class="hero__image-wrapper">
+      <img
+        src="https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=800&q=80&auto=format"
+        alt="Abstrakte Gegenwartskunst"
+        loading="eager"
+      />
+    </div>
+
+    <span class="hero__side-text">Kunst ist kein Zufall.</span>
+  </section>
+
+  <!-- ===== SECTION 2 — AKTUELL ===== -->
+  <section class="aktuell">
+    <span class="aktuell__label">Aktuell</span>
+
+    <div class="aktuell__main">
+      <div class="aktuell__main-accent"></div>
+      <h3>Zwischen<br />den Zeilen</h3>
+      <p class="aktuell__main-artist">Mara Vogel</p>
+      <p class="aktuell__main-dates">15.03 — 28.04.2026</p>
+    </div>
+
+    <span class="aktuell__overlap-text">ART</span>
+
+    <div class="aktuell__secondary">
+      <p class="aktuell__secondary-label">Coming</p>
+      <h4>Frequenz&shy;storung</h4>
+      <p class="aktuell__secondary-info">Gruppenausstellung<br />Mai 2026</p>
+    </div>
+  </section>
+
+  <!-- ===== SECTION 3 — MANIFEST ===== -->
+  <section class="manifest">
+    <span class="manifest__bg-letter">S</span>
+
+    <p class="manifest__text">
+      Wir zeigen keine <span class="struck">schoene</span> Kunst.<br />
+      Wir zeigen Kunst die <span class="red">stoert</span><br />
+      <span class="blue">unbequem</span> ist<br />
+      nachdenken lasst.
+    </p>
+
+    <div class="manifest__divider"></div>
+
+    <div class="manifest__info">
+      <strong>Offnungszeiten</strong><br />
+      Do — Sa &nbsp; 14:00 — 20:00<br />
+      So &nbsp; 11:00 — 18:00<br />
+      Mo — Mi &nbsp; geschlossen<br /><br />
+      <strong>Adresse</strong><br />
+      Neustrasse 12<br />
+      54290 Trier<br /><br />
+      kontakt@stoerung-trier.de
+    </div>
+
+    <p class="manifest__closing">Eintritt frei. Meinungen auch.</p>
+  </section>
+
+</body>
+</html>

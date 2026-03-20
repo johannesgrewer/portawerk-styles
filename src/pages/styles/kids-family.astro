@@ -1,0 +1,820 @@
+---
+export const prerender = true;
+---
+
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Kleine Burg — Elterncafe & Spielraum in Trier</title>
+  <meta name="description" content="Kleine Burg — Elterncafe & Spielraum in Trier. Kaffee fuer die Grossen, Abenteuer fuer die Kleinen. Mo-Sa 9-18 Uhr." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      color: #3D2C22;
+      background-color: #FFFAF5;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Comfortaa', cursive;
+      line-height: 1.3;
+    }
+
+    /* ===== NAV ===== */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 250, 245, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 2px solid rgba(232, 115, 74, 0.12);
+    }
+
+    .nav-logo {
+      font-family: 'Comfortaa', cursive;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #E8734A;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-logo span {
+      color: #5B8C5A;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #3D2C22;
+      transition: color 0.3s ease;
+      border-radius: 20px;
+      padding: 0.4rem 1rem;
+    }
+
+    .nav-links a:hover {
+      color: #E8734A;
+      background: rgba(232, 115, 74, 0.08);
+    }
+
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+
+    .nav-hamburger span {
+      width: 26px;
+      height: 3px;
+      background: #3D2C22;
+      border-radius: 3px;
+      transition: all 0.3s ease;
+    }
+
+    /* ===== HERO — STACKED BLOCKS ===== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg-shape {
+      position: absolute;
+      border-radius: 32px;
+      opacity: 0.12;
+    }
+
+    .hero-bg-shape--1 {
+      width: 300px;
+      height: 300px;
+      background: #E8734A;
+      top: 8%;
+      left: -4%;
+      transform: rotate(-12deg);
+    }
+
+    .hero-bg-shape--2 {
+      width: 200px;
+      height: 200px;
+      background: #5B8C5A;
+      bottom: 12%;
+      right: -2%;
+      transform: rotate(8deg);
+    }
+
+    .hero-bg-shape--3 {
+      width: 160px;
+      height: 160px;
+      background: #F5C85D;
+      top: 15%;
+      right: 10%;
+      transform: rotate(20deg);
+    }
+
+    .hero-composition {
+      position: relative;
+      max-width: 720px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      z-index: 2;
+    }
+
+    .block {
+      padding: 2.5rem 3rem;
+      border-radius: 28px;
+      box-shadow: 0 8px 32px rgba(61, 44, 34, 0.1), 0 2px 8px rgba(61, 44, 34, 0.06);
+      position: relative;
+      transition: transform 0.4s ease;
+    }
+
+    .block:hover {
+      transform: translateY(-3px);
+    }
+
+    .block--coral {
+      background: #E8734A;
+      color: #fff;
+      transform: rotate(-1.5deg);
+      z-index: 3;
+      margin-bottom: -18px;
+      margin-left: 0;
+    }
+
+    .block--sage {
+      background: #5B8C5A;
+      color: #fff;
+      transform: rotate(1.2deg);
+      z-index: 2;
+      margin-left: 3rem;
+      margin-bottom: -14px;
+    }
+
+    .block--yellow {
+      background: #F5C85D;
+      color: #3D2C22;
+      transform: rotate(-0.5deg);
+      z-index: 1;
+      margin-left: 1rem;
+      padding: 2rem 3rem;
+    }
+
+    .block--cream {
+      background: #FFF5EB;
+      color: #3D2C22;
+      border: 2px solid rgba(232, 115, 74, 0.15);
+      transform: rotate(0.3deg);
+      z-index: 4;
+      margin-top: 1rem;
+      margin-left: 2rem;
+      text-align: center;
+    }
+
+    .block-headline {
+      font-family: 'Comfortaa', cursive;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .block-subtext {
+      font-size: 1.05rem;
+      font-weight: 600;
+      line-height: 1.6;
+      opacity: 0.92;
+    }
+
+    .block-meta {
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .cta-pill {
+      display: inline-block;
+      background: #E8734A;
+      color: #fff;
+      font-family: 'Comfortaa', cursive;
+      font-weight: 700;
+      font-size: 1.1rem;
+      padding: 1rem 2.8rem;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(232, 115, 74, 0.35);
+      margin-top: 1.2rem;
+    }
+
+    .cta-pill:hover {
+      background: #d4613b;
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 6px 28px rgba(232, 115, 74, 0.45);
+    }
+
+    /* ===== SECTION 2 — BEI UNS GIBT'S ===== */
+    .offerings {
+      padding: 6rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .offerings-title {
+      text-align: center;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      color: #3D2C22;
+      margin-bottom: 3.5rem;
+    }
+
+    .offerings-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+    }
+
+    .offerings-card {
+      border-radius: 28px;
+      padding: 3rem 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .offerings-card--coral {
+      background: #E8734A;
+      color: #fff;
+    }
+
+    .offerings-card--sage {
+      background: #5B8C5A;
+      color: #fff;
+    }
+
+    .offerings-card-deco {
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      border-radius: 24px;
+      opacity: 0.12;
+      background: #fff;
+      top: -20px;
+      right: -20px;
+      transform: rotate(15deg);
+    }
+
+    .offerings-card h3 {
+      font-size: 1.6rem;
+      margin-bottom: 2rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .offerings-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .offerings-list li {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 1.05rem;
+      font-weight: 600;
+    }
+
+    .offerings-icon {
+      width: 44px;
+      height: 44px;
+      min-width: 44px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .offerings-icon svg {
+      width: 22px;
+      height: 22px;
+      fill: none;
+      stroke: #fff;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* ===== SECTION 3 — UEBER UNS ===== */
+    .about {
+      padding: 6rem 2rem;
+      background: #FFF5EB;
+    }
+
+    .about-inner {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .about-title {
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      color: #3D2C22;
+      margin-bottom: 2rem;
+    }
+
+    .about-quote {
+      font-size: 1.2rem;
+      line-height: 1.8;
+      color: #3D2C22;
+      background: #fff;
+      border-radius: 24px;
+      padding: 2.5rem 3rem;
+      box-shadow: 0 4px 20px rgba(61, 44, 34, 0.06);
+      border-left: 5px solid #E8734A;
+      text-align: left;
+      margin-bottom: 3rem;
+      position: relative;
+    }
+
+    .about-quote-author {
+      display: block;
+      margin-top: 1rem;
+      font-weight: 700;
+      color: #E8734A;
+      font-size: 1rem;
+    }
+
+    .about-details {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .about-detail-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 2rem 1.5rem;
+      box-shadow: 0 4px 16px rgba(61, 44, 34, 0.06);
+      text-align: center;
+    }
+
+    .about-detail-card-icon {
+      width: 52px;
+      height: 52px;
+      background: rgba(91, 140, 90, 0.1);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+    }
+
+    .about-detail-card-icon svg {
+      width: 24px;
+      height: 24px;
+      stroke: #5B8C5A;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .about-detail-card h4 {
+      font-size: 1rem;
+      color: #5B8C5A;
+      margin-bottom: 0.4rem;
+    }
+
+    .about-detail-card p {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #3D2C22;
+    }
+
+    .about-info {
+      background: #fff;
+      border-radius: 20px;
+      padding: 2rem 2.5rem;
+      box-shadow: 0 4px 16px rgba(61, 44, 34, 0.06);
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .about-info-item {
+      text-align: center;
+    }
+
+    .about-info-item span {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #5B8C5A;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.3rem;
+    }
+
+    .about-info-item p {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #3D2C22;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      background: #3D2C22;
+      color: rgba(255, 250, 245, 0.7);
+      font-size: 0.9rem;
+      border-radius: 28px 28px 0 0;
+    }
+
+    .footer strong {
+      color: #E8734A;
+    }
+
+    /* ===== MOBILE NAV ===== */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(255, 250, 245, 0.97);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      z-index: 200;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+    }
+
+    .mobile-menu.active {
+      display: flex;
+    }
+
+    .mobile-menu a {
+      font-family: 'Comfortaa', cursive;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #3D2C22;
+      padding: 0.5rem 1.5rem;
+      border-radius: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-menu a:hover {
+      color: #E8734A;
+      background: rgba(232, 115, 74, 0.08);
+    }
+
+    .mobile-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 2rem;
+      background: none;
+      border: none;
+      font-size: 2rem;
+      color: #3D2C22;
+      cursor: pointer;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+    }
+
+    .mobile-close:hover {
+      background: rgba(232, 115, 74, 0.1);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .nav-hamburger {
+        display: flex;
+      }
+
+      .hero {
+        padding: 7rem 1.2rem 3rem;
+        min-height: auto;
+      }
+
+      .block {
+        padding: 1.8rem 1.5rem;
+        border-radius: 22px;
+      }
+
+      .block--coral {
+        transform: rotate(-1deg);
+      }
+
+      .block--sage {
+        margin-left: 1rem;
+        transform: rotate(0.8deg);
+      }
+
+      .block--yellow {
+        margin-left: 0.5rem;
+        padding: 1.4rem 1.5rem;
+      }
+
+      .block--cream {
+        margin-left: 0;
+      }
+
+      .block-headline {
+        font-size: clamp(1.4rem, 6vw, 2rem);
+      }
+
+      .offerings {
+        padding: 4rem 1.2rem;
+      }
+
+      .offerings-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .offerings-card {
+        padding: 2rem 1.5rem;
+        border-radius: 22px;
+      }
+
+      .about {
+        padding: 4rem 1.2rem;
+      }
+
+      .about-quote {
+        padding: 1.8rem 1.5rem;
+        border-radius: 20px;
+      }
+
+      .about-details {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .about-info {
+        flex-direction: column;
+        gap: 1.5rem;
+        padding: 1.5rem;
+      }
+
+      .hero-bg-shape--1 {
+        width: 180px;
+        height: 180px;
+      }
+
+      .hero-bg-shape--2 {
+        width: 120px;
+        height: 120px;
+      }
+
+      .hero-bg-shape--3 {
+        width: 100px;
+        height: 100px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav-logo">Kleine <span>Burg</span></div>
+    <ul class="nav-links">
+      <li><a href="/#angebot">Angebot</a></li>
+      <li><a href="/#ueber-uns">Ueber uns</a></li>
+      <li><a href="/#kontakt">Kontakt</a></li>
+    </ul>
+    <button class="nav-hamburger" onclick="document.querySelector('.mobile-menu').classList.add('active')" aria-label="Menu oeffnen">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu">
+    <button class="mobile-close" onclick="this.parentElement.classList.remove('active')" aria-label="Menu schliessen">&times;</button>
+    <a href="/#angebot" onclick="this.parentElement.classList.remove('active')">Angebot</a>
+    <a href="/#ueber-uns" onclick="this.parentElement.classList.remove('active')">Ueber uns</a>
+    <a href="/#kontakt" onclick="this.parentElement.classList.remove('active')">Kontakt</a>
+  </div>
+
+  <!-- HERO — STACKED BLOCKS -->
+  <section class="hero">
+    <div class="hero-bg-shape hero-bg-shape--1"></div>
+    <div class="hero-bg-shape hero-bg-shape--2"></div>
+    <div class="hero-bg-shape hero-bg-shape--3"></div>
+
+    <div class="hero-composition">
+      <div class="block block--coral">
+        <div class="block-headline">Kaffee f&uuml;r die Gro&szlig;en.</div>
+      </div>
+      <div class="block block--sage">
+        <div class="block-headline">Abenteuer f&uuml;r die Kleinen.</div>
+      </div>
+      <div class="block block--yellow">
+        <div class="block-subtext">Elterncaf&eacute; &amp; Spielraum &middot; Trier &middot; Mo&ndash;Sa 9&ndash;18 Uhr</div>
+      </div>
+      <div class="block block--cream">
+        <a href="#angebot" class="cta-pill">Vorbeikommen</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 2 — BEI UNS GIBT'S -->
+  <section class="offerings" id="angebot">
+    <h2 class="offerings-title">Bei uns gibt&rsquo;s</h2>
+    <div class="offerings-grid">
+
+      <!-- Fuer die Grossen -->
+      <div class="offerings-card offerings-card--coral">
+        <div class="offerings-card-deco"></div>
+        <h3>F&uuml;r die Gro&szlig;en</h3>
+        <ul class="offerings-list">
+          <li>
+            <div class="offerings-icon">
+              <svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+            </div>
+            Specialty Coffee
+          </li>
+          <li>
+            <div class="offerings-icon">
+              <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </div>
+            Hausgemachter Kuchen
+          </li>
+          <li>
+            <div class="offerings-icon">
+              <svg viewBox="0 0 24 24"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+            </div>
+            Ruhe zum Durchatmen
+          </li>
+          <li>
+            <div class="offerings-icon">
+              <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 7V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v3"/><line x1="12" y1="12" x2="12" y2="12.01"/></svg>
+            </div>
+            WLAN &amp; Steckdosen
+          </li>
+        </ul>
+      </div>
+
+      <!-- Fuer die Kleinen -->
+      <div class="offerings-card offerings-card--sage">
+        <div class="offerings-card-deco"></div>
+        <h3>F&uuml;r die Kleinen</h3>
+        <ul class="offerings-list">
+          <li>
+            <div class="offerings-icon">
+              <svg viewBox="0 0 24 24"><path d="M2 20h20"/><path d="M5 20V8l7-5 7 5v12"/><path d="M9 20v-4h6v4"/></svg>
+            </div>
+            Kletterwand
+          </li>
+          <li>
+            <div class="offerings-icon">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1"/></svg>
+            </div>
+            B&auml;llebad
+          </li>
+          <li>
+            <div class="offerings-icon">
+              <svg viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
+            </div>
+            Malecke
+          </li>
+          <li>
+            <div class="offerings-icon">
+              <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            </div>
+            B&uuml;cherkiste
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECTION 3 — UEBER UNS -->
+  <section class="about" id="ueber-uns">
+    <div class="about-inner">
+      <h2 class="about-title">&Uuml;ber uns</h2>
+
+      <div class="about-quote">
+        Zwei Kinder, null Orte wo beides ging: guter Kaffee UND gl&uuml;ckliche Kinder. Also haben wir selbst einen aufgemacht.
+        <span class="about-quote-author">&mdash; Nina &amp; Paul, Gr&uuml;nder</span>
+      </div>
+
+      <div class="about-details">
+        <div class="about-detail-card">
+          <div class="about-detail-card-icon">
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+          </div>
+          <h4>Fl&auml;che</h4>
+          <p>160 m&sup2;, davon 80 m&sup2; Spielfl&auml;che</p>
+        </div>
+        <div class="about-detail-card">
+          <div class="about-detail-card-icon">
+            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <h4>Eintritt</h4>
+          <p>5 &euro; / Kind &middot; Erwachsene frei</p>
+        </div>
+        <div class="about-detail-card">
+          <div class="about-detail-card-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <h4>&Ouml;ffnungszeiten</h4>
+          <p>Mo &ndash; Sa, 9 &ndash; 18 Uhr</p>
+        </div>
+      </div>
+
+      <div class="about-info" id="kontakt">
+        <div class="about-info-item">
+          <span>Adresse</span>
+          <p>Kleine Burg 12, 54290 Trier</p>
+        </div>
+        <div class="about-info-item">
+          <span>Telefon</span>
+          <p>0651 / 123 45 67</p>
+        </div>
+        <div class="about-info-item">
+          <span>E-Mail</span>
+          <p>hallo@kleine-burg.de</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p><strong>Kleine Burg</strong> &middot; Elterncaf&eacute; &amp; Spielraum &middot; Trier</p>
+  </footer>
+
+</body>
+</html>

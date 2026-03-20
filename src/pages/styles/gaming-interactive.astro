@@ -1,0 +1,962 @@
+---
+export const prerender = true;
+---
+
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Respawn — Gaming Cafe & Bar | Trier</title>
+  <meta name="description" content="Respawn — Gaming Cafe & Bar in Trier. Konsolen, High-End PCs, Brettspiele und Turniere. Di-So 14-01 Uhr." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'VT323', monospace;
+      color: #E0E0E0;
+      background-color: #0D0D0D;
+      line-height: 1.6;
+      overflow-x: hidden;
+      font-size: 20px;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Press Start 2P', cursive;
+      line-height: 1.4;
+    }
+
+    /* ===== CRT SCANLINE OVERLAY ===== */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.15) 2px,
+        rgba(0, 0, 0, 0.15) 4px
+      );
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ===== CRT VIGNETTE ===== */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(
+        ellipse at center,
+        transparent 60%,
+        rgba(0, 0, 0, 0.6) 100%
+      );
+      pointer-events: none;
+      z-index: 9998;
+    }
+
+    /* ===== NEON GLOW UTILITIES ===== */
+    .glow-green {
+      text-shadow:
+        0 0 7px #39FF14,
+        0 0 10px #39FF14,
+        0 0 21px #39FF14,
+        0 0 42px #39FF14;
+    }
+
+    .glow-pink {
+      text-shadow:
+        0 0 7px #FF1493,
+        0 0 10px #FF1493,
+        0 0 21px #FF1493,
+        0 0 42px #FF1493;
+    }
+
+    .glow-green-subtle {
+      text-shadow:
+        0 0 4px #39FF14,
+        0 0 8px #39FF14;
+    }
+
+    /* ===== PIXEL BORDER ===== */
+    .pixel-border {
+      border: 4px solid #39FF14;
+      box-shadow:
+        4px 4px 0 #39FF14,
+        -4px -4px 0 #0D0D0D,
+        inset 0 0 20px rgba(57, 255, 20, 0.05);
+      position: relative;
+    }
+
+    .pixel-border::before {
+      content: '';
+      position: absolute;
+      top: -8px;
+      left: -8px;
+      right: -8px;
+      bottom: -8px;
+      border: 2px solid rgba(57, 255, 20, 0.3);
+      pointer-events: none;
+    }
+
+    /* ===== KEYFRAMES ===== */
+    @keyframes blink {
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: 0; }
+    }
+
+    @keyframes typeLine1 {
+      0% { width: 0; }
+      100% { width: 100%; }
+    }
+
+    @keyframes typeLine2 {
+      0%, 33% { width: 0; opacity: 0; }
+      34% { opacity: 1; }
+      100% { width: 100%; opacity: 1; }
+    }
+
+    @keyframes typeLine3 {
+      0%, 60% { width: 0; opacity: 0; }
+      61% { opacity: 1; }
+      100% { width: 100%; opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes glitch {
+      0%, 100% {
+        text-shadow:
+          0 0 7px #39FF14,
+          0 0 10px #39FF14,
+          0 0 21px #39FF14,
+          0 0 42px #39FF14;
+        transform: translate(0);
+      }
+      20% {
+        text-shadow:
+          -3px 0 #FF1493,
+          3px 0 #39FF14;
+        transform: translate(-2px, 1px);
+      }
+      40% {
+        text-shadow:
+          3px 0 #FF1493,
+          -3px 0 #39FF14;
+        transform: translate(2px, -1px);
+      }
+      60% {
+        text-shadow:
+          -1px 0 #FF1493,
+          1px 0 #39FF14,
+          0 0 21px #39FF14;
+        transform: translate(1px, 1px);
+      }
+      80% {
+        text-shadow:
+          2px 0 #FF1493,
+          -2px 0 #39FF14;
+        transform: translate(-1px, -1px);
+      }
+    }
+
+    @keyframes flicker {
+      0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% {
+        opacity: 1;
+      }
+      20%, 21.999%, 63%, 63.999%, 65%, 69.999% {
+        opacity: 0.4;
+      }
+    }
+
+    @keyframes cursorPulse {
+      0%, 49% { border-left-color: #39FF14; }
+      50%, 100% { border-left-color: transparent; }
+    }
+
+    @keyframes slideInLeft {
+      0% { opacity: 0; transform: translateX(-40px); }
+      100% { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes neonPulse {
+      0%, 100% {
+        box-shadow:
+          0 0 5px #39FF14,
+          0 0 10px #39FF14,
+          0 0 20px #39FF14,
+          inset 0 0 5px rgba(57, 255, 20, 0.1);
+      }
+      50% {
+        box-shadow:
+          0 0 10px #39FF14,
+          0 0 20px #39FF14,
+          0 0 40px #39FF14,
+          0 0 60px #39FF14,
+          inset 0 0 10px rgba(57, 255, 20, 0.2);
+      }
+    }
+
+    /* ===== NAV ===== */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(13, 13, 13, 0.92);
+      border-bottom: 2px solid rgba(57, 255, 20, 0.3);
+      backdrop-filter: blur(8px);
+    }
+
+    .nav-logo {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 14px;
+      color: #39FF14;
+      letter-spacing: 2px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'VT323', monospace;
+      font-size: 22px;
+      color: #E0E0E0;
+      transition: color 0.2s, text-shadow 0.2s;
+      letter-spacing: 1px;
+    }
+
+    .nav-links a:hover {
+      color: #39FF14;
+      text-shadow: 0 0 8px #39FF14;
+    }
+
+    /* Mobile Nav */
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: 2px solid #39FF14;
+      color: #39FF14;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 10px;
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+
+    /* ===== HERO — BOOT SCREEN ===== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 120px 24px 80px;
+      text-align: center;
+      position: relative;
+      background:
+        radial-gradient(ellipse at 50% 0%, rgba(57, 255, 20, 0.06) 0%, transparent 60%),
+        #0D0D0D;
+    }
+
+    .boot-terminal {
+      width: 100%;
+      max-width: 700px;
+      text-align: left;
+      margin-bottom: 48px;
+    }
+
+    .boot-line {
+      font-family: 'VT323', monospace;
+      font-size: 24px;
+      color: #39FF14;
+      white-space: nowrap;
+      overflow: hidden;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .boot-line-1 {
+      animation: typeLine1 1.2s steps(28) 0.5s both;
+    }
+
+    .boot-line-2 {
+      animation: typeLine2 1.8s steps(20) 0.5s both;
+    }
+
+    .boot-line-3 {
+      animation: typeLine3 2.5s steps(16) 0.5s both;
+    }
+
+    .hero-title {
+      font-size: clamp(28px, 6vw, 64px);
+      color: #39FF14;
+      letter-spacing: 4px;
+      margin-bottom: 24px;
+      animation: glitch 3s infinite, fadeInUp 0.8s 2.8s both;
+      opacity: 0;
+      animation-delay: 2.8s, 2.8s;
+    }
+
+    .hero-title-wrapper {
+      animation: flicker 8s infinite;
+    }
+
+    .hero-subtitle {
+      font-family: 'VT323', monospace;
+      font-size: clamp(20px, 3vw, 28px);
+      color: #E0E0E0;
+      letter-spacing: 2px;
+      margin-bottom: 40px;
+      opacity: 0;
+      animation: fadeInUp 0.8s 3.2s both;
+    }
+
+    .hero-subtitle span {
+      color: #FF1493;
+    }
+
+    /* Pixel decoration */
+    .pixel-decoration {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-bottom: 40px;
+      opacity: 0;
+      animation: fadeInUp 0.6s 3s both;
+    }
+
+    .pixel-dot {
+      width: 8px;
+      height: 8px;
+      background: #39FF14;
+    }
+
+    .pixel-dot:nth-child(even) {
+      background: #FF1493;
+    }
+
+    .pixel-dot:nth-child(3n) {
+      background: transparent;
+      border: 2px solid #39FF14;
+    }
+
+    /* CTA Button */
+    .cta-button {
+      display: inline-block;
+      font-family: 'Press Start 2P', cursive;
+      font-size: clamp(14px, 2.5vw, 20px);
+      color: #0D0D0D;
+      background: #39FF14;
+      padding: 20px 48px;
+      border: none;
+      cursor: pointer;
+      letter-spacing: 2px;
+      position: relative;
+      transition: all 0.2s;
+      opacity: 0;
+      animation: fadeInUp 0.8s 3.5s both, neonPulse 2s infinite 4s;
+      text-transform: uppercase;
+    }
+
+    .cta-button::before {
+      content: '';
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      right: -4px;
+      bottom: -4px;
+      background: #FF1493;
+      z-index: -1;
+      transition: all 0.2s;
+    }
+
+    .cta-button:hover {
+      transform: translate(2px, 2px);
+      background: #FF1493;
+      color: #0D0D0D;
+      box-shadow:
+        0 0 10px #FF1493,
+        0 0 20px #FF1493,
+        0 0 40px #FF1493;
+    }
+
+    .cta-button:hover::before {
+      transform: translate(-4px, -4px);
+      background: #39FF14;
+    }
+
+    /* ===== SECTION 2 — SELECT MODE ===== */
+    .select-mode {
+      padding: 100px 24px;
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+
+    .section-tag {
+      font-family: 'VT323', monospace;
+      font-size: 22px;
+      color: #FF1493;
+      letter-spacing: 4px;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .section-title {
+      font-size: clamp(20px, 4vw, 36px);
+      color: #39FF14;
+      letter-spacing: 3px;
+    }
+
+    .menu-list {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .menu-item {
+      border: 2px solid rgba(57, 255, 20, 0.3);
+      padding: 32px;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.3s;
+      background: rgba(57, 255, 20, 0.02);
+    }
+
+    .menu-item::before {
+      content: '>';
+      position: absolute;
+      left: -24px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: 'Press Start 2P', cursive;
+      font-size: 16px;
+      color: #39FF14;
+      opacity: 0;
+      animation: blink 0.8s steps(1) infinite;
+      transition: opacity 0.3s;
+    }
+
+    .menu-item:hover::before {
+      opacity: 1;
+    }
+
+    .menu-item:hover {
+      border-color: #39FF14;
+      background: rgba(57, 255, 20, 0.06);
+      box-shadow:
+        0 0 10px rgba(57, 255, 20, 0.2),
+        inset 0 0 20px rgba(57, 255, 20, 0.03);
+      transform: translateX(8px);
+    }
+
+    .menu-item-number {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 11px;
+      color: #FF1493;
+      margin-bottom: 12px;
+      letter-spacing: 2px;
+    }
+
+    .menu-item-title {
+      font-family: 'Press Start 2P', cursive;
+      font-size: clamp(14px, 2.5vw, 18px);
+      color: #39FF14;
+      margin-bottom: 12px;
+      letter-spacing: 1px;
+    }
+
+    .menu-item-desc {
+      font-family: 'VT323', monospace;
+      font-size: 22px;
+      color: #E0E0E0;
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+
+    .menu-item-price {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 12px;
+      color: #FF1493;
+      letter-spacing: 1px;
+    }
+
+    .menu-item-icons {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      font-family: 'VT323', monospace;
+      font-size: 28px;
+      color: rgba(57, 255, 20, 0.4);
+      letter-spacing: 4px;
+    }
+
+    /* ===== SECTION 3 — HIGH SCORES / EVENTS ===== */
+    .high-scores {
+      padding: 100px 24px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .leaderboard {
+      border: 3px solid #39FF14;
+      overflow: hidden;
+      margin-bottom: 64px;
+      box-shadow: 0 0 20px rgba(57, 255, 20, 0.15);
+    }
+
+    .leaderboard-header {
+      background: rgba(57, 255, 20, 0.1);
+      padding: 20px 32px;
+      display: grid;
+      grid-template-columns: 60px 1fr 1fr;
+      gap: 16px;
+      border-bottom: 2px solid #39FF14;
+    }
+
+    .leaderboard-header span {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 10px;
+      color: #39FF14;
+      letter-spacing: 2px;
+    }
+
+    .leaderboard-row {
+      display: grid;
+      grid-template-columns: 60px 1fr 1fr;
+      gap: 16px;
+      padding: 20px 32px;
+      border-bottom: 1px solid rgba(57, 255, 20, 0.15);
+      transition: all 0.3s;
+      cursor: default;
+    }
+
+    .leaderboard-row:last-child {
+      border-bottom: none;
+    }
+
+    .leaderboard-row:hover {
+      background: rgba(57, 255, 20, 0.06);
+    }
+
+    .leaderboard-rank {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 14px;
+      color: #FF1493;
+      display: flex;
+      align-items: center;
+    }
+
+    .leaderboard-day {
+      font-family: 'Press Start 2P', cursive;
+      font-size: clamp(10px, 1.8vw, 13px);
+      color: #39FF14;
+      display: flex;
+      align-items: center;
+      letter-spacing: 1px;
+    }
+
+    .leaderboard-event {
+      font-family: 'VT323', monospace;
+      font-size: clamp(20px, 2.5vw, 26px);
+      color: #E0E0E0;
+      display: flex;
+      align-items: center;
+    }
+
+    /* Info Footer */
+    .info-bar {
+      text-align: center;
+      padding: 48px 24px;
+      border-top: 2px solid rgba(57, 255, 20, 0.2);
+    }
+
+    .info-address {
+      font-family: 'VT323', monospace;
+      font-size: 24px;
+      color: #E0E0E0;
+      margin-bottom: 16px;
+    }
+
+    .info-social {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 11px;
+      color: #FF1493;
+      letter-spacing: 1px;
+    }
+
+    .info-social a {
+      color: #FF1493;
+      transition: text-shadow 0.2s;
+    }
+
+    .info-social a:hover {
+      text-shadow: 0 0 8px #FF1493, 0 0 16px #FF1493;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      padding: 40px 24px;
+      text-align: center;
+      border-top: 2px solid rgba(57, 255, 20, 0.15);
+      background: rgba(0, 0, 0, 0.3);
+    }
+
+    .footer-text {
+      font-family: 'VT323', monospace;
+      font-size: 20px;
+      color: rgba(224, 224, 224, 0.4);
+    }
+
+    .footer-credit {
+      font-family: 'VT323', monospace;
+      font-size: 18px;
+      color: rgba(57, 255, 20, 0.3);
+      margin-top: 8px;
+    }
+
+    .footer-credit a {
+      color: rgba(57, 255, 20, 0.5);
+      transition: color 0.2s;
+    }
+
+    .footer-credit a:hover {
+      color: #39FF14;
+    }
+
+    /* ===== CURSOR BLINK ===== */
+    .cursor {
+      display: inline-block;
+      width: 12px;
+      height: 24px;
+      background: #39FF14;
+      margin-left: 4px;
+      animation: blink 0.8s steps(1) infinite;
+      vertical-align: middle;
+    }
+
+    /* ===== DIVIDER ===== */
+    .section-divider {
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+      height: 2px;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        #39FF14 20%,
+        #FF1493 50%,
+        #39FF14 80%,
+        transparent
+      );
+      opacity: 0.4;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: rgba(13, 13, 13, 0.97);
+        flex-direction: column;
+        padding: 24px;
+        gap: 20px;
+        border-bottom: 2px solid rgba(57, 255, 20, 0.3);
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+
+      .nav-toggle {
+        display: block;
+      }
+
+      .hero {
+        padding: 100px 20px 60px;
+      }
+
+      .boot-line {
+        font-size: 18px;
+      }
+
+      .select-mode {
+        padding: 80px 20px;
+      }
+
+      .menu-item {
+        padding: 24px;
+        margin-left: 0;
+      }
+
+      .menu-item::before {
+        display: none;
+      }
+
+      .menu-item:hover {
+        transform: none;
+      }
+
+      .menu-item-icons {
+        display: none;
+      }
+
+      .high-scores {
+        padding: 80px 20px;
+      }
+
+      .leaderboard-header,
+      .leaderboard-row {
+        grid-template-columns: 40px 1fr;
+        padding: 16px 20px;
+      }
+
+      .leaderboard-header span:last-child,
+      .leaderboard-event {
+        grid-column: 1 / -1;
+      }
+
+      .leaderboard-day {
+        font-size: 10px;
+      }
+
+      .pixel-decoration {
+        gap: 4px;
+      }
+
+      .pixel-dot {
+        width: 6px;
+        height: 6px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-title {
+        letter-spacing: 2px;
+      }
+
+      .cta-button {
+        padding: 16px 32px;
+        font-size: 12px;
+      }
+
+      .boot-line {
+        font-size: 15px;
+      }
+
+      .nav-logo {
+        font-size: 11px;
+      }
+
+      .leaderboard-header,
+      .leaderboard-row {
+        padding: 12px 16px;
+        gap: 8px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav-logo glow-green-subtle">RESPAWN</div>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">MENU</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#select-mode">SELECT MODE</a></li>
+      <li><a href="#high-scores">EVENTS</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO — BOOT SCREEN -->
+  <section class="hero">
+    <div class="boot-terminal">
+      <span class="boot-line boot-line-1">&gt; LOADING RESPAWN.EXE...</span>
+      <span class="boot-line boot-line-2">&gt; LOCATION: TRIER</span>
+      <span class="boot-line boot-line-3">&gt; STATUS: OPEN<span class="cursor"></span></span>
+    </div>
+
+    <div class="pixel-decoration">
+      <div class="pixel-dot"></div>
+      <div class="pixel-dot"></div>
+      <div class="pixel-dot"></div>
+      <div class="pixel-dot"></div>
+      <div class="pixel-dot"></div>
+      <div class="pixel-dot"></div>
+      <div class="pixel-dot"></div>
+      <div class="pixel-dot"></div>
+      <div class="pixel-dot"></div>
+      <div class="pixel-dot"></div>
+      <div class="pixel-dot"></div>
+      <div class="pixel-dot"></div>
+      <div class="pixel-dot"></div>
+      <div class="pixel-dot"></div>
+      <div class="pixel-dot"></div>
+    </div>
+
+    <div class="hero-title-wrapper">
+      <h1 class="hero-title glow-green">PRESS START</h1>
+    </div>
+
+    <p class="hero-subtitle">Gaming Cafe & Bar <span>|</span> Di&ndash;So 14&ndash;01 Uhr</p>
+
+    <a href="#select-mode" class="cta-button">[START GAME]</a>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- SECTION 2 — SELECT MODE -->
+  <section class="select-mode" id="select-mode">
+    <div class="section-header">
+      <span class="section-tag">&gt; PLAYER_SELECT.EXE</span>
+      <h2 class="section-title glow-green-subtle">SELECT MODE</h2>
+    </div>
+
+    <div class="menu-list">
+      <!-- Option 1 -->
+      <div class="menu-item">
+        <div class="menu-item-icons">/.1</div>
+        <div class="menu-item-number">OPTION 01</div>
+        <h3 class="menu-item-title">CONSOLE CORNER</h3>
+        <p class="menu-item-desc">PS5, Nintendo Switch, Retro-Konsolen. Couch-Feeling mit Freunden oder allein abtauchen.</p>
+        <span class="menu-item-price">AB 5 EUR / STUNDE</span>
+      </div>
+
+      <!-- Option 2 -->
+      <div class="menu-item">
+        <div class="menu-item-icons">/.2</div>
+        <div class="menu-item-number">OPTION 02</div>
+        <h3 class="menu-item-title">PC ARENA</h3>
+        <p class="menu-item-desc">High-End Gaming PCs, 144Hz Monitore, mechanische Keyboards. Dein Setup wartet.</p>
+        <span class="menu-item-price">AB 6 EUR / STUNDE</span>
+      </div>
+
+      <!-- Option 3 -->
+      <div class="menu-item">
+        <div class="menu-item-icons">/.3</div>
+        <div class="menu-item-number">OPTION 03</div>
+        <h3 class="menu-item-title">TABLETOP</h3>
+        <p class="menu-item-desc">Brettspiele, Magic: The Gathering, D&D. Wuerfel rollen, Karten ziehen, Abenteuer erleben.</p>
+        <span class="menu-item-price">KOSTENLOS BEI GETRAENKEBESTELLUNG</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- SECTION 3 — HIGH SCORES / EVENTS -->
+  <section class="high-scores" id="high-scores">
+    <div class="section-header">
+      <span class="section-tag">&gt; WEEKLY_EVENTS.LOG</span>
+      <h2 class="section-title glow-green-subtle">HIGH SCORES</h2>
+    </div>
+
+    <div class="leaderboard pixel-border">
+      <div class="leaderboard-header">
+        <span>#</span>
+        <span>TAG</span>
+        <span>EVENT</span>
+      </div>
+
+      <div class="leaderboard-row">
+        <div class="leaderboard-rank">01</div>
+        <div class="leaderboard-day">MO</div>
+        <div class="leaderboard-event">Retro Monday -- SNES Turnier</div>
+      </div>
+
+      <div class="leaderboard-row">
+        <div class="leaderboard-rank">02</div>
+        <div class="leaderboard-day">MI</div>
+        <div class="leaderboard-event">Magic: The Gathering</div>
+      </div>
+
+      <div class="leaderboard-row">
+        <div class="leaderboard-rank">03</div>
+        <div class="leaderboard-day">FR</div>
+        <div class="leaderboard-event">Smash Bros Ultimate Turnier</div>
+      </div>
+
+      <div class="leaderboard-row">
+        <div class="leaderboard-rank">04</div>
+        <div class="leaderboard-day">SA</div>
+        <div class="leaderboard-event">D&D Abend</div>
+      </div>
+    </div>
+
+    <div class="info-bar">
+      <p class="info-address">Respawn Gaming Cafe & Bar // Trier</p>
+      <p class="info-social">Follow us: <a href="#">@respawn.trier</a></p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p class="footer-text">GAME OVER? NEVER. RESPAWN.</p>
+    <p class="footer-credit">Design by <a href="https://portawerk.de" target="_blank" rel="noopener">PortaWerk</a></p>
+  </footer>
+
+  <!-- Mobile Nav Toggle -->
+  <script>
+    document.getElementById('navToggle')?.addEventListener('click', () => {
+      document.getElementById('navLinks')?.classList.toggle('open');
+    });
+
+    // Close nav on link click (mobile)
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById('navLinks')?.classList.remove('open');
+      });
+    });
+  </script>
+</body>
+</html>

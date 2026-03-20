@@ -1,0 +1,953 @@
+---
+export const prerender = true;
+---
+
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Moseltrans — Spedition & Logistik Grossregion Trier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: #F7F9FB;
+      color: #1A2B3C;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    .nav {
+      background: #003366;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 2px solid rgba(255, 140, 0, 0.3);
+    }
+
+    .nav-logo {
+      color: #fff;
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      text-decoration: none;
+    }
+
+    .nav-logo span {
+      color: #FF8C00;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: #FF8C00;
+    }
+
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .nav-toggle span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: #fff;
+      margin: 5px 0;
+      transition: 0.3s;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: #003366;
+      padding: 64px 24px 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(255, 140, 0, 0.06) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255, 140, 0, 0.12);
+      color: #FF8C00;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 20px;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      color: #fff;
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .hero-sub {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 1.05rem;
+      font-weight: 400;
+      max-width: 520px;
+      margin: 0 auto 48px;
+    }
+
+    /* ── KPI ROW ── */
+    .kpi-wrapper {
+      position: relative;
+      max-width: 960px;
+      margin: 0 auto;
+      padding-bottom: 48px;
+    }
+
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .kpi-box {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 28px 16px 24px;
+      text-align: center;
+      backdrop-filter: blur(4px);
+      transition: border-color 0.3s, background 0.3s;
+    }
+
+    .kpi-box:hover {
+      border-color: rgba(255, 140, 0, 0.3);
+      background: rgba(255, 255, 255, 0.09);
+    }
+
+    .kpi-number {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #FF8C00;
+      line-height: 1;
+      margin-bottom: 6px;
+      letter-spacing: -0.02em;
+    }
+
+    .kpi-label {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.55);
+      font-weight: 500;
+    }
+
+    /* Route line SVG */
+    .route-line {
+      position: absolute;
+      top: 50%;
+      left: 5%;
+      right: 5%;
+      height: 2px;
+      z-index: 1;
+      transform: translateY(-50%);
+    }
+
+    .route-line line {
+      stroke: rgba(255, 140, 0, 0.25);
+      stroke-width: 2;
+      stroke-dasharray: 6 8;
+    }
+
+    .route-line circle {
+      fill: #FF8C00;
+      opacity: 0.4;
+    }
+
+    /* ── HERO IMAGE CARD ── */
+    .hero-image-section {
+      background: linear-gradient(to bottom, #003366 50%, #F7F9FB 50%);
+      padding: 0 24px 48px;
+    }
+
+    .hero-image-card {
+      max-width: 960px;
+      margin: 0 auto;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+
+    .hero-image-card img {
+      width: 100%;
+      height: 340px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero-image-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(0, 51, 102, 0.85) 0%, transparent 100%);
+      padding: 32px 28px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .hero-image-overlay-text {
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 500;
+      opacity: 0.9;
+    }
+
+    .hero-image-overlay-tag {
+      background: #FF8C00;
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 6px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    /* ── SECTION SHARED ── */
+    .section {
+      padding: 80px 24px;
+    }
+
+    .section-header {
+      max-width: 640px;
+      margin: 0 auto 48px;
+      text-align: center;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #FF8C00;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #003366;
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .section-desc {
+      font-size: 0.95rem;
+      color: #5A6B7C;
+      line-height: 1.6;
+    }
+
+    /* ── LEISTUNGEN ── */
+    .services-grid {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .service-card {
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #E2E8F0;
+      transition: box-shadow 0.3s, transform 0.2s;
+    }
+
+    .service-card:hover {
+      box-shadow: 0 12px 36px rgba(0, 51, 102, 0.08);
+      transform: translateY(-2px);
+    }
+
+    .service-card-accent {
+      height: 4px;
+      background: #FF8C00;
+    }
+
+    .service-card-body {
+      padding: 32px 28px;
+    }
+
+    .service-icon {
+      width: 48px;
+      height: 48px;
+      background: #F0F4F8;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .service-icon svg {
+      width: 24px;
+      height: 24px;
+      stroke: #003366;
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .service-card h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #003366;
+      margin-bottom: 8px;
+      letter-spacing: -0.01em;
+    }
+
+    .service-route {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #FF8C00;
+      margin-bottom: 12px;
+    }
+
+    .service-desc {
+      font-size: 0.875rem;
+      color: #5A6B7C;
+      line-height: 1.65;
+      margin-bottom: 16px;
+    }
+
+    .service-specs {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .service-specs li {
+      font-size: 0.8rem;
+      color: #1A2B3C;
+      font-weight: 500;
+      padding-left: 18px;
+      position: relative;
+    }
+
+    .service-specs li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 7px;
+      width: 6px;
+      height: 6px;
+      background: #FF8C00;
+      border-radius: 50%;
+    }
+
+    /* ── VERTRAUEN ── */
+    .trust-section {
+      background: #F0F4F8;
+    }
+
+    .trust-content {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .trust-clients-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #5A6B7C;
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .trust-logos {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+      flex-wrap: wrap;
+      margin-bottom: 48px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid #D8E0E8;
+    }
+
+    .trust-logo {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #A0AEC0;
+      letter-spacing: -0.01em;
+      user-select: none;
+      transition: color 0.3s;
+    }
+
+    .trust-logo:hover {
+      color: #718096;
+    }
+
+    .certs-row {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 56px;
+    }
+
+    .cert-badge {
+      background: #fff;
+      border: 1px solid #E2E8F0;
+      border-radius: 10px;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #003366;
+    }
+
+    .cert-icon {
+      width: 36px;
+      height: 36px;
+      background: #F0F4F8;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .cert-icon svg {
+      width: 18px;
+      height: 18px;
+      stroke: #003366;
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* ── QUOTE ── */
+    .quote-block {
+      max-width: 640px;
+      margin: 0 auto 56px;
+      text-align: center;
+    }
+
+    .quote-text {
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: #003366;
+      font-style: italic;
+      line-height: 1.5;
+      margin-bottom: 16px;
+      position: relative;
+    }
+
+    .quote-text::before {
+      content: '\201E';
+      font-size: 3rem;
+      color: #FF8C00;
+      opacity: 0.4;
+      line-height: 1;
+      display: block;
+      margin-bottom: -8px;
+    }
+
+    .quote-author {
+      font-size: 0.85rem;
+      color: #5A6B7C;
+      font-weight: 500;
+    }
+
+    .quote-author strong {
+      color: #1A2B3C;
+      font-weight: 700;
+    }
+
+    /* ── CONTACT BAR ── */
+    .contact-bar {
+      background: #003366;
+      padding: 48px 24px;
+    }
+
+    .contact-bar-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 32px;
+    }
+
+    .contact-bar-left h3 {
+      color: #fff;
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .contact-bar-left p {
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.85rem;
+    }
+
+    .contact-items {
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .contact-item:hover {
+      color: #FF8C00;
+    }
+
+    .contact-item svg {
+      width: 18px;
+      height: 18px;
+      stroke: #FF8C00;
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex-shrink: 0;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      background: #00264D;
+      padding: 20px 24px;
+      text-align: center;
+    }
+
+    .footer p {
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.35);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: #003366;
+        flex-direction: column;
+        padding: 16px 24px 24px;
+        gap: 16px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .nav-links.active {
+        display: flex;
+      }
+
+      .nav-toggle {
+        display: block;
+      }
+
+      .hero {
+        padding: 48px 20px 0;
+      }
+
+      .hero h1 {
+        font-size: 1.75rem;
+      }
+
+      .hero-sub {
+        font-size: 0.95rem;
+        margin-bottom: 36px;
+      }
+
+      .kpi-row {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+
+      .kpi-number {
+        font-size: 1.6rem;
+      }
+
+      .route-line {
+        display: none;
+      }
+
+      .hero-image-card img {
+        height: 220px;
+      }
+
+      .services-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .section-title {
+        font-size: 1.5rem;
+      }
+
+      .trust-logos {
+        gap: 24px;
+      }
+
+      .trust-logo {
+        font-size: 0.9rem;
+      }
+
+      .certs-row {
+        gap: 12px;
+      }
+
+      .quote-text {
+        font-size: 1.1rem;
+      }
+
+      .contact-bar-inner {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .contact-items {
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero h1 {
+        font-size: 1.5rem;
+      }
+
+      .kpi-box {
+        padding: 20px 12px 18px;
+      }
+
+      .kpi-number {
+        font-size: 1.35rem;
+      }
+
+      .cert-badge {
+        padding: 12px 16px;
+        font-size: 0.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="#" class="nav-logo">MOSEL<span>TRANS</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#leistungen">Leistungen</a></li>
+      <li><a href="#vertrauen">Referenzen</a></li>
+      <li><a href="#kontakt">Kontakt</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">Spedition & Logistik seit 1998</div>
+      <h1>Zuverlaessig. Puenktlich. Regional.</h1>
+      <p class="hero-sub">Ihr Logistikpartner in der Grossregion Trier -- Luxemburg -- Saarbruecken. Transporte, die ankommen.</p>
+    </div>
+    <div class="kpi-wrapper">
+      <!-- Route line connecting KPIs -->
+      <svg class="route-line" viewBox="0 0 1000 20" preserveAspectRatio="none">
+        <line x1="60" y1="10" x2="940" y2="10" />
+        <circle cx="125" cy="10" r="4" />
+        <circle cx="375" cy="10" r="4" />
+        <circle cx="625" cy="10" r="4" />
+        <circle cx="875" cy="10" r="4" />
+      </svg>
+      <div class="kpi-row">
+        <div class="kpi-box">
+          <div class="kpi-number">28</div>
+          <div class="kpi-label">Jahre Erfahrung</div>
+        </div>
+        <div class="kpi-box">
+          <div class="kpi-number">340+</div>
+          <div class="kpi-label">Kunden</div>
+        </div>
+        <div class="kpi-box">
+          <div class="kpi-number">12</div>
+          <div class="kpi-label">Fahrzeuge</div>
+        </div>
+        <div class="kpi-box">
+          <div class="kpi-number">&lt; 24h</div>
+          <div class="kpi-label">Lieferzeit</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HERO IMAGE -->
+  <div class="hero-image-section">
+    <div class="hero-image-card">
+      <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1000&q=80&auto=format" alt="Logistik und Spedition — Laderampe mit LKW" loading="eager" />
+      <div class="hero-image-overlay">
+        <span class="hero-image-overlay-text">Standort Trier-Euren — Direktanbindung A64 / A602</span>
+        <span class="hero-image-overlay-tag">ISO 9001</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEISTUNGEN -->
+  <section class="section" id="leistungen">
+    <div class="section-header">
+      <div class="section-label">Leistungen</div>
+      <h2 class="section-title">Was wir bewegen</h2>
+      <p class="section-desc">Drei Kernbereiche, ein Versprechen: Ihre Ware kommt an. Termingerecht, dokumentiert, nachvollziehbar.</p>
+    </div>
+    <div class="services-grid">
+
+      <!-- Service 1 -->
+      <div class="service-card">
+        <div class="service-card-accent"></div>
+        <div class="service-card-body">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24">
+              <rect x="1" y="3" width="15" height="13" rx="1" />
+              <polygon points="16,8 20,8 23,11 23,16 16,16" />
+              <circle cx="5.5" cy="18.5" r="2.5" />
+              <circle cx="18.5" cy="18.5" r="2.5" />
+            </svg>
+          </div>
+          <h3>Stueckgut & Teilladungen</h3>
+          <div class="service-route">Trier -- Luxemburg -- Saarbruecken, taeglich</div>
+          <p class="service-desc">Tagesaktuelle Verbindungen in der Grossregion. Feste Fahrplaene, feste Ansprechpartner, feste Laufzeiten.</p>
+          <ul class="service-specs">
+            <li>Taeglich ab 06:00 Uhr</li>
+            <li>Sendungsverfolgung in Echtzeit</li>
+            <li>Ab 1 Palette bis 10 Stellplaetze</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Service 2 -->
+      <div class="service-card">
+        <div class="service-card-accent"></div>
+        <div class="service-card-body">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10" />
+              <path d="M2 12h20" />
+              <path d="M12 2a15 15 0 0 1 0 20" />
+              <path d="M12 2a15 15 0 0 0 0 20" />
+            </svg>
+          </div>
+          <h3>Komplettladungen</h3>
+          <div class="service-route">Europaweit, 7.5t -- 40t</div>
+          <p class="service-desc">Vom Sprinter bis zum 40-Tonner. Direkte Punkt-zu-Punkt-Verbindungen ohne Umschlag, europaweit.</p>
+          <ul class="service-specs">
+            <li>Eigene Flotte + Partnernetzwerk</li>
+            <li>ADR-Transporte moeglich</li>
+            <li>Express-Option: Abholung innerhalb 4h</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Service 3 -->
+      <div class="service-card">
+        <div class="service-card-accent"></div>
+        <div class="service-card-body">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M3 21V8l9-5 9 5v13" />
+              <path d="M9 21V14h6v7" />
+              <path d="M1 21h22" />
+              <line x1="12" y1="3" x2="12" y2="8" />
+            </svg>
+          </div>
+          <h3>Lagerlogistik</h3>
+          <div class="service-route">2.400 m2 in Trier-Euren, Kommissionierung</div>
+          <p class="service-desc">Einlagern, kommissionieren, versenden -- alles aus einer Hand. Direkt an der Autobahn, 24/7 ueberwacht.</p>
+          <ul class="service-specs">
+            <li>2.400 m2 Lagerflaeche, temperiert</li>
+            <li>WMS-Anbindung an Ihr ERP</li>
+            <li>Pick & Pack, Retouren-Handling</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- VERTRAUEN -->
+  <section class="section trust-section" id="vertrauen">
+    <div class="trust-content">
+      <div class="section-header">
+        <div class="section-label">Referenzen & Zertifizierungen</div>
+        <h2 class="section-title">Vertrauen, das auf Fakten basiert</h2>
+      </div>
+
+      <p class="trust-clients-label">Diese Unternehmen vertrauen uns:</p>
+      <div class="trust-logos">
+        <span class="trust-logo">WEBER Stahl</span>
+        <span class="trust-logo">LUX-PACK</span>
+        <span class="trust-logo">Saar Moebel AG</span>
+        <span class="trust-logo">TriPharma</span>
+        <span class="trust-logo">RHENANIA Bau</span>
+      </div>
+
+      <div class="certs-row">
+        <div class="cert-badge">
+          <div class="cert-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z" />
+            </svg>
+          </div>
+          ISO 9001 zertifiziert
+        </div>
+        <div class="cert-badge">
+          <div class="cert-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            </svg>
+          </div>
+          AEO Status
+        </div>
+        <div class="cert-badge">
+          <div class="cert-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 22c5.5 0 10-4.5 10-10S17.5 2 12 2 2 6.5 2 12s4.5 10 10 10z" />
+              <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+              <path d="M7 8l2 2-2 2" />
+              <path d="M17 8l-2 2 2 2" />
+            </svg>
+          </div>
+          Go Green Zertifikat
+        </div>
+      </div>
+
+      <div class="quote-block">
+        <p class="quote-text">Logistik ist Vertrauen. Jeden Tag aufs Neue.</p>
+        <p class="quote-author"><strong>Klaus Bauer</strong>, Geschaeftsfuehrer Moseltrans GmbH</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT BAR -->
+  <div class="contact-bar" id="kontakt">
+    <div class="contact-bar-inner">
+      <div class="contact-bar-left">
+        <h3>Sprechen wir ueber Ihre Logistik.</h3>
+        <p>Moseltrans GmbH -- Trier-Euren</p>
+      </div>
+      <div class="contact-items">
+        <a href="tel:+4965198760" class="contact-item">
+          <svg viewBox="0 0 24 24">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+          </svg>
+          0651 / 987 60
+        </a>
+        <a href="mailto:info@moseltrans.de" class="contact-item">
+          <svg viewBox="0 0 24 24">
+            <rect x="2" y="4" width="20" height="16" rx="2" />
+            <polyline points="22,4 12,13 2,4" />
+          </svg>
+          info@moseltrans.de
+        </a>
+        <span class="contact-item">
+          <svg viewBox="0 0 24 24">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+            <circle cx="12" cy="10" r="3" />
+          </svg>
+          Eurener Str. 74, 54294 Trier
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>Moseltrans GmbH — Designstudie von PortaWerk. Keine echte Firma.</p>
+  </footer>
+
+  <script>
+    document.getElementById('navToggle').addEventListener('click', function () {
+      document.getElementById('navLinks').classList.toggle('active');
+    });
+  </script>
+
+</body>
+</html>

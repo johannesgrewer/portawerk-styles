@@ -1,0 +1,751 @@
+---
+export const prerender = true;
+---
+
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Formwerk — Leuchtenmanufaktur Trier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600&family=Tenor+Sans&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #1A1A1A;
+      --secondary: #F5F3EF;
+      --accent: #D4A04A;
+      --bg: #F5F3EF;
+      --text: #1A1A1A;
+      --font-display: 'Tenor Sans', serif;
+      --font-body: 'Figtree', sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--text);
+      background-color: var(--bg);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* ── Navigation ── */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      padding: 1.5rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: transparent;
+      transition: background 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .nav.scrolled {
+      background: rgba(245, 243, 239, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 1px 0 rgba(26, 26, 26, 0.06);
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--primary);
+      text-decoration: none;
+      opacity: 0.6;
+      transition: opacity 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      opacity: 1;
+    }
+
+    /* ── Mobile Nav Toggle ── */
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      width: 28px;
+      height: 20px;
+      position: relative;
+      z-index: 110;
+    }
+
+    .nav-toggle span {
+      display: block;
+      width: 100%;
+      height: 1.5px;
+      background: var(--primary);
+      position: absolute;
+      left: 0;
+      transition: all 0.3s ease;
+    }
+
+    .nav-toggle span:nth-child(1) { top: 0; }
+    .nav-toggle span:nth-child(2) { top: 50%; transform: translateY(-50%); }
+    .nav-toggle span:nth-child(3) { bottom: 0; }
+
+    .nav-toggle.active span:nth-child(1) {
+      top: 50%;
+      transform: translateY(-50%) rotate(45deg);
+    }
+
+    .nav-toggle.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .nav-toggle.active span:nth-child(3) {
+      bottom: 50%;
+      transform: translateY(50%) rotate(-45deg);
+    }
+
+    /* ── Hero — Product Stage ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 10rem 2rem 6rem;
+      text-align: center;
+    }
+
+    .hero-image-wrapper {
+      max-width: 680px;
+      width: 100%;
+      margin-bottom: 4rem;
+      position: relative;
+    }
+
+    .hero-image-wrapper::before {
+      content: '';
+      position: absolute;
+      inset: -40px;
+      border: 1px solid rgba(212, 160, 74, 0.15);
+      pointer-events: none;
+    }
+
+    .hero-image {
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      filter: brightness(0.97) contrast(1.02);
+    }
+
+    .hero-brand {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    .hero-tagline {
+      font-family: var(--font-body);
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      font-weight: 300;
+      color: var(--primary);
+      opacity: 0.65;
+      margin-bottom: 3.5rem;
+    }
+
+    .gold-divider {
+      width: 60px;
+      height: 1px;
+      background: var(--accent);
+      border: none;
+      margin: 0 auto;
+    }
+
+    /* ── Section Shared ── */
+    .section {
+      padding: 8rem 2rem;
+    }
+
+    .section-label {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      text-align: center;
+      color: var(--primary);
+      margin-bottom: 4rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── Kollektion ── */
+    .kollektion {
+      background: #fff;
+    }
+
+    .kollektion-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3rem;
+    }
+
+    .product-card {
+      text-align: center;
+    }
+
+    .product-image-wrapper {
+      background: var(--bg);
+      padding: 2.5rem;
+      margin-bottom: 2rem;
+      overflow: hidden;
+    }
+
+    .product-image {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .product-card:hover .product-image {
+      transform: scale(1.03);
+    }
+
+    .product-name {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      letter-spacing: 0.08em;
+      color: var(--primary);
+      margin-bottom: 0.4rem;
+    }
+
+    .product-type {
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.8rem;
+    }
+
+    .product-materials {
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: var(--primary);
+      opacity: 0.6;
+      margin-bottom: 0.5rem;
+    }
+
+    .product-description {
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: var(--primary);
+      opacity: 0.5;
+      margin-bottom: 1.5rem;
+      max-width: 280px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .product-price {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      color: var(--primary);
+      letter-spacing: 0.05em;
+    }
+
+    .product-price span {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.5;
+    }
+
+    /* ── Handarbeit ── */
+    .handarbeit {
+      background: var(--bg);
+    }
+
+    .handarbeit-intro {
+      font-family: var(--font-body);
+      font-size: clamp(1rem, 2vw, 1.15rem);
+      font-weight: 300;
+      text-align: center;
+      color: var(--primary);
+      opacity: 0.65;
+      max-width: 560px;
+      margin: -2rem auto 5rem;
+      line-height: 1.8;
+    }
+
+    .process-flow {
+      max-width: 960px;
+      margin: 0 auto 6rem;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      position: relative;
+    }
+
+    .process-flow::before {
+      content: '';
+      position: absolute;
+      top: 2.5rem;
+      left: 12.5%;
+      right: 12.5%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent), var(--accent), transparent);
+      opacity: 0.3;
+    }
+
+    .process-step {
+      text-align: center;
+      position: relative;
+    }
+
+    .process-number {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 1px solid var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      font-family: var(--font-display);
+      font-size: 1rem;
+      color: var(--accent);
+      background: var(--bg);
+      position: relative;
+      z-index: 1;
+    }
+
+    .process-label {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      letter-spacing: 0.08em;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .process-detail {
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: var(--primary);
+      opacity: 0.5;
+      max-width: 160px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* ── Founder Quote ── */
+    .founder-block {
+      max-width: 640px;
+      margin: 0 auto;
+      text-align: center;
+      padding-top: 4rem;
+      border-top: 1px solid rgba(212, 160, 74, 0.2);
+    }
+
+    .founder-quote {
+      font-family: var(--font-display);
+      font-size: clamp(1.3rem, 3vw, 1.8rem);
+      color: var(--primary);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.02em;
+    }
+
+    .founder-quote::before {
+      content: '\2014\00a0';
+      color: var(--accent);
+    }
+
+    .founder-name {
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--primary);
+      opacity: 0.5;
+      margin-bottom: 0.3rem;
+    }
+
+    .founder-role {
+      font-size: 0.75rem;
+      font-weight: 300;
+      color: var(--primary);
+      opacity: 0.35;
+    }
+
+    .contact-line {
+      margin-top: 3rem;
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: var(--primary);
+      opacity: 0.5;
+    }
+
+    .contact-line a {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(212, 160, 74, 0.3);
+      transition: border-color 0.3s ease;
+    }
+
+    .contact-line a:hover {
+      border-color: var(--accent);
+    }
+
+    /* ── Footer ── */
+    .footer {
+      padding: 3rem 2rem;
+      text-align: center;
+      background: var(--primary);
+      color: var(--secondary);
+    }
+
+    .footer-brand {
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+      opacity: 0.8;
+    }
+
+    .footer-sub {
+      font-size: 0.7rem;
+      font-weight: 300;
+      opacity: 0.35;
+      letter-spacing: 0.1em;
+    }
+
+    /* ── Animations ── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .fade-in-delay-1 { transition-delay: 0.1s; }
+    .fade-in-delay-2 { transition-delay: 0.2s; }
+    .fade-in-delay-3 { transition-delay: 0.3s; }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .kollektion-grid {
+        grid-template-columns: 1fr;
+        max-width: 420px;
+        gap: 4rem;
+      }
+
+      .process-flow {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 3rem 2rem;
+      }
+
+      .process-flow::before {
+        display: none;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav {
+        padding: 1.2rem 1.5rem;
+      }
+
+      .nav-links {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: var(--bg);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2rem;
+        z-index: 105;
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+
+      .nav-links a {
+        font-size: 1rem;
+        opacity: 0.8;
+      }
+
+      .nav-toggle {
+        display: block;
+      }
+
+      .hero {
+        padding: 8rem 1.5rem 4rem;
+      }
+
+      .hero-image-wrapper::before {
+        inset: -20px;
+      }
+
+      .hero-brand {
+        letter-spacing: 0.25em;
+      }
+
+      .section {
+        padding: 5rem 1.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .process-flow {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+
+      .hero-brand {
+        letter-spacing: 0.2em;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav" id="mainNav">
+    <a href="#" class="nav-logo">Formwerk</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#kollektion" onclick="closeNav()">Kollektion</a></li>
+      <li><a href="#handarbeit" onclick="closeNav()">Handarbeit</a></li>
+      <li><a href="#kontakt" onclick="closeNav()">Kontakt</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <!-- HERO — Product Stage -->
+  <section class="hero">
+    <div class="hero-image-wrapper fade-in">
+      <img
+        class="hero-image"
+        src="https://images.unsplash.com/photo-1507473885765-e6ed057ab3fe?w=1200&q=80&auto=format"
+        alt="Formwerk Leuchte — Handgefertigte Designerleuchte"
+        loading="eager"
+      />
+    </div>
+    <h1 class="hero-brand fade-in fade-in-delay-1">Formwerk</h1>
+    <p class="hero-tagline fade-in fade-in-delay-2">Licht, das man sp&uuml;rt.</p>
+    <hr class="gold-divider fade-in fade-in-delay-3" />
+  </section>
+
+  <!-- SECTION 2 — Die Kollektion -->
+  <section class="section kollektion" id="kollektion">
+    <p class="section-label fade-in">Die Kollektion</p>
+    <h2 class="section-title fade-in">Drei Leuchten. Drei Geschichten.</h2>
+    <div class="kollektion-grid">
+
+      <!-- Mosel No.1 -->
+      <div class="product-card fade-in fade-in-delay-1">
+        <div class="product-image-wrapper">
+          <img
+            class="product-image"
+            src="https://images.unsplash.com/photo-1524484485831-a92ffc0de03f?w=800&q=80&auto=format"
+            alt="Mosel No.1 — Pendelleuchte aus Messing"
+            loading="lazy"
+          />
+        </div>
+        <h3 class="product-name">Mosel No.1</h3>
+        <p class="product-type">Pendelleuchte</p>
+        <p class="product-materials">Messing, handgebogen</p>
+        <p class="product-description">Warmtoned arc light inspired by the river valley curves</p>
+        <p class="product-price"><span>ab </span>380&thinsp;&euro;</p>
+      </div>
+
+      <!-- Porta -->
+      <div class="product-card fade-in fade-in-delay-2">
+        <div class="product-image-wrapper">
+          <img
+            class="product-image"
+            src="https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=800&q=80&auto=format"
+            alt="Porta — Tischleuchte aus Eiche und Porzellan"
+            loading="lazy"
+          />
+        </div>
+        <h3 class="product-name">Porta</h3>
+        <p class="product-type">Tischleuchte</p>
+        <p class="product-materials">Eiche &amp; Porzellan</p>
+        <p class="product-description">Architektonische Ruhe auf dem Nachttisch</p>
+        <p class="product-price"><span>ab </span>220&thinsp;&euro;</p>
+      </div>
+
+      <!-- Amphora -->
+      <div class="product-card fade-in fade-in-delay-3">
+        <div class="product-image-wrapper">
+          <img
+            class="product-image"
+            src="https://images.unsplash.com/photo-1540932239986-30128078f3c5?w=800&q=80&auto=format"
+            alt="Amphora — Stehleuchte aus Keramik"
+            loading="lazy"
+          />
+        </div>
+        <h3 class="product-name">Amphora</h3>
+        <p class="product-type">Stehleuchte</p>
+        <p class="product-materials">Keramik, glasiert</p>
+        <p class="product-description">Skulpturales Licht, das einen Raum verankert</p>
+        <p class="product-price"><span>ab </span>560&thinsp;&euro;</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECTION 3 — Handarbeit -->
+  <section class="section handarbeit" id="handarbeit">
+    <p class="section-label fade-in">Handarbeit</p>
+    <h2 class="section-title fade-in">Jede Leuchte entsteht hier.</h2>
+    <p class="handarbeit-intro fade-in">
+      Von der Skizze bis zum letzten Schliff. Kein Flie&szlig;band, keine Serie &mdash; jedes St&uuml;ck tr&auml;gt die Spuren seiner Entstehung.
+    </p>
+
+    <div class="process-flow">
+      <div class="process-step fade-in fade-in-delay-1">
+        <div class="process-number">01</div>
+        <p class="process-label">Entwurf</p>
+        <p class="process-detail">Skizze, Proportion, Lichtplanung &mdash; die Form entsteht auf Papier</p>
+      </div>
+      <div class="process-step fade-in fade-in-delay-1">
+        <div class="process-number">02</div>
+        <p class="process-label">Material</p>
+        <p class="process-detail">Messing, Eiche, Porzellan &mdash; ausgew&auml;hlt nach Haptik und Charakter</p>
+      </div>
+      <div class="process-step fade-in fade-in-delay-2">
+        <div class="process-number">03</div>
+        <p class="process-label">Fertigung</p>
+        <p class="process-detail">Biegen, drehen, schleifen &mdash; jeder Handgriff z&auml;hlt</p>
+      </div>
+      <div class="process-step fade-in fade-in-delay-3">
+        <div class="process-number">04</div>
+        <p class="process-label">Finish</p>
+        <p class="process-detail">Oberfl&auml;che, Elektrik, Endkontrolle &mdash; bereit f&uuml;r den Raum</p>
+      </div>
+    </div>
+
+    <div class="founder-block fade-in" id="kontakt">
+      <p class="founder-quote">Licht formt R&auml;ume. Deshalb forme ich Licht.</p>
+      <p class="founder-name">Henrik Formwerk</p>
+      <p class="founder-role">Gr&uuml;nder &amp; Leuchtenbauer</p>
+      <p class="contact-line">
+        Werkstatt in Trier &mdash; Termine nach Vereinbarung.<br />
+        <a href="mailto:hallo@formwerk-trier.de">hallo@formwerk-trier.de</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p class="footer-brand">Formwerk</p>
+    <p class="footer-sub">Leuchtenmanufaktur Trier</p>
+  </footer>
+
+  <script>
+    // ── Mobile Nav ──
+    const navToggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+
+    navToggle.addEventListener('click', () => {
+      navToggle.classList.toggle('active');
+      navLinks.classList.toggle('open');
+    });
+
+    function closeNav() {
+      navToggle.classList.remove('active');
+      navLinks.classList.remove('open');
+    }
+
+    // ── Scroll Nav Background ──
+    const mainNav = document.getElementById('mainNav');
+    window.addEventListener('scroll', () => {
+      mainNav.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // ── Fade-in on Scroll ──
+    const observerOptions = {
+      threshold: 0.15,
+      rootMargin: '0px 0px -40px 0px'
+    };
+
+    const fadeObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          fadeObserver.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.fade-in').forEach(element => {
+      fadeObserver.observe(element);
+    });
+  </script>
+
+</body>
+</html>
