@@ -62,14 +62,14 @@ import { styles, categories } from "../data/styles";
     </aside>
 
     <!-- Content -->
-    <main class="main-content p-8">
+    <main class="main-content p-10">
       <div class="mb-8">
         <h2 id="category-title" class="font-display text-2xl font-bold">Alle Stile</h2>
         <p id="category-count" class="text-text-muted text-sm mt-1">{styles.length} Stile</p>
       </div>
 
       <!-- Grid -->
-      <div id="styles-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+      <div id="styles-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10">
         {styles.map((style) => (
           <div
             class="style-card group cursor-pointer"
