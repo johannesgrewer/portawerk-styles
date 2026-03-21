@@ -348,26 +348,48 @@ import { styles, categories } from "../data/styles";
       count.textContent = visible + (visible === 1 ? ' Stil' : ' Stile');
     }
 
-    // ── Lazy Load ──────────────────────────────────────────
+    // ── Lazy Load with concurrency queue ───────────────────
     function initLazyLoad() {
+      const loadQueue = [];
+      let activeLoads = 0;
+      const MAX_CONCURRENT = 4;
+
+      function revealIframe(iframe) {
+        iframe.style.opacity = '1';
+        const skeleton = iframe.previousElementSibling;
+        if (skeleton?.classList.contains('card-skeleton')) {
+          skeleton.style.opacity = '0';
+          skeleton.style.transition = 'opacity 0.4s';
+        }
+      }
+
+      function processQueue() {
+        while (activeLoads < MAX_CONCURRENT && loadQueue.length > 0) {
+          const iframe = loadQueue.shift();
+          const src = iframe.dataset.src;
+          if (!src || iframe.src) continue;
+          activeLoads++;
+          iframe.src = src;
+          iframe.addEventListener('load', () => {
+            revealIframe(iframe);
+            activeLoads--;
+            processQueue();
+          }, { once: true });
+          // Fallback timeout in case load event misfires
+          setTimeout(() => { revealIframe(iframe); activeLoads--; processQueue(); }, 8000);
+        }
+      }
+
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
           const iframe = entry.target;
-          const src = iframe.dataset.src;
-          if (!src || iframe.src) return;
-          iframe.src = src;
-          iframe.addEventListener('load', () => {
-            iframe.style.opacity = '1';
-            const skeleton = iframe.previousElementSibling;
-            if (skeleton?.classList.contains('card-skeleton')) {
-              skeleton.style.opacity = '0';
-              skeleton.style.transition = 'opacity 0.4s';
-            }
-          }, { once: true });
+          if (!iframe.dataset.src || iframe.src) return;
           observer.unobserve(iframe);
+          loadQueue.push(iframe);
+          processQueue();
         });
-      }, { rootMargin: '200px' });
+      }, { rootMargin: '800px' });
 
       document.querySelectorAll('.lazy-iframe').forEach((iframe) => observer.observe(iframe));
     }
