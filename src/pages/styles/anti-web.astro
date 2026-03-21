@@ -7,333 +7,572 @@ export const prerender = true;
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
-  <title>Fehler — Experimental Kollektiv | Trier</title>
+  <title>fehler_ — Experimental Kollektiv | Trier</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { overflow-x: hidden; }
+    html { background: #fff; overflow-x: hidden; }
 
     :root {
-      --red:    #FF0000;
-      --white:  #FFFFFF;
-      --black:  #000000;
+      --red:   #FF0000;
+      --white: #FFFFFF;
+      --black: #000000;
+      --gray:  rgba(0,0,0,0.08);
     }
 
     body {
       background: var(--white);
       color: var(--black);
       font-family: 'Space Mono', monospace;
-      min-height: 100vh;
       overflow-x: hidden;
     }
 
-    /* Intentionally misaligned nav */
+    /* ─── Nav ──────────────────────────────────────────── */
     nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: flex-end; justify-content: space-between;
       padding: 0.75rem 2rem 0.75rem 3.5rem;
-      background: var(--black);
-      border-bottom: 4px solid var(--red);
+      background: var(--black); border-bottom: 4px solid var(--red);
     }
     .nav-logo {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--red);
-      letter-spacing: 0;
-      text-decoration: line-through;
+      font-size: 1.1rem; font-weight: 700;
+      color: var(--red); text-decoration: line-through;
     }
-    .nav-links {
-      display: flex;
-      gap: 0;
-      list-style: none;
-      border-left: 2px solid rgba(255,255,255,0.1);
-    }
-    .nav-links li {
-      border-right: 2px solid rgba(255,255,255,0.1);
-    }
+    .nav-links { display: flex; gap: 0; list-style: none; border-left: 2px solid rgba(255,255,255,0.1); }
+    .nav-links li { border-right: 2px solid rgba(255,255,255,0.1); }
     .nav-links a {
-      display: block;
-      padding: 0.5rem 1.25rem;
-      font-size: 0.58rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.35);
+      display: block; padding: 0.5rem 1.25rem;
+      font-size: 0.58rem; letter-spacing: 0.1em;
+      text-transform: uppercase; color: rgba(255,255,255,0.35);
       text-decoration: none;
     }
     .nav-links a:hover { color: var(--red); background: rgba(255,0,0,0.06); }
     .nav-broken {
-      font-size: 0.58rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--black);
-      background: var(--red);
-      padding: 0.55rem 1.2rem;
-      text-decoration: none;
-      position: relative;
-      top: -4px;
+      font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--black); background: var(--red);
+      padding: 0.55rem 1.2rem; text-decoration: none;
+      position: relative; top: -4px;
     }
 
-    .hero {
-      min-height: 100vh;
-      padding-top: 56px;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-    }
-
-    /* Striped accent bar */
+    /* ─── Hero ─────────────────────────────────────────── */
     .accent-bar {
       height: 8px;
       background: repeating-linear-gradient(
         90deg,
-        var(--red) 0px,
-        var(--red) 20px,
-        var(--black) 20px,
-        var(--black) 40px
+        var(--red) 0px, var(--red) 20px,
+        var(--black) 20px, var(--black) 40px
       );
     }
 
+    .hero {
+      min-height: 100vh; padding-top: 56px;
+      display: flex; flex-direction: column;
+    }
     .hero-body-wrap {
-      flex: 1;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+      flex: 1; display: grid; grid-template-columns: 1fr 1fr;
     }
 
-    /* LEFT — chaotic */
     .hero-left {
       padding: 3.5rem 3rem 3.5rem 3.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0;
+      display: flex; flex-direction: column; gap: 0;
       border-right: 4px solid var(--black);
-      position: relative;
     }
-
-    /* Intentionally off-kilter label */
     .error-tag {
-      display: inline-block;
-      font-size: 0.6rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--white);
-      background: var(--red);
-      padding: 0.2rem 0.6rem;
-      margin-bottom: 1.5rem;
-      transform: rotate(-1.5deg);
-      width: fit-content;
+      display: inline-block; font-size: 0.6rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--white);
+      background: var(--red); padding: 0.2rem 0.6rem;
+      margin-bottom: 1.5rem; transform: rotate(-1.5deg); width: fit-content;
     }
-
     .hero-headline {
-      font-family: 'Space Mono', monospace;
-      font-weight: 700;
-      font-size: clamp(2.8rem, 6vw, 5rem);
-      line-height: 1;
-      letter-spacing: -0.02em;
-      color: var(--black);
-      margin-bottom: 1.5rem;
+      font-weight: 700; font-size: clamp(2.8rem, 6vw, 5rem);
+      line-height: 1; letter-spacing: -0.02em; margin-bottom: 1.5rem;
     }
-    .hero-headline .red { color: var(--red); }
-    .hero-headline .strike {
-      text-decoration: line-through;
-      color: rgba(0,0,0,0.2);
-    }
-
-    /* Intentionally mis-placed body text */
+    .hero-headline .red   { color: var(--red); }
+    .hero-headline .strike { text-decoration: line-through; color: rgba(0,0,0,0.2); }
     .hero-text {
-      font-size: 0.82rem;
-      font-weight: 400;
-      line-height: 1.8;
-      color: rgba(0,0,0,0.55);
-      max-width: 40ch;
-      margin-bottom: 2.5rem;
-      padding-left: 1.5rem;
-      border-left: 3px solid var(--black);
+      font-size: 0.82rem; line-height: 1.8; color: rgba(0,0,0,0.55);
+      max-width: 40ch; margin-bottom: 2.5rem;
+      padding-left: 1.5rem; border-left: 3px solid var(--black);
     }
-
-    /* Manifesto list */
     .manifesto {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      margin-bottom: 2.5rem;
-      border: 2px solid var(--black);
+      display: flex; flex-direction: column; gap: 0;
+      margin-bottom: 2.5rem; border: 2px solid var(--black);
     }
     .m-item {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      padding: 0.65rem 1rem;
-      border-bottom: 1px solid rgba(0,0,0,0.1);
+      display: flex; align-items: center; gap: 1rem;
+      padding: 0.65rem 1rem; border-bottom: 1px solid rgba(0,0,0,0.1);
     }
     .m-item:last-child { border-bottom: none; }
-    .m-num {
-      font-size: 0.6rem;
-      color: var(--red);
-      flex-shrink: 0;
-      width: 1.5rem;
-    }
-    .m-text {
-      font-size: 0.78rem;
-      color: var(--black);
-    }
+    .m-num { font-size: 0.6rem; color: var(--red); flex-shrink: 0; width: 1.5rem; }
+    .m-text { font-size: 0.78rem; }
     .m-text s { color: rgba(0,0,0,0.25); }
-
-    .cta-area {
-      display: flex;
-      gap: 1rem;
-      align-items: flex-start;
-    }
+    .cta-area { display: flex; gap: 1rem; align-items: flex-start; }
     .cta-btn {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--white);
-      background: var(--black);
-      padding: 0.85rem 1.75rem;
-      text-decoration: none;
-      border: 2px solid var(--black);
-      transition: background 0.15s, color 0.15s;
+      font-family: 'Space Mono', monospace; font-size: 0.68rem;
+      font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--white); background: var(--black);
+      padding: 0.85rem 1.75rem; text-decoration: none;
+      border: 2px solid var(--black); transition: background 0.15s, color 0.15s;
     }
     .cta-btn:hover { background: var(--red); border-color: var(--red); }
     .cta-btn-ghost {
-      font-family: 'Space Mono', monospace;
-      font-size: 0.68rem;
-      font-weight: 400;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--black);
-      background: transparent;
-      padding: 0.85rem 1.75rem;
-      text-decoration: none;
-      border: 2px solid var(--black);
-      transition: border-color 0.15s, color 0.15s;
+      font-family: 'Space Mono', monospace; font-size: 0.68rem;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--black); background: transparent;
+      padding: 0.85rem 1.75rem; text-decoration: none;
+      border: 2px solid var(--black); transition: border-color 0.15s, color 0.15s;
     }
     .cta-btn-ghost:hover { border-color: var(--red); color: var(--red); }
 
-    /* RIGHT — black panel */
     .hero-right {
       background: var(--black);
-      display: flex;
-      flex-direction: column;
-      padding: 3.5rem 3rem;
-      gap: 2rem;
+      display: flex; flex-direction: column;
+      padding: 3.5rem 3rem; gap: 2rem;
     }
-
     .right-label {
-      font-size: 0.55rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.2);
+      font-size: 0.55rem; letter-spacing: 0.22em;
+      text-transform: uppercase; color: rgba(255,255,255,0.2);
     }
-
-    /* Terminal-style upcoming list */
-    .terminal-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      border: 1px solid rgba(255,0,0,0.3);
-    }
+    .terminal-list { display: flex; flex-direction: column; gap: 0; border: 1px solid rgba(255,0,0,0.3); }
     .tl-header {
-      background: var(--red);
-      padding: 0.4rem 0.75rem;
-      font-size: 0.55rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--white);
+      background: var(--red); padding: 0.4rem 0.75rem;
+      font-size: 0.55rem; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--white);
     }
     .tl-row {
-      display: flex;
-      align-items: center;
-      padding: 0.75rem;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      gap: 0.75rem;
+      display: flex; align-items: center;
+      padding: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.06); gap: 0.75rem;
     }
     .tl-row:last-child { border-bottom: none; }
-    .tl-date {
-      font-size: 0.6rem;
-      color: var(--red);
-      width: 5rem;
-      flex-shrink: 0;
-    }
-    .tl-name {
-      font-size: 0.82rem;
-      color: rgba(255,255,255,0.8);
-      flex: 1;
-    }
+    .tl-date { font-size: 0.6rem; color: var(--red); width: 5rem; flex-shrink: 0; }
+    .tl-name { font-size: 0.82rem; color: rgba(255,255,255,0.8); flex: 1; }
     .tl-tag {
-      font-size: 0.5rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.25);
-      border: 1px solid rgba(255,255,255,0.1);
+      font-size: 0.5rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: rgba(255,255,255,0.25); border: 1px solid rgba(255,255,255,0.1);
       padding: 0.15rem 0.5rem;
     }
-
-    /* Glitch-style info block */
-    .info-block {
-      border: 2px solid rgba(255,0,0,0.4);
-      padding: 1.25rem;
-      position: relative;
-    }
+    .info-block { border: 2px solid rgba(255,0,0,0.4); padding: 1.25rem; position: relative; }
     .info-block::before {
       content: '// INFO';
-      position: absolute;
-      top: -0.7rem;
-      left: 0.75rem;
-      font-size: 0.55rem;
-      letter-spacing: 0.15em;
-      color: var(--red);
-      background: var(--black);
-      padding: 0 0.4rem;
+      position: absolute; top: -0.7rem; left: 0.75rem;
+      font-size: 0.55rem; letter-spacing: 0.15em; color: var(--red);
+      background: var(--black); padding: 0 0.4rem;
     }
-    .ib-line {
-      font-size: 0.78rem;
-      color: rgba(255,255,255,0.5);
-      margin-bottom: 0.35rem;
-      line-height: 1.5;
-    }
+    .ib-line { font-size: 0.78rem; color: rgba(255,255,255,0.5); margin-bottom: 0.35rem; line-height: 1.5; }
     .ib-line span { color: rgba(255,255,255,0.85); }
-
-    /* Intentional misalignment element */
     .misaligned {
-      font-size: 4rem;
-      font-weight: 700;
-      color: rgba(255,0,0,0.06);
-      line-height: 1;
-      letter-spacing: -0.04em;
-      transform: translateX(1rem);
-      user-select: none;
-      margin-top: auto;
+      font-size: 4rem; font-weight: 700;
+      color: rgba(255,0,0,0.06); line-height: 1; letter-spacing: -0.04em;
+      transform: translateX(1rem); user-select: none; margin-top: auto;
+    }
+    .bottom-bar {
+      background: var(--red); padding: 0.5rem 3.5rem;
+      display: flex; align-items: center; gap: 3rem;
+    }
+    .bb-item { font-size: 0.58rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.7); }
+    .bb-sep { color: rgba(255,255,255,0.3); }
+
+    /* ─── Section 2: PROJEKTE ──────────────────────────── */
+    .projekte {
+      background: var(--white);
+      border-top: 6px solid var(--black);
     }
 
-    /* Bottom accent */
-    .bottom-bar {
+    .proj-header {
+      display: flex; align-items: center;
+      border-bottom: 4px solid var(--black);
+      padding: 1.5rem 3.5rem;
+      gap: 2rem;
+    }
+    .proj-counter {
+      font-size: clamp(3rem, 7vw, 6rem);
+      font-weight: 700; letter-spacing: -0.05em;
+      color: var(--red); line-height: 1; flex-shrink: 0;
+    }
+    .proj-title-block {}
+    .proj-sup {
+      font-size: 0.55rem; letter-spacing: 0.25em;
+      text-transform: uppercase; color: rgba(0,0,0,0.3);
+      margin-bottom: 0.2rem;
+    }
+    .proj-h {
+      font-size: clamp(1.5rem, 3vw, 2.4rem);
+      font-weight: 700; line-height: 1;
+    }
+    .proj-h .red { color: var(--red); }
+    .proj-scroll {
+      margin-left: auto;
+      font-size: 0.55rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(0,0,0,0.2); white-space: nowrap;
+    }
+
+    .proj-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0;
+      border-bottom: 4px solid var(--black);
+    }
+
+    .proj-card {
+      border-right: 4px solid var(--black);
+      display: flex; flex-direction: column;
+      transition: background 0.15s;
+    }
+    .proj-card:last-child { border-right: none; }
+    .proj-card:nth-child(2) { border-top: 4px solid var(--red); margin-top: -4px; }
+    .proj-card:hover { background: rgba(255,0,0,0.03); }
+
+    /* CSS "broken image" art */
+    .proj-art {
+      height: 240px;
+      position: relative; overflow: hidden;
+      border-bottom: 4px solid var(--black);
+    }
+
+    .art-broken-1 { background: #f5f5f5; }
+    .art-broken-2 { background: var(--black); }
+    .art-broken-3 { background: #f5f5f5; }
+
+    /* Big glitchy background letter */
+    .proj-bg-letter {
+      position: absolute;
+      font-size: 14rem; font-weight: 700; line-height: 1;
+      letter-spacing: -0.06em; user-select: none;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .proj-bg-letter.light { color: rgba(0,0,0,0.04); }
+    .proj-bg-letter.dark  { color: rgba(255,255,255,0.04); }
+
+    /* Glitch red offset */
+    .glitch-layer {
+      position: absolute;
+      font-size: 14rem; font-weight: 700; line-height: 1;
+      letter-spacing: -0.06em; user-select: none;
+      top: 50%; left: 50%;
+    }
+    .glitch-layer.r {
+      transform: translate(calc(-50% + 4px), calc(-50% + 2px));
+      color: rgba(255,0,0,0.06);
+    }
+
+    /* CSS X mark (broken image icon) */
+    .x-mark {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 60px; height: 60px;
+    }
+    .x-mark::before, .x-mark::after {
+      content: '';
+      position: absolute;
+      width: 100%; height: 4px;
+      top: 50%; left: 0;
+      transform-origin: center;
+    }
+    .x-mark.dark::before, .x-mark.dark::after { background: rgba(0,0,0,0.15); }
+    .x-mark.light::before, .x-mark.light::after { background: rgba(255,255,255,0.12); }
+    .x-mark::before { transform: translateY(-50%) rotate(45deg); }
+    .x-mark::after  { transform: translateY(-50%) rotate(-45deg); }
+
+    /* Glitch scan line overlay */
+    .scan-overlay {
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent, transparent 3px,
+        rgba(0,0,0,0.03) 3px, rgba(0,0,0,0.03) 4px
+      );
+      pointer-events: none;
+    }
+
+    /* Red corner bracket */
+    .corner-br {
+      position: absolute; bottom: 8px; right: 10px;
+      width: 20px; height: 20px;
+      border-right: 3px solid var(--red);
+      border-bottom: 3px solid var(--red);
+    }
+    .corner-tl {
+      position: absolute; top: 8px; left: 10px;
+      width: 20px; height: 20px;
+      border-left: 3px solid var(--red);
+      border-top: 3px solid var(--red);
+    }
+
+    .proj-info { padding: 1.5rem; flex: 1; display: flex; flex-direction: column; }
+    .proj-num {
+      font-size: 0.55rem; letter-spacing: 0.2em;
+      color: rgba(0,0,0,0.2); margin-bottom: 0.4rem;
+    }
+    .proj-num.inv { color: rgba(255,255,255,0.2); }
+    .proj-name {
+      font-size: 1.2rem; font-weight: 700; line-height: 1.2;
+      margin-bottom: 0.5rem;
+    }
+    .proj-name.inv { color: var(--white); }
+    .proj-desc {
+      font-size: 0.72rem; font-weight: 400; line-height: 1.7;
+      color: rgba(0,0,0,0.45); flex: 1; margin-bottom: 1.25rem;
+    }
+    .proj-desc.inv { color: rgba(255,255,255,0.35); }
+    .proj-foot {
+      display: flex; align-items: center; justify-content: space-between;
+      border-top: 2px solid rgba(0,0,0,0.1); padding-top: 1rem;
+    }
+    .proj-foot.inv { border-color: rgba(255,255,255,0.08); }
+    .pf-tags { display: flex; gap: 0.5rem; }
+    .pf-tag {
+      font-size: 0.5rem; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.2rem 0.5rem;
+      border: 1px solid rgba(0,0,0,0.15); color: rgba(0,0,0,0.4);
+    }
+    .pf-tag.inv { border-color: rgba(255,255,255,0.12); color: rgba(255,255,255,0.3); }
+    .pf-tag.red-tag { border-color: var(--red); color: var(--red); }
+    .pf-link {
+      font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--red); text-decoration: none;
+    }
+    .pf-link:hover { text-decoration: underline; }
+
+    /* Wide card (spans 2 cols) at bottom */
+    .proj-wide {
+      grid-column: span 2;
+      border-right: none;
+      border-top: 4px solid var(--black);
+      flex-direction: row;
+    }
+    .proj-wide .proj-art {
+      width: 380px; flex-shrink: 0;
+      height: auto; min-height: 220px;
+      border-right: 4px solid var(--black); border-bottom: none;
+    }
+
+    .proj-aside {
+      grid-column: span 1;
+      border-top: 4px solid var(--black);
       background: var(--red);
-      padding: 0.5rem 3.5rem;
-      display: flex;
-      align-items: center;
-      gap: 3rem;
+      display: flex; flex-direction: column;
+      justify-content: center;
+      padding: 2rem;
     }
-    .bb-item {
-      font-size: 0.58rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.7);
+    .pa-num {
+      font-size: 5rem; font-weight: 700;
+      color: rgba(0,0,0,0.12); line-height: 1;
+      margin-bottom: 0.5rem; letter-spacing: -0.04em;
     }
-    .bb-sep {
-      color: rgba(255,255,255,0.3);
+    .pa-label {
+      font-size: 0.65rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: rgba(0,0,0,0.5);
+      margin-bottom: 0.25rem;
+    }
+    .pa-value {
+      font-size: 1.2rem; font-weight: 700; color: var(--black);
+    }
+    .pa-divider { width: 100%; height: 1px; background: rgba(0,0,0,0.15); margin: 1.5rem 0; }
+
+    /* ─── Section 3: KOLLEKTIV ────────────────────────── */
+    .kollektiv {
+      background: var(--black);
+      border-top: 6px solid var(--red);
+    }
+
+    .koll-inner {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+    }
+
+    /* Left: Manifesto terminal */
+    .koll-left {
+      padding: 4rem 3.5rem;
+      border-right: 4px solid rgba(255,0,0,0.3);
+    }
+    .koll-tag {
+      font-size: 0.55rem; letter-spacing: 0.25em;
+      text-transform: uppercase; color: rgba(255,0,0,0.6);
+      margin-bottom: 1.5rem;
+    }
+    .koll-title {
+      font-size: clamp(2rem, 4vw, 3rem); font-weight: 700;
+      line-height: 1.05; color: var(--white);
+      letter-spacing: -0.02em; margin-bottom: 2.5rem;
+    }
+    .koll-title .red { color: var(--red); }
+    .koll-title s { color: rgba(255,255,255,0.15); text-decoration-color: rgba(255,0,0,0.5); }
+
+    /* Terminal block */
+    .terminal-block {
+      background: #0a0a0a; border: 1px solid rgba(255,0,0,0.2);
+      padding: 0; overflow: hidden; margin-bottom: 2.5rem;
+    }
+    .tb-bar {
+      background: rgba(255,0,0,0.15); padding: 0.4rem 0.75rem;
+      display: flex; align-items: center; gap: 0.5rem;
+      border-bottom: 1px solid rgba(255,0,0,0.15);
+    }
+    .tb-dot { width: 8px; height: 8px; border-radius: 50%; }
+    .tb-title {
+      font-size: 0.5rem; letter-spacing: 0.15em;
+      text-transform: uppercase; color: rgba(255,255,255,0.2);
+      margin-left: 0.5rem;
+    }
+    .tb-body { padding: 1.25rem; }
+    .tb-line {
+      font-size: 0.72rem; line-height: 2;
+      color: rgba(255,255,255,0.5);
+    }
+    .tb-line .prompt { color: rgba(255,0,0,0.6); margin-right: 0.5rem; }
+    .tb-line .cmd   { color: rgba(255,255,255,0.85); }
+    .tb-line .out   { color: #4ade80; padding-left: 1.2rem; }
+    .tb-line .err   { color: var(--red); padding-left: 1.2rem; }
+    .tb-cursor {
+      display: inline-block; width: 8px; height: 14px;
+      background: #4ade80; vertical-align: middle;
+      animation: blink 1.1s step-end infinite;
+    }
+
+    /* Stats row */
+    .koll-stats {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 1px; background: rgba(255,255,255,0.06);
+    }
+    .ks-cell {
+      background: var(--black); padding: 1.25rem;
+    }
+    .ks-num {
+      font-size: 2rem; font-weight: 700;
+      color: var(--red); line-height: 1; margin-bottom: 0.2rem;
+    }
+    .ks-label {
+      font-size: 0.58rem; letter-spacing: 0.15em;
+      text-transform: uppercase; color: rgba(255,255,255,0.2);
+    }
+
+    /* Right: CRT screen CSS art */
+    .koll-right {
+      padding: 4rem 3rem;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 2rem;
+    }
+    .crt-outer {
+      width: 100%; max-width: 480px;
+      position: relative;
+    }
+    .crt-stand {
+      width: 80px; height: 20px;
+      border-radius: 0 0 8px 8px;
+    }
+    .crt-base {
+      width: 160px; height: 10px;
+      border-radius: 0 0 6px 6px;
+    }
+    .crt-body {
+      background: #111;
+      border: 6px solid #1a1a1a;
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      box-shadow:
+        0 0 0 2px #333,
+        0 20px 60px rgba(0,0,0,0.8),
+        inset 0 0 30px rgba(0,0,0,0.5);
+    }
+    .crt-screen {
+      background: #000;
+      padding: 1.5rem;
+      position: relative;
+      min-height: 280px;
+    }
+    /* Scan lines */
+    .crt-screen::before {
+      content: '';
+      position: absolute; inset: 0; z-index: 10;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent, transparent 2px,
+        rgba(0,0,0,0.25) 2px, rgba(0,0,0,0.25) 3px
+      );
+      pointer-events: none;
+    }
+    /* CRT glow */
+    .crt-screen::after {
+      content: '';
+      position: absolute; inset: 0; z-index: 9;
+      background: radial-gradient(ellipse at 50% 40%, rgba(74,222,128,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .crt-line {
+      font-size: 0.68rem; line-height: 1.9;
+      position: relative; z-index: 11;
+    }
+    .crt-line .g { color: #4ade80; text-shadow: 0 0 6px rgba(74,222,128,0.5); }
+    .crt-line .r { color: var(--red); text-shadow: 0 0 6px rgba(255,0,0,0.4); }
+    .crt-line .d { color: rgba(74,222,128,0.3); }
+    .crt-line .w { color: rgba(255,255,255,0.7); }
+    .crt-blink {
+      display: inline-block; width: 7px; height: 12px;
+      background: #4ade80; vertical-align: middle;
+      animation: blink 1.1s step-end infinite;
+      box-shadow: 0 0 6px rgba(74,222,128,0.6);
+    }
+
+    /* Members strip */
+    .members-strip {
+      width: 100%; max-width: 480px;
+    }
+    .ms-head {
+      font-size: 0.5rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: rgba(255,255,255,0.15);
+      margin-bottom: 0.6rem;
+    }
+    .ms-grid {
+      display: grid; grid-template-columns: repeat(6, 1fr);
+      gap: 4px;
+    }
+    .ms-member {
+      height: 24px; background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 2px; transition: background 0.15s;
+    }
+    .ms-member:hover { background: rgba(255,0,0,0.2); }
+    .ms-member.active { background: rgba(255,0,0,0.15); border-color: rgba(255,0,0,0.3); }
+
+    /* Bottom manifesto bar */
+    .koll-bar {
+      background: var(--red); padding: 1.5rem 3.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .kb-quote {
+      font-size: 0.85rem; font-style: italic;
+      color: rgba(0,0,0,0.7); max-width: 60ch;
+    }
+    .kb-link {
+      font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--black); text-decoration: none;
+      border-bottom: 2px solid rgba(0,0,0,0.3); white-space: nowrap;
+    }
+
+    /* ─── Animations ──────────────────────────────────── */
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0; }
+    }
+
+    @keyframes glitch {
+      0%, 90%, 100% { clip-path: none; transform: none; }
+      92% { clip-path: inset(20% 0 60% 0); transform: translateX(-4px); }
+      94% { clip-path: inset(60% 0 10% 0); transform: translateX(4px); }
+      96% { clip-path: inset(40% 0 40% 0); transform: translateX(-2px); }
+    }
+
+    .hero-headline {
+      animation: glitch 8s ease infinite;
     }
   </style>
 </head>
 <body>
+
   <nav>
     <div class="nav-logo">fehler_</div>
     <ul class="nav-links">
@@ -347,6 +586,7 @@ export const prerender = true;
 
   <div class="accent-bar"></div>
 
+  <!-- ── Section 1: Hero ────────────────────────────────── -->
   <section class="hero">
     <div class="hero-body-wrap">
       <div class="hero-left">
@@ -391,7 +631,6 @@ export const prerender = true;
 
       <div class="hero-right">
         <div class="right-label">// Nächste Veranstaltungen</div>
-
         <div class="terminal-list">
           <div class="tl-header">EVENTS_2025.log</div>
           <div class="tl-row">
@@ -415,14 +654,12 @@ export const prerender = true;
             <span class="tl-tag">Intern</span>
           </div>
         </div>
-
         <div class="info-block">
           <div class="ib-line">Ort: <span>Altes Lager, Trier-Nord</span></div>
           <div class="ib-line">Öffnung: <span>Mi + Do 17–22 Uhr</span></div>
           <div class="ib-line">Mitglied: <span>offen, kostenlos</span></div>
-          <div class="ib-line">Status: <span style="color: #4ade80;">AKTIV</span></div>
+          <div class="ib-line">Status: <span style="color:#4ade80;">AKTIV</span></div>
         </div>
-
         <div class="misaligned">ERROR</div>
       </div>
     </div>
@@ -437,5 +674,270 @@ export const prerender = true;
       <span class="bb-item">Nicht-kommerziell</span>
     </div>
   </section>
+
+  <!-- ── Section 2: PROJEKTE ───────────────────────────── -->
+  <section class="projekte">
+    <div class="proj-header">
+      <div class="proj-counter">47</div>
+      <div class="proj-title-block">
+        <div class="proj-sup">// Seit 2019</div>
+        <div class="proj-h">Projekte.<br><span class="red">Kaputt</span> & lebendig.</div>
+      </div>
+      <div class="proj-scroll">SCROLL → → →</div>
+    </div>
+
+    <div class="proj-grid">
+
+      <!-- Card 1 -->
+      <div class="proj-card">
+        <div class="proj-art art-broken-1">
+          <div class="proj-bg-letter light">G</div>
+          <div class="glitch-layer r">G</div>
+          <div class="scan-overlay"></div>
+          <div class="corner-tl"></div>
+          <div class="corner-br"></div>
+        </div>
+        <div class="proj-info">
+          <div class="proj-num">_001 / 2024</div>
+          <div class="proj-name">GLITCH<br>NIGHT #12</div>
+          <div class="proj-desc">
+            Live-Audiovisual-Performance mit bewusst fehlerhafter Hardware. Drei Stunden kollektiver Zusammenbruch — mit Publikum.
+          </div>
+          <div class="proj-foot">
+            <div class="pf-tags">
+              <span class="pf-tag">Performance</span>
+              <span class="pf-tag red-tag">Live</span>
+            </div>
+            <a href="#" class="pf-link">→ Doku</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 (dark) -->
+      <div class="proj-card" style="background:var(--black);">
+        <div class="proj-art art-broken-2">
+          <div class="proj-bg-letter dark">F</div>
+          <div class="glitch-layer" style="transform:translate(calc(-50% + 4px),calc(-50% + 2px));color:rgba(255,0,0,0.08);">F</div>
+          <div class="x-mark light"></div>
+          <div class="scan-overlay" style="background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(255,255,255,0.02) 3px,rgba(255,255,255,0.02) 4px);"></div>
+          <div style="position:absolute;top:8px;left:10px;width:20px;height:20px;border-left:3px solid rgba(255,0,0,0.4);border-top:3px solid rgba(255,0,0,0.4);"></div>
+          <div style="position:absolute;bottom:8px;right:10px;width:20px;height:20px;border-right:3px solid rgba(255,0,0,0.4);border-bottom:3px solid rgba(255,0,0,0.4);"></div>
+        </div>
+        <div class="proj-info">
+          <div class="proj-num inv">_002 / 2024</div>
+          <div class="proj-name inv"><s>FEHLER</s>-<br>AUSSTELLUNG</div>
+          <div class="proj-desc inv">
+            Ausstellung über das Scheitern als künstlerische Methode. 22 Positionen, ein Thema: was übrig bleibt, wenn es nicht klappt.
+          </div>
+          <div class="proj-foot inv">
+            <div class="pf-tags">
+              <span class="pf-tag inv">Ausstellung</span>
+              <span class="pf-tag red-tag">Vernissage</span>
+            </div>
+            <a href="#" class="pf-link">→ Fotos</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="proj-card">
+        <div class="proj-art art-broken-3">
+          <div class="proj-bg-letter light">P</div>
+          <div class="glitch-layer r">P</div>
+          <div class="scan-overlay"></div>
+          <div class="corner-tl"></div>
+          <div class="corner-br"></div>
+          <!-- Rotated label -->
+          <div style="position:absolute;top:20px;right:-10px;background:var(--red);padding:0.2rem 1rem;font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;color:#fff;transform:rotate(90deg);transform-origin:right center;">Workshop</div>
+        </div>
+        <div class="proj-info">
+          <div class="proj-num">_003 / 2025</div>
+          <div class="proj-name">ANTI-WORK-<br>SHOP: PRINT</div>
+          <div class="proj-desc">
+            Siebdrucken ohne Regeln. Drucke, die nicht funktionieren sollen — und genau deshalb funktionieren. Offen für alle Levels.
+          </div>
+          <div class="proj-foot">
+            <div class="pf-tags">
+              <span class="pf-tag">Siebdruck</span>
+              <span class="pf-tag">Workshop</span>
+            </div>
+            <a href="#" class="pf-link">→ Anmeld.</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Wide card + aside -->
+      <div class="proj-card proj-wide">
+        <div class="proj-art" style="background:var(--red);width:320px;flex-shrink:0;border-right:4px solid var(--black);border-bottom:none;display:flex;align-items:center;justify-content:center;">
+          <div style="font-size:7rem;font-weight:700;color:rgba(0,0,0,0.15);letter-spacing:-0.05em;user-select:none;">N</div>
+          <div style="position:absolute;font-size:7rem;font-weight:700;color:rgba(0,0,0,0.06);letter-spacing:-0.05em;user-select:none;transform:translate(5px,3px);">N</div>
+          <div style="position:absolute;bottom:8px;right:10px;width:20px;height:20px;border-right:3px solid rgba(0,0,0,0.2);border-bottom:3px solid rgba(0,0,0,0.2);"></div>
+        </div>
+        <div class="proj-info" style="background:#fff;">
+          <div class="proj-num">_004 / 2025 — UPCOMING</div>
+          <div class="proj-name">NACHT DER<br>OFFENEN FEHLER</div>
+          <div class="proj-desc" style="max-width:50ch;">
+            Ein Abend lang zeigt das Kollektiv unveröffentlichte Misserfolge. Prototypen, abgebrochene Serien, gescheiterte Konzepte — alle willkommen. Eintritt frei.
+          </div>
+          <div class="proj-foot">
+            <div class="pf-tags">
+              <span class="pf-tag">Event</span>
+              <span class="pf-tag red-tag">Eintritt frei</span>
+            </div>
+            <a href="#" class="pf-link">→ Kalender</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="proj-aside">
+        <div class="pa-num">47</div>
+        <div class="pa-label">Projekte seit</div>
+        <div class="pa-value">2019</div>
+        <div class="pa-divider"></div>
+        <div class="pa-label">Nächstes Event</div>
+        <div class="pa-value">14. März</div>
+        <div class="pa-divider"></div>
+        <div class="pa-label">Mitglieder aktiv</div>
+        <div class="pa-value">42</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── Section 3: KOLLEKTIV ──────────────────────────── -->
+  <section class="kollektiv">
+    <div class="koll-inner">
+
+      <!-- Left: Manifesto -->
+      <div class="koll-left">
+        <div class="koll-tag">// WIR SIND fehler_</div>
+        <h2 class="koll-title">
+          <s>Profis.</s><br>
+          <span class="red">Dilettanten</span><br>
+          mit Plan.
+        </h2>
+
+        <div class="terminal-block">
+          <div class="tb-bar">
+            <div class="tb-dot" style="background:#ff5f57;"></div>
+            <div class="tb-dot" style="background:#febc2e;"></div>
+            <div class="tb-dot" style="background:#28c840;"></div>
+            <span class="tb-title">kollektiv.sh — bash</span>
+          </div>
+          <div class="tb-body">
+            <div class="tb-line"><span class="prompt">$</span><span class="cmd">whoami</span></div>
+            <div class="tb-line"><span class="out">fehler_ experimental kollektiv, trier</span></div>
+            <div class="tb-line"><span class="prompt">$</span><span class="cmd">cat manifest.txt</span></div>
+            <div class="tb-line"><span class="out">→ Wir glauben nicht an gutes Design.</span></div>
+            <div class="tb-line"><span class="out">→ Wir glauben an ehrliches Design.</span></div>
+            <div class="tb-line"><span class="out">→ Fehler sind keine Bugs. Sie sind Features.</span></div>
+            <div class="tb-line"><span class="prompt">$</span><span class="cmd">ls -la mitglieder/</span></div>
+            <div class="tb-line"><span class="out">42 entries found — all welcome</span></div>
+            <div class="tb-line"><span class="prompt">$</span><span class="cmd">join --no-fee --no-rules .</span></div>
+            <div class="tb-line"><span class="err">WARNING: this may change your mind</span></div>
+            <div class="tb-line"><span class="prompt">$</span> <span class="crt-blink"></span></div>
+          </div>
+        </div>
+
+        <div class="koll-stats">
+          <div class="ks-cell">
+            <div class="ks-num">42</div>
+            <div class="ks-label">Mitglieder</div>
+          </div>
+          <div class="ks-cell">
+            <div class="ks-num">0 €</div>
+            <div class="ks-label">Mitgliedsbeitrag</div>
+          </div>
+          <div class="ks-cell">
+            <div class="ks-num">47</div>
+            <div class="ks-label">Projekte</div>
+          </div>
+          <div class="ks-cell">
+            <div class="ks-num">2019</div>
+            <div class="ks-label">Gegründet</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: CRT monitor -->
+      <div class="koll-right">
+        <div class="crt-outer">
+          <div class="crt-body">
+            <div class="crt-screen">
+              <div class="crt-line"><span class="g">FEHLER_OS v2.3.1 — Trier</span></div>
+              <div class="crt-line"><span class="d">──────────────────────────</span></div>
+              <div class="crt-line"><span class="g">[BOOT] Kollektiv gestartet</span></div>
+              <div class="crt-line"><span class="g">[BOOT] 42 Mitglieder geladen</span></div>
+              <div class="crt-line"><span class="r">[WARN] Regeln nicht gefunden</span></div>
+              <div class="crt-line"><span class="g">[OK]   Fehler aktiviert</span></div>
+              <div class="crt-line"><span class="d">──────────────────────────</span></div>
+              <div class="crt-line"><span class="w">NÄCHSTES EVENT:</span></div>
+              <div class="crt-line"><span class="g">  Glitch Night #13</span></div>
+              <div class="crt-line"><span class="g">  14.03 / 20:00 Uhr</span></div>
+              <div class="crt-line"><span class="g">  Altes Lager, Trier-Nord</span></div>
+              <div class="crt-line"><span class="d">──────────────────────────</span></div>
+              <div class="crt-line"><span class="r">[INPUT] Projekt einreichen_</span> <span class="crt-blink"></span></div>
+            </div>
+          </div>
+          <div class="crt-stand"></div>
+          <div class="crt-base"></div>
+        </div>
+
+        <div class="members-strip">
+          <div class="ms-head">// 42 MITGLIEDER — AKTIV</div>
+          <div class="ms-grid">
+            <div class="ms-member active"></div>
+            <div class="ms-member active"></div>
+            <div class="ms-member"></div>
+            <div class="ms-member active"></div>
+            <div class="ms-member"></div>
+            <div class="ms-member active"></div>
+            <div class="ms-member"></div>
+            <div class="ms-member active"></div>
+            <div class="ms-member active"></div>
+            <div class="ms-member"></div>
+            <div class="ms-member active"></div>
+            <div class="ms-member"></div>
+            <div class="ms-member"></div>
+            <div class="ms-member active"></div>
+            <div class="ms-member"></div>
+            <div class="ms-member active"></div>
+            <div class="ms-member active"></div>
+            <div class="ms-member"></div>
+            <div class="ms-member"></div>
+            <div class="ms-member active"></div>
+            <div class="ms-member active"></div>
+            <div class="ms-member"></div>
+            <div class="ms-member active"></div>
+            <div class="ms-member"></div>
+            <div class="ms-member active"></div>
+            <div class="ms-member"></div>
+            <div class="ms-member active"></div>
+            <div class="ms-member active"></div>
+            <div class="ms-member"></div>
+            <div class="ms-member active"></div>
+            <div class="ms-member"></div>
+            <div class="ms-member active"></div>
+            <div class="ms-member active"></div>
+            <div class="ms-member"></div>
+            <div class="ms-member"></div>
+            <div class="ms-member active"></div>
+            <div class="ms-member active"></div>
+            <div class="ms-member"></div>
+            <div class="ms-member active"></div>
+            <div class="ms-member"></div>
+            <div class="ms-member active"></div>
+            <div class="ms-member active"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="koll-bar">
+      <div class="kb-quote">„Wir machen keine Kunst für Galerien. Wir machen Kunst für den Moment, in dem etwas schiefgeht — und trotzdem stimmt."</div>
+      <a href="#" class="kb-link">Mitglied werden →</a>
+    </div>
+  </section>
+
 </body>
 </html>
