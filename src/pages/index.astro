@@ -157,7 +157,7 @@ import { styles, categories } from "../data/styles";
                   </div>
                   <iframe
                     class="lazy-iframe pointer-events-none absolute top-0 opacity-0 transition-opacity duration-500"
-                    style="width:1536px;height:864px;left:50%;transform:translateX(-50%) scale(0.3);transform-origin:top center;"
+                    style="width:1536px;height:864px;left:0;top:0;transform:scale(0.3);transform-origin:top left;"
                     data-src={`/styles/${style.slug}`}
                     tabindex="-1"
                   />
@@ -248,10 +248,22 @@ import { styles, categories } from "../data/styles";
     let currentModalSlug = null;
     let favs = new Set(JSON.parse(localStorage.getItem(FAV_KEY) || '[]'));
 
+    // ── Scale iframes to fill card width ───────────────────
+    function updateIframeScales() {
+      document.querySelectorAll('.card-preview').forEach(card => {
+        const iframe = card.querySelector('.lazy-iframe');
+        if (!iframe) return;
+        const scale = card.offsetWidth / 1536;
+        iframe.style.transform = `scale(${scale})`;
+      });
+    }
+    window.addEventListener('resize', updateIframeScales);
+
     // ── Init ───────────────────────────────────────────────
     function initApp() {
       updateAllFavBtns();
       updateFavCount();
+      updateIframeScales();
       initLazyLoad();
       initCards();
       initFilter();
