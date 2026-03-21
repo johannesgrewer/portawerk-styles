@@ -425,8 +425,19 @@ import { styles, categories } from "../data/styles";
 
         if (card.dataset.ready !== 'true') return;
 
-        // Hover → preload in background
-        card.addEventListener('mouseenter', () => preloadStyle(slug));
+        // Hover → preload in background + replay card animations
+        card.addEventListener('mouseenter', () => {
+          preloadStyle(slug);
+          const iframe = card.querySelector('.lazy-iframe');
+          if (!iframe?.contentDocument) return;
+          try {
+            iframe.contentDocument.querySelectorAll('*').forEach(el => {
+              el.style.animation = 'none';
+              void el.offsetHeight;
+              el.style.animation = '';
+            });
+          } catch (e) {}
+        });
 
         // Click → open modal
         card.addEventListener('click', () => openModal(slug));
