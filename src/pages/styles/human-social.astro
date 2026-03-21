@@ -7,411 +7,861 @@ export const prerender = true;
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
-  <title>Brücke — Soziale Arbeit & Beratung | Trier</title>
+  <title>Brücke — Soziale Arbeit & Beratung Trier</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&family=Source+Sans+3:wght@300;400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;0,700;0,800;1,700&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { overflow-x: hidden; }
+    html { overflow-x: hidden; scroll-behavior: smooth; }
 
     :root {
       --amber:  #D97706;
+      --amber-light: #FEF3C7;
+      --amber-mid:   #FDE68A;
       --green:  #059669;
+      --green-light: rgba(5,150,105,0.08);
       --bg:     #FFFBEB;
+      --surface:#FFFFFF;
       --dark:   #1C1917;
-      --muted:  rgba(28,25,23,0.5);
-      --light:  #FEF3C7;
+      --muted:  rgba(28,25,23,0.48);
+      --border: rgba(28,25,23,0.07);
     }
 
     body {
       background: var(--bg);
       color: var(--dark);
       font-family: 'Source Sans 3', sans-serif;
-      min-height: 100vh;
       overflow-x: hidden;
     }
 
+    /* ─── Nav ──────────────────────────────────────────── */
     nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1.25rem 3.5rem;
-      background: rgba(255,251,235,0.95);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid rgba(28,25,23,0.06);
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 3.5rem; height: 60px;
+      background: rgba(255,251,235,0.96); backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
     }
-    .nav-logo {
-      font-family: 'Nunito', sans-serif;
-      font-weight: 700;
-      font-size: 1.2rem;
-      letter-spacing: 0.02em;
-      color: var(--amber);
+    .nav-brand { display: flex; align-items: center; gap: .7rem; }
+    .nav-mark {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--amber);
+      display: flex; align-items: center; justify-content: center;
     }
-    .nav-links {
-      display: flex;
-      gap: 2.5rem;
-      list-style: none;
+    .nav-mark svg { width: 16px; height: 16px; stroke: #fff; fill: none; stroke-width: 2.2; stroke-linecap: round; }
+    .nav-name {
+      font-family: 'Nunito', sans-serif; font-weight: 800;
+      font-size: 1.05rem; color: var(--dark);
     }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
     .nav-links a {
-      font-size: 0.65rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-      text-decoration: none;
-      transition: color 0.2s;
+      font-size: .65rem; font-weight: 600; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--muted);
+      text-decoration: none; transition: color .2s;
     }
     .nav-links a:hover { color: var(--amber); }
     .nav-cta {
-      font-size: 0.62rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: #fff;
-      background: var(--amber);
-      padding: 0.65rem 1.5rem;
-      border-radius: 8px;
-      text-decoration: none;
-      transition: background 0.2s;
+      font-size: .62rem; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; color: #fff;
+      background: var(--amber); padding: .65rem 1.5rem;
+      border-radius: 100px; text-decoration: none; transition: background .2s;
     }
     .nav-cta:hover { background: var(--dark); }
 
+    /* ─── Hero ─────────────────────────────────────────── */
     .hero {
-      min-height: 100vh;
-      padding-top: 57px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+      min-height: 100vh; padding-top: 60px;
+      display: grid; grid-template-columns: 1fr 480px;
     }
 
-    /* LEFT */
     .hero-left {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 4rem 3.5rem 4rem 4.5rem;
-      gap: 2rem;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 5rem 3.5rem 5rem 5rem; gap: 2.25rem;
     }
 
     .eyebrow {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      font-size: 0.6rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--green);
+      display: inline-flex; align-items: center; gap: .6rem;
+      font-size: .6rem; font-weight: 700; letter-spacing: .18em;
+      text-transform: uppercase; color: var(--green);
     }
-    .eyebrow::before {
-      content: '';
-      display: block;
-      width: 1.5rem;
-      height: 3px;
+    .eyebrow-dot {
+      width: 7px; height: 7px; border-radius: 50%;
       background: var(--green);
-      border-radius: 2px;
     }
 
-    .hero-headline {
-      font-family: 'Nunito', sans-serif;
-      font-weight: 700;
-      font-size: clamp(2.5rem, 5vw, 4.5rem);
-      line-height: 1.1;
-      letter-spacing: -0.01em;
-      color: var(--dark);
+    .hero-h1 {
+      font-family: 'Nunito', sans-serif; font-weight: 800;
+      font-size: clamp(2.8rem, 5.5vw, 5rem);
+      line-height: 1.05; letter-spacing: -.02em; color: var(--dark);
     }
-    .hero-headline em {
-      font-style: normal;
-      color: var(--amber);
+    .hero-h1 em {
+      font-style: italic; color: var(--amber);
+      position: relative; display: inline-block;
     }
-
-    .hero-body {
-      font-size: 0.9rem;
-      font-weight: 300;
-      line-height: 1.9;
-      color: var(--muted);
-      max-width: 44ch;
+    .hero-h1 em::after {
+      content: '';
+      position: absolute; bottom: 4px; left: 0; right: 0;
+      height: 3px; background: var(--amber-mid); border-radius: 2px;
     }
 
-    /* Offer cards */
-    .offer-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
+    .hero-p {
+      font-size: .92rem; font-weight: 300; line-height: 1.9;
+      color: var(--muted); max-width: 46ch;
     }
-    .offer-card {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      padding: 1rem 1.25rem;
-      background: #fff;
-      border: 1px solid rgba(28,25,23,0.06);
-      border-radius: 10px;
+
+    /* Angebots-Chips */
+    .chips { display: flex; flex-direction: column; gap: .55rem; }
+    .chip {
+      display: flex; align-items: center; gap: 1rem;
+      padding: .85rem 1.25rem;
+      background: var(--surface); border: 1px solid var(--border);
       border-left: 3px solid var(--amber);
-      transition: border-left-color 0.2s, box-shadow 0.2s;
+      transition: border-left-color .2s, transform .2s, box-shadow .2s;
     }
-    .offer-card:hover {
+    .chip:hover {
       border-left-color: var(--green);
-      box-shadow: 0 2px 10px rgba(28,25,23,0.06);
+      transform: translateX(4px);
+      box-shadow: 0 2px 12px rgba(28,25,23,0.06);
     }
-    .oc-icon { font-size: 1.3rem; flex-shrink: 0; }
-    .oc-text {}
-    .oc-title {
-      font-family: 'Nunito', sans-serif;
-      font-weight: 700;
-      font-size: 0.88rem;
-      color: var(--dark);
-    }
-    .oc-desc {
-      font-size: 0.68rem;
-      font-weight: 300;
-      color: var(--muted);
-      margin-top: 0.1rem;
-    }
-    .oc-free {
-      margin-left: auto;
-      font-size: 0.55rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--green);
-      background: rgba(5,150,105,0.08);
-      border: 1px solid rgba(5,150,105,0.2);
-      padding: 0.2rem 0.6rem;
-      border-radius: 100px;
+    .chip-icon {
+      width: 32px; height: 32px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
     }
-
-    .cta-row {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
+    .chip-icon svg { width: 16px; height: 16px; }
+    .chip-text {}
+    .chip-title {
+      font-family: 'Nunito', sans-serif; font-weight: 700;
+      font-size: .86rem; color: var(--dark);
     }
-    .cta-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: #fff;
-      background: var(--amber);
-      text-decoration: none;
-      padding: 0.9rem 2rem;
-      border-radius: 8px;
-      transition: background 0.2s;
+    .chip-sub {
+      font-size: .68rem; font-weight: 300; color: var(--muted); margin-top: 1px;
     }
-    .cta-btn:hover { background: var(--dark); }
-    .cta-link {
-      font-size: 0.62rem;
-      font-weight: 400;
-      color: var(--muted);
-      text-decoration: none;
-      border-bottom: 1px solid rgba(28,25,23,0.15);
-      padding-bottom: 1px;
+    .chip-badge {
+      margin-left: auto; flex-shrink: 0;
+      font-size: .52rem; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--green);
+      background: var(--green-light);
+      border: 1px solid rgba(5,150,105,.2);
+      padding: .2rem .65rem; border-radius: 100px;
     }
 
-    /* RIGHT */
+    .cta-row { display: flex; align-items: center; gap: 1.5rem; }
+    .btn-prim {
+      font-size: .65rem; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; color: #fff;
+      background: var(--amber); text-decoration: none;
+      padding: .9rem 2rem; border-radius: 100px; transition: background .2s;
+    }
+    .btn-prim:hover { background: var(--dark); }
+    .btn-ghost {
+      font-size: .62rem; font-weight: 400; color: var(--muted);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(28,25,23,.15); padding-bottom: 1px;
+    }
+
+    /* ─── Hero Right: Menschen-Mosaik ─────────────────── */
     .hero-right {
-      background: var(--light);
-      display: flex;
-      flex-direction: column;
-      padding: 6rem 4rem 4rem;
-      gap: 2.5rem;
-      border-left: 1px solid rgba(28,25,23,0.06);
+      background: var(--amber-light); border-left: 1px solid var(--border);
+      display: flex; flex-direction: column;
+      padding: 5rem 3.5rem 3.5rem; gap: 2rem;
     }
 
-    .right-label {
-      font-size: 0.55rem;
-      font-weight: 700;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--amber);
+    .mosaic-label {
+      font-size: .55rem; font-weight: 700; letter-spacing: .2em;
+      text-transform: uppercase; color: var(--amber);
     }
 
-    .testimonial {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-      padding: 1.5rem;
-      background: #fff;
-      border-radius: 12px;
-      border: 1px solid rgba(28,25,23,0.06);
-      box-shadow: 0 2px 8px rgba(28,25,23,0.04);
-    }
-    .test-quote {
-      font-family: 'Nunito', sans-serif;
-      font-size: 0.95rem;
-      font-weight: 400;
-      line-height: 1.6;
-      color: var(--dark);
-    }
-    .test-author {
-      font-size: 0.62rem;
-      font-weight: 600;
-      color: var(--amber);
-      letter-spacing: 0.06em;
-    }
-    .test-stars {
-      font-size: 0.75rem;
-      letter-spacing: 0.05em;
-      color: var(--amber);
-    }
-
-    .stats-grid {
+    .mosaic {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
+      grid-template-columns: repeat(4, 1fr);
+      gap: .75rem;
     }
-    .sg-card {
-      background: #fff;
-      border: 1px solid rgba(28,25,23,0.06);
-      border-radius: 10px;
-      padding: 1.25rem;
+    .avatar {
+      display: flex; flex-direction: column;
+      align-items: center; gap: .4rem;
     }
-    .sg-num {
-      font-family: 'Nunito', sans-serif;
-      font-weight: 700;
-      font-size: 1.8rem;
-      line-height: 1;
-      letter-spacing: -0.02em;
-      color: var(--amber);
+    .avatar-circle {
+      width: 64px; height: 64px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Nunito', sans-serif; font-weight: 800;
+      font-size: 1.1rem; color: #fff;
+      transition: transform .2s;
     }
-    .sg-label {
-      font-size: 0.6rem;
-      font-weight: 400;
-      color: var(--muted);
-      margin-top: 0.25rem;
+    .avatar-circle:hover { transform: scale(1.08); }
+    .avatar-name {
+      font-size: .56rem; font-weight: 600; color: var(--dark);
+      text-align: center; line-height: 1.2;
+    }
+    .avatar-role {
+      font-size: .5rem; font-weight: 300; color: var(--muted);
+      text-align: center;
     }
 
-    .contact-block {
-      background: var(--amber);
-      border-radius: 10px;
-      padding: 1.5rem;
+    /* Avatar colors */
+    .av-1 { background: #D97706; }
+    .av-2 { background: #059669; }
+    .av-3 { background: #7C3AED; }
+    .av-4 { background: #DC2626; }
+    .av-5 { background: #0891B2; }
+    .av-6 { background: #CA8A04; }
+    .av-7 { background: #16A34A; }
+    .av-8 { background: #9333EA; }
+
+    /* Big stat */
+    .hero-stat {
+      padding: 1.5rem; background: var(--surface);
+      border: 1px solid var(--border);
     }
-    .cb-label {
-      font-size: 0.55rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.65);
-      margin-bottom: 0.4rem;
+    .hs-num {
+      font-family: 'Nunito', sans-serif; font-weight: 800;
+      font-size: 2.8rem; letter-spacing: -.03em; color: var(--amber);
+      line-height: 1;
     }
-    .cb-hours {
-      font-family: 'Nunito', sans-serif;
-      font-weight: 700;
-      font-size: 1rem;
-      color: #fff;
+    .hs-label {
+      font-size: .72rem; font-weight: 300; color: var(--muted);
+      margin-top: .3rem; line-height: 1.4;
     }
-    .cb-note {
-      font-size: 0.68rem;
-      font-weight: 300;
-      color: rgba(255,255,255,0.7);
-      margin-top: 0.25rem;
+    .hs-note {
+      font-size: .58rem; font-weight: 600; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--green);
+      margin-top: .6rem; display: flex; align-items: center; gap: .4rem;
     }
+    .hs-note::before {
+      content: ''; width: 20px; height: 1px; background: var(--green);
+    }
+
+    /* ─── Section 2 — Angebote ────────────────────────── */
+    .angebote {
+      padding: 7rem 5rem;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+    }
+    .sec-head {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      margin-bottom: 3.5rem;
+    }
+    .sec-eyebrow {
+      font-size: .58rem; font-weight: 700; letter-spacing: .18em;
+      text-transform: uppercase; color: var(--green);
+      margin-bottom: .5rem; display: flex; align-items: center; gap: .55rem;
+    }
+    .sec-eyebrow::before { content: ''; width: 18px; height: 2px; background: var(--green); border-radius: 1px; }
+    .sec-title {
+      font-family: 'Nunito', sans-serif; font-weight: 800;
+      font-size: 2.25rem; letter-spacing: -.02em; color: var(--dark);
+    }
+    .sec-link {
+      font-size: .62rem; font-weight: 600; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--amber); text-decoration: none;
+    }
+
+    .ang-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem;
+    }
+
+    .ang-card {
+      background: var(--bg); border: 1px solid var(--border);
+      display: flex; flex-direction: column;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .ang-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(28,25,23,.08);
+    }
+
+    .ang-art {
+      height: 160px; display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Art: Einzelberatung — two chairs facing each other */
+    .art-chair {
+      position: relative; display: flex; align-items: flex-end;
+      gap: 24px;
+    }
+    .chair {
+      display: flex; flex-direction: column; align-items: center; gap: 3px;
+    }
+    .chair-back {
+      width: 24px; height: 32px; border-radius: 4px 4px 0 0;
+    }
+    .chair-seat {
+      width: 32px; height: 10px; border-radius: 3px;
+    }
+    .chair-legs {
+      display: flex; gap: 16px;
+    }
+    .chair-leg {
+      width: 3px; height: 18px; border-radius: 2px;
+    }
+    .chair-r { transform: scaleX(-1); }
+    .chair-line {
+      position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+      width: 1px; height: 24px; background: rgba(28,25,23,.08);
+    }
+
+    /* Art: Familienbegleitung — family silhouettes */
+    .art-family {
+      display: flex; align-items: flex-end; gap: 10px;
+    }
+    .fig {
+      display: flex; flex-direction: column; align-items: center; gap: 3px;
+    }
+    .fig-head { border-radius: 50%; }
+    .fig-body { border-radius: 3px 3px 0 0; }
+
+    /* Art: Krisenintervention — lifeline/heart */
+    .art-heart {
+      position: relative; width: 64px; height: 56px;
+    }
+    .art-heart::before, .art-heart::after {
+      content: ''; position: absolute;
+      width: 36px; height: 56px; border-radius: 36px 36px 0 0;
+      background: #DC2626; opacity: .85;
+      top: 0;
+    }
+    .art-heart::before { left: 14px; transform: rotate(-45deg); transform-origin: 0 100%; }
+    .art-heart::after  { right: 14px; transform: rotate(45deg); transform-origin: 100% 100%; }
+
+    /* Art: Gruppenangebote — circle of people */
+    .art-group {
+      position: relative; width: 120px; height: 120px;
+    }
+    .grp-dot {
+      position: absolute; border-radius: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .grp-line {
+      position: absolute; height: 1px;
+      background: rgba(28,25,23,.08);
+      transform-origin: left center;
+    }
+
+    .ang-body {
+      padding: 1.5rem; flex: 1;
+      display: flex; flex-direction: column; gap: .6rem;
+    }
+    .ang-tag {
+      font-size: .52rem; font-weight: 700; letter-spacing: .16em;
+      text-transform: uppercase; color: var(--amber);
+    }
+    .ang-name {
+      font-family: 'Nunito', sans-serif; font-weight: 800;
+      font-size: 1rem; color: var(--dark); line-height: 1.2;
+    }
+    .ang-desc {
+      font-size: .74rem; font-weight: 300; color: var(--muted);
+      line-height: 1.75; flex: 1;
+    }
+    .ang-foot {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: .75rem; border-top: 1px solid var(--border);
+      margin-top: auto;
+    }
+    .ang-badge {
+      font-size: .52rem; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--green);
+      background: var(--green-light);
+      border: 1px solid rgba(5,150,105,.2);
+      padding: .22rem .7rem; border-radius: 100px;
+    }
+    .ang-more {
+      font-size: .6rem; font-weight: 600; color: var(--amber);
+      text-decoration: none; transition: color .2s;
+    }
+    .ang-more:hover { color: var(--dark); }
+
+    /* ─── Section 3 — Wirkung ─────────────────────────── */
+    .wirkung {
+      padding: 7rem 5rem;
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+    }
+
+    /* Pull quote */
+    .pullquote-wrap {
+      max-width: 860px; margin: 0 auto 6rem;
+      text-align: center; position: relative;
+    }
+    .pq-mark {
+      font-family: 'Nunito', sans-serif; font-weight: 800;
+      font-size: 8rem; line-height: .6; color: var(--amber-mid);
+      display: block; margin-bottom: .5rem; user-select: none;
+    }
+    .pq-text {
+      font-family: 'Nunito', sans-serif; font-weight: 700; font-style: italic;
+      font-size: clamp(1.4rem, 2.5vw, 2rem); line-height: 1.45;
+      color: var(--dark); letter-spacing: -.01em;
+    }
+    .pq-text em { font-style: normal; color: var(--amber); }
+    .pq-author {
+      margin-top: 1.5rem; display: flex; align-items: center;
+      justify-content: center; gap: .75rem;
+    }
+    .pq-avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: var(--amber); display: flex; align-items: center;
+      justify-content: center;
+      font-family: 'Nunito', sans-serif; font-weight: 800;
+      font-size: .9rem; color: #fff;
+    }
+    .pq-name {
+      text-align: left;
+    }
+    .pq-n {
+      font-size: .78rem; font-weight: 600; color: var(--dark);
+    }
+    .pq-sub {
+      font-size: .62rem; font-weight: 300; color: var(--muted);
+    }
+
+    /* Impact grid */
+    .impact-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border);
+      margin-bottom: 5rem;
+    }
+    .impact-cell {
+      background: var(--surface); padding: 2.5rem 2rem;
+      display: flex; flex-direction: column; gap: .5rem;
+      transition: background .2s;
+    }
+    .impact-cell:hover { background: var(--amber-light); }
+    .impact-num {
+      font-family: 'Nunito', sans-serif; font-weight: 800;
+      font-size: 3rem; letter-spacing: -.03em; color: var(--amber);
+      line-height: 1;
+    }
+    .impact-label {
+      font-size: .82rem; font-weight: 600; color: var(--dark);
+    }
+    .impact-sub {
+      font-size: .68rem; font-weight: 300; color: var(--muted); line-height: 1.5;
+    }
+
+    /* Team row */
+    .team-head {
+      font-size: .58rem; font-weight: 700; letter-spacing: .18em;
+      text-transform: uppercase; color: var(--muted);
+      margin-bottom: 1.5rem; display: flex; align-items: center; gap: .6rem;
+    }
+    .team-head::before { content: ''; width: 18px; height: 1px; background: var(--muted); }
+    .team-row {
+      display: flex; gap: 2rem; align-items: flex-start;
+    }
+    .team-member {
+      display: flex; flex-direction: column; align-items: center; gap: .5rem;
+      flex: 1;
+    }
+    .tm-circle {
+      width: 72px; height: 72px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Nunito', sans-serif; font-weight: 800;
+      font-size: 1.2rem; color: #fff;
+      transition: transform .2s;
+    }
+    .tm-circle:hover { transform: scale(1.06); }
+    .tm-name {
+      font-family: 'Nunito', sans-serif; font-weight: 700;
+      font-size: .78rem; color: var(--dark); text-align: center;
+    }
+    .tm-role {
+      font-size: .62rem; font-weight: 300; color: var(--muted);
+      text-align: center; line-height: 1.3;
+    }
+
+    /* ─── Animations ───────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-left > * { animation: fadeUp .65s ease both; }
+    .hero-left > *:nth-child(1){ animation-delay:.05s }
+    .hero-left > *:nth-child(2){ animation-delay:.15s }
+    .hero-left > *:nth-child(3){ animation-delay:.25s }
+    .hero-left > *:nth-child(4){ animation-delay:.35s }
+    .hero-left > *:nth-child(5){ animation-delay:.45s }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(.85); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+    .avatar-circle {
+      animation: popIn .5s ease both;
+    }
+    .avatar:nth-child(1) .avatar-circle { animation-delay:.1s }
+    .avatar:nth-child(2) .avatar-circle { animation-delay:.18s }
+    .avatar:nth-child(3) .avatar-circle { animation-delay:.26s }
+    .avatar:nth-child(4) .avatar-circle { animation-delay:.34s }
+    .avatar:nth-child(5) .avatar-circle { animation-delay:.42s }
+    .avatar:nth-child(6) .avatar-circle { animation-delay:.50s }
+    .avatar:nth-child(7) .avatar-circle { animation-delay:.58s }
+    .avatar:nth-child(8) .avatar-circle { animation-delay:.66s }
+
+    .ang-card { animation: fadeUp .6s ease both; }
+    .ang-card:nth-child(1){ animation-delay:.1s }
+    .ang-card:nth-child(2){ animation-delay:.2s }
+    .ang-card:nth-child(3){ animation-delay:.3s }
+    .ang-card:nth-child(4){ animation-delay:.4s }
   </style>
 </head>
 <body>
-  <nav>
-    <div class="nav-logo">Brücke</div>
-    <ul class="nav-links">
-      <li><a href="#">Beratung</a></li>
-      <li><a href="#">Angebote</a></li>
-      <li><a href="#">Team</a></li>
-      <li><a href="#">Kontakt</a></li>
-    </ul>
-    <a href="#" class="nav-cta">Termin anfragen</a>
-  </nav>
 
-  <section class="hero">
-    <div class="hero-left">
-      <div class="eyebrow">Soziale Arbeit · Trier</div>
+<!-- Nav -->
+<nav>
+  <div class="nav-brand">
+    <div class="nav-mark">
+      <svg viewBox="0 0 24 24"><path d="M12 21C12 21 4 14 4 8.5a8 8 0 0 1 16 0C20 14 12 21 12 21z"/><circle cx="12" cy="9" r="2.5" fill="white" stroke="none"/></svg>
+    </div>
+    <span class="nav-name">Brücke</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#">Beratung</a></li>
+    <li><a href="#">Angebote</a></li>
+    <li><a href="#">Team</a></li>
+    <li><a href="#">Über uns</a></li>
+  </ul>
+  <a href="#" class="nav-cta">Termin anfragen</a>
+</nav>
 
-      <h1 class="hero-headline">
-        Für jeden<br>
-        ein <em>Ohr.</em>
-      </h1>
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="eyebrow">
+      <div class="eyebrow-dot"></div>
+      Soziale Arbeit · Trier · seit 2009
+    </div>
 
-      <p class="hero-body">
-        Niemand muss alleine durch schwierige Zeiten.
-        Wir hören zu, begleiten und helfen — kostenlos
-        und ohne Bürokratie-Hürden.
-      </p>
+    <h1 class="hero-h1">
+      Für jeden<br>
+      ein <em>Ohr.</em>
+    </h1>
 
-      <div class="offer-list">
-        <div class="offer-card">
-          <div class="oc-icon">🤝</div>
-          <div class="oc-text">
-            <div class="oc-title">Einzelberatung</div>
-            <div class="oc-desc">Persönliche Beratung zu Alltagsproblemen</div>
-          </div>
-          <span class="oc-free">Kostenlos</span>
+    <p class="hero-p">
+      Niemand muss alleine durch schwierige Zeiten.
+      Wir hören zu, begleiten und helfen — kostenlos,
+      vertraulich und ohne Bürokratie-Hürden.
+    </p>
+
+    <div class="chips">
+      <div class="chip">
+        <div class="chip-icon" style="background:#FEF3C7;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2" stroke-linecap="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+          </svg>
         </div>
-        <div class="offer-card">
-          <div class="oc-icon">👨‍👩‍👧</div>
-          <div class="oc-text">
-            <div class="oc-title">Familienbegleitung</div>
-            <div class="oc-desc">Unterstützung für Familien in Krisen</div>
-          </div>
-          <span class="oc-free">Kostenlos</span>
+        <div class="chip-text">
+          <div class="chip-title">Einzelberatung</div>
+          <div class="chip-sub">Persönlich · vertraulich · ohne Wartezeit</div>
         </div>
-        <div class="offer-card">
-          <div class="oc-icon">💬</div>
-          <div class="oc-text">
-            <div class="oc-title">Gruppenangebote</div>
-            <div class="oc-desc">Wöchentliche Treffen & Selbsthilfegruppen</div>
-          </div>
-          <span class="oc-free">Offen</span>
-        </div>
+        <span class="chip-badge">Kostenlos</span>
       </div>
-
-      <div class="cta-row">
-        <a href="#" class="cta-btn">Termin anfragen →</a>
-        <a href="#" class="cta-link">Alle Angebote ansehen</a>
+      <div class="chip">
+        <div class="chip-icon" style="background:#ECFDF5;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2" stroke-linecap="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <div class="chip-text">
+          <div class="chip-title">Familienbegleitung</div>
+          <div class="chip-sub">Unterstützung für Familien in Krisen</div>
+        </div>
+        <span class="chip-badge">Kostenlos</span>
+      </div>
+      <div class="chip">
+        <div class="chip-icon" style="background:#FEF3C7;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2" stroke-linecap="round">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M8 12h8M12 8v8"/>
+          </svg>
+        </div>
+        <div class="chip-text">
+          <div class="chip-title">Gruppenangebote</div>
+          <div class="chip-sub">Wöchentliche Treffen · Selbsthilfegruppen</div>
+        </div>
+        <span class="chip-badge">Offen</span>
       </div>
     </div>
 
-    <div class="hero-right">
-      <div class="right-label">Was Menschen sagen</div>
+    <div class="cta-row">
+      <a href="#" class="btn-prim">Termin anfragen →</a>
+      <a href="#" class="btn-ghost">Alle Angebote ansehen</a>
+    </div>
+  </div>
 
-      <div class="testimonial">
-        <div class="test-stars">★★★★★</div>
-        <div class="test-quote">
-          „Ich hatte das Gefühl, zum ersten Mal wirklich gehört zu werden.
-          Das Team ist außergewöhnlich einfühlsam."
-        </div>
-        <div class="test-author">— Maria K., Nutzerin seit 2022</div>
+  <!-- Menschen-Mosaik -->
+  <div class="hero-right">
+    <div class="mosaic-label">Unser Team · 18 Mitarbeitende</div>
+
+    <div class="mosaic">
+      <div class="avatar">
+        <div class="avatar-circle av-1">SK</div>
+        <div class="avatar-name">Sarah K.</div>
+        <div class="avatar-role">Beratung</div>
       </div>
-
-      <div class="stats-grid">
-        <div class="sg-card">
-          <div class="sg-num">1.200+</div>
-          <div class="sg-label">Beratungen / Jahr</div>
-        </div>
-        <div class="sg-card">
-          <div class="sg-num">18</div>
-          <div class="sg-label">Mitarbeiter</div>
-        </div>
-        <div class="sg-card">
-          <div class="sg-num">15</div>
-          <div class="sg-label">Jahre in Trier</div>
-        </div>
-        <div class="sg-card">
-          <div class="sg-num">0 €</div>
-          <div class="sg-label">Kosten für Ratsuchende</div>
-        </div>
+      <div class="avatar">
+        <div class="avatar-circle av-2">MT</div>
+        <div class="avatar-name">Marc T.</div>
+        <div class="avatar-role">Sozialarbeit</div>
       </div>
-
-      <div class="contact-block">
-        <div class="cb-label">Öffnungszeiten Beratungsstelle</div>
-        <div class="cb-hours">Mo – Fr, 9 – 17 Uhr</div>
-        <div class="cb-note">Trier Innenstadt · Keine Anmeldung nötig</div>
+      <div class="avatar">
+        <div class="avatar-circle av-3">LM</div>
+        <div class="avatar-name">Lisa M.</div>
+        <div class="avatar-role">Leitung</div>
+      </div>
+      <div class="avatar">
+        <div class="avatar-circle av-4">JB</div>
+        <div class="avatar-name">Jonas B.</div>
+        <div class="avatar-role">Jugendarbeit</div>
+      </div>
+      <div class="avatar">
+        <div class="avatar-circle av-5">AW</div>
+        <div class="avatar-name">Anna W.</div>
+        <div class="avatar-role">Beratung</div>
+      </div>
+      <div class="avatar">
+        <div class="avatar-circle av-6">TR</div>
+        <div class="avatar-name">Tom R.</div>
+        <div class="avatar-role">Kriseninterv.</div>
+      </div>
+      <div class="avatar">
+        <div class="avatar-circle av-7">KH</div>
+        <div class="avatar-name">Karin H.</div>
+        <div class="avatar-role">Familie</div>
+      </div>
+      <div class="avatar">
+        <div class="avatar-circle av-8">PL</div>
+        <div class="avatar-name">Paul L.</div>
+        <div class="avatar-role">Gruppen</div>
       </div>
     </div>
-  </section>
+
+    <div class="hero-stat">
+      <div class="hs-num">1.200+</div>
+      <div class="hs-label">Beratungsgespräche pro Jahr —<br>jedes davon kostenlos.</div>
+      <div class="hs-note">Trier · seit 2009</div>
+    </div>
+  </div>
+</section>
+
+<!-- Angebote -->
+<section class="angebote">
+  <div class="sec-head">
+    <div>
+      <div class="sec-eyebrow">Was wir anbieten</div>
+      <h2 class="sec-title">Hilfe, die ankommt</h2>
+    </div>
+    <a href="#" class="sec-link">Alle Angebote →</a>
+  </div>
+
+  <div class="ang-grid">
+
+    <!-- Einzelberatung -->
+    <div class="ang-card">
+      <div class="ang-art" style="background:#FFFBEB;">
+        <!-- Two chairs facing each other -->
+        <div class="art-chair">
+          <div class="chair">
+            <div class="chair-back" style="background:#D97706;opacity:.7;"></div>
+            <div class="chair-seat" style="background:#D97706;"></div>
+            <div class="chair-legs">
+              <div class="chair-leg" style="background:#D97706;opacity:.5;"></div>
+              <div class="chair-leg" style="background:#D97706;opacity:.5;"></div>
+            </div>
+          </div>
+          <div style="width:1px;height:40px;background:rgba(28,25,23,.1);margin-bottom:28px;"></div>
+          <div class="chair chair-r">
+            <div class="chair-back" style="background:#059669;opacity:.7;"></div>
+            <div class="chair-seat" style="background:#059669;"></div>
+            <div class="chair-legs">
+              <div class="chair-leg" style="background:#059669;opacity:.5;"></div>
+              <div class="chair-leg" style="background:#059669;opacity:.5;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ang-body">
+        <div class="ang-tag">1:1 · Persönlich</div>
+        <div class="ang-name">Einzelberatung</div>
+        <div class="ang-desc">Ein Gespräch, das zählt. In ruhiger Atmosphäre, ohne Zeitdruck — zu Alltagsproblemen, Schulden, Wohnen oder einfach wenn's nicht weitergeht.</div>
+        <div class="ang-foot">
+          <span class="ang-badge">Kostenlos</span>
+          <a href="#" class="ang-more">Termin buchen →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Familienbegleitung -->
+    <div class="ang-card">
+      <div class="ang-art" style="background:#ECFDF5;">
+        <div class="art-family">
+          <!-- Adult 1 -->
+          <div class="fig">
+            <div class="fig-head" style="width:22px;height:22px;background:#059669;opacity:.8;"></div>
+            <div class="fig-body" style="width:18px;height:28px;background:#059669;opacity:.6;"></div>
+          </div>
+          <!-- Child -->
+          <div class="fig" style="margin-top:12px;">
+            <div class="fig-head" style="width:14px;height:14px;background:#34D399;opacity:.9;"></div>
+            <div class="fig-body" style="width:11px;height:18px;background:#34D399;opacity:.7;"></div>
+          </div>
+          <!-- Adult 2 -->
+          <div class="fig">
+            <div class="fig-head" style="width:22px;height:22px;background:#059669;opacity:.75;"></div>
+            <div class="fig-body" style="width:18px;height:28px;background:#059669;opacity:.55;"></div>
+          </div>
+        </div>
+      </div>
+      <div class="ang-body">
+        <div class="ang-tag">Familie · Krise</div>
+        <div class="ang-name">Familienbegleitung</div>
+        <div class="ang-desc">Wenn der Familienalltag aus den Fugen gerät — wir begleiten Familien, Paare und Erziehende durch schwierige Phasen, Trennung oder Überforderung.</div>
+        <div class="ang-foot">
+          <span class="ang-badge">Kostenlos</span>
+          <a href="#" class="ang-more">Mehr erfahren →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Krisenintervention -->
+    <div class="ang-card">
+      <div class="ang-art" style="background:#FFF1F2;">
+        <div style="position:relative;">
+          <!-- Heart shape via CSS -->
+          <div style="position:relative;width:70px;height:65px;">
+            <div style="position:absolute;width:36px;height:52px;border-radius:18px 18px 0 0;background:#DC2626;opacity:.75;top:0;left:7px;transform:rotate(-45deg);transform-origin:0 100%;"></div>
+            <div style="position:absolute;width:36px;height:52px;border-radius:18px 18px 0 0;background:#DC2626;opacity:.75;top:0;right:7px;transform:rotate(45deg);transform-origin:100% 100%;"></div>
+          </div>
+          <!-- Pulse line -->
+          <div style="position:absolute;bottom:-8px;left:-20px;width:110px;height:2px;background:rgba(220,38,38,.15);border-radius:1px;"></div>
+        </div>
+      </div>
+      <div class="ang-body">
+        <div class="ang-tag">Akut · 24h-Erreichbar</div>
+        <div class="ang-name">Krisenintervention</div>
+        <div class="ang-desc">In akuten Notsituationen sind wir erreichbar. Schnelle, persönliche Hilfe — ohne Anmeldung, ohne Formulare, ohne Wartezeit.</div>
+        <div class="ang-foot">
+          <span class="ang-badge" style="color:#DC2626;background:rgba(220,38,38,.08);border-color:rgba(220,38,38,.2);">Akutangebot</span>
+          <a href="#" class="ang-more">Kontakt →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gruppenangebote -->
+    <div class="ang-card">
+      <div class="ang-art" style="background:#FFFBEB;">
+        <!-- Circle of people dots -->
+        <div class="art-group">
+          <div class="grp-dot" style="width:18px;height:18px;background:#D97706;opacity:.8;top:15%;left:50%;"></div>
+          <div class="grp-dot" style="width:14px;height:14px;background:#059669;opacity:.75;top:35%;left:80%;"></div>
+          <div class="grp-dot" style="width:16px;height:16px;background:#7C3AED;opacity:.7;top:72%;left:72%;"></div>
+          <div class="grp-dot" style="width:15px;height:15px;background:#0891B2;opacity:.75;top:80%;left:28%;"></div>
+          <div class="grp-dot" style="width:14px;height:14px;background:#DC2626;opacity:.7;top:38%;left:18%;"></div>
+          <div class="grp-dot" style="width:20px;height:20px;background:#D97706;opacity:.5;top:50%;left:50%;"></div>
+          <!-- Connecting lines -->
+          <div class="grp-line" style="left:50%;top:15%;width:38%;transform:rotate(25deg);"></div>
+          <div class="grp-line" style="left:50%;top:15%;width:36%;transform:rotate(145deg);"></div>
+        </div>
+      </div>
+      <div class="ang-body">
+        <div class="ang-tag">Gruppe · Gemeinschaft</div>
+        <div class="ang-name">Gruppenangebote</div>
+        <div class="ang-desc">Wöchentliche Selbsthilfegruppen, Gesprächskreise und offene Treffs. Hier begegnen sich Menschen — und merken, dass sie nicht alleine sind.</div>
+        <div class="ang-foot">
+          <span class="ang-badge">Offen für alle</span>
+          <a href="#" class="ang-more">Programm →</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Wirkung -->
+<section class="wirkung">
+
+  <!-- Pull quote -->
+  <div class="pullquote-wrap">
+    <span class="pq-mark">"</span>
+    <p class="pq-text">
+      Ich hatte das Gefühl, zum ersten Mal wirklich <em>gehört</em> zu werden.
+      Das Team hat mir nicht gesagt, was ich tun soll —
+      sie haben mir geholfen, es selbst herauszufinden.
+    </p>
+    <div class="pq-author">
+      <div class="pq-avatar">MK</div>
+      <div class="pq-name">
+        <div class="pq-n">Maria K.</div>
+        <div class="pq-sub">Nutzerin der Einzelberatung · Trier</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Impact numbers -->
+  <div class="impact-grid">
+    <div class="impact-cell">
+      <div class="impact-num">1.200+</div>
+      <div class="impact-label">Beratungen pro Jahr</div>
+      <div class="impact-sub">Jedes Gespräch kostenlos und vertraulich</div>
+    </div>
+    <div class="impact-cell">
+      <div class="impact-num">18</div>
+      <div class="impact-label">Mitarbeitende</div>
+      <div class="impact-sub">Ausgebildete Sozialarbeiter, Berater & Ehrenamtliche</div>
+    </div>
+    <div class="impact-cell">
+      <div class="impact-num">15</div>
+      <div class="impact-label">Jahre in Trier</div>
+      <div class="impact-sub">Verwurzelt im Stadtteil, bekannt bei den Menschen</div>
+    </div>
+    <div class="impact-cell">
+      <div class="impact-num">0 €</div>
+      <div class="impact-label">Kosten für Ratsuchende</div>
+      <div class="impact-sub">Finanziert durch Stadt, Land und Spenden</div>
+    </div>
+  </div>
+
+  <!-- Team -->
+  <div class="team-head">Das Team hinter der Brücke</div>
+  <div class="team-row">
+    <div class="team-member">
+      <div class="tm-circle" style="background:#D97706;">LM</div>
+      <div class="tm-name">Lisa Meier</div>
+      <div class="tm-role">Leiterin</div>
+    </div>
+    <div class="team-member">
+      <div class="tm-circle" style="background:#059669;">SK</div>
+      <div class="tm-name">Sarah König</div>
+      <div class="tm-role">Beratung</div>
+    </div>
+    <div class="team-member">
+      <div class="tm-circle" style="background:#7C3AED;">MT</div>
+      <div class="tm-name">Marc Trost</div>
+      <div class="tm-role">Sozialarbeit</div>
+    </div>
+    <div class="team-member">
+      <div class="tm-circle" style="background:#0891B2;">AW</div>
+      <div class="tm-name">Anna Weber</div>
+      <div class="tm-role">Familie</div>
+    </div>
+    <div class="team-member">
+      <div class="tm-circle" style="background:#DC2626;">TR</div>
+      <div class="tm-name">Tom Richter</div>
+      <div class="tm-role">Kriseninterv.</div>
+    </div>
+    <div class="team-member">
+      <div class="tm-circle" style="background:#CA8A04;">JB</div>
+      <div class="tm-name">Jonas Braun</div>
+      <div class="tm-role">Jugendarbeit</div>
+    </div>
+  </div>
+
+</section>
+
 </body>
 </html>
