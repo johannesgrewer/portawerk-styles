@@ -5,29 +5,70 @@ import { styles, categories } from "../data/styles";
 
 <Layout>
   <!-- Password Gate -->
-  <div id="password-gate" class="fixed inset-0 z-50 flex items-center justify-center bg-bg">
-    <div class="w-full max-w-sm px-6">
-      <div class="text-center mb-8">
-        <h1 class="font-display text-3xl font-bold tracking-tight mb-2">Style Library</h1>
-        <p class="text-text-muted text-sm">PortaWerk — Interner Zugang</p>
+  <div id="password-gate" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-bg overflow-hidden">
+
+    <!-- Background radial glow -->
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 55% at 50% 65%, rgba(14,77,82,0.07) 0%, transparent 70%);pointer-events:none;"></div>
+
+    <!-- Content -->
+    <div style="width:100%;max-width:360px;padding:0 28px;position:relative;">
+
+      <!-- Logo mark -->
+      <div style="display:flex;flex-direction:column;align-items:center;margin-bottom:36px;gap:14px;">
+        <div style="width:52px;height:52px;background:#0E4D52;border-radius:14px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 24px rgba(14,77,82,0.25);">
+          <span style="color:#FDFAF6;font-family:var(--font-display);font-weight:800;font-size:19px;letter-spacing:-0.04em;line-height:1;">PW</span>
+        </div>
+        <div style="text-align:center;">
+          <h1 style="font-family:var(--font-display);font-size:1.625rem;font-weight:700;letter-spacing:-0.03em;color:#1B1B1B;line-height:1.1;margin-bottom:5px;">Style Library</h1>
+          <p style="color:#6B6360;font-size:0.8125rem;letter-spacing:0.01em;">Interner Zugang · PortaWerk</p>
+        </div>
       </div>
-      <form id="password-form" class="space-y-4">
-        <input
-          type="password"
-          id="password-input"
-          placeholder="Passwort eingeben"
-          autocomplete="off"
-          class="w-full bg-surface border border-border rounded-lg px-4 py-3 text-sm text-text placeholder:text-text-muted/50 outline-none focus:border-accent transition-colors"
-        />
+
+      <!-- Style palette preview (color dots) -->
+      <div style="display:flex;gap:7px;justify-content:center;margin-bottom:36px;flex-wrap:wrap;">
+        <div style="width:10px;height:10px;border-radius:50%;background:#1C1107;" title="Brauerei"></div>
+        <div style="width:10px;height:10px;border-radius:50%;background:#2B1A2F;" title="Weinhandlung"></div>
+        <div style="width:10px;height:10px;border-radius:50%;background:#D4A853;" title="Friseursalon"></div>
+        <div style="width:10px;height:10px;border-radius:50%;background:#4AADCF;" title="Arztpraxis"></div>
+        <div style="width:10px;height:10px;border-radius:50%;background:#2C1A0E;" title="Café"></div>
+        <div style="width:10px;height:10px;border-radius:50%;background:#C0392B;" title="Metzgerei"></div>
+        <div style="width:10px;height:10px;border-radius:50%;background:#0A1628;" title="Luxury Hotel"></div>
+        <div style="width:10px;height:10px;border-radius:50%;background:#6B4FA0;" title="Purple Haze"></div>
+        <div style="width:10px;height:10px;border-radius:50%;background:#1A4D3A;" title="Nordic"></div>
+        <div style="width:10px;height:10px;border-radius:50%;background:#C97B2A;" title="Craft"></div>
+        <div style="width:10px;height:10px;border-radius:50%;background:#B8860B;" title="Art Deco"></div>
+        <div style="width:10px;height:10px;border-radius:50%;background:#E84020;" title="Bold"></div>
+      </div>
+
+      <!-- Form -->
+      <form id="password-form">
+        <div style="position:relative;margin-bottom:10px;">
+          <input
+            type="password"
+            id="password-input"
+            placeholder="Passwort"
+            autocomplete="off"
+            style="width:100%;background:#F0EBE3;border:1.5px solid #DDD7CE;border-radius:10px;padding:13px 16px;font-size:0.9375rem;color:#1B1B1B;outline:none;transition:border-color 0.15s;font-family:var(--font-sans);"
+            onfocus="this.style.borderColor='#0E4D52'"
+            onblur="this.style.borderColor='#DDD7CE'"
+          />
+        </div>
         <button
           type="submit"
-          class="w-full bg-accent hover:bg-accent-light text-white font-medium rounded-lg px-4 py-3 text-sm transition-colors cursor-pointer"
+          style="width:100%;background:#0E4D52;color:#FDFAF6;font-family:var(--font-sans);font-weight:600;font-size:0.9375rem;border:none;border-radius:10px;padding:13px 16px;cursor:pointer;transition:background 0.15s;letter-spacing:0.01em;"
+          onmouseover="this.style.background='#1A7A82'"
+          onmouseout="this.style.background='#0E4D52'"
         >
           Zugang
         </button>
-        <p id="password-error" class="text-red-500 text-xs text-center hidden">Falsches Passwort.</p>
+        <p id="password-error" style="color:#C0392B;font-size:0.75rem;text-align:center;margin-top:10px;display:none;">Falsches Passwort — bitte nochmal versuchen.</p>
       </form>
+
     </div>
+
+    <!-- Footer -->
+    <p style="position:absolute;bottom:28px;color:#6B6360;font-size:0.6875rem;letter-spacing:0.04em;text-transform:uppercase;">portawerk.de</p>
+
   </div>
 
   <!-- Main App -->
@@ -247,7 +288,7 @@ import { styles, categories } from "../data/styles";
         document.getElementById('app').classList.remove('hidden');
         initApp();
       } else {
-        errorEl.classList.remove('hidden');
+        errorEl.style.display = 'block';
         input.value = '';
         input.focus();
       }
