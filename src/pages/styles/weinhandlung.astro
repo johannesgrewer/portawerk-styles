@@ -1,0 +1,652 @@
+---
+export const prerender = true;
+---
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Domaine Lefèvre — Weinhandlung & Bar, Trier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --plum:    #2B1A2F;
+      --mid:     #5C3A5C;
+      --rose:    #A0516A;
+      --blush:   #D4889A;
+      --cream:   #FAF7F4;
+      --warm:    #F3EDE8;
+      --muted:   #8A7A80;
+      --border:  #E0D4D0;
+      --ff-disp: 'Playfair Display', serif;
+      --ff-body: 'Lato', sans-serif;
+    }
+
+    html, body {
+      background: var(--cream);
+      color: var(--plum);
+      font-family: var(--ff-body);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--cream);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 3.5rem;
+      height: 64px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-logo {
+      font-family: var(--ff-disp);
+      font-style: italic;
+      font-size: 1.35rem;
+      color: var(--plum);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--plum); }
+
+    .nav-cta {
+      background: var(--plum);
+      color: #fff !important;
+      padding: 0.45rem 1.4rem;
+      border-radius: 2px;
+      transition: background 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--mid) !important; }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--plum);
+      min-height: 540px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .hero-left {
+      padding: 5rem 4rem 5rem 3.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--blush);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-headline {
+      font-family: var(--ff-disp);
+      font-size: clamp(2.4rem, 4vw, 3.6rem);
+      line-height: 1.15;
+      color: #fff;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-headline em {
+      font-style: italic;
+      color: var(--blush);
+    }
+
+    .hero-desc {
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.55);
+      max-width: 380px;
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .btn-primary {
+      background: var(--rose);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.8rem 2rem;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { background: #B5607A; transform: translateY(-1px); }
+
+    .btn-text {
+      font-size: 0.75rem;
+      font-weight: 400;
+      color: rgba(255,255,255,0.45);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .btn-text:hover { color: #fff; border-color: rgba(255,255,255,0.5); }
+
+    /* Right panel — feature wine */
+    .hero-right {
+      background: rgba(255,255,255,0.04);
+      border-left: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-right::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(160,81,106,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .bottle-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 4px;
+      padding: 2rem;
+      width: 280px;
+      position: relative;
+      transition: background 0.3s;
+    }
+    .bottle-card:hover { background: rgba(255,255,255,0.09); }
+
+    .bottle-badge {
+      position: absolute;
+      top: -12px;
+      right: 1.5rem;
+      background: var(--rose);
+      color: #fff;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.75rem;
+      border-radius: 2px;
+    }
+
+    .bottle-year {
+      font-family: var(--ff-disp);
+      font-size: 3rem;
+      color: rgba(255,255,255,0.12);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .bottle-name {
+      font-family: var(--ff-disp);
+      font-style: italic;
+      font-size: 1.4rem;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+    }
+
+    .bottle-region {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--blush);
+      margin-bottom: 1.25rem;
+    }
+
+    .bottle-notes {
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+
+    .bottle-price-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+    }
+
+    .bottle-price {
+      font-family: var(--ff-disp);
+      font-size: 1.6rem;
+      color: #fff;
+    }
+
+    .bottle-volume {
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.4);
+    }
+
+    /* ── SORTIMENT ── */
+    .sortiment-section {
+      padding: 5rem 3.5rem;
+      background: var(--cream);
+    }
+
+    .section-intro {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: end;
+      margin-bottom: 3.5rem;
+    }
+
+    .section-eyebrow {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--rose);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-family: var(--ff-disp);
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      color: var(--plum);
+      line-height: 1.2;
+    }
+
+    .section-title em {
+      font-style: italic;
+      color: var(--rose);
+    }
+
+    .section-desc {
+      font-size: 0.875rem;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.8;
+      align-self: end;
+    }
+
+    .wine-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .wine-row {
+      display: grid;
+      grid-template-columns: 1fr auto auto auto;
+      align-items: baseline;
+      gap: 1.5rem;
+      padding: 1.25rem 0;
+      border-bottom: 1px solid var(--border);
+      cursor: default;
+      transition: padding-left 0.2s;
+    }
+    .wine-row:last-child { border-bottom: 2px solid var(--plum); }
+    .wine-row:hover { padding-left: 0.5rem; }
+    .wine-row:hover .wine-name { color: var(--rose); }
+
+    .wine-name {
+      font-family: var(--ff-disp);
+      font-style: italic;
+      font-size: 1.15rem;
+      color: var(--plum);
+      transition: color 0.2s;
+    }
+
+    .wine-type {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .wine-year {
+      font-family: var(--ff-disp);
+      font-size: 0.9rem;
+      color: var(--muted);
+      width: 3rem;
+      text-align: right;
+    }
+
+    .wine-price {
+      font-family: var(--ff-disp);
+      font-size: 1rem;
+      color: var(--plum);
+      text-align: right;
+      min-width: 4rem;
+    }
+
+    /* ── TASTING / BERATUNG ── */
+    .tasting-section {
+      background: var(--warm);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 5rem 3.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .tasting-aside { }
+
+    .tasting-pull {
+      font-family: var(--ff-disp);
+      font-style: italic;
+      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      color: var(--plum);
+      line-height: 1.4;
+      margin-bottom: 2rem;
+      border-left: 3px solid var(--rose);
+      padding-left: 1.5rem;
+      animation: quoteIn 0.8s ease-out both;
+    }
+
+    @keyframes quoteIn {
+      from { opacity: 0; transform: translateX(-10px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    .tasting-sub {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .tasting-options { display: flex; flex-direction: column; gap: 1.25rem; }
+
+    .tasting-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.5rem;
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .tasting-card:hover {
+      border-color: var(--rose);
+      box-shadow: 0 4px 20px rgba(160,81,106,0.08);
+    }
+
+    .tasting-icon {
+      width: 40px;
+      height: 40px;
+      background: rgba(160,81,106,0.08);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .tasting-card-title {
+      font-family: var(--ff-disp);
+      font-size: 1rem;
+      color: var(--plum);
+      margin-bottom: 0.25rem;
+    }
+
+    .tasting-card-desc {
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .tasting-card-price {
+      margin-top: 0.5rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--rose);
+      letter-spacing: 0.05em;
+    }
+
+    /* ── ANIMATIONS ── */
+    /* Wine rows already have hover — add smooth left-border reveal */
+    .wine-row::before {
+      content: '';
+      display: block;
+      width: 0;
+      height: 2px;
+      background: var(--rose);
+      position: absolute;
+      left: 0; bottom: -1px;
+      transition: width 0.3s ease;
+    }
+    .wine-row { position: relative; }
+    .wine-row:hover::before { width: 100%; }
+
+    /* Bottle card shimmer on hover */
+    @keyframes bottleShimmer {
+      0%   { background-position: -200% center; }
+      100% { background-position: 200% center; }
+    }
+    .bottle-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.04) 50%, transparent 60%);
+      background-size: 200% auto;
+      pointer-events: none;
+      animation: bottleShimmer 4s linear infinite;
+    }
+    .bottle-card { position: relative; overflow: hidden; }
+
+    /* Tasting cards slide right on hover */
+    .tasting-card { transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s; }
+    .tasting-card:hover { transform: translateX(4px); }
+
+    /* Pull quote line grows */
+    .tasting-pull {
+      transition: border-left-width 0.3s;
+    }
+    .tasting-aside:hover .tasting-pull { border-left-width: 5px; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--plum);
+      padding: 2.5rem 3.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-logo {
+      font-family: var(--ff-disp);
+      font-style: italic;
+      font-size: 1.25rem;
+      color: rgba(255,255,255,0.8);
+    }
+
+    .footer-info {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.35);
+    }
+
+    .footer-tag {
+      font-size: 0.7rem;
+      font-style: italic;
+      color: var(--blush);
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="#">Domaine Lefèvre</a>
+    <ul class="nav-links">
+      <li><a href="#">Sortiment</a></li>
+      <li><a href="#">Weinbar</a></li>
+      <li><a href="#">Verkostungen</a></li>
+      <li><a href="#">Beratung</a></li>
+      <li><a class="nav-cta" href="#">Termin buchen</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <p class="hero-eyebrow">Weinhandlung & Bar · Trier Innenstadt</p>
+      <h1 class="hero-headline">
+        Jede Flasche<br>
+        hat eine <em>Geschichte.</em>
+      </h1>
+      <p class="hero-desc">Kuratierte Weine aus kleinen Gütern, persönliche Beratung und eine Bar, in der man verweilen darf. Wein als Lebensstil — nicht als Status.</p>
+      <div class="hero-actions">
+        <a class="btn-primary" href="#">Sortiment entdecken</a>
+        <a class="btn-text" href="#">Weinbar & Öffnungszeiten</a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="bottle-card">
+        <span class="bottle-badge">Weinempfehlung</span>
+        <div class="bottle-year">2021</div>
+        <div class="bottle-name">Château Margaux<br>Côtes du Rhône</div>
+        <div class="bottle-region">Frankreich · Rhône</div>
+        <p class="bottle-notes">"Kirsche, Veilchen und ein Hauch Leder. Seidige Tannine, langer Abgang. Ein Wein der auf Geduld antwortet."</p>
+        <div class="bottle-price-row">
+          <span class="bottle-price">€ 38,00</span>
+          <span class="bottle-volume">0,75 l · Flasche</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SORTIMENT -->
+  <section class="sortiment-section">
+    <div class="section-intro">
+      <div>
+        <p class="section-eyebrow">Aktuell im Angebot</p>
+        <h2 class="section-title">Unser <em>Sortiment</em></h2>
+      </div>
+      <p class="section-desc">Wir führen ausschließlich Weine, hinter denen wir stehen. Kleine Güter, ehrliche Winzer — aus dem Moseltal, aus Frankreich, aus Spanien und Italien.</p>
+    </div>
+
+    <div class="wine-list">
+      <div class="wine-row">
+        <span class="wine-name">Riesling Großes Gewächs, Dr. Loosen</span>
+        <span class="wine-type">Weißwein</span>
+        <span class="wine-year">2022</span>
+        <span class="wine-price">€ 44,00</span>
+      </div>
+      <div class="wine-row">
+        <span class="wine-name">Pinot Noir, Domaine Drouhin</span>
+        <span class="wine-type">Rotwein</span>
+        <span class="wine-year">2020</span>
+        <span class="wine-price">€ 52,00</span>
+      </div>
+      <div class="wine-row">
+        <span class="wine-name">Garnacha Rioja Reserva, Muga</span>
+        <span class="wine-type">Rotwein</span>
+        <span class="wine-year">2019</span>
+        <span class="wine-price">€ 29,00</span>
+      </div>
+      <div class="wine-row">
+        <span class="wine-name">Grüner Veltliner Smaragd, F.X. Pichler</span>
+        <span class="wine-type">Weißwein</span>
+        <span class="wine-year">2022</span>
+        <span class="wine-price">€ 38,00</span>
+      </div>
+      <div class="wine-row">
+        <span class="wine-name">Brunello di Montalcino, Il Poggione</span>
+        <span class="wine-type">Rotwein</span>
+        <span class="wine-year">2018</span>
+        <span class="wine-price">€ 68,00</span>
+      </div>
+      <div class="wine-row">
+        <span class="wine-name">Champagne Blanc de Blancs, Billecart-Salmon</span>
+        <span class="wine-type">Schaumwein</span>
+        <span class="wine-year">NV</span>
+        <span class="wine-price">€ 79,00</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- TASTING -->
+  <section class="tasting-section">
+    <div class="tasting-aside">
+      <p class="section-eyebrow">Beratung & Erlebnis</p>
+      <blockquote class="tasting-pull">"Wein zu verstehen bedeutet nicht, ihn zu erklären — es bedeutet, ihn zu erleben."</blockquote>
+      <p class="tasting-sub">Wir bieten persönliche Weinberatung, kuratierte Verkostungsabende und maßgeschneiderte Weinpakete für besondere Anlässe. Kein Fachvokabular, keine Scheu — nur gute Weine in guter Gesellschaft.</p>
+    </div>
+
+    <div class="tasting-options">
+      <div class="tasting-card">
+        <div class="tasting-icon">🍷</div>
+        <div>
+          <div class="tasting-card-title">Einzelberatung</div>
+          <p class="tasting-card-desc">30 Minuten persönliche Weinberatung mit Verkostung — für Einsteiger und Kenner. Wir finden den Wein, der zu dir passt.</p>
+          <div class="tasting-card-price">Kostenlos mit Kauf</div>
+        </div>
+      </div>
+
+      <div class="tasting-card">
+        <div class="tasting-icon">🕯️</div>
+        <div>
+          <div class="tasting-card-title">Verkostungsabend</div>
+          <p class="tasting-card-desc">6 Weine, ein Thema, ein Abend. Monatlich wechselnd — Mosel, Burgund, Naturweine oder Schaumweine. Maximal 12 Personen.</p>
+          <div class="tasting-card-price">ab € 45 pro Person</div>
+        </div>
+      </div>
+
+      <div class="tasting-card">
+        <div class="tasting-icon">🎁</div>
+        <div>
+          <div class="tasting-card-title">Weinpaket nach Maß</div>
+          <p class="tasting-card-desc">Hochzeit, Firmenfeier, Geburtstag — wir stellen Weinpakete für jeden Anlass zusammen. Auf Wunsch mit handgeschriebener Karte.</p>
+          <div class="tasting-card-price">Ab 3 Flaschen, auf Anfrage</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span class="footer-logo">Domaine Lefèvre</span>
+    <span class="footer-info">Weinhandlung Lefèvre · Simeonstraße 44 · 54290 Trier · wein@domaineLefevre.de</span>
+    <span class="footer-tag">Jede Flasche hat eine Geschichte.</span>
+  </footer>
+
+</body>
+</html>

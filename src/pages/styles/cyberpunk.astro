@@ -1,0 +1,337 @@
+---
+export const prerender = true;
+---
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>NeuRoam — Digital Nomad Space & Co-Working | Trier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Exo+2:wght@200;300;400;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { overflow-x: hidden; }
+
+    :root {
+      --pink:  #FF0080;
+      --green: #00FF41;
+      --bg:    #0A000F;
+      --text:  #E0FFE8;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Exo 2', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* CRT scanlines */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,255,65,0.025) 2px,
+        rgba(0,255,65,0.025) 3px
+      );
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    /* Ambient glow */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 50% 40% at 10% 60%, rgba(255,0,128,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 50% at 90% 30%, rgba(0,255,65,0.06) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2.5rem;
+      background: rgba(10,0,15,0.92);
+      border-bottom: 1px solid rgba(0,255,65,0.15);
+    }
+    .nav-logo {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 1.1rem;
+      letter-spacing: 0.08em;
+      color: var(--green);
+      text-shadow: 0 0 10px rgba(0,255,65,0.5);
+    }
+    .nav-logo span { color: var(--pink); text-shadow: 0 0 10px rgba(255,0,128,0.5); }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(224,255,232,0.3);
+      text-decoration: none;
+      transition: color 0.15s, text-shadow 0.15s;
+    }
+    .nav-links a:hover {
+      color: var(--green);
+      text-shadow: 0 0 6px rgba(0,255,65,0.5);
+    }
+    .nav-access {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--green);
+      padding: 0.5rem 1.2rem;
+      text-decoration: none;
+      box-shadow: 0 0 12px rgba(0,255,65,0.35);
+      transition: box-shadow 0.2s;
+    }
+    .nav-access:hover { box-shadow: 0 0 24px rgba(0,255,65,0.6); }
+
+    .hero {
+      min-height: 100vh;
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 8rem 4rem 6rem;
+      gap: 1.75rem;
+    }
+
+    /* Terminal prompt line */
+    .terminal-line {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      color: var(--green);
+      text-shadow: 0 0 6px rgba(0,255,65,0.4);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .terminal-line::before {
+      content: '>';
+      color: var(--pink);
+      text-shadow: 0 0 6px rgba(255,0,128,0.5);
+    }
+    .cursor {
+      display: inline-block;
+      width: 8px;
+      height: 14px;
+      background: var(--green);
+      animation: blink 1s step-end infinite;
+      vertical-align: middle;
+    }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+    .hero-headline {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: clamp(2.8rem, 7vw, 6rem);
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      max-width: 18ch;
+    }
+    .line-green {
+      color: var(--green);
+      text-shadow: 0 0 20px rgba(0,255,65,0.5), 0 0 40px rgba(0,255,65,0.2);
+      display: block;
+    }
+    .line-pink {
+      color: var(--pink);
+      text-shadow: 0 0 20px rgba(255,0,128,0.5), 0 0 40px rgba(255,0,128,0.2);
+      display: block;
+    }
+    .line-dim {
+      color: rgba(224,255,232,0.2);
+      display: block;
+    }
+
+    .hero-sub {
+      font-size: 0.85rem;
+      font-weight: 200;
+      line-height: 1.9;
+      color: rgba(224,255,232,0.4);
+      max-width: 44ch;
+      border-left: 2px solid rgba(0,255,65,0.2);
+      padding-left: 1rem;
+    }
+
+    /* Tags */
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .cp-tag {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.55rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.28rem 0.8rem;
+      border: 1px solid;
+    }
+    .ct-green { color: var(--green); border-color: rgba(0,255,65,0.25); }
+    .ct-pink  { color: var(--pink);  border-color: rgba(255,0,128,0.25); }
+    .ct-dim   { color: rgba(224,255,232,0.3); border-color: rgba(224,255,232,0.08); }
+
+    .cta-row {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+    .cta-btn {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--pink);
+      text-decoration: none;
+      padding: 0.85rem 2rem;
+      box-shadow: 0 0 20px rgba(255,0,128,0.35);
+      transition: box-shadow 0.2s;
+    }
+    .cta-btn:hover { box-shadow: 0 0 35px rgba(255,0,128,0.6); }
+    .cta-link {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(224,255,232,0.25);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .cta-link:hover { color: var(--green); }
+
+    /* Stats grid */
+    .stats-grid {
+      display: flex;
+      gap: 2.5rem;
+      margin-top: 0.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(0,255,65,0.08);
+      width: 100%;
+      max-width: 600px;
+    }
+    .sg-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+    .sg-num {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 1.5rem;
+      line-height: 1;
+      color: var(--green);
+      text-shadow: 0 0 10px rgba(0,255,65,0.4);
+    }
+    .sg-label {
+      font-size: 0.55rem;
+      font-weight: 200;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(224,255,232,0.25);
+    }
+
+    /* Corner text */
+    .corner {
+      position: fixed;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.42rem;
+      letter-spacing: 0.15em;
+      color: rgba(0,255,65,0.15);
+      z-index: 5;
+    }
+    .corner.br { bottom: 1.5rem; right: 2rem; }
+    .corner.bl { bottom: 1.5rem; left: 2rem; }
+  </style>
+</head>
+<body>
+  <div class="corner br">SYS::TRIER-NODE-01</div>
+  <div class="corner bl">UPTIME: 99.97% // NOMADS: 247</div>
+
+  <nav>
+    <div class="nav-logo">Neu<span>Roam</span></div>
+    <ul class="nav-links">
+      <li><a href="#">Workspace</a></li>
+      <li><a href="#">Pläne</a></li>
+      <li><a href="#">Community</a></li>
+      <li><a href="#">Events</a></li>
+    </ul>
+    <a href="#" class="nav-access">Access beantragen</a>
+  </nav>
+
+  <section class="hero">
+    <div class="terminal-line">
+      NEUROAM_TRIER // CO-WORKING_SPACE // STATUS: ONLINE<span class="cursor"></span>
+    </div>
+
+    <h1 class="hero-headline">
+      <span class="line-green">Plug in.</span>
+      <span class="line-pink">Zone out.</span>
+      <span class="line-dim">Ship it.</span>
+    </h1>
+
+    <p class="hero-sub">
+      Kein Dresscode. Kein Bullshit-Office.<br>
+      Nur schnelles Internet, guter Kaffee und<br>
+      Menschen, die auch nachts noch liefern.
+    </p>
+
+    <div class="tag-row">
+      <span class="cp-tag ct-green">24/7 Access</span>
+      <span class="cp-tag ct-pink">10 Gbit/s</span>
+      <span class="cp-tag ct-dim">Privat-Booths</span>
+      <span class="cp-tag ct-green">Standing Desks</span>
+      <span class="cp-tag ct-dim">Meetingräume</span>
+    </div>
+
+    <div class="cta-row">
+      <a href="#" class="cta-btn">Jetzt einloggen →</a>
+      <a href="#" class="cta-link">// Pläne & Preise</a>
+    </div>
+
+    <div class="stats-grid">
+      <div class="sg-item">
+        <div class="sg-num">247</div>
+        <div class="sg-label">Aktive Nomads</div>
+      </div>
+      <div class="sg-item">
+        <div class="sg-num">24/7</div>
+        <div class="sg-label">Geöffnet</div>
+      </div>
+      <div class="sg-item">
+        <div class="sg-num">10G</div>
+        <div class="sg-label">Netzwerk</div>
+      </div>
+      <div class="sg-item">
+        <div class="sg-num">ab 29€</div>
+        <div class="sg-label">Pro Monat</div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

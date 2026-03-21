@@ -1,0 +1,590 @@
+---
+export const prerender = true;
+---
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Kreislauf — Zero Waste Shop & Beratung | Trier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { overflow-x: hidden; }
+
+    :root {
+      --green:  #2D5A27;
+      --leaf:   #7A9E3A;
+      --earth:  #8B6914;
+      --bg:     #F8FAF3;
+      --warm:   #F0F4E8;
+      --muted:  rgba(45,90,39,0.45);
+      --rule:   rgba(45,90,39,0.1);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--green);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Subtle leaf pattern */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at 20% 20%, rgba(122,158,58,0.04) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(45,90,39,0.04) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem 3.5rem;
+      background: rgba(248,250,243,0.97);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--rule);
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .nav-logo-mark {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .nav-logo-mark svg {
+      width: 14px;
+      height: 14px;
+      fill: none;
+      stroke: #fff;
+      stroke-width: 2;
+      stroke-linecap: round;
+    }
+    .nav-logo-text {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      letter-spacing: 0.02em;
+      color: var(--green);
+    }
+    .nav-logo-sub {
+      font-size: 0.5rem;
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: -0.1rem;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.58rem;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--green); }
+    .nav-shop {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--green);
+      padding: 0.6rem 1.4rem;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .nav-shop:hover { background: var(--leaf); }
+
+    .hero {
+      min-height: 100vh;
+      padding-top: 64px;
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    /* LEFT */
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 5rem 4rem 5rem 4.5rem;
+      gap: 2.5rem;
+      border-right: 1px solid var(--rule);
+    }
+
+    .impact-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(122,158,58,0.12);
+      border: 1px solid rgba(122,158,58,0.25);
+      border-radius: 100px;
+      padding: 0.3rem 0.75rem 0.3rem 0.5rem;
+      width: fit-content;
+    }
+    .ib-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--leaf);
+    }
+    .ib-text {
+      font-size: 0.52rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--leaf);
+    }
+
+    .hero-headline {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 600;
+      font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+      line-height: 1.2;
+      color: var(--green);
+    }
+    .hero-headline .leaf { color: var(--leaf); }
+
+    .green-rule {
+      width: 2.5rem;
+      height: 2px;
+      background: linear-gradient(90deg, var(--green), var(--leaf));
+      border-radius: 1px;
+    }
+
+    .hero-body {
+      font-size: 0.9rem;
+      font-weight: 300;
+      line-height: 2;
+      color: var(--muted);
+      max-width: 44ch;
+    }
+
+    /* Category pills */
+    .category-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .cat-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.9rem 1.1rem;
+      background: #fff;
+      border: 1px solid var(--rule);
+      border-left: 3px solid var(--leaf);
+      border-radius: 4px;
+      transition: border-left-color 0.2s;
+      cursor: default;
+    }
+    .cat-item:hover { border-left-color: var(--green); }
+    .ci-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--warm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+    .ci-info { flex: 1; }
+    .ci-name {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--green);
+    }
+    .ci-count {
+      font-size: 0.6rem;
+      font-weight: 300;
+      color: var(--muted);
+      margin-top: 0.1rem;
+    }
+    .ci-arrow {
+      font-size: 0.7rem;
+      color: var(--leaf);
+    }
+
+    .cta-row {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .cta-btn {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--green);
+      padding: 0.9rem 2rem;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .cta-btn:hover { background: var(--leaf); }
+    .cta-link {
+      font-size: 0.62rem;
+      font-weight: 400;
+      color: var(--muted);
+      text-decoration: none;
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: 1px;
+    }
+
+    /* RIGHT */
+    .hero-right {
+      background: var(--warm);
+      display: flex;
+      flex-direction: column;
+      padding: 4.5rem 3.5rem;
+      gap: 2rem;
+    }
+
+    .right-label {
+      font-size: 0.52rem;
+      font-weight: 500;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* Impact counter */
+    .impact-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0;
+      background: #fff;
+      border: 1px solid var(--rule);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .impact-cell {
+      padding: 1.25rem;
+      text-align: center;
+      border-right: 1px solid var(--rule);
+    }
+    .impact-cell:last-child { border-right: none; }
+    .ic-num {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: var(--green);
+      line-height: 1;
+    }
+    .ic-unit {
+      font-size: 0.75rem;
+      font-weight: 300;
+      color: var(--leaf);
+    }
+    .ic-label {
+      font-size: 0.55rem;
+      font-weight: 400;
+      color: var(--muted);
+      margin-top: 0.3rem;
+      letter-spacing: 0.06em;
+    }
+
+    /* Featured products */
+    .product-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6rem;
+    }
+    .product-card {
+      background: #fff;
+      border: 1px solid var(--rule);
+      border-radius: 6px;
+      padding: 1.1rem;
+    }
+    .pc-emoji {
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+    }
+    .pc-name {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--green);
+    }
+    .pc-desc {
+      font-size: 0.6rem;
+      font-weight: 300;
+      color: var(--muted);
+      margin-top: 0.15rem;
+    }
+    .pc-tag {
+      display: inline-block;
+      margin-top: 0.5rem;
+      font-size: 0.48rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.45rem;
+      background: rgba(122,158,58,0.1);
+      color: var(--leaf);
+      border-radius: 100px;
+    }
+
+    /* Pledge block */
+    .pledge-block {
+      background: var(--green);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-top: auto;
+    }
+    .pb-label {
+      font-size: 0.52rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 0.6rem;
+    }
+    .pb-text {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 400;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.7;
+    }
+    .pb-text strong {
+      color: #fff;
+      font-weight: 600;
+    }
+    /* === Animations & Micro-interactions === */
+    @keyframes dotPulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50%       { transform: scale(1.5); opacity: 0.6; }
+    }
+    @keyframes logoSpin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    .ib-dot { animation: dotPulse 2.2s ease-in-out infinite; }
+
+    .nav-logo-mark {
+      transition: transform 0.4s ease;
+      cursor: pointer;
+    }
+    .nav-logo:hover .nav-logo-mark { transform: rotate(180deg); }
+
+    .cat-item {
+      transition: border-left-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .cat-item:hover {
+      transform: translateX(4px);
+      box-shadow: 0 4px 16px rgba(45,90,39,0.08);
+    }
+    .ci-name { transition: color 0.2s; }
+    .cat-item:hover .ci-name { color: var(--green); }
+
+    .product-card {
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: default;
+    }
+    .product-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(45,90,39,0.1);
+    }
+
+    .impact-cell {
+      transition: background 0.2s;
+      cursor: default;
+    }
+    .impact-cell:hover { background: rgba(122,158,58,0.05); }
+    .ic-num { transition: color 0.2s; }
+    .impact-cell:hover .ic-num { color: var(--leaf); }
+
+    .cta-btn {
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-btn::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -60%;
+      width: 40%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+      transition: left 0.5s;
+    }
+    .cta-btn:hover::after { left: 150%; }
+
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-logo">
+      <div class="nav-logo-mark">
+        <svg viewBox="0 0 14 14">
+          <path d="M7 2 C4 2 2 4 2 7 C2 10 4 12 7 12 C10 12 12 10 12 7" stroke-linecap="round"/>
+          <path d="M10 4 L12 7 L9 7" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div>
+        <div class="nav-logo-text">Kreislauf</div>
+        <div class="nav-logo-sub">Zero Waste · Trier</div>
+      </div>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#">Shop</a></li>
+      <li><a href="#">Beratung</a></li>
+      <li><a href="#">Blog</a></li>
+      <li><a href="#">Über uns</a></li>
+    </ul>
+    <a href="#" class="nav-shop">Zum Shop</a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-left">
+      <div class="impact-badge">
+        <span class="ib-dot"></span>
+        <span class="ib-text">Zertifiziert plastikfrei</span>
+      </div>
+
+      <h1 class="hero-headline">
+        Weniger<br>
+        ist <span class="leaf">mehr.</span><br>
+        Wirklich.
+      </h1>
+
+      <div class="green-rule"></div>
+
+      <p class="hero-body">
+        Alles was du zum Leben brauchst —
+        ohne Verpackungsmüll, ohne Reue.
+        Nachhaltige Produkte und ehrliche
+        Beratung für deinen Weg zur Zero Waste Küche.
+      </p>
+
+      <div class="category-list">
+        <div class="cat-item">
+          <div class="ci-icon">🍳</div>
+          <div class="ci-info">
+            <div class="ci-name">Küche & Kochen</div>
+            <div class="ci-count">48 Produkte · Bienenwachstuch bis Kompost-Set</div>
+          </div>
+          <span class="ci-arrow">→</span>
+        </div>
+        <div class="cat-item">
+          <div class="ci-icon">🧴</div>
+          <div class="ci-info">
+            <div class="ci-name">Bad & Pflege</div>
+            <div class="ci-count">35 Produkte · Festes Shampoo bis Bambuszahnbürste</div>
+          </div>
+          <span class="ci-arrow">→</span>
+        </div>
+        <div class="cat-item">
+          <div class="ci-icon">🏡</div>
+          <div class="ci-info">
+            <div class="ci-name">Haushalt & Reinigung</div>
+            <div class="ci-count">29 Produkte · Seife bis Wäschenetz</div>
+          </div>
+          <span class="ci-arrow">→</span>
+        </div>
+      </div>
+
+      <div class="cta-row">
+        <a href="#" class="cta-btn">Jetzt entdecken →</a>
+        <a href="#" class="cta-link">Beratung anfragen</a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="right-label">Unser Einfluss</div>
+
+      <div class="impact-row">
+        <div class="impact-cell">
+          <div class="ic-num">1.2<span class="ic-unit">t</span></div>
+          <div class="ic-label">Plastik gespart</div>
+        </div>
+        <div class="impact-cell">
+          <div class="ic-num">840</div>
+          <div class="ic-label">Kundenhaushalte</div>
+        </div>
+        <div class="impact-cell">
+          <div class="ic-num">112</div>
+          <div class="ic-label">Produkte</div>
+        </div>
+      </div>
+
+      <div class="right-label">Neu im Shop</div>
+
+      <div class="product-grid">
+        <div class="product-card">
+          <div class="pc-emoji">🫙</div>
+          <div class="pc-name">Weck-Starter Set</div>
+          <div class="pc-desc">6 Gläser, alle Größen</div>
+          <span class="pc-tag">Bestseller</span>
+        </div>
+        <div class="product-card">
+          <div class="pc-emoji">🌿</div>
+          <div class="pc-name">Bienenwachstuch 3er</div>
+          <div class="pc-desc">Regionale Bienenwachs</div>
+          <span class="pc-tag">Lokal</span>
+        </div>
+        <div class="product-card">
+          <div class="pc-emoji">🧹</div>
+          <div class="pc-name">Kochbürste Bambus</div>
+          <div class="pc-desc">Pflanzenfasern, kompostierbar</div>
+          <span class="pc-tag">Neu</span>
+        </div>
+        <div class="product-card">
+          <div class="pc-emoji">💧</div>
+          <div class="pc-name">Wasserfilter-Karaffe</div>
+          <div class="pc-desc">Ersetzt 500 PET-Flaschen</div>
+          <span class="pc-tag">Top-Deal</span>
+        </div>
+      </div>
+
+      <div class="pledge-block">
+        <div class="pb-label">Unser Versprechen</div>
+        <div class="pb-text">
+          Jedes Produkt bei Kreislauf ist
+          <strong>plastikfrei verpackt</strong>, fair produziert
+          und <strong>nachweislich besser</strong> als sein
+          konventionelles Pendant.
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

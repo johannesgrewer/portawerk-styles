@@ -1,0 +1,290 @@
+---
+export const prerender = true;
+---
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Ma — Interior Design & Wohnkonzepte | Trier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,300;0,400;1,300;1,400&family=Noto+Sans:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { overflow-x: hidden; }
+    body {
+      overflow-x: hidden;
+      background: #FAF7F2;
+      color: #2A2824;
+      font-family: 'Noto Sans', sans-serif;
+      min-height: 100vh;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 2rem 4rem;
+    }
+    .nav-logo {
+      font-family: 'Noto Serif', serif;
+      font-weight: 300;
+      font-size: 1.5rem;
+      letter-spacing: 0.3em;
+      color: #2A2824;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.65rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      color: rgba(42,40,36,0.5);
+      text-decoration: none;
+      transition: color 0.4s;
+    }
+    .nav-links a:hover { color: #2A2824; }
+
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      position: relative;
+    }
+
+    /* LEFT — vertical text + kanji */
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 8rem 2rem 4rem;
+      border-right: 1px solid rgba(42,40,36,0.12);
+      gap: 4rem;
+    }
+
+    .kanji {
+      font-family: 'Noto Serif', serif;
+      font-size: 5rem;
+      font-weight: 300;
+      color: #7A8B76;
+      writing-mode: vertical-rl;
+      letter-spacing: 0.2em;
+      line-height: 1;
+      opacity: 0.5;
+    }
+
+    .vertical-label {
+      writing-mode: vertical-rl;
+      font-size: 0.55rem;
+      font-weight: 300;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(42,40,36,0.35);
+    }
+
+    /* RIGHT */
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 5rem 4rem 5rem;
+      gap: 3rem;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.6rem;
+      font-weight: 300;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #7A8B76;
+    }
+
+    .hero-headline {
+      font-family: 'Noto Serif', serif;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.25;
+      color: #2A2824;
+      letter-spacing: -0.01em;
+    }
+
+    .divider {
+      width: 3rem;
+      height: 1px;
+      background: #7A8B76;
+    }
+
+    .hero-body {
+      font-size: 0.85rem;
+      font-weight: 300;
+      line-height: 1.9;
+      color: rgba(42,40,36,0.65);
+      max-width: 42ch;
+    }
+
+    /* Three principles row */
+    .principles {
+      display: flex;
+      gap: 3rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(42,40,36,0.1);
+    }
+    .principle {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .principle-jp {
+      font-family: 'Noto Serif', serif;
+      font-size: 1.25rem;
+      font-weight: 300;
+      color: #7A8B76;
+    }
+    .principle-de {
+      font-size: 0.6rem;
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(42,40,36,0.45);
+    }
+
+    .cta-area {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      margin-top: 1rem;
+    }
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      text-decoration: none;
+      color: #2A2824;
+      font-size: 0.7rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      border: 1px solid rgba(42,40,36,0.3);
+      padding: 0.9rem 2rem;
+      transition: border-color 0.3s, background 0.3s;
+    }
+    .cta-btn:hover {
+      border-color: #7A8B76;
+      background: rgba(122,139,118,0.06);
+    }
+
+    /* Bottom stamp */
+    .stamp {
+      position: fixed;
+      bottom: 3rem;
+      right: 4rem;
+      width: 80px;
+      height: 80px;
+      border: 1px solid rgba(42,40,36,0.2);
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.1rem;
+    }
+    .stamp-jp {
+      font-family: 'Noto Serif', serif;
+      font-size: 1.2rem;
+      font-weight: 300;
+      color: #7A8B76;
+    }
+    .stamp-de {
+      font-size: 0.45rem;
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(42,40,36,0.35);
+    }
+
+    /* Ink brush accent */
+    .ink-accent {
+      position: absolute;
+      top: 50%;
+      left: calc(100% / 3 + 2rem);
+      transform: translateY(-50%);
+      width: 2px;
+      height: 40vh;
+      background: linear-gradient(to bottom, transparent, rgba(122,139,118,0.3), transparent);
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-logo">間</div>
+    <ul class="nav-links">
+      <li><a href="#">Konzepte</a></li>
+      <li><a href="#">Projekte</a></li>
+      <li><a href="#">Atelier</a></li>
+      <li><a href="#">Kontakt</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-left">
+      <div class="kanji">間</div>
+      <div class="vertical-label">Interior Design · Trier</div>
+    </div>
+
+    <div class="hero-right">
+      <div class="hero-eyebrow">Ma — Der Raum zwischen den Dingen</div>
+
+      <h1 class="hero-headline">
+        Stille ist keine<br>
+        Leere — sie ist<br>
+        <em>die Essenz.</em>
+      </h1>
+
+      <div class="divider"></div>
+
+      <p class="hero-body">
+        Wir entwerfen Räume, die atmen. Japanische Reduktion, skandinavische Wärme —
+        zwei Philosophien, ein Zuhause. Jedes Detail hat seinen Grund.
+        Alles andere haben wir weggelassen.
+      </p>
+
+      <div class="principles">
+        <div class="principle">
+          <div class="principle-jp">侘</div>
+          <div class="principle-de">Wabi</div>
+        </div>
+        <div class="principle">
+          <div class="principle-jp">寂</div>
+          <div class="principle-de">Sabi</div>
+        </div>
+        <div class="principle">
+          <div class="principle-jp">間</div>
+          <div class="principle-de">Ma</div>
+        </div>
+      </div>
+
+      <div class="cta-area">
+        <a href="#" class="cta-btn">Gespräch anfragen →</a>
+      </div>
+    </div>
+
+    <div class="ink-accent"></div>
+  </section>
+
+  <div class="stamp">
+    <div class="stamp-jp">間</div>
+    <div class="stamp-de">Trier</div>
+  </div>
+</body>
+</html>

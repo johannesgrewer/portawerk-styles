@@ -1,0 +1,479 @@
+---
+export const prerender = true;
+---
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Feld & Tafel — Restaurant & Hofladen | Trier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { overflow-x: hidden; }
+
+    :root {
+      --green:  #4A7C59;
+      --amber:  #C4832E;
+      --cream:  #F8F4EC;
+      --dark:   #2B2416;
+      --muted:  rgba(43,36,22,0.5);
+      --light:  #EDE8DC;
+    }
+
+    body {
+      background: var(--cream);
+      color: var(--dark);
+      font-family: 'Source Sans 3', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Paper texture */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(
+          0deg, transparent, transparent 4px,
+          rgba(43,36,22,0.015) 4px, rgba(43,36,22,0.015) 5px
+        ),
+        repeating-linear-gradient(
+          90deg, transparent, transparent 4px,
+          rgba(43,36,22,0.008) 4px, rgba(43,36,22,0.008) 5px
+        );
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 3.5rem;
+      background: rgba(248,244,236,0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(74,124,89,0.15);
+    }
+    .nav-logo {
+      font-family: 'Libre Baskerville', serif;
+      font-weight: 700;
+      font-size: 1.15rem;
+      letter-spacing: 0.02em;
+      color: var(--dark);
+    }
+    .nav-logo span {
+      color: var(--green);
+    }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--green); }
+    .nav-reserve {
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--cream);
+      background: var(--green);
+      padding: 0.6rem 1.4rem;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .nav-reserve:hover { background: var(--dark); }
+
+    .hero {
+      min-height: 100vh;
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    /* LEFT */
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 3.5rem 4rem 4.5rem;
+      gap: 2rem;
+    }
+
+    .season-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.58rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--amber);
+    }
+    .season-badge::before {
+      content: '';
+      display: block;
+      width: 1.75rem;
+      height: 1px;
+      background: var(--amber);
+    }
+
+    .hero-headline {
+      font-family: 'Libre Baskerville', serif;
+      font-weight: 700;
+      font-size: clamp(2.8rem, 5.5vw, 5rem);
+      line-height: 1.1;
+      color: var(--dark);
+      letter-spacing: -0.01em;
+    }
+    .hero-headline em {
+      font-style: italic;
+      color: var(--green);
+    }
+
+    .hero-body {
+      font-size: 0.9rem;
+      font-weight: 300;
+      line-height: 1.9;
+      color: var(--muted);
+      max-width: 42ch;
+    }
+
+    /* Seasonal menu list */
+    .menu-preview {
+      display: flex;
+      flex-direction: column;
+      border-top: 1px solid rgba(74,124,89,0.2);
+      gap: 0;
+    }
+    .menu-item {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding: 0.9rem 0;
+      border-bottom: 1px solid rgba(43,36,22,0.07);
+      gap: 1rem;
+    }
+    .menu-dots {
+      flex: 1;
+      border-bottom: 1px dotted rgba(43,36,22,0.2);
+      margin-bottom: 3px;
+    }
+    .menu-name {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: var(--dark);
+      white-space: nowrap;
+    }
+    .menu-desc {
+      font-size: 0.6rem;
+      font-weight: 300;
+      color: var(--muted);
+      font-style: italic;
+      white-space: nowrap;
+    }
+    .menu-price {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: var(--amber);
+      white-space: nowrap;
+    }
+
+    .cta-row {
+      display: flex;
+      align-items: center;
+      gap: 1.75rem;
+    }
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--green);
+      color: var(--cream);
+      text-decoration: none;
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding: 0.9rem 2rem;
+      transition: background 0.2s;
+    }
+    .cta-btn:hover { background: var(--dark); }
+    .cta-link {
+      font-size: 0.6rem;
+      font-weight: 300;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .cta-link:hover { color: var(--green); }
+
+    /* RIGHT */
+    .hero-right {
+      background: var(--light);
+      display: flex;
+      flex-direction: column;
+      padding: 8rem 3.5rem 4rem;
+      gap: 2.5rem;
+      position: relative;
+      border-left: 1px solid rgba(74,124,89,0.12);
+    }
+
+    /* Decorative botanical lines */
+    .botanical {
+      position: absolute;
+      top: 8rem;
+      right: 3rem;
+      width: 80px;
+      height: 120px;
+      opacity: 0.12;
+    }
+    .botanical-stem {
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      width: 1px;
+      height: 100%;
+      background: var(--green);
+      transform: translateX(-50%);
+    }
+    .botanical-leaf {
+      position: absolute;
+      left: 50%;
+      width: 24px;
+      height: 12px;
+      border-radius: 50% 50% 0 50%;
+      background: var(--green);
+    }
+    .botanical-leaf.l1 { bottom: 80px; transform: translateX(-100%) rotate(-20deg); }
+    .botanical-leaf.l2 { bottom: 55px; transform: translateX(0) rotate(20deg); }
+    .botanical-leaf.l3 { bottom: 35px; transform: translateX(-100%) rotate(-15deg); }
+
+    .right-label {
+      font-size: 0.52rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--green);
+    }
+
+    .origin-block {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    .origin-heading {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 1.6rem;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--dark);
+      line-height: 1.2;
+    }
+    .origin-body {
+      font-size: 0.78rem;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--muted);
+      max-width: 34ch;
+      margin-top: 0.5rem;
+    }
+
+    /* Farm partner list */
+    .farm-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border-top: 1px solid rgba(74,124,89,0.15);
+    }
+    .farm-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.8rem 0;
+      border-bottom: 1px solid rgba(43,36,22,0.06);
+    }
+    .farm-name {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 0.88rem;
+      font-weight: 400;
+      color: var(--dark);
+    }
+    .farm-product {
+      font-size: 0.62rem;
+      font-weight: 300;
+      color: var(--muted);
+      font-style: italic;
+    }
+    .farm-dist {
+      font-size: 0.6rem;
+      font-weight: 600;
+      color: var(--green);
+      letter-spacing: 0.06em;
+    }
+
+    /* Open hours pill */
+    .hours-pill {
+      background: rgba(74,124,89,0.1);
+      border: 1px solid rgba(74,124,89,0.2);
+      padding: 1.2rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 2rem;
+    }
+    .hours-day {
+      font-size: 0.6rem;
+      font-weight: 300;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+    }
+    .hours-time {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 0.9rem;
+      color: var(--dark);
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-logo">Feld <span>&</span> Tafel</div>
+    <ul class="nav-links">
+      <li><a href="#">Speisekarte</a></li>
+      <li><a href="#">Hofladen</a></li>
+      <li><a href="#">Über uns</a></li>
+      <li><a href="#">Events</a></li>
+    </ul>
+    <a href="#" class="nav-reserve">Tisch reservieren</a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-left">
+      <div class="season-badge">Frühjahrskarte 2025</div>
+
+      <h1 class="hero-headline">
+        Vom Feld.<br>
+        Auf den Tisch.<br>
+        <em>Ehrlich.</em>
+      </h1>
+
+      <p class="hero-body">
+        Wir kochen, was gerade wächst — keine weiten Wege,
+        keine Kompromisse. Direkt von unseren Partnerhöfen
+        in der Trierer Umgebung auf Ihren Teller.
+      </p>
+
+      <div class="menu-preview">
+        <div class="menu-item">
+          <span class="menu-name">Bärlauch-Velouté</span>
+          <div class="menu-dots"></div>
+          <span class="menu-desc">Sauerrahm, Roggencrouton</span>
+          <span class="menu-price">9 €</span>
+        </div>
+        <div class="menu-item">
+          <span class="menu-name">Moselzander</span>
+          <div class="menu-dots"></div>
+          <span class="menu-desc">Spargel, Riesling-Beurre blanc</span>
+          <span class="menu-price">26 €</span>
+        </div>
+        <div class="menu-item">
+          <span class="menu-name">Weidehähnchen</span>
+          <div class="menu-dots"></div>
+          <span class="menu-desc">Frühlingsgemüse, Kartoffelschaum</span>
+          <span class="menu-price">22 €</span>
+        </div>
+        <div class="menu-item">
+          <span class="menu-name">Rhabarber-Tarte</span>
+          <div class="menu-dots"></div>
+          <span class="menu-desc">Holunderblüteneis</span>
+          <span class="menu-price">8 €</span>
+        </div>
+      </div>
+
+      <div class="cta-row">
+        <a href="#" class="cta-btn">Tisch reservieren</a>
+        <a href="#" class="cta-link">Zur Karte →</a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="botanical">
+        <div class="botanical-stem"></div>
+        <div class="botanical-leaf l1"></div>
+        <div class="botanical-leaf l2"></div>
+        <div class="botanical-leaf l3"></div>
+      </div>
+
+      <div class="right-label">Unsere Herkunft</div>
+
+      <div class="origin-block">
+        <div class="origin-heading">
+          Kurze Wege,<br>langer Geschmack.
+        </div>
+        <p class="origin-body">
+          Alle Zutaten kommen von Höfen innerhalb von 40 km.
+          Was wir nicht selbst anbauen, beziehen wir von
+          Landwirten, die wir persönlich kennen.
+        </p>
+      </div>
+
+      <div class="right-label">Partnerhöfe</div>
+
+      <div class="farm-list">
+        <div class="farm-row">
+          <span class="farm-name">Hof Bergmann</span>
+          <span class="farm-product">Gemüse & Kräuter</span>
+          <span class="farm-dist">8 km</span>
+        </div>
+        <div class="farm-row">
+          <span class="farm-name">Moselfischerei Klug</span>
+          <span class="farm-product">Fisch & Meeresfrüchte</span>
+          <span class="farm-dist">12 km</span>
+        </div>
+        <div class="farm-row">
+          <span class="farm-name">Weinhof Schäfer</span>
+          <span class="farm-product">Wein & Trauben</span>
+          <span class="farm-dist">18 km</span>
+        </div>
+        <div class="farm-row">
+          <span class="farm-name">Geflügelhof Mayer</span>
+          <span class="farm-product">Geflügel & Eier</span>
+          <span class="farm-dist">23 km</span>
+        </div>
+      </div>
+
+      <div class="hours-pill">
+        <div>
+          <div class="hours-day">Di – Fr</div>
+          <div class="hours-time">12 – 14 & 18 – 22 Uhr</div>
+        </div>
+        <div>
+          <div class="hours-day">Sa – So</div>
+          <div class="hours-time">11 – 22 Uhr</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

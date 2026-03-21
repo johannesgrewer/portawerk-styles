@@ -1,0 +1,421 @@
+---
+export const prerender = true;
+---
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Ruhe & Raum — Day Spa & Massagen | Trier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;1,300;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { overflow-x: hidden; }
+
+    :root {
+      --stone: #F9F6F1;
+      --teal:  #7E9E9F;
+      --sand:  #C4A882;
+      --dark:  #2C2825;
+      --muted: rgba(44,40,37,0.45);
+    }
+
+    body {
+      background: var(--stone);
+      color: var(--dark);
+      font-family: 'Lato', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Subtle linen texture */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(
+          0deg, transparent, transparent 3px,
+          rgba(44,40,37,0.012) 3px, rgba(44,40,37,0.012) 4px
+        );
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.75rem 4rem;
+      background: rgba(249,246,241,0.9);
+      backdrop-filter: blur(10px);
+    }
+    .nav-logo {
+      font-family: 'Cormorant', serif;
+      font-weight: 300;
+      font-size: 1.3rem;
+      letter-spacing: 0.08em;
+      color: var(--dark);
+    }
+    .nav-logo span { color: var(--teal); font-style: italic; }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.62rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--teal); }
+    .nav-cta {
+      font-size: 0.6rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--stone);
+      background: var(--teal);
+      padding: 0.6rem 1.25rem;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+    .nav-cta:hover { background: var(--dark); }
+
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* LEFT */
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 4rem 4rem 5rem;
+      gap: 2.5rem;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.58rem;
+      font-weight: 300;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--teal);
+    }
+    .eyebrow::before {
+      content: '';
+      display: block;
+      width: 2rem;
+      height: 1px;
+      background: var(--teal);
+      opacity: 0.5;
+    }
+
+    .hero-headline {
+      font-family: 'Cormorant', serif;
+      font-weight: 300;
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      line-height: 1.2;
+      color: var(--dark);
+      letter-spacing: 0.01em;
+    }
+    .hero-headline em {
+      font-style: italic;
+      color: var(--teal);
+    }
+
+    .hero-body {
+      font-size: 0.85rem;
+      font-weight: 300;
+      line-height: 1.9;
+      color: var(--muted);
+      max-width: 40ch;
+    }
+
+    /* Treatments */
+    .treatments {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border-top: 1px solid rgba(44,40,37,0.1);
+    }
+    .treatment-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(44,40,37,0.07);
+      cursor: default;
+      transition: padding-left 0.3s;
+    }
+    .treatment-row:hover { padding-left: 0.5rem; }
+    .treatment-name {
+      font-family: 'Cormorant', serif;
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--dark);
+    }
+    .treatment-meta {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .treatment-duration {
+      font-size: 0.62rem;
+      font-weight: 300;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+    }
+    .treatment-price {
+      font-family: 'Cormorant', serif;
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--teal);
+    }
+
+    .cta-row {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--teal);
+      color: var(--stone);
+      text-decoration: none;
+      font-size: 0.6rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 1rem 2rem;
+      transition: background 0.3s;
+    }
+    .cta-btn:hover { background: var(--dark); }
+    .cta-link {
+      font-size: 0.6rem;
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    /* RIGHT — decorative panel */
+    .hero-right {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 8rem 4rem 4rem;
+      gap: 3rem;
+      background: #F2EDE6;
+    }
+
+    /* Bamboo lines */
+    .bamboo-lines {
+      position: absolute;
+      top: 0; bottom: 0; right: 4rem;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent 10%, rgba(126,158,159,0.15) 30%, rgba(126,158,159,0.15) 70%, transparent 90%);
+    }
+    .bamboo-lines::before {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      right: 2rem;
+      width: 1px;
+      background: inherit;
+      opacity: 0.6;
+    }
+
+    .circle-badge {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      border: 1px solid rgba(126,158,159,0.3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.3rem;
+      position: relative;
+    }
+    .circle-badge::before {
+      content: '';
+      position: absolute;
+      inset: 8px;
+      border-radius: 50%;
+      border: 1px solid rgba(126,158,159,0.15);
+    }
+    .badge-main {
+      font-family: 'Cormorant', serif;
+      font-size: 2.8rem;
+      font-weight: 300;
+      color: var(--teal);
+      line-height: 1;
+    }
+    .badge-sub {
+      font-size: 0.52rem;
+      font-weight: 300;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .right-copy {
+      font-family: 'Cormorant', serif;
+      font-size: 1.5rem;
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.5;
+      text-align: center;
+      color: var(--dark);
+      max-width: 22ch;
+    }
+
+    .info-pills {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+      width: 100%;
+    }
+    .info-pill {
+      width: 100%;
+      max-width: 260px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 1.25rem;
+      background: rgba(249,246,241,0.8);
+      border: 1px solid rgba(44,40,37,0.08);
+    }
+    .pill-label {
+      font-size: 0.6rem;
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .pill-value {
+      font-family: 'Cormorant', serif;
+      font-size: 0.9rem;
+      color: var(--dark);
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-logo">Ruhe <span>&</span> Raum</div>
+    <ul class="nav-links">
+      <li><a href="#">Behandlungen</a></li>
+      <li><a href="#">Pakete</a></li>
+      <li><a href="#">Gutscheine</a></li>
+    </ul>
+    <a href="#" class="nav-cta">Termin buchen</a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-left">
+      <div class="eyebrow">Day Spa · Trier</div>
+
+      <h1 class="hero-headline">
+        Ankommen.<br>
+        Loslassen.<br>
+        <em>Sein.</em>
+      </h1>
+
+      <p class="hero-body">
+        Ein Ort für tiefe Entspannung — fernab des Alltags.
+        Handverlesene Behandlungen, natürliche Produkte,
+        ein Team das zuhört.
+      </p>
+
+      <div class="treatments">
+        <div class="treatment-row">
+          <span class="treatment-name">Hot Stone Massage</span>
+          <div class="treatment-meta">
+            <span class="treatment-duration">90 Min</span>
+            <span class="treatment-price">98 €</span>
+          </div>
+        </div>
+        <div class="treatment-row">
+          <span class="treatment-name">Tiefenentspannung</span>
+          <div class="treatment-meta">
+            <span class="treatment-duration">60 Min</span>
+            <span class="treatment-price">72 €</span>
+          </div>
+        </div>
+        <div class="treatment-row">
+          <span class="treatment-name">Aromaöl-Ritual</span>
+          <div class="treatment-meta">
+            <span class="treatment-duration">75 Min</span>
+            <span class="treatment-price">85 €</span>
+          </div>
+        </div>
+        <div class="treatment-row">
+          <span class="treatment-name">Gesichtsbehandlung</span>
+          <div class="treatment-meta">
+            <span class="treatment-duration">50 Min</span>
+            <span class="treatment-price">65 €</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="cta-row">
+        <a href="#" class="cta-btn">Termin buchen</a>
+        <a href="#" class="cta-link">Alle Behandlungen →</a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="bamboo-lines"></div>
+
+      <div class="circle-badge">
+        <div class="badge-main">10</div>
+        <div class="badge-sub">Jahre Erfahrung</div>
+      </div>
+
+      <p class="right-copy">
+        „Körper und Geist brauchen<br>
+        denselben Raum — Stille."
+      </p>
+
+      <div class="info-pills">
+        <div class="info-pill">
+          <span class="pill-label">Öffnungszeiten</span>
+          <span class="pill-value">Di – Sa, 9 – 20 Uhr</span>
+        </div>
+        <div class="info-pill">
+          <span class="pill-label">Parken</span>
+          <span class="pill-value">Kostenlos, direkt vorm Haus</span>
+        </div>
+        <div class="info-pill">
+          <span class="pill-label">Gutscheine</span>
+          <span class="pill-value">Online & vor Ort erhältlich</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

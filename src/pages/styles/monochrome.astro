@@ -1,0 +1,334 @@
+---
+export const prerender = true;
+---
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Punkt — Fotoatelier & Bildgestaltung | Trier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;1,300&family=Barlow:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { overflow-x: hidden; }
+
+    body {
+      background: #FFFFFF;
+      color: #000000;
+      font-family: 'Barlow', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 4rem;
+      background: #FFFFFF;
+      border-bottom: 1px solid #000000;
+    }
+    .nav-logo {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 1.4rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #000;
+    }
+    .nav-links {
+      display: flex;
+      gap: 3rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.4);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: #000; }
+    .nav-contact {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #fff;
+      background: #000;
+      padding: 0.6rem 1.4rem;
+      text-decoration: none;
+      transition: background 0.15s, color 0.15s;
+    }
+    .nav-contact:hover { background: #fff; color: #000; outline: 1px solid #000; }
+
+    .hero {
+      min-height: 100vh;
+      padding-top: 57px;
+      display: grid;
+      grid-template-columns: 1fr 1px 420px;
+    }
+
+    /* LEFT */
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 4rem 4rem 4rem 5rem;
+    }
+
+    .top-section { display: flex; flex-direction: column; gap: 2rem; }
+
+    .eyebrow {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.35);
+    }
+
+    .hero-headline {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: clamp(5rem, 12vw, 10rem);
+      line-height: 0.85;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      color: #000;
+    }
+    .hero-headline .outline {
+      -webkit-text-stroke: 2px #000;
+      color: transparent;
+    }
+    .hero-headline .italic {
+      font-style: italic;
+      font-weight: 300;
+    }
+
+    .hero-body {
+      font-size: 0.88rem;
+      font-weight: 300;
+      line-height: 1.9;
+      color: rgba(0,0,0,0.5);
+      max-width: 42ch;
+    }
+
+    .bottom-section {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(0,0,0,0.1);
+    }
+    .cta-area {
+      display: flex;
+      align-items: center;
+      gap: 1.75rem;
+    }
+    .cta-btn {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #fff;
+      background: #000;
+      text-decoration: none;
+      padding: 0.85rem 2rem;
+      transition: background 0.15s, color 0.15s;
+      border: 1px solid #000;
+    }
+    .cta-btn:hover { background: #fff; color: #000; }
+    .cta-link {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.35);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .cta-link:hover { color: #000; }
+
+    .founded {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.55rem;
+      font-weight: 300;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.2);
+    }
+
+    /* Divider */
+    .divider { background: #000; }
+
+    /* RIGHT */
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      background: #000;
+    }
+
+    .right-block {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 2.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .right-block:last-child { border-bottom: none; }
+    .rb-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 2.8rem;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      color: #fff;
+    }
+    .rb-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.55rem;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+      margin-top: 0.3rem;
+    }
+    .rb-sub {
+      font-size: 0.7rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.35);
+      margin-top: 0.2rem;
+      line-height: 1.5;
+    }
+
+    .booking-block {
+      padding: 2.5rem;
+      background: #fff;
+      border-top: 2px solid #000;
+    }
+    .bb-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.55rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.4);
+      margin-bottom: 0.75rem;
+    }
+    .bb-hours {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .bh-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.72rem;
+      font-weight: 300;
+      color: rgba(0,0,0,0.7);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      padding-bottom: 0.4rem;
+    }
+    .bh-row:last-child { border-bottom: none; padding-bottom: 0; }
+
+    /* Corner decoration */
+    .corner-mark {
+      position: fixed;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.45rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.15);
+    }
+    .corner-mark.bl { bottom: 1.5rem; left: 2rem; }
+    .corner-mark.br { bottom: 1.5rem; right: 2rem; }
+  </style>
+</head>
+<body>
+  <div class="corner-mark bl">49°45'N · 06°38'E</div>
+  <div class="corner-mark br">Punkt Studio · Trier</div>
+
+  <nav>
+    <div class="nav-logo">Punkt.</div>
+    <ul class="nav-links">
+      <li><a href="#">Portfolio</a></li>
+      <li><a href="#">Services</a></li>
+      <li><a href="#">Studio</a></li>
+      <li><a href="#">Kontakt</a></li>
+    </ul>
+    <a href="#" class="nav-contact">Anfrage</a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-left">
+      <div class="top-section">
+        <div class="eyebrow">Fotoatelier & Bildgestaltung · Trier</div>
+
+        <h1 class="hero-headline">
+          Kein<br>
+          <span class="outline">Rau</span>schen.<br>
+          <span class="italic">Nur</span><br>
+          das Bild.
+        </h1>
+
+        <p class="hero-body">
+          Wir fotografieren Menschen, Produkte und Räume —
+          ohne Filter, ohne Kompromisse. Was zählt, ist
+          das Bild, das bleibt.
+        </p>
+      </div>
+
+      <div class="bottom-section">
+        <div class="cta-area">
+          <a href="#" class="cta-btn">Shooting anfragen</a>
+          <a href="#" class="cta-link">Portfolio ansehen →</a>
+        </div>
+        <div class="founded">Est. 2017 · Trier</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="hero-right">
+      <div class="right-block">
+        <div class="rb-num">800+</div>
+        <div class="rb-label">Shootings</div>
+        <div class="rb-sub">Portrait, Produkt, Editorial, Architektur</div>
+      </div>
+      <div class="right-block">
+        <div class="rb-num">120m²</div>
+        <div class="rb-label">Studiofläche</div>
+        <div class="rb-sub">Daylight & Kunstlicht, komplett ausgestattet</div>
+      </div>
+      <div class="right-block">
+        <div class="rb-num">48h</div>
+        <div class="rb-label">Lieferzeit</div>
+        <div class="rb-sub">Fertig retuschierte Bilder nach dem Shooting</div>
+      </div>
+      <div class="booking-block">
+        <div class="bb-label">Studiozeiten</div>
+        <div class="bb-hours">
+          <div class="bh-row"><span>Mo – Fr</span><span>9 – 19 Uhr</span></div>
+          <div class="bh-row"><span>Samstag</span><span>10 – 17 Uhr</span></div>
+          <div class="bh-row"><span>Sonntag</span><span>nach Absprache</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

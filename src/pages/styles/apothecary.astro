@@ -1,0 +1,406 @@
+---
+export const prerender = true;
+---
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Materia — Naturapotheke & Kräuterküche | Trier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { overflow-x: hidden; }
+
+    :root {
+      --gold:  #B8963E;
+      --green: #1A2E1A;
+      --bg:    #0F1A0F;
+      --cream: #F5F0E3;
+      --mid:   #162416;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--cream);
+      font-family: 'Source Sans 3', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Paper/grain texture */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+      background-size: 256px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Vignette */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.5) 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 3.5rem;
+      background: rgba(15,26,15,0.95);
+      border-bottom: 1px solid rgba(184,150,62,0.2);
+    }
+    .nav-logo {
+      font-family: 'IM Fell English', serif;
+      font-size: 1.35rem;
+      letter-spacing: 0.06em;
+      color: var(--gold);
+    }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.6rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(245,240,227,0.35);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-cta {
+      font-size: 0.58rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--gold);
+      padding: 0.6rem 1.4rem;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+    .nav-cta:hover { background: var(--cream); }
+
+    .hero {
+      min-height: 100vh;
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      padding-top: 57px;
+    }
+
+    /* LEFT */
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 4rem 3rem 4rem 5rem;
+      gap: 2rem;
+      border-right: 1px solid rgba(184,150,62,0.12);
+    }
+
+    .latin-tag {
+      font-family: 'IM Fell English', serif;
+      font-style: italic;
+      font-size: 0.72rem;
+      color: rgba(184,150,62,0.6);
+      letter-spacing: 0.06em;
+    }
+
+    .hero-headline {
+      font-family: 'IM Fell English', serif;
+      font-size: clamp(3rem, 7vw, 6rem);
+      line-height: 1.05;
+      letter-spacing: 0.02em;
+      color: var(--cream);
+    }
+    .hero-headline em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .divider-ornament {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      color: rgba(184,150,62,0.4);
+      font-size: 0.7rem;
+    }
+    .div-line {
+      flex: 1;
+      max-width: 80px;
+      height: 1px;
+      background: rgba(184,150,62,0.25);
+    }
+
+    .hero-body {
+      font-size: 0.88rem;
+      font-weight: 300;
+      line-height: 1.9;
+      color: rgba(245,240,227,0.5);
+      max-width: 44ch;
+    }
+
+    /* Herb list */
+    .herb-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border-top: 1px solid rgba(184,150,62,0.12);
+    }
+    .herb-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding: 0.8rem 0;
+      border-bottom: 1px solid rgba(245,240,227,0.05);
+      gap: 1rem;
+    }
+    .herb-name {
+      font-family: 'IM Fell English', serif;
+      font-size: 0.95rem;
+      color: var(--cream);
+    }
+    .herb-latin {
+      font-family: 'IM Fell English', serif;
+      font-style: italic;
+      font-size: 0.72rem;
+      color: rgba(245,240,227,0.3);
+      flex: 1;
+    }
+    .herb-use {
+      font-size: 0.6rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+
+    .cta-row {
+      display: flex;
+      align-items: center;
+      gap: 1.75rem;
+    }
+    .cta-btn {
+      font-family: 'IM Fell English', serif;
+      font-size: 0.9rem;
+      color: var(--bg);
+      background: var(--gold);
+      text-decoration: none;
+      padding: 0.85rem 2.25rem;
+      border: 1px solid var(--gold);
+      transition: background 0.3s, color 0.3s;
+    }
+    .cta-btn:hover { background: transparent; color: var(--gold); }
+    .cta-link {
+      font-size: 0.6rem;
+      font-weight: 300;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(245,240,227,0.3);
+      text-decoration: none;
+    }
+
+    /* RIGHT */
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      background: var(--mid);
+    }
+
+    .right-top {
+      flex: 1;
+      padding: 3rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      border-bottom: 1px solid rgba(184,150,62,0.1);
+    }
+    .rt-label {
+      font-size: 0.5rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(184,150,62,0.5);
+    }
+    .rt-quote {
+      font-family: 'IM Fell English', serif;
+      font-style: italic;
+      font-size: 1.15rem;
+      line-height: 1.5;
+      color: rgba(245,240,227,0.6);
+    }
+    .rt-author {
+      font-size: 0.6rem;
+      font-weight: 300;
+      letter-spacing: 0.12em;
+      color: rgba(245,240,227,0.25);
+    }
+
+    .ingredient-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: rgba(184,150,62,0.08);
+      border: 1px solid rgba(184,150,62,0.08);
+    }
+    .ing-cell {
+      padding: 1rem 1.25rem;
+      background: var(--mid);
+    }
+    .ing-icon { font-size: 1.2rem; margin-bottom: 0.3rem; }
+    .ing-name {
+      font-family: 'IM Fell English', serif;
+      font-size: 0.88rem;
+      color: var(--cream);
+    }
+    .ing-note {
+      font-size: 0.58rem;
+      font-weight: 300;
+      color: rgba(245,240,227,0.3);
+      margin-top: 0.1rem;
+    }
+
+    .hours-block {
+      padding: 1.5rem 2rem;
+    }
+    .hours-label {
+      font-size: 0.5rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+    }
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.7rem;
+      font-weight: 300;
+      color: rgba(245,240,227,0.45);
+      padding: 0.3rem 0;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-logo">Materia</div>
+    <ul class="nav-links">
+      <li><a href="#">Apotheke</a></li>
+      <li><a href="#">Kräuter</a></li>
+      <li><a href="#">Tinkturen</a></li>
+      <li><a href="#">Beratung</a></li>
+    </ul>
+    <a href="#" class="nav-cta">Beratung buchen</a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-left">
+      <div class="latin-tag">Naturapotheke · Trier · Est. MMXV</div>
+
+      <h1 class="hero-headline">
+        Was die<br>
+        Natur kennt,<br>
+        <em>heilt.</em>
+      </h1>
+
+      <div class="divider-ornament">
+        <div class="div-line"></div>
+        <span>✦</span>
+        <div class="div-line"></div>
+      </div>
+
+      <p class="hero-body">
+        Handgefertigte Tinkturen, getrocknete Kräuter aus eigenem Anbau,
+        persönliche Beratung ohne Eile.
+        Wissen, das Generationen weitergegeben haben.
+      </p>
+
+      <div class="herb-list">
+        <div class="herb-row">
+          <span class="herb-name">Baldrian</span>
+          <span class="herb-latin">Valeriana officinalis</span>
+          <span class="herb-use">Schlaf</span>
+        </div>
+        <div class="herb-row">
+          <span class="herb-name">Johanniskraut</span>
+          <span class="herb-latin">Hypericum perforatum</span>
+          <span class="herb-use">Stimmung</span>
+        </div>
+        <div class="herb-row">
+          <span class="herb-name">Ringelblume</span>
+          <span class="herb-latin">Calendula officinalis</span>
+          <span class="herb-use">Haut</span>
+        </div>
+        <div class="herb-row">
+          <span class="herb-name">Kamille</span>
+          <span class="herb-latin">Matricaria chamomilla</span>
+          <span class="herb-use">Beruhigung</span>
+        </div>
+      </div>
+
+      <div class="cta-row">
+        <a href="#" class="cta-btn">Beratung vereinbaren</a>
+        <a href="#" class="cta-link">Sortiment ansehen →</a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="right-top">
+        <div class="rt-label">Aus unserem Archiv</div>
+        <div class="rt-quote">
+          „Die Natur gibt uns alles,<br>was wir brauchen —<br>wir müssen nur zuhören."
+        </div>
+        <div class="rt-author">— Paracelsus, 1493–1541</div>
+
+        <div class="ingredient-grid">
+          <div class="ing-cell">
+            <div class="ing-icon">🌿</div>
+            <div class="ing-name">Frische Kräuter</div>
+            <div class="ing-note">Eigener Anbau</div>
+          </div>
+          <div class="ing-cell">
+            <div class="ing-icon">🫙</div>
+            <div class="ing-name">Tinkturen</div>
+            <div class="ing-note">Handgefertigt</div>
+          </div>
+          <div class="ing-cell">
+            <div class="ing-icon">🌸</div>
+            <div class="ing-name">Öle & Salben</div>
+            <div class="ing-note">Kaltgepresst</div>
+          </div>
+          <div class="ing-cell">
+            <div class="ing-icon">📖</div>
+            <div class="ing-name">Beratung</div>
+            <div class="ing-note">Persönlich</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hours-block">
+        <div class="hours-label">Öffnungszeiten</div>
+        <div class="hours-row"><span>Di – Fr</span><span>10 – 18 Uhr</span></div>
+        <div class="hours-row"><span>Samstag</span><span>9 – 14 Uhr</span></div>
+        <div class="hours-row"><span>Mo, So</span><span>Geschlossen</span></div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

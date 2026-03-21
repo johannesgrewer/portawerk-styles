@@ -1,0 +1,321 @@
+---
+export const prerender = true;
+---
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Büro Vier — Grafikdesign & Visuelle Kommunikation | Trier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { overflow-x: hidden; }
+    body {
+      overflow-x: hidden;
+      background: #FFFFFF;
+      color: #1A1A1A;
+      font-family: 'Inter', system-ui, sans-serif;
+      min-height: 100vh;
+    }
+
+    /* Grid overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(to right, rgba(0,0,0,0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0,0,0,0.04) 1px, transparent 1px);
+      background-size: 80px 80px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 3rem;
+      background: #FFFFFF;
+      border-bottom: 1px solid #1A1A1A;
+    }
+    .nav-logo {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #1A1A1A;
+    }
+    .nav-logo span { color: #E8210A; }
+    .nav-links {
+      display: flex;
+      gap: 3rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #1A1A1A;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: #E8210A; }
+
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      z-index: 1;
+      padding-top: 57px;
+    }
+
+    /* LEFT column */
+    .hero-left {
+      border-right: 1px solid #1A1A1A;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 4rem 3rem;
+    }
+
+    .hero-label {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #E8210A;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .hero-label::before {
+      content: '';
+      display: block;
+      width: 2rem;
+      height: 2px;
+      background: #E8210A;
+    }
+
+    .hero-headline {
+      font-size: clamp(4rem, 9vw, 8rem);
+      font-weight: 900;
+      line-height: 0.9;
+      letter-spacing: -0.04em;
+      color: #1A1A1A;
+      text-transform: uppercase;
+    }
+    .hero-headline .red { color: #E8210A; }
+
+    .hero-foot {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      border-top: 1px solid #1A1A1A;
+      padding-top: 2rem;
+    }
+    .hero-tagline {
+      font-size: 0.8rem;
+      font-weight: 300;
+      line-height: 1.6;
+      color: #555;
+      max-width: 28ch;
+    }
+    .hero-index {
+      font-size: 4rem;
+      font-weight: 900;
+      color: rgba(0,0,0,0.06);
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+
+    /* RIGHT column */
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 4rem 3rem;
+      gap: 3rem;
+    }
+
+    .info-block {
+      border-left: 3px solid #E8210A;
+      padding-left: 1.5rem;
+    }
+    .info-label {
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 0.4rem;
+    }
+    .info-value {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #1A1A1A;
+    }
+
+    .service-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border: 1px solid #1A1A1A;
+    }
+    .service-item {
+      padding: 1.25rem 1.5rem;
+      border-right: 1px solid #1A1A1A;
+      border-bottom: 1px solid #1A1A1A;
+    }
+    .service-item:nth-child(even) { border-right: none; }
+    .service-item:nth-last-child(-n+2) { border-bottom: none; }
+    .service-num {
+      font-size: 0.5rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #E8210A;
+      margin-bottom: 0.5rem;
+    }
+    .service-name {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #1A1A1A;
+    }
+
+    .cta-row {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: #E8210A;
+      color: #FFFFFF;
+      text-decoration: none;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 1rem 2rem;
+      transition: background 0.2s;
+    }
+    .cta-btn:hover { background: #1A1A1A; }
+    .cta-link {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #1A1A1A;
+      text-decoration: none;
+      border-bottom: 1px solid #1A1A1A;
+      padding-bottom: 2px;
+    }
+
+    /* Bottom bar */
+    .bottom-bar {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 3rem;
+      background: #E8210A;
+      color: #FFFFFF;
+    }
+    .bottom-bar-text {
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+    }
+    .bottom-bar-ticker {
+      font-size: 0.55rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-logo">Büro<span>Vier</span></div>
+    <ul class="nav-links">
+      <li><a href="#">Leistungen</a></li>
+      <li><a href="#">Arbeiten</a></li>
+      <li><a href="#">Studio</a></li>
+      <li><a href="#">Kontakt</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-left">
+      <div class="hero-label">Visuelle Kommunikation — Trier</div>
+
+      <div>
+        <h1 class="hero-headline">
+          Gutes<br>
+          <span class="red">Design</span><br>
+          beginnt<br>
+          mit Ord<span class="red">nung.</span>
+        </h1>
+      </div>
+
+      <div class="hero-foot">
+        <p class="hero-tagline">Ordnung ist der erste Schritt zur Eleganz. Wir gestalten Identitäten, die bleiben.</p>
+        <div class="hero-index">IV</div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="info-block">
+        <div class="info-label">Standort</div>
+        <div class="info-value">Trier, Rheinland-Pfalz</div>
+      </div>
+
+      <div class="service-grid">
+        <div class="service-item">
+          <div class="service-num">01</div>
+          <div class="service-name">Corporate Identity</div>
+        </div>
+        <div class="service-item">
+          <div class="service-num">02</div>
+          <div class="service-name">Editorial Design</div>
+        </div>
+        <div class="service-item">
+          <div class="service-num">03</div>
+          <div class="service-name">Signage & Leitsystem</div>
+        </div>
+        <div class="service-item">
+          <div class="service-num">04</div>
+          <div class="service-name">Digitale Medien</div>
+        </div>
+      </div>
+
+      <div class="cta-row">
+        <a href="#" class="cta-btn">Projekt anfragen →</a>
+        <a href="#" class="cta-link">Arbeiten ansehen</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="bottom-bar">
+    <span class="bottom-bar-text">Büro Vier — Trier</span>
+    <span class="bottom-bar-ticker">Corporate Identity · Editorial · Signage · Digital</span>
+  </div>
+</body>
+</html>

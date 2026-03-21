@@ -1,0 +1,381 @@
+---
+export const prerender = true;
+---
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Kosmos — Planetarium & Wissenschaftszentrum | Trier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&family=Space+Mono:wght@400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { overflow-x: hidden; }
+
+    :root {
+      --gold:   #FFD878;
+      --purple: #6B2FA0;
+      --bg:     #03050E;
+      --text:   #E8E0F8;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Star field */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 15% 22%, rgba(255,216,120,0.8) 0%, transparent 100%),
+        radial-gradient(1px 1px at 42% 8%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 67% 35%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 88% 18%, rgba(255,216,120,0.7) 0%, transparent 100%),
+        radial-gradient(1px 1px at 25% 60%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 78% 72%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 10% 85%, rgba(255,216,120,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 55% 90%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(2px 2px at 35% 45%, rgba(255,216,120,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 92% 55%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 5% 40%, rgba(255,255,255,0.3) 0%, transparent 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Nebula glow */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 40% at 70% 30%, rgba(107,47,160,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 60% at 20% 70%, rgba(30,60,120,0.12) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 3rem;
+      background: rgba(3,5,14,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(107,47,160,0.2);
+    }
+    .nav-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1.15rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(232,224,248,0.35);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-tickets {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--gold);
+      padding: 0.6rem 1.4rem;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .nav-tickets:hover { background: #fff; }
+
+    .hero {
+      min-height: 100vh;
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      padding-top: 57px;
+    }
+
+    /* LEFT */
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 4rem 3rem 4rem 4.5rem;
+      gap: 2rem;
+    }
+
+    .coord-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.55rem;
+      letter-spacing: 0.2em;
+      color: rgba(107,47,160,0.7);
+    }
+
+    .hero-headline {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: clamp(3rem, 7vw, 6rem);
+      line-height: 1;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+    .hero-headline .gold { color: var(--gold); }
+    .hero-headline .dim {
+      font-weight: 300;
+      color: rgba(232,224,248,0.4);
+    }
+
+    .hero-body {
+      font-size: 0.88rem;
+      font-weight: 300;
+      line-height: 1.9;
+      color: rgba(232,224,248,0.45);
+      max-width: 44ch;
+    }
+
+    /* Mission list */
+    .mission-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border-top: 1px solid rgba(107,47,160,0.2);
+    }
+    .mission-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.9rem 0;
+      border-bottom: 1px solid rgba(107,47,160,0.1);
+    }
+    .mission-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      color: rgba(107,47,160,0.6);
+      width: 2rem;
+      flex-shrink: 0;
+    }
+    .mission-name {
+      font-size: 0.88rem;
+      font-weight: 400;
+      color: var(--text);
+    }
+    .mission-date {
+      margin-left: auto;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.55rem;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+    }
+
+    .cta-row {
+      display: flex;
+      align-items: center;
+      gap: 1.75rem;
+    }
+    .cta-btn {
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--gold);
+      text-decoration: none;
+      padding: 0.9rem 2rem;
+      transition: background 0.2s;
+    }
+    .cta-btn:hover { background: #fff; }
+    .cta-link {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.55rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(232,224,248,0.3);
+      text-decoration: none;
+    }
+
+    /* RIGHT */
+    .hero-right {
+      border-left: 1px solid rgba(107,47,160,0.15);
+      display: flex;
+      flex-direction: column;
+      background: rgba(107,47,160,0.04);
+    }
+
+    .right-block {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 2rem 2.5rem;
+      border-bottom: 1px solid rgba(107,47,160,0.1);
+    }
+    .right-block:last-child { border-bottom: none; }
+    .rb-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.5rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(232,224,248,0.2);
+      margin-bottom: 0.5rem;
+    }
+    .rb-value {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1.8rem;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      color: var(--gold);
+    }
+    .rb-sub {
+      font-size: 0.68rem;
+      font-weight: 300;
+      color: rgba(232,224,248,0.35);
+      margin-top: 0.2rem;
+    }
+
+    /* Live show indicator */
+    .live-block {
+      padding: 1.75rem 2.5rem;
+      background: rgba(107,47,160,0.12);
+      border-top: 1px solid rgba(107,47,160,0.2);
+    }
+    .live-dot {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.6rem;
+    }
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #4ade80;
+      box-shadow: 0 0 6px #4ade80;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+    .live-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.52rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #4ade80;
+    }
+    .live-show {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .live-time {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--gold);
+      margin-top: 0.2rem;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-logo">Kosmos</div>
+    <ul class="nav-links">
+      <li><a href="#">Planetarium</a></li>
+      <li><a href="#">Ausstellungen</a></li>
+      <li><a href="#">Schule</a></li>
+      <li><a href="#">Programm</a></li>
+    </ul>
+    <a href="#" class="nav-tickets">Tickets</a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-left">
+      <div class="coord-tag">RA 05h 34m 32s · DEC +22° 00′ 52″ · Trier</div>
+
+      <h1 class="hero-headline">
+        Das Uni<span class="gold">versum</span><br>
+        <span class="dim">ist neugierig</span><br>
+        auf dich.
+      </h1>
+
+      <p class="hero-body">
+        Livevorführungen unter dem Sternenzelt,
+        interaktive Ausstellungen und Kurse für alle,
+        die wissen wollen, woher wir kommen.
+      </p>
+
+      <div class="mission-list">
+        <div class="mission-row">
+          <span class="mission-num">01</span>
+          <span class="mission-name">Große Planetariumsshow</span>
+          <span class="mission-date">22. März</span>
+        </div>
+        <div class="mission-row">
+          <span class="mission-num">02</span>
+          <span class="mission-name">Mondbeobachtung — Kinder</span>
+          <span class="mission-date">28. März</span>
+        </div>
+        <div class="mission-row">
+          <span class="mission-num">03</span>
+          <span class="mission-name">Finsternisse & Phänomene</span>
+          <span class="mission-date">4. April</span>
+        </div>
+      </div>
+
+      <div class="cta-row">
+        <a href="#" class="cta-btn">Tickets kaufen →</a>
+        <a href="#" class="cta-link">// Programm ansehen</a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="right-block">
+        <div class="rb-label">Entfernung · Sonne</div>
+        <div class="rb-value">150 Mio.</div>
+        <div class="rb-sub">Kilometer · 8 Lichtminuten</div>
+      </div>
+      <div class="right-block">
+        <div class="rb-label">Besucher / Jahr</div>
+        <div class="rb-value">28.000+</div>
+        <div class="rb-sub">Schüler, Familien, Neugierige</div>
+      </div>
+      <div class="right-block">
+        <div class="rb-label">Kuppeldurchmesser</div>
+        <div class="rb-value">12 m</div>
+        <div class="rb-sub">Full-Dome-Projektion · 4K</div>
+      </div>
+      <div class="live-block">
+        <div class="live-dot">
+          <div class="dot"></div>
+          <span class="live-label">Heute Abend</span>
+        </div>
+        <div class="live-show">Sternenhimmel im Frühling</div>
+        <div class="live-time">20:00 Uhr · Kuppelsaal</div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

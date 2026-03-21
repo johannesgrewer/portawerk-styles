@@ -1,0 +1,334 @@
+---
+export const prerender = true;
+---
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Überfluß — Vintage & Concept Store | Trier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { overflow-x: hidden; }
+
+    :root {
+      --red:    #E03030;
+      --teal:   #1A6B6B;
+      --mustard:#E8A020;
+      --cream:  #FFF8EC;
+      --dark:   #1A1A1A;
+    }
+
+    body {
+      background: var(--cream);
+      color: var(--dark);
+      font-family: 'Lato', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Diagonal stripe pattern */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 18px,
+        rgba(26,107,107,0.04) 18px,
+        rgba(26,107,107,0.04) 19px
+      );
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    nav {
+      position: relative;
+      z-index: 100;
+      display: flex;
+      align-items: stretch;
+      border-bottom: 3px solid var(--dark);
+      background: var(--red);
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      padding: 1rem 2rem;
+      font-family: 'Abril Fatface', serif;
+      font-size: 1.3rem;
+      letter-spacing: 0.02em;
+      color: var(--cream);
+      border-right: 3px solid var(--dark);
+    }
+    .nav-links {
+      display: flex;
+      list-style: none;
+      height: 100%;
+    }
+    .nav-links li { border-right: 2px solid rgba(0,0,0,0.15); }
+    .nav-links a {
+      display: flex;
+      align-items: center;
+      padding: 0 1.5rem;
+      height: 100%;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,248,236,0.7);
+      text-decoration: none;
+      transition: color 0.15s, background 0.15s;
+    }
+    .nav-links a:hover { color: var(--cream); background: rgba(0,0,0,0.1); }
+    .nav-right {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      padding: 0 1.5rem;
+      border-left: 2px solid rgba(0,0,0,0.15);
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--cream);
+      background: var(--dark);
+      cursor: pointer;
+    }
+
+    .hero {
+      position: relative;
+      z-index: 1;
+      min-height: calc(100vh - 57px);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    /* LEFT */
+    .hero-left {
+      padding: 3rem 2.5rem 3rem 4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-right: 3px solid var(--dark);
+    }
+
+    .stamp-row {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .stamp {
+      font-size: 0.52rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.85rem;
+      border: 2px solid;
+    }
+    .st-red    { color: var(--red);    border-color: var(--red); }
+    .st-teal   { color: var(--teal);   border-color: var(--teal); }
+    .st-mustard{ color: var(--mustard);border-color: var(--mustard); }
+    .st-dark   { color: var(--dark);   border-color: var(--dark); }
+
+    .hero-headline {
+      font-family: 'Abril Fatface', serif;
+      font-size: clamp(4rem, 9vw, 8rem);
+      line-height: 0.92;
+      letter-spacing: 0.01em;
+      color: var(--dark);
+    }
+    .line-red  { color: var(--red); }
+    .line-teal { color: var(--teal); }
+
+    .hero-body {
+      font-size: 0.9rem;
+      font-weight: 300;
+      line-height: 1.8;
+      color: rgba(26,26,26,0.6);
+      max-width: 40ch;
+      border-left: 4px solid var(--mustard);
+      padding-left: 1rem;
+    }
+
+    .cta-cluster {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .cta-main {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--cream);
+      background: var(--dark);
+      text-decoration: none;
+      padding: 1rem 2.25rem;
+      border: 3px solid var(--dark);
+      transition: background 0.15s, color 0.15s;
+      width: fit-content;
+    }
+    .cta-main:hover { background: var(--cream); color: var(--dark); }
+    .cta-secondary {
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--teal);
+      text-decoration: none;
+      border-bottom: 2px solid var(--teal);
+      padding-bottom: 0.1rem;
+      width: fit-content;
+    }
+
+    /* RIGHT */
+    .hero-right {
+      display: grid;
+      grid-template-rows: 1fr auto;
+    }
+
+    .right-main {
+      background: var(--teal);
+      padding: 3rem 3rem 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-bottom: 3px solid var(--dark);
+    }
+
+    .rm-label {
+      font-size: 0.52rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(255,248,236,0.5);
+      margin-bottom: 1.5rem;
+    }
+
+    .category-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .cat-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(255,248,236,0.1);
+    }
+    .cat-row:last-child { border-bottom: none; }
+    .cat-name {
+      font-family: 'Abril Fatface', serif;
+      font-size: 1.4rem;
+      color: var(--cream);
+      line-height: 1;
+    }
+    .cat-count {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: rgba(255,248,236,0.4);
+    }
+
+    .right-bottom {
+      background: var(--mustard);
+      padding: 2rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 3px solid var(--dark);
+    }
+    .rb-tagline {
+      font-family: 'Abril Fatface', serif;
+      font-size: 1.5rem;
+      color: var(--dark);
+      line-height: 1.15;
+    }
+    .rb-since {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(26,26,26,0.45);
+      text-align: right;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-logo">Überfluß</div>
+    <ul class="nav-links">
+      <li><a href="#">Vintage</a></li>
+      <li><a href="#">Neu</a></li>
+      <li><a href="#">Raritäten</a></li>
+      <li><a href="#">Über uns</a></li>
+    </ul>
+    <div class="nav-right">In den Laden →</div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-left">
+      <div class="stamp-row">
+        <span class="stamp st-red">Vintage</span>
+        <span class="stamp st-teal">Upcycled</span>
+        <span class="stamp st-mustard">Handpicked</span>
+        <span class="stamp st-dark">Trier</span>
+      </div>
+
+      <h1 class="hero-headline">
+        Zu<br>
+        <span class="line-red">viel</span><br>
+        ist ge<span class="line-teal">nau</span><br>
+        richtig.
+      </h1>
+
+      <p class="hero-body">
+        Vintage-Mode, Kleinmöbel, Kuriositäten und
+        Neues von lokalen Machern. Unser Laden ist
+        ein Ort für Menschen, die mehr wollen als das Normale.
+      </p>
+
+      <div class="cta-cluster">
+        <a href="#" class="cta-main">Jetzt stöbern →</a>
+        <a href="#" class="cta-secondary">Neuankömmlinge diese Woche</a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="right-main">
+        <div class="rm-label">Kategorien</div>
+        <div class="category-list">
+          <div class="cat-row">
+            <span class="cat-name">Kleidung</span>
+            <span class="cat-count">340+ Teile</span>
+          </div>
+          <div class="cat-row">
+            <span class="cat-name">Möbel</span>
+            <span class="cat-count">80+ Stücke</span>
+          </div>
+          <div class="cat-row">
+            <span class="cat-name">Schmuck</span>
+            <span class="cat-count">120+ Teile</span>
+          </div>
+          <div class="cat-row">
+            <span class="cat-name">Lokal</span>
+            <span class="cat-count">25+ Macher</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="right-bottom">
+        <div class="rb-tagline">Kein<br>Template.</div>
+        <div class="rb-since">Im Herzen<br>Triers seit 2019</div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

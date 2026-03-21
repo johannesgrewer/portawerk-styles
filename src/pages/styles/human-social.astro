@@ -1,0 +1,417 @@
+---
+export const prerender = true;
+---
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Brücke — Soziale Arbeit & Beratung | Trier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&family=Source+Sans+3:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { overflow-x: hidden; }
+
+    :root {
+      --amber:  #D97706;
+      --green:  #059669;
+      --bg:     #FFFBEB;
+      --dark:   #1C1917;
+      --muted:  rgba(28,25,23,0.5);
+      --light:  #FEF3C7;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--dark);
+      font-family: 'Source Sans 3', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 3.5rem;
+      background: rgba(255,251,235,0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(28,25,23,0.06);
+    }
+    .nav-logo {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      letter-spacing: 0.02em;
+      color: var(--amber);
+    }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--amber); }
+    .nav-cta {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--amber);
+      padding: 0.65rem 1.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--dark); }
+
+    .hero {
+      min-height: 100vh;
+      padding-top: 57px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    /* LEFT */
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 4rem 3.5rem 4rem 4.5rem;
+      gap: 2rem;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--green);
+    }
+    .eyebrow::before {
+      content: '';
+      display: block;
+      width: 1.5rem;
+      height: 3px;
+      background: var(--green);
+      border-radius: 2px;
+    }
+
+    .hero-headline {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      color: var(--dark);
+    }
+    .hero-headline em {
+      font-style: normal;
+      color: var(--amber);
+    }
+
+    .hero-body {
+      font-size: 0.9rem;
+      font-weight: 300;
+      line-height: 1.9;
+      color: var(--muted);
+      max-width: 44ch;
+    }
+
+    /* Offer cards */
+    .offer-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .offer-card {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.25rem;
+      background: #fff;
+      border: 1px solid rgba(28,25,23,0.06);
+      border-radius: 10px;
+      border-left: 3px solid var(--amber);
+      transition: border-left-color 0.2s, box-shadow 0.2s;
+    }
+    .offer-card:hover {
+      border-left-color: var(--green);
+      box-shadow: 0 2px 10px rgba(28,25,23,0.06);
+    }
+    .oc-icon { font-size: 1.3rem; flex-shrink: 0; }
+    .oc-text {}
+    .oc-title {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: var(--dark);
+    }
+    .oc-desc {
+      font-size: 0.68rem;
+      font-weight: 300;
+      color: var(--muted);
+      margin-top: 0.1rem;
+    }
+    .oc-free {
+      margin-left: auto;
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--green);
+      background: rgba(5,150,105,0.08);
+      border: 1px solid rgba(5,150,105,0.2);
+      padding: 0.2rem 0.6rem;
+      border-radius: 100px;
+      flex-shrink: 0;
+    }
+
+    .cta-row {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--amber);
+      text-decoration: none;
+      padding: 0.9rem 2rem;
+      border-radius: 8px;
+      transition: background 0.2s;
+    }
+    .cta-btn:hover { background: var(--dark); }
+    .cta-link {
+      font-size: 0.62rem;
+      font-weight: 400;
+      color: var(--muted);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(28,25,23,0.15);
+      padding-bottom: 1px;
+    }
+
+    /* RIGHT */
+    .hero-right {
+      background: var(--light);
+      display: flex;
+      flex-direction: column;
+      padding: 6rem 4rem 4rem;
+      gap: 2.5rem;
+      border-left: 1px solid rgba(28,25,23,0.06);
+    }
+
+    .right-label {
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--amber);
+    }
+
+    .testimonial {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      padding: 1.5rem;
+      background: #fff;
+      border-radius: 12px;
+      border: 1px solid rgba(28,25,23,0.06);
+      box-shadow: 0 2px 8px rgba(28,25,23,0.04);
+    }
+    .test-quote {
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 400;
+      line-height: 1.6;
+      color: var(--dark);
+    }
+    .test-author {
+      font-size: 0.62rem;
+      font-weight: 600;
+      color: var(--amber);
+      letter-spacing: 0.06em;
+    }
+    .test-stars {
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+      color: var(--amber);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .sg-card {
+      background: #fff;
+      border: 1px solid rgba(28,25,23,0.06);
+      border-radius: 10px;
+      padding: 1.25rem;
+    }
+    .sg-num {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: 1.8rem;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      color: var(--amber);
+    }
+    .sg-label {
+      font-size: 0.6rem;
+      font-weight: 400;
+      color: var(--muted);
+      margin-top: 0.25rem;
+    }
+
+    .contact-block {
+      background: var(--amber);
+      border-radius: 10px;
+      padding: 1.5rem;
+    }
+    .cb-label {
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 0.4rem;
+    }
+    .cb-hours {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: #fff;
+    }
+    .cb-note {
+      font-size: 0.68rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.7);
+      margin-top: 0.25rem;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-logo">Brücke</div>
+    <ul class="nav-links">
+      <li><a href="#">Beratung</a></li>
+      <li><a href="#">Angebote</a></li>
+      <li><a href="#">Team</a></li>
+      <li><a href="#">Kontakt</a></li>
+    </ul>
+    <a href="#" class="nav-cta">Termin anfragen</a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-left">
+      <div class="eyebrow">Soziale Arbeit · Trier</div>
+
+      <h1 class="hero-headline">
+        Für jeden<br>
+        ein <em>Ohr.</em>
+      </h1>
+
+      <p class="hero-body">
+        Niemand muss alleine durch schwierige Zeiten.
+        Wir hören zu, begleiten und helfen — kostenlos
+        und ohne Bürokratie-Hürden.
+      </p>
+
+      <div class="offer-list">
+        <div class="offer-card">
+          <div class="oc-icon">🤝</div>
+          <div class="oc-text">
+            <div class="oc-title">Einzelberatung</div>
+            <div class="oc-desc">Persönliche Beratung zu Alltagsproblemen</div>
+          </div>
+          <span class="oc-free">Kostenlos</span>
+        </div>
+        <div class="offer-card">
+          <div class="oc-icon">👨‍👩‍👧</div>
+          <div class="oc-text">
+            <div class="oc-title">Familienbegleitung</div>
+            <div class="oc-desc">Unterstützung für Familien in Krisen</div>
+          </div>
+          <span class="oc-free">Kostenlos</span>
+        </div>
+        <div class="offer-card">
+          <div class="oc-icon">💬</div>
+          <div class="oc-text">
+            <div class="oc-title">Gruppenangebote</div>
+            <div class="oc-desc">Wöchentliche Treffen & Selbsthilfegruppen</div>
+          </div>
+          <span class="oc-free">Offen</span>
+        </div>
+      </div>
+
+      <div class="cta-row">
+        <a href="#" class="cta-btn">Termin anfragen →</a>
+        <a href="#" class="cta-link">Alle Angebote ansehen</a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="right-label">Was Menschen sagen</div>
+
+      <div class="testimonial">
+        <div class="test-stars">★★★★★</div>
+        <div class="test-quote">
+          „Ich hatte das Gefühl, zum ersten Mal wirklich gehört zu werden.
+          Das Team ist außergewöhnlich einfühlsam."
+        </div>
+        <div class="test-author">— Maria K., Nutzerin seit 2022</div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="sg-card">
+          <div class="sg-num">1.200+</div>
+          <div class="sg-label">Beratungen / Jahr</div>
+        </div>
+        <div class="sg-card">
+          <div class="sg-num">18</div>
+          <div class="sg-label">Mitarbeiter</div>
+        </div>
+        <div class="sg-card">
+          <div class="sg-num">15</div>
+          <div class="sg-label">Jahre in Trier</div>
+        </div>
+        <div class="sg-card">
+          <div class="sg-num">0 €</div>
+          <div class="sg-label">Kosten für Ratsuchende</div>
+        </div>
+      </div>
+
+      <div class="contact-block">
+        <div class="cb-label">Öffnungszeiten Beratungsstelle</div>
+        <div class="cb-hours">Mo – Fr, 9 – 17 Uhr</div>
+        <div class="cb-note">Trier Innenstadt · Keine Anmeldung nötig</div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

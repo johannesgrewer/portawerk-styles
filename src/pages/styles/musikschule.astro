@@ -1,0 +1,556 @@
+---
+export const prerender = true;
+---
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Tonart — Musikschule & Konservatorium | Trier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { overflow-x: hidden; }
+
+    :root {
+      --ink:    #1A1A2E;
+      --amber:  #9B6B47;
+      --bg:     #FDFCF8;
+      --warm:   #F8F5EE;
+      --cream:  #F2EDE2;
+      --muted:  rgba(26,26,46,0.42);
+      --rule:   rgba(26,26,46,0.08);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Raleway', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Music staff lines — very subtle */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(
+          0deg,
+          transparent 0px,
+          transparent 18px,
+          rgba(26,26,46,0.025) 18px,
+          rgba(26,26,46,0.025) 19px
+        );
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.4rem 4rem;
+      background: rgba(253,252,248,0.97);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--rule);
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: 1.3rem;
+      letter-spacing: 0.08em;
+      color: var(--ink);
+    }
+    .nav-logo em {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--amber);
+    }
+    .nav-logo-sub {
+      display: block;
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.46rem;
+      font-weight: 400;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: -0.1rem;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.58rem;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.25s;
+    }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-probe {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.88rem;
+      font-style: italic;
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid var(--ink);
+      padding-bottom: 1px;
+      transition: color 0.25s, border-color 0.25s;
+    }
+    .nav-probe:hover { color: var(--amber); border-color: var(--amber); }
+
+    .hero {
+      min-height: 100vh;
+      padding-top: 72px;
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    /* LEFT */
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 5rem 4rem 5rem 4.5rem;
+      gap: 2.5rem;
+      border-right: 1px solid var(--rule);
+    }
+
+    .eyebrow {
+      font-size: 0.52rem;
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--amber);
+    }
+
+    .hero-headline {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      line-height: 1.15;
+      color: var(--ink);
+    }
+    .hero-headline em {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--muted);
+    }
+
+    .amber-line {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .al-bar {
+      width: 2.5rem;
+      height: 1px;
+      background: var(--amber);
+    }
+    .al-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 0.9rem;
+      color: var(--amber);
+    }
+
+    .hero-body {
+      font-size: 0.88rem;
+      font-weight: 300;
+      line-height: 2;
+      color: var(--muted);
+      max-width: 44ch;
+    }
+
+    /* Instrument list */
+    .instrument-list {
+      display: flex;
+      flex-direction: column;
+      border-top: 1px solid var(--rule);
+    }
+    .instrument-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding: 0.85rem 0;
+      border-bottom: 1px solid var(--rule);
+      cursor: default;
+      transition: padding-left 0.25s;
+    }
+    .instrument-row:hover { padding-left: 0.35rem; }
+    .ir-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+    .ir-detail {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.88rem;
+      font-style: italic;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+    }
+
+    .cta-row {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+    .cta-btn {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.58rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--ink);
+      padding: 0.9rem 2rem;
+      text-decoration: none;
+      transition: background 0.25s;
+    }
+    .cta-btn:hover { background: var(--amber); }
+    .cta-link {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-style: italic;
+      color: var(--muted);
+      text-decoration: none;
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: 1px;
+      transition: color 0.25s;
+    }
+    .cta-link:hover { color: var(--amber); }
+
+    /* RIGHT */
+    .hero-right {
+      background: var(--warm);
+      display: flex;
+      flex-direction: column;
+      padding: 5rem 4rem;
+      gap: 2.5rem;
+    }
+
+    .right-label {
+      font-size: 0.5rem;
+      font-weight: 400;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* Teacher profiles */
+    .teacher-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+    }
+    .teacher-card {
+      background: var(--bg);
+      padding: 1.1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .tc-initial {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--cream);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--ink);
+      flex-shrink: 0;
+      border: 1px solid var(--rule);
+    }
+    .tc-info { flex: 1; }
+    .tc-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+    .tc-spec {
+      font-size: 0.62rem;
+      font-weight: 300;
+      color: var(--muted);
+      font-style: italic;
+      margin-top: 0.1rem;
+    }
+    .tc-avail {
+      font-size: 0.5rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.18rem 0.55rem;
+    }
+    .avail-yes { background: rgba(155,107,71,0.1); color: var(--amber); }
+    .avail-no  { background: rgba(26,26,46,0.06); color: var(--muted); }
+
+    /* Schedule snippet */
+    .schedule-block {
+      background: var(--ink);
+      padding: 1.5rem;
+    }
+    .sb-label {
+      font-size: 0.48rem;
+      font-weight: 400;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+      margin-bottom: 1rem;
+    }
+    .schedule-row {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .schedule-row:last-child { border-bottom: none; }
+    .sr-day {
+      font-family: 'Raleway', sans-serif;
+      font-size: 0.52rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      width: 2rem;
+      flex-shrink: 0;
+    }
+    .sr-entry {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.92rem;
+      font-style: italic;
+      color: rgba(255,255,255,0.75);
+    }
+    .sr-time {
+      margin-left: auto;
+      font-size: 0.6rem;
+      font-weight: 300;
+      color: var(--amber);
+    }
+
+    /* Contact strip */
+    .contact-strip {
+      margin-top: auto;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--rule);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .cs-item {}
+    .cs-label {
+      font-size: 0.48rem;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.2rem;
+    }
+    .cs-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.92rem;
+      color: var(--ink);
+      line-height: 1.5;
+    }
+    /* === Animations & Micro-interactions === */
+    @keyframes staffScroll {
+      0%   { background-position: 0 0; }
+      100% { background-position: 0 19px; }
+    }
+    @keyframes barPulse {
+      0%, 100% { opacity: 1; width: 2.5rem; }
+      50%       { opacity: 0.6; width: 1.5rem; }
+    }
+
+    body::before { animation: staffScroll 10s linear infinite; }
+
+    .al-bar { animation: barPulse 3.5s ease-in-out infinite; }
+
+    .instrument-row .ir-name { transition: color 0.25s; }
+    .instrument-row:hover .ir-name { color: var(--amber); }
+    .instrument-row .ir-detail { transition: color 0.25s; }
+    .instrument-row:hover .ir-detail { color: var(--muted); opacity: 1; }
+
+    .teacher-card {
+      transition: background 0.2s, transform 0.2s;
+    }
+    .teacher-card:hover {
+      background: rgba(155,107,71,0.04);
+      transform: translateX(4px);
+    }
+    .tc-name { transition: color 0.2s; }
+    .teacher-card:hover .tc-name { color: var(--amber); }
+
+    .schedule-row {
+      transition: background 0.2s;
+      cursor: default;
+    }
+    .schedule-row:hover { background: rgba(255,255,255,0.04); }
+    .sr-entry { transition: color 0.2s; }
+    .schedule-row:hover .sr-entry { color: rgba(255,255,255,0.95); }
+
+    .tc-initial {
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .teacher-card:hover .tc-initial {
+      background: rgba(155,107,71,0.12);
+      border-color: rgba(155,107,71,0.3);
+    }
+
+    .nav-probe {
+      transition: color 0.25s, border-color 0.25s, letter-spacing 0.25s;
+    }
+    .nav-probe:hover { letter-spacing: 0.02em; }
+
+  </style>
+</head>
+<body>
+  <nav>
+    <div>
+      <div class="nav-logo">Ton<em>art</em></div>
+      <span class="nav-logo-sub">Musikschule · Trier</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#">Instrumente</a></li>
+      <li><a href="#">Lehrkräfte</a></li>
+      <li><a href="#">Kurse</a></li>
+      <li><a href="#">Konzerte</a></li>
+    </ul>
+    <a href="#" class="nav-probe">Probestunde anfragen</a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-left">
+      <div class="eyebrow">Musikschule & Konservatorium · Trier</div>
+
+      <h1 class="hero-headline">
+        Musik beginnt<br>
+        mit <em>Zuhören.</em>
+      </h1>
+
+      <div class="amber-line">
+        <span class="al-bar"></span>
+        <span class="al-text">Seit 1994 in Trier</span>
+      </div>
+
+      <p class="hero-body">
+        Wir unterrichten keine Noten — wir unterrichten
+        Menschen. Jeder Schüler bekommt seinen eigenen
+        Rhythmus. Vom Erstgespräch bis zum ersten Konzert.
+      </p>
+
+      <div class="instrument-list">
+        <div class="instrument-row">
+          <span class="ir-name">Klavier</span>
+          <span class="ir-detail">Klassik · Jazz · Pop, alle Niveaus</span>
+        </div>
+        <div class="instrument-row">
+          <span class="ir-name">Violine</span>
+          <span class="ir-detail">Klassisches Repertoire, Kammermusik</span>
+        </div>
+        <div class="instrument-row">
+          <span class="ir-name">Gitarre</span>
+          <span class="ir-detail">Akustik · Klassisch · E-Gitarre</span>
+        </div>
+        <div class="instrument-row">
+          <span class="ir-name">Gesang</span>
+          <span class="ir-detail">Stimmbildung, Chor, Einzelunterricht</span>
+        </div>
+        <div class="instrument-row">
+          <span class="ir-name">Schlagzeug</span>
+          <span class="ir-detail">Rhythmik · Jazz · Rock</span>
+        </div>
+      </div>
+
+      <div class="cta-row">
+        <a href="#" class="cta-btn">Probestunde buchen</a>
+        <a href="#" class="cta-link">Alle Instrumente →</a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="right-label">Unsere Lehrkräfte</div>
+
+      <div class="teacher-list">
+        <div class="teacher-card">
+          <div class="tc-initial">EK</div>
+          <div class="tc-info">
+            <div class="tc-name">Elisabeth Kern</div>
+            <div class="tc-spec">Klavier · Hochschulstudium Köln</div>
+          </div>
+          <span class="tc-avail avail-yes">Plätze frei</span>
+        </div>
+        <div class="teacher-card">
+          <div class="tc-initial">FW</div>
+          <div class="tc-info">
+            <div class="tc-name">Friedrich Walther</div>
+            <div class="tc-spec">Violine · Orchester & Kammer</div>
+          </div>
+          <span class="tc-avail avail-no">Warteliste</span>
+        </div>
+        <div class="teacher-card">
+          <div class="tc-initial">MR</div>
+          <div class="tc-info">
+            <div class="tc-name">Mia Richter</div>
+            <div class="tc-spec">Gesang · Musical & Klassik</div>
+          </div>
+          <span class="tc-avail avail-yes">Plätze frei</span>
+        </div>
+      </div>
+
+      <div class="schedule-block">
+        <div class="sb-label">Kommende Konzerte</div>
+        <div class="schedule-row">
+          <span class="sr-day">Fr</span>
+          <span class="sr-entry">Schülerkonzert Frühjahr</span>
+          <span class="sr-time">28.03 · 19:00</span>
+        </div>
+        <div class="schedule-row">
+          <span class="sr-day">Sa</span>
+          <span class="sr-entry">Kammermusikabend</span>
+          <span class="sr-time">05.04 · 18:00</span>
+        </div>
+        <div class="schedule-row">
+          <span class="sr-day">So</span>
+          <span class="sr-entry">Tag der offenen Tür</span>
+          <span class="sr-time">27.04 · 11:00</span>
+        </div>
+      </div>
+
+      <div class="contact-strip">
+        <div class="cs-item">
+          <div class="cs-label">Unterrichtszeiten</div>
+          <div class="cs-value">Mo – Fr 14 – 20 Uhr<br>Sa 9 – 15 Uhr</div>
+        </div>
+        <div class="cs-item">
+          <div class="cs-label">Adresse</div>
+          <div class="cs-value">Simeonstraße 14<br>54290 Trier</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

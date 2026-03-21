@@ -1,0 +1,432 @@
+---
+export const prerender = true;
+---
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Ursprung — Specialty Coffee & Rösterei | Trier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { overflow-x: hidden; }
+
+    :root {
+      --espresso: #3D2B1F;
+      --caramel:  #C07D3A;
+      --cream:    #F5EDE0;
+      --bg:       #FAF7F3;
+      --muted:    rgba(61,43,31,0.45);
+      --rule:     rgba(61,43,31,0.08);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--espresso);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem 3.5rem;
+      background: rgba(250,247,243,0.96);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--rule);
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--espresso);
+    }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.6rem;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--caramel); }
+    .nav-order {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--espresso);
+      padding: 0.6rem 1.4rem;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .nav-order:hover { background: var(--caramel); }
+
+    .hero {
+      min-height: 100vh;
+      padding-top: 60px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    /* LEFT */
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 4rem 4rem 4rem 4.5rem;
+      gap: 2.5rem;
+      border-right: 1px solid var(--rule);
+    }
+
+    .eyebrow {
+      font-size: 0.58rem;
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--caramel);
+    }
+
+    .hero-headline {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2.8rem, 5.5vw, 4.8rem);
+      line-height: 1;
+      letter-spacing: -0.01em;
+      color: var(--espresso);
+    }
+    .hero-headline .caramel { color: var(--caramel); }
+
+    .hero-body {
+      font-size: 0.88rem;
+      font-weight: 300;
+      line-height: 1.95;
+      color: var(--muted);
+      max-width: 44ch;
+    }
+
+    /* Origin list */
+    .origin-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border-top: 1px solid var(--rule);
+    }
+    .origin-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.9rem 0;
+      border-bottom: 1px solid var(--rule);
+    }
+    .or-flag { font-size: 1.2rem; flex-shrink: 0; }
+    .or-info { flex: 1; }
+    .or-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--espresso);
+    }
+    .or-region {
+      font-size: 0.65rem;
+      font-weight: 300;
+      color: var(--muted);
+      margin-top: 0.05rem;
+    }
+    .or-profile {
+      font-size: 0.62rem;
+      font-weight: 300;
+      color: var(--caramel);
+      font-style: italic;
+    }
+
+    .cta-row {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .cta-btn {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--espresso);
+      padding: 0.9rem 2rem;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .cta-btn:hover { background: var(--caramel); }
+    .cta-link {
+      font-size: 0.62rem;
+      font-weight: 300;
+      color: var(--muted);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(61,43,31,0.2);
+      padding-bottom: 1px;
+    }
+
+    /* RIGHT */
+    .hero-right {
+      background: var(--espresso);
+      display: flex;
+      flex-direction: column;
+      padding: 4rem 3.5rem;
+      gap: 2.5rem;
+    }
+
+    .right-label {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+    }
+
+    /* Brew guide */
+    .brew-guide {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .bg-method {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.25rem;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      cursor: default;
+      transition: background 0.2s;
+    }
+    .bg-method:hover { background: rgba(255,255,255,0.09); }
+    .bgm-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #fff;
+      flex: 1;
+    }
+    .bgm-temp {
+      font-size: 0.62rem;
+      font-weight: 300;
+      color: var(--caramel);
+    }
+    .bgm-time {
+      font-size: 0.62rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.3);
+    }
+
+    /* Roast chart */
+    .roast-block {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .rb-label {
+      font-size: 0.55rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+    }
+    .roast-levels {
+      display: flex;
+      gap: 0.4rem;
+    }
+    .roast-level {
+      flex: 1;
+      height: 8px;
+      border-radius: 2px;
+    }
+    .rl-light { background: #C49A6C; }
+    .rl-medium { background: #8B5E3C; }
+    .rl-dark { background: #4A2C1A; }
+    .rl-espresso { background: #1C0F08; border: 1px solid rgba(255,255,255,0.1); }
+    .roast-labels {
+      display: flex;
+      gap: 0.4rem;
+    }
+    .rl-lbl {
+      flex: 1;
+      font-size: 0.5rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+      text-align: center;
+    }
+
+    /* Info row */
+    .info-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6rem;
+      margin-top: auto;
+    }
+    .ir-item {
+      background: rgba(255,255,255,0.05);
+      padding: 1rem;
+    }
+    .ir-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--caramel);
+      line-height: 1;
+    }
+    .ir-label {
+      font-size: 0.58rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.3);
+      margin-top: 0.2rem;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-logo">Ursprung</div>
+    <ul class="nav-links">
+      <li><a href="#">Rösterei</a></li>
+      <li><a href="#">Herkunft</a></li>
+      <li><a href="#">Café</a></li>
+      <li><a href="#">Shop</a></li>
+    </ul>
+    <a href="#" class="nav-order">Online bestellen</a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-left">
+      <div class="eyebrow">Specialty Coffee & Rösterei · Trier</div>
+
+      <h1 class="hero-headline">
+        Herkunft<br>
+        <span class="caramel">schmeckt</span><br>
+        man.
+      </h1>
+
+      <p class="hero-body">
+        Jede Bohne hat eine Geschichte — wir erzählen sie.
+        Von der Farm bis in die Tasse, mit Transparenz,
+        Handwerk und dem Willen zum perfekten Extrakt.
+      </p>
+
+      <div class="origin-list">
+        <div class="origin-row">
+          <span class="or-flag">🇪🇹</span>
+          <div class="or-info">
+            <div class="or-name">Yirgacheffe Natural</div>
+            <div class="or-region">Äthiopien · 1.900 m</div>
+          </div>
+          <div class="or-profile">Blaubeere · Jasmin</div>
+        </div>
+        <div class="origin-row">
+          <span class="or-flag">🇨🇴</span>
+          <div class="or-info">
+            <div class="or-name">Huila Washed</div>
+            <div class="or-region">Kolumbien · 1.750 m</div>
+          </div>
+          <div class="or-profile">Karamell · rote Kirsche</div>
+        </div>
+        <div class="origin-row">
+          <span class="or-flag">🇬🇹</span>
+          <div class="or-info">
+            <div class="or-name">Antigua Honey</div>
+            <div class="or-region">Guatemala · 1.500 m</div>
+          </div>
+          <div class="or-profile">Honig · dunkle Schokolade</div>
+        </div>
+      </div>
+
+      <div class="cta-row">
+        <a href="#" class="cta-btn">Kaffee bestellen →</a>
+        <a href="#" class="cta-link">Alle Herkunftsländer</a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="right-label">Zubereitungsmethoden</div>
+
+      <div class="brew-guide">
+        <div class="bg-method">
+          <div class="bgm-name">Espresso</div>
+          <div class="bgm-temp">93 °C</div>
+          <div class="bgm-time">25 s</div>
+        </div>
+        <div class="bg-method">
+          <div class="bgm-name">Pour-Over V60</div>
+          <div class="bgm-temp">91 °C</div>
+          <div class="bgm-time">3:30 min</div>
+        </div>
+        <div class="bg-method">
+          <div class="bgm-name">AeroPress</div>
+          <div class="bgm-temp">85 °C</div>
+          <div class="bgm-time">2:00 min</div>
+        </div>
+        <div class="bg-method">
+          <div class="bgm-name">Cold Brew</div>
+          <div class="bgm-temp">4 °C</div>
+          <div class="bgm-time">12 h</div>
+        </div>
+      </div>
+
+      <div class="roast-block">
+        <div class="rb-label">Röstgrad-Spektrum</div>
+        <div class="roast-levels">
+          <div class="roast-level rl-light"></div>
+          <div class="roast-level rl-medium"></div>
+          <div class="roast-level rl-dark"></div>
+          <div class="roast-level rl-espresso"></div>
+        </div>
+        <div class="roast-labels">
+          <div class="rl-lbl">Hell</div>
+          <div class="rl-lbl">Medium</div>
+          <div class="rl-lbl">Dunkel</div>
+          <div class="rl-lbl">Espresso</div>
+        </div>
+      </div>
+
+      <div class="info-row">
+        <div class="ir-item">
+          <div class="ir-num">12</div>
+          <div class="ir-label">Herkunftsländer</div>
+        </div>
+        <div class="ir-item">
+          <div class="ir-num">3×</div>
+          <div class="ir-label">Röstung / Woche</div>
+        </div>
+        <div class="ir-item">
+          <div class="ir-num">8</div>
+          <div class="ir-label">Jahre Erfahrung</div>
+        </div>
+        <div class="ir-item">
+          <div class="ir-num">SCA</div>
+          <div class="ir-label">Zertifiziert</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

@@ -1,0 +1,430 @@
+---
+export const prerender = true;
+---
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Doppel — Grafikdesign-Duo | Trier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { overflow-x: hidden; }
+
+    :root {
+      --yellow: #F5C842;
+      --black:  #0A0A0A;
+      --white:  #FFFFFF;
+      --muted:  rgba(10,10,10,0.45);
+    }
+
+    body {
+      background: var(--white);
+      color: var(--black);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Fixed split nav */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      height: 56px;
+    }
+    .nav-half-white {
+      display: flex;
+      align-items: center;
+      padding: 0 3rem;
+      background: var(--white);
+      border-bottom: 2px solid var(--black);
+    }
+    .nav-half-yellow {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 2.5rem;
+      padding: 0 3rem;
+      background: var(--yellow);
+      border-bottom: 2px solid var(--black);
+      border-left: 2px solid var(--black);
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.15rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--black);
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(10,10,10,0.55);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--black); }
+    .nav-contact {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--black);
+      text-decoration: none;
+      border-bottom: 2px solid var(--black);
+      padding-bottom: 1px;
+      transition: border-color 0.2s;
+    }
+    .nav-contact:hover { border-color: transparent; }
+
+    /* Full-height split hero */
+    .hero {
+      min-height: 100vh;
+      padding-top: 56px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    /* LEFT — white side */
+    .hero-left {
+      background: var(--white);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 5rem 4rem 5rem 4.5rem;
+      gap: 3rem;
+      border-right: 2px solid var(--black);
+    }
+
+    .eyebrow {
+      font-size: 0.58rem;
+      font-weight: 500;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .hero-headline {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      color: var(--black);
+    }
+    .hero-headline .outline {
+      -webkit-text-stroke: 2px var(--black);
+      color: transparent;
+    }
+
+    .hero-body {
+      font-size: 0.88rem;
+      font-weight: 300;
+      line-height: 1.9;
+      color: var(--muted);
+      max-width: 40ch;
+    }
+
+    /* Services list */
+    .service-list {
+      display: flex;
+      flex-direction: column;
+      border-top: 1px solid rgba(10,10,10,0.1);
+    }
+    .sl-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.85rem 0;
+      border-bottom: 1px solid rgba(10,10,10,0.07);
+      transition: padding-left 0.3s;
+      cursor: default;
+    }
+    .sl-row:hover { padding-left: 0.4rem; }
+    .sl-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--black);
+    }
+    .sl-tag {
+      font-size: 0.55rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: rgba(10,10,10,0.05);
+      padding: 0.2rem 0.6rem;
+    }
+
+    .cta-row {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .cta-btn {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--white);
+      background: var(--black);
+      padding: 0.9rem 2rem;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .cta-btn:hover { background: var(--yellow); color: var(--black); }
+    .cta-link {
+      font-size: 0.62rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(10,10,10,0.15);
+      padding-bottom: 1px;
+    }
+
+    /* RIGHT — yellow side */
+    .hero-right {
+      background: var(--yellow);
+      display: flex;
+      flex-direction: column;
+      padding: 5rem 4rem;
+      gap: 3rem;
+    }
+
+    .right-label {
+      font-size: 0.55rem;
+      font-weight: 500;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(10,10,10,0.5);
+    }
+
+    /* Project grid — 2 col */
+    .project-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+    }
+    .proj-card {
+      background: var(--black);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      min-height: 140px;
+    }
+    .proj-card.light {
+      background: rgba(10,10,10,0.08);
+    }
+    .pc-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: rgba(255,255,255,0.25);
+    }
+    .pc-num.dark { color: rgba(10,10,10,0.25); }
+    .pc-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--white);
+      margin-top: auto;
+    }
+    .pc-name.dark { color: var(--black); }
+    .pc-type {
+      font-size: 0.62rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.45);
+    }
+    .pc-type.dark { color: rgba(10,10,10,0.45); }
+
+    /* About / duo block */
+    .duo-block {
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+    }
+    .duo-divider {
+      width: 2px;
+      background: var(--black);
+      align-self: stretch;
+      flex-shrink: 0;
+    }
+    .duo-person {}
+    .dp-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--black);
+      margin-bottom: 0.2rem;
+    }
+    .dp-role {
+      font-size: 0.65rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(10,10,10,0.5);
+    }
+
+    /* Stats row */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border: 2px solid var(--black);
+    }
+    .stat-cell {
+      padding: 1rem;
+      border-right: 1px solid rgba(10,10,10,0.15);
+    }
+    .stat-cell:last-child { border-right: none; }
+    .sc-num {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.6rem;
+      color: var(--black);
+      line-height: 1;
+    }
+    .sc-label {
+      font-size: 0.58rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(10,10,10,0.45);
+      margin-top: 0.2rem;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-half-white">
+      <div class="nav-logo">Doppel</div>
+    </div>
+    <div class="nav-half-yellow">
+      <ul class="nav-links">
+        <li><a href="#">Projekte</a></li>
+        <li><a href="#">Leistungen</a></li>
+        <li><a href="#">Studio</a></li>
+      </ul>
+      <a href="#" class="nav-contact">Kontakt aufnehmen</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-left">
+      <div class="eyebrow">Grafikdesign-Duo · Trier</div>
+
+      <h1 class="hero-headline">
+        Zwei<br>
+        Köpfe.<br>
+        <span class="outline">Eine</span><br>
+        Idee.
+      </h1>
+
+      <p class="hero-body">
+        Anna & Paul. Wir entwerfen visuelle Identitäten,
+        die bleiben — für Marken, die etwas zu sagen haben.
+        Seit 2021 gemeinsam in Trier.
+      </p>
+
+      <div class="service-list">
+        <div class="sl-row">
+          <span class="sl-name">Brand Identity</span>
+          <span class="sl-tag">Kernleistung</span>
+        </div>
+        <div class="sl-row">
+          <span class="sl-name">Editorial Design</span>
+          <span class="sl-tag">Print</span>
+        </div>
+        <div class="sl-row">
+          <span class="sl-name">Digital Branding</span>
+          <span class="sl-tag">Web & Social</span>
+        </div>
+        <div class="sl-row">
+          <span class="sl-name">Verpackungsdesign</span>
+          <span class="sl-tag">Produkt</span>
+        </div>
+      </div>
+
+      <div class="cta-row">
+        <a href="#" class="cta-btn">Projekt starten →</a>
+        <a href="#" class="cta-link">Alle Arbeiten</a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="right-label">Ausgewählte Projekte</div>
+
+      <div class="project-grid">
+        <div class="proj-card">
+          <span class="pc-num">01</span>
+          <div class="pc-name">Mosel Vinothek</div>
+          <div class="pc-type">Brand Identity · 2024</div>
+        </div>
+        <div class="proj-card light">
+          <span class="pc-num dark">02</span>
+          <div class="pc-name dark">Stadtwerk Magazin</div>
+          <div class="pc-type dark">Editorial · 2024</div>
+        </div>
+        <div class="proj-card light">
+          <span class="pc-num dark">03</span>
+          <div class="pc-name dark">Kern & Co.</div>
+          <div class="pc-type dark">Corporate CD · 2023</div>
+        </div>
+        <div class="proj-card">
+          <span class="pc-num">04</span>
+          <div class="pc-name">Lautstark Festival</div>
+          <div class="pc-type">Kampagne · 2023</div>
+        </div>
+      </div>
+
+      <div class="duo-block">
+        <div class="duo-person">
+          <div class="dp-name">Anna Förster</div>
+          <div class="dp-role">Konzept & Art Direction</div>
+        </div>
+        <div class="duo-divider"></div>
+        <div class="duo-person">
+          <div class="dp-name">Paul Reinhardt</div>
+          <div class="dp-role">Design & Typografie</div>
+        </div>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-cell">
+          <div class="sc-num">74</div>
+          <div class="sc-label">Projekte</div>
+        </div>
+        <div class="stat-cell">
+          <div class="sc-num">3</div>
+          <div class="sc-label">Awards</div>
+        </div>
+        <div class="stat-cell">
+          <div class="sc-num">4 J.</div>
+          <div class="sc-label">Gemeinsam</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

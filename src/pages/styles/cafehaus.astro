@@ -1,0 +1,792 @@
+---
+export const prerender = true;
+---
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Röstwerk Café — Specialty Coffee, Trier Altstadt</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;1,9..144,400;1,9..144,600&family=Nunito:wght@300;400;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --espresso: #2C1A0E;
+      --dark:     #1A0D06;
+      --mid:      #5C3520;
+      --amber:    #C47E3A;
+      --amber-l:  #D99B55;
+      --cream:    #FBF6EF;
+      --warm:     #F5EDE0;
+      --muted:    #9A7A60;
+      --border:   #E8D8C4;
+      --ff-disp:  'Fraunces', serif;
+      --ff-body:  'Nunito', sans-serif;
+    }
+
+    html, body {
+      background: var(--cream);
+      color: var(--espresso);
+      font-family: var(--ff-body);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--cream);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 3.5rem;
+      height: 64px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-logo {
+      font-family: var(--ff-disp);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--espresso);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .logo-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--amber);
+      border-radius: 50%;
+      animation: coffeeSteam 2s ease-in-out infinite;
+    }
+
+    @keyframes coffeeSteam {
+      0%, 100% { transform: translateY(0) scale(1); opacity: 1; }
+      50%       { transform: translateY(-3px) scale(0.8); opacity: 0.5; }
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--espresso); }
+
+    .nav-hours {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--amber) !important;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--espresso);
+      min-height: 520px;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Warm halo */
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -100px; right: -100px;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(196,126,58,0.18) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .hero-left {
+      padding: 5rem 3.5rem 5rem 3.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      width: 20px;
+      height: 1px;
+      background: var(--amber);
+    }
+
+    .hero-headline {
+      font-family: var(--ff-disp);
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-headline em {
+      font-style: italic;
+      color: var(--amber);
+    }
+
+    .hero-desc {
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.5);
+      max-width: 380px;
+      line-height: 1.85;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-ctas {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .btn-amber {
+      background: var(--amber);
+      color: var(--espresso);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      padding: 0.8rem 2rem;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-amber:hover { background: var(--amber-l); transform: translateY(-1px); }
+
+    .btn-ghost {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.45);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .btn-ghost:hover { color: #fff; }
+
+    /* Right panel — coffee details */
+    .hero-right {
+      background: rgba(255,255,255,0.04);
+      border-left: 1px solid rgba(255,255,255,0.07);
+      padding: 3rem 2.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .coffee-feature {
+      margin-bottom: 2rem;
+    }
+
+    .cf-label {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 0.75rem;
+    }
+
+    .cf-name {
+      font-family: var(--ff-disp);
+      font-style: italic;
+      font-size: 1.5rem;
+      color: #fff;
+      margin-bottom: 0.5rem;
+      line-height: 1.2;
+    }
+
+    .cf-origin {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 1rem;
+    }
+
+    .cf-notes {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.7;
+      font-style: italic;
+    }
+
+    .cf-divider {
+      height: 1px;
+      background: rgba(255,255,255,0.08);
+      margin: 1.5rem 0;
+    }
+
+    .brew-methods {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .brew-pill {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      border: 1px solid rgba(255,255,255,0.12);
+      padding: 0.3rem 0.75rem;
+      border-radius: 100px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .brew-pill:hover { border-color: var(--amber); color: var(--amber); }
+
+    .brew-methods-label {
+      font-size: 0.6rem;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 0.5rem;
+    }
+
+    /* ── KARTE / MENU ── */
+    .menu-section {
+      padding: 5rem 3.5rem;
+      background: var(--cream);
+    }
+
+    .menu-intro {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: end;
+      margin-bottom: 3.5rem;
+    }
+
+    .section-eyebrow {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+      font-family: var(--ff-disp);
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      color: var(--espresso);
+      line-height: 1.15;
+    }
+
+    .section-title em {
+      font-style: italic;
+      color: var(--amber);
+    }
+
+    .menu-note {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.8;
+      align-self: end;
+    }
+
+    .menu-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+
+    .menu-group-title {
+      font-family: var(--ff-disp);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--espresso);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding: 0.6rem 0;
+      border-bottom: 1px dashed var(--border);
+      gap: 1rem;
+      transition: padding-left 0.2s;
+    }
+    .menu-item:last-child { border-bottom: none; }
+    .menu-item:hover { padding-left: 0.35rem; }
+    .menu-item:hover .item-name { color: var(--amber); }
+
+    .item-left { flex: 1; }
+
+    .item-name {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--espresso);
+      transition: color 0.2s;
+    }
+
+    .item-desc {
+      font-size: 0.72rem;
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    .item-price {
+      font-family: var(--ff-disp);
+      font-size: 0.95rem;
+      color: var(--espresso);
+      flex-shrink: 0;
+    }
+
+    /* ── MORNING SECTION ── */
+    .morning-section {
+      background: var(--warm);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 5rem 3.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .morning-text { }
+
+    .morning-headline {
+      font-family: var(--ff-disp);
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      color: var(--espresso);
+      line-height: 1.2;
+      margin-bottom: 1.25rem;
+    }
+
+    .morning-headline em {
+      font-style: italic;
+      color: var(--amber);
+    }
+
+    .morning-desc {
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.85;
+      margin-bottom: 2rem;
+    }
+
+    .morning-facts {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .morning-fact {
+      display: flex;
+      gap: 1.25rem;
+      align-items: flex-start;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border);
+      transition: padding-left 0.2s;
+    }
+    .morning-fact:last-child { border-bottom: none; }
+    .morning-fact:hover { padding-left: 0.35rem; }
+
+    .fact-icon {
+      font-size: 1.2rem;
+      flex-shrink: 0;
+      width: 28px;
+    }
+
+    .fact-body { }
+
+    .fact-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--espresso);
+      margin-bottom: 0.2rem;
+    }
+
+    .fact-text {
+      font-size: 0.75rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* Opening hours card */
+    .hours-card {
+      background: var(--espresso);
+      border-radius: 12px;
+      padding: 2.5rem;
+      color: #fff;
+    }
+
+    .hours-title {
+      font-family: var(--ff-disp);
+      font-style: italic;
+      font-size: 1.2rem;
+      color: var(--amber);
+      margin-bottom: 1.75rem;
+    }
+
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.7rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .hours-row:last-child { border-bottom: none; }
+
+    .hours-day {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.55);
+    }
+
+    .hours-time {
+      font-family: var(--ff-disp);
+      font-size: 0.9rem;
+      color: #fff;
+    }
+
+    .hours-closed {
+      color: rgba(255,255,255,0.25) !important;
+      font-style: italic;
+      font-family: var(--ff-body);
+      font-size: 0.8rem;
+    }
+
+    .hours-address {
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.4);
+      line-height: 1.7;
+    }
+
+    /* ── ANIMATIONS ── */
+    /* Menu items slide right + name turns amber (already done via hover, add smooth) */
+    .menu-item { transition: padding-left 0.2s; }
+
+    /* Brew pills light up sequentially */
+    .brew-pill { transition: border-color 0.2s, color 0.2s; cursor: default; }
+
+    /* Morning facts slide right on hover */
+    .morning-fact { transition: padding-left 0.2s; }
+
+    /* Hero warm halo breathes */
+    @keyframes haloBreath {
+      0%, 100% { opacity: 0.8; transform: scale(1); }
+      50%       { opacity: 1;   transform: scale(1.08); }
+    }
+    .hero::after { animation: haloBreath 5s ease-in-out infinite; }
+
+    /* Hours row highlight on hover */
+    .hours-row { transition: padding-left 0.2s; cursor: default; }
+    .hours-row:hover { padding-left: 0.5rem; }
+    .hours-row:hover .hours-time { color: var(--amber); }
+    .hours-time { transition: color 0.2s; }
+
+    /* Logo dot floats up slightly on hover */
+    nav:hover .logo-dot {
+      animation: coffeeSteam 0.8s ease-in-out infinite;
+    }
+
+    /* CTA button pulse ring */
+    @keyframes pulseRing {
+      0%   { box-shadow: 0 0 0 0 rgba(196,126,58,0.4); }
+      70%  { box-shadow: 0 0 0 10px rgba(196,126,58,0); }
+      100% { box-shadow: 0 0 0 0 rgba(196,126,58,0); }
+    }
+    .btn-amber { animation: pulseRing 2.5s ease-out infinite; }
+    .btn-amber:hover { animation: none; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--espresso);
+      padding: 2rem 3.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-logo {
+      font-family: var(--ff-disp);
+      font-size: 1.1rem;
+      font-style: italic;
+      color: rgba(255,255,255,0.7);
+    }
+
+    .footer-info {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.3);
+    }
+
+    .footer-tag {
+      font-family: var(--ff-disp);
+      font-style: italic;
+      font-size: 0.8rem;
+      color: var(--amber);
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="#">
+      <span class="logo-dot"></span>
+      Röstwerk Café
+    </a>
+    <ul class="nav-links">
+      <li><a href="#">Karte</a></li>
+      <li><a href="#">Kaffee</a></li>
+      <li><a href="#">Frühstück</a></li>
+      <li><a href="#">Über uns</a></li>
+      <li><a class="nav-hours" href="#">Mo–Fr 7:30–18 Uhr</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <p class="hero-eyebrow">Specialty Coffee · Trier Altstadt</p>
+      <h1 class="hero-headline">
+        Hier riecht es<br>
+        nach <em>Morgen.</em>
+      </h1>
+      <p class="hero-desc">Kaffee, der mit Sorgfalt geröstet wurde. Frühstück, bei dem man sitzen bleibt. Ein Ort, an dem der Tag gut anfängt — und manchmal auch gut endet.</p>
+      <div class="hero-ctas">
+        <a class="btn-amber" href="#">Die Karte</a>
+        <a class="btn-ghost" href="#">Über unseren Kaffee →</a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="coffee-feature">
+        <p class="cf-label">Kaffee des Monats</p>
+        <div class="cf-name">Yirgacheffe Washed<br>Natural G1</div>
+        <div class="cf-origin">Äthiopien · 1.850 m · Kleinbauer-Kooperative</div>
+        <p class="cf-notes">"Jasmin, rote Johannisbeere, Zitrusschale. Seidig im Mund, cleaner Abgang. Hervorragend als Pour Over."</p>
+      </div>
+
+      <div class="cf-divider"></div>
+
+      <div>
+        <p class="brew-methods-label">Erhältlich als</p>
+        <div class="brew-methods">
+          <span class="brew-pill">Espresso</span>
+          <span class="brew-pill">Pour Over</span>
+          <span class="brew-pill">Cold Brew</span>
+          <span class="brew-pill">Batch</span>
+          <span class="brew-pill">Bohnen 250g</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENU -->
+  <section class="menu-section">
+    <div class="menu-intro">
+      <div>
+        <p class="section-eyebrow">Was wir servieren</p>
+        <h2 class="section-title">Die <em>Karte</em></h2>
+      </div>
+      <p class="menu-note">Alle Speisen frisch zubereitet, täglich wechselnde Tagesgerichte. Auf Wunsch vegan oder glutenfrei — einfach fragen.</p>
+    </div>
+
+    <div class="menu-cols">
+      <div>
+        <div class="menu-group-title">Kaffee & Heiß</div>
+        <div class="menu-item">
+          <div class="item-left">
+            <div class="item-name">Espresso</div>
+            <div class="item-desc">Single Origin, doppelt auf Wunsch</div>
+          </div>
+          <span class="item-price">2,40</span>
+        </div>
+        <div class="menu-item">
+          <div class="item-left">
+            <div class="item-name">Flat White</div>
+            <div class="item-desc">Doppelter Ristretto, aufgeschäumte Mandelmilch</div>
+          </div>
+          <span class="item-price">3,90</span>
+        </div>
+        <div class="menu-item">
+          <div class="item-left">
+            <div class="item-name">Pour Over V60</div>
+            <div class="item-desc">Wechselnde Single Origins, handgebrüht</div>
+          </div>
+          <span class="item-price">4,50</span>
+        </div>
+        <div class="menu-item">
+          <div class="item-left">
+            <div class="item-name">Matcha Latte</div>
+            <div class="item-desc">Bio-Ceremonial Grade, Hafermilch</div>
+          </div>
+          <span class="item-price">4,20</span>
+        </div>
+        <div class="menu-item">
+          <div class="item-left">
+            <div class="item-name">Cold Brew</div>
+            <div class="item-desc">18-Stunden-Kaltextraktion, auf Eis</div>
+          </div>
+          <span class="item-price">4,80</span>
+        </div>
+
+        <div class="menu-group-title" style="margin-top:2rem;">Süßes</div>
+        <div class="menu-item">
+          <div class="item-left">
+            <div class="item-name">Cardamom Roll</div>
+            <div class="item-desc">Täglich frisch, hausgemacht</div>
+          </div>
+          <span class="item-price">3,80</span>
+        </div>
+        <div class="menu-item">
+          <div class="item-left">
+            <div class="item-name">Banana Bread Slice</div>
+            <div class="item-desc">Mit Tahini-Butter</div>
+          </div>
+          <span class="item-price">3,50</span>
+        </div>
+      </div>
+
+      <div>
+        <div class="menu-group-title">Frühstück</div>
+        <div class="menu-item">
+          <div class="item-left">
+            <div class="item-name">Avocado Toast</div>
+            <div class="item-desc">Sauerteig, Avocado, Radieschen, Dukkah</div>
+          </div>
+          <span class="item-price">9,50</span>
+        </div>
+        <div class="menu-item">
+          <div class="item-left">
+            <div class="item-name">Scrambled Eggs</div>
+            <div class="item-desc">Drei Eier, Brioche, Schnittlauch</div>
+          </div>
+          <span class="item-price">8,90</span>
+        </div>
+        <div class="menu-item">
+          <div class="item-left">
+            <div class="item-name">Acai Bowl</div>
+            <div class="item-desc">Acai, Granola, Früchte, Kokosflocken</div>
+          </div>
+          <span class="item-price">10,50</span>
+        </div>
+        <div class="menu-item">
+          <div class="item-left">
+            <div class="item-name">Porridge</div>
+            <div class="item-desc">Overnight Oats, saisonal getoppt</div>
+          </div>
+          <span class="item-price">7,90</span>
+        </div>
+
+        <div class="menu-group-title" style="margin-top:2rem;">Lunch (ab 11:30)</div>
+        <div class="menu-item">
+          <div class="item-left">
+            <div class="item-name">Tagessuppe</div>
+            <div class="item-desc">Mit Sauerteigbrot</div>
+          </div>
+          <span class="item-price">7,50</span>
+        </div>
+        <div class="menu-item">
+          <div class="item-left">
+            <div class="item-name">Sandwich des Tages</div>
+            <div class="item-desc">Wechselt täglich, steht an der Tafel</div>
+          </div>
+          <span class="item-price">8,50</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MORNING -->
+  <section class="morning-section">
+    <div class="morning-text">
+      <p class="section-eyebrow">Warum hierher kommen</p>
+      <h2 class="morning-headline">Ein Ort für<br><em>echte Pausen.</em></h2>
+      <p class="morning-desc">Wir glauben, dass guter Kaffee mehr ist als ein Wachmacher. Es ist der Moment, in dem man kurz aufatmet — allein mit dem Laptop, mit einer Freundin, oder einfach mit dem Morgen.</p>
+
+      <div class="morning-facts">
+        <div class="morning-fact">
+          <span class="fact-icon">☕</span>
+          <div class="fact-body">
+            <div class="fact-title">Specialty Coffee</div>
+            <p class="fact-text">Wir beziehen direkt von Röstern, die ihre Farmen persönlich kennen.</p>
+          </div>
+        </div>
+        <div class="morning-fact">
+          <span class="fact-icon">🌱</span>
+          <div class="fact-body">
+            <div class="fact-title">Pflanzliche Alternativen</div>
+            <p class="fact-text">Hafer-, Mandel-, Soja- und Kokosmilch — immer im Angebot, gleicher Preis.</p>
+          </div>
+        </div>
+        <div class="morning-fact">
+          <span class="fact-icon">💻</span>
+          <div class="fact-body">
+            <div class="fact-title">Laptop-freundlich</div>
+            <p class="fact-text">Steckdosen, stabiles WLAN, keine Zeitlimits. Solange du was trinkst.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hours-card">
+      <div class="hours-title">Wann wir da sind</div>
+      <div class="hours-row">
+        <span class="hours-day">Montag – Freitag</span>
+        <span class="hours-time">7:30 – 18:00</span>
+      </div>
+      <div class="hours-row">
+        <span class="hours-day">Samstag</span>
+        <span class="hours-time">8:00 – 17:00</span>
+      </div>
+      <div class="hours-row">
+        <span class="hours-day">Sonntag</span>
+        <span class="hours-closed">Ruhetag</span>
+      </div>
+      <div class="hours-row">
+        <span class="hours-day">Feiertage</span>
+        <span class="hours-time">9:00 – 15:00</span>
+      </div>
+      <div class="hours-address">
+        Röstwerk Café<br>
+        Fleischstraße 17 · 54290 Trier Altstadt<br>
+        hallo@roestwerk-cafe.de
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span class="footer-logo">Röstwerk Café</span>
+    <span class="footer-info">Fleischstraße 17 · 54290 Trier · hallo@roestwerk-cafe.de</span>
+    <span class="footer-tag">Hier riecht es nach Morgen.</span>
+  </footer>
+
+</body>
+</html>

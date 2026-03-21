@@ -1,0 +1,414 @@
+---
+export const prerender = true;
+---
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Route 66 — Diner & Burgerbar | Trier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Monoton&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { overflow-x: hidden; }
+
+    :root {
+      --red:    #E63030;
+      --dark:   #1A1A1A;
+      --cream:  #F5F0E8;
+      --bg:     #FAFAF5;
+      --muted:  rgba(26,26,26,0.45);
+      --chrome: #B8B8B8;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--dark);
+      font-family: 'Lato', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Checkerboard floor strip */
+    body::before {
+      content: '';
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      height: 12px;
+      background-image: repeating-linear-gradient(
+        90deg,
+        var(--red) 0px, var(--red) 12px,
+        var(--dark) 12px, var(--dark) 24px
+      );
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0;
+      background: var(--red);
+      border-bottom: 4px solid var(--dark);
+    }
+    .nav-logo-wrap {
+      padding: 0.85rem 2.5rem;
+      border-right: 3px solid rgba(0,0,0,0.2);
+    }
+    .nav-logo {
+      font-family: 'Monoton', cursive;
+      font-size: 1rem;
+      letter-spacing: 0.08em;
+      color: #fff;
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+    }
+    .nav-links {
+      display: flex;
+      gap: 0;
+      list-style: none;
+      flex: 1;
+      padding: 0 2rem;
+    }
+    .nav-links a {
+      display: block;
+      padding: 0.9rem 1.25rem;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+      transition: color 0.2s, background 0.2s;
+    }
+    .nav-links a:hover { color: #fff; background: rgba(0,0,0,0.15); }
+    .nav-order {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--red);
+      background: var(--dark);
+      padding: 0.9rem 2rem;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .nav-order:hover { background: #333; }
+
+    .hero {
+      min-height: 100vh;
+      padding-top: 57px;
+      display: grid;
+      grid-template-columns: 1fr 440px;
+    }
+
+    /* LEFT */
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 4rem 4rem 4rem 5rem;
+      gap: 2.5rem;
+      background: var(--bg);
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--red);
+    }
+    .eyebrow::before,
+    .eyebrow::after {
+      content: '★';
+      font-size: 0.8rem;
+    }
+
+    .hero-headline {
+      font-family: 'Monoton', cursive;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      line-height: 1.1;
+      letter-spacing: 0.05em;
+      color: var(--dark);
+    }
+    .hero-headline .red { color: var(--red); }
+
+    .hero-body {
+      font-size: 0.92rem;
+      font-weight: 300;
+      line-height: 1.9;
+      color: var(--muted);
+      max-width: 44ch;
+    }
+
+    /* Menu preview */
+    .menu-strip {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border: 3px solid var(--dark);
+      background: #fff;
+    }
+    .menu-header {
+      background: var(--dark);
+      padding: 0.45rem 1rem;
+      font-family: 'Monoton', cursive;
+      font-size: 0.55rem;
+      letter-spacing: 0.15em;
+      color: var(--red);
+    }
+    .menu-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px dashed rgba(26,26,26,0.12);
+    }
+    .menu-row:last-child { border-bottom: none; }
+    .mr-name {
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: var(--dark);
+    }
+    .mr-desc {
+      font-size: 0.65rem;
+      font-weight: 300;
+      color: var(--muted);
+    }
+    .mr-price {
+      font-family: 'Monoton', cursive;
+      font-size: 0.7rem;
+      color: var(--red);
+      flex-shrink: 0;
+    }
+
+    .cta-row {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .cta-btn {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--red);
+      padding: 0.9rem 2rem;
+      text-decoration: none;
+      border: 3px solid var(--dark);
+      box-shadow: 4px 4px 0 var(--dark);
+      transition: box-shadow 0.15s, transform 0.15s;
+    }
+    .cta-btn:hover { box-shadow: 2px 2px 0 var(--dark); transform: translate(2px, 2px); }
+    .cta-link {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--dark);
+      text-decoration: none;
+      border-bottom: 2px solid var(--dark);
+      padding-bottom: 1px;
+    }
+
+    /* RIGHT */
+    .hero-right {
+      background: var(--dark);
+      display: flex;
+      flex-direction: column;
+      border-left: 4px solid var(--red);
+    }
+
+    /* Neon sign mockup */
+    .neon-block {
+      padding: 3rem 2.5rem 2rem;
+      text-align: center;
+      border-bottom: 2px solid rgba(230,48,48,0.3);
+    }
+    .neon-text {
+      font-family: 'Monoton', cursive;
+      font-size: 2rem;
+      line-height: 1.2;
+      letter-spacing: 0.1em;
+      color: var(--red);
+      text-shadow: 0 0 8px rgba(230,48,48,0.6), 0 0 20px rgba(230,48,48,0.3);
+    }
+    .neon-sub {
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+      margin-top: 0.75rem;
+    }
+
+    /* Info blocks */
+    .info-list {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .info-cell {
+      flex: 1;
+      padding: 1.5rem 2.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .ic-label {
+      font-size: 0.52rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.2);
+      margin-bottom: 0.4rem;
+    }
+    .ic-value {
+      font-family: 'Monoton', cursive;
+      font-size: 1.4rem;
+      color: #fff;
+      line-height: 1;
+    }
+    .ic-sub {
+      font-size: 0.68rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.4);
+      margin-top: 0.25rem;
+    }
+
+    /* Review */
+    .review-cell {
+      padding: 1.5rem 2.5rem;
+      border-top: 2px solid rgba(230,48,48,0.3);
+    }
+    .rc-stars {
+      font-size: 0.8rem;
+      color: #FFD000;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+    .rc-quote {
+      font-size: 0.82rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.6;
+      font-style: italic;
+    }
+    .rc-name {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-logo-wrap">
+      <div class="nav-logo">Route 66</div>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#">Menu</a></li>
+      <li><a href="#">Drinks</a></li>
+      <li><a href="#">Events</a></li>
+      <li><a href="#">Reservieren</a></li>
+    </ul>
+    <a href="#" class="nav-order">Jetzt bestellen</a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-left">
+      <div class="eyebrow">Diner & Burgerbar · Trier</div>
+
+      <h1 class="hero-headline">
+        Frisch.<br>
+        <span class="red">Klassisch.</span><br>
+        Gut.
+      </h1>
+
+      <p class="hero-body">
+        Handgemachte Burger, Milchshakes aus echtem Eis
+        und ein Ambiente, das direkt aus den 50ern stammt.
+        Hier schmeckt Amerika, wie es sein sollte.
+      </p>
+
+      <div class="menu-strip">
+        <div class="menu-header">Heute auf der Karte</div>
+        <div class="menu-row">
+          <div>
+            <div class="mr-name">Classic Double</div>
+            <div class="mr-desc">180g Patty, Cheddar, Haussoße</div>
+          </div>
+          <div class="mr-price">12,90</div>
+        </div>
+        <div class="menu-row">
+          <div>
+            <div class="mr-name">Route Shake</div>
+            <div class="mr-desc">Echtes Eis, 3 Sorten</div>
+          </div>
+          <div class="mr-price">6,50</div>
+        </div>
+        <div class="menu-row">
+          <div>
+            <div class="mr-name">Chili Cheese Fries</div>
+            <div class="mr-desc">Hausgemachter Chili</div>
+          </div>
+          <div class="mr-price">7,90</div>
+        </div>
+      </div>
+
+      <div class="cta-row">
+        <a href="#" class="cta-btn">Tisch reservieren →</a>
+        <a href="#" class="cta-link">Vollständiges Menü</a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="neon-block">
+        <div class="neon-text">OPEN<br>24/7</div>
+        <div class="neon-sub">Jeden Tag bis spät in die Nacht</div>
+      </div>
+
+      <div class="info-list">
+        <div class="info-cell">
+          <div class="ic-label">Öffnungszeiten</div>
+          <div class="ic-value">10–24</div>
+          <div class="ic-sub">Mo bis So · Freitag & Samstag bis 2 Uhr</div>
+        </div>
+        <div class="info-cell">
+          <div class="ic-label">Bewertung</div>
+          <div class="ic-value">4.8 ★</div>
+          <div class="ic-sub">Aus 840 Google-Bewertungen</div>
+        </div>
+        <div class="info-cell">
+          <div class="ic-label">Sitzplätze</div>
+          <div class="ic-value">80</div>
+          <div class="ic-sub">Innen + Außenterrasse</div>
+        </div>
+      </div>
+
+      <div class="review-cell">
+        <div class="rc-stars">★★★★★</div>
+        <div class="rc-quote">
+          „Bester Burger weit und breit. Der Shake ist legendär.
+          Ich komme jede Woche."
+        </div>
+        <div class="rc-name">— Thomas K.</div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

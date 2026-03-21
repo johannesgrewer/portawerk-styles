@@ -1,0 +1,415 @@
+---
+export const prerender = true;
+---
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Wanderherz — Hostel & Reisecafé | Trier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { overflow-x: hidden; }
+
+    :root {
+      --sky:    #0EA5E9;
+      --sand:   #F59E0B;
+      --green:  #10B981;
+      --coral:  #F87171;
+      --bg:     #FFF8E7;
+      --dark:   #1C1917;
+      --muted:  rgba(28,25,23,0.5);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--dark);
+      font-family: 'Work Sans', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 3rem;
+      background: rgba(255,248,231,0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(28,25,23,0.06);
+    }
+    .nav-logo {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: var(--sky);
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--sky); }
+    .nav-book {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--sky);
+      padding: 0.6rem 1.4rem;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .nav-book:hover { background: var(--dark); }
+
+    .hero {
+      min-height: 100vh;
+      padding-top: 60px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    /* LEFT */
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 4rem 3.5rem 4rem 4rem;
+      gap: 2rem;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--sky);
+      background: rgba(14,165,233,0.08);
+      border: 1px solid rgba(14,165,233,0.2);
+      padding: 0.35rem 0.9rem;
+      border-radius: 100px;
+      width: fit-content;
+    }
+
+    .hero-headline {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      color: var(--dark);
+    }
+    .hero-headline .sky { color: var(--sky); }
+    .hero-headline .sand { color: var(--sand); }
+
+    .hero-body {
+      font-size: 0.9rem;
+      font-weight: 300;
+      line-height: 1.9;
+      color: var(--muted);
+      max-width: 44ch;
+    }
+
+    /* Feature pills */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6rem;
+    }
+    .feature-pill {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.7rem 1rem;
+      background: #fff;
+      border: 1px solid rgba(28,25,23,0.07);
+      border-radius: 10px;
+    }
+    .fp-icon { font-size: 1.1rem; }
+    .fp-text {
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--dark);
+    }
+
+    .cta-row {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+    .cta-btn {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--sky);
+      padding: 0.9rem 2rem;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .cta-btn:hover { background: var(--dark); }
+    .cta-price {
+      font-size: 0.82rem;
+      font-weight: 400;
+      color: var(--muted);
+    }
+    .cta-price strong {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      color: var(--dark);
+      font-size: 1rem;
+    }
+
+    /* RIGHT */
+    .hero-right {
+      background: var(--sky);
+      display: flex;
+      flex-direction: column;
+      padding: 4rem 3.5rem;
+      gap: 1.5rem;
+    }
+
+    .right-label {
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+    }
+
+    /* Destination cards */
+    .dest-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .dest-card {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.25rem;
+      background: rgba(255,255,255,0.15);
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .dc-flag { font-size: 1.5rem; flex-shrink: 0; }
+    .dc-info { flex: 1; }
+    .dc-city {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      font-size: 0.92rem;
+      color: #fff;
+    }
+    .dc-route {
+      font-size: 0.68rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.65);
+      margin-top: 0.1rem;
+    }
+    .dc-tag {
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--sky);
+      background: #fff;
+      padding: 0.2rem 0.55rem;
+      border-radius: 100px;
+    }
+
+    /* Stats strip */
+    .stats-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+      margin-top: auto;
+    }
+    .stat-item {
+      background: rgba(255,255,255,0.12);
+      border-radius: 10px;
+      padding: 1rem;
+      text-align: center;
+    }
+    .stat-num {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800;
+      font-size: 1.6rem;
+      color: #fff;
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.6rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.6);
+      margin-top: 0.2rem;
+    }
+
+    /* Review snippet */
+    .review-block {
+      background: rgba(255,255,255,0.15);
+      border-radius: 12px;
+      padding: 1.25rem;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .rb-stars {
+      font-size: 0.75rem;
+      color: var(--sand);
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+    .rb-quote {
+      font-size: 0.88rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.6;
+      font-style: italic;
+    }
+    .rb-author {
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: rgba(255,255,255,0.55);
+      letter-spacing: 0.06em;
+      margin-top: 0.6rem;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-logo">Wanderherz</div>
+    <ul class="nav-links">
+      <li><a href="#">Schlafen</a></li>
+      <li><a href="#">Café</a></li>
+      <li><a href="#">Events</a></li>
+      <li><a href="#">Community</a></li>
+    </ul>
+    <a href="#" class="nav-book">Jetzt buchen</a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-left">
+      <div class="eyebrow">✈ Hostel & Reisecafé · Trier</div>
+
+      <h1 class="hero-headline">
+        Ankommen.<br>
+        <span class="sky">Kennenlernen.</span><br>
+        <span class="sand">Weiterträumen.</span>
+      </h1>
+
+      <p class="hero-body">
+        Trier als Startpunkt, die Welt als Ziel.
+        Unser Hostel ist mehr als eine Unterkunft —
+        es ist ein Ort, wo Reisende zu Freunden werden.
+      </p>
+
+      <div class="feature-grid">
+        <div class="feature-pill">
+          <span class="fp-icon">🛏</span>
+          <span class="fp-text">Dorms & Privatzimmer</span>
+        </div>
+        <div class="feature-pill">
+          <span class="fp-icon">☕</span>
+          <span class="fp-text">Reisecafé & Bar</span>
+        </div>
+        <div class="feature-pill">
+          <span class="fp-icon">🗺</span>
+          <span class="fp-text">Stadtführungen</span>
+        </div>
+        <div class="feature-pill">
+          <span class="fp-icon">🌍</span>
+          <span class="fp-text">Travel Community</span>
+        </div>
+      </div>
+
+      <div class="cta-row">
+        <a href="#" class="cta-btn">Zimmer buchen →</a>
+        <div class="cta-price">ab <strong>19 €</strong> / Nacht</div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="right-label">Beliebte Routen von Trier</div>
+
+      <div class="dest-list">
+        <div class="dest-card">
+          <div class="dc-flag">🇱🇺</div>
+          <div class="dc-info">
+            <div class="dc-city">Luxemburg City</div>
+            <div class="dc-route">45 min · Zug ab Trier Hbf</div>
+          </div>
+          <span class="dc-tag">Beliebt</span>
+        </div>
+        <div class="dest-card">
+          <div class="dc-flag">🇧🇪</div>
+          <div class="dc-info">
+            <div class="dc-city">Brüssel</div>
+            <div class="dc-route">3 h · Via Luxemburg</div>
+          </div>
+          <span class="dc-tag">Tipp</span>
+        </div>
+        <div class="dest-card">
+          <div class="dc-flag">🇩🇪</div>
+          <div class="dc-info">
+            <div class="dc-city">Moselradweg</div>
+            <div class="dc-route">250 km · Koblenz bis Trier</div>
+          </div>
+          <span class="dc-tag">Rad</span>
+        </div>
+      </div>
+
+      <div class="review-block">
+        <div class="rb-stars">★★★★★</div>
+        <div class="rb-quote">
+          „Bestes Hostel meiner Europatour. Das Café ist legendär,
+          die Menschen unvergesslich."
+        </div>
+        <div class="rb-author">— Lena M., Backpackerin aus München</div>
+      </div>
+
+      <div class="stats-strip">
+        <div class="stat-item">
+          <div class="stat-num">62</div>
+          <div class="stat-label">Betten</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">40+</div>
+          <div class="stat-label">Länder</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">4.9</div>
+          <div class="stat-label">★ Bewertung</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

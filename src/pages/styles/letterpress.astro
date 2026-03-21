@@ -1,0 +1,392 @@
+---
+export const prerender = true;
+---
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Drucksatz — Letterpress Atelier | Trier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { overflow-x: hidden; }
+
+    :root {
+      --ink:     #1C1A17;
+      --red:     #8B1A1A;
+      --paper:   #F7F3EC;
+      --aged:    #EDE7D9;
+      --muted:   rgba(28,26,23,0.45);
+      --rule:    rgba(28,26,23,0.12);
+    }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'EB Garamond', serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Paper texture via repeating lines */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 27px,
+        rgba(28,26,23,0.03) 27px,
+        rgba(28,26,23,0.03) 28px
+      );
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 4rem;
+      background: var(--paper);
+      border-bottom: 2px solid var(--ink);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      letter-spacing: 0.06em;
+      color: var(--ink);
+    }
+    .nav-links {
+      display: flex;
+      gap: 3rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: 'EB Garamond', serif;
+      font-size: 0.85rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--red); }
+    .nav-cta {
+      font-family: 'EB Garamond', serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--paper);
+      background: var(--ink);
+      padding: 0.6rem 1.6rem;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--red); }
+
+    .hero {
+      min-height: 100vh;
+      padding-top: 64px;
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    /* LEFT */
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 5rem 4rem 5rem 4.5rem;
+      gap: 2.5rem;
+      border-right: 2px solid var(--ink);
+    }
+
+    .eyebrow {
+      font-family: 'EB Garamond', serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--red);
+    }
+
+    .hero-headline {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      line-height: 1.15;
+      letter-spacing: 0.01em;
+      color: var(--ink);
+    }
+    .hero-headline em {
+      font-style: italic;
+      color: var(--red);
+      font-weight: 400;
+    }
+
+    .hero-rule {
+      width: 3rem;
+      height: 2px;
+      background: var(--ink);
+    }
+
+    .hero-body {
+      font-size: 1.05rem;
+      font-weight: 400;
+      line-height: 1.85;
+      color: var(--muted);
+      max-width: 42ch;
+    }
+
+    /* Service list */
+    .service-list {
+      display: flex;
+      flex-direction: column;
+      border-top: 1px solid var(--rule);
+    }
+    .service-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding: 0.85rem 0;
+      border-bottom: 1px solid var(--rule);
+    }
+    .sr-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--ink);
+    }
+    .sr-detail {
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+
+    .cta-row {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+    .cta-btn {
+      font-family: 'EB Garamond', serif;
+      font-size: 0.82rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--paper);
+      background: var(--ink);
+      text-decoration: none;
+      padding: 0.9rem 2.2rem;
+      transition: background 0.2s;
+    }
+    .cta-btn:hover { background: var(--red); }
+    .cta-link {
+      font-family: 'EB Garamond', serif;
+      font-size: 0.85rem;
+      font-style: italic;
+      color: var(--muted);
+      text-decoration: none;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    /* RIGHT */
+    .hero-right {
+      background: var(--aged);
+      display: flex;
+      flex-direction: column;
+      padding: 5rem 4rem;
+      gap: 3rem;
+    }
+
+    /* Specimen block */
+    .specimen {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .specimen-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.25rem;
+    }
+    .specimen-line {
+      font-family: 'Playfair Display', serif;
+      line-height: 1;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+    }
+    .sl-xl { font-size: 5rem; font-weight: 700; }
+    .sl-lg { font-size: 3rem; font-weight: 400; font-style: italic; }
+    .sl-md { font-size: 1.8rem; font-weight: 700; }
+    .sl-sm { font-size: 1.1rem; font-weight: 400; letter-spacing: 0.05em; }
+
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: rgba(28,26,23,0.15);
+    }
+
+    /* Paper swatches */
+    .swatch-row {
+      display: flex;
+      gap: 0.75rem;
+    }
+    .swatch-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.6rem;
+    }
+    .swatch {
+      flex: 1;
+      height: 60px;
+      border-radius: 2px;
+      border: 1px solid rgba(28,26,23,0.12);
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      padding: 0.3rem 0.4rem;
+    }
+    .swatch span {
+      font-size: 0.5rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .sw-cotton { background: #FFFFFF; }
+    .sw-cotton span { color: var(--muted); }
+    .sw-natural { background: #F7F3EC; }
+    .sw-natural span { color: var(--muted); }
+    .sw-aged { background: #EDE7D9; }
+    .sw-aged span { color: var(--muted); }
+    .sw-kraft { background: #C4A882; }
+    .sw-kraft span { color: rgba(255,255,255,0.7); }
+
+    /* Contact / info block */
+    .info-block {
+      background: var(--ink);
+      padding: 1.75rem;
+    }
+    .ib-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(247,243,236,0.4);
+      margin-bottom: 0.5rem;
+    }
+    .ib-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      color: var(--paper);
+      line-height: 1.5;
+    }
+    .ib-sub {
+      font-size: 0.78rem;
+      color: rgba(247,243,236,0.5);
+      margin-top: 0.3rem;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-logo">Drucksatz</div>
+    <ul class="nav-links">
+      <li><a href="#">Arbeiten</a></li>
+      <li><a href="#">Drucke</a></li>
+      <li><a href="#">Papier</a></li>
+      <li><a href="#">Atelier</a></li>
+    </ul>
+    <a href="#" class="nav-cta">Projekt anfragen</a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-left">
+      <div class="eyebrow">Letterpress Atelier · Trier</div>
+
+      <h1 class="hero-headline">
+        Gedruckt.<br>
+        Gepresst.<br>
+        <em>Unverwechselbar.</em>
+      </h1>
+
+      <div class="hero-rule"></div>
+
+      <p class="hero-body">
+        Jeder Druck hinterlässt eine Spur im Papier —
+        buchstäblich. Wir arbeiten mit historischen Pressen
+        und modernem Anspruch für Projekte, die man anfassen will.
+      </p>
+
+      <div class="service-list">
+        <div class="service-row">
+          <span class="sr-name">Visitenkarten & Kurzwaren</span>
+          <span class="sr-detail">ab 150 Stück</span>
+        </div>
+        <div class="service-row">
+          <span class="sr-name">Hochzeitsdrucksachen</span>
+          <span class="sr-detail">Einzelanfertigung</span>
+        </div>
+        <div class="service-row">
+          <span class="sr-name">Editionen & Kunstdrucke</span>
+          <span class="sr-detail">nummeriert & signiert</span>
+        </div>
+        <div class="service-row">
+          <span class="sr-name">Briefpapier & Corporate</span>
+          <span class="sr-detail">nach Maß</span>
+        </div>
+      </div>
+
+      <div class="cta-row">
+        <a href="#" class="cta-btn">Projekt anfragen</a>
+        <a href="#" class="cta-link">Arbeiten ansehen</a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="specimen">
+        <div class="specimen-label">Typografisches Muster</div>
+        <div class="specimen-line sl-xl">Aa</div>
+        <div class="specimen-line sl-lg">Schrift & Form</div>
+        <div class="specimen-line sl-md">Letterpress</div>
+        <div class="specimen-line sl-sm">ABCDEFGHIJKLMNOPQRSTUVWXYZ</div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div>
+        <div class="swatch-label">Papiere im Atelier</div>
+        <div class="swatch-row">
+          <div class="swatch sw-cotton"><span>Cotton</span></div>
+          <div class="swatch sw-natural"><span>Natural</span></div>
+          <div class="swatch sw-aged"><span>Aged</span></div>
+          <div class="swatch sw-kraft"><span>Kraft</span></div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="info-block">
+        <div class="ib-label">Atelier & Showroom</div>
+        <div class="ib-value">Palaststraße 14, Trier<br>Di – Sa, 11 – 18 Uhr</div>
+        <div class="ib-sub">Besichtigungen nach Vereinbarung</div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

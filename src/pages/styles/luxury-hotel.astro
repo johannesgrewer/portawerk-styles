@@ -1,0 +1,397 @@
+---
+export const prerender = true;
+---
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Hotel zur Porta — Boutiquehotel & Fine Dining | Trier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { overflow-x: hidden; }
+
+    :root {
+      --forest: #2C4A3E;
+      --gold:   #C9A84C;
+      --bg:     #FAF6EE;
+      --dark:   #1A2C26;
+      --muted:  rgba(26,44,38,0.45);
+      --rule:   rgba(26,44,38,0.08);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--dark);
+      font-family: 'Raleway', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.4rem 4rem;
+      background: rgba(250,246,238,0.97);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--rule);
+    }
+    .nav-logo {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .nl-name {
+      font-family: 'Cormorant', serif;
+      font-weight: 400;
+      font-size: 1.1rem;
+      letter-spacing: 0.1em;
+      color: var(--forest);
+    }
+    .nl-sub {
+      font-size: 0.48rem;
+      font-weight: 500;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-top: 0.1rem;
+    }
+    .nav-links {
+      display: flex;
+      gap: 3rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.58rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--forest); }
+    .nav-reserve {
+      font-size: 0.55rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--forest);
+      padding: 0.7rem 1.75rem;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+    .nav-reserve:hover { background: var(--gold); }
+
+    .hero {
+      min-height: 100vh;
+      padding-top: 70px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    /* LEFT */
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 5rem 4rem 5rem 5rem;
+      gap: 3rem;
+      border-right: 1px solid var(--rule);
+    }
+
+    .eyebrow {
+      font-size: 0.52rem;
+      font-weight: 400;
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .hero-headline {
+      font-family: 'Cormorant', serif;
+      font-weight: 300;
+      font-size: clamp(3rem, 5.5vw, 5rem);
+      line-height: 1.15;
+      color: var(--dark);
+      letter-spacing: 0.02em;
+    }
+    .hero-headline em {
+      font-style: italic;
+      color: var(--forest);
+    }
+
+    .gold-rule {
+      width: 40px;
+      height: 2px;
+      background: var(--gold);
+    }
+
+    .hero-body {
+      font-size: 0.88rem;
+      font-weight: 300;
+      line-height: 2.1;
+      color: var(--muted);
+      max-width: 42ch;
+    }
+
+    /* Room types */
+    .room-list {
+      display: flex;
+      flex-direction: column;
+      border-top: 1px solid var(--rule);
+    }
+    .room-row {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--rule);
+      transition: padding-left 0.3s;
+      cursor: default;
+    }
+    .room-row:hover { padding-left: 0.3rem; }
+    .rr-name {
+      font-family: 'Cormorant', serif;
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--dark);
+    }
+    .rr-size {
+      font-size: 0.65rem;
+      font-weight: 300;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .rr-price {
+      font-family: 'Cormorant', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--gold);
+      white-space: nowrap;
+    }
+
+    .cta-row {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+    .cta-btn {
+      font-size: 0.58rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--forest);
+      padding: 0.95rem 2.2rem;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+    .cta-btn:hover { background: var(--gold); }
+    .cta-link {
+      font-family: 'Cormorant', serif;
+      font-size: 1rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--muted);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(26,44,38,0.15);
+      padding-bottom: 1px;
+    }
+
+    /* RIGHT */
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      padding: 5rem 4rem 5rem 4rem;
+      gap: 3rem;
+    }
+
+    /* Pull quote */
+    .pull-quote {
+      font-family: 'Cormorant', serif;
+      font-weight: 300;
+      font-style: italic;
+      font-size: 1.6rem;
+      line-height: 1.45;
+      color: var(--forest);
+      padding-left: 1.5rem;
+      border-left: 2px solid var(--gold);
+      max-width: 26ch;
+    }
+    .pq-source {
+      display: block;
+      font-family: 'Raleway', sans-serif;
+      font-style: normal;
+      font-size: 0.58rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.9rem;
+    }
+
+    /* Amenities grid */
+    .amenities {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem;
+    }
+    .am-label {
+      grid-column: 1 / -1;
+      font-size: 0.52rem;
+      font-weight: 500;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(26,44,38,0.25);
+    }
+    .am-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.78rem;
+      font-weight: 300;
+      color: var(--muted);
+    }
+    .am-item::before {
+      content: '—';
+      color: var(--gold);
+      font-size: 0.65rem;
+      flex-shrink: 0;
+    }
+
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: var(--rule);
+    }
+
+    /* Award strip */
+    .award-strip {
+      display: flex;
+      gap: 2.5rem;
+    }
+    .aw-item {}
+    .aw-num {
+      font-family: 'Cormorant', serif;
+      font-size: 2.2rem;
+      font-weight: 300;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .aw-label {
+      font-size: 0.55rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.15rem;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-logo">
+      <div class="nl-name">Hotel zur Porta</div>
+      <div class="nl-sub">Boutiquehotel · Fine Dining · Trier</div>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#">Zimmer</a></li>
+      <li><a href="#">Restaurant</a></li>
+      <li><a href="#">Veranstaltungen</a></li>
+      <li><a href="#">Über uns</a></li>
+    </ul>
+    <a href="#" class="nav-reserve">Reservieren</a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-left">
+      <div class="eyebrow">Boutiquehotel · Trier Altstadt</div>
+
+      <h1 class="hero-headline">
+        Willkommen.<br>
+        <em>Immer.</em>
+      </h1>
+
+      <div class="gold-rule"></div>
+
+      <p class="hero-body">
+        Zwölf Zimmer, jedes ein Unikat. Küche, die die Region
+        feiert. Ein Haus, das seit drei Generationen Gäste
+        willkommen heißt — mit Handschlag und Herzlichkeit.
+      </p>
+
+      <div class="room-list">
+        <div class="room-row">
+          <span class="rr-name">Zimmer Classic</span>
+          <span class="rr-size">22 m²</span>
+          <span class="rr-price">ab 148 €</span>
+        </div>
+        <div class="room-row">
+          <span class="rr-name">Zimmer Deluxe</span>
+          <span class="rr-size">32 m²</span>
+          <span class="rr-price">ab 198 €</span>
+        </div>
+        <div class="room-row">
+          <span class="rr-name">Suite Porta Nigra</span>
+          <span class="rr-size">55 m²</span>
+          <span class="rr-price">ab 320 €</span>
+        </div>
+      </div>
+
+      <div class="cta-row">
+        <a href="#" class="cta-btn">Verfügbarkeit prüfen</a>
+        <a href="#" class="cta-link">Restaurant reservieren</a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="pull-quote">
+        „Selten so gut geschlafen und noch besser gegessen."
+        <cite class="pq-source">— Gast · März 2025</cite>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="amenities">
+        <div class="am-label">Ausstattung & Services</div>
+        <div class="am-item">Frühstück inklusive</div>
+        <div class="am-item">Fine Dining Restaurant</div>
+        <div class="am-item">Kostenlose Parkplätze</div>
+        <div class="am-item">Concierge Service</div>
+        <div class="am-item">Kostenfreies WLAN</div>
+        <div class="am-item">Weinkellerführungen</div>
+        <div class="am-item">Haustiere willkommen</div>
+        <div class="am-item">Stadtführungen</div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="award-strip">
+        <div class="aw-item">
+          <div class="aw-num">12</div>
+          <div class="aw-label">Zimmer</div>
+        </div>
+        <div class="aw-item">
+          <div class="aw-num">4★</div>
+          <div class="aw-label">Superior</div>
+        </div>
+        <div class="aw-item">
+          <div class="aw-num">1936</div>
+          <div class="aw-label">Gegründet</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

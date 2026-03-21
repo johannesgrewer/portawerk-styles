@@ -1,0 +1,441 @@
+---
+export const prerender = true;
+---
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Fehler — Experimental Kollektiv | Trier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { overflow-x: hidden; }
+
+    :root {
+      --red:    #FF0000;
+      --white:  #FFFFFF;
+      --black:  #000000;
+    }
+
+    body {
+      background: var(--white);
+      color: var(--black);
+      font-family: 'Space Mono', monospace;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Intentionally misaligned nav */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      padding: 0.75rem 2rem 0.75rem 3.5rem;
+      background: var(--black);
+      border-bottom: 4px solid var(--red);
+    }
+    .nav-logo {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--red);
+      letter-spacing: 0;
+      text-decoration: line-through;
+    }
+    .nav-links {
+      display: flex;
+      gap: 0;
+      list-style: none;
+      border-left: 2px solid rgba(255,255,255,0.1);
+    }
+    .nav-links li {
+      border-right: 2px solid rgba(255,255,255,0.1);
+    }
+    .nav-links a {
+      display: block;
+      padding: 0.5rem 1.25rem;
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      text-decoration: none;
+    }
+    .nav-links a:hover { color: var(--red); background: rgba(255,0,0,0.06); }
+    .nav-broken {
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--black);
+      background: var(--red);
+      padding: 0.55rem 1.2rem;
+      text-decoration: none;
+      position: relative;
+      top: -4px;
+    }
+
+    .hero {
+      min-height: 100vh;
+      padding-top: 56px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* Striped accent bar */
+    .accent-bar {
+      height: 8px;
+      background: repeating-linear-gradient(
+        90deg,
+        var(--red) 0px,
+        var(--red) 20px,
+        var(--black) 20px,
+        var(--black) 40px
+      );
+    }
+
+    .hero-body-wrap {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    /* LEFT — chaotic */
+    .hero-left {
+      padding: 3.5rem 3rem 3.5rem 3.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border-right: 4px solid var(--black);
+      position: relative;
+    }
+
+    /* Intentionally off-kilter label */
+    .error-tag {
+      display: inline-block;
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--white);
+      background: var(--red);
+      padding: 0.2rem 0.6rem;
+      margin-bottom: 1.5rem;
+      transform: rotate(-1.5deg);
+      width: fit-content;
+    }
+
+    .hero-headline {
+      font-family: 'Space Mono', monospace;
+      font-weight: 700;
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      line-height: 1;
+      letter-spacing: -0.02em;
+      color: var(--black);
+      margin-bottom: 1.5rem;
+    }
+    .hero-headline .red { color: var(--red); }
+    .hero-headline .strike {
+      text-decoration: line-through;
+      color: rgba(0,0,0,0.2);
+    }
+
+    /* Intentionally mis-placed body text */
+    .hero-text {
+      font-size: 0.82rem;
+      font-weight: 400;
+      line-height: 1.8;
+      color: rgba(0,0,0,0.55);
+      max-width: 40ch;
+      margin-bottom: 2.5rem;
+      padding-left: 1.5rem;
+      border-left: 3px solid var(--black);
+    }
+
+    /* Manifesto list */
+    .manifesto {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-bottom: 2.5rem;
+      border: 2px solid var(--black);
+    }
+    .m-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.65rem 1rem;
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+    }
+    .m-item:last-child { border-bottom: none; }
+    .m-num {
+      font-size: 0.6rem;
+      color: var(--red);
+      flex-shrink: 0;
+      width: 1.5rem;
+    }
+    .m-text {
+      font-size: 0.78rem;
+      color: var(--black);
+    }
+    .m-text s { color: rgba(0,0,0,0.25); }
+
+    .cta-area {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+    .cta-btn {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--white);
+      background: var(--black);
+      padding: 0.85rem 1.75rem;
+      text-decoration: none;
+      border: 2px solid var(--black);
+      transition: background 0.15s, color 0.15s;
+    }
+    .cta-btn:hover { background: var(--red); border-color: var(--red); }
+    .cta-btn-ghost {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--black);
+      background: transparent;
+      padding: 0.85rem 1.75rem;
+      text-decoration: none;
+      border: 2px solid var(--black);
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .cta-btn-ghost:hover { border-color: var(--red); color: var(--red); }
+
+    /* RIGHT — black panel */
+    .hero-right {
+      background: var(--black);
+      display: flex;
+      flex-direction: column;
+      padding: 3.5rem 3rem;
+      gap: 2rem;
+    }
+
+    .right-label {
+      font-size: 0.55rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.2);
+    }
+
+    /* Terminal-style upcoming list */
+    .terminal-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border: 1px solid rgba(255,0,0,0.3);
+    }
+    .tl-header {
+      background: var(--red);
+      padding: 0.4rem 0.75rem;
+      font-size: 0.55rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+    .tl-row {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      gap: 0.75rem;
+    }
+    .tl-row:last-child { border-bottom: none; }
+    .tl-date {
+      font-size: 0.6rem;
+      color: var(--red);
+      width: 5rem;
+      flex-shrink: 0;
+    }
+    .tl-name {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.8);
+      flex: 1;
+    }
+    .tl-tag {
+      font-size: 0.5rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 0.15rem 0.5rem;
+    }
+
+    /* Glitch-style info block */
+    .info-block {
+      border: 2px solid rgba(255,0,0,0.4);
+      padding: 1.25rem;
+      position: relative;
+    }
+    .info-block::before {
+      content: '// INFO';
+      position: absolute;
+      top: -0.7rem;
+      left: 0.75rem;
+      font-size: 0.55rem;
+      letter-spacing: 0.15em;
+      color: var(--red);
+      background: var(--black);
+      padding: 0 0.4rem;
+    }
+    .ib-line {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 0.35rem;
+      line-height: 1.5;
+    }
+    .ib-line span { color: rgba(255,255,255,0.85); }
+
+    /* Intentional misalignment element */
+    .misaligned {
+      font-size: 4rem;
+      font-weight: 700;
+      color: rgba(255,0,0,0.06);
+      line-height: 1;
+      letter-spacing: -0.04em;
+      transform: translateX(1rem);
+      user-select: none;
+      margin-top: auto;
+    }
+
+    /* Bottom accent */
+    .bottom-bar {
+      background: var(--red);
+      padding: 0.5rem 3.5rem;
+      display: flex;
+      align-items: center;
+      gap: 3rem;
+    }
+    .bb-item {
+      font-size: 0.58rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+    }
+    .bb-sep {
+      color: rgba(255,255,255,0.3);
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-logo">fehler_</div>
+    <ul class="nav-links">
+      <li><a href="#">Projekte</a></li>
+      <li><a href="#">Kollektiv</a></li>
+      <li><a href="#">Events</a></li>
+      <li><a href="#">Kontakt</a></li>
+    </ul>
+    <a href="#" class="nav-broken">Mitmachen</a>
+  </nav>
+
+  <div class="accent-bar"></div>
+
+  <section class="hero">
+    <div class="hero-body-wrap">
+      <div class="hero-left">
+        <div class="error-tag">404 — Design not found</div>
+
+        <h1 class="hero-headline">
+          <span class="strike">Schön.</span><br>
+          <span class="red">Kaputt.</span><br>
+          Echt.
+        </h1>
+
+        <p class="hero-text">
+          Wir machen Kunst, Performance und digitale Projekte,
+          die sich weigern, gefällig zu sein. Seit 2019
+          gegen den Strom — ohne Kompromiss.
+        </p>
+
+        <div class="manifesto">
+          <div class="m-item">
+            <span class="m-num">01</span>
+            <span class="m-text"><s>Kein</s> Design mit Absicht</span>
+          </div>
+          <div class="m-item">
+            <span class="m-num">02</span>
+            <span class="m-text">Fehler als Gestaltungsmittel</span>
+          </div>
+          <div class="m-item">
+            <span class="m-num">03</span>
+            <span class="m-text">Offen für alle — <s>exklusiv</s></span>
+          </div>
+          <div class="m-item">
+            <span class="m-num">04</span>
+            <span class="m-text">Kollektiv vor Einzelwerk</span>
+          </div>
+        </div>
+
+        <div class="cta-area">
+          <a href="#" class="cta-btn">Projekt einreichen →</a>
+          <a href="#" class="cta-btn-ghost">Archiv ansehen</a>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="right-label">// Nächste Veranstaltungen</div>
+
+        <div class="terminal-list">
+          <div class="tl-header">EVENTS_2025.log</div>
+          <div class="tl-row">
+            <span class="tl-date">14.03.</span>
+            <span class="tl-name">Glitch Night #12</span>
+            <span class="tl-tag">Live</span>
+          </div>
+          <div class="tl-row">
+            <span class="tl-date">22.03.</span>
+            <span class="tl-name">Fehler-Ausstellung</span>
+            <span class="tl-tag">Vernissage</span>
+          </div>
+          <div class="tl-row">
+            <span class="tl-date">05.04.</span>
+            <span class="tl-name">Anti-Workshop: Print</span>
+            <span class="tl-tag">Workshop</span>
+          </div>
+          <div class="tl-row">
+            <span class="tl-date">19.04.</span>
+            <span class="tl-name">Kollektiv-Vollversammlung</span>
+            <span class="tl-tag">Intern</span>
+          </div>
+        </div>
+
+        <div class="info-block">
+          <div class="ib-line">Ort: <span>Altes Lager, Trier-Nord</span></div>
+          <div class="ib-line">Öffnung: <span>Mi + Do 17–22 Uhr</span></div>
+          <div class="ib-line">Mitglied: <span>offen, kostenlos</span></div>
+          <div class="ib-line">Status: <span style="color: #4ade80;">AKTIV</span></div>
+        </div>
+
+        <div class="misaligned">ERROR</div>
+      </div>
+    </div>
+
+    <div class="bottom-bar">
+      <span class="bb-item">Experimental Kollektiv Trier</span>
+      <span class="bb-sep">//</span>
+      <span class="bb-item">Gegründet 2019</span>
+      <span class="bb-sep">//</span>
+      <span class="bb-item">42 Mitglieder</span>
+      <span class="bb-sep">//</span>
+      <span class="bb-item">Nicht-kommerziell</span>
+    </div>
+  </section>
+</body>
+</html>

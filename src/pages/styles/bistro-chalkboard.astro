@@ -1,0 +1,423 @@
+---
+export const prerender = true;
+---
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Tafel & Tisch — Bistro & Mittagstisch | Trier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Satisfy&family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { overflow-x: hidden; }
+
+    :root {
+      --chalk: #FAF7F2;
+      --board: #2A2E2A;
+      --yellow: #F5C842;
+      --orange: #E8956D;
+      --board-light: #323632;
+    }
+
+    body {
+      overflow-x: hidden;
+      background: var(--board);
+      color: var(--chalk);
+      font-family: 'Lato', sans-serif;
+      min-height: 100vh;
+    }
+
+    /* Chalkboard texture */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 3px,
+          rgba(255,255,255,0.008) 3px,
+          rgba(255,255,255,0.008) 4px
+        ),
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 3px,
+          rgba(255,255,255,0.005) 3px,
+          rgba(255,255,255,0.005) 4px
+        );
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Chalk dust smear */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 30% 40%, rgba(245,248,242,0.025) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 80% at 70% 60%, rgba(245,248,242,0.02) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 3rem;
+      border-bottom: 2px dashed rgba(250,247,242,0.2);
+    }
+    .nav-logo {
+      font-family: 'Satisfy', cursive;
+      font-size: 1.6rem;
+      color: var(--chalk);
+      letter-spacing: 0.02em;
+    }
+    .nav-logo span { color: var(--yellow); }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: 'Lato', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(250,247,242,0.5);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--yellow); }
+
+    .hero {
+      min-height: 100vh;
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 0;
+      padding-top: 65px;
+    }
+
+    /* LEFT */
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 4rem 3rem 4rem 4rem;
+      border-right: 2px dashed rgba(250,247,242,0.15);
+      gap: 2.5rem;
+    }
+
+    .chalk-label {
+      font-family: 'Satisfy', cursive;
+      font-size: 0.9rem;
+      color: var(--orange);
+      opacity: 0.8;
+    }
+
+    .hero-headline {
+      font-family: 'Satisfy', cursive;
+      font-size: clamp(3.5rem, 7vw, 6.5rem);
+      line-height: 1.05;
+      color: var(--chalk);
+    }
+    .hero-headline .hl { color: var(--yellow); }
+
+    /* Chalk underline */
+    .chalk-underline {
+      position: relative;
+      display: inline-block;
+    }
+    .chalk-underline::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--orange);
+      opacity: 0.7;
+      border-radius: 2px;
+    }
+
+    .tagline {
+      font-size: 0.85rem;
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.7;
+      color: rgba(250,247,242,0.65);
+      max-width: 36ch;
+    }
+
+    /* Tagesmenü box */
+    .menu-box {
+      border: 2px dashed rgba(250,247,242,0.25);
+      padding: 1.5rem 2rem;
+      position: relative;
+    }
+    .menu-box-label {
+      position: absolute;
+      top: -0.7rem;
+      left: 1.5rem;
+      background: var(--board);
+      padding: 0 0.5rem;
+      font-family: 'Satisfy', cursive;
+      font-size: 0.9rem;
+      color: var(--yellow);
+    }
+    .menu-items {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      margin-top: 0.5rem;
+    }
+    .menu-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+    .menu-dots {
+      flex: 1;
+      border-bottom: 1px dotted rgba(250,247,242,0.2);
+      margin: 0 0.5rem;
+      position: relative;
+      top: -3px;
+    }
+    .menu-name {
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: rgba(250,247,242,0.8);
+    }
+    .menu-price {
+      font-family: 'Satisfy', cursive;
+      font-size: 0.9rem;
+      color: var(--yellow);
+    }
+
+    .cta-row {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--yellow);
+      color: var(--board);
+      text-decoration: none;
+      font-family: 'Satisfy', cursive;
+      font-size: 1rem;
+      padding: 0.8rem 2rem;
+      border-radius: 2px;
+      transition: background 0.2s;
+    }
+    .cta-btn:hover { background: var(--orange); color: var(--chalk); }
+    .cta-link {
+      font-size: 0.65rem;
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(250,247,242,0.45);
+      text-decoration: none;
+    }
+
+    /* RIGHT column */
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 4rem 2.5rem;
+      gap: 2rem;
+    }
+
+    .opening-block {
+      text-align: center;
+      border: 2px dashed rgba(250,247,242,0.2);
+      padding: 2rem 1.5rem;
+    }
+    .opening-title {
+      font-family: 'Satisfy', cursive;
+      font-size: 1.1rem;
+      color: var(--orange);
+      margin-bottom: 1.25rem;
+    }
+    .opening-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .opening-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.72rem;
+      font-weight: 300;
+    }
+    .opening-day { color: rgba(250,247,242,0.55); }
+    .opening-time { color: var(--chalk); font-weight: 400; }
+    .opening-closed { color: rgba(250,247,242,0.25); font-style: italic; }
+
+    .specials-block {
+      border: 2px dashed rgba(250,247,242,0.2);
+      padding: 1.75rem;
+    }
+    .specials-title {
+      font-family: 'Satisfy', cursive;
+      font-size: 1rem;
+      color: var(--yellow);
+      margin-bottom: 1rem;
+    }
+    .special-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+      font-size: 0.75rem;
+      font-weight: 300;
+      color: rgba(250,247,242,0.75);
+      line-height: 1.4;
+    }
+    .special-dot {
+      color: var(--orange);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .address-block {
+      font-size: 0.65rem;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      color: rgba(250,247,242,0.35);
+      text-align: center;
+      line-height: 1.7;
+      border-top: 1px dashed rgba(250,247,242,0.15);
+      padding-top: 1.25rem;
+    }
+    .address-block strong {
+      font-family: 'Satisfy', cursive;
+      font-size: 0.85rem;
+      color: rgba(250,247,242,0.5);
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-logo">Tafel <span>&</span> Tisch</div>
+    <ul class="nav-links">
+      <li><a href="#">Mittagstisch</a></li>
+      <li><a href="#">Frühstück</a></li>
+      <li><a href="#">Reservieren</a></li>
+      <li><a href="#">Kontakt</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-left">
+      <div class="chalk-label">Täglich frisch · Trier Innenstadt</div>
+
+      <h1 class="hero-headline">
+        <span class="chalk-underline">Heute:</span><br>
+        <span class="hl">richtig</span><br>
+        gut essen.
+      </h1>
+
+      <p class="tagline">
+        Frisch gekocht, täglich wechselnde Karte. Gemüse vom Wochenmarkt,
+        Brot vom Bäcker nebenan. Einfach. Ehrlich. Lecker.
+      </p>
+
+      <div class="menu-box">
+        <div class="menu-box-label">Tagesmenü</div>
+        <div class="menu-items">
+          <div class="menu-row">
+            <span class="menu-name">Linsensuppe mit Brot</span>
+            <span class="menu-dots"></span>
+            <span class="menu-price">4,50 €</span>
+          </div>
+          <div class="menu-row">
+            <span class="menu-name">Rinderroulade & Kartoffeln</span>
+            <span class="menu-dots"></span>
+            <span class="menu-price">12,80 €</span>
+          </div>
+          <div class="menu-row">
+            <span class="menu-name">Zucchini-Risotto (v)</span>
+            <span class="menu-dots"></span>
+            <span class="menu-price">10,50 €</span>
+          </div>
+          <div class="menu-row">
+            <span class="menu-name">Apfelstrudel & Sahne</span>
+            <span class="menu-dots"></span>
+            <span class="menu-price">4,20 €</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="cta-row">
+        <a href="#" class="cta-btn">Tisch reservieren</a>
+        <a href="#" class="cta-link">Zur Karte →</a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="opening-block">
+        <div class="opening-title">Öffnungszeiten</div>
+        <div class="opening-rows">
+          <div class="opening-row">
+            <span class="opening-day">Mo – Fr</span>
+            <span class="opening-time">11:30 – 15:00</span>
+          </div>
+          <div class="opening-row">
+            <span class="opening-day">Frühstück Di–Fr</span>
+            <span class="opening-time">08:00 – 11:00</span>
+          </div>
+          <div class="opening-row">
+            <span class="opening-day">Samstag</span>
+            <span class="opening-time">09:00 – 14:00</span>
+          </div>
+          <div class="opening-row">
+            <span class="opening-day">Sonntag</span>
+            <span class="opening-closed">Ruhetag</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="specials-block">
+        <div class="specials-title">Heute besonders</div>
+        <div class="special-item">
+          <span class="special-dot">★</span>
+          <span>Frisches Sauerteigbrot zum Frühstück — nur bis 10:30 Uhr</span>
+        </div>
+        <div class="special-item">
+          <span class="special-dot">★</span>
+          <span>Vegetarisches Tagesmenü mit Eifel-Gemüse ab 11:30 Uhr</span>
+        </div>
+        <div class="special-item">
+          <span class="special-dot">★</span>
+          <span>Hausgemachter Kuchen — heute Pflaumenkuchen mit Streusel</span>
+        </div>
+      </div>
+
+      <div class="address-block">
+        <strong>Tafel & Tisch</strong>
+        Simeonstraße 18 · 54290 Trier<br>
+        0651 / 987 65 43
+      </div>
+    </div>
+  </section>
+</body>
+</html>

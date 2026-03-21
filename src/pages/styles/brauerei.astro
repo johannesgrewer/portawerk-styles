@@ -1,0 +1,835 @@
+---
+export const prerender = true;
+---
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Bergstrom Brauerei — Gebraut mit Haltung</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --dark:    #1C1107;
+      --mid:     #3D2B0F;
+      --amber:   #C97B2A;
+      --tan:     #A0783A;
+      --cream:   #F5EFE6;
+      --muted:   #8C7A65;
+      --border:  #DDD0BC;
+      --ff-disp: 'Bebas Neue', sans-serif;
+      --ff-body: 'IBM Plex Sans', sans-serif;
+    }
+
+    html, body {
+      background: var(--cream);
+      color: var(--dark);
+      font-family: var(--ff-body);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--dark);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 3rem;
+      height: 60px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-logo {
+      font-family: var(--ff-disp);
+      font-size: 1.5rem;
+      letter-spacing: 0.08em;
+      color: var(--amber);
+      text-decoration: none;
+    }
+
+    .nav-logo span {
+      color: rgba(255,255,255,0.5);
+      font-size: 1rem;
+      margin-left: 0.5rem;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--amber); }
+
+    .nav-cta {
+      background: var(--amber);
+      color: var(--dark) !important;
+      padding: 0.4rem 1.2rem;
+      border-radius: 3px;
+      font-weight: 600 !important;
+      transition: background 0.2s !important;
+    }
+    .nav-cta:hover { background: #D98F3A !important; color: var(--dark) !important; }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--dark);
+      position: relative;
+      overflow: hidden;
+      padding: 5rem 3rem 4rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 3rem;
+      min-height: 520px;
+    }
+
+    /* Grain texture */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      animation: grainShift 4s steps(2) infinite;
+    }
+
+    @keyframes grainShift {
+      0%   { transform: translate(0,0); }
+      25%  { transform: translate(-2px, 1px); }
+      50%  { transform: translate(1px, -1px); }
+      75%  { transform: translate(-1px, 2px); }
+      100% { transform: translate(0,0); }
+    }
+
+    .hero-text { position: relative; z-index: 1; }
+
+    .hero-eyebrow {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: var(--amber);
+    }
+
+    .hero-headline {
+      font-family: var(--ff-disp);
+      font-size: clamp(3.5rem, 7vw, 6rem);
+      line-height: 0.95;
+      letter-spacing: 0.04em;
+      color: #fff;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-headline .line-amber { color: var(--amber); }
+
+    .hero-desc {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.5);
+      max-width: 360px;
+      margin-bottom: 2.5rem;
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .btn-primary {
+      background: var(--amber);
+      color: var(--dark);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.75rem 2rem;
+      border-radius: 3px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { background: #D98F3A; transform: translateY(-1px); }
+
+    .btn-ghost {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: color 0.2s;
+    }
+    .btn-ghost:hover { color: #fff; }
+
+    /* Keg illustration */
+    .hero-visual {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .keg-wrap {
+      width: 200px;
+      height: 260px;
+      position: relative;
+    }
+
+    .keg-body {
+      width: 200px;
+      height: 260px;
+      background: linear-gradient(135deg, #4A3520 0%, #2C1E0A 40%, #3D2B0F 100%);
+      border-radius: 40px;
+      position: relative;
+      overflow: hidden;
+      border: 2px solid #5A4020;
+    }
+
+    .keg-band {
+      position: absolute;
+      left: 0; right: 0;
+      height: 18px;
+      background: linear-gradient(180deg, #C97B2A 0%, #8A5010 50%, #C97B2A 100%);
+      opacity: 0.8;
+    }
+    .keg-band:nth-child(1) { top: 30px; }
+    .keg-band:nth-child(2) { top: 110px; }
+    .keg-band:nth-child(3) { bottom: 30px; }
+
+    .keg-label {
+      position: absolute;
+      top: 55px;
+      left: 20px; right: 20px;
+      bottom: 55px;
+      background: var(--cream);
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .keg-label-name {
+      font-family: var(--ff-disp);
+      font-size: 1.4rem;
+      letter-spacing: 0.08em;
+      color: var(--dark);
+      text-align: center;
+      line-height: 1;
+    }
+
+    .keg-label-sub {
+      font-size: 0.5rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.3rem;
+    }
+
+    .keg-tap {
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 20px;
+      height: 40px;
+      background: linear-gradient(180deg, #8A8A8A, #555);
+      border-radius: 4px 4px 0 0;
+    }
+    .keg-tap::after {
+      content: '';
+      position: absolute;
+      top: 8px;
+      left: -8px;
+      width: 36px;
+      height: 12px;
+      background: linear-gradient(180deg, #AAA, #666);
+      border-radius: 6px;
+    }
+
+    /* Stats strip */
+    .hero-stats {
+      grid-column: 1 / -1;
+      display: flex;
+      gap: 3rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .stat-num {
+      font-family: var(--ff-disp);
+      font-size: 2rem;
+      letter-spacing: 0.04em;
+      color: var(--amber);
+      line-height: 1;
+      animation: statCount 0.6s ease-out;
+    }
+
+    @keyframes statCount {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .stat-label {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+    }
+
+    /* ── TAP LIST ── */
+    .tap-section {
+      background: var(--cream);
+      padding: 5rem 3rem;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 3rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1.5rem;
+    }
+
+    .section-eyebrow {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+      font-family: var(--ff-disp);
+      font-size: 2.8rem;
+      letter-spacing: 0.04em;
+      color: var(--dark);
+      line-height: 1;
+    }
+
+    .section-note {
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .tap-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .tap-item {
+      background: #fff;
+      padding: 1.5rem;
+      transition: background 0.2s;
+    }
+    .tap-item:hover {
+      background: #FDF9F3;
+    }
+
+    .tap-item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.75rem;
+    }
+
+    .tap-name {
+      font-family: var(--ff-disp);
+      font-size: 1.4rem;
+      letter-spacing: 0.04em;
+      color: var(--dark);
+      line-height: 1;
+    }
+
+    .tap-style {
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--amber);
+      background: rgba(201,123,42,0.1);
+      padding: 0.2rem 0.6rem;
+      border-radius: 2px;
+    }
+
+    .tap-desc {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .tap-specs {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .tap-spec {
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+
+    .tap-spec-val {
+      font-family: var(--ff-disp);
+      font-size: 1.1rem;
+      letter-spacing: 0.06em;
+      color: var(--dark);
+    }
+
+    .tap-spec-key {
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ── BRAUEREI / PROCESS ── */
+    .process-section {
+      background: var(--dark);
+      padding: 5rem 3rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .process-text { }
+
+    .process-intro {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.55);
+      max-width: 400px;
+      line-height: 1.8;
+      margin-bottom: 3rem;
+    }
+
+    .process-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .process-step {
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+      padding: 1.25rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      cursor: default;
+      transition: border-color 0.2s;
+    }
+    .process-step:last-child { border-bottom: none; }
+    .process-step:hover { border-color: rgba(201,123,42,0.4); }
+    .process-step:hover .step-num { color: var(--amber); }
+
+    .step-num {
+      font-family: var(--ff-disp);
+      font-size: 2rem;
+      letter-spacing: 0.06em;
+      color: rgba(255,255,255,0.12);
+      line-height: 1;
+      flex-shrink: 0;
+      width: 3rem;
+      transition: color 0.2s;
+    }
+
+    .step-content { }
+
+    .step-title {
+      font-family: var(--ff-disp);
+      font-size: 1.1rem;
+      letter-spacing: 0.06em;
+      color: #fff;
+      margin-bottom: 0.3rem;
+    }
+
+    .step-desc {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.4);
+      line-height: 1.6;
+    }
+
+    /* Ingredient circles */
+    .ingredients {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+
+    .ingredient-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 1.5rem;
+      text-align: center;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .ingredient-card:hover {
+      border-color: rgba(201,123,42,0.4);
+      background: rgba(201,123,42,0.05);
+    }
+
+    .ingredient-icon {
+      width: 48px;
+      height: 48px;
+      background: rgba(201,123,42,0.15);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 0.75rem;
+      font-size: 1.4rem;
+    }
+
+    .ingredient-name {
+      font-family: var(--ff-disp);
+      font-size: 1rem;
+      letter-spacing: 0.06em;
+      color: #fff;
+      margin-bottom: 0.25rem;
+    }
+
+    .ingredient-origin {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--amber);
+    }
+
+    /* ── ANIMATIONS ── */
+    /* Tap items slide right on hover */
+    .tap-item { transition: background 0.2s, padding-left 0.2s; }
+    .tap-item:hover { padding-left: 2rem; }
+    .tap-item:hover .tap-name { color: var(--amber); }
+    .tap-name { transition: color 0.2s; }
+
+    /* Ingredient cards pulse border on hover */
+    @keyframes borderPulse {
+      0%, 100% { border-color: rgba(201,123,42,0.4); }
+      50%       { border-color: rgba(201,123,42,0.9); }
+    }
+    .ingredient-card:hover { animation: borderPulse 1.2s ease-in-out infinite; }
+
+    /* Keg tap drip */
+    @keyframes tapDrip {
+      0%, 100% { transform: translateX(-50%) scaleY(1); }
+      50%       { transform: translateX(-50%) scaleY(1.08); }
+    }
+    .keg-tap { animation: tapDrip 3s ease-in-out infinite; }
+
+    /* Stat numbers count up feel */
+    .stat-num { transition: color 0.2s; }
+    .hero-stats:hover .stat-num { color: #fff; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 2rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-brand {
+      font-family: var(--ff-disp);
+      font-size: 1.2rem;
+      letter-spacing: 0.08em;
+      color: var(--amber);
+    }
+
+    .footer-info {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.3);
+    }
+
+    .footer-tagline {
+      font-size: 0.7rem;
+      font-style: italic;
+      color: rgba(255,255,255,0.25);
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="#">BERGSTROM <span>BRAUEREI</span></a>
+    <ul class="nav-links">
+      <li><a href="#">Sorten</a></li>
+      <li><a href="#">Brauerei</a></li>
+      <li><a href="#">Taproom</a></li>
+      <li><a href="#">Shop</a></li>
+      <li><a class="nav-cta" href="#">Taproom besuchen</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-text">
+      <p class="hero-eyebrow">Trier-Euren · Gegründet 2018</p>
+      <h1 class="hero-headline">
+        GEBRAUT<br>
+        MIT<br>
+        <span class="line-amber">HALTUNG.</span>
+      </h1>
+      <p class="hero-desc">Handwerkliches Craft-Beer aus dem Trierer Stadtrand. Keine Kompromisse bei den Zutaten, keine Massenproduktion, kein Bullshit.</p>
+      <div class="hero-actions">
+        <a class="btn-primary" href="#">Aktuelle Zapfliste</a>
+        <a class="btn-ghost" href="#">
+          Taproom-Zeiten
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="keg-wrap">
+        <div class="keg-tap"></div>
+        <div class="keg-body">
+          <div class="keg-band"></div>
+          <div class="keg-band"></div>
+          <div class="keg-band"></div>
+          <div class="keg-label">
+            <div class="keg-label-name">BERG<br>STROM</div>
+            <div class="keg-label-sub">Craft Beer · Trier</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat-item">
+        <span class="stat-num">12+</span>
+        <span class="stat-label">Sorten auf Lager</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">6</span>
+        <span class="stat-label">Zapfhähne im Taproom</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">100%</span>
+        <span class="stat-label">Regionale Zutaten</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">2018</span>
+        <span class="stat-label">Gegründet</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- TAP LIST -->
+  <section class="tap-section">
+    <div class="section-header">
+      <div>
+        <p class="section-eyebrow">Was heute zapft</p>
+        <h2 class="section-title">DIE ZAPFLISTE</h2>
+      </div>
+      <span class="section-note">Stand: heute · wechselt wöchentlich</span>
+    </div>
+
+    <div class="tap-grid">
+      <div class="tap-item">
+        <div class="tap-item-header">
+          <span class="tap-name">Mosel Pale</span>
+          <span class="tap-style">Pale Ale</span>
+        </div>
+        <p class="tap-desc">Fruchtig, leicht harzig. Aromen von Zitrusgras und weißem Pfirsich. Trocken und erfrischend.</p>
+        <div class="tap-specs">
+          <div class="tap-spec"><span class="tap-spec-val">5.2%</span><span class="tap-spec-key">Alc.</span></div>
+          <div class="tap-spec"><span class="tap-spec-val">38</span><span class="tap-spec-key">IBU</span></div>
+          <div class="tap-spec"><span class="tap-spec-val">4.2°P</span><span class="tap-spec-key">Stammw.</span></div>
+        </div>
+      </div>
+
+      <div class="tap-item">
+        <div class="tap-item-header">
+          <span class="tap-name">Schwarzer Fels</span>
+          <span class="tap-style">Porter</span>
+        </div>
+        <p class="tap-desc">Röstaromen von dunkler Schokolade und Espresso. Samtig, mit langem, trockenen Abgang.</p>
+        <div class="tap-specs">
+          <div class="tap-spec"><span class="tap-spec-val">5.8%</span><span class="tap-spec-key">Alc.</span></div>
+          <div class="tap-spec"><span class="tap-spec-val">28</span><span class="tap-spec-key">IBU</span></div>
+          <div class="tap-spec"><span class="tap-spec-val">5.6°P</span><span class="tap-spec-key">Stammw.</span></div>
+        </div>
+      </div>
+
+      <div class="tap-item">
+        <div class="tap-item-header">
+          <span class="tap-name">Hopfen Furt</span>
+          <span class="tap-style">IPA</span>
+        </div>
+        <p class="tap-desc">Harzig, tropisch, intensiv. Cascade, Citra und Mosaic. Für alle, die es hopfig mögen.</p>
+        <div class="tap-specs">
+          <div class="tap-spec"><span class="tap-spec-val">6.6%</span><span class="tap-spec-key">Alc.</span></div>
+          <div class="tap-spec"><span class="tap-spec-val">65</span><span class="tap-spec-key">IBU</span></div>
+          <div class="tap-spec"><span class="tap-spec-val">6.0°P</span><span class="tap-spec-key">Stammw.</span></div>
+        </div>
+      </div>
+
+      <div class="tap-item">
+        <div class="tap-item-header">
+          <span class="tap-name">Römer Weizen</span>
+          <span class="tap-style">Weizen</span>
+        </div>
+        <p class="tap-desc">Klassisches Hefeweizen mit Bananennoten und einem Hauch Gewürznelke. Naturtrüb.</p>
+        <div class="tap-specs">
+          <div class="tap-spec"><span class="tap-spec-val">5.0%</span><span class="tap-spec-key">Alc.</span></div>
+          <div class="tap-spec"><span class="tap-spec-val">14</span><span class="tap-spec-key">IBU</span></div>
+          <div class="tap-spec"><span class="tap-spec-val">4.8°P</span><span class="tap-spec-key">Stammw.</span></div>
+        </div>
+      </div>
+
+      <div class="tap-item">
+        <div class="tap-item-header">
+          <span class="tap-name">Wacholder Saison</span>
+          <span class="tap-style">Saison</span>
+        </div>
+        <p class="tap-desc">Saisonal mit lokalem Wacholder. Würzig, trocken, leicht pfeffrig — das Sommer-Sonderbrauen.</p>
+        <div class="tap-specs">
+          <div class="tap-spec"><span class="tap-spec-val">5.4%</span><span class="tap-spec-key">Alc.</span></div>
+          <div class="tap-spec"><span class="tap-spec-val">22</span><span class="tap-spec-key">IBU</span></div>
+          <div class="tap-spec"><span class="tap-spec-val">4.4°P</span><span class="tap-spec-key">Stammw.</span></div>
+        </div>
+      </div>
+
+      <div class="tap-item">
+        <div class="tap-item-header">
+          <span class="tap-name">Kellerbier</span>
+          <span class="tap-style">Lager</span>
+        </div>
+        <p class="tap-desc">Ungefiltert, naturbelassen. Malzig, vollmundig, wie Bier schmecken sollte. Unser Hausbier.</p>
+        <div class="tap-specs">
+          <div class="tap-spec"><span class="tap-spec-val">4.8%</span><span class="tap-spec-key">Alc.</span></div>
+          <div class="tap-spec"><span class="tap-spec-val">20</span><span class="tap-spec-key">IBU</span></div>
+          <div class="tap-spec"><span class="tap-spec-val">4.5°P</span><span class="tap-spec-key">Stammw.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="process-section">
+    <div class="process-text">
+      <p class="section-eyebrow" style="color:var(--amber);font-size:.65rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;margin-bottom:.5rem;">Handwerk</p>
+      <h2 class="section-title" style="font-family:var(--ff-disp);font-size:2.8rem;letter-spacing:.04em;color:#fff;line-height:1;margin-bottom:1.5rem;">WIE WIR<br>BRAUEN</h2>
+      <p class="process-intro">Vom Schrot bis zum Fass — jeder Schritt passiert hier in Trier-Euren. Klein. Kontrolliert. Mit Überzeugung.</p>
+
+      <div class="process-steps">
+        <div class="process-step">
+          <span class="step-num">01</span>
+          <div class="step-content">
+            <div class="step-title">MALZ SCHROTEN</div>
+            <p class="step-desc">Regionales Malz aus der Eifel, frisch geschrotet am Brautag. Keine Fertigmischungen.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <span class="step-num">02</span>
+          <div class="step-content">
+            <div class="step-title">MAISCHEN & LÄUTERN</div>
+            <p class="step-desc">Temperaturgesteuert im 300-Liter-Sudwerk. Jedes Rezept individuell.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <span class="step-num">03</span>
+          <div class="step-content">
+            <div class="step-title">HOPFENGABE</div>
+            <p class="step-desc">Hopfen aus der Hallertau und unserem eigenen Garten. Timing entscheidet über Charakter.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <span class="step-num">04</span>
+          <div class="step-content">
+            <div class="step-title">GÄRUNG & REIFUNG</div>
+            <p class="step-desc">Obergärig bei kontrollierten Temperaturen. Kein Druck — das Bier entscheidet wann es fertig ist.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ingredients">
+      <div class="ingredient-card">
+        <div class="ingredient-icon">🌾</div>
+        <div class="ingredient-name">MALZ</div>
+        <div class="ingredient-origin">Eifel Region</div>
+      </div>
+      <div class="ingredient-card">
+        <div class="ingredient-icon">🌿</div>
+        <div class="ingredient-name">HOPFEN</div>
+        <div class="ingredient-origin">Hallertau & Eigengarten</div>
+      </div>
+      <div class="ingredient-card">
+        <div class="ingredient-icon">💧</div>
+        <div class="ingredient-name">WASSER</div>
+        <div class="ingredient-origin">Trier Stadtquell</div>
+      </div>
+      <div class="ingredient-card">
+        <div class="ingredient-icon">🦠</div>
+        <div class="ingredient-name">HEFE</div>
+        <div class="ingredient-origin">Eigene Stämme</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span class="footer-brand">BERGSTROM BRAUEREI</span>
+    <span class="footer-info">Brauerei Bergstrom GmbH · Im Eurenfeld 14 · 54294 Trier · info@bergstrom-brauerei.de</span>
+    <span class="footer-tagline">Gebraut mit Haltung.</span>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,514 @@
+---
+export const prerender = true;
+---
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Thalassa — Griechisches Restaurant & Meeresfrüchte | Trier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { overflow-x: hidden; }
+
+    :root {
+      --blue:   #1B4F9E;
+      --navy:   #0D2240;
+      --gold:   #E8A830;
+      --white:  #FFFFFF;
+      --bg:     #F5F8FF;
+      --muted:  rgba(13,34,64,0.45);
+      --rule:   rgba(27,79,158,0.1);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--navy);
+      font-family: 'Source Sans 3', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Subtle wave at top */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--navy), var(--blue), var(--gold), var(--blue), var(--navy));
+      z-index: 200;
+      pointer-events: none;
+    }
+
+    nav {
+      position: fixed;
+      top: 4px; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 3.5rem;
+      background: rgba(245,248,255,0.97);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--rule);
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: 1.2rem;
+      letter-spacing: 0.1em;
+      color: var(--blue);
+    }
+    .nav-logo small {
+      display: block;
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.48rem;
+      font-weight: 400;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: -0.1rem;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.6rem;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--blue); }
+    .nav-reserve {
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--white);
+      background: var(--blue);
+      padding: 0.65rem 1.5rem;
+      text-decoration: none;
+      border-radius: 3px;
+      transition: background 0.2s;
+    }
+    .nav-reserve:hover { background: var(--navy); }
+
+    .hero {
+      min-height: 100vh;
+      padding-top: 68px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    /* LEFT */
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 5rem 4rem 5rem 4.5rem;
+      gap: 2.5rem;
+      border-right: 1px solid var(--rule);
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.58rem;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .eyebrow::before {
+      content: '~';
+      font-size: 1rem;
+      line-height: 0;
+    }
+
+    .hero-headline {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      line-height: 1.15;
+      color: var(--navy);
+    }
+    .hero-headline em {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--blue);
+    }
+
+    .blue-rule {
+      width: 3rem;
+      height: 2px;
+      background: linear-gradient(90deg, var(--blue), var(--gold));
+    }
+
+    .hero-body {
+      font-size: 0.9rem;
+      font-weight: 300;
+      line-height: 1.95;
+      color: var(--muted);
+      max-width: 44ch;
+    }
+
+    /* Menu highlights */
+    .menu-list {
+      display: flex;
+      flex-direction: column;
+      border-top: 1px solid var(--rule);
+    }
+    .menu-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: start;
+      gap: 1rem;
+      padding: 0.9rem 0;
+      border-bottom: 1px solid var(--rule);
+    }
+    .mr-info {}
+    .mr-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--navy);
+    }
+    .mr-desc {
+      font-size: 0.65rem;
+      font-weight: 300;
+      color: var(--muted);
+      margin-top: 0.1rem;
+      font-style: italic;
+    }
+    .mr-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--gold);
+      white-space: nowrap;
+      padding-top: 0.15rem;
+    }
+
+    .cta-row {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .cta-btn {
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--white);
+      background: var(--blue);
+      padding: 0.9rem 2rem;
+      border-radius: 3px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .cta-btn:hover { background: var(--navy); }
+    .cta-link {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-style: italic;
+      color: var(--muted);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(13,34,64,0.15);
+      padding-bottom: 1px;
+    }
+
+    /* RIGHT */
+    .hero-right {
+      background: var(--blue);
+      display: flex;
+      flex-direction: column;
+      padding: 4.5rem 3.5rem;
+      gap: 2.5rem;
+    }
+
+    .right-label {
+      font-size: 0.55rem;
+      font-weight: 400;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+    }
+
+    /* Origin story */
+    .origin-block {
+      background: rgba(255,255,255,0.1);
+      border-radius: 8px;
+      padding: 1.75rem;
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+    .ob-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.6rem;
+    }
+    .ob-text {
+      font-size: 0.82rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.8;
+    }
+
+    /* Specialties grid */
+    .spec-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.6rem;
+    }
+    .spec-item {
+      background: rgba(255,255,255,0.08);
+      border-radius: 6px;
+      padding: 1rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+    }
+    .si-icon { font-size: 1.2rem; flex-shrink: 0; }
+    .si-name {
+      font-size: 0.82rem;
+      font-weight: 400;
+      color: rgba(255,255,255,0.8);
+    }
+    .si-origin {
+      font-size: 0.6rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.4);
+      margin-top: 0.1rem;
+    }
+
+    /* Hours & info */
+    .info-strip {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: auto;
+    }
+    .is-item {}
+    .is-label {
+      font-size: 0.5rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 0.3rem;
+    }
+    .is-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: var(--white);
+      line-height: 1.4;
+    }
+    .is-value span {
+      display: block;
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.45);
+      margin-top: 0.1rem;
+    }
+    /* === Animations & Micro-interactions === */
+    @keyframes barShimmer {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    body::before {
+      background-size: 300% auto;
+      animation: barShimmer 6s ease-in-out infinite;
+    }
+
+    .menu-row {
+      transition: background 0.2s, transform 0.25s;
+      cursor: default;
+    }
+    .menu-row:hover {
+      background: rgba(27,79,158,0.04);
+      transform: translateX(4px);
+    }
+    .mr-name { transition: color 0.2s; }
+    .menu-row:hover .mr-name { color: var(--blue); }
+
+    .spec-item {
+      transition: background 0.2s, transform 0.2s;
+      cursor: default;
+    }
+    .spec-item:hover {
+      background: rgba(255,255,255,0.16);
+      transform: translateY(-2px);
+    }
+
+    .origin-block {
+      transition: border-color 0.3s, background 0.3s;
+    }
+    .origin-block:hover {
+      background: rgba(255,255,255,0.14);
+      border-color: rgba(255,255,255,0.25);
+    }
+
+    .cta-btn {
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-btn::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -60%;
+      width: 40%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+      transition: left 0.5s;
+    }
+    .cta-btn:hover::after { left: 150%; }
+
+    .blue-rule {
+      transition: width 0.4s ease-out;
+    }
+    .hero-left:hover .blue-rule { width: 5rem; }
+
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-logo">
+      Thalassa
+      <small>Griechische Küche · Trier</small>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#">Speisekarte</a></li>
+      <li><a href="#">Fisch des Tages</a></li>
+      <li><a href="#">Geschichte</a></li>
+      <li><a href="#">Reservierung</a></li>
+    </ul>
+    <a href="#" class="nav-reserve">Tisch reservieren</a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-left">
+      <div class="eyebrow">Griechisches Restaurant · Trier</div>
+
+      <h1 class="hero-headline">
+        Das Meer<br>
+        auf <em>dem</em><br>
+        Teller.
+      </h1>
+
+      <div class="blue-rule"></div>
+
+      <p class="hero-body">
+        Täglich frische Lieferungen aus dem Mittelmeer.
+        Familienrezepte aus Thessaloniki. Und ein Tisch,
+        an dem man nicht fragt, wann man aufhört.
+      </p>
+
+      <div class="menu-list">
+        <div class="menu-row">
+          <div class="mr-info">
+            <div class="mr-name">Fisch des Tages</div>
+            <div class="mr-desc">Täglich frisch, gegrillte Zubereitung</div>
+          </div>
+          <div class="mr-price">ab 28 €</div>
+        </div>
+        <div class="menu-row">
+          <div class="mr-info">
+            <div class="mr-name">Oktopus vom Grill</div>
+            <div class="mr-desc">Kalamata-Oliven, Zitrone, Oregano</div>
+          </div>
+          <div class="mr-price">22 €</div>
+        </div>
+        <div class="menu-row">
+          <div class="mr-info">
+            <div class="mr-name">Moussaka (Hausart)</div>
+            <div class="mr-desc">Oma Elenis Originalrezept seit 1978</div>
+          </div>
+          <div class="mr-price">18 €</div>
+        </div>
+      </div>
+
+      <div class="cta-row">
+        <a href="#" class="cta-btn">Tisch reservieren →</a>
+        <a href="#" class="cta-link">Vollständige Karte</a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="right-label">Unsere Geschichte</div>
+
+      <div class="origin-block">
+        <div class="ob-title">Seit 1988 in Trier</div>
+        <div class="ob-text">
+          Stavros Papadakis kam 1988 aus Thessaloniki nach Trier —
+          und brachte die Küche seiner Mutter mit. Heute kocht
+          seine Tochter Dimitra weiter, was die Familie ausmacht:
+          ehrliche Zutaten, viel Liebe, kein Kompromiss.
+        </div>
+      </div>
+
+      <div class="spec-grid">
+        <div class="spec-item">
+          <span class="si-icon">🐟</span>
+          <div>
+            <div class="si-name">Frischer Fisch</div>
+            <div class="si-origin">Tägl. aus Thessaloniki</div>
+          </div>
+        </div>
+        <div class="spec-item">
+          <span class="si-icon">🫒</span>
+          <div>
+            <div class="si-name">Olivenöl</div>
+            <div class="si-origin">Kreta, kaltgepresst</div>
+          </div>
+        </div>
+        <div class="spec-item">
+          <span class="si-icon">🍷</span>
+          <div>
+            <div class="si-name">Griechischer Wein</div>
+            <div class="si-origin">Retsina, Assyrtiko</div>
+          </div>
+        </div>
+        <div class="spec-item">
+          <span class="si-icon">🧀</span>
+          <div>
+            <div class="si-name">Echter Feta</div>
+            <div class="si-origin">g.U. Griechenland</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-strip">
+        <div class="is-item">
+          <div class="is-label">Öffnungszeiten</div>
+          <div class="is-value">
+            Di – So
+            <span>12:00 – 14:30 · 17:30 – 22:30</span>
+          </div>
+        </div>
+        <div class="is-item">
+          <div class="is-label">Adresse</div>
+          <div class="is-value">
+            Fleischstraße 38
+            <span>54290 Trier · Fußgängerzone</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

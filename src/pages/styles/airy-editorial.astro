@@ -1,0 +1,378 @@
+---
+export const prerender = true;
+---
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Weissraum — Architektur & Innenarchitektur | Trier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;1,300;1,400&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { overflow-x: hidden; }
+
+    :root {
+      --amber:  #C4832E;
+      --dark:   #1A1A1A;
+      --muted:  rgba(26,26,26,0.4);
+      --light:  rgba(26,26,26,0.06);
+    }
+
+    body {
+      background: #FFFFFF;
+      color: var(--dark);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 2rem 5rem;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(8px);
+    }
+    .nav-logo {
+      font-family: 'Cormorant', serif;
+      font-weight: 300;
+      font-size: 1.15rem;
+      letter-spacing: 0.12em;
+      color: var(--dark);
+    }
+    .nav-links {
+      display: flex;
+      gap: 3rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.6rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--dark); }
+    .nav-contact {
+      font-size: 0.58rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--dark);
+      text-decoration: none;
+      border-bottom: 1px solid var(--dark);
+      padding-bottom: 2px;
+      transition: color 0.3s, border-color 0.3s;
+    }
+    .nav-contact:hover { color: var(--amber); border-color: var(--amber); }
+
+    .hero {
+      min-height: 100vh;
+      padding-top: 80px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    /* LEFT */
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 5rem 4rem 5rem 5rem;
+      gap: 3rem;
+      border-right: 1px solid var(--light);
+    }
+
+    .eyebrow {
+      font-size: 0.55rem;
+      font-weight: 400;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--amber);
+    }
+
+    .hero-headline {
+      font-family: 'Cormorant', serif;
+      font-weight: 300;
+      font-size: clamp(3rem, 5.5vw, 5rem);
+      line-height: 1.15;
+      color: var(--dark);
+      letter-spacing: 0.01em;
+    }
+    .hero-headline em {
+      font-style: italic;
+      color: var(--muted);
+    }
+
+    .hero-body {
+      font-size: 0.85rem;
+      font-weight: 300;
+      line-height: 2;
+      color: var(--muted);
+      max-width: 42ch;
+    }
+
+    /* Project list */
+    .project-list {
+      display: flex;
+      flex-direction: column;
+      border-top: 1px solid var(--light);
+    }
+    .proj-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem 0;
+      border-bottom: 1px solid var(--light);
+      cursor: default;
+      transition: padding-left 0.3s;
+    }
+    .proj-row:hover { padding-left: 0.5rem; }
+    .proj-info {}
+    .proj-name {
+      font-family: 'Cormorant', serif;
+      font-size: 1.05rem;
+      font-weight: 400;
+      color: var(--dark);
+    }
+    .proj-location {
+      font-size: 0.6rem;
+      font-weight: 300;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      margin-top: 0.1rem;
+    }
+    .proj-year {
+      font-size: 0.62rem;
+      font-weight: 300;
+      color: rgba(26,26,26,0.25);
+      letter-spacing: 0.1em;
+    }
+
+    .cta-row {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--dark);
+      text-decoration: none;
+      padding: 0.95rem 2rem;
+      transition: background 0.3s;
+    }
+    .cta-btn:hover { background: var(--amber); }
+    .cta-link {
+      font-size: 0.6rem;
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(26,26,26,0.15);
+      padding-bottom: 2px;
+    }
+
+    /* RIGHT */
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      padding: 7rem 5rem 5rem 4rem;
+      gap: 4rem;
+    }
+
+    .pull-quote {
+      font-family: 'Cormorant', serif;
+      font-weight: 300;
+      font-style: italic;
+      font-size: 1.8rem;
+      line-height: 1.4;
+      color: var(--dark);
+      max-width: 22ch;
+      position: relative;
+      padding-left: 1.5rem;
+      border-left: 2px solid var(--amber);
+    }
+    .pull-quote cite {
+      display: block;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-style: normal;
+      font-size: 0.6rem;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 1rem;
+    }
+
+    .info-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    .info-block {}
+    .ib-label {
+      font-size: 0.52rem;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(26,26,26,0.25);
+      margin-bottom: 0.4rem;
+    }
+    .ib-value {
+      font-family: 'Cormorant', serif;
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--dark);
+    }
+    .ib-sub {
+      font-size: 0.72rem;
+      font-weight: 300;
+      color: var(--muted);
+      margin-top: 0.15rem;
+    }
+
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: var(--light);
+    }
+
+    .accolade-row {
+      display: flex;
+      gap: 2.5rem;
+    }
+    .acc-item {}
+    .acc-num {
+      font-family: 'Cormorant', serif;
+      font-size: 2.2rem;
+      font-weight: 300;
+      color: var(--amber);
+      line-height: 1;
+    }
+    .acc-label {
+      font-size: 0.58rem;
+      font-weight: 300;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.2rem;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-logo">Weissraum</div>
+    <ul class="nav-links">
+      <li><a href="#">Projekte</a></li>
+      <li><a href="#">Leistungen</a></li>
+      <li><a href="#">Studio</a></li>
+      <li><a href="#">Journal</a></li>
+    </ul>
+    <a href="#" class="nav-contact">Gespräch anfragen</a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-left">
+      <div class="eyebrow">Architektur & Innenarchitektur · Trier</div>
+
+      <h1 class="hero-headline">
+        Raum<br>
+        atmen<br>
+        <em>lassen.</em>
+      </h1>
+
+      <p class="hero-body">
+        Wir planen Räume, die nicht auffallen wollen —
+        die einfach stimmen. Für Menschen, die wissen,
+        dass das Beste oft das ist, was man weglässt.
+      </p>
+
+      <div class="project-list">
+        <div class="proj-row">
+          <div class="proj-info">
+            <div class="proj-name">Haus an der Mosel</div>
+            <div class="proj-location">Bernkastel-Kues</div>
+          </div>
+          <span class="proj-year">2024</span>
+        </div>
+        <div class="proj-row">
+          <div class="proj-info">
+            <div class="proj-name">Büro Kern & Partner</div>
+            <div class="proj-location">Trier Innenstadt</div>
+          </div>
+          <span class="proj-year">2024</span>
+        </div>
+        <div class="proj-row">
+          <div class="proj-info">
+            <div class="proj-name">Loft Viehmarktplatz</div>
+            <div class="proj-location">Trier</div>
+          </div>
+          <span class="proj-year">2023</span>
+        </div>
+      </div>
+
+      <div class="cta-row">
+        <a href="#" class="cta-btn">Alle Projekte ansehen</a>
+        <a href="#" class="cta-link">Kontakt aufnehmen →</a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="pull-quote">
+        „Architektur ist gefrorene Musik."
+        <cite>— Arthur Schopenhauer</cite>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="info-stack">
+        <div class="info-block">
+          <div class="ib-label">Leistungen</div>
+          <div class="ib-value">Neubau, Umbau, Innenarchitektur</div>
+          <div class="ib-sub">Vom ersten Gespräch bis zur Übergabe</div>
+        </div>
+        <div class="info-block">
+          <div class="ib-label">Standort</div>
+          <div class="ib-value">Trier & Moselregion</div>
+          <div class="ib-sub">Projekte im gesamten Rheinland-Pfalz</div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="accolade-row">
+        <div class="acc-item">
+          <div class="acc-num">48</div>
+          <div class="acc-label">Realisierte Projekte</div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-num">12</div>
+          <div class="acc-label">Jahre Erfahrung</div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-num">3</div>
+          <div class="acc-label">Auszeichnungen</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

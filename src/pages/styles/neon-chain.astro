@@ -1,0 +1,393 @@
+---
+export const prerender = true;
+---
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Chain Ink — Tattoo & Custom Apparel | Trier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { overflow-x: hidden; }
+
+    :root {
+      --cyan:  #00F5FF;
+      --red:   #FF2E63;
+      --bg:    #0A0A0A;
+      --mid:   #111111;
+      --text:  #FFFFFF;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Space Grotesk', monospace, sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Scanlines */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,245,255,0.012) 2px,
+        rgba(0,245,255,0.012) 3px
+      );
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Neon glow ambient */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 50% 40% at 15% 50%, rgba(0,245,255,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 50% at 85% 50%, rgba(255,46,99,0.07) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 3rem;
+      border-bottom: 1px solid rgba(0,245,255,0.12);
+      background: rgba(10,10,10,0.95);
+      backdrop-filter: blur(8px);
+    }
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      letter-spacing: 0.1em;
+      color: var(--text);
+    }
+    .nav-logo span {
+      color: var(--cyan);
+      text-shadow: 0 0 12px rgba(0,245,255,0.6);
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.65rem;
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      text-decoration: none;
+      transition: color 0.2s, text-shadow 0.2s;
+    }
+    .nav-links a:hover {
+      color: var(--cyan);
+      text-shadow: 0 0 8px rgba(0,245,255,0.5);
+    }
+    .nav-book {
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--cyan);
+      padding: 0.55rem 1.25rem;
+      text-decoration: none;
+      transition: box-shadow 0.2s;
+    }
+    .nav-book:hover { box-shadow: 0 0 20px rgba(0,245,255,0.5); }
+
+    .hero {
+      min-height: 100vh;
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      padding-top: 57px;
+    }
+
+    /* LEFT */
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 4rem 3rem 4rem 4rem;
+      gap: 2.5rem;
+      border-right: 1px solid rgba(0,245,255,0.1);
+    }
+
+    .hero-tag {
+      font-size: 0.6rem;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .hero-tag::before {
+      content: '';
+      display: block;
+      width: 1.5rem;
+      height: 1px;
+      background: var(--cyan);
+      box-shadow: 0 0 6px rgba(0,245,255,0.8);
+    }
+
+    .hero-headline {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(5rem, 12vw, 10rem);
+      line-height: 0.88;
+      letter-spacing: 0.03em;
+      color: var(--text);
+    }
+    .hero-headline .glow-cyan {
+      color: var(--cyan);
+      text-shadow:
+        0 0 20px rgba(0,245,255,0.8),
+        0 0 40px rgba(0,245,255,0.4),
+        0 0 80px rgba(0,245,255,0.2);
+    }
+    .hero-headline .glow-red {
+      color: var(--red);
+      text-shadow:
+        0 0 20px rgba(255,46,99,0.8),
+        0 0 40px rgba(255,46,99,0.4);
+    }
+
+    .hero-sub {
+      font-size: 0.8rem;
+      font-weight: 300;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.4);
+      max-width: 40ch;
+    }
+
+    /* Style tags */
+    .style-tags {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .tag {
+      font-size: 0.6rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.8rem;
+      border: 1px solid;
+    }
+    .tag-cyan { color: var(--cyan); border-color: rgba(0,245,255,0.3); }
+    .tag-red  { color: var(--red);  border-color: rgba(255,46,99,0.3);  }
+    .tag-white{ color: rgba(255,255,255,0.5); border-color: rgba(255,255,255,0.12); }
+
+    .cta-row {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: var(--red);
+      color: var(--text);
+      text-decoration: none;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.12em;
+      padding: 0.75rem 2rem;
+      box-shadow: 0 0 24px rgba(255,46,99,0.35);
+      transition: box-shadow 0.2s;
+    }
+    .cta-btn:hover { box-shadow: 0 0 40px rgba(255,46,99,0.6); }
+    .cta-link {
+      font-size: 0.6rem;
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .cta-link:hover { color: var(--cyan); }
+
+    /* RIGHT */
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .right-block {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 2rem;
+      border-bottom: 1px solid rgba(0,245,255,0.08);
+    }
+    .right-block:last-child { border-bottom: none; }
+    .rb-label {
+      font-size: 0.52rem;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+      margin-bottom: 0.6rem;
+    }
+    .rb-value {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      letter-spacing: 0.06em;
+      color: var(--text);
+      line-height: 1;
+    }
+    .rb-value .small {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.35);
+      display: block;
+      margin-top: 0.2rem;
+      letter-spacing: 0.04em;
+    }
+
+    .booking-block {
+      padding: 2rem;
+      border-top: 1px solid rgba(0,245,255,0.12);
+    }
+    .booking-label {
+      font-size: 0.52rem;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 1rem;
+      text-shadow: 0 0 8px rgba(0,245,255,0.4);
+    }
+    .booking-hours {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .bh-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.68rem;
+      font-weight: 300;
+    }
+    .bh-day { color: rgba(255,255,255,0.35); }
+    .bh-time { color: rgba(255,255,255,0.7); }
+
+    /* Chain decoration */
+    .chain-deco {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+    .chain-link {
+      width: 18px;
+      height: 10px;
+      border: 1.5px solid rgba(0,245,255,0.2);
+      border-radius: 5px;
+      margin: 0 -2px;
+    }
+    .chain-link:nth-child(even) { transform: rotate(90deg); }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-logo">Chain <span>Ink</span></div>
+    <ul class="nav-links">
+      <li><a href="#">Tattoo</a></li>
+      <li><a href="#">Apparel</a></li>
+      <li><a href="#">Flash</a></li>
+      <li><a href="#">Artists</a></li>
+    </ul>
+    <a href="#" class="nav-book">Buchung</a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-left">
+      <div class="hero-tag">Tattoo Studio · Trier</div>
+
+      <h1 class="hero-headline">
+        <span class="glow-cyan">Echtes</span><br>
+        <span>bleibt.</span><br>
+        <span class="glow-red">Immer.</span>
+      </h1>
+
+      <p class="hero-sub">
+        Tattoos, die erzählen. Custom Apparel, das hält.
+        Kein Template. Kein Bullshit. Nur Arbeit,
+        auf die wir stolz sind.
+      </p>
+
+      <div class="style-tags">
+        <span class="tag tag-cyan">Blackwork</span>
+        <span class="tag tag-red">Fine Line</span>
+        <span class="tag tag-white">Japanese</span>
+        <span class="tag tag-white">Geometric</span>
+        <span class="tag tag-cyan">Custom</span>
+      </div>
+
+      <div class="cta-row">
+        <a href="#" class="cta-btn">Session buchen →</a>
+        <a href="#" class="cta-link">Flash Designs →</a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="right-block">
+        <div class="rb-label">Artists</div>
+        <div class="rb-value">4<span class="small">Tattoo Artists im Haus</span></div>
+      </div>
+      <div class="right-block">
+        <div class="rb-label">Experience</div>
+        <div class="rb-value">8+<span class="small">Jahre in Trier</span></div>
+      </div>
+      <div class="right-block">
+        <div class="rb-label">Tattoos</div>
+        <div class="rb-value">2k+<span class="small">Pieces gestochen</span></div>
+      </div>
+      <div class="booking-block">
+        <div class="booking-label">Studio-Zeiten</div>
+        <div class="booking-hours">
+          <div class="bh-row"><span class="bh-day">Mo – Fr</span><span class="bh-time">12 – 20 Uhr</span></div>
+          <div class="bh-row"><span class="bh-day">Samstag</span><span class="bh-time">11 – 18 Uhr</span></div>
+          <div class="bh-row"><span class="bh-day">Sonntag</span><span class="bh-time">nach Absprache</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="chain-deco">
+    <div class="chain-link"></div><div class="chain-link"></div>
+    <div class="chain-link"></div><div class="chain-link"></div>
+    <div class="chain-link"></div><div class="chain-link"></div>
+    <div class="chain-link"></div><div class="chain-link"></div>
+    <div class="chain-link"></div>
+  </div>
+</body>
+</html>

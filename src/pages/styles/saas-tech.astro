@@ -1,0 +1,618 @@
+---
+export const prerender = true;
+---
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Fluxr — Workflow-Automatisierung für Teams</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { overflow-x: hidden; }
+
+    :root {
+      --blue:    #1E3A8A;
+      --indigo:  #6366F1;
+      --light:   #EFF6FF;
+      --bg:      #FAFBFF;
+      --white:   #FFFFFF;
+      --muted:   rgba(15,23,42,0.45);
+      --rule:    rgba(99,102,241,0.1);
+    }
+
+    body {
+      background: var(--bg);
+      color: #0F172A;
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 70% 0%, rgba(99,102,241,0.06) 0%, transparent 60%),
+        radial-gradient(ellipse at 10% 100%, rgba(30,58,138,0.04) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 4rem;
+      background: rgba(250,251,255,0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(99,102,241,0.08);
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .nav-logo-icon {
+      width: 28px;
+      height: 28px;
+      background: linear-gradient(135deg, var(--indigo), var(--blue));
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .nav-logo-icon::after {
+      content: '⚡';
+      font-size: 0.75rem;
+    }
+    .nav-logo-text {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #0F172A;
+      letter-spacing: -0.01em;
+    }
+    .nav-badge {
+      font-size: 0.45rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: rgba(99,102,241,0.1);
+      color: var(--indigo);
+      padding: 0.15rem 0.45rem;
+      border-radius: 100px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.62rem;
+      font-weight: 400;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: #0F172A; }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .nav-login {
+      font-size: 0.62rem;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-login:hover { color: #0F172A; }
+    .nav-cta {
+      font-family: 'Manrope', sans-serif;
+      font-size: 0.62rem;
+      font-weight: 600;
+      color: #fff;
+      background: var(--indigo);
+      padding: 0.6rem 1.25rem;
+      border-radius: 7px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--blue); }
+
+    .hero {
+      min-height: 100vh;
+      padding-top: 60px;
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    /* LEFT */
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 5rem 4rem 5rem 4.5rem;
+      gap: 2rem;
+      border-right: 1px solid rgba(99,102,241,0.08);
+    }
+
+    .label-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .label-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--indigo);
+    }
+    .label-text {
+      font-size: 0.55rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--indigo);
+    }
+
+    .hero-headline {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 600;
+      font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+      line-height: 1.15;
+      color: #0F172A;
+      letter-spacing: -0.02em;
+    }
+    .hero-headline .grad {
+      background: linear-gradient(135deg, var(--blue), var(--indigo));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-body {
+      font-size: 0.9rem;
+      font-weight: 300;
+      line-height: 1.85;
+      color: var(--muted);
+      max-width: 44ch;
+    }
+
+    /* Feature list */
+    .feature-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.85rem 1rem;
+      background: var(--white);
+      border: 1px solid rgba(99,102,241,0.1);
+      border-radius: 8px;
+    }
+    .fi-check {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: rgba(99,102,241,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 0.05rem;
+      font-size: 0.55rem;
+      color: var(--indigo);
+    }
+    .fi-text {
+      font-size: 0.82rem;
+      font-weight: 400;
+      color: #0F172A;
+      line-height: 1.4;
+    }
+    .fi-sub {
+      font-size: 0.62rem;
+      font-weight: 300;
+      color: var(--muted);
+      margin-top: 0.1rem;
+    }
+
+    .cta-row {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+    .cta-primary {
+      font-family: 'Manrope', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: #fff;
+      background: var(--indigo);
+      padding: 0.85rem 1.75rem;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .cta-primary:hover { background: var(--blue); }
+    .cta-secondary {
+      font-size: 0.62rem;
+      font-weight: 400;
+      color: var(--muted);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(15,23,42,0.15);
+      padding-bottom: 1px;
+    }
+    .social-proof {
+      font-size: 0.55rem;
+      font-weight: 400;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+    .social-proof strong {
+      color: #0F172A;
+      font-weight: 500;
+    }
+
+    /* RIGHT */
+    .hero-right {
+      background: var(--light);
+      display: flex;
+      flex-direction: column;
+      padding: 4.5rem 3.5rem;
+      gap: 2rem;
+    }
+
+    /* Fake product UI */
+    .product-ui {
+      background: var(--white);
+      border: 1px solid rgba(99,102,241,0.12);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(99,102,241,0.08);
+    }
+    .ui-topbar {
+      background: #F8FAFF;
+      padding: 0.6rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-bottom: 1px solid rgba(99,102,241,0.08);
+    }
+    .ui-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+    .ui-title {
+      font-size: 0.55rem;
+      font-weight: 500;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      margin-left: 0.5rem;
+    }
+    .ui-body {
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .ui-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.7rem 0.85rem;
+      background: #F8FAFF;
+      border-radius: 6px;
+      border: 1px solid rgba(99,102,241,0.06);
+    }
+    .ur-name {
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: #0F172A;
+    }
+    .ur-step {
+      font-size: 0.55rem;
+      font-weight: 300;
+      color: var(--muted);
+      margin-top: 0.1rem;
+    }
+    .ur-status {
+      font-size: 0.5rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.18rem 0.5rem;
+      border-radius: 100px;
+    }
+    .s-done { background: rgba(34,197,94,0.1); color: #16a34a; }
+    .s-run  { background: rgba(99,102,241,0.1); color: var(--indigo); }
+    .s-wait { background: rgba(15,23,42,0.06); color: var(--muted); }
+
+    /* Stats row */
+    .stats-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0.6rem;
+    }
+    .stat-card {
+      background: var(--white);
+      border: 1px solid rgba(99,102,241,0.1);
+      border-radius: 8px;
+      padding: 1rem;
+      text-align: center;
+    }
+    .sc-num {
+      font-family: 'Manrope', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--indigo);
+      line-height: 1;
+    }
+    .sc-label {
+      font-size: 0.55rem;
+      font-weight: 400;
+      color: var(--muted);
+      margin-top: 0.25rem;
+    }
+
+    /* Integration row */
+    .integration-strip {
+      background: var(--white);
+      border: 1px solid rgba(99,102,241,0.1);
+      border-radius: 8px;
+      padding: 1.1rem 1.25rem;
+      margin-top: auto;
+    }
+    .is-label {
+      font-size: 0.52rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+    .is-icons {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .is-pill {
+      font-size: 0.6rem;
+      font-weight: 400;
+      color: var(--muted);
+      background: #F8FAFF;
+      border: 1px solid rgba(99,102,241,0.1);
+      padding: 0.25rem 0.65rem;
+      border-radius: 100px;
+    }
+    /* === Animations & Micro-interactions === */
+    @keyframes runningPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(99,102,241,0.3); }
+      50%       { box-shadow: 0 0 0 4px rgba(99,102,241,0); }
+    }
+    @keyframes iconBounce {
+      0%, 100% { transform: scale(1); }
+      50%       { transform: scale(1.08); }
+    }
+    @keyframes shimmerSlide {
+      0%   { left: -60%; }
+      100% { left: 140%; }
+    }
+
+    .s-run { animation: runningPulse 2s ease-in-out infinite; }
+
+    .nav-logo-icon { animation: iconBounce 3s ease-in-out infinite; }
+
+    .feature-item {
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+      cursor: default;
+    }
+    .feature-item:hover {
+      transform: translateX(4px);
+      border-color: rgba(99,102,241,0.22);
+      box-shadow: 0 4px 16px rgba(99,102,241,0.08);
+    }
+    .fi-text { transition: color 0.2s; }
+    .feature-item:hover .fi-text { color: var(--indigo); }
+
+    .stat-card {
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: default;
+    }
+    .stat-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(99,102,241,0.1);
+    }
+    .sc-num { transition: color 0.2s; }
+    .stat-card:hover .sc-num { color: var(--blue); }
+
+    .ui-row {
+      transition: background 0.2s, transform 0.2s;
+      cursor: default;
+    }
+    .ui-row:hover {
+      background: rgba(99,102,241,0.04);
+      transform: translateX(2px);
+    }
+
+    .cta-primary {
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-primary::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -60%;
+      width: 40%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+      animation: shimmerSlide 4s ease-in-out infinite 0.5s;
+    }
+
+    .is-pill {
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+      cursor: default;
+    }
+    .is-pill:hover {
+      background: rgba(99,102,241,0.08);
+      color: var(--indigo);
+      border-color: rgba(99,102,241,0.2);
+    }
+
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-logo">
+      <div class="nav-logo-icon"></div>
+      <span class="nav-logo-text">Fluxr</span>
+      <span class="nav-badge">Beta</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#">Produkt</a></li>
+      <li><a href="#">Integrationen</a></li>
+      <li><a href="#">Preise</a></li>
+      <li><a href="#">Docs</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="#" class="nav-login">Anmelden</a>
+      <a href="#" class="nav-cta">Kostenlos starten</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-left">
+      <div class="label-row">
+        <span class="label-dot"></span>
+        <span class="label-text">Workflow-Automatisierung</span>
+      </div>
+
+      <h1 class="hero-headline">
+        Weniger klicken.<br>
+        Mehr <span class="grad">erreichen.</span>
+      </h1>
+
+      <p class="hero-body">
+        Fluxr verbindet deine Tools und automatisiert
+        Routineaufgaben — ohne Code, ohne Kopfschmerzen.
+        Einmal einrichten, für immer profitieren.
+      </p>
+
+      <div class="feature-list">
+        <div class="feature-item">
+          <div class="fi-check">✓</div>
+          <div>
+            <div class="fi-text">No-Code Workflow Builder</div>
+            <div class="fi-sub">Drag & Drop — kein technisches Vorwissen nötig</div>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="fi-check">✓</div>
+          <div>
+            <div class="fi-text">200+ Integrationen</div>
+            <div class="fi-sub">Slack, Notion, GitHub, Stripe, HubSpot und mehr</div>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="fi-check">✓</div>
+          <div>
+            <div class="fi-text">Echtzeit-Monitoring</div>
+            <div class="fi-sub">Sieh live was läuft, was wartet, was fehlgeschlagen ist</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cta-row">
+        <a href="#" class="cta-primary">14 Tage kostenlos testen →</a>
+        <a href="#" class="cta-secondary">Demo ansehen</a>
+      </div>
+      <div class="social-proof"><strong>1.200+ Teams</strong> sparen im Schnitt 4,5 Stunden pro Woche</div>
+    </div>
+
+    <div class="hero-right">
+      <div class="product-ui">
+        <div class="ui-topbar">
+          <div class="ui-dot" style="background:#FF5F57;"></div>
+          <div class="ui-dot" style="background:#FEBC2E;"></div>
+          <div class="ui-dot" style="background:#28C840;"></div>
+          <span class="ui-title">Aktive Workflows</span>
+        </div>
+        <div class="ui-body">
+          <div class="ui-row">
+            <div>
+              <div class="ur-name">Lead → CRM → Slack</div>
+              <div class="ur-step">Schritt 3 / 3 · Zuletzt vor 2 Min.</div>
+            </div>
+            <span class="ur-status s-done">Aktiv</span>
+          </div>
+          <div class="ui-row">
+            <div>
+              <div class="ur-name">Invoice → Stripe → Notify</div>
+              <div class="ur-step">Schritt 1 / 4 · Läuft gerade</div>
+            </div>
+            <span class="ur-status s-run">Läuft</span>
+          </div>
+          <div class="ui-row">
+            <div>
+              <div class="ur-name">GitHub PR → Notion Task</div>
+              <div class="ur-step">Wartet auf Trigger</div>
+            </div>
+            <span class="ur-status s-wait">Bereit</span>
+          </div>
+          <div class="ui-row">
+            <div>
+              <div class="ur-name">Support-Mail → Ticket → Board</div>
+              <div class="ur-step">Schritt 2 / 3 · Zuletzt vor 8 Min.</div>
+            </div>
+            <span class="ur-status s-done">Aktiv</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="sc-num">4.5h</div>
+          <div class="sc-label">Ø Ersparnis / Woche</div>
+        </div>
+        <div class="stat-card">
+          <div class="sc-num">200+</div>
+          <div class="sc-label">Integrationen</div>
+        </div>
+        <div class="stat-card">
+          <div class="sc-num">99.9%</div>
+          <div class="sc-label">Uptime SLA</div>
+        </div>
+      </div>
+
+      <div class="integration-strip">
+        <div class="is-label">Verbindet sich mit</div>
+        <div class="is-icons">
+          <span class="is-pill">Slack</span>
+          <span class="is-pill">Notion</span>
+          <span class="is-pill">GitHub</span>
+          <span class="is-pill">Stripe</span>
+          <span class="is-pill">HubSpot</span>
+          <span class="is-pill">Jira</span>
+          <span class="is-pill">+ 194 weitere</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

@@ -1,0 +1,420 @@
+---
+export const prerender = true;
+---
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Tessèra — Marmor & Naturstein Manufaktur | Trier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@200;300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { overflow-x: hidden; }
+
+    :root {
+      --marble: #FAFAF8;
+      --onyx: #151419;
+      --gold: #C9A84C;
+      --gold-dim: rgba(201,168,76,0.15);
+      --stone: #8A8580;
+    }
+
+    body {
+      overflow-x: hidden;
+      background: var(--marble);
+      color: var(--onyx);
+      font-family: 'Jost', system-ui, sans-serif;
+      min-height: 100vh;
+    }
+
+    /* Marble veining — pure CSS */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(
+          108deg,
+          transparent 0px,
+          transparent 120px,
+          rgba(180,170,160,0.06) 120px,
+          rgba(180,170,160,0.06) 121px
+        ),
+        repeating-linear-gradient(
+          72deg,
+          transparent 0px,
+          transparent 200px,
+          rgba(200,195,185,0.04) 200px,
+          rgba(200,195,185,0.04) 201px
+        ),
+        repeating-linear-gradient(
+          135deg,
+          transparent 0px,
+          transparent 80px,
+          rgba(160,155,145,0.035) 80px,
+          rgba(160,155,145,0.035) 81px,
+          transparent 81px,
+          transparent 160px
+        );
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 2rem 4rem;
+      background: rgba(250,250,248,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+    }
+    .nav-logo {
+      font-family: 'Cormorant', serif;
+      font-weight: 300;
+      font-size: 1.5rem;
+      letter-spacing: 0.12em;
+      color: var(--onyx);
+    }
+    .nav-logo span { color: var(--gold); }
+    .nav-links {
+      display: flex;
+      gap: 3rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.6rem;
+      font-weight: 300;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(21,20,25,0.45);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+
+    .hero {
+      min-height: 100vh;
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    /* LEFT — dark onyx panel */
+    .hero-left {
+      background: var(--onyx);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Marble veins on dark */
+    .hero-left::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(
+          112deg,
+          transparent 0px,
+          transparent 90px,
+          rgba(201,168,76,0.04) 90px,
+          rgba(201,168,76,0.04) 91px
+        ),
+        repeating-linear-gradient(
+          68deg,
+          transparent 0px,
+          transparent 160px,
+          rgba(201,168,76,0.03) 160px,
+          rgba(201,168,76,0.03) 161px
+        );
+      pointer-events: none;
+    }
+
+    /* Gold shimmer */
+    .hero-left::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 40%;
+      background: linear-gradient(to top, rgba(201,168,76,0.06), transparent);
+      pointer-events: none;
+    }
+
+    .hero-left-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .left-eyebrow {
+      font-size: 0.55rem;
+      font-weight: 300;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .left-eyebrow::before {
+      content: '';
+      display: block;
+      width: 2rem;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.5;
+    }
+
+    .left-headline {
+      font-family: 'Cormorant', serif;
+      font-weight: 300;
+      font-size: clamp(3.5rem, 6vw, 5.5rem);
+      line-height: 1.0;
+      color: var(--marble);
+      letter-spacing: 0.01em;
+      margin-bottom: 2.5rem;
+    }
+    .left-headline em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .left-divider {
+      width: 3rem;
+      height: 1px;
+      background: linear-gradient(to right, var(--gold), transparent);
+      margin-bottom: 2rem;
+    }
+
+    .left-tagline {
+      font-size: 0.8rem;
+      font-weight: 200;
+      line-height: 1.85;
+      color: rgba(250,250,248,0.45);
+      max-width: 34ch;
+      margin-bottom: 3rem;
+    }
+
+    .material-pills {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+    .pill {
+      font-size: 0.55rem;
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid rgba(201,168,76,0.3);
+      padding: 0.3rem 0.75rem;
+    }
+
+    /* RIGHT — light marble panel */
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 4rem 4rem;
+      gap: 3rem;
+    }
+
+    .stat-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      border: 1px solid rgba(201,168,76,0.2);
+    }
+    .stat-cell {
+      padding: 1.75rem;
+      border-right: 1px solid rgba(201,168,76,0.15);
+      border-bottom: 1px solid rgba(201,168,76,0.15);
+    }
+    .stat-cell:nth-child(even) { border-right: none; }
+    .stat-cell:nth-last-child(-n+2) { border-bottom: none; }
+    .stat-num {
+      font-family: 'Cormorant', serif;
+      font-size: 2.5rem;
+      font-weight: 300;
+      color: var(--onyx);
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+    .stat-num span { color: var(--gold); font-size: 1.5rem; }
+    .stat-label {
+      font-size: 0.6rem;
+      font-weight: 300;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+
+    .quote-block {
+      border-left: 2px solid var(--gold);
+      padding: 1.25rem 0 1.25rem 1.75rem;
+    }
+    .quote-text {
+      font-family: 'Cormorant', serif;
+      font-size: 1.2rem;
+      font-style: italic;
+      font-weight: 300;
+      line-height: 1.6;
+      color: var(--onyx);
+      margin-bottom: 0.75rem;
+    }
+    .quote-source {
+      font-size: 0.55rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+
+    .cta-area {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .cta-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      background: var(--onyx);
+      color: var(--gold);
+      text-decoration: none;
+      font-size: 0.6rem;
+      font-weight: 300;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      padding: 1.1rem 2rem;
+      border: 1px solid transparent;
+      transition: background 0.3s, border-color 0.3s, color 0.3s;
+    }
+    .cta-btn:hover {
+      background: transparent;
+      border-color: var(--onyx);
+      color: var(--onyx);
+    }
+    .cta-link {
+      text-align: center;
+      font-size: 0.55rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--stone);
+      text-decoration: none;
+    }
+
+    /* Gold corner accent */
+    .corner-gold {
+      position: fixed;
+      bottom: 3rem;
+      left: 4rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .corner-line {
+      width: 2rem;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.4;
+    }
+    .corner-text {
+      font-size: 0.5rem;
+      font-weight: 300;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-logo">Tess<span>è</span>ra</div>
+    <ul class="nav-links">
+      <li><a href="#">Materialien</a></li>
+      <li><a href="#">Referenzen</a></li>
+      <li><a href="#">Manufaktur</a></li>
+      <li><a href="#">Kontakt</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-left">
+      <div class="hero-left-content">
+        <div class="left-eyebrow">Marmor & Naturstein</div>
+        <h1 class="left-headline">
+          Stein.<br>
+          Zeit.<br>
+          <em>Ewigkeit.</em>
+        </h1>
+        <div class="left-divider"></div>
+        <p class="left-tagline">
+          Tessèra fertigt Oberflächen aus den schönsten Natursteinen der Welt.
+          Handwerkliche Perfektion seit drei Generationen.
+        </p>
+        <div class="material-pills">
+          <span class="pill">Carrara</span>
+          <span class="pill">Marquina</span>
+          <span class="pill">Travertin</span>
+          <span class="pill">Onyx</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="stat-row">
+        <div class="stat-cell">
+          <div class="stat-num">40<span>+</span></div>
+          <div class="stat-label">Jahre Erfahrung</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-num">18</div>
+          <div class="stat-label">Steinarten lagernd</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-num">600<span>+</span></div>
+          <div class="stat-label">Realisierte Projekte</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-num">3</div>
+          <div class="stat-label">Generationen</div>
+        </div>
+      </div>
+
+      <div class="quote-block">
+        <div class="quote-text">
+          „Marmor ist geronnene Zeit —<br>jede Ader ein Jahrmillionen-Gedicht."
+        </div>
+        <div class="quote-source">Anton Tessèra, Gründer · 1983</div>
+      </div>
+
+      <div class="cta-area">
+        <a href="#" class="cta-btn">Beratungstermin vereinbaren</a>
+        <a href="#" class="cta-link">Materialien ansehen →</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="corner-gold">
+    <div class="corner-line"></div>
+    <div class="corner-text">Tessèra · Trier · Naturstein Manufaktur</div>
+  </div>
+</body>
+</html>

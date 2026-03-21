@@ -1,0 +1,397 @@
+---
+export const prerender = true;
+---
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Presswerk — Risodruck & Buchbinderei | Trier-Nord</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { overflow-x: hidden; }
+
+    :root {
+      --paper: #F2E8D5;
+      --navy: #1A2744;
+      --red: #C4392D;
+      --ink-faint: rgba(26,39,68,0.08);
+    }
+
+    body {
+      overflow-x: hidden;
+      background: var(--paper);
+      color: var(--navy);
+      font-family: 'Libre Baskerville', Georgia, serif;
+      min-height: 100vh;
+    }
+
+    /* Paper grain */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 200px 200px;
+      pointer-events: none;
+      z-index: 0;
+      mix-blend-mode: multiply;
+    }
+
+    /* Aged edge burn */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 0% 0%, rgba(100,70,20,0.12) 0%, transparent 50%),
+        radial-gradient(ellipse at 100% 100%, rgba(100,70,20,0.1) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, transparent 60%, rgba(100,70,20,0.06) 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 3.5rem;
+      border-bottom: 2px solid var(--navy);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: 1.1rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--navy);
+    }
+    .nav-logo span { color: var(--red); }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 0.65rem;
+      font-style: italic;
+      color: rgba(26,39,68,0.6);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--red); }
+
+    .hero {
+      min-height: 100vh;
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 6rem 3.5rem 3.5rem;
+    }
+
+    /* Registration marks (riso style) */
+    .reg-mark {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+    }
+    .reg-mark::before, .reg-mark::after {
+      content: '';
+      position: absolute;
+      background: var(--navy);
+      opacity: 0.2;
+    }
+    .reg-mark::before { width: 1px; height: 100%; left: 50%; }
+    .reg-mark::after { width: 100%; height: 1px; top: 50%; }
+    .reg-mark.tl { top: 2rem; left: 2rem; }
+    .reg-mark.tr { top: 2rem; right: 2rem; }
+    .reg-mark.bl { bottom: 2rem; left: 2rem; }
+    .reg-mark.br { bottom: 2rem; right: 2rem; }
+
+    /* Issue number + date band */
+    .issue-band {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--navy);
+      margin-bottom: 3rem;
+    }
+    .issue-num {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--red);
+    }
+    .issue-line {
+      flex: 1;
+      height: 1px;
+      background: var(--navy);
+      opacity: 0.15;
+    }
+    .issue-date {
+      font-size: 0.6rem;
+      letter-spacing: 0.16em;
+      color: rgba(26,39,68,0.45);
+      font-style: italic;
+    }
+
+    /* Main headline area */
+    .headline-area {
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 4rem;
+      align-items: start;
+      flex: 1;
+    }
+
+    .headline-main {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    /* Riso color ghost effect */
+    .headline-ghost {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: clamp(4rem, 10vw, 9rem);
+      line-height: 0.85;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(196,57,45,0.18);
+      position: absolute;
+      top: 0;
+      left: 3px;
+      pointer-events: none;
+    }
+    .headline-wrap {
+      position: relative;
+    }
+    .headline-text {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: clamp(4rem, 10vw, 9rem);
+      line-height: 0.85;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      color: var(--navy);
+      position: relative;
+    }
+    .headline-text .accent { color: var(--red); }
+
+    .sub-copy {
+      font-size: 0.9rem;
+      font-style: italic;
+      line-height: 1.75;
+      color: rgba(26,39,68,0.65);
+      max-width: 38ch;
+      border-left: 3px solid var(--red);
+      padding-left: 1.25rem;
+    }
+
+    /* Right column */
+    .side-col {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      padding-top: 0.5rem;
+    }
+
+    .stamp-box {
+      border: 2px solid var(--navy);
+      padding: 1.5rem;
+      text-align: center;
+      position: relative;
+    }
+    .stamp-box::before {
+      content: '';
+      position: absolute;
+      inset: 3px;
+      border: 1px solid var(--navy);
+      opacity: 0.3;
+    }
+    .stamp-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 0.75rem;
+    }
+    .stamp-name {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: 1.8rem;
+      color: var(--navy);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .stamp-sub {
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(26,39,68,0.45);
+    }
+
+    .info-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 1px dashed rgba(26,39,68,0.2);
+      padding-bottom: 0.6rem;
+      font-size: 0.7rem;
+    }
+    .info-key {
+      font-style: italic;
+      color: rgba(26,39,68,0.5);
+    }
+    .info-val {
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .cta-btn {
+      display: block;
+      text-align: center;
+      background: var(--navy);
+      color: var(--paper);
+      text-decoration: none;
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-style: italic;
+      font-size: 0.85rem;
+      padding: 1rem;
+      letter-spacing: 0.04em;
+      transition: background 0.3s;
+    }
+    .cta-btn:hover { background: var(--red); }
+
+    /* Bottom colophon */
+    .colophon {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 2rem;
+      border-top: 2px solid var(--navy);
+      margin-top: 3rem;
+    }
+    .colophon-text {
+      font-size: 0.55rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(26,39,68,0.4);
+      font-style: italic;
+    }
+    .colophon-riso {
+      display: flex;
+      gap: 0.4rem;
+    }
+    .riso-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      opacity: 0.6;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-logo">Press<span>werk</span></div>
+    <ul class="nav-links">
+      <li><a href="#">Risodruck</a></li>
+      <li><a href="#">Buchbinderei</a></li>
+      <li><a href="#">Auflagen</a></li>
+      <li><a href="#">Kontakt</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <div class="reg-mark tl"></div>
+    <div class="reg-mark tr"></div>
+    <div class="reg-mark bl"></div>
+    <div class="reg-mark br"></div>
+
+    <div class="issue-band">
+      <div class="issue-num">Ausgabe No. 001 — Trier-Nord</div>
+      <div class="issue-line"></div>
+      <div class="issue-date">Seit 1987 im Druck</div>
+    </div>
+
+    <div class="headline-area">
+      <div class="headline-main">
+        <div class="headline-wrap">
+          <div class="headline-ghost">Druck<br>sachen</div>
+          <h1 class="headline-text">
+            Druck<br>
+            <span class="accent">sachen.</span>
+          </h1>
+        </div>
+
+        <p class="sub-copy">
+          Risografiedruck, Buchdruck, Letterpress. Wir drucken, was bleibt —
+          auf Papier, das man spürt. Kleine Auflagen, große Wirkung.
+          Gedruckt. Handgemacht. Echt.
+        </p>
+      </div>
+
+      <div class="side-col">
+        <div class="stamp-box">
+          <div class="stamp-title">Druckerei</div>
+          <div class="stamp-name">Presswerk</div>
+          <div class="stamp-sub">Trier-Nord · Est. 1987</div>
+        </div>
+
+        <div class="info-list">
+          <div class="info-row">
+            <span class="info-key">Verfahren</span>
+            <span class="info-val">Risodruck</span>
+          </div>
+          <div class="info-row">
+            <span class="info-key">Mindestauflage</span>
+            <span class="info-val">25 Stück</span>
+          </div>
+          <div class="info-row">
+            <span class="info-key">Papier</span>
+            <span class="info-val">Recycling & Munken</span>
+          </div>
+          <div class="info-row">
+            <span class="info-key">Lieferzeit</span>
+            <span class="info-val">7–14 Werktage</span>
+          </div>
+        </div>
+
+        <a href="#" class="cta-btn">Druckauftrag anfragen</a>
+      </div>
+    </div>
+
+    <div class="colophon">
+      <span class="colophon-text">Presswerk GmbH · Trier-Nord · Risodruck & Buchbinderei seit 1987</span>
+      <div class="colophon-riso">
+        <div class="riso-dot" style="background:#C4392D"></div>
+        <div class="riso-dot" style="background:#1A2744"></div>
+        <div class="riso-dot" style="background:#F5C842"></div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

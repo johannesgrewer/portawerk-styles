@@ -1,0 +1,415 @@
+---
+export const prerender = true;
+---
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Zuckerwatte — Konditorei & Bubble Tea | Trier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Nunito:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { overflow-x: hidden; }
+
+    :root {
+      --pink: #FF6B9D;
+      --mint: #7EC8E3;
+      --yellow: #FFE566;
+      --lavender: #C5A8D4;
+      --bg: #FFF5FC;
+      --dark: #3D1A2E;
+    }
+
+    body {
+      overflow-x: hidden;
+      background: var(--bg);
+      color: var(--dark);
+      font-family: 'Nunito', sans-serif;
+      min-height: 100vh;
+    }
+
+    /* Polka dot background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(255,107,157,0.12) 2px, transparent 2px);
+      background-size: 32px 32px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Floating blobs */
+    .blob {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(60px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .blob-1 {
+      width: 400px; height: 400px;
+      background: rgba(255,107,157,0.15);
+      top: -100px; right: -100px;
+    }
+    .blob-2 {
+      width: 300px; height: 300px;
+      background: rgba(126,200,227,0.18);
+      bottom: -80px; left: -80px;
+    }
+    .blob-3 {
+      width: 250px; height: 250px;
+      background: rgba(255,229,102,0.2);
+      top: 40%; left: 30%;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 3rem;
+      background: rgba(255,245,252,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 2px solid rgba(255,107,157,0.15);
+    }
+    .nav-logo {
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 600;
+      font-size: 1.4rem;
+      color: var(--pink);
+      letter-spacing: 0.02em;
+    }
+    .nav-logo span { color: var(--lavender); }
+    .nav-links {
+      display: flex;
+      gap: 0.4rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--dark);
+      text-decoration: none;
+      padding: 0.4rem 1rem;
+      border-radius: 50px;
+      transition: background 0.2s, color 0.2s;
+      opacity: 0.6;
+    }
+    .nav-links a:hover {
+      background: rgba(255,107,157,0.12);
+      color: var(--pink);
+      opacity: 1;
+    }
+
+    .hero {
+      min-height: 100vh;
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      padding: 6rem 4rem 4rem;
+      gap: 4rem;
+    }
+
+    /* LEFT */
+    .hero-left {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255,107,157,0.12);
+      border: 1.5px solid rgba(255,107,157,0.25);
+      border-radius: 50px;
+      padding: 0.4rem 1rem;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--pink);
+      width: fit-content;
+    }
+    .badge::before { content: '✨'; font-size: 0.8rem; }
+
+    .hero-headline {
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 700;
+      font-size: clamp(3rem, 6.5vw, 5.5rem);
+      line-height: 1.05;
+      color: var(--dark);
+    }
+    .hero-headline .pink { color: var(--pink); }
+    .hero-headline .mint { color: var(--mint); }
+    .hero-headline .yellow-text {
+      color: var(--dark);
+      background: var(--yellow);
+      padding: 0 0.2em;
+      border-radius: 6px;
+    }
+
+    .hero-sub {
+      font-size: 0.95rem;
+      font-weight: 300;
+      line-height: 1.8;
+      color: rgba(61,26,46,0.6);
+      max-width: 38ch;
+    }
+
+    /* Flavor pills */
+    .flavor-row {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+    .flavor-pill {
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.45rem 1.1rem;
+      border-radius: 50px;
+      border: 2px solid;
+    }
+    .fp-pink  { color: var(--pink);    border-color: rgba(255,107,157,0.35); background: rgba(255,107,157,0.08); }
+    .fp-mint  { color: #3AABBF;        border-color: rgba(126,200,227,0.4);  background: rgba(126,200,227,0.1);  }
+    .fp-lav   { color: #9B6BB5;        border-color: rgba(197,168,212,0.4);  background: rgba(197,168,212,0.1);  }
+    .fp-yel   { color: #B8900A;        border-color: rgba(255,229,102,0.5);  background: rgba(255,229,102,0.15); }
+
+    .cta-row {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+    }
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--pink);
+      color: #fff;
+      text-decoration: none;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      padding: 0.9rem 2rem;
+      border-radius: 50px;
+      box-shadow: 0 8px 24px rgba(255,107,157,0.3);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(255,107,157,0.4);
+    }
+    .cta-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: white;
+      color: var(--dark);
+      text-decoration: none;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      padding: 0.9rem 2rem;
+      border-radius: 50px;
+      border: 2px solid rgba(61,26,46,0.12);
+      transition: border-color 0.2s;
+    }
+    .cta-secondary:hover { border-color: var(--pink); }
+
+    /* RIGHT — menu card */
+    .hero-right {
+      width: 340px;
+      flex-shrink: 0;
+    }
+
+    .menu-card {
+      background: white;
+      border-radius: 24px;
+      padding: 2rem;
+      box-shadow:
+        0 4px 24px rgba(255,107,157,0.1),
+        0 1px 4px rgba(0,0,0,0.04);
+      border: 1.5px solid rgba(255,107,157,0.1);
+    }
+    .menu-card-title {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--dark);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .menu-section {
+      margin-bottom: 1.25rem;
+    }
+    .menu-section-label {
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--pink);
+      margin-bottom: 0.6rem;
+    }
+    .menu-item-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.45rem 0;
+      border-bottom: 1px solid rgba(61,26,46,0.05);
+    }
+    .menu-item-row:last-child { border-bottom: none; }
+    .menu-item-name {
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: rgba(61,26,46,0.75);
+    }
+    .menu-item-price {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--pink);
+    }
+
+    .rating-row {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid rgba(61,26,46,0.06);
+      margin-top: 0.5rem;
+    }
+    .stars { color: var(--yellow); font-size: 0.85rem; }
+    .rating-text {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--dark);
+    }
+    .rating-sub {
+      font-size: 0.65rem;
+      color: rgba(61,26,46,0.4);
+    }
+
+    /* Floating decorations */
+    .deco {
+      position: fixed;
+      font-size: 2.5rem;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.25;
+      animation: floatDeco 6s ease-in-out infinite;
+    }
+    .deco-1 { top: 15%; left: 8%;  animation-delay: 0s; }
+    .deco-2 { top: 70%; right: 5%; animation-delay: 2s; }
+    .deco-3 { top: 40%; left: 50%; animation-delay: 4s; font-size: 1.5rem; opacity: 0.15; }
+    @keyframes floatDeco {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50%       { transform: translateY(-12px) rotate(5deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+  <div class="deco deco-1">🍬</div>
+  <div class="deco deco-2">🧋</div>
+  <div class="deco deco-3">✨</div>
+
+  <nav>
+    <div class="nav-logo">Zucker<span>watte</span></div>
+    <ul class="nav-links">
+      <li><a href="#">Torten</a></li>
+      <li><a href="#">Bubble Tea</a></li>
+      <li><a href="#">Cake Pops</a></li>
+      <li><a href="#">Bestellen</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-left">
+      <div class="badge">Neu in Trier · Fußgängerzone</div>
+
+      <h1 class="hero-headline">
+        <span class="pink">Süß.</span><br>
+        <span class="mint">Sauer.</span><br>
+        <span class="yellow-text">Unver&shy;gesslich.</span>
+      </h1>
+
+      <p class="hero-sub">
+        Handgemachte Torten, Macarons & Bubble Tea direkt aus unserer Küche.
+        Alles mit Liebe gemacht — nichts von der Stange.
+      </p>
+
+      <div class="flavor-row">
+        <span class="flavor-pill fp-pink">Erdbeer Cheesecake</span>
+        <span class="flavor-pill fp-mint">Matcha Latte</span>
+        <span class="flavor-pill fp-lav">Lavendel Macaron</span>
+        <span class="flavor-pill fp-yel">Zitrone Tarte</span>
+      </div>
+
+      <div class="cta-row">
+        <a href="#" class="cta-btn">Jetzt bestellen 🎂</a>
+        <a href="#" class="cta-secondary">Zur Karte →</a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="menu-card">
+        <div class="menu-card-title">🧁 Unsere Highlights</div>
+
+        <div class="menu-section">
+          <div class="menu-section-label">Torten & Törtchen</div>
+          <div class="menu-item-row">
+            <span class="menu-item-name">Erdbeer-Sahne Torte</span>
+            <span class="menu-item-price">4,80 €</span>
+          </div>
+          <div class="menu-item-row">
+            <span class="menu-item-name">Schokoladen-Traum</span>
+            <span class="menu-item-price">4,50 €</span>
+          </div>
+          <div class="menu-item-row">
+            <span class="menu-item-name">Macarons (3er Box)</span>
+            <span class="menu-item-price">5,20 €</span>
+          </div>
+        </div>
+
+        <div class="menu-section">
+          <div class="menu-section-label">Bubble Tea</div>
+          <div class="menu-item-row">
+            <span class="menu-item-name">Brown Sugar Milk Tea</span>
+            <span class="menu-item-price">5,90 €</span>
+          </div>
+          <div class="menu-item-row">
+            <span class="menu-item-name">Taro Milk Tea</span>
+            <span class="menu-item-price">5,90 €</span>
+          </div>
+          <div class="menu-item-row">
+            <span class="menu-item-name">Matcha Latte (kalt)</span>
+            <span class="menu-item-price">5,50 €</span>
+          </div>
+        </div>
+
+        <div class="rating-row">
+          <span class="stars">★★★★★</span>
+          <span class="rating-text">4,9</span>
+          <span class="rating-sub">· 284 Bewertungen</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

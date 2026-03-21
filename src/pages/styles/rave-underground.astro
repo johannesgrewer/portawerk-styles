@@ -1,0 +1,365 @@
+---
+export const prerender = true;
+---
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Keller — Underground Club | Trier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { overflow-x: hidden; }
+
+    :root {
+      --red:   #FF2D55;
+      --white: #FFFFFF;
+      --black: #000000;
+    }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Space Mono', monospace;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Strobe line effect */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 3px,
+        rgba(255,255,255,0.01) 3px,
+        rgba(255,255,255,0.01) 4px
+      );
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 3rem;
+      background: var(--black);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .nav-logo {
+      font-family: 'Anton', sans-serif;
+      font-size: 1.3rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+    .nav-logo span { color: var(--red); }
+    .nav-links {
+      display: flex;
+      gap: 0;
+      list-style: none;
+    }
+    .nav-links a {
+      display: block;
+      padding: 0.6rem 1.25rem;
+      font-size: 0.52rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+      text-decoration: none;
+      border-right: 1px solid rgba(255,255,255,0.06);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-tickets {
+      font-family: 'Anton', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--black);
+      background: var(--white);
+      padding: 0.6rem 1.4rem;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .nav-tickets:hover { background: var(--red); color: var(--white); }
+
+    .hero {
+      min-height: 100vh;
+      padding-top: 57px;
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Big headline section */
+    .headline-section {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      padding: 3rem 3.5rem;
+      gap: 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .hero-headline {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(5rem, 14vw, 12rem);
+      line-height: 0.88;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      color: var(--white);
+      flex: 1;
+    }
+    .hero-headline .red { color: var(--red); }
+    .hero-headline .outline {
+      -webkit-text-stroke: 2px rgba(255,255,255,0.25);
+      color: transparent;
+    }
+
+    .side-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      width: 280px;
+      padding-left: 3rem;
+      border-left: 1px solid rgba(255,255,255,0.06);
+    }
+    .si-label {
+      font-size: 0.5rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.2);
+      margin-bottom: 0.4rem;
+    }
+    .si-value {
+      font-family: 'Anton', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.06em;
+      color: var(--white);
+      line-height: 1.2;
+    }
+    .si-sub {
+      font-size: 0.62rem;
+      color: rgba(255,255,255,0.35);
+      margin-top: 0.2rem;
+      line-height: 1.5;
+    }
+
+    /* Event list section */
+    .events-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .event-col {
+      padding: 2rem 2.5rem;
+      border-right: 1px solid rgba(255,255,255,0.06);
+    }
+    .event-col:last-child { border-right: none; }
+
+    .ev-date {
+      font-size: 0.52rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 0.5rem;
+    }
+    .ev-name {
+      font-family: 'Anton', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 0.4rem;
+    }
+    .ev-artist {
+      font-size: 0.65rem;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 0.75rem;
+    }
+    .ev-tags {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+    .ev-tag {
+      font-size: 0.5rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.18rem 0.5rem;
+      border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.3);
+    }
+
+    /* Bottom bar */
+    .bottom-bar {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      padding: 1.5rem 3.5rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,45,85,0.04);
+    }
+    .bb-text {
+      font-size: 0.62rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+    }
+    .bb-cta {
+      font-family: 'Anton', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--black);
+      background: var(--white);
+      padding: 0.75rem 2rem;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .bb-cta:hover { background: var(--red); color: var(--white); }
+    /* === Animations & Micro-interactions === */
+    @keyframes scanPulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.55; }
+    }
+    @keyframes redGlow {
+      0%, 100% { text-shadow: none; }
+      50% { text-shadow: 0 0 30px rgba(255,45,85,0.55), 0 0 60px rgba(255,45,85,0.2); }
+    }
+    @keyframes shimmerSlide {
+      0% { left: -60%; }
+      100% { left: 140%; }
+    }
+
+    body::before { animation: scanPulse 5s ease-in-out infinite; }
+
+    .hero-headline .red { animation: redGlow 3.5s ease-in-out infinite; }
+
+    .event-col {
+      border-top: 2px solid transparent;
+      transition: background 0.3s, border-top-color 0.3s;
+    }
+    .event-col:hover {
+      background: rgba(255,45,85,0.05);
+      border-top-color: var(--red);
+    }
+    .ev-name { transition: letter-spacing 0.3s; }
+    .event-col:hover .ev-name { letter-spacing: 0.08em; }
+
+    .nav-tickets {
+      position: relative;
+      overflow: hidden;
+    }
+    .nav-tickets::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -60%;
+      width: 40%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,45,85,0.25), transparent);
+      animation: shimmerSlide 3s ease-in-out infinite 1s;
+    }
+
+    .ev-tag { transition: background 0.2s, color 0.2s, border-color 0.2s; }
+    .ev-tag:hover {
+      background: rgba(255,45,85,0.12);
+      color: var(--red);
+      border-color: rgba(255,45,85,0.25);
+    }
+
+    .hero-headline .outline { transition: -webkit-text-stroke-color 0.4s; }
+    .hero-headline .outline:hover { -webkit-text-stroke-color: rgba(255,255,255,0.5); }
+
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-logo">KE<span>LL</span>ER</div>
+    <ul class="nav-links">
+      <li><a href="#">Events</a></li>
+      <li><a href="#">Artists</a></li>
+      <li><a href="#">Location</a></li>
+      <li><a href="#">Booking</a></li>
+    </ul>
+    <a href="#" class="nav-tickets">Tickets</a>
+  </nav>
+
+  <section class="hero">
+    <div class="headline-section">
+      <h1 class="hero-headline">
+        <span class="outline">UN</span><br>
+        TEN<br>
+        <span class="red">IST</span><br>
+        OBEN.
+      </h1>
+
+      <div class="side-info">
+        <div>
+          <div class="si-label">Location</div>
+          <div class="si-value">Keller B3</div>
+          <div class="si-sub">Untergeschoss · Trier Hafen<br>Eingang Industriestraße 9</div>
+        </div>
+        <div>
+          <div class="si-label">Kapazität</div>
+          <div class="si-value">350 Personen</div>
+          <div class="si-sub">Hauptfloor + Außenbereich</div>
+        </div>
+        <div>
+          <div class="si-label">Türöffnung</div>
+          <div class="si-value">23:00 Uhr</div>
+          <div class="si-sub">Bis die Sonne aufgeht</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="events-section">
+      <div class="event-col">
+        <div class="ev-date">Fr 14.03.</div>
+        <div class="ev-name">Tekk Nacht Vol. 9</div>
+        <div class="ev-artist">Kobayashi b2b Renate · DJ Messer</div>
+        <div class="ev-tags">
+          <span class="ev-tag">Techno</span>
+          <span class="ev-tag">Industrial</span>
+        </div>
+      </div>
+      <div class="event-col">
+        <div class="ev-date">Sa 22.03.</div>
+        <div class="ev-name">Acid Rain</div>
+        <div class="ev-artist">Klaudia Kraft · Lützenkirchen</div>
+        <div class="ev-tags">
+          <span class="ev-tag">Acid</span>
+          <span class="ev-tag">303</span>
+        </div>
+      </div>
+      <div class="event-col">
+        <div class="ev-date">Fr 04.04.</div>
+        <div class="ev-name">Black Room</div>
+        <div class="ev-artist">Residents Only · Keine Gäste</div>
+        <div class="ev-tags">
+          <span class="ev-tag">Minimal</span>
+          <span class="ev-tag">Private</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-bar">
+      <div class="bb-text">Mitglied werden · Presale-Zugang · Keine Warteschlange</div>
+      <a href="#" class="bb-cta">Tickets kaufen →</a>
+    </div>
+  </section>
+</body>
+</html>

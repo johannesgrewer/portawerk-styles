@@ -1,0 +1,388 @@
+---
+export const prerender = true;
+---
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Neon Drive — Music & Event Production | Trier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@200;300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { overflow-x: hidden; }
+
+    :root {
+      --magenta: #FF00FF;
+      --cyan:    #00FFFF;
+      --purple:  #7B00FF;
+      --bg:      #0D001A;
+      --mid:     #130025;
+    }
+
+    body {
+      background: var(--bg);
+      color: #FFFFFF;
+      font-family: 'Exo 2', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Retro grid floor */
+    body::before {
+      content: '';
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 45vh;
+      background:
+        linear-gradient(to bottom, transparent 0%, rgba(255,0,255,0.08) 100%),
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent calc(8vw - 1px),
+          rgba(255,0,255,0.18) calc(8vw - 1px),
+          rgba(255,0,255,0.18) 8vw
+        ),
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent calc(8vw - 1px),
+          rgba(255,0,255,0.12) calc(8vw - 1px),
+          rgba(255,0,255,0.12) 8vw
+        );
+      transform: perspective(400px) rotateX(35deg);
+      transform-origin: bottom center;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Scanlines */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 3px,
+        rgba(0,0,0,0.08) 3px,
+        rgba(0,0,0,0.08) 4px
+      );
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Sun / horizon */
+    .retro-sun {
+      position: fixed;
+      bottom: 44vh;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 220px;
+      height: 110px;
+      border-radius: 110px 110px 0 0;
+      background: linear-gradient(to bottom, #FF6600, #FF00FF, #7B00FF);
+      overflow: hidden;
+      z-index: 0;
+    }
+    .retro-sun::before,
+    .retro-sun::after,
+    .sun-line1,
+    .sun-line2,
+    .sun-line3 {
+      content: '';
+      position: absolute;
+      left: 0; right: 0;
+      height: 6px;
+      background: var(--bg);
+    }
+    .retro-sun::before { bottom: 72px; }
+    .retro-sun::after  { bottom: 52px; }
+    .sun-line1 { bottom: 36px; height: 5px; }
+    .sun-line2 { bottom: 23px; height: 4px; }
+    .sun-line3 { bottom: 13px; height: 3px; }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 3rem;
+      background: rgba(13,0,26,0.85);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,0,255,0.2);
+    }
+    .nav-logo {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      font-size: 1.2rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: linear-gradient(90deg, var(--magenta), var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 8px rgba(255,0,255,0.5));
+    }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.6rem;
+      font-weight: 300;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      text-decoration: none;
+      transition: color 0.2s, text-shadow 0.2s;
+    }
+    .nav-links a:hover {
+      color: var(--cyan);
+      text-shadow: 0 0 8px rgba(0,255,255,0.6);
+    }
+    .nav-btn {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--magenta);
+      padding: 0.55rem 1.25rem;
+      text-decoration: none;
+      box-shadow: 0 0 16px rgba(255,0,255,0.4);
+      transition: box-shadow 0.2s;
+    }
+    .nav-btn:hover { box-shadow: 0 0 30px rgba(255,0,255,0.7); }
+
+    .hero {
+      min-height: 100vh;
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 8rem 3rem 16rem;
+      text-align: center;
+      gap: 2rem;
+    }
+
+    .eyebrow {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.55rem;
+      font-weight: 400;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      text-shadow: 0 0 12px rgba(0,255,255,0.7);
+    }
+
+    .hero-headline {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      font-size: clamp(3rem, 9vw, 7.5rem);
+      line-height: 0.92;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .glow-mag {
+      display: block;
+      color: var(--magenta);
+      text-shadow:
+        0 0 20px rgba(255,0,255,0.9),
+        0 0 40px rgba(255,0,255,0.5),
+        0 0 80px rgba(255,0,255,0.25);
+    }
+    .glow-cyan {
+      display: block;
+      color: var(--cyan);
+      text-shadow:
+        0 0 20px rgba(0,255,255,0.9),
+        0 0 40px rgba(0,255,255,0.5),
+        0 0 80px rgba(0,255,255,0.25);
+    }
+    .glow-white {
+      display: block;
+      color: #FFFFFF;
+      text-shadow: 0 0 30px rgba(255,255,255,0.3);
+    }
+
+    .hero-sub {
+      font-size: 0.82rem;
+      font-weight: 200;
+      line-height: 1.9;
+      color: rgba(255,255,255,0.45);
+      max-width: 42ch;
+    }
+
+    /* Genre tags */
+    .genre-tags {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .genre-tag {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.5rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.9rem;
+      border: 1px solid;
+    }
+    .gt-mag   { color: var(--magenta); border-color: rgba(255,0,255,0.35); }
+    .gt-cyan  { color: var(--cyan);    border-color: rgba(0,255,255,0.35);  }
+    .gt-purp  { color: #BF80FF;        border-color: rgba(123,0,255,0.4);   }
+
+    .cta-row {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+    .cta-btn {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: linear-gradient(90deg, var(--magenta), var(--purple));
+      text-decoration: none;
+      padding: 0.9rem 2.5rem;
+      box-shadow:
+        0 0 24px rgba(255,0,255,0.4),
+        inset 0 1px 0 rgba(255,255,255,0.15);
+      transition: box-shadow 0.2s;
+    }
+    .cta-btn:hover { box-shadow: 0 0 40px rgba(255,0,255,0.65); }
+    .cta-link {
+      font-size: 0.6rem;
+      font-weight: 200;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .cta-link:hover { color: var(--cyan); }
+
+    /* Stats row */
+    .stats-row {
+      display: flex;
+      gap: 4rem;
+      margin-top: 1rem;
+    }
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    .stat-num {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      font-size: 1.8rem;
+      line-height: 1;
+      color: var(--magenta);
+      text-shadow: 0 0 14px rgba(255,0,255,0.6);
+    }
+    .stat-label {
+      font-size: 0.5rem;
+      font-weight: 200;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+    }
+
+    /* Corner coords */
+    .corner {
+      position: fixed;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.42rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      color: rgba(255,0,255,0.25);
+      text-transform: uppercase;
+      z-index: 10;
+    }
+    .corner.tl { top: 5rem; left: 2rem; }
+    .corner.tr { top: 5rem; right: 2rem; }
+  </style>
+</head>
+<body>
+  <div class="retro-sun">
+    <div class="sun-line1"></div>
+    <div class="sun-line2"></div>
+    <div class="sun-line3"></div>
+  </div>
+
+  <div class="corner tl">SYN-TRW-001</div>
+  <div class="corner tr">TRIER · 2024</div>
+
+  <nav>
+    <div class="nav-logo">Neon Drive</div>
+    <ul class="nav-links">
+      <li><a href="#">Events</a></li>
+      <li><a href="#">Artists</a></li>
+      <li><a href="#">Studio</a></li>
+      <li><a href="#">Merch</a></li>
+    </ul>
+    <a href="#" class="nav-btn">Tickets</a>
+  </nav>
+
+  <section class="hero">
+    <div class="eyebrow">Music & Event Production · Trier</div>
+
+    <h1 class="hero-headline">
+      <span class="glow-mag">Neon</span>
+      <span class="glow-white">Drive</span>
+      <span class="glow-cyan">Records</span>
+    </h1>
+
+    <p class="hero-sub">
+      Synthwave. Retrowave. Darksynth.<br>
+      Wir produzieren Klänge aus einer Zukunft,<br>
+      die nie stattgefunden hat.
+    </p>
+
+    <div class="genre-tags">
+      <span class="genre-tag gt-mag">Synthwave</span>
+      <span class="genre-tag gt-cyan">Retrowave</span>
+      <span class="genre-tag gt-purp">Darksynth</span>
+      <span class="genre-tag gt-mag">Outrun</span>
+      <span class="genre-tag gt-cyan">Lo-Fi</span>
+    </div>
+
+    <div class="cta-row">
+      <a href="#" class="cta-btn">Nächste Show →</a>
+      <a href="#" class="cta-link">Releases hören →</a>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-item">
+        <div class="stat-num">47</div>
+        <div class="stat-label">Shows / Jahr</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">12</div>
+        <div class="stat-label">Releases</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">6</div>
+        <div class="stat-label">Artists</div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

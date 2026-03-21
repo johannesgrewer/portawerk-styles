@@ -1,0 +1,289 @@
+---
+export const prerender = true;
+---
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Void — Film & Bildproduktion | Trier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { overflow-x: hidden; }
+    body {
+      background: #050505;
+      color: #FFFFF0;
+      font-family: 'Jost', system-ui, sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Single grain layer */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      background-size: 300px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 2.5rem 4rem;
+    }
+    .nav-logo {
+      font-family: 'Cormorant', serif;
+      font-weight: 300;
+      font-size: 1.2rem;
+      letter-spacing: 0.45em;
+      text-transform: uppercase;
+      color: #FFFFF0;
+    }
+    .nav-links {
+      display: flex;
+      gap: 3rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.55rem;
+      font-weight: 200;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(255,255,240,0.3);
+      text-decoration: none;
+      transition: color 0.4s;
+    }
+    .nav-links a:hover { color: #E8D5B0; }
+
+    .hero {
+      min-height: 100vh;
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 8rem 4rem 4rem;
+      text-align: center;
+    }
+
+    /* Single subtle gold line */
+    .accent-line {
+      width: 1px;
+      height: 80px;
+      background: linear-gradient(to bottom, transparent, #E8D5B0, transparent);
+      margin: 0 auto 4rem;
+    }
+
+    .eyebrow {
+      font-size: 0.55rem;
+      font-weight: 200;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: #E8D5B0;
+      margin-bottom: 3rem;
+    }
+
+    .hero-headline {
+      font-family: 'Cormorant', serif;
+      font-weight: 300;
+      font-size: clamp(3.5rem, 8vw, 7rem);
+      line-height: 1.05;
+      color: #FFFFF0;
+      letter-spacing: 0.02em;
+      margin-bottom: 3rem;
+    }
+    .hero-headline em {
+      font-style: italic;
+      color: #E8D5B0;
+    }
+
+    .divider-row {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+    .divider-line {
+      flex: 1;
+      max-width: 80px;
+      height: 1px;
+      background: rgba(232,213,176,0.3);
+    }
+    .divider-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #E8D5B0;
+    }
+
+    .hero-body {
+      font-size: 0.85rem;
+      font-weight: 200;
+      line-height: 2;
+      color: rgba(255,255,240,0.4);
+      max-width: 38ch;
+      margin-bottom: 4rem;
+    }
+
+    .cta-area {
+      display: flex;
+      align-items: center;
+      gap: 3rem;
+    }
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      text-decoration: none;
+      color: #050505;
+      background: #E8D5B0;
+      font-size: 0.55rem;
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      padding: 1rem 2.5rem;
+      transition: background 0.3s, color 0.3s;
+    }
+    .cta-btn:hover { background: #FFFFF0; }
+    .cta-link {
+      font-size: 0.55rem;
+      font-weight: 200;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(255,255,240,0.3);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .cta-link:hover { color: #E8D5B0; }
+
+    /* Formats row */
+    .formats {
+      position: fixed;
+      bottom: 3rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 2.5rem;
+      align-items: center;
+    }
+    .format-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .format-icon {
+      width: 28px;
+      height: 28px;
+      border: 1px solid rgba(232,213,176,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .format-icon svg { width: 12px; height: 12px; opacity: 0.4; }
+    .format-label {
+      font-size: 0.45rem;
+      font-weight: 200;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,240,0.2);
+    }
+
+    /* Corner coords */
+    .corner {
+      position: fixed;
+      font-size: 0.45rem;
+      font-weight: 200;
+      letter-spacing: 0.2em;
+      color: rgba(255,255,240,0.15);
+      text-transform: uppercase;
+    }
+    .corner.tl { top: 2rem; left: 3rem; }
+    .corner.tr { top: 2rem; right: 3rem; }
+    .corner.bl { bottom: 2rem; left: 3rem; }
+    .corner.br { bottom: 2rem; right: 3rem; }
+  </style>
+</head>
+<body>
+  <div class="corner tl">49°45'N</div>
+  <div class="corner tr">06°38'E</div>
+  <div class="corner bl">Trier · DE</div>
+  <div class="corner br">Est. 2019</div>
+
+  <nav>
+    <div class="nav-logo">Void</div>
+    <ul class="nav-links">
+      <li><a href="#">Film</a></li>
+      <li><a href="#">Fotografie</a></li>
+      <li><a href="#">Konzept</a></li>
+      <li><a href="#">Kontakt</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <div class="accent-line"></div>
+    <div class="eyebrow">Film & Bildproduktion · Trier</div>
+
+    <h1 class="hero-headline">
+      Das Bild<br>
+      sagt <em>alles.</em>
+    </h1>
+
+    <div class="divider-row">
+      <div class="divider-line"></div>
+      <div class="divider-dot"></div>
+      <div class="divider-line"></div>
+    </div>
+
+    <p class="hero-body">
+      Void produziert Bilder und Filme, die bleiben.
+      Keine Überzeugungsarbeit. Kein Lärm.
+      Nur das, was zählt — in seiner reinsten Form.
+    </p>
+
+    <div class="cta-area">
+      <a href="#" class="cta-btn">Anfrage stellen</a>
+      <a href="#" class="cta-link">Arbeiten sehen →</a>
+    </div>
+  </section>
+
+  <div class="formats">
+    <div class="format-item">
+      <div class="format-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="15" rx="2"/><path d="M16 3l-4 4-4-4"/></svg>
+      </div>
+      <span class="format-label">Cinema</span>
+    </div>
+    <div class="format-item">
+      <div class="format-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M9 9h.01M15 9h.01M9 15c.83 1 2.17 1 3 0"/></svg>
+      </div>
+      <span class="format-label">Portrait</span>
+    </div>
+    <div class="format-item">
+      <div class="format-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+      </div>
+      <span class="format-label">Editorial</span>
+    </div>
+    <div class="format-item">
+      <div class="format-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+      </div>
+      <span class="format-label">Produkt</span>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,354 @@
+---
+export const prerender = true;
+---
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Schallfeld — Musikproduktion & Tonstudio | Trier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { overflow-x: hidden; }
+
+    :root {
+      --purple: #9333EA;
+      --pink:   #EC4899;
+      --bg:     #0D0719;
+      --text:   #F0E6FF;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Haze ambient glow */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 20% 40%, rgba(147,51,234,0.14) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 60% at 80% 60%, rgba(236,72,153,0.1) 0%, transparent 65%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Waveform decoration */
+    body::after {
+      content: '';
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 120px;
+      background: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 3px,
+        rgba(147,51,234,0.06) 3px,
+        rgba(147,51,234,0.06) 4px
+      );
+      mask-image: linear-gradient(to top, rgba(0,0,0,0.3), transparent);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 3rem;
+      background: rgba(13,7,25,0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(147,51,234,0.15);
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.3rem;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.62rem;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(240,230,255,0.4);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--pink); }
+    .nav-contact {
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: linear-gradient(90deg, var(--purple), var(--pink));
+      padding: 0.6rem 1.4rem;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .nav-contact:hover { opacity: 0.85; }
+
+    .hero {
+      min-height: 100vh;
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      padding-top: 64px;
+    }
+
+    /* LEFT */
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 4rem 3rem 4rem 4rem;
+      gap: 2rem;
+    }
+
+    .eyebrow {
+      font-size: 0.58rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--purple);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .eyebrow::before {
+      content: '';
+      display: block;
+      width: 2rem;
+      height: 2px;
+      background: linear-gradient(to right, var(--purple), var(--pink));
+    }
+
+    .hero-headline {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(3.5rem, 8vw, 7rem);
+      line-height: 0.9;
+      letter-spacing: -0.03em;
+      color: var(--text);
+    }
+    .hero-headline .grad {
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-body {
+      font-size: 0.88rem;
+      font-weight: 300;
+      line-height: 1.9;
+      color: rgba(240,230,255,0.5);
+      max-width: 44ch;
+    }
+
+    /* Genre tags */
+    .genre-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .genre {
+      font-size: 0.58rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.9rem;
+      border: 1px solid;
+      border-radius: 100px;
+    }
+    .g1 { color: var(--purple); border-color: rgba(147,51,234,0.4); }
+    .g2 { color: var(--pink);   border-color: rgba(236,72,153,0.4); }
+    .g3 { color: rgba(240,230,255,0.5); border-color: rgba(240,230,255,0.12); }
+
+    .cta-row {
+      display: flex;
+      align-items: center;
+      gap: 1.75rem;
+    }
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.9rem 2rem;
+      transition: opacity 0.2s;
+    }
+    .cta-btn:hover { opacity: 0.85; }
+    .cta-link {
+      font-size: 0.6rem;
+      font-weight: 300;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(240,230,255,0.3);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .cta-link:hover { color: var(--purple); }
+
+    /* RIGHT */
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      border-left: 1px solid rgba(147,51,234,0.12);
+      background: rgba(147,51,234,0.04);
+    }
+
+    .right-block {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 2rem 2.5rem;
+      border-bottom: 1px solid rgba(147,51,234,0.08);
+    }
+    .right-block:last-child { border-bottom: none; }
+    .rb-label {
+      font-size: 0.5rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(240,230,255,0.25);
+      margin-bottom: 0.6rem;
+    }
+    .rb-value {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.8rem;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      color: var(--text);
+    }
+    .rb-sub {
+      font-size: 0.68rem;
+      font-weight: 300;
+      color: rgba(240,230,255,0.35);
+      margin-top: 0.25rem;
+    }
+
+    /* Waveform visual */
+    .waveform {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      padding: 2rem 2.5rem;
+      border-top: 1px solid rgba(147,51,234,0.1);
+    }
+    .wave-bar {
+      flex: 1;
+      border-radius: 2px;
+      background: linear-gradient(to top, var(--purple), var(--pink));
+      opacity: 0.4;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-logo">Schallfeld</div>
+    <ul class="nav-links">
+      <li><a href="#">Studio</a></li>
+      <li><a href="#">Beats</a></li>
+      <li><a href="#">Artists</a></li>
+      <li><a href="#">Booking</a></li>
+    </ul>
+    <a href="#" class="nav-contact">Session buchen</a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-left">
+      <div class="eyebrow">Musikproduktion · Trier</div>
+
+      <h1 class="hero-headline">
+        <span class="grad">Schall</span><br>
+        <span>feld.</span>
+      </h1>
+
+      <p class="hero-body">
+        Wir produzieren Klang für Künstler, die etwas zu sagen haben.
+        Vom ersten Beat bis zum fertigen Master —
+        alles unter einem Dach.
+      </p>
+
+      <div class="genre-row">
+        <span class="genre g1">Hip-Hop</span>
+        <span class="genre g2">Electronic</span>
+        <span class="genre g1">R&B</span>
+        <span class="genre g3">Ambient</span>
+        <span class="genre g2">Indie</span>
+      </div>
+
+      <div class="cta-row">
+        <a href="#" class="cta-btn">Studio buchen →</a>
+        <a href="#" class="cta-link">Referenzen hören →</a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="right-block">
+        <div class="rb-label">Recording Studios</div>
+        <div class="rb-value">3<span class="rb-sub">Vollausgestattete Räume</span></div>
+      </div>
+      <div class="right-block">
+        <div class="rb-label">Releases</div>
+        <div class="rb-value">80+<span class="rb-sub">Produktionen seit 2018</span></div>
+      </div>
+      <div class="right-block">
+        <div class="rb-label">Session</div>
+        <div class="rb-value">ab 60 €<span class="rb-sub">Pro Stunde, inkl. Engineer</span></div>
+      </div>
+      <div class="waveform">
+        <div class="wave-bar" style="height:14px"></div>
+        <div class="wave-bar" style="height:28px"></div>
+        <div class="wave-bar" style="height:20px"></div>
+        <div class="wave-bar" style="height:38px"></div>
+        <div class="wave-bar" style="height:24px"></div>
+        <div class="wave-bar" style="height:44px"></div>
+        <div class="wave-bar" style="height:32px"></div>
+        <div class="wave-bar" style="height:50px"></div>
+        <div class="wave-bar" style="height:36px"></div>
+        <div class="wave-bar" style="height:44px"></div>
+        <div class="wave-bar" style="height:28px"></div>
+        <div class="wave-bar" style="height:38px"></div>
+        <div class="wave-bar" style="height:18px"></div>
+        <div class="wave-bar" style="height:30px"></div>
+        <div class="wave-bar" style="height:12px"></div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

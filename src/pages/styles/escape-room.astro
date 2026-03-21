@@ -1,0 +1,594 @@
+---
+export const prerender = true;
+---
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Kammer 13 — Escape Room & Mystery Experience | Trier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inconsolata:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { overflow-x: hidden; }
+
+    :root {
+      --gold:   #E8C547;
+      --red:    #CC1F1F;
+      --bg:     #0D0B08;
+      --panel:  #141209;
+      --text:   #F0E8D0;
+      --muted:  rgba(240,232,208,0.35);
+      --rule:   rgba(240,232,208,0.06);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inconsolata', monospace;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Film grain effect */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 2px,
+          rgba(255,255,255,0.008) 2px,
+          rgba(255,255,255,0.008) 3px
+        );
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Vignette */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(
+        ellipse at center,
+        transparent 40%,
+        rgba(0,0,0,0.6) 100%
+      );
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem 3.5rem;
+      background: rgba(13,11,8,0.95);
+      border-bottom: 1px solid var(--rule);
+    }
+    .nav-logo {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text);
+    }
+    .nav-logo span { color: var(--gold); }
+    .nav-links {
+      display: flex;
+      gap: 0;
+      list-style: none;
+    }
+    .nav-links a {
+      display: block;
+      padding: 0.5rem 1.25rem;
+      font-size: 0.52rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      border-right: 1px solid var(--rule);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-tickets {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--gold);
+      padding: 0.6rem 1.5rem;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .nav-tickets:hover { background: #fff; }
+
+    .hero {
+      min-height: 100vh;
+      padding-top: 56px;
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 380px;
+    }
+
+    /* LEFT — full dark atmosphere */
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 5rem 3.5rem 5rem 4.5rem;
+      gap: 2.5rem;
+      border-right: 1px solid var(--rule);
+    }
+
+    .timer-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.55rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--red);
+      width: fit-content;
+    }
+    .tb-pulse {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--red);
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .hero-headline {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: clamp(3.5rem, 7vw, 6rem);
+      line-height: 0.92;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--text);
+    }
+    .hero-headline .gold { color: var(--gold); }
+    .hero-headline .dim  { color: rgba(240,232,208,0.15); }
+
+    .hero-body {
+      font-size: 0.85rem;
+      font-weight: 300;
+      line-height: 1.9;
+      color: var(--muted);
+      max-width: 44ch;
+      font-family: 'Inconsolata', monospace;
+    }
+
+    /* Room list */
+    .room-list {
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--rule);
+    }
+    .rl-header {
+      padding: 0.4rem 1rem;
+      font-size: 0.48rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border-bottom: 1px solid var(--rule);
+      background: rgba(255,255,255,0.02);
+    }
+    .room-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid var(--rule);
+      transition: background 0.2s;
+      cursor: default;
+    }
+    .room-row:last-child { border-bottom: none; }
+    .room-row:hover { background: rgba(232,197,71,0.03); }
+    .rr-num {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--gold);
+      opacity: 0.4;
+      width: 2rem;
+      flex-shrink: 0;
+    }
+    .rr-info { flex: 1; }
+    .rr-name {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text);
+    }
+    .rr-desc {
+      font-size: 0.58rem;
+      font-weight: 300;
+      color: var(--muted);
+      margin-top: 0.05rem;
+    }
+    .rr-diff {
+      display: flex;
+      gap: 3px;
+    }
+    .diff-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--rule);
+    }
+    .diff-dot.on { background: var(--red); }
+
+    .cta-row {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .cta-btn {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--gold);
+      padding: 0.9rem 2rem;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .cta-btn:hover { background: #fff; }
+    .cta-link {
+      font-size: 0.58rem;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: 1px;
+    }
+
+    /* RIGHT panel */
+    .hero-right {
+      background: var(--panel);
+      border-left: 1px solid var(--rule);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Big timer display */
+    .timer-display {
+      padding: 2.5rem 2rem;
+      border-bottom: 1px solid var(--rule);
+      text-align: center;
+    }
+    .td-label {
+      font-size: 0.48rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+    .td-time {
+      font-family: 'Oswald', sans-serif;
+      font-size: 3.5rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .td-sub {
+      font-size: 0.55rem;
+      color: rgba(240,232,208,0.25);
+      margin-top: 0.4rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    /* Stats */
+    .side-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: 1px solid var(--rule);
+    }
+    .ss-cell {
+      padding: 1.25rem 1.5rem;
+      border-right: 1px solid var(--rule);
+      text-align: center;
+    }
+    .ss-cell:last-child,
+    .ss-cell:nth-child(2) { border-right: none; }
+    .ss-num {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1;
+    }
+    .ss-label {
+      font-size: 0.52rem;
+      color: var(--muted);
+      margin-top: 0.2rem;
+      letter-spacing: 0.1em;
+    }
+
+    /* Recent results */
+    .results-list {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 1.25rem 0;
+    }
+    .results-label {
+      font-size: 0.48rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 0 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+    .result-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.6rem 1.5rem;
+      border-bottom: 1px solid var(--rule);
+    }
+    .result-row:last-child { border-bottom: none; }
+    .rr-team {
+      font-size: 0.72rem;
+      font-weight: 400;
+      color: var(--text);
+    }
+    .rr-time {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.06em;
+    }
+
+    /* Book block */
+    .book-block {
+      padding: 1.25rem 1.5rem;
+      border-top: 1px solid rgba(232,197,71,0.15);
+      background: rgba(232,197,71,0.03);
+    }
+    .bb-text {
+      font-size: 0.62rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 0.75rem;
+    }
+    .bb-cta {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--gold);
+      padding: 0.6rem 1.25rem;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.2s;
+    }
+    .bb-cta:hover { background: #fff; }
+    /* === Animations & Micro-interactions === */
+    @keyframes colonBlink {
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: 0; }
+    }
+    @keyframes vignetteBreath {
+      0%, 100% { opacity: 0.85; }
+      50%       { opacity: 1; }
+    }
+    @keyframes timerGlow {
+      0%, 100% { text-shadow: 0 0 10px rgba(232,197,71,0.2); }
+      50%       { text-shadow: 0 0 30px rgba(232,197,71,0.5), 0 0 60px rgba(232,197,71,0.15); }
+    }
+
+    .colon { animation: colonBlink 1s step-end infinite; }
+
+    .td-time { animation: timerGlow 3s ease-in-out infinite; }
+
+    body::after { animation: vignetteBreath 8s ease-in-out infinite; }
+
+    .room-row {
+      transition: background 0.2s, padding-left 0.25s;
+    }
+    .room-row:hover {
+      background: rgba(232,197,71,0.05);
+      padding-left: 1.3rem;
+    }
+    .rr-name { transition: color 0.2s; }
+    .room-row:hover .rr-name { color: var(--gold); }
+    .rr-num { transition: opacity 0.2s; }
+    .room-row:hover .rr-num { opacity: 0.9; }
+
+    .result-row {
+      transition: background 0.2s;
+      cursor: default;
+    }
+    .result-row:hover { background: rgba(232,197,71,0.05); }
+    .rr-team { transition: color 0.2s; }
+    .result-row:hover .rr-team { color: var(--gold); }
+
+    .diff-dot { transition: background 0.2s; }
+    .room-row:hover .diff-dot.on { background: var(--gold); }
+
+    .nav-tickets {
+      position: relative;
+      overflow: hidden;
+    }
+    .nav-tickets::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -60%;
+      width: 40%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(0,0,0,0.15), transparent);
+      transition: left 0.5s;
+    }
+    .nav-tickets:hover::after { left: 150%; }
+
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-logo">Kammer <span>13</span></div>
+    <ul class="nav-links">
+      <li><a href="#">Räume</a></li>
+      <li><a href="#">Bestenliste</a></li>
+      <li><a href="#">Events</a></li>
+      <li><a href="#">FAQ</a></li>
+    </ul>
+    <a href="#" class="nav-tickets">Jetzt buchen</a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-left">
+      <div class="timer-badge">
+        <span class="tb-pulse"></span>
+        Du hast 60 Minuten
+      </div>
+
+      <h1 class="hero-headline">
+        FIND<br>
+        <span class="gold">DEN</span><br>
+        AUS<span class="dim">-</span><br>
+        GANG.
+      </h1>
+
+      <p class="hero-body">
+        Vier Räume. Vier Geschichten.
+        Jede mit einem Geheimnis, das nur
+        gelöst wird, wenn du zusammenarbeitest —
+        oder alleine brillierst.
+      </p>
+
+      <div class="room-list">
+        <div class="rl-header">Verfügbare Räume</div>
+        <div class="room-row">
+          <div class="rr-num">01</div>
+          <div class="rr-info">
+            <div class="rr-name">Das Archiv</div>
+            <div class="rr-desc">Detektiv-Noir · 2–5 Personen</div>
+          </div>
+          <div class="rr-diff">
+            <span class="diff-dot on"></span>
+            <span class="diff-dot on"></span>
+            <span class="diff-dot"></span>
+          </div>
+        </div>
+        <div class="room-row">
+          <div class="rr-num">02</div>
+          <div class="rr-info">
+            <div class="rr-name">Das Labor</div>
+            <div class="rr-desc">Sci-Fi Thriller · 3–6 Personen</div>
+          </div>
+          <div class="rr-diff">
+            <span class="diff-dot on"></span>
+            <span class="diff-dot on"></span>
+            <span class="diff-dot on"></span>
+          </div>
+        </div>
+        <div class="room-row">
+          <div class="rr-num">03</div>
+          <div class="rr-info">
+            <div class="rr-name">Die Gruft</div>
+            <div class="rr-desc">Horror · 2–4 Personen · ab 18</div>
+          </div>
+          <div class="rr-diff">
+            <span class="diff-dot on"></span>
+            <span class="diff-dot on"></span>
+            <span class="diff-dot on"></span>
+          </div>
+        </div>
+        <div class="room-row">
+          <div class="rr-num">04</div>
+          <div class="rr-info">
+            <div class="rr-name">Die Kammer</div>
+            <div class="rr-desc">Mystery Classic · 2–8 Personen</div>
+          </div>
+          <div class="rr-diff">
+            <span class="diff-dot on"></span>
+            <span class="diff-dot"></span>
+            <span class="diff-dot"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="cta-row">
+        <a href="#" class="cta-btn">Raum buchen →</a>
+        <a href="#" class="cta-link">Gruppenangebote</a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="timer-display">
+        <div class="td-label">Dein Countdown</div>
+        <div class="td-time">60<span class="colon">:</span>00</div>
+        <div class="td-sub">Minuten bis zur Entscheidung</div>
+      </div>
+
+      <div class="side-stats">
+        <div class="ss-cell">
+          <div class="ss-num">38%</div>
+          <div class="ss-label">Erfolgsrate</div>
+        </div>
+        <div class="ss-cell">
+          <div class="ss-num">4.800+</div>
+          <div class="ss-label">Spielgruppen</div>
+        </div>
+      </div>
+
+      <div class="results-list">
+        <div class="results-label">Aktuelle Bestzeiten</div>
+        <div class="result-row">
+          <span class="rr-team">Team Rätselkönige</span>
+          <span class="rr-time">38:12</span>
+        </div>
+        <div class="result-row">
+          <span class="rr-team">Familie Schröder</span>
+          <span class="rr-time">41:55</span>
+        </div>
+        <div class="result-row">
+          <span class="rr-team">Gruppe Nerds United</span>
+          <span class="rr-time">43:08</span>
+        </div>
+        <div class="result-row">
+          <span class="rr-team">Das geheime Team</span>
+          <span class="rr-time">45:30</span>
+        </div>
+      </div>
+
+      <div class="book-block">
+        <div class="bb-text">
+          Di – So ab 16:00 Uhr.<br>
+          Buche deinen Slot — Gruppen bis 8 Personen.
+        </div>
+        <a href="#" class="bb-cta">Termin wählen →</a>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
