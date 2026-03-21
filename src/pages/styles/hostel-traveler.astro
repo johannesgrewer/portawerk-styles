@@ -10,77 +10,65 @@ export const prerender = true;
   <title>Wanderherz — Hostel & Reisecafé | Trier</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,800;0,900;1,800&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { overflow-x: hidden; }
+    html { background: #FFF8E7; overflow-x: hidden; }
 
     :root {
       --sky:    #0EA5E9;
+      --sky-d:  #0284C7;
       --sand:   #F59E0B;
       --green:  #10B981;
       --coral:  #F87171;
+      --purple: #8B5CF6;
       --bg:     #FFF8E7;
       --dark:   #1C1917;
       --muted:  rgba(28,25,23,0.5);
+      --border: rgba(28,25,23,0.07);
     }
 
     body {
       background: var(--bg);
       color: var(--dark);
       font-family: 'Work Sans', sans-serif;
-      min-height: 100vh;
       overflow-x: hidden;
+      max-width: 1440px;
+      margin: 0 auto;
     }
 
+    /* ─── Nav ──────────────────────────────────────────── */
     nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
+      position: fixed; top: 0; left: 0; right: 0;
       z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      display: flex; align-items: center; justify-content: space-between;
       padding: 1rem 3rem;
-      background: rgba(255,248,231,0.95);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid rgba(28,25,23,0.06);
+      background: rgba(255,248,231,0.96); backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
     }
     .nav-logo {
       font-family: 'Nunito', sans-serif;
-      font-weight: 800;
-      font-size: 1.2rem;
+      font-weight: 900; font-size: 1.25rem;
       color: var(--sky);
     }
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
-    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
     .nav-links a {
-      font-size: 0.65rem;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-      text-decoration: none;
-      transition: color 0.2s;
+      font-size: 0.65rem; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--muted); text-decoration: none; transition: color 0.2s;
     }
     .nav-links a:hover { color: var(--sky); }
     .nav-book {
       font-family: 'Nunito', sans-serif;
-      font-weight: 700;
-      font-size: 0.7rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #fff;
-      background: var(--sky);
-      padding: 0.6rem 1.4rem;
-      border-radius: 100px;
-      text-decoration: none;
-      transition: background 0.2s;
+      font-weight: 700; font-size: 0.7rem;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: #fff; background: var(--sky);
+      padding: 0.6rem 1.4rem; border-radius: 100px;
+      text-decoration: none; transition: background 0.2s;
     }
     .nav-book:hover { background: var(--dark); }
 
+    /* ─── Hero ─────────────────────────────────────────── */
     .hero {
       min-height: 100vh;
       padding-top: 60px;
@@ -88,219 +76,621 @@ export const prerender = true;
       grid-template-columns: 1fr 1fr;
     }
 
-    /* LEFT */
     .hero-left {
-      display: flex;
-      flex-direction: column;
+      display: flex; flex-direction: column;
       justify-content: center;
       padding: 4rem 3.5rem 4rem 4rem;
       gap: 2rem;
     }
 
     .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
+      display: inline-flex; align-items: center; gap: 0.5rem;
       font-family: 'Nunito', sans-serif;
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--sky);
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--sky);
       background: rgba(14,165,233,0.08);
       border: 1px solid rgba(14,165,233,0.2);
-      padding: 0.35rem 0.9rem;
-      border-radius: 100px;
+      padding: 0.35rem 0.9rem; border-radius: 100px;
       width: fit-content;
     }
 
     .hero-headline {
       font-family: 'Nunito', sans-serif;
-      font-weight: 800;
-      font-size: clamp(2.4rem, 4.5vw, 3.8rem);
-      line-height: 1.15;
-      letter-spacing: -0.01em;
-      color: var(--dark);
+      font-weight: 900;
+      font-size: clamp(2.6rem, 4.5vw, 4rem);
+      line-height: 1.1; letter-spacing: -0.02em;
     }
-    .hero-headline .sky { color: var(--sky); }
+    .hero-headline .sky  { color: var(--sky); }
     .hero-headline .sand { color: var(--sand); }
 
     .hero-body {
-      font-size: 0.9rem;
-      font-weight: 300;
-      line-height: 1.9;
-      color: var(--muted);
-      max-width: 44ch;
+      font-size: 0.9rem; font-weight: 300;
+      line-height: 1.9; color: var(--muted); max-width: 44ch;
     }
 
-    /* Feature pills */
-    .feature-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.6rem;
-    }
+    .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
     .feature-pill {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
+      display: flex; align-items: center; gap: 0.6rem;
       padding: 0.7rem 1rem;
-      background: #fff;
-      border: 1px solid rgba(28,25,23,0.07);
-      border-radius: 10px;
+      background: #fff; border: 1px solid var(--border); border-radius: 10px;
     }
-    .fp-icon { font-size: 1.1rem; }
+    .fp-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      flex-shrink: 0;
+    }
     .fp-text {
       font-family: 'Nunito', sans-serif;
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: var(--dark);
+      font-size: 0.78rem; font-weight: 700; color: var(--dark);
     }
 
-    .cta-row {
-      display: flex;
-      align-items: center;
-      gap: 1.25rem;
-    }
+    .cta-row { display: flex; align-items: center; gap: 1.25rem; }
     .cta-btn {
       font-family: 'Nunito', sans-serif;
-      font-weight: 700;
-      font-size: 0.72rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #fff;
-      background: var(--sky);
-      padding: 0.9rem 2rem;
-      border-radius: 100px;
-      text-decoration: none;
-      transition: background 0.2s;
+      font-weight: 700; font-size: 0.72rem; letter-spacing: 0.08em;
+      text-transform: uppercase; color: #fff; background: var(--sky);
+      padding: 0.9rem 2rem; border-radius: 100px;
+      text-decoration: none; transition: background 0.2s;
     }
     .cta-btn:hover { background: var(--dark); }
-    .cta-price {
-      font-size: 0.82rem;
-      font-weight: 400;
-      color: var(--muted);
-    }
+    .cta-price { font-size: 0.82rem; font-weight: 400; color: var(--muted); }
     .cta-price strong {
       font-family: 'Nunito', sans-serif;
-      font-weight: 700;
-      color: var(--dark);
-      font-size: 1rem;
+      font-weight: 800; color: var(--dark); font-size: 1rem;
     }
 
-    /* RIGHT */
     .hero-right {
       background: var(--sky);
-      display: flex;
-      flex-direction: column;
-      padding: 4rem 3.5rem;
-      gap: 1.5rem;
+      display: flex; flex-direction: column;
+      padding: 4rem 3.5rem; gap: 1.5rem;
     }
 
     .right-label {
       font-family: 'Nunito', sans-serif;
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.6);
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em;
+      text-transform: uppercase; color: rgba(255,255,255,0.6);
     }
 
-    /* Destination cards */
-    .dest-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-    }
+    .dest-list { display: flex; flex-direction: column; gap: 0.6rem; }
     .dest-card {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
+      display: flex; align-items: center; gap: 1rem;
       padding: 1rem 1.25rem;
       background: rgba(255,255,255,0.15);
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 12px; border: 1px solid rgba(255,255,255,0.2);
+      transition: background 0.2s;
     }
-    .dc-flag { font-size: 1.5rem; flex-shrink: 0; }
+    .dest-card:hover { background: rgba(255,255,255,0.22); }
+    .dc-circle {
+      width: 38px; height: 38px; border-radius: 50%;
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 0.75rem; color: #fff;
+    }
     .dc-info { flex: 1; }
     .dc-city {
       font-family: 'Nunito', sans-serif;
-      font-weight: 700;
-      font-size: 0.92rem;
-      color: #fff;
+      font-weight: 700; font-size: 0.92rem; color: #fff;
     }
     .dc-route {
-      font-size: 0.68rem;
-      font-weight: 300;
-      color: rgba(255,255,255,0.65);
-      margin-top: 0.1rem;
+      font-size: 0.68rem; font-weight: 300;
+      color: rgba(255,255,255,0.65); margin-top: 0.1rem;
     }
     .dc-tag {
       font-family: 'Nunito', sans-serif;
-      font-size: 0.55rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--sky);
-      background: #fff;
-      padding: 0.2rem 0.55rem;
-      border-radius: 100px;
+      font-size: 0.55rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--sky);
+      background: #fff; padding: 0.2rem 0.55rem; border-radius: 100px;
     }
 
-    /* Stats strip */
-    .stats-strip {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0.5rem;
-      margin-top: auto;
-    }
-    .stat-item {
-      background: rgba(255,255,255,0.12);
-      border-radius: 10px;
-      padding: 1rem;
-      text-align: center;
-    }
-    .stat-num {
-      font-family: 'Nunito', sans-serif;
-      font-weight: 800;
-      font-size: 1.6rem;
-      color: #fff;
-      line-height: 1;
-    }
-    .stat-label {
-      font-size: 0.6rem;
-      font-weight: 300;
-      color: rgba(255,255,255,0.6);
-      margin-top: 0.2rem;
-    }
-
-    /* Review snippet */
     .review-block {
       background: rgba(255,255,255,0.15);
-      border-radius: 12px;
-      padding: 1.25rem;
+      border-radius: 12px; padding: 1.25rem;
       border: 1px solid rgba(255,255,255,0.2);
     }
-    .rb-stars {
-      font-size: 0.75rem;
-      color: var(--sand);
-      letter-spacing: 0.05em;
-      margin-bottom: 0.5rem;
-    }
+    .rb-stars { font-size: 0.75rem; color: var(--sand); margin-bottom: 0.5rem; }
     .rb-quote {
-      font-size: 0.88rem;
-      font-weight: 300;
-      color: rgba(255,255,255,0.85);
-      line-height: 1.6;
-      font-style: italic;
+      font-size: 0.88rem; font-weight: 300;
+      color: rgba(255,255,255,0.85); line-height: 1.6; font-style: italic;
     }
     .rb-author {
       font-family: 'Nunito', sans-serif;
-      font-size: 0.65rem;
-      font-weight: 700;
-      color: rgba(255,255,255,0.55);
-      letter-spacing: 0.06em;
-      margin-top: 0.6rem;
+      font-size: 0.65rem; font-weight: 700;
+      color: rgba(255,255,255,0.55); letter-spacing: 0.06em; margin-top: 0.6rem;
     }
+
+    .stats-strip {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem; margin-top: auto;
+    }
+    .stat-item {
+      background: rgba(255,255,255,0.12);
+      border-radius: 10px; padding: 1rem; text-align: center;
+    }
+    .stat-num {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 900; font-size: 1.6rem; color: #fff; line-height: 1;
+    }
+    .stat-label { font-size: 0.6rem; font-weight: 300; color: rgba(255,255,255,0.6); margin-top: 0.2rem; }
+
+    /* ─── Section 2: Räume ─────────────────────────────── */
+    .raeume {
+      background: #fff;
+      padding: 7rem 4rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .sec-intro {
+      display: flex; align-items: flex-end;
+      justify-content: space-between; margin-bottom: 4rem;
+    }
+    .sec-tag {
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--sky); margin-bottom: 0.5rem;
+    }
+    .sec-h {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 900; font-size: clamp(2rem, 3.5vw, 3rem);
+      line-height: 1.1; letter-spacing: -0.02em;
+    }
+    .sec-h em { font-style: italic; color: var(--sky); }
+    .sec-sub {
+      font-size: 0.85rem; font-weight: 300;
+      color: var(--muted); max-width: 38ch; text-align: right;
+      line-height: 1.7;
+    }
+
+    .room-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+
+    .room-card {
+      border: 1px solid var(--border); overflow: hidden;
+      transition: box-shadow 0.3s, transform 0.3s;
+      border-radius: 16px;
+    }
+    .room-card:hover {
+      box-shadow: 0 16px 48px rgba(14,165,233,0.12);
+      transform: translateY(-4px);
+    }
+
+    /* CSS Art areas */
+    .room-art {
+      height: 220px;
+      position: relative; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* Art 1: Bunk dorm */
+    .art-dorm6 { background: linear-gradient(160deg, #E0F2FE 0%, #BAE6FD 100%); }
+    .bunk-scene {
+      display: flex; gap: 18px; align-items: flex-end;
+    }
+    .bunk-unit {
+      width: 52px;
+      display: flex; flex-direction: column;
+      gap: 0; position: relative;
+    }
+    .bunk-post {
+      position: absolute; left: 0; top: 0; bottom: 0;
+      width: 5px; background: var(--sky-d); border-radius: 3px;
+    }
+    .bunk-post-r {
+      position: absolute; right: 0; top: 0; bottom: 0;
+      width: 5px; background: var(--sky-d); border-radius: 3px;
+    }
+    .bunk-bed {
+      height: 22px; margin: 0 5px;
+      border-radius: 3px; position: relative;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+    }
+    .bunk-bed.top { margin-top: 8px; }
+    .bunk-bed.bottom { margin-top: 36px; }
+    .bunk-pillow {
+      position: absolute; top: 3px; right: 4px;
+      width: 16px; height: 10px;
+      border-radius: 3px; opacity: 0.85;
+    }
+    .bunk-ladder {
+      position: absolute; right: -12px; top: 0; bottom: 0;
+      width: 10px; display: flex; flex-direction: column;
+      justify-content: space-around; padding: 6px 0;
+    }
+    .ladder-rung {
+      height: 2px; width: 100%;
+      background: rgba(2,132,199,0.5); border-radius: 2px;
+    }
+    .bunk-unit.u1 { height: 105px; }
+    .bunk-unit.u2 { height: 105px; }
+    .bunk-unit.u3 { height: 105px; }
+    .b-mattress { background: #fff; }
+    .b-pillow   { background: #BAE6FD; }
+
+    /* Art 2: Private room */
+    .art-privat { background: linear-gradient(160deg, #FEF9C3 0%, #FDE68A 60%, #FCD34D 100%); }
+    .private-scene {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 12px;
+    }
+    .priv-window {
+      width: 80px; height: 55px;
+      background: rgba(255,255,255,0.6);
+      border: 3px solid rgba(180,120,0,0.3);
+      border-radius: 4px; position: relative;
+      box-shadow: inset 0 0 12px rgba(255,255,255,0.4);
+    }
+    .priv-window::before {
+      content: '';
+      position: absolute; left: 50%; top: 0; bottom: 0;
+      width: 2px; background: rgba(180,120,0,0.25);
+      transform: translateX(-50%);
+    }
+    .priv-window::after {
+      content: '';
+      position: absolute; top: 50%; left: 0; right: 0;
+      height: 2px; background: rgba(180,120,0,0.25);
+      transform: translateY(-50%);
+    }
+    .priv-bed {
+      width: 140px; height: 55px;
+      background: #fff; border-radius: 8px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      position: relative; overflow: hidden;
+    }
+    .priv-headboard {
+      position: absolute; left: 0; top: 0; bottom: 0;
+      width: 12px; background: #FCD34D; border-radius: 8px 0 0 8px;
+    }
+    .priv-blanket {
+      position: absolute; left: 12px; top: 8px; bottom: 8px; right: 0;
+      background: linear-gradient(90deg, #FEF3C7, #FDE68A);
+      border-radius: 0 4px 4px 0;
+    }
+    .priv-pillow {
+      position: absolute; right: 12px; top: 8px;
+      width: 30px; height: 39px;
+      background: #fff; border-radius: 4px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+    .priv-rug {
+      width: 120px; height: 10px;
+      background: var(--sand); opacity: 0.4; border-radius: 3px;
+    }
+
+    /* Art 3: Café cowork */
+    .art-cafe { background: linear-gradient(160deg, #DCFCE7 0%, #BBF7D0 100%); }
+    .cafe-scene {
+      display: flex; gap: 20px; align-items: flex-end;
+    }
+    .cafe-table {
+      width: 90px; height: 8px;
+      background: var(--green); border-radius: 4px;
+      position: relative;
+    }
+    .cafe-table::before {
+      content: '';
+      position: absolute; bottom: 0; left: 14px;
+      width: 6px; height: 40px;
+      background: rgba(16,185,129,0.6); border-radius: 0 0 3px 3px;
+    }
+    .cafe-table::after {
+      content: '';
+      position: absolute; bottom: 0; right: 14px;
+      width: 6px; height: 40px;
+      background: rgba(16,185,129,0.6); border-radius: 0 0 3px 3px;
+    }
+    .cafe-cup {
+      position: relative;
+    }
+    .cup-body {
+      width: 32px; height: 28px;
+      background: #fff;
+      border-radius: 3px 3px 6px 6px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      position: relative;
+      margin-bottom: 4px;
+    }
+    .cup-body::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 8px; background: #7C3AED; border-radius: 3px 3px 0 0;
+    }
+    .cup-handle {
+      position: absolute; right: -10px; top: 6px;
+      width: 10px; height: 14px;
+      border: 3px solid #ddd; border-left: none;
+      border-radius: 0 6px 6px 0;
+    }
+    .cup-saucer {
+      width: 42px; height: 5px;
+      background: #e5e5e5; border-radius: 3px; margin: 0 auto;
+    }
+    .steam {
+      display: flex; gap: 5px; justify-content: center; margin-bottom: 3px;
+    }
+    .steam-line {
+      width: 2px; background: rgba(124,58,237,0.3);
+      border-radius: 2px;
+      animation: steamRise 1.8s ease-in-out infinite;
+    }
+    .steam-line:nth-child(1) { height: 10px; animation-delay: 0s; }
+    .steam-line:nth-child(2) { height: 14px; animation-delay: 0.3s; }
+    .steam-line:nth-child(3) { height: 10px; animation-delay: 0.6s; }
+
+    .laptop {
+      width: 70px;
+    }
+    .laptop-screen {
+      height: 44px; background: var(--dark);
+      border-radius: 4px 4px 0 0;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .ls-glow {
+      width: 40px; height: 20px;
+      background: var(--sky); opacity: 0.15;
+      border-radius: 50%; filter: blur(6px);
+    }
+    .ls-lines {
+      position: absolute; inset: 6px;
+      display: flex; flex-direction: column; gap: 4px; justify-content: center;
+    }
+    .ls-line {
+      height: 2px; border-radius: 2px;
+      background: rgba(14,165,233,0.5);
+    }
+    .laptop-base {
+      height: 5px; background: rgba(28,25,23,0.6);
+      border-radius: 0 0 4px 4px;
+    }
+    .laptop-foot {
+      height: 3px; width: 80%; margin: 0 auto;
+      background: rgba(28,25,23,0.3); border-radius: 0 0 4px 4px;
+    }
+
+    .room-body { padding: 1.5rem; }
+    .room-type {
+      font-size: 0.6rem; font-weight: 700; letter-spacing: 0.18em;
+      text-transform: uppercase; margin-bottom: 0.4rem;
+    }
+    .room-name {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800; font-size: 1.2rem; margin-bottom: 0.5rem;
+    }
+    .room-desc {
+      font-size: 0.82rem; font-weight: 300;
+      color: var(--muted); line-height: 1.6; margin-bottom: 1.2rem;
+    }
+    .room-features { display: flex; flex-direction: column; gap: 0.3rem; margin-bottom: 1.25rem; }
+    .room-feat {
+      display: flex; align-items: center; gap: 0.6rem;
+      font-size: 0.78rem; font-weight: 400; color: var(--dark);
+    }
+    .rf-check {
+      width: 16px; height: 16px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .rf-check svg { width: 8px; height: 8px; }
+    .room-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 1rem; border-top: 1px solid var(--border);
+    }
+    .room-price { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1.1rem; }
+    .room-price span { font-size: 0.65rem; font-weight: 400; color: var(--muted); }
+    .room-book {
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; text-decoration: none;
+      padding: 0.5rem 1.1rem; border-radius: 100px;
+      color: #fff; transition: background 0.2s;
+    }
+
+    /* ─── Section 3: Welt trifft Wanderherz ────────────── */
+    .community {
+      background: #0C2F4A;
+      padding: 7rem 4rem;
+    }
+
+    .comm-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem; align-items: center;
+    }
+
+    /* Globe CSS art */
+    .globe-wrap {
+      display: flex; align-items: center; justify-content: center;
+    }
+    .globe-outer {
+      width: 340px; height: 340px;
+      border-radius: 50%;
+      border: 1px solid rgba(14,165,233,0.25);
+      position: relative;
+      background: radial-gradient(circle at 40% 35%, rgba(14,165,233,0.12), rgba(14,165,233,0.04) 60%, transparent);
+    }
+    .globe-outer::before {
+      content: '';
+      position: absolute; inset: -20px;
+      border-radius: 50%;
+      border: 1px solid rgba(14,165,233,0.1);
+    }
+    /* Latitude arcs */
+    .globe-lat {
+      position: absolute; left: 0; right: 0;
+      border-top: 1px solid rgba(14,165,233,0.15);
+      border-radius: 50%;
+    }
+    .lat-1 { top: 25%; height: 50%; }
+    .lat-2 { top: 40%; height: 20%; }
+    .lat-3 { top: 12%; height: 76%; }
+    /* Longitude arcs */
+    .globe-lon {
+      position: absolute; top: 0; bottom: 0; left: 50%;
+      border-left: 1px solid rgba(14,165,233,0.15);
+      transform-origin: top center;
+    }
+    .lon-1 { transform: rotate(30deg); }
+    .lon-2 { transform: rotate(-30deg); }
+    .lon-3 { transform: rotate(60deg); }
+    .lon-4 { transform: rotate(-60deg); }
+    /* Location pins */
+    .globe-pin {
+      position: absolute;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .globe-pin::after {
+      content: '';
+      position: absolute;
+      inset: -5px;
+      border-radius: 50%;
+      border: 1px solid currentColor;
+      opacity: 0.5;
+      animation: ping 2.5s ease infinite;
+    }
+    .pin-de { left: 52%; top: 30%; background: var(--sky); color: var(--sky); animation-delay: 0s; }
+    .pin-fr { left: 40%; top: 35%; background: var(--sand); color: var(--sand); animation-delay: 0.4s; }
+    .pin-jp { left: 76%; top: 38%; background: var(--coral); color: var(--coral); animation-delay: 0.8s; }
+    .pin-us { left: 24%; top: 40%; background: var(--green); color: var(--green); animation-delay: 1.2s; }
+    .pin-br { left: 30%; top: 60%; background: var(--sand); color: var(--sand); animation-delay: 0.6s; }
+    .pin-au { left: 72%; top: 68%; background: var(--purple); color: var(--purple); animation-delay: 1.5s; }
+    .pin-za { left: 54%; top: 72%; background: var(--green); color: var(--green); animation-delay: 0.3s; }
+
+    .globe-center {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+    .gc-num {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 900; font-size: 2.2rem;
+      color: #fff; line-height: 1;
+    }
+    .gc-label {
+      font-size: 0.58rem; font-weight: 400; letter-spacing: 0.15em;
+      text-transform: uppercase; color: rgba(255,255,255,0.4);
+      margin-top: 0.15rem;
+    }
+
+    /* Right content */
+    .comm-right {}
+    .comm-tag {
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--sky); margin-bottom: 0.5rem;
+    }
+    .comm-title {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 900; font-size: clamp(1.8rem, 3vw, 2.6rem);
+      line-height: 1.15; color: #fff; margin-bottom: 0.75rem;
+      letter-spacing: -0.02em;
+    }
+    .comm-title em { font-style: italic; color: var(--sky); }
+    .comm-sub {
+      font-size: 0.88rem; font-weight: 300; line-height: 1.8;
+      color: rgba(255,255,255,0.5); margin-bottom: 3rem;
+    }
+
+    /* Event list */
+    .event-head {
+      font-size: 0.58rem; font-weight: 700; letter-spacing: 0.2em;
+      text-transform: uppercase; color: rgba(255,255,255,0.3);
+      margin-bottom: 1rem;
+    }
+    .event-list { display: flex; flex-direction: column; gap: 0; margin-bottom: 3rem; }
+    .event-item {
+      display: flex; align-items: center; gap: 1.25rem;
+      padding: 1rem 0; border-bottom: 1px solid rgba(255,255,255,0.06);
+      transition: background 0.2s;
+    }
+    .event-date {
+      flex-shrink: 0;
+      width: 42px; height: 42px;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 8px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 0;
+    }
+    .ed-day {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 800; font-size: 1.1rem; color: #fff; line-height: 1;
+    }
+    .ed-mon {
+      font-size: 0.5rem; font-weight: 400; letter-spacing: 0.1em;
+      text-transform: uppercase; color: rgba(255,255,255,0.45);
+    }
+    .event-info { flex: 1; }
+    .ev-name {
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700; font-size: 0.88rem; color: #fff;
+    }
+    .ev-sub { font-size: 0.68rem; color: rgba(255,255,255,0.4); margin-top: 0.1rem; }
+    .ev-tag {
+      font-size: 0.5rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; padding: 0.2rem 0.6rem;
+      border-radius: 100px; color: #fff;
+    }
+
+    /* Country flags strip */
+    .origin-strip {
+      display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: center;
+    }
+    .origin-label {
+      font-size: 0.58rem; letter-spacing: 0.15em;
+      text-transform: uppercase; color: rgba(255,255,255,0.25);
+      width: 100%; margin-bottom: 0.25rem;
+    }
+    .origin-chip {
+      display: flex; align-items: center; gap: 0.4rem;
+      padding: 0.3rem 0.7rem;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 100px;
+    }
+    .oc-flag {
+      width: 14px; height: 10px;
+      border-radius: 2px;
+    }
+    .oc-name {
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.62rem; font-weight: 600;
+      color: rgba(255,255,255,0.5);
+    }
+
+    /* ─── Animations ──────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-left > * {
+      animation: fadeUp 0.7s ease both;
+    }
+    .hero-left > *:nth-child(1) { animation-delay: 0.1s; }
+    .hero-left > *:nth-child(2) { animation-delay: 0.2s; }
+    .hero-left > *:nth-child(3) { animation-delay: 0.3s; }
+    .hero-left > *:nth-child(4) { animation-delay: 0.4s; }
+    .hero-left > *:nth-child(5) { animation-delay: 0.5s; }
+
+    @keyframes ping {
+      0%   { transform: scale(1); opacity: 0.5; }
+      100% { transform: scale(2.5); opacity: 0; }
+    }
+
+    @keyframes steamRise {
+      0%, 100% { height: 8px; opacity: 0.3; }
+      50%       { height: 16px; opacity: 0.6; }
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(20px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    .hero-right > * {
+      animation: slideIn 0.8s ease both;
+    }
+    .hero-right > *:nth-child(1) { animation-delay: 0.2s; }
+    .hero-right > *:nth-child(2) { animation-delay: 0.35s; }
+    .hero-right > *:nth-child(3) { animation-delay: 0.5s; }
+    .hero-right > *:nth-child(4) { animation-delay: 0.7s; }
   </style>
 </head>
 <body>
@@ -315,9 +705,10 @@ export const prerender = true;
     <a href="#" class="nav-book">Jetzt buchen</a>
   </nav>
 
+  <!-- ── Section 1: Hero ─────────────────────────────── -->
   <section class="hero">
     <div class="hero-left">
-      <div class="eyebrow">✈ Hostel & Reisecafé · Trier</div>
+      <div class="eyebrow">✦ Hostel &amp; Reisecafé · Trier</div>
 
       <h1 class="hero-headline">
         Ankommen.<br>
@@ -333,19 +724,19 @@ export const prerender = true;
 
       <div class="feature-grid">
         <div class="feature-pill">
-          <span class="fp-icon">🛏</span>
+          <div class="fp-dot" style="background:var(--sky);"></div>
           <span class="fp-text">Dorms & Privatzimmer</span>
         </div>
         <div class="feature-pill">
-          <span class="fp-icon">☕</span>
+          <div class="fp-dot" style="background:var(--green);"></div>
           <span class="fp-text">Reisecafé & Bar</span>
         </div>
         <div class="feature-pill">
-          <span class="fp-icon">🗺</span>
+          <div class="fp-dot" style="background:var(--sand);"></div>
           <span class="fp-text">Stadtführungen</span>
         </div>
         <div class="feature-pill">
-          <span class="fp-icon">🌍</span>
+          <div class="fp-dot" style="background:var(--coral);"></div>
           <span class="fp-text">Travel Community</span>
         </div>
       </div>
@@ -357,11 +748,11 @@ export const prerender = true;
     </div>
 
     <div class="hero-right">
-      <div class="right-label">Beliebte Routen von Trier</div>
+      <div class="right-label">Beliebte Routen ab Trier</div>
 
       <div class="dest-list">
         <div class="dest-card">
-          <div class="dc-flag">🇱🇺</div>
+          <div class="dc-circle" style="background:rgba(255,255,255,0.2);font-family:'Nunito',sans-serif;">LU</div>
           <div class="dc-info">
             <div class="dc-city">Luxemburg City</div>
             <div class="dc-route">45 min · Zug ab Trier Hbf</div>
@@ -369,7 +760,7 @@ export const prerender = true;
           <span class="dc-tag">Beliebt</span>
         </div>
         <div class="dest-card">
-          <div class="dc-flag">🇧🇪</div>
+          <div class="dc-circle" style="background:rgba(255,255,255,0.2);font-family:'Nunito',sans-serif;">BE</div>
           <div class="dc-info">
             <div class="dc-city">Brüssel</div>
             <div class="dc-route">3 h · Via Luxemburg</div>
@@ -377,7 +768,7 @@ export const prerender = true;
           <span class="dc-tag">Tipp</span>
         </div>
         <div class="dest-card">
-          <div class="dc-flag">🇩🇪</div>
+          <div class="dc-circle" style="background:rgba(255,255,255,0.2);font-family:'Nunito',sans-serif;">MO</div>
           <div class="dc-info">
             <div class="dc-city">Moselradweg</div>
             <div class="dc-route">250 km · Koblenz bis Trier</div>
@@ -406,10 +797,335 @@ export const prerender = true;
         </div>
         <div class="stat-item">
           <div class="stat-num">4.9</div>
-          <div class="stat-label">★ Bewertung</div>
+          <div class="stat-label">★ Score</div>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- ── Section 2: Räume ─────────────────────────────── -->
+  <section class="raeume">
+    <div class="sec-intro">
+      <div>
+        <div class="sec-tag">Unterkünfte</div>
+        <h2 class="sec-h">Dein Platz zum <em>Ankommen.</em></h2>
+      </div>
+      <p class="sec-sub">Von der ersten Dorm-Nacht bis zum eigenen Rückzugsort — wir haben das Richtige für jeden Reisestil.</p>
+    </div>
+
+    <div class="room-grid">
+
+      <!-- Room 1: 6er Dorm -->
+      <div class="room-card">
+        <div class="room-art art-dorm6">
+          <div class="bunk-scene">
+            <!-- Bunk unit 1 -->
+            <div class="bunk-unit u1" style="height:100px;position:relative;">
+              <div class="bunk-post"></div>
+              <div class="bunk-post-r"></div>
+              <div style="display:flex;flex-direction:column;gap:20px;padding:0 6px;padding-top:8px;">
+                <div class="bunk-bed top b-mattress" style="background:#fff;position:relative;">
+                  <div class="bunk-pillow b-pillow" style="background:#BAE6FD;"></div>
+                </div>
+                <div class="bunk-bed bottom b-mattress" style="background:#fff;position:relative;margin-top:8px;">
+                  <div class="bunk-pillow b-pillow" style="background:#BAE6FD;"></div>
+                </div>
+              </div>
+              <div class="bunk-ladder">
+                <div class="ladder-rung"></div>
+                <div class="ladder-rung"></div>
+                <div class="ladder-rung"></div>
+              </div>
+            </div>
+            <!-- Bunk unit 2 -->
+            <div class="bunk-unit u2" style="height:100px;position:relative;">
+              <div class="bunk-post"></div>
+              <div class="bunk-post-r"></div>
+              <div style="display:flex;flex-direction:column;gap:20px;padding:0 6px;padding-top:8px;">
+                <div class="bunk-bed top" style="background:#E0F2FE;position:relative;">
+                  <div class="bunk-pillow" style="background:#fff;position:absolute;top:3px;right:4px;width:16px;height:10px;border-radius:3px;"></div>
+                </div>
+                <div class="bunk-bed bottom" style="background:#fff;position:relative;margin-top:8px;">
+                  <div class="bunk-pillow" style="background:#BAE6FD;position:absolute;top:3px;right:4px;width:16px;height:10px;border-radius:3px;"></div>
+                </div>
+              </div>
+              <div class="bunk-ladder">
+                <div class="ladder-rung"></div>
+                <div class="ladder-rung"></div>
+                <div class="ladder-rung"></div>
+              </div>
+            </div>
+            <!-- Bunk unit 3 -->
+            <div class="bunk-unit u3" style="height:100px;position:relative;">
+              <div class="bunk-post"></div>
+              <div class="bunk-post-r"></div>
+              <div style="display:flex;flex-direction:column;gap:20px;padding:0 6px;padding-top:8px;">
+                <div class="bunk-bed top" style="background:#fff;position:relative;">
+                  <div class="bunk-pillow" style="background:#7DD3FC;position:absolute;top:3px;right:4px;width:16px;height:10px;border-radius:3px;"></div>
+                </div>
+                <div class="bunk-bed bottom" style="background:#E0F2FE;position:relative;margin-top:8px;">
+                  <div class="bunk-pillow" style="background:#fff;position:absolute;top:3px;right:4px;width:16px;height:10px;border-radius:3px;"></div>
+                </div>
+              </div>
+              <div class="bunk-ladder">
+                <div class="ladder-rung"></div>
+                <div class="ladder-rung"></div>
+                <div class="ladder-rung"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="room-body">
+          <div class="room-type" style="color:var(--sky);">Dormitory</div>
+          <div class="room-name">6er Dorm</div>
+          <div class="room-desc">Perfekt für Solotravel­er. Geteiltes Bad, Schließfächer, Leseleuchten und USB-Ladestationen an jedem Bett.</div>
+          <div class="room-features">
+            <div class="room-feat">
+              <div class="rf-check" style="background:rgba(14,165,233,0.1);">
+                <svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="var(--sky)" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </div>
+              Schließfach mit Schloss
+            </div>
+            <div class="room-feat">
+              <div class="rf-check" style="background:rgba(14,165,233,0.1);">
+                <svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="var(--sky)" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </div>
+              USB-Ladestation am Bett
+            </div>
+            <div class="room-feat">
+              <div class="rf-check" style="background:rgba(14,165,233,0.1);">
+                <svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="var(--sky)" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </div>
+              Bettwäsche inklusive
+            </div>
+          </div>
+          <div class="room-footer">
+            <div class="room-price" style="color:var(--sky);">19 € <span>/ Nacht</span></div>
+            <a href="#" class="room-book" style="background:var(--sky);">Buchen →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Room 2: Privatzimmer -->
+      <div class="room-card">
+        <div class="room-art art-privat">
+          <div class="private-scene">
+            <div class="priv-window"></div>
+            <div class="priv-bed">
+              <div class="priv-headboard"></div>
+              <div class="priv-blanket"></div>
+              <div class="priv-pillow"></div>
+            </div>
+            <div class="priv-rug"></div>
+          </div>
+        </div>
+        <div class="room-body">
+          <div class="room-type" style="color:var(--sand);">Privat</div>
+          <div class="room-name">Doppelzimmer</div>
+          <div class="room-desc">Dein eigener Rückzugsort im Hostel-Spirit. Für Paare, Freunde oder wenn du einfach etwas Ruhe brauchst.</div>
+          <div class="room-features">
+            <div class="room-feat">
+              <div class="rf-check" style="background:rgba(245,158,11,0.1);">
+                <svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="var(--sand)" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </div>
+              Eigenes Bad
+            </div>
+            <div class="room-feat">
+              <div class="rf-check" style="background:rgba(245,158,11,0.1);">
+                <svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="var(--sand)" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </div>
+              Frühstück optional
+            </div>
+            <div class="room-feat">
+              <div class="rf-check" style="background:rgba(245,158,11,0.1);">
+                <svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="var(--sand)" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </div>
+              Blick auf den Innenhof
+            </div>
+          </div>
+          <div class="room-footer">
+            <div class="room-price" style="color:var(--sand);">54 € <span>/ Nacht</span></div>
+            <a href="#" class="room-book" style="background:var(--sand);">Buchen →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Room 3: Reisecafé Cowork -->
+      <div class="room-card">
+        <div class="room-art art-cafe">
+          <div class="cafe-scene">
+            <div style="display:flex;flex-direction:column;gap:8px;align-items:center;">
+              <div class="steam">
+                <div class="steam-line"></div>
+                <div class="steam-line"></div>
+                <div class="steam-line"></div>
+              </div>
+              <div class="cafe-cup">
+                <div class="cup-body">
+                  <div class="cup-handle"></div>
+                </div>
+                <div class="cup-saucer"></div>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px;align-items:center;margin-bottom:4px;">
+              <div class="laptop">
+                <div class="laptop-screen">
+                  <div class="ls-lines">
+                    <div class="ls-line" style="width:70%;"></div>
+                    <div class="ls-line" style="width:50%;"></div>
+                    <div class="ls-line" style="width:80%;"></div>
+                  </div>
+                </div>
+                <div class="laptop-base"></div>
+                <div class="laptop-foot"></div>
+              </div>
+            </div>
+            <div style="position:absolute;bottom:20px;left:50%;transform:translateX(-50%);width:220px;">
+              <div class="cafe-table" style="position:relative;width:220px;">
+                <div style="position:absolute;bottom:0;left:30px;width:6px;height:50px;background:rgba(16,185,129,0.5);border-radius:0 0 3px 3px;"></div>
+                <div style="position:absolute;bottom:0;right:30px;width:6px;height:50px;background:rgba(16,185,129,0.5);border-radius:0 0 3px 3px;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="room-body">
+          <div class="room-type" style="color:var(--green);">Café & Cowork</div>
+          <div class="room-name">Reisecafé</div>
+          <div class="room-desc">Arbeiten, treffen, planen. Mit Specialty Coffee, schnellem WLAN und dem besten Kuchenstück in der Innenstadt.</div>
+          <div class="room-features">
+            <div class="room-feat">
+              <div class="rf-check" style="background:rgba(16,185,129,0.1);">
+                <svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="var(--green)" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </div>
+              WLAN 500 Mbit/s
+            </div>
+            <div class="room-feat">
+              <div class="rf-check" style="background:rgba(16,185,129,0.1);">
+                <svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="var(--green)" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </div>
+              Specialty Coffee
+            </div>
+            <div class="room-feat">
+              <div class="rf-check" style="background:rgba(16,185,129,0.1);">
+                <svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="var(--green)" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </div>
+              Tages-Pass ab 8 €
+            </div>
+          </div>
+          <div class="room-footer">
+            <div class="room-price" style="color:var(--green);">Offen <span>tägl. 7 – 22 h</span></div>
+            <a href="#" class="room-book" style="background:var(--green);">Mehr →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Section 3: Community ─────────────────────────── -->
+  <section class="community">
+    <div class="comm-inner">
+
+      <!-- Globe -->
+      <div class="globe-wrap">
+        <div class="globe-outer">
+          <div class="globe-lat lat-1"></div>
+          <div class="globe-lat lat-2"></div>
+          <div class="globe-lat lat-3"></div>
+          <div class="globe-lon lon-1"></div>
+          <div class="globe-lon lon-2"></div>
+          <div class="globe-lon lon-3"></div>
+          <div class="globe-lon lon-4"></div>
+          <div class="globe-pin pin-de"></div>
+          <div class="globe-pin pin-fr"></div>
+          <div class="globe-pin pin-jp"></div>
+          <div class="globe-pin pin-us"></div>
+          <div class="globe-pin pin-br"></div>
+          <div class="globe-pin pin-au"></div>
+          <div class="globe-pin pin-za"></div>
+          <div class="globe-center">
+            <div class="gc-num">40+</div>
+            <div class="gc-label">Länder</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right content -->
+      <div class="comm-right">
+        <div class="comm-tag">Community & Events</div>
+        <h2 class="comm-title">Welt trifft<br><em>Wanderherz.</em></h2>
+        <p class="comm-sub">Jeden Monat kommen Reisende aus 40+ Ländern bei uns an. Die besten Begegnungen passieren nicht auf Sehenswürdigkeiten — sie passieren hier.</p>
+
+        <div class="event-head">Nächste Events</div>
+        <div class="event-list">
+          <div class="event-item">
+            <div class="event-date">
+              <div class="ed-day">14</div>
+              <div class="ed-mon">Apr</div>
+            </div>
+            <div class="event-info">
+              <div class="ev-name">Traveler's Night — Storytime</div>
+              <div class="ev-sub">Hostel Bar · ab 20:00 Uhr · kostenlos</div>
+            </div>
+            <div class="ev-tag" style="background:rgba(14,165,233,0.2);color:var(--sky);">Heute</div>
+          </div>
+          <div class="event-item">
+            <div class="event-date">
+              <div class="ed-day">16</div>
+              <div class="ed-mon">Apr</div>
+            </div>
+            <div class="event-info">
+              <div class="ev-name">Mosel-Radtour ab Wanderherz</div>
+              <div class="ev-sub">Treff Eingang · 09:00 Uhr · 8 € inkl. Leihrad</div>
+            </div>
+            <div class="ev-tag" style="background:rgba(16,185,129,0.2);color:var(--green);">Rad</div>
+          </div>
+          <div class="event-item">
+            <div class="event-date">
+              <div class="ed-day">19</div>
+              <div class="ed-mon">Apr</div>
+            </div>
+            <div class="event-info">
+              <div class="ev-name">Pasta-Night im Gemeinschafts­küche</div>
+              <div class="ev-sub">Küche OG · 18:30 Uhr · max. 12 Pers.</div>
+            </div>
+            <div class="ev-tag" style="background:rgba(248,113,113,0.2);color:var(--coral);">Food</div>
+          </div>
+        </div>
+
+        <div class="origin-strip">
+          <div class="origin-label">Heute im Haus</div>
+          <div class="origin-chip">
+            <div class="oc-flag" style="background:linear-gradient(#000 33%,#F00 33%,#F00 66%,#FF0 66%);"></div>
+            <span class="oc-name">DE</span>
+          </div>
+          <div class="origin-chip">
+            <div class="oc-flag" style="background:linear-gradient(#003189 33%,#fff 33%,#fff 66%,#E30000 66%);"></div>
+            <span class="oc-name">FR</span>
+          </div>
+          <div class="origin-chip">
+            <div class="oc-flag" style="background:linear-gradient(90deg,#BC0021 33%,#fff 33%,#fff 66%,#BC0021 66%);"></div>
+            <span class="oc-name">JP</span>
+          </div>
+          <div class="origin-chip">
+            <div class="oc-flag" style="background:linear-gradient(#B22234 33%,#fff 33%,#fff 66%,#B22234 66%);"></div>
+            <span class="oc-name">US</span>
+          </div>
+          <div class="origin-chip">
+            <div class="oc-flag" style="background:linear-gradient(#009B3A,#009B3A 50%,#FEDF00 50%);"></div>
+            <span class="oc-name">BR</span>
+          </div>
+          <div class="origin-chip">
+            <div class="oc-flag" style="background:linear-gradient(#00008B 33%,#fff 33%,#fff 66%,#00008B 66%);"></div>
+            <span class="oc-name">NL</span>
+          </div>
+          <div class="origin-chip">
+            <div class="oc-flag" style="background:linear-gradient(#002868 33%,#fff 33%,#fff 66%,#BF0A30 66%);"></div>
+            <span class="oc-name">AU</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </body>
 </html>
