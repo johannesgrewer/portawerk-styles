@@ -333,6 +333,191 @@ export const prerender = true;
       letter-spacing: 0.06em;
     }
 
+    /* ===== SECTION 2 — GERICHTE ===== */
+    .gerichte {
+      padding: 6rem 4.5rem;
+      background: var(--cream);
+      position: relative;
+      z-index: 1;
+    }
+    .gerichte-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 3rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid rgba(74,124,89,0.15);
+    }
+    .gerichte-eyebrow {
+      font-size: 0.55rem;
+      font-weight: 600;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .gerichte-eyebrow::before {
+      content: '';
+      display: block;
+      width: 1.5rem;
+      height: 1px;
+      background: var(--amber);
+    }
+    .gerichte-title {
+      font-family: 'Libre Baskerville', serif;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 700;
+      color: var(--dark);
+      line-height: 1.1;
+    }
+    .gerichte-title em {
+      font-style: italic;
+      color: var(--green);
+    }
+    .gerichte-link {
+      font-size: 0.58rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--green);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: gap 0.2s;
+    }
+    .gerichte-link:hover { gap: 0.85rem; }
+
+    .gerichte-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+    }
+    .gericht-card {
+      position: relative;
+      overflow: hidden;
+    }
+    .gericht-card img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.55s ease;
+    }
+    .gericht-card:hover img {
+      transform: scale(1.05);
+    }
+    .gericht-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(43,36,22,0.72) 0%, transparent 55%);
+    }
+    .gericht-info {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 2rem 1.75rem;
+    }
+    .gericht-tag {
+      font-size: 0.5rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 0.5rem;
+    }
+    .gericht-name {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: #F8F4EC;
+      line-height: 1.3;
+    }
+    .gericht-desc {
+      font-size: 0.68rem;
+      font-weight: 300;
+      color: rgba(248,244,236,0.68);
+      margin-top: 0.35rem;
+      font-style: italic;
+    }
+
+    /* ===== SECTION 3 — HERKUNFT ===== */
+    .herkunft {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 580px;
+      position: relative;
+      z-index: 1;
+    }
+    .herkunft-photo {
+      position: relative;
+      overflow: hidden;
+    }
+    .herkunft-photo img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .herkunft-photo-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, transparent 60%, var(--cream) 100%),
+                  linear-gradient(to top, rgba(43,36,22,0.25) 0%, transparent 50%);
+    }
+    .herkunft-text {
+      background: var(--cream);
+      padding: 5rem 4.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 2rem;
+    }
+    .herkunft-quote {
+      font-family: 'Libre Baskerville', serif;
+      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1.5;
+      color: var(--dark);
+    }
+    .herkunft-body {
+      font-size: 0.88rem;
+      font-weight: 300;
+      line-height: 1.95;
+      color: var(--muted);
+      max-width: 46ch;
+    }
+    .herkunft-sig {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+    .herkunft-sig-name {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--dark);
+    }
+    .herkunft-sig-role {
+      font-size: 0.6rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+    }
+    .herkunft-sig-rule {
+      width: 2.5rem;
+      height: 1px;
+      background: var(--amber);
+      margin-bottom: 0.25rem;
+    }
+
     /* Open hours pill */
     .hours-pill {
       background: rgba(74,124,89,0.1);
@@ -353,6 +538,28 @@ export const prerender = true;
       font-family: 'Libre Baskerville', serif;
       font-size: 0.9rem;
       color: var(--dark);
+    }
+
+    @media (max-width: 1024px) {
+      .gerichte-grid { grid-template-columns: 1fr 1fr; }
+      .gericht-card:last-child { grid-column: 1 / -1; }
+      .gericht-card:last-child img { height: 300px; }
+      .herkunft { grid-template-columns: 1fr; }
+      .herkunft-photo { height: 380px; position: relative; }
+      .herkunft-photo img { position: absolute; }
+    }
+
+    @media (max-width: 768px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { border-left: none; border-top: 1px solid rgba(74,124,89,0.12); padding: 3rem 2rem; }
+      .hero-left { padding: 7rem 2rem 3rem; }
+      .gerichte { padding: 4rem 2rem; }
+      .gerichte-grid { grid-template-columns: 1fr; }
+      .gericht-card:last-child { grid-column: auto; }
+      .gericht-card img, .gericht-card:last-child img { height: 320px; }
+      .herkunft-text { padding: 3.5rem 2rem; }
+      .nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
     }
   </style>
 </head>
@@ -475,5 +682,99 @@ export const prerender = true;
       </div>
     </div>
   </section>
+
+  <!-- ===== SECTION 2: GERICHTE ===== -->
+  <section class="gerichte">
+    <div class="gerichte-head">
+      <div>
+        <div class="gerichte-eyebrow">Was gerade reif ist</div>
+        <h2 class="gerichte-title">Saisonale<br><em>Lieblingsgerichte.</em></h2>
+      </div>
+      <a href="#" class="gerichte-link">Zur Speisekarte →</a>
+    </div>
+
+    <div class="gerichte-grid">
+      <!-- Gericht 1: Fisch -->
+      <div class="gericht-card">
+        <img
+          src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&w=800&h=600&q=80"
+          alt="Gebratener Moselzander mit Spargel"
+          loading="lazy"
+        />
+        <div class="gericht-overlay"></div>
+        <div class="gericht-info">
+          <div class="gericht-tag">Hauptgang · Fisch</div>
+          <div class="gericht-name">Moselzander</div>
+          <div class="gericht-desc">Spargel, Riesling-Beurre blanc, Kerbel</div>
+        </div>
+      </div>
+
+      <!-- Gericht 2: Gemüse -->
+      <div class="gericht-card">
+        <img
+          src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&h=600&q=80"
+          alt="Frisches Frühlingsgemüse Gericht"
+          loading="lazy"
+        />
+        <div class="gericht-overlay"></div>
+        <div class="gericht-info">
+          <div class="gericht-tag">Vorspeise · Vegetarisch</div>
+          <div class="gericht-name">Bärlauch-Velouté</div>
+          <div class="gericht-desc">Sauerrahm, Roggencrouton, Wildkräuter</div>
+        </div>
+      </div>
+
+      <!-- Gericht 3: Dessert -->
+      <div class="gericht-card">
+        <img
+          src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=800&h=600&q=80"
+          alt="Rhabarber-Tarte mit Holunderblüteneis"
+          loading="lazy"
+        />
+        <div class="gericht-overlay"></div>
+        <div class="gericht-info">
+          <div class="gericht-tag">Dessert · Süß</div>
+          <div class="gericht-name">Rhabarber-Tarte</div>
+          <div class="gericht-desc">Holunderblüteneis, Vanillesauce</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SECTION 3: HERKUNFT ===== -->
+  <section class="herkunft">
+    <div class="herkunft-photo">
+      <img
+        src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=900&h=700&q=80"
+        alt="Feld im Morgenlicht — Partnerhof in der Trierer Umgebung"
+        loading="lazy"
+      />
+      <div class="herkunft-photo-overlay"></div>
+    </div>
+
+    <div class="herkunft-text">
+      <div class="gerichte-eyebrow">Unsere Philosophie</div>
+      <p class="herkunft-quote">
+        "Was wir nicht selbst benennen können, kommt nicht in unsere Küche."
+      </p>
+      <p class="herkunft-body">
+        Seit 2018 arbeiten wir ausschließlich mit Höfen zusammen, die wir
+        persönlich kennen und regelmäßig besuchen. Keine Großhändler,
+        keine Kompromisse bei der Herkunft. Das kostet mehr Arbeit —
+        aber man schmeckt es.
+      </p>
+      <p class="herkunft-body">
+        Unsere Karte wechselt mit der Ernte. Was heute auf dem Speisezettel
+        steht, war heute Morgen noch auf dem Feld. Diese Ehrlichkeit ist
+        unser Versprechen — an Sie und an die Region.
+      </p>
+      <div class="herkunft-sig">
+        <div class="herkunft-sig-rule"></div>
+        <div class="herkunft-sig-name">Thomas & Anna Kreutzer</div>
+        <div class="herkunft-sig-role">Inhaber, Feld & Tafel</div>
+      </div>
+    </div>
+  </section>
+
 </body>
 </html>

@@ -813,63 +813,11 @@ export const prerender = true;
 
       <!-- Room 1: 6er Dorm -->
       <div class="room-card">
-        <div class="room-art art-dorm6">
-          <div class="bunk-scene">
-            <!-- Bunk unit 1 -->
-            <div class="bunk-unit u1" style="height:100px;position:relative;">
-              <div class="bunk-post"></div>
-              <div class="bunk-post-r"></div>
-              <div style="display:flex;flex-direction:column;gap:20px;padding:0 6px;padding-top:8px;">
-                <div class="bunk-bed top b-mattress" style="background:#fff;position:relative;">
-                  <div class="bunk-pillow b-pillow" style="background:#BAE6FD;"></div>
-                </div>
-                <div class="bunk-bed bottom b-mattress" style="background:#fff;position:relative;margin-top:8px;">
-                  <div class="bunk-pillow b-pillow" style="background:#BAE6FD;"></div>
-                </div>
-              </div>
-              <div class="bunk-ladder">
-                <div class="ladder-rung"></div>
-                <div class="ladder-rung"></div>
-                <div class="ladder-rung"></div>
-              </div>
-            </div>
-            <!-- Bunk unit 2 -->
-            <div class="bunk-unit u2" style="height:100px;position:relative;">
-              <div class="bunk-post"></div>
-              <div class="bunk-post-r"></div>
-              <div style="display:flex;flex-direction:column;gap:20px;padding:0 6px;padding-top:8px;">
-                <div class="bunk-bed top" style="background:#E0F2FE;position:relative;">
-                  <div class="bunk-pillow" style="background:#fff;position:absolute;top:3px;right:4px;width:16px;height:10px;border-radius:3px;"></div>
-                </div>
-                <div class="bunk-bed bottom" style="background:#fff;position:relative;margin-top:8px;">
-                  <div class="bunk-pillow" style="background:#BAE6FD;position:absolute;top:3px;right:4px;width:16px;height:10px;border-radius:3px;"></div>
-                </div>
-              </div>
-              <div class="bunk-ladder">
-                <div class="ladder-rung"></div>
-                <div class="ladder-rung"></div>
-                <div class="ladder-rung"></div>
-              </div>
-            </div>
-            <!-- Bunk unit 3 -->
-            <div class="bunk-unit u3" style="height:100px;position:relative;">
-              <div class="bunk-post"></div>
-              <div class="bunk-post-r"></div>
-              <div style="display:flex;flex-direction:column;gap:20px;padding:0 6px;padding-top:8px;">
-                <div class="bunk-bed top" style="background:#fff;position:relative;">
-                  <div class="bunk-pillow" style="background:#7DD3FC;position:absolute;top:3px;right:4px;width:16px;height:10px;border-radius:3px;"></div>
-                </div>
-                <div class="bunk-bed bottom" style="background:#E0F2FE;position:relative;margin-top:8px;">
-                  <div class="bunk-pillow" style="background:#fff;position:absolute;top:3px;right:4px;width:16px;height:10px;border-radius:3px;"></div>
-                </div>
-              </div>
-              <div class="bunk-ladder">
-                <div class="ladder-rung"></div>
-                <div class="ladder-rung"></div>
-                <div class="ladder-rung"></div>
-              </div>
-            </div>
-          </div>
+        <div class="room-art" style="overflow:hidden;position:relative;background:#0c2a3d;">
+          <img src="https://images.unsplash.com/photo-1555854877-bab93fdde4c2?auto=format&fit=crop&w=640&h=220&q=80"
+               alt="Hostel Dorm Bunk Beds" loading="lazy"
+               style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" />
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(14,165,233,0.3) 0%,transparent 70%);"></div>
         </div>
         <div class="room-body">
           <div class="room-type" style="color:var(--sky);">Dormitory</div>
@@ -904,16 +852,11 @@ export const prerender = true;
 
       <!-- Room 2: Privatzimmer -->
       <div class="room-card">
-        <div class="room-art art-privat">
-          <div class="private-scene">
-            <div class="priv-window"></div>
-            <div class="priv-bed">
-              <div class="priv-headboard"></div>
-              <div class="priv-blanket"></div>
-              <div class="priv-pillow"></div>
-            </div>
-            <div class="priv-rug"></div>
-          </div>
+        <div class="room-art" style="overflow:hidden;position:relative;background:#3d2a00;">
+          <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=640&h=220&q=80"
+               alt="Privates Doppelzimmer" loading="lazy"
+               style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" />
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(245,158,11,0.25) 0%,transparent 60%);"></div>
         </div>
         <div class="room-body">
           <div class="room-type" style="color:var(--sand);">Privat</div>
@@ -948,41 +891,11 @@ export const prerender = true;
 
       <!-- Room 3: Reisecafé Cowork -->
       <div class="room-card">
-        <div class="room-art art-cafe">
-          <div class="cafe-scene">
-            <div style="display:flex;flex-direction:column;gap:8px;align-items:center;">
-              <div class="steam">
-                <div class="steam-line"></div>
-                <div class="steam-line"></div>
-                <div class="steam-line"></div>
-              </div>
-              <div class="cafe-cup">
-                <div class="cup-body">
-                  <div class="cup-handle"></div>
-                </div>
-                <div class="cup-saucer"></div>
-              </div>
-            </div>
-            <div style="display:flex;flex-direction:column;gap:6px;align-items:center;margin-bottom:4px;">
-              <div class="laptop">
-                <div class="laptop-screen">
-                  <div class="ls-lines">
-                    <div class="ls-line" style="width:70%;"></div>
-                    <div class="ls-line" style="width:50%;"></div>
-                    <div class="ls-line" style="width:80%;"></div>
-                  </div>
-                </div>
-                <div class="laptop-base"></div>
-                <div class="laptop-foot"></div>
-              </div>
-            </div>
-            <div style="position:absolute;bottom:20px;left:50%;transform:translateX(-50%);width:220px;">
-              <div class="cafe-table" style="position:relative;width:220px;">
-                <div style="position:absolute;bottom:0;left:30px;width:6px;height:50px;background:rgba(16,185,129,0.5);border-radius:0 0 3px 3px;"></div>
-                <div style="position:absolute;bottom:0;right:30px;width:6px;height:50px;background:rgba(16,185,129,0.5);border-radius:0 0 3px 3px;"></div>
-              </div>
-            </div>
-          </div>
+        <div class="room-art art-cafe" style="overflow:hidden;position:relative;background:#DCFCE7;">
+          <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=640&h=280&q=80"
+               alt="Coworking café with coffee and laptop" loading="lazy"
+               style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" />
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(16,185,129,0.35) 0%,transparent 60%);"></div>
         </div>
         <div class="room-body">
           <div class="room-type" style="color:var(--green);">Café & Cowork</div>

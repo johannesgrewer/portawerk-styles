@@ -195,7 +195,8 @@ export const prerender = true;
 
     /* Right panel — coffee details */
     .hero-right {
-      background: rgba(255,255,255,0.04);
+      position: relative;
+      overflow: hidden;
       border-left: 1px solid rgba(255,255,255,0.07);
       padding: 3rem 2.5rem;
       display: flex;
@@ -586,23 +587,29 @@ export const prerender = true;
     </div>
 
     <div class="hero-right">
-      <div class="coffee-feature">
-        <p class="cf-label">Kaffee des Monats</p>
-        <div class="cf-name">Yirgacheffe Washed<br>Natural G1</div>
-        <div class="cf-origin">Äthiopien · 1.850 m · Kleinbauer-Kooperative</div>
-        <p class="cf-notes">"Jasmin, rote Johannisbeere, Zitrusschale. Seidig im Mund, cleaner Abgang. Hervorragend als Pour Over."</p>
-      </div>
+      <img src="https://images.unsplash.com/photo-1442512595331-87584113a58b?auto=format&fit=crop&w=800&h=700&q=80"
+           alt="Specialty Coffee Nahaufnahme" loading="eager"
+           style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.18;" />
+      <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(31,17,7,0.6) 0%,transparent 70%);pointer-events:none;"></div>
+      <div style="position:relative;z-index:1;display:flex;flex-direction:column;gap:inherit;height:100%;">
+        <div class="coffee-feature">
+          <p class="cf-label">Kaffee des Monats</p>
+          <div class="cf-name">Yirgacheffe Washed<br>Natural G1</div>
+          <div class="cf-origin">Äthiopien · 1.850 m · Kleinbauer-Kooperative</div>
+          <p class="cf-notes">"Jasmin, rote Johannisbeere, Zitrusschale. Seidig im Mund, cleaner Abgang. Hervorragend als Pour Over."</p>
+        </div>
 
-      <div class="cf-divider"></div>
+        <div class="cf-divider"></div>
 
-      <div>
-        <p class="brew-methods-label">Erhältlich als</p>
-        <div class="brew-methods">
-          <span class="brew-pill">Espresso</span>
-          <span class="brew-pill">Pour Over</span>
-          <span class="brew-pill">Cold Brew</span>
-          <span class="brew-pill">Batch</span>
-          <span class="brew-pill">Bohnen 250g</span>
+        <div>
+          <p class="brew-methods-label">Erhältlich als</p>
+          <div class="brew-methods">
+            <span class="brew-pill">Espresso</span>
+            <span class="brew-pill">Pour Over</span>
+            <span class="brew-pill">Cold Brew</span>
+            <span class="brew-pill">Batch</span>
+            <span class="brew-pill">Bohnen 250g</span>
+          </div>
         </div>
       </div>
     </div>
@@ -756,7 +763,11 @@ export const prerender = true;
       </div>
     </div>
 
-    <div class="hours-card">
+    <div class="hours-card" style="position:relative;overflow:hidden;">
+      <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=600&h=700&q=80"
+           alt="Café Atmosphäre morgens" loading="lazy"
+           style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.12;" />
+      <div style="position:relative;z-index:1;">
       <div class="hours-title">Wann wir da sind</div>
       <div class="hours-row">
         <span class="hours-day">Montag – Freitag</span>
@@ -779,6 +790,7 @@ export const prerender = true;
         Fleischstraße 17 · 54290 Trier Altstadt<br>
         hallo@roestwerk-cafe.de
       </div>
+      </div><!-- /z-index wrapper -->
     </div>
   </section>
 

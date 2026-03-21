@@ -274,6 +274,168 @@ export const prerender = true;
       from { opacity: 0; transform: translateY(20px); }
       to   { opacity: 1; transform: translateY(0); }
     }
+
+    /* ===== SECTION 2 — SIGNATURE COCKTAILS ===== */
+    .karte {
+      padding: 6rem 5rem;
+      background: #1A0D04;
+    }
+    .karte-head {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+    .karte-eyebrow {
+      font-size: 0.58rem;
+      font-weight: 300;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: #D4891A;
+      margin-bottom: 1rem;
+    }
+    .karte-title {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      color: #EDE0C4;
+      line-height: 1.2;
+    }
+    .karte-rule {
+      width: 3rem;
+      height: 1px;
+      background: rgba(212,137,26,0.4);
+      margin: 1.25rem auto 0;
+    }
+
+    .cocktail-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+    .cocktail-card {
+      position: relative;
+      overflow: hidden;
+    }
+    .cocktail-card img {
+      width: 100%;
+      height: 420px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s ease;
+      filter: brightness(0.9);
+    }
+    .cocktail-card:hover img { transform: scale(1.06); }
+    .cocktail-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(20,10,2,0.9) 0%, rgba(20,10,2,0.2) 50%, transparent 100%);
+    }
+    .cocktail-info {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 2rem 2rem;
+    }
+    .cocktail-category {
+      font-size: 0.5rem;
+      font-weight: 300;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: #D4891A;
+      margin-bottom: 0.5rem;
+    }
+    .cocktail-name {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.5rem;
+      color: #EDE0C4;
+      line-height: 1.2;
+    }
+    .cocktail-desc {
+      font-size: 0.68rem;
+      font-weight: 300;
+      color: rgba(237,224,196,0.55);
+      margin-top: 0.4rem;
+    }
+    .cocktail-price {
+      font-size: 0.75rem;
+      color: #D4891A;
+      margin-top: 0.75rem;
+      letter-spacing: 0.06em;
+    }
+
+    /* ===== SECTION 3 — BAR ATMO ===== */
+    .bar-atmo {
+      position: relative;
+      min-height: 580px;
+      overflow: hidden;
+    }
+    .bar-atmo img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.45);
+    }
+    .bar-atmo-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(20,10,2,0.7) 0%, transparent 60%);
+    }
+    .bar-atmo-content {
+      position: relative;
+      z-index: 1;
+      max-width: 540px;
+      padding: 6rem 5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+      height: 100%;
+      justify-content: center;
+    }
+    .bar-atmo-quote {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(1.5rem, 3vw, 2.4rem);
+      color: #EDE0C4;
+      line-height: 1.45;
+    }
+    .bar-atmo-body {
+      font-size: 0.88rem;
+      font-weight: 300;
+      line-height: 1.9;
+      color: rgba(237,224,196,0.55);
+      max-width: 46ch;
+    }
+    .bar-atmo-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.6rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #D4891A;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(212,137,26,0.35);
+      padding-bottom: 2px;
+      align-self: flex-start;
+      transition: opacity 0.2s;
+    }
+    .bar-atmo-cta:hover { opacity: 0.7; }
+
+    @media (max-width: 1024px) {
+      .cocktail-grid { grid-template-columns: 1fr 1fr; }
+      .cocktail-card:last-child { grid-column: 1 / -1; }
+      .cocktail-card:last-child img { height: 300px; }
+    }
+    @media (max-width: 768px) {
+      .karte { padding: 4rem 2rem; }
+      .cocktail-grid { grid-template-columns: 1fr; }
+      .cocktail-card:last-child { grid-column: auto; }
+      .cocktail-card img, .cocktail-card:last-child img { height: 300px; }
+      .bar-atmo-content { padding: 4rem 2rem; }
+    }
   </style>
 </head>
 <body>
@@ -339,5 +501,71 @@ export const prerender = true;
       </div>
     </div>
   </section>
+
+  <!-- ===== SECTION 2: COCKTAIL KARTE ===== -->
+  <section class="karte">
+    <div class="karte-head">
+      <div class="karte-eyebrow">Handcrafted Cocktails</div>
+      <h2 class="karte-title">Unsere Signaturen.</h2>
+      <div class="karte-rule"></div>
+    </div>
+    <div class="cocktail-grid">
+      <div class="cocktail-card">
+        <img src="https://images.unsplash.com/photo-1551538827-9c037cb4f32a?auto=format&fit=crop&w=800&h=700&q=80"
+             alt="Signature Cocktail mit Garnish" loading="lazy" />
+        <div class="cocktail-overlay"></div>
+        <div class="cocktail-info">
+          <div class="cocktail-category">Signature · Bitter</div>
+          <div class="cocktail-name">Dunkel Negroni</div>
+          <div class="cocktail-desc">Campari, Gin, roter Wermut, Orangenzeste</div>
+          <div class="cocktail-price">14 €</div>
+        </div>
+      </div>
+      <div class="cocktail-card">
+        <img src="https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=800&h=700&q=80"
+             alt="Frischer Cocktail mit Limette" loading="lazy" />
+        <div class="cocktail-overlay"></div>
+        <div class="cocktail-info">
+          <div class="cocktail-category">Frisch · Zitrus</div>
+          <div class="cocktail-name">Trier Mule</div>
+          <div class="cocktail-desc">Vodka, Ingwerbier, Limette, Gurke</div>
+          <div class="cocktail-price">12 €</div>
+        </div>
+      </div>
+      <div class="cocktail-card">
+        <img src="https://images.unsplash.com/photo-1499638673689-79a0b5115d87?auto=format&fit=crop&w=800&h=700&q=80"
+             alt="Eleganter Martini" loading="lazy" />
+        <div class="cocktail-overlay"></div>
+        <div class="cocktail-info">
+          <div class="cocktail-category">Classic · Trocken</div>
+          <div class="cocktail-name">Dry Martini</div>
+          <div class="cocktail-desc">Gin, trockener Wermut, Olive oder Zitronenzeste</div>
+          <div class="cocktail-price">13 €</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SECTION 3: BAR ATMOSPHÄRE ===== -->
+  <section class="bar-atmo">
+    <img src="https://images.unsplash.com/photo-1572116469696-31de0f17cc34?auto=format&fit=crop&w=1600&h=900&q=80"
+         alt="Dunkle Bar-Atmosphäre mit warmem Licht" loading="lazy" />
+    <div class="bar-atmo-overlay"></div>
+    <div class="bar-atmo-content">
+      <div class="karte-eyebrow">Der Ort</div>
+      <p class="bar-atmo-quote">"Ein guter Cocktail braucht keinen Lärm."</p>
+      <p class="bar-atmo-body">
+        Dunkel liegt versteckt in einem Gewölbe nahe der Trierer Altstadt.
+        Kein DJ, keine Warteschlange. Nur handgemischte Drinks,
+        wechselnde Karten und das Gespräch, das beim zweiten Glas anfängt.
+      </p>
+      <p class="bar-atmo-body">
+        Dienstag bis Samstag ab 18 Uhr.
+        Reservierungen für Gruppen ab 6 Personen.
+      </p>
+      <a href="#" class="bar-atmo-cta">Tisch reservieren →</a>
+    </div>
+  </section>
+
 </body>
 </html>

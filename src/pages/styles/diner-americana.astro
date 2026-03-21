@@ -313,6 +313,174 @@ export const prerender = true;
       color: var(--red);
       margin-top: 0.5rem;
     }
+
+    /* ===== SECTION 2 — BURGER ===== */
+    .burgers {
+      padding: 6rem 5rem;
+      background: var(--dark);
+    }
+    .burgers-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 3rem;
+      border-bottom: 2px solid var(--red);
+      padding-bottom: 1.5rem;
+    }
+    .burgers-eyebrow {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 0.6rem;
+    }
+    .burgers-title {
+      font-family: 'Monoton', cursive;
+      font-size: clamp(1.6rem, 3vw, 2.8rem);
+      color: var(--cream);
+      line-height: 1.1;
+      letter-spacing: 0.04em;
+    }
+    .burgers-link {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--chrome);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(184,184,184,0.35);
+      padding-bottom: 2px;
+      white-space: nowrap;
+      transition: color 0.2s;
+    }
+    .burgers-link:hover { color: var(--red); }
+
+    .burger-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3px;
+    }
+    .burger-card {
+      position: relative;
+      overflow: hidden;
+    }
+    .burger-card img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.55s ease;
+    }
+    .burger-card:hover img { transform: scale(1.05); }
+    .burger-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(26,26,26,0.92) 0%, transparent 55%);
+    }
+    .burger-info {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 2rem;
+    }
+    .burger-name {
+      font-family: 'Monoton', cursive;
+      font-size: 1rem;
+      color: var(--cream);
+      letter-spacing: 0.05em;
+    }
+    .burger-desc {
+      font-size: 0.68rem;
+      font-weight: 300;
+      color: rgba(245,240,232,0.6);
+      margin-top: 0.3rem;
+    }
+    .burger-price {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--red);
+      margin-top: 0.6rem;
+    }
+
+    /* ===== SECTION 3 — DINER VIBE ===== */
+    .diner-vibe {
+      position: relative;
+      min-height: 560px;
+      overflow: hidden;
+    }
+    .diner-vibe img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.4) saturate(0.85);
+    }
+    .diner-vibe-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(26,26,26,0.85) 0%, transparent 65%);
+    }
+    .diner-vibe-content {
+      position: relative;
+      z-index: 1;
+      padding: 6rem 5rem;
+      max-width: 600px;
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+    }
+    .diner-vibe-eyebrow {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--red);
+    }
+    .diner-vibe-title {
+      font-family: 'Monoton', cursive;
+      font-size: clamp(1.6rem, 3vw, 2.6rem);
+      color: var(--cream);
+      letter-spacing: 0.04em;
+      line-height: 1.25;
+    }
+    .diner-vibe-body {
+      font-size: 0.88rem;
+      font-weight: 300;
+      line-height: 1.9;
+      color: rgba(245,240,232,0.55);
+      max-width: 46ch;
+    }
+    .diner-vibe-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--cream);
+      background: var(--red);
+      padding: 0.9rem 2rem;
+      text-decoration: none;
+      align-self: flex-start;
+      transition: background 0.2s;
+    }
+    .diner-vibe-cta:hover { background: #c02020; }
+
+    @media (max-width: 1024px) {
+      .burger-grid { grid-template-columns: 1fr 1fr; }
+      .burger-card:last-child { grid-column: 1 / -1; }
+      .burger-card:last-child img { height: 280px; }
+    }
+    @media (max-width: 768px) {
+      .burgers { padding: 4rem 2rem; }
+      .burger-grid { grid-template-columns: 1fr; }
+      .burger-card:last-child { grid-column: auto; }
+      .burger-card img, .burger-card:last-child img { height: 280px; }
+      .diner-vibe-content { padding: 4rem 2rem; }
+    }
   </style>
 </head>
 <body>
@@ -410,5 +578,70 @@ export const prerender = true;
       </div>
     </div>
   </section>
+
+  <!-- ===== SECTION 2: BURGERS ===== -->
+  <section class="burgers">
+    <div class="burgers-head">
+      <div>
+        <div class="burgers-eyebrow">Unsere Klassiker</div>
+        <h2 class="burgers-title">ON THE MENU</h2>
+      </div>
+      <a href="#" class="burgers-link">Volle Karte →</a>
+    </div>
+    <div class="burger-grid">
+      <div class="burger-card">
+        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&h=600&q=80"
+             alt="Classic Double Burger" loading="lazy" />
+        <div class="burger-overlay"></div>
+        <div class="burger-info">
+          <div class="burger-name">CLASSIC DOUBLE</div>
+          <div class="burger-desc">180g Patty · Cheddar · Haussoße · Brioche</div>
+          <div class="burger-price">12,90 €</div>
+        </div>
+      </div>
+      <div class="burger-card">
+        <img src="https://images.unsplash.com/photo-1541518763669-27fef04b14ea?auto=format&fit=crop&w=800&h=600&q=80"
+             alt="Chili Cheese Fries" loading="lazy" />
+        <div class="burger-overlay"></div>
+        <div class="burger-info">
+          <div class="burger-name">CHILI CHEESE FRIES</div>
+          <div class="burger-desc">Hausgemachter Chili · Cheddar-Sauce · Jalapeños</div>
+          <div class="burger-price">7,90 €</div>
+        </div>
+      </div>
+      <div class="burger-card">
+        <img src="https://images.unsplash.com/photo-1572490122747-3e9b15de1f5d?auto=format&fit=crop&w=800&h=600&q=80"
+             alt="Route Milchshake" loading="lazy" />
+        <div class="burger-overlay"></div>
+        <div class="burger-info">
+          <div class="burger-name">ROUTE SHAKE</div>
+          <div class="burger-desc">Echtes Eis · Vanille · Schoko · Erdbeere</div>
+          <div class="burger-price">6,50 €</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SECTION 3: DINER VIBE ===== -->
+  <section class="diner-vibe">
+    <img src="https://images.unsplash.com/photo-1514190051997-0f6f39ca5cde?auto=format&fit=crop&w=1600&h=900&q=80"
+         alt="Klassisches amerikanisches Diner-Ambiente" loading="lazy" />
+    <div class="diner-vibe-overlay"></div>
+    <div class="diner-vibe-content">
+      <div class="diner-vibe-eyebrow">Das Erlebnis</div>
+      <h2 class="diner-vibe-title">50s. FOR REAL.</h2>
+      <p class="diner-vibe-body">
+        Keine Dekoration aus dem Möbelkatalog — unsere Bar stammt
+        aus einem echten Diner in New Jersey, Baujahr 1954.
+        Die Jukebox läuft. Die Neonlichter auch.
+      </p>
+      <p class="diner-vibe-body">
+        Route 66 ist für alle da: Familie, Paare, Late-Night-Hunger.
+        Wir machen keine halben Sachen — weder beim Essen noch beim Ambiente.
+      </p>
+      <a href="#" class="diner-vibe-cta">Tisch reservieren →</a>
+    </div>
+  </section>
+
 </body>
 </html>

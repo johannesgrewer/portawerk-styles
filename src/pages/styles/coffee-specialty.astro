@@ -303,6 +303,171 @@ export const prerender = true;
       color: rgba(255,255,255,0.3);
       margin-top: 0.2rem;
     }
+
+    /* ===== SECTION 2 — BREWS ===== */
+    .brews {
+      padding: 6rem 4.5rem;
+      background: var(--bg);
+    }
+    .brews-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 3rem;
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: 2rem;
+    }
+    .brews-eyebrow {
+      font-size: 0.55rem;
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--caramel);
+      margin-bottom: 0.6rem;
+    }
+    .brews-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      color: var(--espresso);
+      line-height: 1.05;
+    }
+    .brews-link {
+      font-size: 0.6rem;
+      font-weight: 300;
+      color: var(--muted);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(61,43,31,0.2);
+      padding-bottom: 1px;
+      transition: color 0.2s;
+    }
+    .brews-link:hover { color: var(--caramel); }
+
+    .brews-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+    .brew-card {
+      position: relative;
+      overflow: hidden;
+    }
+    .brew-card img {
+      width: 100%;
+      height: 380px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.55s ease;
+      filter: sepia(15%);
+    }
+    .brew-card:hover img { transform: scale(1.05); }
+    .brew-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(61,43,31,0.8) 0%, transparent 55%);
+    }
+    .brew-card-info {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 2rem 1.75rem;
+    }
+    .brew-card-method {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.15rem;
+      color: #fff;
+      letter-spacing: 0.02em;
+    }
+    .brew-card-detail {
+      font-size: 0.62rem;
+      font-weight: 300;
+      color: var(--caramel);
+      margin-top: 0.3rem;
+      letter-spacing: 0.06em;
+    }
+
+    /* ===== SECTION 3 — RAUM ===== */
+    .raum {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 560px;
+      background: var(--espresso);
+    }
+    .raum-text {
+      padding: 5rem 4.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 2rem;
+    }
+    .raum-eyebrow {
+      font-size: 0.55rem;
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--caramel);
+    }
+    .raum-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      color: var(--cream);
+      line-height: 1.05;
+    }
+    .raum-body {
+      font-size: 0.88rem;
+      font-weight: 300;
+      line-height: 1.95;
+      color: rgba(245,237,224,0.6);
+      max-width: 46ch;
+    }
+    .raum-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--cream);
+      text-decoration: none;
+      padding-bottom: 2px;
+      border-bottom: 1px solid rgba(245,237,224,0.3);
+      transition: border-color 0.2s;
+      align-self: flex-start;
+    }
+    .raum-cta:hover { border-color: var(--caramel); color: var(--caramel); }
+    .raum-photo {
+      position: relative;
+      overflow: hidden;
+    }
+    .raum-photo img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: sepia(10%) brightness(0.88);
+    }
+
+    @media (max-width: 1024px) {
+      .brews-grid { grid-template-columns: 1fr 1fr; }
+      .brew-card:last-child { grid-column: 1 / -1; }
+      .brew-card:last-child img { height: 280px; }
+      .raum { grid-template-columns: 1fr; }
+      .raum-photo { height: 380px; position: relative; }
+      .raum-photo img { position: absolute; }
+    }
+    @media (max-width: 768px) {
+      .brews { padding: 4rem 2rem; }
+      .brews-grid { grid-template-columns: 1fr; }
+      .brew-card:last-child { grid-column: auto; }
+      .brew-card img, .brew-card:last-child img { height: 280px; }
+      .raum-text { padding: 3.5rem 2rem; }
+      .nav { padding: 1rem 1.5rem; }
+    }
   </style>
 </head>
 <body>
@@ -428,5 +593,71 @@ export const prerender = true;
       </div>
     </div>
   </section>
+
+  <!-- ===== SECTION 2: BREWS ===== -->
+  <section class="brews">
+    <div class="brews-head">
+      <div>
+        <div class="brews-eyebrow">Handwerk trifft Wissenschaft</div>
+        <h2 class="brews-title">Unsere<br>Zubereitungen.</h2>
+      </div>
+      <a href="#" class="brews-link">Workshop buchen →</a>
+    </div>
+
+    <div class="brews-grid">
+      <div class="brew-card">
+        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&h=600&q=80"
+             alt="Espresso shot" loading="lazy" />
+        <div class="brew-card-overlay"></div>
+        <div class="brew-card-info">
+          <div class="brew-card-method">Espresso</div>
+          <div class="brew-card-detail">93 °C · 25 Sekunden · 9 bar</div>
+        </div>
+      </div>
+
+      <div class="brew-card">
+        <img src="https://images.unsplash.com/photo-1459755486867-b55449bb39ff?auto=format&fit=crop&w=800&h=600&q=80"
+             alt="Pour-over Zubereitung" loading="lazy" />
+        <div class="brew-card-overlay"></div>
+        <div class="brew-card-info">
+          <div class="brew-card-method">Pour-Over V60</div>
+          <div class="brew-card-detail">91 °C · 3:30 Minuten · Blooming</div>
+        </div>
+      </div>
+
+      <div class="brew-card">
+        <img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=800&h=600&q=80"
+             alt="Cold Brew in Glasflasche" loading="lazy" />
+        <div class="brew-card-overlay"></div>
+        <div class="brew-card-info">
+          <div class="brew-card-method">Cold Brew</div>
+          <div class="brew-card-detail">4 °C · 12 Stunden · Slow Drip</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SECTION 3: RAUM ===== -->
+  <section class="raum">
+    <div class="raum-text">
+      <div class="raum-eyebrow">Der Ort</div>
+      <h2 class="raum-title">Kein Lärm.<br>Nur Kaffee.</h2>
+      <p class="raum-body">
+        Unsere Bar in der Trierer Innenstadt ist kein Schnellimbiss.
+        Hier gibt es keine Warteschlangen, keine Wegwerfbecher — nur
+        einen Platz, an dem Kaffee so ernst genommen wird wie er sein sollte.
+      </p>
+      <p class="raum-body">
+        Jeder Gast bekommt Zeit. Für Fragen, für die zweite Tasse,
+        für das Gespräch, das erst beim dritten Schluck anfängt.
+      </p>
+      <a href="#" class="raum-cta">Zur Kaffeebar →</a>
+    </div>
+    <div class="raum-photo">
+      <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=900&h=700&q=80"
+           alt="Stimmungsvolle Specialty Coffee Bar" loading="lazy" />
+    </div>
+  </section>
+
 </body>
 </html>

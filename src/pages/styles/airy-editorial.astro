@@ -275,6 +275,158 @@ export const prerender = true;
       color: var(--muted);
       margin-top: 0.2rem;
     }
+
+    /* ===== SECTION 2 — PROJEKTE ===== */
+    .projekte {
+      padding: 6rem 5rem;
+      background: #FAFAFA;
+      border-top: 1px solid var(--light);
+    }
+    .p-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 3.5rem;
+    }
+    .p-eyebrow {
+      font-size: 0.52rem;
+      font-weight: 500;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 0.75rem;
+    }
+    .p-title {
+      font-family: 'Cormorant', serif;
+      font-weight: 300;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      color: var(--dark);
+      line-height: 1.1;
+    }
+    .p-link {
+      font-size: 0.58rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(26,26,26,0.2);
+      padding-bottom: 2px;
+      white-space: nowrap;
+    }
+    .p-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .p-card {
+      position: relative;
+      overflow: hidden;
+    }
+    .p-card img {
+      width: 100%;
+      height: 380px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s ease;
+    }
+    .p-card:hover img { transform: scale(1.04); }
+    .p-card-meta {
+      padding: 1.25rem 0 0.5rem;
+    }
+    .p-card-name {
+      font-family: 'Cormorant', serif;
+      font-size: 1.05rem;
+      font-weight: 400;
+      color: var(--dark);
+    }
+    .p-card-loc {
+      font-size: 0.6rem;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-top: 0.2rem;
+    }
+
+    /* ===== SECTION 3 — ATMOSPHÄRE ===== */
+    .atmo {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 560px;
+    }
+    .atmo-photo {
+      position: relative;
+      overflow: hidden;
+    }
+    .atmo-photo img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.8s ease;
+    }
+    .atmo-photo:hover img { transform: scale(1.04); }
+    .atmo-text {
+      background: #fff;
+      padding: 6rem 5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 2rem;
+      border-left: 1px solid var(--light);
+    }
+    .atmo-eyebrow {
+      font-size: 0.52rem;
+      font-weight: 500;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--amber);
+    }
+    .atmo-title {
+      font-family: 'Cormorant', serif;
+      font-weight: 300;
+      font-size: clamp(2rem, 3.5vw, 3.2rem);
+      color: var(--dark);
+      line-height: 1.15;
+    }
+    .atmo-body {
+      font-size: 0.85rem;
+      font-weight: 300;
+      line-height: 1.9;
+      color: var(--muted);
+      max-width: 38ch;
+    }
+    .atmo-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.58rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--dark);
+      text-decoration: none;
+      padding: 0.95rem 2.25rem;
+      align-self: flex-start;
+      transition: background 0.3s;
+    }
+    .atmo-btn:hover { background: var(--amber); }
+
+    @media (max-width: 1024px) {
+      .p-grid { grid-template-columns: 1fr 1fr; }
+      .atmo { grid-template-columns: 1fr; }
+      .atmo-photo { height: 380px; position: relative; }
+      .atmo-photo img { position: absolute; }
+    }
+    @media (max-width: 768px) {
+      .projekte { padding: 4rem 2rem; }
+      .p-grid { grid-template-columns: 1fr; }
+      .p-card img { height: 260px; }
+      .atmo-text { padding: 3.5rem 2rem; }
+    }
   </style>
 </head>
 <body>
@@ -374,5 +526,61 @@ export const prerender = true;
       </div>
     </div>
   </section>
+
+  <!-- SECTION 2 — PROJEKTE -->
+  <section class="projekte" id="projekte">
+    <div class="p-head">
+      <div>
+        <p class="p-eyebrow">Ausgewählte Arbeiten</p>
+        <h2 class="p-title">Räume,<br>die bleiben.</h2>
+      </div>
+      <a href="#" class="p-link">Alle Projekte ansehen →</a>
+    </div>
+    <div class="p-grid">
+      <div class="p-card">
+        <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=800&h=380&q=80"
+             alt="Modernes Wohnzimmer mit Holz und Beton" loading="lazy" />
+        <div class="p-card-meta">
+          <div class="p-card-name">Haus an der Mosel</div>
+          <div class="p-card-loc">Bernkastel-Kues · 2024</div>
+        </div>
+      </div>
+      <div class="p-card">
+        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&h=380&q=80"
+             alt="Helles modernes Büro mit klaren Linien" loading="lazy" />
+        <div class="p-card-meta">
+          <div class="p-card-name">Büro Kern & Partner</div>
+          <div class="p-card-loc">Trier Innenstadt · 2024</div>
+        </div>
+      </div>
+      <div class="p-card">
+        <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=800&h=380&q=80"
+             alt="Loft-Wohnung mit großen Fenstern" loading="lazy" />
+        <div class="p-card-meta">
+          <div class="p-card-name">Loft Viehmarktplatz</div>
+          <div class="p-card-loc">Trier · 2023</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3 — ATMOSPHÄRE -->
+  <section class="atmo" id="studio">
+    <div class="atmo-photo">
+      <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=900&h=600&q=80"
+           alt="Minimalistische Architektur mit Licht und Schatten" loading="lazy" />
+    </div>
+    <div class="atmo-text">
+      <p class="atmo-eyebrow">Unsere Haltung</p>
+      <h2 class="atmo-title">Weniger,<br>aber besser.</h2>
+      <p class="atmo-body">
+        Gute Architektur entsteht durch weglassen.
+        Wir gestalten Räume, die nicht nach Aufmerksamkeit rufen —
+        die einfach da sind. Still. Klar. Richtig.
+      </p>
+      <a href="#" class="atmo-btn">Studio kennenlernen →</a>
+    </div>
+  </section>
+
 </body>
 </html>

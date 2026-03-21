@@ -313,6 +313,139 @@ export const prerender = true;
       display: block;
       margin-bottom: 0.25rem;
     }
+
+    /* ===== SECTION 2 — GERICHTE ===== */
+    .gerichte {
+      padding: 5rem 4.5rem;
+      background: var(--board-light);
+    }
+    .gerichte-head {
+      margin-bottom: 2.5rem;
+      border-bottom: 1px dashed rgba(250,247,242,0.15);
+      padding-bottom: 2rem;
+    }
+    .chalk-sec-label {
+      font-family: 'Satisfy', cursive;
+      font-size: 1rem;
+      color: var(--yellow);
+      margin-bottom: 0.5rem;
+    }
+    .chalk-sec-title {
+      font-family: 'Satisfy', cursive;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      color: var(--chalk);
+      line-height: 1.2;
+    }
+    .gerichte-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+    .gericht-card {
+      position: relative;
+      overflow: hidden;
+    }
+    .gericht-card img {
+      width: 100%;
+      height: 360px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+    .gericht-card:hover img { transform: scale(1.05); }
+    .gericht-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(42,46,42,0.88) 0%, transparent 55%);
+    }
+    .gericht-info {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 1.75rem;
+    }
+    .gericht-name {
+      font-family: 'Satisfy', cursive;
+      font-size: 1.3rem;
+      color: var(--chalk);
+    }
+    .gericht-price {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--yellow);
+      margin-top: 0.3rem;
+      letter-spacing: 0.06em;
+    }
+
+    /* ===== SECTION 3 — ATMO ===== */
+    .atmo {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 520px;
+    }
+    .atmo-photo {
+      position: relative;
+      overflow: hidden;
+    }
+    .atmo-photo img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .atmo-text {
+      background: var(--board);
+      padding: 5rem 4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1.75rem;
+      border-left: 1px dashed rgba(250,247,242,0.12);
+    }
+    .atmo-quote {
+      font-family: 'Satisfy', cursive;
+      font-size: clamp(1.5rem, 2.5vw, 2.2rem);
+      color: var(--chalk);
+      line-height: 1.45;
+    }
+    .atmo-body {
+      font-size: 0.88rem;
+      font-weight: 300;
+      line-height: 1.9;
+      color: rgba(250,247,242,0.55);
+      max-width: 44ch;
+    }
+    .atmo-cta {
+      display: inline-flex;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--yellow);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(245,200,66,0.4);
+      padding-bottom: 2px;
+      align-self: flex-start;
+      transition: opacity 0.2s;
+    }
+    .atmo-cta:hover { opacity: 0.75; }
+
+    @media (max-width: 1024px) {
+      .gerichte-grid { grid-template-columns: 1fr 1fr; }
+      .gericht-card:last-child { grid-column: 1 / -1; }
+      .gericht-card:last-child img { height: 280px; }
+      .atmo { grid-template-columns: 1fr; }
+      .atmo-photo { height: 380px; position: relative; }
+      .atmo-photo img { position: absolute; }
+    }
+    @media (max-width: 768px) {
+      .gerichte { padding: 4rem 2rem; }
+      .gerichte-grid { grid-template-columns: 1fr; }
+      .gericht-card:last-child { grid-column: auto; }
+      .gericht-card img, .gericht-card:last-child img { height: 280px; }
+      .atmo-text { padding: 3.5rem 2rem; }
+    }
   </style>
 </head>
 <body>
@@ -419,5 +552,66 @@ export const prerender = true;
       </div>
     </div>
   </section>
+
+  <!-- ===== SECTION 2: GERICHTE ===== -->
+  <section class="gerichte">
+    <div class="gerichte-head">
+      <div class="chalk-sec-label">Was heute auf den Tisch kommt</div>
+      <h2 class="chalk-sec-title">Frisch.<br>Hausgemacht.</h2>
+    </div>
+    <div class="gerichte-grid">
+      <div class="gericht-card">
+        <img src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=800&h=600&q=80"
+             alt="Hausgemachte Linsensuppe" loading="lazy" />
+        <div class="gericht-overlay"></div>
+        <div class="gericht-info">
+          <div class="gericht-name">Linsensuppe</div>
+          <div class="gericht-price">4,50 € · mit Brot</div>
+        </div>
+      </div>
+      <div class="gericht-card">
+        <img src="https://images.unsplash.com/photo-1574484284002-952d92456975?auto=format&fit=crop&w=800&h=600&q=80"
+             alt="Rinderroulade mit Kartoffeln" loading="lazy" />
+        <div class="gericht-overlay"></div>
+        <div class="gericht-info">
+          <div class="gericht-name">Rinderroulade</div>
+          <div class="gericht-price">12,80 € · Kartoffeln & Rotkohl</div>
+        </div>
+      </div>
+      <div class="gericht-card">
+        <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=800&h=600&q=80"
+             alt="Zucchini Risotto vegetarisch" loading="lazy" />
+        <div class="gericht-overlay"></div>
+        <div class="gericht-info">
+          <div class="gericht-name">Zucchini-Risotto</div>
+          <div class="gericht-price">10,50 € · vegetarisch</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SECTION 3: ATMOSPHÄRE ===== -->
+  <section class="atmo">
+    <div class="atmo-photo">
+      <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&h=700&q=80"
+           alt="Gemütliches Bistro-Ambiente" loading="lazy" />
+    </div>
+    <div class="atmo-text">
+      <div class="chalk-sec-label">Warum hierher kommen?</div>
+      <p class="atmo-quote">"Hier riecht es nach echter Küche."</p>
+      <p class="atmo-body">
+        Kein Tiefkühlkost, kein Convenience-Food. Täglich frisch —
+        das Gemüse kommt vom Wochenmarkt, das Brot vom Bäcker
+        aus der Nachbarstraße. Was nach Saison nicht da ist,
+        kommt nicht auf den Tisch.
+      </p>
+      <p class="atmo-body">
+        Mittagstisch heißt bei uns: Ein Platz, an dem man sitzen
+        bleibt. Nicht durchschluckt und weiter.
+      </p>
+      <a href="#" class="atmo-cta">Tisch reservieren →</a>
+    </div>
+  </section>
+
 </body>
 </html>

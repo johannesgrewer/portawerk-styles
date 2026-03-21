@@ -251,6 +251,185 @@ export const prerender = true;
       from { opacity: 0; transform: translateY(16px); }
       to   { opacity: 1; transform: translateY(0); }
     }
+
+    /* ===== SECTION 2 — LEISTUNGEN ===== */
+    .leistungen {
+      padding: 6rem 5rem;
+      background: #111;
+    }
+    .l-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 3rem;
+      border-bottom: 1px solid rgba(245,243,239,0.08);
+      padding-bottom: 2rem;
+    }
+    .l-eyebrow {
+      font-size: 0.55rem;
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      color: #FF6B35;
+      margin-bottom: 0.6rem;
+    }
+    .l-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(1.8rem, 3.5vw, 3rem);
+      color: #F5F3EF;
+      line-height: 1.05;
+    }
+    .l-link {
+      font-size: 0.6rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      color: rgba(245,243,239,0.3);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(245,243,239,0.15);
+      padding-bottom: 2px;
+      white-space: nowrap;
+      transition: color 0.2s;
+    }
+    .l-link:hover { color: #FF6B35; }
+
+    .l-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+    .l-card {
+      position: relative;
+      overflow: hidden;
+    }
+    .l-card img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.55s ease;
+      filter: grayscale(40%) brightness(0.75);
+    }
+    .l-card:hover img { transform: scale(1.05); filter: grayscale(0%) brightness(0.85); }
+    .l-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(13,13,13,0.92) 0%, transparent 55%);
+    }
+    .l-card-info {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 2rem;
+    }
+    .l-card-num {
+      font-size: 0.5rem;
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      color: #FF6B35;
+      margin-bottom: 0.5rem;
+    }
+    .l-card-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: #F5F3EF;
+    }
+    .l-card-desc {
+      font-size: 0.68rem;
+      font-weight: 300;
+      color: rgba(245,243,239,0.5);
+      margin-top: 0.3rem;
+      line-height: 1.5;
+    }
+
+    /* ===== SECTION 3 — ERGEBNISSE ===== */
+    .ergebnisse {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 560px;
+    }
+    .erg-text {
+      background: #0D0D0D;
+      padding: 5rem 4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1.75rem;
+      border-right: 1px solid rgba(245,243,239,0.06);
+    }
+    .erg-eyebrow {
+      font-size: 0.55rem;
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      color: #FF6B35;
+    }
+    .erg-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      color: #F5F3EF;
+      line-height: 1.05;
+    }
+    .erg-quote {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.95rem;
+      font-style: italic;
+      line-height: 1.7;
+      color: rgba(245,243,239,0.6);
+      padding-left: 1.25rem;
+      border-left: 2px solid #FF6B35;
+    }
+    .erg-author {
+      font-size: 0.65rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      color: rgba(245,243,239,0.35);
+    }
+    .erg-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.62rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #0D0D0D;
+      background: #FF6B35;
+      padding: 0.9rem 2rem;
+      text-decoration: none;
+      align-self: flex-start;
+      transition: background 0.2s;
+    }
+    .erg-cta:hover { background: #e05820; }
+    .erg-photo {
+      position: relative;
+      overflow: hidden;
+    }
+    .erg-photo img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: grayscale(30%) brightness(0.7);
+    }
+
+    @media (max-width: 1024px) {
+      .l-grid { grid-template-columns: 1fr 1fr; }
+      .l-card:last-child { grid-column: 1 / -1; }
+      .l-card:last-child img { height: 280px; }
+      .ergebnisse { grid-template-columns: 1fr; }
+      .erg-photo { height: 380px; position: relative; }
+      .erg-photo img { position: absolute; }
+    }
+    @media (max-width: 768px) {
+      .leistungen { padding: 4rem 2rem; }
+      .l-grid { grid-template-columns: 1fr; }
+      .l-card:last-child { grid-column: auto; }
+      .l-card img, .l-card:last-child img { height: 280px; }
+      .erg-text { padding: 3.5rem 2rem; }
+    }
   </style>
 </head>
 <body>
@@ -315,5 +494,71 @@ export const prerender = true;
       </div>
     </div>
   </section>
+
+  <!-- SECTION 2 — LEISTUNGEN -->
+  <section class="leistungen" id="leistungen">
+    <div class="l-head">
+      <div>
+        <p class="l-eyebrow">// LEISTUNGEN</p>
+        <h2 class="l-title">Was wir<br>gemeinsam<br>angehen.</h2>
+      </div>
+      <a href="#" class="l-link">Alle Leistungen ansehen →</a>
+    </div>
+
+    <div class="l-grid">
+      <div class="l-card">
+        <img src="https://images.unsplash.com/photo-1573497620053-ea5300f94f21?auto=format&fit=crop&w=800&h=400&q=80"
+             alt="Business Coaching Einzelgespräch" loading="lazy" />
+        <div class="l-card-overlay"></div>
+        <div class="l-card-info">
+          <p class="l-card-num">01 — EINZELCOACHING</p>
+          <h3 class="l-card-name">1:1 Coaching</h3>
+          <p class="l-card-desc">Fokussierte Arbeit an deinen Themen — Klarheit, Entscheidungen, Wirkung.</p>
+        </div>
+      </div>
+
+      <div class="l-card">
+        <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=800&h=400&q=80"
+             alt="Führungskräfte Workshop" loading="lazy" />
+        <div class="l-card-overlay"></div>
+        <div class="l-card-info">
+          <p class="l-card-num">02 — FÜHRUNG</p>
+          <h3 class="l-card-name">Leadership-Coaching</h3>
+          <p class="l-card-desc">Für Führungskräfte, die besser führen wollen — sich selbst und andere.</p>
+        </div>
+      </div>
+
+      <div class="l-card">
+        <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=800&h=400&q=80"
+             alt="Teamworkshop und Strategie" loading="lazy" />
+        <div class="l-card-overlay"></div>
+        <div class="l-card-info">
+          <p class="l-card-num">03 — TEAMS</p>
+          <h3 class="l-card-name">Team-Workshops</h3>
+          <p class="l-card-desc">Gemeinsam herausfinden, was das Team blockiert — und wie es wegkommt.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3 — ERGEBNISSE -->
+  <section class="ergebnisse" id="ergebnisse">
+    <div class="erg-text">
+      <p class="erg-eyebrow">// ERGEBNISSE</p>
+      <h2 class="erg-title">Weniger<br>Rauschen.<br>Mehr Wirkung.</h2>
+      <blockquote class="erg-quote">
+        "Nach sechs Monaten hatte ich nicht nur eine neue Strategie. Ich hatte
+        wieder Vertrauen — in mich selbst und in das, was ich tue."
+      </blockquote>
+      <p class="erg-author">— Markus T., Geschäftsführer · Trier</p>
+      <a href="#" class="erg-cta">Erstgespräch vereinbaren →</a>
+    </div>
+
+    <div class="erg-photo">
+      <img src="https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=900&h=600&q=80"
+           alt="Coaching-Gespräch in modernem Büro" loading="lazy" />
+    </div>
+  </section>
+
 </body>
 </html>

@@ -397,6 +397,176 @@ export const prerender = true;
     }
     .cta-btn:hover::after { left: 150%; }
 
+
+    /* ===== SECTION 2 — BÜCHER ===== */
+    .buecher {
+      padding: 6rem 5rem;
+      background: var(--warm);
+      border-top: 1px solid var(--rule);
+    }
+    .buecher-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 3rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--rule);
+    }
+    .buecher-eyebrow {
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: 0.6rem;
+    }
+    .buecher-title {
+      font-family: 'Libre Baskerville', serif;
+      font-size: clamp(1.8rem, 3.5vw, 3rem);
+      font-weight: 700;
+      color: var(--brown);
+      line-height: 1.1;
+    }
+    .buecher-title em { font-style: italic; color: var(--rust); }
+    .buecher-link {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(61,43,31,0.2);
+      padding-bottom: 2px;
+      white-space: nowrap;
+      transition: color 0.2s;
+    }
+    .buecher-link:hover { color: var(--rust); }
+
+    .book-photo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+    .book-photo-card {
+      position: relative;
+      overflow: hidden;
+    }
+    .book-photo-card img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.55s ease;
+      filter: sepia(10%);
+    }
+    .book-photo-card:hover img { transform: scale(1.05); filter: sepia(0%); }
+    .book-photo-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(61,43,31,0.85) 0%, transparent 55%);
+    }
+    .book-photo-info {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 2rem;
+    }
+    .book-photo-genre {
+      font-size: 0.5rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: 0.4rem;
+    }
+    .book-photo-title {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 1.1rem;
+      font-style: italic;
+      color: #FAF6EF;
+      line-height: 1.3;
+    }
+
+    /* ===== SECTION 3 — LESECAFÉ ===== */
+    .lesecafe {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 560px;
+    }
+    .lc-photo {
+      position: relative;
+      overflow: hidden;
+    }
+    .lc-photo img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: sepia(8%);
+    }
+    .lc-text {
+      background: var(--brown);
+      padding: 5rem 4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1.75rem;
+    }
+    .lc-eyebrow {
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--rust);
+    }
+    .lc-title {
+      font-family: 'Libre Baskerville', serif;
+      font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+      font-weight: 700;
+      font-style: italic;
+      color: var(--bg);
+      line-height: 1.25;
+    }
+    .lc-body {
+      font-size: 0.88rem;
+      font-weight: 400;
+      line-height: 1.95;
+      color: rgba(250,246,239,0.55);
+      max-width: 46ch;
+    }
+    .lc-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--rust);
+      padding: 0.9rem 2rem;
+      text-decoration: none;
+      align-self: flex-start;
+      transition: background 0.2s;
+    }
+    .lc-cta:hover { background: #9a3a14; }
+
+    @media (max-width: 1024px) {
+      .book-photo-grid { grid-template-columns: 1fr 1fr; }
+      .book-photo-card:last-child { grid-column: 1 / -1; }
+      .book-photo-card:last-child img { height: 280px; }
+      .lesecafe { grid-template-columns: 1fr; }
+      .lc-photo { height: 380px; position: relative; }
+      .lc-photo img { position: absolute; }
+    }
+    @media (max-width: 768px) {
+      .buecher { padding: 4rem 2rem; }
+      .book-photo-grid { grid-template-columns: 1fr; }
+      .book-photo-card:last-child { grid-column: auto; }
+      .book-photo-card img, .book-photo-card:last-child img { height: 280px; }
+      .lc-text { padding: 3.5rem 2rem; }
+    }
   </style>
 </head>
 <body>
@@ -502,5 +672,69 @@ export const prerender = true;
       </div>
     </div>
   </section>
+
+  <!-- ===== SECTION 2: BÜCHER ===== -->
+  <section class="buecher">
+    <div class="buecher-head">
+      <div>
+        <div class="buecher-eyebrow">Handverlesen & empfohlen</div>
+        <h2 class="buecher-title">Bücher, die<br><em>bleiben.</em></h2>
+      </div>
+      <a href="#" class="buecher-link">Alle Empfehlungen →</a>
+    </div>
+    <div class="book-photo-grid">
+      <div class="book-photo-card">
+        <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=800&h=600&q=80"
+             alt="Bücher im Regal" loading="lazy" />
+        <div class="book-photo-overlay"></div>
+        <div class="book-photo-info">
+          <div class="book-photo-genre">Belletristik</div>
+          <div class="book-photo-title">Der Gesang<br>der Flusskrebse</div>
+        </div>
+      </div>
+      <div class="book-photo-card">
+        <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=800&h=600&q=80"
+             alt="Aufgeschlagenes Buch" loading="lazy" />
+        <div class="book-photo-overlay"></div>
+        <div class="book-photo-info">
+          <div class="book-photo-genre">Klassiker</div>
+          <div class="book-photo-title">Stoner</div>
+        </div>
+      </div>
+      <div class="book-photo-card">
+        <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=800&h=600&q=80"
+             alt="Gemütliche Leseecke" loading="lazy" />
+        <div class="book-photo-overlay"></div>
+        <div class="book-photo-info">
+          <div class="book-photo-genre">Literatur</div>
+          <div class="book-photo-title">Atemschaukel</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SECTION 3: LESECAFÉ ===== -->
+  <section class="lesecafe">
+    <div class="lc-photo">
+      <img src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=900&h=700&q=80"
+           alt="Buchhandlung Atmosphäre mit Holzregalen" loading="lazy" />
+    </div>
+    <div class="lc-text">
+      <div class="lc-eyebrow">Der Ort</div>
+      <h2 class="lc-title">"Wer kauft,<br>darf bleiben."</h2>
+      <p class="lc-body">
+        Im hinteren Teil des Ladens stehen fünf Tische,
+        zwei alte Sofas und ein Kachelofen. Es gibt
+        Espresso, Filterkaffee und selbst gebackenen Kuchen —
+        jeden Tag eine andere Sorte.
+      </p>
+      <p class="lc-body">
+        Kein WLAN-Passwort auf Kassenbon. Kein Zeitlimit.
+        Wer ein Buch kauft, gehört dazu.
+      </p>
+      <a href="#" class="lc-cta">Tisch reservieren →</a>
+    </div>
+  </section>
+
 </body>
 </html>

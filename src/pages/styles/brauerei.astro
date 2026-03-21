@@ -194,13 +194,21 @@ export const prerender = true;
     }
     .btn-ghost:hover { color: #fff; }
 
-    /* Keg illustration */
+    /* Hero photo */
     .hero-visual {
       position: relative;
       z-index: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      overflow: hidden;
+      border-radius: 4px;
+      min-height: 380px;
+    }
+    .hero-visual img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
     .keg-wrap {
@@ -510,28 +518,32 @@ export const prerender = true;
     }
 
     .ingredient-card {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 8px;
-      padding: 1.5rem;
-      text-align: center;
-      transition: border-color 0.2s, background 0.2s;
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+      aspect-ratio: 1;
+      transition: transform 0.3s ease;
     }
-    .ingredient-card:hover {
-      border-color: rgba(201,123,42,0.4);
-      background: rgba(201,123,42,0.05);
+    .ingredient-card:hover { transform: scale(1.02); }
+    .ingredient-card img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
     }
-
-    .ingredient-icon {
-      width: 48px;
-      height: 48px;
-      background: rgba(201,123,42,0.15);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 0.75rem;
-      font-size: 1.4rem;
+    .ingredient-card:hover img { transform: scale(1.08); }
+    .ingredient-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(28,17,7,0.88) 0%, rgba(28,17,7,0.2) 55%, transparent 100%);
+    }
+    .ingredient-card-info {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 1.25rem;
     }
 
     .ingredient-name {
@@ -637,18 +649,8 @@ export const prerender = true;
     </div>
 
     <div class="hero-visual">
-      <div class="keg-wrap">
-        <div class="keg-tap"></div>
-        <div class="keg-body">
-          <div class="keg-band"></div>
-          <div class="keg-band"></div>
-          <div class="keg-band"></div>
-          <div class="keg-label">
-            <div class="keg-label-name">BERG<br>STROM</div>
-            <div class="keg-label-sub">Craft Beer · Trier</div>
-          </div>
-        </div>
-      </div>
+      <img src="https://images.unsplash.com/photo-1559526324-593bc073d938?auto=format&fit=crop&w=800&h=600&q=80"
+           alt="Craft Beer im Glas mit Schaumkrone" loading="eager" />
     </div>
 
     <div class="hero-stats">
@@ -803,24 +805,40 @@ export const prerender = true;
 
     <div class="ingredients">
       <div class="ingredient-card">
-        <div class="ingredient-icon">🌾</div>
-        <div class="ingredient-name">MALZ</div>
-        <div class="ingredient-origin">Eifel Region</div>
+        <img src="https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=600&h=600&q=80"
+             alt="Gerstenmalz" loading="lazy" />
+        <div class="ingredient-card-overlay"></div>
+        <div class="ingredient-card-info">
+          <div class="ingredient-name">MALZ</div>
+          <div class="ingredient-origin">Eifel Region</div>
+        </div>
       </div>
       <div class="ingredient-card">
-        <div class="ingredient-icon">🌿</div>
-        <div class="ingredient-name">HOPFEN</div>
-        <div class="ingredient-origin">Hallertau & Eigengarten</div>
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=600&h=600&q=80"
+             alt="Hopfendolden" loading="lazy" />
+        <div class="ingredient-card-overlay"></div>
+        <div class="ingredient-card-info">
+          <div class="ingredient-name">HOPFEN</div>
+          <div class="ingredient-origin">Hallertau & Eigengarten</div>
+        </div>
       </div>
       <div class="ingredient-card">
-        <div class="ingredient-icon">💧</div>
-        <div class="ingredient-name">WASSER</div>
-        <div class="ingredient-origin">Trier Stadtquell</div>
+        <img src="https://images.unsplash.com/photo-1548839140-29a749e1cf4d?auto=format&fit=crop&w=600&h=600&q=80"
+             alt="Klares Quellwasser" loading="lazy" />
+        <div class="ingredient-card-overlay"></div>
+        <div class="ingredient-card-info">
+          <div class="ingredient-name">WASSER</div>
+          <div class="ingredient-origin">Trier Stadtquell</div>
+        </div>
       </div>
       <div class="ingredient-card">
-        <div class="ingredient-icon">🦠</div>
-        <div class="ingredient-name">HEFE</div>
-        <div class="ingredient-origin">Eigene Stämme</div>
+        <img src="https://images.unsplash.com/photo-1567696153798-9111f9cd3d0d?auto=format&fit=crop&w=600&h=600&q=80"
+             alt="Brauprozess Gärung" loading="lazy" />
+        <div class="ingredient-card-overlay"></div>
+        <div class="ingredient-card-info">
+          <div class="ingredient-name">HEFE</div>
+          <div class="ingredient-origin">Eigene Stämme</div>
+        </div>
       </div>
     </div>
   </section>
