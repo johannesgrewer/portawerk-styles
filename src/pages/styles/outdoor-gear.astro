@@ -7,579 +7,1305 @@ export const prerender = true;
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
-  <title>Gipfelblick — Outdoor & Bergausrüstung | Eifel & Trier</title>
+  <title>Gipfelblick — Outdoor & Bergausrüstung | Trier</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Source+Sans+3:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { overflow-x: hidden; }
+    html { overflow-x: hidden; scroll-behavior: smooth; }
 
     :root {
-      --forest: #2F4F2F;
-      --orange: #D4650A;
-      --stone:  #8C7B6B;
-      --bg:     #F8F5F0;
-      --warm:   #F0EBE0;
-      --muted:  rgba(47,79,47,0.45);
-      --rule:   rgba(47,79,47,0.1);
+      --ink:    #0d190d;
+      --forest: #1b3318;
+      --leaf:   #2d5a20;
+      --ember:  #c8531a;
+      --gold:   #c48a14;
+      --paper:  #f4edd8;
+      --fog:    #e5dcca;
+      --ash:    #8a8278;
+      --snow:   #faf8f4;
     }
 
     body {
-      background: var(--bg);
-      color: var(--forest);
-      font-family: 'Source Sans 3', sans-serif;
-      min-height: 100vh;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Lora', Georgia, serif;
       overflow-x: hidden;
     }
 
-    /* Topographic line texture */
-    body::before {
+    /* Grain texture overlay */
+    body::after {
       content: '';
       position: fixed;
       inset: 0;
-      background-image:
-        repeating-linear-gradient(
-          -30deg,
-          transparent 0px,
-          transparent 30px,
-          rgba(47,79,47,0.018) 30px,
-          rgba(47,79,47,0.018) 31px
-        );
       pointer-events: none;
-      z-index: 0;
+      z-index: 9999;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      background-size: 180px 180px;
     }
 
+    /* ========== NAV ========== */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
-      z-index: 100;
+      z-index: 1000;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 1rem 3.5rem;
-      background: var(--forest);
+      padding: 1.4rem 4rem;
+      transition: background 0.5s, backdrop-filter 0.5s, padding 0.3s;
     }
+    nav.scrolled {
+      background: rgba(13, 25, 13, 0.93);
+      backdrop-filter: blur(14px);
+      padding: 1rem 4rem;
+    }
+
     .nav-logo {
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 800;
-      font-size: 1rem;
-      letter-spacing: 0.12em;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 1.1rem;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
       color: #fff;
     }
-    .nav-logo span { color: var(--orange); }
+    .nav-logo span { color: var(--ember); }
+
     .nav-links {
       display: flex;
-      gap: 2.5rem;
+      gap: 3rem;
       list-style: none;
     }
     .nav-links a {
-      font-size: 0.58rem;
-      font-weight: 500;
-      letter-spacing: 0.14em;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.4);
+      color: rgba(255,255,255,0.5);
       text-decoration: none;
       transition: color 0.2s;
     }
     .nav-links a:hover { color: #fff; }
-    .nav-shop {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.6rem;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--forest);
-      background: var(--orange);
-      padding: 0.6rem 1.4rem;
-      text-decoration: none;
-      transition: background 0.2s;
-      border-radius: 2px;
-    }
-    .nav-shop:hover { background: #fff; }
 
-    .hero {
-      min-height: 100vh;
-      padding-top: 56px;
-      position: relative;
-      z-index: 1;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-    }
-
-    /* LEFT */
-    .hero-left {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 5rem 3.5rem 5rem 4.5rem;
-      gap: 2.5rem;
-      border-right: 2px solid var(--rule);
-    }
-
-    .location-tag {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.55rem;
-      font-weight: 500;
+    .nav-cta {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.64rem;
+      font-weight: 800;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--orange);
+      color: var(--ink);
+      background: var(--ember);
+      padding: 0.6rem 1.5rem;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+      clip-path: polygon(0 0, calc(100% - 7px) 0, 100% 7px, 100% 100%, 7px 100%, 0 calc(100% - 7px));
     }
-    .lt-line {
-      width: 1.5rem;
-      height: 2px;
-      background: var(--orange);
+    .nav-cta:hover { background: #fff; }
+
+    /* ========== HERO ========== */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 720px;
+      overflow: hidden;
     }
 
-    .hero-headline {
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 800;
-      font-size: clamp(2.8rem, 5.5vw, 4.8rem);
-      line-height: 0.95;
-      letter-spacing: -0.01em;
-      text-transform: uppercase;
-      color: var(--forest);
+    .hero-bg {
+      position: absolute;
+      inset: 0;
     }
-    .hero-headline .orange { color: var(--orange); }
-    .hero-headline .light { color: rgba(47,79,47,0.2); }
+    .hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      will-change: transform;
+    }
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to right, rgba(13,25,13,0.88) 0%, rgba(13,25,13,0.45) 55%, rgba(13,25,13,0.15) 100%),
+        linear-gradient(to top, rgba(13,25,13,0.75) 0%, transparent 45%);
+    }
+    /* Topographic lines */
+    .hero-topo {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background-image:
+        repeating-linear-gradient(
+          -12deg,
+          transparent 0px, transparent 36px,
+          rgba(255,255,255,0.028) 36px, rgba(255,255,255,0.028) 37px
+        ),
+        repeating-linear-gradient(
+          78deg,
+          transparent 0px, transparent 52px,
+          rgba(255,255,255,0.015) 52px, rgba(255,255,255,0.015) 53px
+        );
+    }
 
-    .hero-body {
-      font-size: 0.9rem;
-      font-weight: 300;
-      line-height: 1.9;
-      color: var(--muted);
-      max-width: 42ch;
-    }
-
-    /* Gear categories */
-    .gear-list {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.5rem;
-    }
-    .gear-item {
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      height: 100%;
       display: flex;
       flex-direction: column;
-      gap: 0.35rem;
-      padding: 1rem 1.1rem;
-      background: #fff;
-      border: 1px solid var(--rule);
-      border-top: 3px solid var(--forest);
-      transition: border-top-color 0.2s;
-      cursor: default;
-    }
-    .gear-item:hover { border-top-color: var(--orange); }
-    .img-wrap:hover img { transform: scale(1.05); }
-    .gi-icon { font-size: 1.1rem; }
-    .gi-name {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: var(--forest);
-    }
-    .gi-count {
-      font-size: 0.58rem;
-      font-weight: 300;
-      color: var(--muted);
+      justify-content: flex-end;
+      padding: 0 4rem 5.5rem;
+      max-width: 1600px;
+      margin: 0 auto;
     }
 
-    .cta-row {
+    .hero-eyebrow {
       display: flex;
       align-items: center;
-      gap: 1.5rem;
+      gap: 0.8rem;
+      margin-bottom: 2rem;
+      animation: fadeUp 0.9s 0.1s both;
     }
-    .cta-btn {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
+    .eyebrow-line {
+      width: 2.8rem;
+      height: 2px;
+      background: var(--ember);
+    }
+    .eyebrow-text {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--ember);
+    }
+
+    .hero-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: clamp(5.5rem, 12vw, 10.5rem);
+      line-height: 0.86;
+      letter-spacing: -0.01em;
       text-transform: uppercase;
       color: #fff;
-      background: var(--forest);
-      padding: 0.9rem 2rem;
-      text-decoration: none;
-      transition: background 0.2s;
-      border-radius: 2px;
+      margin-bottom: 3rem;
+      animation: fadeUp 0.9s 0.2s both;
     }
-    .cta-btn:hover { background: var(--orange); }
-    .cta-link {
-      font-size: 0.62rem;
-      font-weight: 400;
-      color: var(--muted);
-      text-decoration: none;
-      border-bottom: 1px solid var(--rule);
-      padding-bottom: 1px;
+    .hero-title .outline {
+      -webkit-text-stroke: 2px rgba(255,255,255,0.32);
+      color: transparent;
+    }
+    .hero-title .accent { color: var(--ember); }
+
+    .hero-bottom {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 3rem;
+      animation: fadeUp 0.9s 0.35s both;
     }
 
-    /* RIGHT */
-    .hero-right {
-      background: var(--warm);
+    .hero-desc {
+      max-width: 38ch;
+      font-size: 0.9rem;
+      font-style: italic;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.85;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 0;
+    }
+    .hero-stat {
+      padding: 0 2.5rem;
+      border-left: 1px solid rgba(255,255,255,0.12);
+      text-align: right;
+    }
+    .hero-stat:first-child { border-left: none; padding-left: 0; }
+    .stat-val {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 2.6rem;
+      color: #fff;
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+    .stat-val sup { color: var(--ember); font-size: 0.5em; vertical-align: super; }
+    .stat-key {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.55rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.38);
+      margin-top: 0.2rem;
+    }
+
+    /* Scroll indicator */
+    .hero-scroll {
+      position: absolute;
+      right: 4rem;
+      bottom: 3.5rem;
+      z-index: 2;
       display: flex;
       flex-direction: column;
-      padding: 4rem 3.5rem;
-      gap: 2rem;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .scroll-word {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.5rem;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.28);
+      writing-mode: vertical-rl;
+    }
+    .scroll-bar {
+      width: 1px;
+      height: 4.5rem;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.5), transparent);
+      animation: scrollPulse 2.2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; transform: scaleY(0.9); transform-origin: top; }
+      50% { opacity: 1; transform: scaleY(1.1); transform-origin: top; }
     }
 
-    .right-label {
-      font-family: 'Montserrat', sans-serif;
+    /* ========== SECTION SORTIMENT ========== */
+    .section-sortiment {
+      background: var(--ink);
+      padding: 7rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .section-sortiment::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image: repeating-linear-gradient(
+        0deg,
+        transparent 0px, transparent 47px,
+        rgba(255,255,255,0.018) 47px, rgba(255,255,255,0.018) 48px
+      );
+    }
+
+    .sortiment-inner {
+      max-width: 1600px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .sec-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 4rem;
+    }
+    .sec-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--ember);
+      margin-bottom: 0.8rem;
+    }
+    .sec-title-dark {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: clamp(2.4rem, 4.5vw, 4rem);
+      line-height: 0.88;
+      text-transform: uppercase;
+      color: #fff;
+    }
+    .sec-title-dark .g {
+      -webkit-text-stroke: 1.5px rgba(255,255,255,0.18);
+      color: transparent;
+    }
+    .sec-title-light {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: clamp(2.4rem, 4.5vw, 4rem);
+      line-height: 0.88;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+    .sec-title-light .g {
+      -webkit-text-stroke: 1.5px rgba(13,25,13,0.15);
+      color: transparent;
+    }
+    .sec-link {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.64rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.38);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+      padding-bottom: 0.25rem;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .sec-link:hover { color: var(--ember); border-color: var(--ember); }
+    .sec-link-light {
+      color: rgba(13,25,13,0.35);
+      border-color: rgba(13,25,13,0.1);
+    }
+    .sec-link-light:hover { color: var(--ember); border-color: var(--ember); }
+
+    /* Product grid */
+    .products-grid {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 1fr;
+      grid-template-rows: 320px 280px;
+      gap: 2px;
+      background: rgba(255,255,255,0.05);
+    }
+
+    .pcard {
+      position: relative;
+      overflow: hidden;
+      background: #080f08;
+      cursor: pointer;
+    }
+    /* Tall hero card */
+    .pcard:nth-child(1) { grid-row: 1 / 3; }
+    /* Wide bottom card */
+    .pcard:nth-child(4) { grid-column: 2 / 4; }
+
+    .pcard img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.75s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      filter: saturate(0.8);
+    }
+    .pcard:hover img {
+      transform: scale(1.07);
+      filter: saturate(1);
+    }
+
+    .pcard-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(13,25,13,0.9) 0%, rgba(13,25,13,0.2) 45%, transparent 100%);
+      transition: background 0.4s;
+    }
+    .pcard:hover .pcard-overlay {
+      background: linear-gradient(to top, rgba(13,25,13,0.95) 0%, rgba(13,25,13,0.4) 55%, rgba(13,25,13,0.1) 100%);
+    }
+
+    .pcard-info {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 1.75rem 2rem;
+    }
+    .pcard-cat {
+      font-family: 'Barlow Condensed', sans-serif;
       font-size: 0.52rem;
+      font-weight: 700;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--ember);
+      margin-bottom: 0.45rem;
+    }
+    .pcard-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 1.6rem;
+      text-transform: uppercase;
+      color: #fff;
+      line-height: 0.92;
+      margin-bottom: 0.5rem;
+      transition: color 0.2s;
+    }
+    .pcard:nth-child(1) .pcard-name { font-size: 2.6rem; }
+    .pcard:hover .pcard-name { color: rgba(255,255,255,0.85); }
+    .pcard-brands {
+      font-size: 0.68rem;
+      font-style: italic;
+      color: rgba(255,255,255,0.42);
+    }
+
+    .pcard-corner {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+      width: 2.2rem;
+      height: 2.2rem;
+      border: 1px solid rgba(255,255,255,0.16);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.35);
+      font-size: 0.9rem;
+      transition: all 0.25s;
+      clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
+    }
+    .pcard:hover .pcard-corner {
+      background: var(--ember);
+      border-color: var(--ember);
+      color: #fff;
+    }
+
+    /* ========== SECTION TOUREN ========== */
+    .section-touren {
+      background: var(--paper);
+      padding: 8rem 4rem;
+    }
+
+    .touren-inner {
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+
+    .touren-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 6rem;
+      margin-top: 5rem;
+      align-items: start;
+    }
+
+    /* Left: photo composition */
+    .tour-photos {
+      position: relative;
+      padding-bottom: 3rem;
+    }
+    .tour-photo-main {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 3 / 4;
+    }
+    .tour-photo-main img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s ease;
+    }
+    .tour-photo-main:hover img { transform: scale(1.04); }
+    .tour-photo-main::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(13,25,13,0.55) 0%, transparent 45%);
+    }
+
+    .tour-badge {
+      position: absolute;
+      bottom: 2rem;
+      left: 2rem;
+      z-index: 2;
+      background: var(--ember);
+      padding: 0.9rem 1.4rem;
+      clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+    }
+    .tb-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 2rem;
+      color: #fff;
+      line-height: 1;
+    }
+    .tb-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.5rem;
       font-weight: 700;
       letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: rgba(255,255,255,0.72);
     }
 
-    /* Featured product */
-    .featured-product {
-      background: var(--forest);
-      border-radius: 4px;
-      padding: 1.5rem;
-      position: relative;
-    }
-    .fp-badge {
+    /* Small inset photo */
+    .tour-photo-inset {
       position: absolute;
-      top: 1rem;
-      right: 1rem;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.48rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      background: var(--orange);
-      color: #fff;
-      padding: 0.2rem 0.6rem;
-      border-radius: 2px;
+      bottom: 0;
+      right: -2rem;
+      width: 42%;
+      aspect-ratio: 1;
+      overflow: hidden;
+      border: 4px solid var(--paper);
+      box-shadow: 0 8px 32px rgba(13,25,13,0.2);
     }
-    .fp-name {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 1.1rem;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      color: #fff;
-      margin-bottom: 0.3rem;
+    .tour-photo-inset img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
-    .fp-desc {
-      font-size: 0.72rem;
-      font-weight: 300;
-      color: rgba(255,255,255,0.55);
-      line-height: 1.6;
-      margin-bottom: 1rem;
-    }
-    .fp-specs {
-      display: flex;
-      gap: 1rem;
-    }
-    .fps-item {
+
+    /* Right: tour list */
+    .tour-list {
       display: flex;
       flex-direction: column;
-      gap: 0.1rem;
-    }
-    .fps-val {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.88rem;
-      font-weight: 700;
-      color: var(--orange);
-    }
-    .fps-key {
-      font-size: 0.5rem;
-      font-weight: 300;
-      color: rgba(255,255,255,0.4);
-      letter-spacing: 0.1em;
+      padding-top: 0.5rem;
     }
 
-    /* Trail conditions */
-    .conditions-block {
-      background: #fff;
-      border: 1px solid var(--rule);
-      border-radius: 4px;
-      overflow: hidden;
-    }
-    .cb-header {
-      background: var(--forest);
-      padding: 0.4rem 1rem;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.5rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.4);
-    }
-    .condition-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.75rem 1rem;
-      border-bottom: 1px solid var(--rule);
-    }
-    .condition-row:last-child { border-bottom: none; }
-    .cr-trail {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: var(--forest);
-    }
-    .cr-info {
-      font-size: 0.58rem;
-      font-weight: 300;
-      color: var(--muted);
-      margin-top: 0.05rem;
-    }
-    .cr-status {
-      font-size: 0.5rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 0.18rem 0.55rem;
-      border-radius: 100px;
-    }
-    .s-good   { background: rgba(47,150,47,0.1); color: #2f9630; }
-    .s-medium { background: rgba(212,101,10,0.1); color: var(--orange); }
-
-    /* Info strip */
-    .info-strip {
-      margin-top: auto;
+    .tour-item {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      padding-top: 1.25rem;
-      border-top: 1px solid var(--rule);
+      grid-template-columns: 2.5rem 1fr auto;
+      gap: 1.25rem;
+      align-items: center;
+      padding: 1.75rem 0;
+      border-bottom: 1px solid rgba(13,25,13,0.08);
+      cursor: default;
+      transition: padding 0.2s, background 0.2s;
     }
-    .is-item {}
-    .is-label {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.48rem;
+    .tour-item:first-child { border-top: 1px solid rgba(13,25,13,0.08); }
+    .tour-item:hover { padding-left: 0.5rem; padding-right: 0.5rem; background: rgba(13,25,13,0.022); }
+
+    .tour-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 0.68rem;
+      color: var(--ember);
+      letter-spacing: 0.08em;
+    }
+
+    .tour-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 1.25rem;
+      text-transform: uppercase;
+      color: var(--ink);
+      line-height: 1;
+      margin-bottom: 0.35rem;
+      transition: color 0.2s;
+    }
+    .tour-item:hover .tour-name { color: var(--ember); }
+
+    .tour-meta {
+      font-size: 0.7rem;
+      font-style: italic;
+      color: var(--ash);
+      line-height: 1.6;
+    }
+    .tour-meta strong { font-style: normal; font-weight: 500; color: var(--ink); }
+
+    .tour-diff {
+      display: flex;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+    .dd {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgba(13,25,13,0.1);
+    }
+    .dd.on { background: var(--ember); }
+
+    .tour-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-top: 2.5rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.7rem;
       font-weight: 700;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 0.2rem;
-    }
-    .is-value {
-      font-size: 0.82rem;
-      font-weight: 400;
       color: var(--forest);
-      line-height: 1.5;
+      text-decoration: none;
+      border-bottom: 2px solid var(--forest);
+      padding-bottom: 0.3rem;
+      transition: color 0.2s, border-color 0.2s;
     }
-    /* === Animations & Micro-interactions === */
-    @keyframes goodPulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(47,150,47,0.25); }
-      50%       { box-shadow: 0 0 0 4px rgba(47,150,47,0); }
-    }
-    @keyframes productShimmer {
-      0%   { transform: translateX(-100%); }
-      100% { transform: translateX(400%); }
+    .tour-cta:hover { color: var(--ember); border-color: var(--ember); }
+
+    /* ========== SECTION WERKSTATT ========== */
+    .section-werkstatt {
+      background: var(--forest);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 640px;
     }
 
-    .s-good { animation: goodPulse 3s ease-in-out infinite; }
-
-    .featured-product {
-      overflow: hidden;
-    }
-    .featured-product::after {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 25%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
-      animation: productShimmer 5s ease-in-out infinite 1s;
-      pointer-events: none;
-    }
-
-    .gear-item {
-      transition: border-top-color 0.2s, transform 0.2s, box-shadow 0.2s;
-    }
-    .gear-item:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 6px 20px rgba(47,79,47,0.1);
-    }
-    .gi-name { transition: color 0.2s; }
-    .gear-item:hover .gi-name { color: var(--orange); }
-
-    .condition-row {
-      transition: background 0.2s;
-      cursor: default;
-    }
-    .condition-row:hover { background: rgba(47,79,47,0.03); }
-    .cr-trail { transition: color 0.2s; }
-    .condition-row:hover .cr-trail { color: var(--orange); }
-
-    .cta-btn {
+    .wk-photo {
       position: relative;
       overflow: hidden;
     }
-    .cta-btn::after {
+    .wk-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: saturate(0.65);
+      transition: filter 0.6s, transform 0.8s;
+    }
+    .section-werkstatt:hover .wk-photo img {
+      filter: saturate(0.85);
+      transform: scale(1.03);
+    }
+    .wk-photo::after {
       content: '';
       position: absolute;
-      top: 0; left: -60%;
-      width: 40%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-      transition: left 0.5s;
+      inset: 0;
+      background: linear-gradient(to right, transparent 55%, var(--forest) 100%);
     }
-    .cta-btn:hover::after { left: 150%; }
 
-    .fps-item {
-      transition: transform 0.2s;
+    .wk-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 6rem 5rem 6rem 3.5rem;
+    }
+
+    .wk-items {
+      display: flex;
+      flex-direction: column;
+      gap: 2.25rem;
+      margin-top: 2.75rem;
+    }
+
+    .wk-item {
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+    }
+
+    .wk-icon {
+      width: 2.6rem;
+      height: 2.6rem;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
+      transition: background 0.2s;
+    }
+    .wk-item:hover .wk-icon { background: rgba(200,83,26,0.2); }
+
+    .wk-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #fff;
+      margin-bottom: 0.22rem;
+    }
+    .wk-desc {
+      font-size: 0.74rem;
+      font-style: italic;
+      color: rgba(255,255,255,0.42);
+      line-height: 1.75;
+    }
+
+    .sec-title-white {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: clamp(2rem, 3.5vw, 3.4rem);
+      line-height: 0.88;
+      text-transform: uppercase;
+      color: #fff;
+    }
+    .sec-title-white .g {
+      -webkit-text-stroke: 1.5px rgba(255,255,255,0.2);
+      color: transparent;
+    }
+
+    /* ========== SECTION COMMUNITY ========== */
+    .section-community {
+      background: var(--snow);
+      padding: 8rem 4rem;
+    }
+
+    .community-inner {
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+
+    .community-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 7rem;
+      margin-top: 5rem;
+      align-items: center;
+    }
+
+    .comm-quote {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: clamp(2rem, 4vw, 3.8rem);
+      line-height: 0.88;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 2rem;
+    }
+    .comm-quote .accent { color: var(--ember); }
+    .comm-quote .g {
+      -webkit-text-stroke: 1.5px rgba(13,25,13,0.13);
+      color: transparent;
+    }
+
+    .comm-body {
+      font-size: 0.88rem;
+      font-style: italic;
+      color: var(--ash);
+      line-height: 1.9;
+      max-width: 44ch;
+      margin-bottom: 2.5rem;
+    }
+
+    .comm-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+    }
+    .ctag {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.38rem 0.95rem;
+      border: 1px solid rgba(13,25,13,0.13);
+      color: var(--ash);
+      transition: border-color 0.2s, color 0.2s;
       cursor: default;
     }
-    .fps-item:hover { transform: translateY(-2px); }
+    .ctag:hover { border-color: var(--ember); color: var(--ember); }
 
+    /* Photo mosaic */
+    .comm-mosaic {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 260px 200px;
+      gap: 0.75rem;
+    }
+    .cm-photo {
+      position: relative;
+      overflow: hidden;
+    }
+    .cm-photo:first-child { grid-column: span 2; }
+    .cm-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.65s ease;
+    }
+    .cm-photo:hover img { transform: scale(1.05); }
+    .cm-photo::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(13,25,13,0.38) 0%, transparent 55%);
+    }
+
+    /* ========== SECTION CTA ========== */
+    .section-cta {
+      background: var(--ember);
+      padding: 6rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .section-cta::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image: repeating-linear-gradient(
+        -18deg,
+        transparent 0px, transparent 34px,
+        rgba(255,255,255,0.045) 34px, rgba(255,255,255,0.045) 35px
+      );
+    }
+
+    .cta-inner {
+      max-width: 1600px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 4rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-headline {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: clamp(2.8rem, 5.5vw, 5rem);
+      text-transform: uppercase;
+      line-height: 0.86;
+      color: #fff;
+    }
+    .cta-headline .g {
+      -webkit-text-stroke: 2px rgba(255,255,255,0.3);
+      color: transparent;
+    }
+
+    .cta-actions {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: flex-end;
+    }
+    .cta-btn {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ember);
+      background: #fff;
+      padding: 1rem 2.5rem;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+      clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+    }
+    .cta-btn:hover { background: var(--ink); color: #fff; }
+    .cta-address {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.58rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      text-align: right;
+      line-height: 1.7;
+    }
+
+    /* ========== ANIMATIONS ========== */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
 <body>
-  <nav>
+
+  <!-- ─── NAVIGATION ─── -->
+  <nav id="nav">
     <div class="nav-logo">Gipfel<span>blick</span></div>
     <ul class="nav-links">
       <li><a href="#">Ausrüstung</a></li>
       <li><a href="#">Touren</a></li>
-      <li><a href="#">Karten</a></li>
-      <li><a href="#">Service</a></li>
+      <li><a href="#">Werkstatt</a></li>
+      <li><a href="#">Über uns</a></li>
     </ul>
-    <a href="#" class="nav-shop">Shop</a>
+    <a href="#" class="nav-cta">Shop →</a>
   </nav>
 
-  <section class="hero" style="max-width:1600px;margin-left:auto;margin-right:auto;">
-    <div class="hero-left">
-      <div class="location-tag">
-        <span class="lt-line"></span>
-        Eifel & Mosel · Trier
+  <!-- ─── HERO ─── -->
+  <section class="hero" id="hero-section">
+    <div class="hero-bg">
+      <img
+        id="hero-img"
+        src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1900&h=1100&q=85"
+        alt="Berglandschaft Eifel bei Sonnenaufgang"
+        loading="eager"
+      />
+    </div>
+    <div class="hero-topo"></div>
+
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <span class="eyebrow-line"></span>
+        <span class="eyebrow-text">Trier · Eifel · Moseltal — seit 2009</span>
       </div>
 
-      <h1 class="hero-headline">
-        <span class="light">FÜR</span><br>
-        ALLE<br>
-        DIE<br>
-        <span class="orange">RAUS</span>-<br>
-        GEHEN.
+      <h1 class="hero-title">
+        Für die<br>
+        <span class="outline">Draußen</span><br>
+        <span class="accent">Sind.</span>
       </h1>
 
-      <p class="hero-body">
-        Ausrüstung für echte Touren. Keine Fashion,
-        keine Influencer-Gear. Nur das, was draußen
-        wirklich funktioniert — aus über 15 Jahren
-        Erfahrung in Eifel und Hunsrück.
-      </p>
-
-      <div class="gear-list">
-        <div class="gear-item">
-          <div class="img-wrap" style="position:relative;overflow:hidden;height:120px;border-radius:4px;margin-bottom:0.5rem;">
-            <img src="https://images.unsplash.com/photo-1504893524553-b855bce32c67?auto=format&fit=crop&w=400&h=300&q=80"
-                 alt="Rucksack auf Bergtour" loading="lazy"
-                 style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.55s ease;" />
-            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.4) 0%,transparent 55%);pointer-events:none;"></div>
+      <div class="hero-bottom">
+        <p class="hero-desc">
+          Ausrüstung für echte Touren in Eifel, Hunsrück und Moseltal.
+          Keine Mode, kein Influencer-Gear — nur das, was draußen
+          wirklich funktioniert. Aus fünfzehn Jahren Erfahrung.
+        </p>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <div class="stat-val">15<sup>+</sup></div>
+            <div class="stat-key">Jahre Erfahrung</div>
           </div>
-          <div class="gi-name">Rucksäcke</div>
-          <div class="gi-count">64 Modelle ab 28L</div>
-        </div>
-        <div class="gear-item">
-          <div class="img-wrap" style="position:relative;overflow:hidden;height:120px;border-radius:4px;margin-bottom:0.5rem;">
-            <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=400&h=300&q=80"
-                 alt="Wanderschuhe auf Felsweg" loading="lazy"
-                 style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.55s ease;" />
-            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.4) 0%,transparent 55%);pointer-events:none;"></div>
+          <div class="hero-stat">
+            <div class="stat-val">820<sup>+</sup></div>
+            <div class="stat-key">Produkte</div>
           </div>
-          <div class="gi-name">Schuhe</div>
-          <div class="gi-count">Wander- & Kletter-</div>
-        </div>
-        <div class="gear-item">
-          <div class="img-wrap" style="position:relative;overflow:hidden;height:120px;border-radius:4px;margin-bottom:0.5rem;">
-            <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=400&h=300&q=80"
-                 alt="Zelt in Berglandschaft" loading="lazy"
-                 style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.55s ease;" />
-            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.4) 0%,transparent 55%);pointer-events:none;"></div>
+          <div class="hero-stat">
+            <div class="stat-val">38</div>
+            <div class="stat-key">Tour-Routen</div>
           </div>
-          <div class="gi-name">Zelte & Biwak</div>
-          <div class="gi-count">3-Jahreszeiten & Winter</div>
         </div>
-        <div class="gear-item">
-          <div class="img-wrap" style="position:relative;overflow:hidden;height:120px;border-radius:4px;margin-bottom:0.5rem;">
-            <img src="https://images.unsplash.com/photo-1483412033650-1015ddeb83d1?auto=format&fit=crop&w=400&h=300&q=80"
-                 alt="Topografische Karte und Kompass" loading="lazy"
-                 style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.55s ease;" />
-            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.4) 0%,transparent 55%);pointer-events:none;"></div>
-          </div>
-          <div class="gi-name">Navigation</div>
-          <div class="gi-count">Karten, GPS, Kompass</div>
-        </div>
-      </div>
-
-      <div class="cta-row">
-        <a href="#" class="cta-btn">Ausrüstung finden →</a>
-        <a href="#" class="cta-link">Tourenberatung</a>
       </div>
     </div>
 
-    <div class="hero-right">
-      <div class="right-label">Produkt der Woche</div>
+    <div class="hero-scroll">
+      <span class="scroll-word">Scroll</span>
+      <div class="scroll-bar"></div>
+    </div>
+  </section>
 
-      <div class="featured-product">
-        <span class="fp-badge">−20%</span>
-        <div class="fp-name">Osprey Atmos AG 65</div>
-        <div class="fp-desc">
-          Anti-Gravity-Tragesystem für Mehrtagestouren.
-          Belüftetes Rückenteil, inklusive Regenhülle.
-          Für ernsthafte Wanderungen gemacht.
-        </div>
-        <div class="fp-specs">
-          <div class="fps-item">
-            <span class="fps-val">65L</span>
-            <span class="fps-key">Volumen</span>
-          </div>
-          <div class="fps-item">
-            <span class="fps-val">1,8 kg</span>
-            <span class="fps-key">Gewicht</span>
-          </div>
-          <div class="fps-item">
-            <span class="fps-val">189 €</span>
-            <span class="fps-key">Statt 234 €</span>
+  <!-- ─── SORTIMENT ─── -->
+  <section class="section-sortiment">
+    <div class="sortiment-inner">
+      <div class="sec-head">
+        <div>
+          <div class="sec-label">Das Sortiment</div>
+          <div class="sec-title-dark">
+            Ausrüstung für<br>
+            <span class="g">jeden Terrain</span>
           </div>
         </div>
+        <a href="#" class="sec-link">Alle Kategorien →</a>
       </div>
 
-      <div class="right-label">Trail-Bedingungen Eifel</div>
+      <div class="products-grid">
+        <!-- Große Karte: Rucksäcke -->
+        <div class="pcard">
+          <img
+            src="https://images.unsplash.com/photo-1504893524553-b855bce32c67?auto=format&fit=crop&w=800&h=1200&q=80"
+            alt="Rucksack Bergwanderung"
+            loading="lazy"
+          />
+          <div class="pcard-overlay"></div>
+          <div class="pcard-corner">↗</div>
+          <div class="pcard-info">
+            <div class="pcard-cat">28L bis 75L Volumen</div>
+            <div class="pcard-name">Rucksäcke &<br>Trekking</div>
+            <div class="pcard-brands">Osprey · Deuter · Gregory · 64 Modelle</div>
+          </div>
+        </div>
 
-      <div class="conditions-block">
-        <div class="cb-header">Aktuelle Wegebedingungen</div>
-        <div class="condition-row">
-          <div>
-            <div class="cr-trail">Eifelsteig — Abschnitt 3</div>
-            <div class="cr-info">Prüm → Hillesheim · 22 km</div>
+        <!-- Wanderschuhe -->
+        <div class="pcard">
+          <img
+            src="https://images.unsplash.com/photo-1536147116438-62679a5e01f2?auto=format&fit=crop&w=600&h=420&q=80"
+            alt="Wanderschuhe auf Felsweg"
+            loading="lazy"
+          />
+          <div class="pcard-overlay"></div>
+          <div class="pcard-corner">↗</div>
+          <div class="pcard-info">
+            <div class="pcard-cat">GTX & Volleder</div>
+            <div class="pcard-name">Wanderschuhe</div>
+            <div class="pcard-brands">Salomon · Lowa · Hanwag</div>
           </div>
-          <span class="cr-status s-good">Gut</span>
         </div>
-        <div class="condition-row">
-          <div>
-            <div class="cr-trail">Moselsteig — Etappe 7</div>
-            <div class="cr-info">Cochem → Treis · 18 km</div>
-          </div>
-          <span class="cr-status s-good">Gut</span>
-        </div>
-        <div class="condition-row">
-          <div>
-            <div class="cr-trail">Hunsrücksteig — Nordroute</div>
-            <div class="cr-info">Stellenweise nass nach Regen</div>
-          </div>
-          <span class="cr-status s-medium">Bedingt</span>
-        </div>
-      </div>
 
-      <div class="info-strip">
-        <div class="is-item">
-          <div class="is-label">Ladenöffnung</div>
-          <div class="is-value">Di – Fr 10 – 19 Uhr<br>Sa 9 – 16 Uhr</div>
+        <!-- Zelte -->
+        <div class="pcard">
+          <img
+            src="https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?auto=format&fit=crop&w=600&h=420&q=80"
+            alt="Zelt in Berglandschaft"
+            loading="lazy"
+          />
+          <div class="pcard-overlay"></div>
+          <div class="pcard-corner">↗</div>
+          <div class="pcard-info">
+            <div class="pcard-cat">3-Jahreszeiten & Winter</div>
+            <div class="pcard-name">Zelte & Biwak</div>
+            <div class="pcard-brands">MSR · Hilleberg · Vaude</div>
+          </div>
         </div>
-        <div class="is-item">
-          <div class="is-label">Werkstatt & Reparatur</div>
-          <div class="is-value">Schuhpflege, Packraumreparatur,<br>Schlafsack-Reinigung</div>
+
+        <!-- Navigation — breite Karte unten -->
+        <div class="pcard">
+          <img
+            src="https://images.unsplash.com/photo-1483412033650-1015ddeb83d1?auto=format&fit=crop&w=1000&h=400&q=80"
+            alt="Karte und Kompass für Navigation"
+            loading="lazy"
+          />
+          <div class="pcard-overlay"></div>
+          <div class="pcard-corner">↗</div>
+          <div class="pcard-info">
+            <div class="pcard-cat">GPS & Analog</div>
+            <div class="pcard-name">Navigation & Karten</div>
+            <div class="pcard-brands">Garmin · Silva · Kompasskarten Eifel</div>
+          </div>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- ─── TOUREN ─── -->
+  <section class="section-touren">
+    <div class="touren-inner">
+      <div class="sec-head">
+        <div>
+          <div class="sec-label">Geführte Touren</div>
+          <div class="sec-title-light">
+            Regionale<br>
+            <span class="g">Erlebnisse</span>
+          </div>
+        </div>
+        <a href="#" class="sec-link sec-link-light">Alle 38 Routen →</a>
+      </div>
+
+      <div class="touren-layout">
+        <!-- Foto-Komposition -->
+        <div class="tour-photos">
+          <div class="tour-photo-main">
+            <img
+              src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=800&h=1050&q=80"
+              alt="Wanderweg durch Eifel-Landschaft"
+              loading="lazy"
+            />
+            <div class="tour-badge">
+              <div class="tb-num">38</div>
+              <div class="tb-label">Routen</div>
+            </div>
+          </div>
+          <div class="tour-photo-inset">
+            <img
+              src="https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&w=400&h=400&q=80"
+              alt="Wandergruppe auf Tour"
+              loading="lazy"
+            />
+          </div>
+        </div>
+
+        <!-- Tourliste -->
+        <div>
+          <div class="tour-list">
+            <div class="tour-item">
+              <div class="tour-num">01</div>
+              <div>
+                <div class="tour-name">Eifelsteig — Abschnitt 3</div>
+                <div class="tour-meta">
+                  <strong>22 km</strong> · Prüm → Hillesheim · <strong>620 m</strong> Aufstieg
+                </div>
+              </div>
+              <div class="tour-diff">
+                <div class="dd on"></div><div class="dd on"></div><div class="dd"></div>
+              </div>
+            </div>
+
+            <div class="tour-item">
+              <div class="tour-num">02</div>
+              <div>
+                <div class="tour-name">Moselsteig — Etappe 7</div>
+                <div class="tour-meta">
+                  <strong>18 km</strong> · Cochem → Treis · <strong>480 m</strong> Aufstieg
+                </div>
+              </div>
+              <div class="tour-diff">
+                <div class="dd on"></div><div class="dd"></div><div class="dd"></div>
+              </div>
+            </div>
+
+            <div class="tour-item">
+              <div class="tour-num">03</div>
+              <div>
+                <div class="tour-name">Hunsrücksteig Nordroute</div>
+                <div class="tour-meta">
+                  <strong>31 km</strong> · Mehrtagesroute · <strong>1.100 m</strong> Aufstieg
+                </div>
+              </div>
+              <div class="tour-diff">
+                <div class="dd on"></div><div class="dd on"></div><div class="dd on"></div>
+              </div>
+            </div>
+
+            <div class="tour-item">
+              <div class="tour-num">04</div>
+              <div>
+                <div class="tour-name">Saarschleife Panorama</div>
+                <div class="tour-meta">
+                  <strong>14 km</strong> · Tagesroute · <strong>340 m</strong> Aufstieg
+                </div>
+              </div>
+              <div class="tour-diff">
+                <div class="dd on"></div><div class="dd"></div><div class="dd"></div>
+              </div>
+            </div>
+
+            <div class="tour-item">
+              <div class="tour-num">05</div>
+              <div>
+                <div class="tour-name">Trierer Bergwelt Runde</div>
+                <div class="tour-meta">
+                  <strong>11 km</strong> · Ab Trier Hauptbahnhof · <strong>290 m</strong> Aufstieg
+                </div>
+              </div>
+              <div class="tour-diff">
+                <div class="dd on"></div><div class="dd"></div><div class="dd"></div>
+              </div>
+            </div>
+          </div>
+
+          <a href="#" class="tour-cta">Persönliche Tourenberatung →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── WERKSTATT & SERVICE ─── -->
+  <section class="section-werkstatt">
+    <div class="wk-photo">
+      <img
+        src="https://images.unsplash.com/photo-1511884642898-4c92249e20b6?auto=format&fit=crop&w=900&h=750&q=80"
+        alt="Outdoor Ausrüstung Werkstatt"
+        loading="lazy"
+      />
+    </div>
+    <div class="wk-content">
+      <div class="sec-label" style="color:rgba(255,255,255,0.4);">Werkstatt & Service</div>
+      <div class="sec-title-white">
+        Reparieren<br>
+        statt<br>
+        <span class="g">Wegwerfen.</span>
+      </div>
+
+      <div class="wk-items">
+        <div class="wk-item">
+          <div class="wk-icon">🧵</div>
+          <div>
+            <div class="wk-title">Schlafsack & Zelt Reparatur</div>
+            <div class="wk-desc">Reißverschlüsse, Nähte, Beschichtungen — wir machen alles wieder dicht und einsatzbereit.</div>
+          </div>
+        </div>
+        <div class="wk-item">
+          <div class="wk-icon">👟</div>
+          <div>
+            <div class="wk-title">Schuh-Werkstatt</div>
+            <div class="wk-desc">Neusohlung, Imprägnierung, Einlagenberatung — alles für optimalen Halt auf jedem Untergrund.</div>
+          </div>
+        </div>
+        <div class="wk-item">
+          <div class="wk-icon">🎒</div>
+          <div>
+            <div class="wk-title">Tragesystem & Anpassung</div>
+            <div class="wk-desc">Individuelle Rückenanpassung und Packberatung für maximalen Komfort auf langen Etappen.</div>
+          </div>
+        </div>
+        <div class="wk-item">
+          <div class="wk-icon">🗺</div>
+          <div>
+            <div class="wk-title">Tourenplanung & Beratung</div>
+            <div class="wk-desc">Persönliche Routenplanung mit aktuellen Wegebedingungen für Eifel, Hunsrück und Mosel.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── COMMUNITY ─── -->
+  <section class="section-community">
+    <div class="community-inner">
+      <div class="sec-head">
+        <div>
+          <div class="sec-label">Community & Events</div>
+          <div class="sec-title-light">
+            <span class="g">Gemeinsam</span><br>
+            Draußen.
+          </div>
+        </div>
+      </div>
+
+      <div class="community-layout">
+        <div>
+          <div class="comm-quote">
+            "Draußen sein ist<br>
+            kein Hobby —<br>
+            <span class="accent">eine Haltung.</span>"
+          </div>
+          <p class="comm-body">
+            Jeden Monat organisieren wir geführte Touren, Packkurse
+            und Abende, an denen erfahrene Outdoor-Menschen ihr
+            Wissen teilen. Für Einsteiger genauso wie für alte Hasen.
+          </p>
+          <div class="comm-tags">
+            <span class="ctag">Packkurse</span>
+            <span class="ctag">Erste Hilfe Outdoor</span>
+            <span class="ctag">Tourenplanung</span>
+            <span class="ctag">Wetterkunde</span>
+            <span class="ctag">Navigation</span>
+            <span class="ctag">Biwak-Workshops</span>
+            <span class="ctag">Winterwandern</span>
+          </div>
+        </div>
+
+        <div>
+          <div class="comm-mosaic">
+            <div class="cm-photo">
+              <img
+                src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=900&h=320&q=80"
+                alt="Wandergruppe in Natur"
+                loading="lazy"
+              />
+            </div>
+            <div class="cm-photo">
+              <img
+                src="https://images.unsplash.com/photo-1501854140801-50d01698950b?auto=format&fit=crop&w=450&h=250&q=80"
+                alt="Bergpanorama"
+                loading="lazy"
+              />
+            </div>
+            <div class="cm-photo">
+              <img
+                src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=450&h=250&q=80"
+                alt="Outdoor Abenteuer"
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CTA FOOTER ─── -->
+  <section class="section-cta">
+    <div class="cta-inner">
+      <div class="cta-headline">
+        <span class="g">Dein nächstes</span><br>
+        Abenteuer<br>
+        beginnt hier.
+      </div>
+      <div class="cta-actions">
+        <a href="#" class="cta-btn">Zum Online-Shop →</a>
+        <div class="cta-address">
+          Gipfelblick Outdoor — Simeonstraße 14, 54290 Trier<br>
+          Di – Fr 10–19 Uhr · Sa 9–16 Uhr
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Parallax on hero image
+    const heroImg = document.getElementById('hero-img');
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          if (heroImg) {
+            heroImg.style.transform = `translateY(${window.scrollY * 0.28}px)`;
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+
+    // Sticky nav background on scroll
+    const nav = document.getElementById('nav');
+    const heroSection = document.getElementById('hero-section');
+    const navObserver = new IntersectionObserver(
+      ([entry]) => nav.classList.toggle('scrolled', !entry.isIntersecting),
+      { threshold: 0.05 }
+    );
+    if (heroSection) navObserver.observe(heroSection);
+  </script>
 </body>
 </html>
