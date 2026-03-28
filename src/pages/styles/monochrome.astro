@@ -7,616 +7,799 @@ export const prerender = true;
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
-  <title>Punkt — Fotoatelier & Bildgestaltung | Trier</title>
+  <title>KORN — Fotografisches Atelier | Trier</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;1,300&family=Barlow:wght@300;400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { overflow-x: hidden; }
+    html { overflow-x: hidden; scroll-behavior: smooth; }
+
+    :root {
+      --ink: #080808;
+      --paper: #f7f7f5;
+      --ink-50: rgba(8,8,8,0.5);
+      --ink-30: rgba(8,8,8,0.3);
+      --ink-15: rgba(8,8,8,0.15);
+      --ink-08: rgba(8,8,8,0.08);
+    }
 
     body {
-      background: #FFFFFF;
-      color: #000000;
-      font-family: 'Barlow', sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'IBM Plex Mono', monospace;
       min-height: 100vh;
       overflow-x: hidden;
     }
 
+    /* Subtle grain overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.025'/%3E%3C/svg%3E");
+      background-size: 250px;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* NAV */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 100;
+      height: 60px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 1.5rem 4rem;
-      background: #FFFFFF;
-      border-bottom: 1px solid #000000;
+      padding: 0 4rem;
+      background: var(--paper);
+      border-bottom: 1px solid var(--ink);
     }
     .nav-logo {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 700;
-      font-size: 1.4rem;
-      letter-spacing: 0.15em;
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 400;
+      font-size: 1rem;
+      letter-spacing: 0.28em;
       text-transform: uppercase;
-      color: #000;
+      color: var(--ink);
     }
     .nav-links {
       display: flex;
-      gap: 3rem;
+      gap: 2.5rem;
       list-style: none;
     }
     .nav-links a {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.65rem;
-      font-weight: 400;
-      letter-spacing: 0.2em;
+      font-size: 0.52rem;
+      font-weight: 300;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: rgba(0,0,0,0.4);
+      color: var(--ink-50);
       text-decoration: none;
       transition: color 0.2s;
     }
-    .nav-links a:hover { color: #000; }
-    .nav-contact {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.6rem;
-      font-weight: 600;
-      letter-spacing: 0.18em;
+    .nav-links a:hover { color: var(--ink); }
+    .nav-cta {
+      font-size: 0.5rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: #fff;
-      background: #000;
-      padding: 0.6rem 1.4rem;
+      color: var(--paper);
+      background: var(--ink);
+      padding: 0.55rem 1.4rem;
       text-decoration: none;
+      border: 1px solid var(--ink);
       transition: background 0.15s, color 0.15s;
     }
-    .nav-contact:hover { background: #fff; color: #000; outline: 1px solid #000; }
+    .nav-cta:hover { background: transparent; color: var(--ink); }
 
+    /* HERO */
     .hero {
       min-height: 100vh;
-      padding-top: 57px;
+      padding-top: 60px;
       display: grid;
-      grid-template-columns: 1fr 1px 420px;
+      grid-template-columns: 42% 1px 1fr;
     }
-
-    /* LEFT */
     .hero-left {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: 4rem 4rem 4rem 5rem;
+      padding: 4.5rem 4rem 4rem 5rem;
     }
-
-    .top-section { display: flex; flex-direction: column; gap: 2rem; }
-
-    .eyebrow {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.6rem;
-      font-weight: 400;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: rgba(0,0,0,0.35);
-    }
-
-    .hero-headline {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 700;
-      font-size: clamp(5rem, 12vw, 10rem);
-      line-height: 0.85;
-      letter-spacing: -0.01em;
-      text-transform: uppercase;
-      color: #000;
-    }
-    .hero-headline .outline {
-      -webkit-text-stroke: 2px #000;
-      color: transparent;
-    }
-    .hero-headline .italic {
-      font-style: italic;
-      font-weight: 300;
-    }
-
-    .hero-body {
-      font-size: 0.88rem;
-      font-weight: 300;
-      line-height: 1.9;
-      color: rgba(0,0,0,0.5);
-      max-width: 42ch;
-    }
-
-    .bottom-section {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      padding-top: 2rem;
-      border-top: 1px solid rgba(0,0,0,0.1);
-    }
-    .cta-area {
-      display: flex;
-      align-items: center;
-      gap: 1.75rem;
-    }
-    .cta-btn {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.65rem;
-      font-weight: 600;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: #fff;
-      background: #000;
-      text-decoration: none;
-      padding: 0.85rem 2rem;
-      transition: background 0.15s, color 0.15s;
-      border: 1px solid #000;
-    }
-    .cta-btn:hover { background: #fff; color: #000; }
-    .cta-link {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.6rem;
-      font-weight: 400;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: rgba(0,0,0,0.35);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .cta-link:hover { color: #000; }
-
-    .founded {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.55rem;
-      font-weight: 300;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: rgba(0,0,0,0.2);
-    }
-
-    /* Divider */
-    .divider { background: #000; }
-
-    /* RIGHT */
-    .hero-right {
+    .hero-meta {
       display: flex;
       flex-direction: column;
-      background: #000;
+      gap: 0.35rem;
     }
-
-    .right-block {
+    .meta-line {
+      font-size: 0.46rem;
+      font-weight: 300;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--ink-30);
+    }
+    .hero-center {
       flex: 1;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: 2.5rem;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding: 2rem 0;
     }
-    .right-block:last-child { border-bottom: none; }
-    .rb-num {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 700;
-      font-size: 2.8rem;
-      line-height: 1;
-      letter-spacing: -0.02em;
-      color: #fff;
-    }
-    .rb-label {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.55rem;
-      font-weight: 400;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.25);
-      margin-top: 0.3rem;
-    }
-    .rb-sub {
-      font-size: 0.7rem;
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
       font-weight: 300;
-      color: rgba(255,255,255,0.35);
-      margin-top: 0.2rem;
-      line-height: 1.5;
-    }
-
-    .booking-block {
-      padding: 2.5rem;
-      background: #fff;
-      border-top: 2px solid #000;
-    }
-    .bb-label {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.55rem;
-      font-weight: 600;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: rgba(0,0,0,0.4);
-      margin-bottom: 0.75rem;
-    }
-    .bb-hours {
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-    }
-    .bh-row {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.72rem;
-      font-weight: 300;
-      color: rgba(0,0,0,0.7);
-      border-bottom: 1px solid rgba(0,0,0,0.06);
-      padding-bottom: 0.4rem;
-    }
-    .bh-row:last-child { border-bottom: none; padding-bottom: 0; }
-
-    /* Corner decoration */
-    .corner-mark {
-      position: fixed;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.45rem;
-      font-weight: 300;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: rgba(0,0,0,0.15);
-    }
-    .corner-mark.bl { bottom: 1.5rem; left: 2rem; }
-    .corner-mark.br { bottom: 1.5rem; right: 2rem; }
-
-    /* Photo container */
-    .ph { position:relative; overflow:hidden; }
-    .ph img { position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.55s ease; }
-    .ph:hover img { transform: scale(1.05); }
-
-    /* Portfolio section */
-    .portfolio-section {
-      background: #fff;
-      padding: 6rem 0;
-      border-top: 1px solid #000;
-    }
-    .portfolio-inner {
-      max-width: 1600px;
-      margin-left: auto;
-      margin-right: auto;
-      padding: 0 5rem;
-    }
-    .port-header {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      margin-bottom: 4rem;
-      align-items: end;
-    }
-    .port-eyebrow {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.55rem;
-      font-weight: 400;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: rgba(0,0,0,0.3);
-      margin-bottom: 0.75rem;
-    }
-    .port-title {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 700;
-      font-size: clamp(2.5rem, 5vw, 4.5rem);
-      line-height: 0.9;
+      font-size: clamp(4.5rem, 10vw, 9rem);
+      line-height: 0.88;
       letter-spacing: -0.01em;
-      text-transform: uppercase;
-      color: #000;
+      color: var(--ink);
+      margin-bottom: 2.5rem;
     }
-    .port-title .outline {
-      -webkit-text-stroke: 2px #000;
+    h1 .stroke {
+      font-style: normal;
+      font-weight: 300;
+      -webkit-text-stroke: 1.5px var(--ink);
       color: transparent;
     }
-    .port-desc {
-      font-size: 0.88rem;
+    .hero-body {
+      font-size: 0.68rem;
       font-weight: 300;
-      line-height: 1.9;
-      color: rgba(0,0,0,0.45);
-      max-width: 42ch;
+      line-height: 1.95;
+      color: var(--ink-50);
+      max-width: 40ch;
     }
-    .port-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 2px;
-    }
-    .port-item {}
-    .port-meta {
-      padding: 0.75rem 0 1.5rem;
+    .hero-bottom {
       display: flex;
+      align-items: flex-end;
       justify-content: space-between;
-      align-items: baseline;
-      border-bottom: 1px solid rgba(0,0,0,0.08);
+      padding-top: 2rem;
+      border-top: 1px solid var(--ink-15);
     }
-    .pm-num {
-      font-family: 'Barlow Condensed', sans-serif;
+    .cta-group {
+      display: flex;
+      align-items: center;
+      gap: 1.8rem;
+    }
+    .btn-primary {
+      font-family: 'IBM Plex Mono', monospace;
       font-size: 0.5rem;
       font-weight: 400;
       letter-spacing: 0.2em;
-      color: rgba(0,0,0,0.2);
-    }
-    .pm-title {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: rgba(0,0,0,0.5);
+      color: var(--paper);
+      background: var(--ink);
+      padding: 0.8rem 1.8rem;
+      text-decoration: none;
+      border: 1px solid var(--ink);
+      transition: background 0.15s, color 0.15s;
+    }
+    .btn-primary:hover { background: transparent; color: var(--ink); }
+    .btn-ghost {
+      font-size: 0.46rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-30);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .btn-ghost:hover { color: var(--ink); }
+    .hero-est {
+      font-size: 0.42rem;
+      font-weight: 300;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--ink-30);
     }
 
-    /* Studio section */
-    .studio-section {
-      background: #000;
-      padding: 6rem 0;
+    .v-rule { background: var(--ink); }
+
+    .hero-photo {
+      position: relative;
+      overflow: hidden;
     }
-    .studio-inner {
-      max-width: 1600px;
-      margin-left: auto;
-      margin-right: auto;
-      padding: 0 5rem;
+    .hero-photo img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(100%) contrast(1.1);
+    }
+    .hero-photo::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(8,8,8,0.3) 0%, transparent 35%);
+      pointer-events: none;
+    }
+    .photo-tag {
+      position: absolute;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      font-size: 0.4rem;
+      font-weight: 300;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(247,247,245,0.35);
+      z-index: 2;
+    }
+
+    /* STATS STRIP */
+    .stats-strip {
+      background: var(--ink);
+      display: flex;
+      border-top: 1px solid var(--ink);
+    }
+    .stat-item {
+      flex: 1;
+      padding: 2rem 3rem;
+      border-right: 1px solid rgba(247,247,245,0.08);
+      text-align: center;
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      line-height: 1;
+      letter-spacing: -0.02em;
+      color: rgba(247,247,245,0.88);
+    }
+    .stat-label {
+      font-size: 0.42rem;
+      font-weight: 300;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(247,247,245,0.22);
+      margin-top: 0.5rem;
+    }
+
+    /* Photo utility */
+    .ph { position: relative; overflow: hidden; }
+    .ph img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(100%) contrast(1.05);
+      transition: transform 0.6s ease;
+    }
+    .ph:hover img { transform: scale(1.04); }
+
+    /* PORTFOLIO */
+    .portfolio-section { border-top: 1px solid var(--ink); }
+    .section-header {
+      padding: 4rem 5rem 3.5rem;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 6rem;
-      align-items: center;
+      gap: 4rem;
+      align-items: end;
+      border-bottom: 1px solid var(--ink-08);
     }
-    .studio-photo-col {
+    .s-num {
+      font-size: 0.42rem;
+      font-weight: 300;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--ink-30);
+      margin-bottom: 1.2rem;
+    }
+    .s-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      line-height: 0.9;
+      color: var(--ink);
+    }
+    .s-title em { font-style: italic; }
+    .s-title .stroke {
+      -webkit-text-stroke: 1px var(--ink);
+      color: transparent;
+    }
+    .s-desc {
+      font-size: 0.66rem;
+      font-weight: 300;
+      line-height: 1.95;
+      color: var(--ink-50);
+      max-width: 44ch;
+    }
+    .port-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1.3fr 1fr 1fr;
       gap: 2px;
+      background: var(--ink);
     }
+    .port-item { background: var(--paper); }
+    .port-overlay {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 1.25rem;
+      background: linear-gradient(to top, rgba(8,8,8,0.75) 0%, transparent 100%);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      z-index: 2;
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+    .ph:hover .port-overlay { opacity: 1; }
+    .po-cat {
+      font-size: 0.4rem;
+      font-weight: 300;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(247,247,245,0.55);
+    }
+    .po-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 1rem;
+      color: rgba(247,247,245,0.9);
+    }
+
+    /* FILMSTRIP */
+    .filmstrip {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 2px;
+      background: var(--ink);
+      border-top: 3px solid var(--ink);
+      border-bottom: 3px solid var(--ink);
+    }
+    .fs-item { position: relative; overflow: hidden; }
+    .fs-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(100%) brightness(0.6);
+      display: block;
+      transition: filter 0.4s;
+    }
+    .fs-item:hover img { filter: grayscale(100%) brightness(0.9); }
+
+    /* STUDIO */
+    .studio-section { background: var(--ink); }
+    .studio-grid { display: grid; grid-template-columns: 1fr 1fr; }
     .studio-text {
+      padding: 6rem 5rem;
       display: flex;
       flex-direction: column;
       gap: 2.5rem;
+      justify-content: center;
     }
-    .studio-eyebrow {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.55rem;
-      font-weight: 400;
+    .s-num-light {
+      font-size: 0.42rem;
+      font-weight: 300;
       letter-spacing: 0.3em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.25);
+      color: rgba(247,247,245,0.2);
     }
-    .studio-title {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 700;
-      font-size: clamp(2.5rem, 4vw, 4rem);
-      line-height: 0.9;
-      text-transform: uppercase;
-      color: #fff;
+    .studio-headline {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(2.5rem, 4.5vw, 4rem);
+      line-height: 0.95;
+      color: rgba(247,247,245,0.88);
     }
-    .studio-title .outline {
-      -webkit-text-stroke: 1px rgba(255,255,255,0.4);
+    .studio-headline .stroke {
+      font-style: normal;
+      -webkit-text-stroke: 1px rgba(247,247,245,0.3);
       color: transparent;
     }
     .studio-body {
-      font-size: 0.88rem;
+      font-size: 0.66rem;
       font-weight: 300;
-      line-height: 1.9;
-      color: rgba(255,255,255,0.35);
+      line-height: 2;
+      color: rgba(247,247,245,0.3);
       max-width: 40ch;
     }
-    .studio-specs {
+    .spec-table {
       display: flex;
       flex-direction: column;
-      gap: 0;
-      border-top: 1px solid rgba(255,255,255,0.08);
+      border-top: 1px solid rgba(247,247,245,0.08);
     }
     .spec-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0.75rem 0;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
+      padding: 0.7rem 0;
+      border-bottom: 1px solid rgba(247,247,245,0.06);
     }
-    .sr-label {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.55rem;
+    .sp-label {
+      font-size: 0.46rem;
+      font-weight: 300;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(247,247,245,0.2);
+    }
+    .sp-value {
+      font-size: 0.6rem;
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      color: rgba(247,247,245,0.55);
+    }
+    .btn-light {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.5rem;
       font-weight: 400;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.2);
-    }
-    .sr-value {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.75rem;
-      font-weight: 400;
-      letter-spacing: 0.08em;
-      color: rgba(255,255,255,0.6);
-    }
-    .studio-cta {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 0.65rem;
-      font-weight: 600;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: #000;
-      background: #fff;
-      padding: 0.85rem 2rem;
+      color: var(--ink);
+      background: var(--paper);
+      padding: 0.8rem 1.8rem;
       text-decoration: none;
-      border: 1px solid #fff;
+      border: 1px solid var(--paper);
       transition: background 0.15s, color 0.15s;
       width: fit-content;
     }
-    .studio-cta:hover { background: #000; color: #fff; }
-
-    /* Large screen fix */
-    @media (min-width: 1600px) {
-      .hero {
-        max-width: 1600px;
-        margin-left: auto;
-        margin-right: auto;
-      }
+    .btn-light:hover { background: transparent; color: var(--paper); }
+    .studio-photo {
+      position: relative;
+      overflow: hidden;
+      min-height: 580px;
     }
+    .studio-photo img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(100%) brightness(0.68) contrast(1.1);
+    }
+
+    /* CONTACT */
+    .contact-section {
+      border-top: 1px solid var(--ink);
+      padding: 6rem 5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+    }
+    .contact-headline {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      line-height: 1.05;
+      color: var(--ink);
+      margin-bottom: 2.5rem;
+    }
+    .contact-headline em { font-style: italic; }
+    .services-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+    }
+    .services-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--ink-08);
+    }
+    .svc-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 1.15rem;
+      color: var(--ink);
+    }
+    .svc-price {
+      font-size: 0.42rem;
+      font-weight: 300;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--ink-30);
+    }
+    .contact-details {
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+    }
+    .cd-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    .cd-label {
+      font-size: 0.4rem;
+      font-weight: 300;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--ink-30);
+    }
+    .cd-value {
+      font-size: 0.66rem;
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      color: var(--ink-50);
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--ink);
+      padding: 1.5rem 5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer-logo {
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(247,247,245,0.45);
+    }
+    .footer-meta {
+      font-size: 0.4rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(247,247,245,0.18);
+    }
+
+    /* Corner marks */
+    .corner {
+      position: fixed;
+      font-size: 0.38rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-15);
+      z-index: 50;
+    }
+    .corner.bl { bottom: 1.5rem; left: 2rem; }
+    .corner.br { bottom: 1.5rem; right: 2rem; }
   </style>
 </head>
 <body>
-  <div class="corner-mark bl">49°45'N · 06°38'E</div>
-  <div class="corner-mark br">Punkt Studio · Trier</div>
+  <div class="corner bl">49°45'N · 06°38'E</div>
+  <div class="corner br">KORN · Trier</div>
 
   <nav>
-    <div class="nav-logo">Punkt.</div>
+    <div class="nav-logo">KORN</div>
     <ul class="nav-links">
       <li><a href="#">Portfolio</a></li>
-      <li><a href="#">Services</a></li>
+      <li><a href="#">Leistungen</a></li>
       <li><a href="#">Studio</a></li>
       <li><a href="#">Kontakt</a></li>
     </ul>
-    <a href="#" class="nav-contact">Anfrage</a>
+    <a href="#" class="nav-cta">Shooting anfragen</a>
   </nav>
 
+  <!-- HERO -->
   <section class="hero">
     <div class="hero-left">
-      <div class="top-section">
-        <div class="eyebrow">Fotoatelier & Bildgestaltung · Trier</div>
+      <div class="hero-meta">
+        <span class="meta-line">Fotografisches Atelier · Trier</span>
+        <span class="meta-line">f/2.8 · ISO 400 · 35mm Analog</span>
+      </div>
 
-        <h1 class="hero-headline">
-          Kein<br>
-          <span class="outline">Rau</span>schen.<br>
-          <span class="italic">Nur</span><br>
-          das Bild.
+      <div class="hero-center">
+        <h1>
+          Das<br>
+          Bild<br>
+          braucht<br>
+          keine<br>
+          <span class="stroke">Farbe.</span>
         </h1>
-
         <p class="hero-body">
-          Wir fotografieren Menschen, Produkte und Räume —
-          ohne Filter, ohne Kompromisse. Was zählt, ist
-          das Bild, das bleibt.
+          KORN ist ein fotografisches Atelier in Trier.
+          Wir arbeiten in Schwarzweiß — nicht aus Nostalgie,
+          sondern weil Reduktion die stärkste Form der Aussage ist.
         </p>
       </div>
 
-      <div class="bottom-section">
-        <div class="cta-area">
-          <a href="#" class="cta-btn">Shooting anfragen</a>
-          <a href="#" class="cta-link">Portfolio ansehen →</a>
+      <div class="hero-bottom">
+        <div class="cta-group">
+          <a href="#" class="btn-primary">Shooting anfragen</a>
+          <a href="#" class="btn-ghost">Portfolio ansehen →</a>
         </div>
-        <div class="founded">Est. 2017 · Trier</div>
+        <span class="hero-est">Est. 2018 · Trier</span>
       </div>
     </div>
 
-    <div class="divider"></div>
+    <div class="v-rule"></div>
 
-    <div class="hero-right">
-      <div class="right-block">
-        <div class="rb-num">800+</div>
-        <div class="rb-label">Shootings</div>
-        <div class="rb-sub">Portrait, Produkt, Editorial, Architektur</div>
-      </div>
-      <div class="right-block">
-        <div class="rb-num">120m²</div>
-        <div class="rb-label">Studiofläche</div>
-        <div class="rb-sub">Daylight & Kunstlicht, komplett ausgestattet</div>
-      </div>
-      <div class="right-block">
-        <div class="rb-num">48h</div>
-        <div class="rb-label">Lieferzeit</div>
-        <div class="rb-sub">Fertig retuschierte Bilder nach dem Shooting</div>
-      </div>
-      <div class="booking-block">
-        <div class="bb-label">Studiozeiten</div>
-        <div class="bb-hours">
-          <div class="bh-row"><span>Mo – Fr</span><span>9 – 19 Uhr</span></div>
-          <div class="bh-row"><span>Samstag</span><span>10 – 17 Uhr</span></div>
-          <div class="bh-row"><span>Sonntag</span><span>nach Absprache</span></div>
-        </div>
-      </div>
+    <div class="hero-photo">
+      <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=1600&h=1400&q=85" alt="Portrait Fotografie" />
+      <div class="photo-tag">Portrait · Trier · 2025</div>
     </div>
   </section>
 
-  <!-- PORTFOLIO SECTION -->
+  <!-- STATS STRIP -->
+  <div class="stats-strip">
+    <div class="stat-item">
+      <div class="stat-num">800+</div>
+      <div class="stat-label">Shootings</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">120m²</div>
+      <div class="stat-label">Studiofläche</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">48h</div>
+      <div class="stat-label">Lieferzeit</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">12</div>
+      <div class="stat-label">Jahre Erfahrung</div>
+    </div>
+  </div>
+
+  <!-- PORTFOLIO -->
   <section class="portfolio-section">
-    <div class="portfolio-inner">
-      <div class="port-header">
-        <div>
-          <div class="port-eyebrow">Ausgewählte Arbeiten</div>
-          <h2 class="port-title">Das<br><span class="outline">Bild</span><br>zählt.</h2>
-        </div>
-        <p class="port-desc">
-          800 Shootings. Jedes davon mit einer Idee dahinter.
-          Portrait, Produkt, Editorial — hier ist eine Auswahl
-          der Arbeiten, auf die wir stolz sind.
-        </p>
+    <div class="section-header">
+      <div>
+        <div class="s-num">001 — Ausgewählte Arbeiten</div>
+        <h2 class="s-title">
+          Bilder<br>
+          die <em>bleiben.</em><br>
+          <span class="stroke">Immer.</span>
+        </h2>
       </div>
-      <div class="port-grid">
-        <div class="port-item">
-          <div class="ph" style="height:360px;">
-            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1200&h=900&q=80" alt="Portrait Shooting" loading="lazy" style="filter:grayscale(100%);" />
-            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.5) 0%,transparent 60%);pointer-events:none;"></div>
-          </div>
-          <div class="port-meta">
-            <span class="pm-num">01</span>
-            <span class="pm-title">Portrait · Editorial</span>
-          </div>
-        </div>
-        <div class="port-item">
-          <div class="ph" style="height:360px;">
-            <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1200&h=900&q=80" alt="Produkt Shooting" loading="lazy" style="filter:grayscale(100%);" />
-            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.5) 0%,transparent 60%);pointer-events:none;"></div>
-          </div>
-          <div class="port-meta">
-            <span class="pm-num">02</span>
-            <span class="pm-title">Produkt · Werbung</span>
+      <p class="s-desc">
+        Schwarzweiß zwingt zur Konzentration auf das Wesentliche —
+        Form, Licht, Schatten, Ausdruck. Jedes unserer Bilder ist so gemacht,
+        dass es auch in 30 Jahren noch funktioniert.
+      </p>
+    </div>
+    <div class="port-grid">
+      <div class="port-item">
+        <div class="ph" style="height:420px;">
+          <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e0?auto=format&fit=crop&w=1400&h=1000&q=80" alt="Editorial Portrait" loading="lazy" />
+          <div class="port-overlay">
+            <span class="po-cat">Editorial</span>
+            <span class="po-title">Zeichen der Zeit</span>
           </div>
         </div>
-        <div class="port-item">
-          <div class="ph" style="height:360px;">
-            <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=1200&h=900&q=80" alt="Architektur Shooting" loading="lazy" style="filter:grayscale(100%);" />
-            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.5) 0%,transparent 60%);pointer-events:none;"></div>
+      </div>
+      <div class="port-item">
+        <div class="ph" style="height:420px;">
+          <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=900&h=700&q=80" alt="Portrait Herr" loading="lazy" />
+          <div class="port-overlay">
+            <span class="po-cat">Portrait</span>
+            <span class="po-title">Stille Stärke</span>
           </div>
-          <div class="port-meta">
-            <span class="pm-num">03</span>
-            <span class="pm-title">Architektur · Raum</span>
+        </div>
+      </div>
+      <div class="port-item">
+        <div class="ph" style="height:420px;">
+          <img src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=900&h=700&q=80" alt="Frauenportrait" loading="lazy" />
+          <div class="port-overlay">
+            <span class="po-cat">Mode</span>
+            <span class="po-title">In Bewegung</span>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- STUDIO SECTION -->
+  <!-- FILMSTRIP -->
+  <div class="filmstrip" style="height:150px;">
+    <div class="fs-item">
+      <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&h=280&q=70" alt="" loading="lazy" />
+    </div>
+    <div class="fs-item">
+      <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=400&h=280&q=70" alt="" loading="lazy" />
+    </div>
+    <div class="fs-item">
+      <img src="https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?auto=format&fit=crop&w=400&h=280&q=70" alt="" loading="lazy" />
+    </div>
+    <div class="fs-item">
+      <img src="https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?auto=format&fit=crop&w=400&h=280&q=70" alt="" loading="lazy" />
+    </div>
+    <div class="fs-item">
+      <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=400&h=280&q=70" alt="" loading="lazy" />
+    </div>
+  </div>
+
+  <!-- STUDIO -->
   <section class="studio-section">
-    <div class="studio-inner">
-      <div class="studio-photo-col">
-        <div class="ph" style="height:420px;">
-          <img src="https://images.unsplash.com/photo-1547826039-a3e6db4c2527?auto=format&fit=crop&w=800&h=1050&q=80" alt="Studio Innenansicht" loading="lazy" style="filter:grayscale(100%);" />
-        </div>
-        <div style="display:flex;flex-direction:column;gap:2px;margin-top:3rem;">
-          <div class="ph" style="height:200px;">
-            <img src="https://images.unsplash.com/photo-1471193945509-9ad0617afabf?auto=format&fit=crop&w=800&h=500&q=80" alt="Kamera Equipment" loading="lazy" style="filter:grayscale(80%);" />
-          </div>
-          <div class="ph" style="height:200px;">
-            <img src="https://images.unsplash.com/photo-1606216794074-735e91aa2c92?auto=format&fit=crop&w=800&h=500&q=80" alt="Lichtsetzung Studio" loading="lazy" style="filter:grayscale(80%);" />
-          </div>
-        </div>
-      </div>
+    <div class="studio-grid">
       <div class="studio-text">
-        <div class="studio-eyebrow">Das Studio</div>
-        <h2 class="studio-title">120 m².<br><span class="outline">Kein</span><br>Kompromiss.</h2>
+        <div class="s-num-light">002 — Das Studio</div>
+        <h2 class="studio-headline">
+          120 m².<br>
+          <span class="stroke">Stille.</span><br>
+          Klarheit.
+        </h2>
         <p class="studio-body">
-          Daylight-Studio, Kunstlicht-Setup, Cyclorama-Wand.
-          Alles vorhanden — damit das Bild stimmt,
-          nicht der Zufall.
+          Kein Dekor. Keine Ablenkung. Ein Raum, der alles wegräumt —
+          damit das Bild das einzige ist, was zählt.
         </p>
-        <div class="studio-specs">
+        <div class="spec-table">
           <div class="spec-row">
-            <span class="sr-label">Fläche</span>
-            <span class="sr-value">120 m² Gesamt</span>
+            <span class="sp-label">Fläche</span>
+            <span class="sp-value">120 m² Gesamt</span>
           </div>
           <div class="spec-row">
-            <span class="sr-label">Licht</span>
-            <span class="sr-value">Daylight + Profoto D2</span>
+            <span class="sp-label">Licht</span>
+            <span class="sp-value">Daylight + Profoto D2</span>
           </div>
           <div class="spec-row">
-            <span class="sr-label">Hintergründe</span>
-            <span class="sr-value">Weiß, Schwarz, Grau, Cyclorama</span>
+            <span class="sp-label">Hintergründe</span>
+            <span class="sp-value">Weiß · Grau · Schwarz · Cyclorama</span>
           </div>
           <div class="spec-row">
-            <span class="sr-label">Lieferzeit</span>
-            <span class="sr-value">48h nach Shooting</span>
+            <span class="sp-label">Lieferzeit</span>
+            <span class="sp-value">48h fertig retuschiert</span>
           </div>
           <div class="spec-row">
-            <span class="sr-label">Standort</span>
-            <span class="sr-value">Trier-Nord · kostenlos parken</span>
+            <span class="sp-label">Standort</span>
+            <span class="sp-value">Trier-Nord · freier Parkplatz</span>
           </div>
         </div>
-        <a href="#" class="studio-cta">Shooting anfragen →</a>
+        <a href="#" class="btn-light">Studio besichtigen →</a>
+      </div>
+      <div class="studio-photo">
+        <img src="https://images.unsplash.com/photo-1606216794074-735e91aa2c92?auto=format&fit=crop&w=1400&h=1800&q=85" alt="Studio" loading="lazy" />
       </div>
     </div>
   </section>
+
+  <!-- CONTACT -->
+  <section class="contact-section">
+    <div>
+      <div class="s-num">003 — Leistungen</div>
+      <h2 class="contact-headline">Was wir<br>für dich <em>machen.</em></h2>
+      <ul class="services-list">
+        <li>
+          <span class="svc-name">Portrait & Bewerbung</span>
+          <span class="svc-price">ab 180 €</span>
+        </li>
+        <li>
+          <span class="svc-name">Editorial & Mode</span>
+          <span class="svc-price">Halbtag / Ganztag</span>
+        </li>
+        <li>
+          <span class="svc-name">Produkt & Werbung</span>
+          <span class="svc-price">auf Anfrage</span>
+        </li>
+        <li>
+          <span class="svc-name">Architektur & Interior</span>
+          <span class="svc-price">auf Anfrage</span>
+        </li>
+        <li>
+          <span class="svc-name">Hochzeit & Events</span>
+          <span class="svc-price">Reportage</span>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <div class="s-num">004 — Kontakt</div>
+      <h2 class="contact-headline">Ein Projekt<br><em>im Kopf?</em></h2>
+      <div class="contact-details">
+        <div class="cd-item">
+          <span class="cd-label">Studio</span>
+          <span class="cd-value">KORN Fotografisches Atelier</span>
+          <span class="cd-value">Roonstraße 14, 54290 Trier</span>
+        </div>
+        <div class="cd-item">
+          <span class="cd-label">E-Mail</span>
+          <span class="cd-value">hallo@korn-atelier.de</span>
+        </div>
+        <div class="cd-item">
+          <span class="cd-label">Telefon</span>
+          <span class="cd-value">+49 651 / 987 654 3</span>
+        </div>
+        <div class="cd-item">
+          <span class="cd-label">Öffnungszeiten</span>
+          <span class="cd-value">Mo – Fr: 9:00 – 19:00 Uhr</span>
+          <span class="cd-value">Sa: 10:00 – 16:00 Uhr</span>
+        </div>
+        <a href="#" class="btn-primary">Jetzt anfragen →</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span class="footer-logo">KORN</span>
+    <span class="footer-meta">Fotografisches Atelier · 54290 Trier · © 2026</span>
+    <span class="footer-meta">49°45'N · 06°38'E</span>
+  </footer>
 
 </body>
 </html>
