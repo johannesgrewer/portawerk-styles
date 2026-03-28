@@ -7,615 +7,1099 @@ export const prerender = true;
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
-  <title>Presswerk — Risodruck & Buchbinderei | Trier-Nord</title>
+  <title>Druckhaus Treveris — Letterpress & Handsatz | Trier</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400;1,600&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { overflow-x: hidden; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
 
     :root {
-      --paper: #F2E8D5;
-      --navy: #1A2744;
-      --red: #C4392D;
-      --ink-faint: rgba(26,39,68,0.08);
+      --parchment:  #EDE1C4;
+      --cream:      #F6EDD8;
+      --ink:        #18100A;
+      --sepia:      #5A3A1A;
+      --rust:       #A63220;
+      --gold:       #8F6E18;
+      --paper-mid:  #D8CAAA;
     }
 
     body {
+      background: var(--parchment);
+      color: var(--ink);
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: 1.05rem;
+      line-height: 1.7;
       overflow-x: hidden;
-      background: var(--paper);
-      color: var(--navy);
-      font-family: 'Libre Baskerville', Georgia, serif;
-      min-height: 100vh;
     }
 
-    /* Paper grain */
+    /* Paper grain overlay */
     body::before {
       content: '';
       position: fixed;
       inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='320' height='320' filter='url(%23n)' opacity='0.042'/%3E%3C/svg%3E");
       background-repeat: repeat;
-      background-size: 200px 200px;
+      background-size: 320px 320px;
       pointer-events: none;
-      z-index: 0;
+      z-index: 9000;
       mix-blend-mode: multiply;
     }
 
-    /* Aged edge burn */
+    /* Aged paper vignette */
     body::after {
       content: '';
       position: fixed;
       inset: 0;
-      background:
-        radial-gradient(ellipse at 0% 0%, rgba(100,70,20,0.12) 0%, transparent 50%),
-        radial-gradient(ellipse at 100% 100%, rgba(100,70,20,0.1) 0%, transparent 50%),
-        radial-gradient(ellipse at 50% 50%, transparent 60%, rgba(100,70,20,0.06) 100%);
+      background: radial-gradient(ellipse 90% 80% at 50% 50%, transparent 55%, rgba(72,40,8,0.1) 100%);
       pointer-events: none;
-      z-index: 0;
+      z-index: 8999;
     }
 
+    /* Photo utility */
+    .ph { position: relative; overflow: hidden; }
+    .ph img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      filter: sepia(0.18) contrast(1.08) brightness(0.97);
+    }
+    .ph:hover img { transform: scale(1.06); }
+
+    /* ===== NAVIGATION ===== */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
-      z-index: 100;
+      z-index: 500;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 1.5rem 3.5rem;
-      border-bottom: 2px solid var(--navy);
+      padding: 1rem 3rem;
+      background: rgba(237,225,196,0.95);
+      backdrop-filter: blur(6px);
+      border-bottom: 1.5px solid var(--ink);
     }
-    .nav-logo {
-      font-family: 'Playfair Display', serif;
-      font-weight: 900;
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .nav-monogram {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
       font-size: 1.1rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--navy);
+      color: var(--rust);
+      border: 1.5px solid var(--rust);
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      letter-spacing: -0.03em;
+      flex-shrink: 0;
     }
-    .nav-logo span { color: var(--red); }
+    .nav-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: 0.85rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
     .nav-links {
       display: flex;
       gap: 2.5rem;
       list-style: none;
     }
     .nav-links a {
-      font-family: 'Libre Baskerville', serif;
-      font-size: 0.65rem;
+      font-family: 'Crimson Pro', serif;
+      font-size: 0.7rem;
       font-style: italic;
-      color: rgba(26,39,68,0.6);
+      letter-spacing: 0.08em;
+      color: rgba(24,16,10,0.5);
       text-decoration: none;
-      transition: color 0.3s;
+      transition: color 0.25s;
     }
-    .nav-links a:hover { color: var(--red); }
+    .nav-links a:hover { color: var(--rust); }
 
+    /* ===== HERO: ZEITUNGSFORMAT ===== */
     .hero {
       min-height: 100vh;
+      padding: 5.5rem 3rem 3rem;
       position: relative;
       z-index: 1;
       display: flex;
       flex-direction: column;
-      padding: 6rem 3.5rem 3.5rem;
+      max-width: 1440px;
+      margin: 0 auto;
     }
 
-    /* Registration marks (riso style) */
-    .reg-mark {
-      position: absolute;
-      width: 20px;
-      height: 20px;
+    /* Masthead */
+    .masthead {
+      text-align: center;
+      padding: 1.5rem 0 0;
+      animation: fadeUp 0.9s ease both;
     }
-    .reg-mark::before, .reg-mark::after {
-      content: '';
-      position: absolute;
-      background: var(--navy);
-      opacity: 0.2;
+    .mh-top-rules {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      margin-bottom: 1.1rem;
     }
-    .reg-mark::before { width: 1px; height: 100%; left: 50%; }
-    .reg-mark::after { width: 100%; height: 1px; top: 50%; }
-    .reg-mark.tl { top: 2rem; left: 2rem; }
-    .reg-mark.tr { top: 2rem; right: 2rem; }
-    .reg-mark.bl { bottom: 2rem; left: 2rem; }
-    .reg-mark.br { bottom: 2rem; right: 2rem; }
+    .mh-rule-thick { height: 2.5px; background: var(--ink); }
+    .mh-rule-thin  { height: 1px;   background: var(--ink); }
 
-    /* Issue number + date band */
+    .mh-ornament {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.72rem;
+      color: var(--rust);
+      letter-spacing: 0.6em;
+      margin-bottom: 0.4rem;
+    }
+    .mh-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: clamp(2.4rem, 5.5vw, 5.2rem);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink);
+      line-height: 1;
+      text-shadow: 1.5px 1.5px 0 rgba(166,50,32,0.15), -0.5px -0.5px 0 rgba(24,16,10,0.06);
+      margin-bottom: 0.35rem;
+    }
+    .mh-tagline {
+      font-family: 'Crimson Pro', serif;
+      font-size: 0.7rem;
+      font-style: italic;
+      letter-spacing: 0.22em;
+      color: var(--sepia);
+      opacity: 0.75;
+    }
+    .mh-bottom-rules {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      margin-top: 1.1rem;
+    }
+
+    /* Issue band */
     .issue-band {
       display: flex;
       align-items: center;
-      gap: 2rem;
-      padding-bottom: 1.5rem;
-      border-bottom: 1px solid var(--navy);
-      margin-bottom: 3rem;
+      justify-content: space-between;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid rgba(24,16,10,0.28);
+      margin-bottom: 2.5rem;
+      animation: fadeUp 0.9s 0.15s ease both;
     }
-    .issue-num {
-      font-family: 'Playfair Display', serif;
-      font-weight: 900;
-      font-size: 0.65rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--red);
-    }
-    .issue-line {
-      flex: 1;
-      height: 1px;
-      background: var(--navy);
-      opacity: 0.15;
-    }
-    .issue-date {
-      font-size: 0.6rem;
-      letter-spacing: 0.16em;
-      color: rgba(26,39,68,0.45);
-      font-style: italic;
-    }
-
-    /* Main headline area */
-    .headline-area {
-      display: grid;
-      grid-template-columns: 1fr 280px;
-      gap: 4rem;
-      align-items: start;
-      flex: 1;
-    }
-
-    .headline-main {
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-    }
-
-    /* Riso color ghost effect */
-    .headline-ghost {
-      font-family: 'Playfair Display', serif;
-      font-weight: 900;
-      font-size: clamp(4rem, 10vw, 9rem);
-      line-height: 0.85;
-      letter-spacing: -0.02em;
-      text-transform: uppercase;
-      color: transparent;
-      -webkit-text-stroke: 1px rgba(196,57,45,0.18);
-      position: absolute;
-      top: 0;
-      left: 3px;
-      pointer-events: none;
-    }
-    .headline-wrap {
-      position: relative;
-    }
-    .headline-text {
-      font-family: 'Playfair Display', serif;
-      font-weight: 900;
-      font-size: clamp(4rem, 10vw, 9rem);
-      line-height: 0.85;
-      letter-spacing: -0.02em;
-      text-transform: uppercase;
-      color: var(--navy);
-      position: relative;
-    }
-    .headline-text .accent { color: var(--red); }
-
-    .sub-copy {
-      font-size: 0.9rem;
-      font-style: italic;
-      line-height: 1.75;
-      color: rgba(26,39,68,0.65);
-      max-width: 38ch;
-      border-left: 3px solid var(--red);
-      padding-left: 1.25rem;
-    }
-
-    /* Right column */
-    .side-col {
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-      padding-top: 0.5rem;
-    }
-
-    .stamp-box {
-      border: 2px solid var(--navy);
-      padding: 1.5rem;
-      text-align: center;
-      position: relative;
-    }
-    .stamp-box::before {
-      content: '';
-      position: absolute;
-      inset: 3px;
-      border: 1px solid var(--navy);
-      opacity: 0.3;
-    }
-    .stamp-title {
-      font-family: 'Playfair Display', serif;
-      font-weight: 900;
-      font-size: 0.7rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--red);
-      margin-bottom: 0.75rem;
-    }
-    .stamp-name {
-      font-family: 'Playfair Display', serif;
-      font-weight: 900;
-      font-size: 1.8rem;
-      color: var(--navy);
-      line-height: 1;
-      margin-bottom: 0.5rem;
-    }
-    .stamp-sub {
-      font-size: 0.6rem;
+    .ib-text {
+      font-family: 'Crimson Pro', serif;
+      font-size: 0.58rem;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: rgba(26,39,68,0.45);
+      color: rgba(24,16,10,0.45);
+    }
+    .ib-ornament {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.7rem;
+      color: var(--rust);
+      opacity: 0.55;
     }
 
-    .info-list {
+    /* 3-column front page */
+    .front-page {
+      display: grid;
+      grid-template-columns: 295px 1fr 255px;
+      gap: 0;
+      flex: 1;
+      align-items: start;
+      animation: fadeUp 0.9s 0.3s ease both;
+    }
+    .fp-photo-col {
+      padding-right: 2rem;
+      border-right: 1px solid rgba(24,16,10,0.18);
+    }
+    .fp-main-col {
+      padding: 0 2.5rem;
+      border-right: 1px solid rgba(24,16,10,0.18);
+    }
+    .fp-sidebar {
+      padding-left: 2rem;
+    }
+
+    /* Photo column */
+    .fp-caption {
+      font-family: 'Crimson Pro', serif;
+      font-size: 0.62rem;
+      font-style: italic;
+      color: rgba(24,16,10,0.48);
+      border-top: 1px solid rgba(24,16,10,0.18);
+      padding-top: 0.5rem;
+      margin-top: 0.6rem;
+      line-height: 1.5;
+    }
+
+    /* Main column */
+    .fp-kicker {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: 0.7rem;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+    .fp-kicker::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(166,50,32,0.28);
+    }
+    .fp-headline {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: clamp(2.4rem, 4.2vw, 4rem);
+      line-height: 0.9;
+      letter-spacing: -0.025em;
+      color: var(--ink);
+      margin-bottom: 1.2rem;
+      text-shadow: 1px 1px 0 rgba(166,50,32,0.1);
+    }
+    .fp-divider {
+      width: 42px;
+      height: 2px;
+      background: var(--rust);
+      margin-bottom: 1.2rem;
+    }
+    .fp-lead {
+      font-size: 1rem;
+      font-weight: 600;
+      line-height: 1.55;
+      color: var(--ink);
+      margin-bottom: 1.1rem;
+      border-left: 3px solid var(--rust);
+      padding-left: 1rem;
+    }
+    .fp-body {
+      font-size: 0.88rem;
+      line-height: 1.78;
+      color: rgba(24,16,10,0.7);
+      columns: 2;
+      column-gap: 1.5rem;
+      column-rule: 1px solid rgba(24,16,10,0.1);
+    }
+    .fp-body p + p { margin-top: 0.7rem; }
+    /* Drop cap */
+    .fp-body p:first-child::first-letter {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 3.6rem;
+      float: left;
+      line-height: 0.68;
+      margin: 0.12rem 0.12rem -0.05rem 0;
+      color: var(--ink);
+    }
+
+    /* Sidebar */
+    .sb-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.58rem;
+      font-weight: 600;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--rust);
+      padding-bottom: 0.55rem;
+      border-bottom: 2px solid var(--ink);
+      margin-bottom: 1rem;
+    }
+    .sb-box {
+      border: 1.5px solid var(--ink);
+      padding: 1.2rem;
+      margin-bottom: 1.25rem;
+      position: relative;
+    }
+    .sb-box::after {
+      content: '';
+      position: absolute;
+      inset: 3.5px;
+      border: 0.5px solid rgba(24,16,10,0.12);
+      pointer-events: none;
+    }
+    .sb-list {
+      list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 0.75rem;
+      gap: 0.55rem;
     }
-    .info-row {
+    .sb-list li {
+      font-family: 'Crimson Pro', serif;
+      font-size: 0.7rem;
+      color: rgba(24,16,10,0.65);
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      border-bottom: 1px dashed rgba(26,39,68,0.2);
-      padding-bottom: 0.6rem;
-      font-size: 0.7rem;
+      border-bottom: 1px dashed rgba(24,16,10,0.12);
+      padding-bottom: 0.45rem;
     }
-    .info-key {
-      font-style: italic;
-      color: rgba(26,39,68,0.5);
-    }
-    .info-val {
-      font-weight: 700;
-      color: var(--navy);
-    }
+    .sb-list li:last-child { border-bottom: none; padding-bottom: 0; }
+    .sb-list strong { color: var(--ink); font-weight: 600; font-style: normal; }
 
-    .cta-btn {
+    .sb-pullquote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      font-style: italic;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.4;
+      border-top: 1px solid rgba(24,16,10,0.18);
+      border-bottom: 1px solid rgba(24,16,10,0.18);
+      padding: 1rem 0;
+      margin-bottom: 1.25rem;
+    }
+    .cta-solid {
       display: block;
       text-align: center;
-      background: var(--navy);
-      color: var(--paper);
+      background: var(--ink);
+      color: var(--cream);
       text-decoration: none;
-      font-family: 'Playfair Display', serif;
-      font-weight: 700;
-      font-style: italic;
-      font-size: 0.85rem;
-      padding: 1rem;
-      letter-spacing: 0.04em;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.95rem 1.5rem;
       transition: background 0.3s;
     }
-    .cta-btn:hover { background: var(--red); }
+    .cta-solid:hover { background: var(--rust); }
 
-    /* Bottom colophon */
-    .colophon {
+    /* Hero footer */
+    .hero-foot {
+      border-top: 1px solid rgba(24,16,10,0.18);
+      margin-top: 2.5rem;
+      padding-top: 0.75rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding-top: 2rem;
-      border-top: 2px solid var(--navy);
-      margin-top: 3rem;
     }
-    .colophon-text {
-      font-size: 0.55rem;
-      letter-spacing: 0.15em;
+    .hf-text {
+      font-size: 0.53rem;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: rgba(26,39,68,0.4);
+      color: rgba(24,16,10,0.32);
       font-style: italic;
     }
-    .colophon-riso {
-      display: flex;
-      gap: 0.4rem;
+    .reg-marks { display: flex; gap: 1.4rem; }
+    .reg-mark {
+      position: relative;
+      width: 12px;
+      height: 12px;
     }
-    .riso-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      opacity: 0.6;
+    .reg-mark::before {
+      content: '';
+      position: absolute;
+      width: 1px;
+      height: 100%;
+      left: calc(50% - 0.5px);
+      background: rgba(24,16,10,0.22);
+    }
+    .reg-mark::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 1px;
+      top: calc(50% - 0.5px);
+      background: rgba(24,16,10,0.22);
     }
 
-    /* Photo container */
-    .ph { position: relative; overflow: hidden; }
-    .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.55s ease; }
-    .ph:hover img { transform: scale(1.05); }
-
-    /* Produkte section */
-    .section-produkte {
-      padding: 6rem 3.5rem;
-      background: var(--paper);
+    /* ===== SECTION 2: LEISTUNGEN ===== */
+    .section-leistungen {
+      background: var(--cream);
+      border-top: 2.5px solid var(--ink);
       position: relative;
       z-index: 1;
-      max-width: 1600px;
+    }
+    .sl-inner {
+      max-width: 1440px;
       margin: 0 auto;
+      padding: 5rem 3rem;
     }
-    .prod-issue {
-      font-family: 'Playfair Display', serif;
-      font-weight: 900;
-      font-size: 0.6rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--red);
-      margin-bottom: 0.5rem;
-    }
-    .prod-heading {
-      font-family: 'Playfair Display', serif;
-      font-weight: 900;
-      font-size: clamp(2rem, 4vw, 3.5rem);
-      text-transform: uppercase;
-      line-height: 0.9;
-      letter-spacing: -0.02em;
-      color: var(--navy);
+    .ornament-header {
+      text-align: center;
       margin-bottom: 3.5rem;
     }
-    .prod-heading .accent { color: var(--red); }
+    .oh-row {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+    .oh-line { flex: 1; height: 1px; background: rgba(24,16,10,0.22); }
+    .oh-ornament {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      color: var(--rust);
+    }
+    .oh-kicker {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin: 0.6rem 0 0.3rem;
+    }
+    .oh-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: clamp(2rem, 3.5vw, 3.2rem);
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+      line-height: 0.95;
+      color: var(--ink);
+    }
 
-    .produkte-grid {
+    .leistungen-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 2.5rem;
+      gap: 2px;
+      background: rgba(24,16,10,0.14);
     }
-    .prod-card {
+    .lc {
+      background: var(--cream);
       display: flex;
       flex-direction: column;
-      gap: 1.25rem;
-    }
-    .prod-photo {
-      border: 6px solid #E8DCC8;
-      box-shadow: 0 2px 12px rgba(26,39,68,0.1);
-    }
-    .prod-card-title {
-      font-family: 'Playfair Display', serif;
-      font-weight: 700;
-      font-size: 1.1rem;
-      color: var(--navy);
-    }
-    .prod-card-desc {
-      font-size: 0.72rem;
-      font-style: italic;
-      line-height: 1.7;
-      color: rgba(26,39,68,0.6);
-    }
-    .prod-card-price {
-      font-family: 'Playfair Display', serif;
-      font-weight: 900;
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--red);
-    }
-
-    /* Prozess section */
-    .section-prozess {
-      padding: 6rem 3.5rem;
-      background: var(--navy);
-      position: relative;
-      z-index: 1;
-      max-width: 1600px;
-      margin: 0 auto;
-    }
-    .prozess-inner {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 6rem;
-      align-items: center;
-    }
-    .prozess-text {
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-    }
-    .prozess-heading {
-      font-family: 'Playfair Display', serif;
-      font-weight: 900;
-      font-size: clamp(2rem, 3.5vw, 3rem);
-      text-transform: uppercase;
-      line-height: 0.9;
-      letter-spacing: -0.02em;
-      color: var(--paper);
-    }
-    .prozess-heading .accent { color: #F5C842; }
-    .prozess-steps {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-    .pstep {
-      display: flex;
-      gap: 1rem;
-      align-items: flex-start;
-      border-bottom: 1px dashed rgba(242,232,213,0.12);
-      padding-bottom: 1rem;
-    }
-    .pstep-num {
-      font-family: 'Playfair Display', serif;
-      font-weight: 900;
-      font-size: 0.7rem;
-      color: #F5C842;
-      flex-shrink: 0;
-      margin-top: 0.1rem;
-    }
-    .pstep-title {
-      font-family: 'Playfair Display', serif;
-      font-weight: 700;
-      font-size: 0.88rem;
-      color: var(--paper);
-      margin-bottom: 0.2rem;
-    }
-    .pstep-desc {
-      font-size: 0.65rem;
-      font-style: italic;
-      color: rgba(242,232,213,0.5);
-      line-height: 1.6;
-    }
-    .prozess-cta {
-      display: inline-block;
-      background: #F5C842;
-      color: var(--navy);
-      font-family: 'Playfair Display', serif;
-      font-weight: 700;
-      font-style: italic;
-      font-size: 0.85rem;
-      padding: 0.9rem 2rem;
-      text-decoration: none;
       transition: background 0.3s;
     }
-    .prozess-cta:hover { background: var(--paper); }
+    .lc:hover { background: #F0E8D0; }
+    .lc-photo { border-bottom: 2px solid rgba(24,16,10,0.12); }
+    .lc-body {
+      padding: 1.75rem 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+    .lc-num {
+      font-family: 'IM Fell English', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--rust);
+    }
+    .lc-rule { width: 24px; height: 1.5px; background: var(--rust); }
+    .lc-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 1.45rem;
+      color: var(--ink);
+      line-height: 1.1;
+    }
+    .lc-desc {
+      font-size: 0.82rem;
+      font-style: italic;
+      line-height: 1.75;
+      color: rgba(24,16,10,0.58);
+      flex: 1;
+    }
+    .lc-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink);
+      font-weight: 600;
+      padding-top: 0.75rem;
+      border-top: 1px solid rgba(24,16,10,0.1);
+    }
+
+    /* ===== SECTION 3: WERKSTATT (dark split) ===== */
+    .section-werkstatt {
+      background: var(--ink);
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+    }
+    .wk-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 680px;
+    }
+    .wk-photo-side {
+      position: relative;
+      overflow: hidden;
+    }
+    .wk-photo-side img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: sepia(0.4) contrast(1.1) brightness(0.72);
+      transition: transform 0.8s ease;
+    }
+    .wk-photo-side:hover img { transform: scale(1.04); }
+    .wk-photo-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, transparent 55%, var(--ink) 100%);
+    }
+    .wk-text-side {
+      padding: 5rem 4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1.75rem;
+    }
+    .wk-kicker {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.58rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: rgba(246,237,216,0.4);
+      font-weight: 600;
+    }
+    .wk-headline {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: clamp(2.2rem, 3.8vw, 3.5rem);
+      line-height: 0.9;
+      letter-spacing: -0.02em;
+      color: var(--cream);
+      text-shadow: 1.5px 1.5px 0 rgba(166,50,32,0.3);
+    }
+    .wk-rule { width: 40px; height: 1.5px; background: var(--rust); }
+    .wk-text {
+      font-size: 0.9rem;
+      line-height: 1.8;
+      color: rgba(246,237,216,0.6);
+      font-style: italic;
+      max-width: 40ch;
+    }
+    .wk-timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+    .wk-tl {
+      display: flex;
+      gap: 1.25rem;
+      align-items: flex-start;
+      padding-bottom: 0.85rem;
+      border-bottom: 1px solid rgba(246,237,216,0.07);
+    }
+    .wk-tl:last-child { border-bottom: none; padding-bottom: 0; }
+    .wk-year {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 0.68rem;
+      color: rgba(166,50,32,0.85);
+      letter-spacing: 0.06em;
+      flex-shrink: 0;
+      width: 38px;
+      margin-top: 0.05rem;
+    }
+    .wk-tl-text {
+      font-size: 0.7rem;
+      color: rgba(246,237,216,0.5);
+      font-style: italic;
+      line-height: 1.6;
+    }
+    .wk-cta {
+      display: inline-block;
+      background: transparent;
+      color: var(--cream);
+      text-decoration: none;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: 0.8rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.85rem 2.2rem;
+      border: 1.5px solid rgba(246,237,216,0.3);
+      align-self: flex-start;
+      transition: border-color 0.3s, background 0.3s;
+    }
+    .wk-cta:hover {
+      border-color: var(--rust);
+      background: var(--rust);
+    }
+
+    /* ===== SECTION 4: FOTO-GRID ===== */
+    .section-fotogrid {
+      background: var(--parchment);
+      border-top: 2.5px solid var(--ink);
+      position: relative;
+      z-index: 1;
+    }
+    .fg-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 5rem 3rem;
+    }
+    .fg-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 2.5rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid rgba(24,16,10,0.18);
+    }
+    .fg-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: clamp(1.6rem, 3vw, 2.6rem);
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+      line-height: 1;
+      color: var(--ink);
+    }
+    .fg-sub {
+      font-family: 'Crimson Pro', serif;
+      font-size: 0.7rem;
+      font-style: italic;
+      color: rgba(24,16,10,0.42);
+    }
+    .foto-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: 280px 280px;
+      gap: 2px;
+      background: rgba(24,16,10,0.12);
+    }
+    .foto-grid .ph:nth-child(1) { grid-column: 1;     grid-row: 1; }
+    .foto-grid .ph:nth-child(2) { grid-column: 2 / 4; grid-row: 1; }
+    .foto-grid .ph:nth-child(3) { grid-column: 1 / 3; grid-row: 2; }
+    .foto-grid .ph:nth-child(4) { grid-column: 3;     grid-row: 2; }
+
+    .foto-label {
+      position: absolute;
+      bottom: 1.4rem;
+      left: 1.4rem;
+      right: 1.4rem;
+    }
+    .foto-label-kicker {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.58rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(246,237,216,0.55);
+      margin-bottom: 0.25rem;
+    }
+    .foto-label-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: #F6EDD8;
+      text-shadow: 0 1px 4px rgba(24,16,10,0.5);
+    }
+
+    /* ===== SECTION 5: KONTAKT ===== */
+    .section-kontakt {
+      background: var(--ink);
+      position: relative;
+      z-index: 1;
+    }
+    .kk-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 6rem 3rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 1.75rem;
+    }
+    .kk-ornament {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      color: var(--rust);
+      letter-spacing: 0.5em;
+    }
+    .kk-headline {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: clamp(2.2rem, 4.5vw, 4rem);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      line-height: 0.92;
+      color: var(--cream);
+      text-shadow: 1.5px 1.5px 0 rgba(166,50,32,0.22);
+    }
+    .kk-divider {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      width: min(500px, 100%);
+    }
+    .kd-line { flex: 1; height: 1px; background: rgba(246,237,216,0.12); }
+    .kd-ornament { font-family: 'Cormorant Garamond', serif; font-size: 0.7rem; color: var(--rust); }
+    .kk-address {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-style: italic;
+      color: rgba(246,237,216,0.55);
+      line-height: 2;
+    }
+    .kk-address strong {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: normal;
+      font-weight: 600;
+      color: var(--cream);
+      display: block;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .kk-cta {
+      display: inline-block;
+      background: var(--rust);
+      color: var(--cream);
+      text-decoration: none;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: 0.82rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding: 1.1rem 3.5rem;
+      transition: background 0.3s;
+    }
+    .kk-cta:hover { background: #8A2818; }
+    .kk-note {
+      font-size: 0.57rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(246,237,216,0.22);
+      font-style: italic;
+    }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0);    }
+    }
+    .masthead   { animation: fadeUp 0.9s       ease both; }
+    .issue-band { animation: fadeUp 0.9s 0.15s ease both; }
+    .front-page { animation: fadeUp 0.9s 0.30s ease both; }
   </style>
 </head>
 <body>
+
+  <!-- NAV -->
   <nav>
-    <div class="nav-logo">Press<span>werk</span></div>
+    <div class="nav-brand">
+      <div class="nav-monogram">DT</div>
+      <div class="nav-name">Druckhaus Treveris</div>
+    </div>
     <ul class="nav-links">
-      <li><a href="#">Risodruck</a></li>
-      <li><a href="#">Buchbinderei</a></li>
+      <li><a href="#">Letterpress</a></li>
+      <li><a href="#">Handsatz</a></li>
       <li><a href="#">Auflagen</a></li>
+      <li><a href="#">Atelier</a></li>
       <li><a href="#">Kontakt</a></li>
     </ul>
   </nav>
 
+  <!-- ═══════════════════════════════════════════════════
+       HERO — Zeitung Frontseite
+  ════════════════════════════════════════════════════ -->
   <section class="hero">
-    <div class="reg-mark tl"></div>
-    <div class="reg-mark tr"></div>
-    <div class="reg-mark bl"></div>
-    <div class="reg-mark br"></div>
 
-    <div class="issue-band">
-      <div class="issue-num">Ausgabe No. 001 — Trier-Nord</div>
-      <div class="issue-line"></div>
-      <div class="issue-date">Seit 1987 im Druck</div>
+    <!-- Masthead -->
+    <div class="masthead">
+      <div class="mh-top-rules">
+        <div class="mh-rule-thick"></div>
+        <div class="mh-rule-thin"></div>
+      </div>
+      <div class="mh-ornament">❧ &nbsp; ❧ &nbsp; ❧</div>
+      <h1 class="mh-title">Druckhaus Treveris</h1>
+      <div class="mh-tagline">Letterpress &ensp;·&ensp; Handsatz &ensp;·&ensp; Bronzedruck &ensp;·&ensp; Trier an der Mosel</div>
+      <div class="mh-ornament" style="margin-top:0.35rem;">❦ &nbsp; ❦ &nbsp; ❦</div>
+      <div class="mh-bottom-rules">
+        <div class="mh-rule-thin"></div>
+        <div class="mh-rule-thick"></div>
+      </div>
     </div>
 
-    <div class="headline-area">
-      <div class="headline-main">
-        <div class="headline-wrap">
-          <div class="headline-ghost">Druck<br>sachen</div>
-          <h1 class="headline-text">
-            Druck<br>
-            <span class="accent">sachen.</span>
-          </h1>
-        </div>
+    <!-- Issue-Band -->
+    <div class="issue-band">
+      <span class="ib-text">Band XCIX · No. 7</span>
+      <span class="ib-ornament">— ✦ —</span>
+      <span class="ib-text">Trier an der Mosel &ensp;·&ensp; Gegründet Anno 1923</span>
+      <span class="ib-ornament">— ✦ —</span>
+      <span class="ib-text">Drei Generationen Druckhandwerk</span>
+    </div>
 
-        <p class="sub-copy">
-          Risografiedruck, Buchdruck, Letterpress. Wir drucken, was bleibt —
-          auf Papier, das man spürt. Kleine Auflagen, große Wirkung.
-          Gedruckt. Handgemacht. Echt.
+    <!-- 3-Spalten-Layout -->
+    <div class="front-page">
+
+      <!-- Linke Spalte: Foto -->
+      <div class="fp-photo-col">
+        <div class="ph" style="height:400px;">
+          <img src="https://images.unsplash.com/photo-1546521343-4eb2c01aa44b?auto=format&fit=crop&w=600&h=800&q=80" alt="Letterpress Druckmaschine Heidelberg Tiegel" />
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(24,16,10,0.48) 0%,transparent 55%);pointer-events:none;"></div>
+        </div>
+        <p class="fp-caption">
+          Die Heidelberg Tiegel-Druckmaschine der Werkstatt —
+          seit 1951 im täglichen Einsatz. Jeder Druckgang
+          hinterlässt eine spürbare Prägung im Papier.
         </p>
       </div>
 
-      <div class="side-col">
-        <div class="stamp-box">
-          <div class="stamp-title">Druckerei</div>
-          <div class="stamp-name">Presswerk</div>
-          <div class="stamp-sub">Trier-Nord · Est. 1987</div>
+      <!-- Mittlere Spalte: Hauptartikel -->
+      <div class="fp-main-col">
+        <div class="fp-kicker">Handwerk &amp; Tradition</div>
+        <h2 class="fp-headline">Vom Setz-<br>kasten zur<br>gedruckten<br>Seite.</h2>
+        <div class="fp-divider"></div>
+        <p class="fp-lead">
+          Wir setzen Buchstaben von Hand. Wir mischen Farben nach
+          Gefühl. Wir drucken auf Maschinen, die älter sind
+          als das Fernsehen.
+        </p>
+        <div class="fp-body">
+          <p>Im Herzen der Trierer Altstadt, zwei Straßenzüge vom Porta Nigra entfernt, arbeitet die dritte Generation der Familie Berens am Letterpress-Handwerk. Was 1923 als Schriftsetzerei begann, ist heute eine der letzten aktiven Letterpress-Werkstätten im Rheinland.</p>
+          <p>Unsere Kunden kommen für das Unverwechselbare: die leichte Vertiefung des Papiers, die Ungleichmäßigkeit des Farbauftrags, das Gewicht eines schweren Kartons in der Hand. Das sind keine Fehler — das ist Handwerk.</p>
         </div>
+      </div>
 
-        <div class="info-list">
-          <div class="info-row">
-            <span class="info-key">Verfahren</span>
-            <span class="info-val">Risodruck</span>
-          </div>
-          <div class="info-row">
-            <span class="info-key">Mindestauflage</span>
-            <span class="info-val">25 Stück</span>
-          </div>
-          <div class="info-row">
-            <span class="info-key">Papier</span>
-            <span class="info-val">Recycling & Munken</span>
-          </div>
-          <div class="info-row">
-            <span class="info-key">Lieferzeit</span>
-            <span class="info-val">7–14 Werktage</span>
-          </div>
+      <!-- Rechte Spalte: Sidebar -->
+      <div class="fp-sidebar">
+        <div class="sb-label">Werkstatt-Info</div>
+        <div class="sb-box">
+          <ul class="sb-list">
+            <li><span>Technik</span><strong>Letterpress</strong></li>
+            <li><span>Maschine</span><strong>Heidelberg Tiegel</strong></li>
+            <li><span>Papier</span><strong>200–600 g/m²</strong></li>
+            <li><span>Mindestaufl.</span><strong>25 Stück</strong></li>
+            <li><span>Lieferzeit</span><strong>2–3 Wochen</strong></li>
+          </ul>
         </div>
+        <p class="sb-pullquote">
+          »Schrift, die man spüren kann — gedruckt in Trier seit 1923.«
+        </p>
+        <a href="#" class="cta-solid">Anfrage stellen</a>
+      </div>
 
-        <a href="#" class="cta-btn">Druckauftrag anfragen</a>
+    </div>
+
+    <!-- Kolophon -->
+    <div class="hero-foot">
+      <span class="hf-text">Druckhaus Treveris · Simeonstraße 14 · 54290 Trier · Letterpress &amp; Handsatz</span>
+      <div class="reg-marks">
+        <div class="reg-mark"></div>
+        <div class="reg-mark"></div>
+        <div class="reg-mark"></div>
       </div>
     </div>
 
-    <div class="colophon">
-      <span class="colophon-text">Presswerk GmbH · Trier-Nord · Risodruck & Buchbinderei seit 1987</span>
-      <div class="colophon-riso">
-        <div class="riso-dot" style="background:#C4392D"></div>
-        <div class="riso-dot" style="background:#1A2744"></div>
-        <div class="riso-dot" style="background:#F5C842"></div>
-      </div>
-    </div>
   </section>
 
-  <!-- SECTION 2: Produkte -->
-  <div style="background:var(--paper); position:relative; z-index:1;">
-    <section class="section-produkte">
-      <div class="prod-issue">Drucksachen No. 002</div>
-      <h2 class="prod-heading">Was wir<br><span class="accent">drucken.</span></h2>
-      <div class="produkte-grid">
-        <div class="prod-card">
-          <div class="ph prod-photo" style="height:280px;">
-            <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=800&h=700&q=80" alt="Risodruck Poster" loading="lazy" />
-            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,39,68,0.4) 0%,transparent 60%);pointer-events:none;"></div>
-          </div>
-          <div class="prod-card-title">Riso-Poster</div>
-          <div class="prod-card-desc">Zweifarbiger Risografiedruck auf 120 g Recyclingpapier. Jede Auflage ein kleines Unikat — charakteristische Körnung inklusive.</div>
-          <div class="prod-card-price">ab 45 € — 25 Stück</div>
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 2 — Leistungen (Druckverfahren)
+  ════════════════════════════════════════════════════ -->
+  <div class="section-leistungen">
+    <div class="sl-inner">
+      <div class="ornament-header">
+        <div class="oh-row">
+          <div class="oh-line"></div>
+          <div class="oh-ornament">❦</div>
+          <div class="oh-line"></div>
         </div>
-        <div class="prod-card">
-          <div class="ph prod-photo" style="height:280px;">
-            <img src="https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?auto=format&fit=crop&w=800&h=700&q=80" alt="Zine Buchbinderei" loading="lazy" />
-            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,39,68,0.4) 0%,transparent 60%);pointer-events:none;"></div>
-          </div>
-          <div class="prod-card-title">Zines & Hefte</div>
-          <div class="prod-card-desc">Selbst verlegte Publikationen, Kataloge und Magazine. Risodruck mit handgebundener Fadenheftung oder Klammerheftung.</div>
-          <div class="prod-card-price">ab 80 € — 25 Stück</div>
-        </div>
-        <div class="prod-card">
-          <div class="ph prod-photo" style="height:280px;">
-            <img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=800&h=700&q=80" alt="Visitenkarten Letterpress" loading="lazy" />
-            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,39,68,0.4) 0%,transparent 60%);pointer-events:none;"></div>
-          </div>
-          <div class="prod-card-title">Karten & Einladungen</div>
-          <div class="prod-card-desc">Visitenkarten, Hochzeitseinladungen, Event-Flyer. Letterpress auf Karton, spürbar geprägt, unvergesslich.</div>
-          <div class="prod-card-price">ab 60 € — 50 Stück</div>
+        <div class="oh-kicker">Unsere Druckverfahren</div>
+        <div class="oh-title">Drei Techniken.<br>Ein Anspruch.</div>
+        <div class="oh-row" style="margin-top:0.8rem;">
+          <div class="oh-line"></div>
+          <div class="oh-ornament">❦</div>
+          <div class="oh-line"></div>
         </div>
       </div>
-    </section>
+
+      <div class="leistungen-grid">
+
+        <!-- Letterpress -->
+        <div class="lc">
+          <div class="ph lc-photo" style="height:260px;">
+            <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=800&h=520&q=80" alt="Letterpress Druck" loading="lazy" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(24,16,10,0.32) 0%,transparent 60%);pointer-events:none;"></div>
+          </div>
+          <div class="lc-body">
+            <div class="lc-num">Verfahren No. 01</div>
+            <div class="lc-rule"></div>
+            <div class="lc-title">Letterpress</div>
+            <div class="lc-desc">
+              Hochdruckverfahren mit Original-Bleisatz oder Photopolymer-Platten.
+              Die spürbare Drucktiefe im Papier ist das Markenzeichen
+              echter Letterpress-Arbeit — taktil, unverkennbar, unvergesslich.
+            </div>
+            <div class="lc-price">Ab 120 € · Visitenkarten, Einladungen, Karten</div>
+          </div>
+        </div>
+
+        <!-- Handsatz -->
+        <div class="lc">
+          <div class="ph lc-photo" style="height:260px;">
+            <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=800&h=520&q=80" alt="Handsatz Bleilettern Setzkasten" loading="lazy" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(24,16,10,0.32) 0%,transparent 60%);pointer-events:none;"></div>
+          </div>
+          <div class="lc-body">
+            <div class="lc-num">Verfahren No. 02</div>
+            <div class="lc-rule"></div>
+            <div class="lc-title">Handsatz</div>
+            <div class="lc-desc">
+              Buchstabe für Buchstabe aus dem Setzkasten: Wir besitzen über
+              80 Schriften in Blei und Holz, von 6 Punkt bis 144 Punkt.
+              Jede Zeile wird mit Ausschlussmaterial und Reglette von Hand
+              aufgebaut und abgedruckt.
+            </div>
+            <div class="lc-price">Ab 220 € · Plakate, Poster, Urkunden</div>
+          </div>
+        </div>
+
+        <!-- Bronzedruck -->
+        <div class="lc">
+          <div class="ph lc-photo" style="height:260px;">
+            <img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=800&h=520&q=80" alt="Bronzedruck Hochzeitseinladung" loading="lazy" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(24,16,10,0.32) 0%,transparent 60%);pointer-events:none;"></div>
+          </div>
+          <div class="lc-body">
+            <div class="lc-num">Verfahren No. 03</div>
+            <div class="lc-rule"></div>
+            <div class="lc-title">Bronzedruck</div>
+            <div class="lc-desc">
+              Frisch gedruckte, noch nasse Farbe wird mit Bronze- oder
+              Silberpulver bestäubt — ein Verfahren aus dem 19. Jahrhundert,
+              das metallisch glänzende Oberflächen erzeugt, ganz ohne
+              modernen Foliendruck.
+            </div>
+            <div class="lc-price">Ab 180 € · Hochzeitskarten, Diplome</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
   </div>
 
-  <!-- SECTION 3: Prozess & Kontakt -->
-  <div style="background:var(--navy); position:relative; z-index:1;">
-    <section class="section-prozess">
-      <div class="prozess-inner">
-        <div class="prozess-text">
-          <div style="font-family:'Playfair Display',serif;font-weight:900;font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:#F5C842;">Druckauftrag</div>
-          <h2 class="prozess-heading">So läuft's<br><span class="accent">ab.</span></h2>
-          <div class="prozess-steps">
-            <div class="pstep">
-              <div class="pstep-num">01</div>
-              <div>
-                <div class="pstep-title">Datei oder Konzept einreichen</div>
-                <div class="pstep-desc">Druckfertige PDF, Illustrator-Datei oder Entwurf — wir beraten auch ohne fertige Vorlage.</div>
-              </div>
-            </div>
-            <div class="pstep">
-              <div class="pstep-num">02</div>
-              <div>
-                <div class="pstep-title">Angebot & Andruckproof</div>
-                <div class="pstep-desc">Wir schicken ein verbindliches Angebot plus einen Andruck zum Freigeben. Kein Druck ohne dein OK.</div>
-              </div>
-            </div>
-            <div class="pstep">
-              <div class="pstep-num">03</div>
-              <div>
-                <div class="pstep-title">Druck & Lieferung</div>
-                <div class="pstep-desc">7–14 Werktage Produktionszeit. Abholung in Trier-Nord oder Versand deutschlandweit.</div>
-              </div>
-            </div>
-          </div>
-          <a href="#" class="prozess-cta">Druckauftrag anfragen →</a>
-        </div>
-        <div class="ph" style="height:500px; border: 8px solid rgba(242,232,213,0.08);">
-          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=800&h=1000&q=80" alt="Druckwerkstatt" loading="lazy" />
-          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,39,68,0.5) 0%,transparent 60%);pointer-events:none;"></div>
-        </div>
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 3 — Werkstatt (dark split)
+  ════════════════════════════════════════════════════ -->
+  <div class="section-werkstatt">
+    <div class="wk-inner">
+
+      <!-- Foto-Seite -->
+      <div class="wk-photo-side">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=900&h=1400&q=80" alt="Druckwerkstatt Atelier Trier" />
+        <div class="wk-photo-overlay"></div>
       </div>
-    </section>
+
+      <!-- Text-Seite -->
+      <div class="wk-text-side">
+        <div class="wk-kicker">Das Atelier · Trier-Altstadt · Simeonstraße</div>
+        <h2 class="wk-headline">Drei<br>Genera-<br>tionen.</h2>
+        <div class="wk-rule"></div>
+        <p class="wk-text">
+          Was Fritz Berens 1923 als Einmann-Schriftsetzerei in der
+          Simeonstraße begann, ist heute ein lebendiges Atelier,
+          in dem antike Maschinen täglich Aufträge für Hochzeiten,
+          Galerien und Verlage produzieren.
+        </p>
+        <div class="wk-timeline">
+          <div class="wk-tl">
+            <div class="wk-year">1923</div>
+            <div class="wk-tl-text">Fritz Berens eröffnet die Schriftsetzerei »Treveris« — vier Schriften, eine Handpresse, ein Raum.</div>
+          </div>
+          <div class="wk-tl">
+            <div class="wk-year">1951</div>
+            <div class="wk-tl-text">Erste Heidelberg Tiegel-Druckmaschine — sie druckt bis heute ohne Unterbrechung.</div>
+          </div>
+          <div class="wk-tl">
+            <div class="wk-year">1987</div>
+            <div class="wk-tl-text">Karl Berens erweitert die Werkstatt um Bronzedruck und handgebundene Buchbinderei.</div>
+          </div>
+          <div class="wk-tl">
+            <div class="wk-year">2009</div>
+            <div class="wk-tl-text">Lena Berens übernimmt, entdeckt Letterpress für eine neue Generation von Kunden.</div>
+          </div>
+        </div>
+        <a href="#" class="wk-cta">Atelier besichtigen</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 4 — Foto-Grid (Einblicke)
+  ════════════════════════════════════════════════════ -->
+  <div class="section-fotogrid">
+    <div class="fg-inner">
+      <div class="fg-header">
+        <div class="fg-title">Einblicke<br>in die Werkstatt</div>
+        <div class="fg-sub">Trier · Simeonstraße 14 · Mo–Fr 9–18 Uhr · Sa 10–14 Uhr</div>
+      </div>
+
+      <div class="foto-grid">
+
+        <!-- 1: kleines Quadrat links oben -->
+        <div class="ph">
+          <img src="https://images.unsplash.com/photo-1543002588-bfa74002ed7e?auto=format&fit=crop&w=600&h=600&q=80" alt="Setzkasten mit Bleilettern" loading="lazy" />
+        </div>
+
+        <!-- 2: breites Panorama rechts oben -->
+        <div class="ph">
+          <img src="https://images.unsplash.com/photo-1455884981818-54cb785db6fc?auto=format&fit=crop&w=1200&h=600&q=80" alt="Letterpress Workshop Werkstatt" loading="lazy" />
+          <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 45%,rgba(24,16,10,0.65) 100%);pointer-events:none;"></div>
+          <div class="foto-label">
+            <div class="foto-label-kicker">Unsere Maschinen</div>
+            <div class="foto-label-text">Heidelberg Tiegel, 1951</div>
+          </div>
+        </div>
+
+        <!-- 3: breites Panorama links unten -->
+        <div class="ph">
+          <img src="https://images.unsplash.com/photo-1471107340929-a87cd0f5b5f3?auto=format&fit=crop&w=1200&h=600&q=80" alt="Papierauswahl Letterpress" loading="lazy" />
+          <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 45%,rgba(24,16,10,0.6) 100%);pointer-events:none;"></div>
+          <div class="foto-label">
+            <div class="foto-label-kicker">Papierauswahl</div>
+            <div class="foto-label-text">200–600 g/m² · 40 Sorten vorrätig</div>
+          </div>
+        </div>
+
+        <!-- 4: kleines Quadrat rechts unten -->
+        <div class="ph">
+          <img src="https://images.unsplash.com/photo-1514894780887-121968d00de9?auto=format&fit=crop&w=600&h=600&q=80" alt="Druckergebnis Letterpress Detail" loading="lazy" />
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 5 — Kontakt
+  ════════════════════════════════════════════════════ -->
+  <div class="section-kontakt">
+    <div class="kk-inner">
+      <div class="kk-ornament">❧ &nbsp; ❦ &nbsp; ❧</div>
+      <h2 class="kk-headline">Druckauftrag<br>anfragen</h2>
+      <div class="kk-divider">
+        <div class="kd-line"></div>
+        <div class="kd-ornament">✦</div>
+        <div class="kd-line"></div>
+      </div>
+      <p class="kk-address">
+        <strong>Druckhaus Treveris · Letterpress &amp; Handsatz</strong>
+        Simeonstraße 14 &ensp;·&ensp; 54290 Trier an der Mosel<br>
+        Mo–Fr 9–18 Uhr &ensp;·&ensp; Sa 10–14 Uhr<br>
+        <br>
+        mail@druckhaus-treveris.de<br>
+        (0651) 4 91 23 70
+      </p>
+      <a href="#" class="kk-cta">Anfrage stellen →</a>
+      <div class="kk-note">Alle Aufträge werden persönlich besprochen — kein Online-Shop, keine Automatisierung.</div>
+    </div>
   </div>
 
 </body>
