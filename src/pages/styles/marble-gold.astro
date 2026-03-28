@@ -7,763 +7,1106 @@ export const prerender = true;
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
-  <title>Tessèra — Marmor & Naturstein Manufaktur | Trier</title>
+  <title>Aurem — Bijouterie & Goldschmiede-Atelier Trier</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@200;300;400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cormorant+SC:wght@300;400&family=Raleway:wght@100;200;300;400&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { overflow-x: hidden; }
+    html { overflow-x: hidden; scroll-behavior: smooth; }
 
     :root {
-      --marble: #FAFAF8;
-      --onyx: #151419;
-      --gold: #C9A84C;
-      --gold-dim: rgba(201,168,76,0.15);
-      --stone: #8A8580;
+      --deep:    #0C0B09;
+      --deep2:   #161410;
+      --cream:   #F2EAD8;
+      --marble:  #F7F3EC;
+      --gold:    #C8983C;
+      --gold2:   #E2B660;
+      --stone:   #8A8070;
+      --line-g:  rgba(200,152,60,0.18);
     }
 
     body {
+      background: var(--deep);
+      color: var(--cream);
+      font-family: 'Raleway', system-ui, sans-serif;
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
-      background: var(--marble);
-      color: var(--onyx);
-      font-family: 'Jost', system-ui, sans-serif;
-      min-height: 100vh;
     }
 
-    /* Marble veining — pure CSS */
-    body::before {
+    /* SVG grain overlay */
+    body::after {
       content: '';
       position: fixed;
       inset: 0;
-      background-image:
-        repeating-linear-gradient(
-          108deg,
-          transparent 0px,
-          transparent 120px,
-          rgba(180,170,160,0.06) 120px,
-          rgba(180,170,160,0.06) 121px
-        ),
-        repeating-linear-gradient(
-          72deg,
-          transparent 0px,
-          transparent 200px,
-          rgba(200,195,185,0.04) 200px,
-          rgba(200,195,185,0.04) 201px
-        ),
-        repeating-linear-gradient(
-          135deg,
-          transparent 0px,
-          transparent 80px,
-          rgba(160,155,145,0.035) 80px,
-          rgba(160,155,145,0.035) 81px,
-          transparent 81px,
-          transparent 160px
-        );
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.68' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.028'/%3E%3C/svg%3E");
       pointer-events: none;
-      z-index: 0;
+      z-index: 9999;
     }
 
+    ::selection { background: var(--gold); color: var(--deep); }
+    img { display: block; max-width: 100%; }
+
+    /* ── Photo utility ── */
+    .ph { position: relative; overflow: hidden; }
+    .ph img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.75s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .ph:hover img { transform: scale(1.05); }
+
+    /* ── Animations ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes lineGrow {
+      from { transform: scaleY(0); }
+      to   { transform: scaleY(1); }
+    }
+    @keyframes goldPulse {
+      0%, 100% { opacity: 0.5; }
+      50%       { opacity: 1; }
+    }
+
+    /* ── NAV ── */
     nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 200;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 2rem 4rem;
-      background: rgba(250,250,248,0.92);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid rgba(201,168,76,0.2);
+      padding: 1.8rem 4.5rem;
+      background: rgba(12,11,9,0.94);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line-g);
     }
-    .nav-logo {
-      font-family: 'Cormorant', serif;
+    .nav-brand {
+      font-family: 'Cormorant SC', serif;
       font-weight: 300;
-      font-size: 1.5rem;
-      letter-spacing: 0.12em;
-      color: var(--onyx);
+      font-size: 1.4rem;
+      letter-spacing: 0.22em;
+      color: var(--cream);
+      text-decoration: none;
     }
-    .nav-logo span { color: var(--gold); }
+    .nav-brand span { color: var(--gold); }
     .nav-links {
       display: flex;
       gap: 3rem;
       list-style: none;
     }
     .nav-links a {
-      font-size: 0.6rem;
-      font-weight: 300;
-      letter-spacing: 0.22em;
+      font-size: 0.58rem;
+      font-weight: 200;
+      letter-spacing: 0.3em;
       text-transform: uppercase;
-      color: rgba(21,20,25,0.45);
+      color: rgba(242,234,216,0.42);
       text-decoration: none;
       transition: color 0.3s;
     }
     .nav-links a:hover { color: var(--gold); }
+    .nav-reserve {
+      font-size: 0.56rem;
+      font-weight: 300;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid rgba(200,152,60,0.45);
+      padding: 0.65rem 1.65rem;
+      text-decoration: none;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .nav-reserve:hover { background: rgba(200,152,60,0.1); border-color: var(--gold); }
 
+    /* ── HERO ── */
     .hero {
       min-height: 100vh;
-      position: relative;
-      z-index: 1;
       display: grid;
       grid-template-columns: 1fr 1fr;
+      position: relative;
+      overflow: hidden;
     }
 
-    /* LEFT — dark onyx panel */
-    .hero-left {
-      background: var(--onyx);
+    /* Left text panel */
+    .hero-l {
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      padding: 4rem;
+      padding: 5rem 4.5rem 5.5rem 4.5rem;
+      position: relative;
+      z-index: 2;
+    }
+    /* Subtle veining on dark */
+    .hero-l::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        repeating-linear-gradient(108deg,
+          transparent 0, transparent 140px,
+          rgba(200,152,60,0.022) 140px, rgba(200,152,60,0.022) 141px),
+        repeating-linear-gradient(72deg,
+          transparent 0, transparent 220px,
+          rgba(200,152,60,0.014) 220px, rgba(200,152,60,0.014) 221px);
+      pointer-events: none;
+    }
+
+    /* Vertical side label */
+    .hero-side-label {
+      position: absolute;
+      left: 1.2rem; top: 50%;
+      transform: translateY(-50%) rotate(-90deg);
+      font-size: 0.44rem;
+      font-weight: 200;
+      letter-spacing: 0.42em;
+      text-transform: uppercase;
+      color: rgba(242,234,216,0.18);
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.54rem;
+      font-weight: 200;
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 2.5rem;
+      display: flex; align-items: center; gap: 1.25rem;
+      animation: fadeUp 1s ease both;
+      animation-delay: 0.15s;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: block; width: 2.5rem; height: 1px;
+      background: var(--gold); opacity: 0.55;
+    }
+
+    .hero-headline {
+      font-family: 'Cormorant', serif;
+      font-weight: 300;
+      font-style: italic;
+      font-size: clamp(3.8rem, 6.5vw, 6.2rem);
+      line-height: 0.98;
+      color: var(--cream);
+      letter-spacing: -0.01em;
+      margin-bottom: 0.5rem;
+      animation: fadeUp 1.1s ease both;
+      animation-delay: 0.3s;
+    }
+    .hero-headline strong {
+      font-style: normal;
+      font-weight: 600;
+      color: var(--gold);
+    }
+
+    .hero-sub {
+      font-family: 'Cormorant SC', serif;
+      font-weight: 300;
+      font-size: clamp(1.4rem, 2.5vw, 2.1rem);
+      color: rgba(242,234,216,0.28);
+      letter-spacing: 0.1em;
+      margin-bottom: 3rem;
+      animation: fadeUp 1.1s ease both;
+      animation-delay: 0.45s;
+    }
+
+    .hero-divider {
+      width: 3.5rem; height: 1px;
+      background: linear-gradient(to right, var(--gold), transparent);
+      margin-bottom: 2.5rem;
+      animation: fadeIn 1.2s ease both;
+      animation-delay: 0.55s;
+    }
+
+    .hero-desc {
+      font-size: 0.82rem;
+      font-weight: 200;
+      line-height: 2;
+      color: rgba(242,234,216,0.42);
+      max-width: 40ch;
+      margin-bottom: 3.5rem;
+      animation: fadeUp 1.2s ease both;
+      animation-delay: 0.65s;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      animation: fadeUp 1.2s ease both;
+      animation-delay: 0.8s;
+    }
+    .btn-gold {
+      display: inline-flex; align-items: center; gap: 0.85rem;
+      background: var(--gold);
+      color: var(--deep);
+      text-decoration: none;
+      font-size: 0.57rem;
+      font-weight: 400;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      padding: 1.1rem 2.5rem;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .btn-gold:hover { background: var(--gold2); transform: translateY(-2px); }
+    .btn-ghost-text {
+      font-size: 0.56rem;
+      font-weight: 200;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(242,234,216,0.42);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(242,234,216,0.2);
+      padding-bottom: 2px;
+      transition: color 0.3s, border-color 0.3s;
+    }
+    .btn-ghost-text:hover { color: var(--gold); border-color: var(--gold); }
+
+    /* Scroll indicator */
+    .scroll-hint {
+      position: absolute;
+      bottom: 3.5rem; left: 4.5rem;
+      display: flex; align-items: center; gap: 1rem;
+      z-index: 3;
+      animation: fadeIn 2s ease both;
+      animation-delay: 1.4s;
+    }
+    .scroll-line {
+      width: 2.5rem; height: 1px;
+      background: linear-gradient(to right, var(--gold), transparent);
+      animation: goldPulse 2.5s ease infinite;
+    }
+    .scroll-text {
+      font-size: 0.44rem;
+      font-weight: 200;
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+      color: rgba(242,234,216,0.28);
+    }
+
+    /* Right: photo */
+    .hero-r {
       position: relative;
       overflow: hidden;
     }
-
-    /* Marble veins on dark */
-    .hero-left::before {
+    .hero-r img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    /* Multi-layer overlay */
+    .hero-r::after {
       content: '';
-      position: absolute;
-      inset: 0;
+      position: absolute; inset: 0;
       background:
-        repeating-linear-gradient(
-          112deg,
-          transparent 0px,
-          transparent 90px,
-          rgba(201,168,76,0.04) 90px,
-          rgba(201,168,76,0.04) 91px
-        ),
-        repeating-linear-gradient(
-          68deg,
-          transparent 0px,
-          transparent 160px,
-          rgba(201,168,76,0.03) 160px,
-          rgba(201,168,76,0.03) 161px
-        );
+        linear-gradient(to right, rgba(12,11,9,0.82) 0%, rgba(12,11,9,0.1) 40%),
+        linear-gradient(to top, rgba(12,11,9,0.55) 0%, transparent 45%),
+        linear-gradient(135deg, rgba(200,152,60,0.07) 0%, transparent 60%);
       pointer-events: none;
     }
 
-    /* Gold shimmer */
-    .hero-left::after {
-      content: '';
+    /* Gold vertical divider */
+    .hero-divider-line {
       position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 40%;
-      background: linear-gradient(to top, rgba(201,168,76,0.06), transparent);
-      pointer-events: none;
+      top: 12%; bottom: 12%;
+      left: 0; width: 1px;
+      background: linear-gradient(to bottom,
+        transparent 0%, var(--gold) 20%, rgba(200,152,60,0.4) 80%, transparent 100%);
+      transform-origin: top;
+      animation: lineGrow 1.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+      animation-delay: 0.5s;
+      z-index: 4;
     }
 
-    .hero-left-content {
-      position: relative;
-      z-index: 1;
-    }
-
-    .left-eyebrow {
-      font-size: 0.55rem;
-      font-weight: 300;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 2rem;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-    .left-eyebrow::before {
-      content: '';
-      display: block;
-      width: 2rem;
-      height: 1px;
-      background: var(--gold);
-      opacity: 0.5;
-    }
-
-    .left-headline {
-      font-family: 'Cormorant', serif;
-      font-weight: 300;
-      font-size: clamp(3.5rem, 6vw, 5.5rem);
-      line-height: 1.0;
-      color: var(--marble);
-      letter-spacing: 0.01em;
-      margin-bottom: 2.5rem;
-    }
-    .left-headline em {
-      font-style: italic;
-      color: var(--gold);
-    }
-
-    .left-divider {
-      width: 3rem;
-      height: 1px;
-      background: linear-gradient(to right, var(--gold), transparent);
-      margin-bottom: 2rem;
-    }
-
-    .left-tagline {
-      font-size: 0.8rem;
-      font-weight: 200;
-      line-height: 1.85;
-      color: rgba(250,250,248,0.45);
-      max-width: 34ch;
-      margin-bottom: 3rem;
-    }
-
-    .material-pills {
-      display: flex;
-      gap: 0.6rem;
-      flex-wrap: wrap;
-    }
-    .pill {
-      font-size: 0.55rem;
-      font-weight: 300;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--gold);
-      border: 1px solid rgba(201,168,76,0.3);
-      padding: 0.3rem 0.75rem;
-    }
-
-    /* RIGHT — light marble panel */
-    .hero-right {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 8rem 4rem 4rem;
-      gap: 3rem;
-    }
-
-    .stat-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2px;
-      border: 1px solid rgba(201,168,76,0.2);
-    }
-    .stat-cell {
-      padding: 1.75rem;
-      border-right: 1px solid rgba(201,168,76,0.15);
-      border-bottom: 1px solid rgba(201,168,76,0.15);
-    }
-    .stat-cell:nth-child(even) { border-right: none; }
-    .stat-cell:nth-last-child(-n+2) { border-bottom: none; }
-    .stat-num {
-      font-family: 'Cormorant', serif;
-      font-size: 2.5rem;
-      font-weight: 300;
-      color: var(--onyx);
-      line-height: 1;
-      margin-bottom: 0.25rem;
-    }
-    .stat-num span { color: var(--gold); font-size: 1.5rem; }
-    .stat-label {
-      font-size: 0.6rem;
-      font-weight: 300;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--stone);
-    }
-
-    .quote-block {
-      border-left: 2px solid var(--gold);
-      padding: 1.25rem 0 1.25rem 1.75rem;
-    }
-    .quote-text {
-      font-family: 'Cormorant', serif;
-      font-size: 1.2rem;
-      font-style: italic;
-      font-weight: 300;
-      line-height: 1.6;
-      color: var(--onyx);
-      margin-bottom: 0.75rem;
-    }
-    .quote-source {
-      font-size: 0.55rem;
-      font-weight: 300;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--stone);
-    }
-
-    .cta-area {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-    .cta-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-      background: var(--onyx);
-      color: var(--gold);
-      text-decoration: none;
-      font-size: 0.6rem;
-      font-weight: 300;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      padding: 1.1rem 2rem;
-      border: 1px solid transparent;
-      transition: background 0.3s, border-color 0.3s, color 0.3s;
-    }
-    .cta-btn:hover {
-      background: transparent;
-      border-color: var(--onyx);
-      color: var(--onyx);
-    }
-    .cta-link {
-      text-align: center;
-      font-size: 0.55rem;
-      font-weight: 300;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--stone);
-      text-decoration: none;
-    }
-
-    /* ─── Photo container ──────────────────────────────── */
-    .ph { position: relative; overflow: hidden; }
-    .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.55s ease; }
-    .ph:hover img { transform: scale(1.05); }
-    .ph-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.45) 0%, transparent 60%); pointer-events: none; }
-
-    /* ─── Large screen constraint ───────────────────────── */
-    .hero { max-width: 1600px; margin-left: auto; margin-right: auto; }
-
-    /* ─── Section 2: Materialien & Referenzen ───────────── */
-    .materialien {
-      padding: 8rem 4rem;
+    /* ── SECTION 2: KOLLEKTIONEN ── */
+    .kollektionen {
       background: var(--marble);
-      border-top: 1px solid rgba(201,168,76,0.15);
+      padding: 9rem 4.5rem;
       position: relative;
-      z-index: 1;
     }
-    .materialien-inner { max-width: 1600px; margin: 0 auto; }
-    .mat-eyebrow {
-      font-size: 0.55rem;
-      font-weight: 300;
-      letter-spacing: 0.3em;
+    .kollektionen-inner { max-width: 1560px; margin: 0 auto; }
+
+    .eyebrow {
+      font-size: 0.54rem;
+      font-weight: 200;
+      letter-spacing: 0.38em;
       text-transform: uppercase;
       color: var(--gold);
       margin-bottom: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
+      display: flex; align-items: center; gap: 1.25rem;
     }
-    .mat-eyebrow::before {
+    .eyebrow::before {
       content: '';
-      display: block;
-      width: 2rem;
-      height: 1px;
-      background: var(--gold);
-      opacity: 0.5;
+      display: block; width: 2.5rem; height: 1px;
+      background: var(--gold); opacity: 0.55;
     }
-    .mat-title {
+
+    .sec-title {
       font-family: 'Cormorant', serif;
       font-weight: 300;
-      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-size: clamp(2.2rem, 3.5vw, 3.1rem);
       line-height: 1.1;
-      color: var(--onyx);
+      color: var(--deep);
       letter-spacing: 0.01em;
-      margin-bottom: 4rem;
-    }
-    .mat-title em { font-style: italic; color: var(--gold); }
-    .mat-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2px;
-      background: rgba(201,168,76,0.15);
       margin-bottom: 5rem;
     }
-    .mat-card {
+    .sec-title em { font-style: italic; color: var(--gold); }
+
+    /* Asymmetric grid: large + 4 small */
+    .kol-grid {
+      display: grid;
+      grid-template-columns: 1.45fr 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 3px;
+      background: rgba(200,152,60,0.14);
+      margin-bottom: 0;
+    }
+
+    .kol-card {
       background: var(--marble);
       overflow: hidden;
-      transition: box-shadow 0.3s;
+      cursor: pointer;
     }
-    .mat-card:hover { box-shadow: 0 12px 40px rgba(21,20,25,0.08); z-index: 1; }
-    .mat-photo { height: 300px; }
-    .mat-body { padding: 2rem; }
-    .mat-stone {
-      font-size: 0.5rem;
-      font-weight: 300;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 0.5rem;
+    .kol-card--large { grid-row: span 2; display: flex; flex-direction: column; }
+    .kol-card--large .ph { flex: 1; min-height: 400px; }
+
+    .kol-card-body {
+      padding: 1.4rem 1.6rem;
     }
-    .mat-name {
+    .kol-card-name {
       font-family: 'Cormorant', serif;
-      font-size: 1.5rem;
+      font-size: 1.1rem;
       font-weight: 400;
-      color: var(--onyx);
+      color: var(--deep);
+      margin-bottom: 0.2rem;
+    }
+    .kol-card-sub {
+      font-size: 0.52rem;
+      font-weight: 200;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--stone);
       margin-bottom: 0.6rem;
     }
-    .mat-origin {
-      font-size: 0.75rem;
-      font-weight: 300;
-      color: var(--stone);
-      line-height: 1.7;
-      margin-bottom: 1.25rem;
-    }
-    .mat-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-    .mat-tag {
-      font-size: 0.5rem;
-      font-weight: 300;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--gold);
-      border: 1px solid rgba(201,168,76,0.3);
-      padding: 0.25rem 0.65rem;
-    }
-
-    /* Referenz-Strip */
-    .ref-strip {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 0;
-      border: 1px solid rgba(201,168,76,0.2);
-    }
-    .ref-cell {
-      padding: 2rem;
-      border-right: 1px solid rgba(201,168,76,0.15);
-      text-align: center;
-    }
-    .ref-cell:last-child { border-right: none; }
-    .ref-num {
+    .kol-card-price {
       font-family: 'Cormorant', serif;
-      font-size: 2.5rem;
+      font-size: 1rem;
       font-weight: 300;
-      color: var(--onyx);
-      line-height: 1;
-      margin-bottom: 0.3rem;
+      color: var(--gold);
     }
-    .ref-num span { color: var(--gold); font-size: 1.6rem; }
-    .ref-label {
-      font-size: 0.55rem;
+
+    /* Photo overlay + hover info */
+    .kol-ov {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(12,11,9,0.68) 0%, transparent 55%);
+      pointer-events: none;
+    }
+    .kol-info {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 1.4rem 1.6rem;
+      transform: translateY(4px);
+      transition: transform 0.4s ease;
+    }
+    .kol-card:hover .kol-info { transform: translateY(0); }
+    .kol-info-name {
+      font-family: 'Cormorant', serif;
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--cream);
+      margin-bottom: 0.15rem;
+    }
+    .kol-info-price {
+      font-size: 0.72rem;
       font-weight: 300;
-      letter-spacing: 0.18em;
+      color: var(--gold2);
+    }
+
+    /* Category strip */
+    .kol-strip {
+      display: flex;
+      border: 1px solid rgba(200,152,60,0.18);
+      border-top: none;
+    }
+    .kol-cat {
+      flex: 1;
+      padding: 1.4rem 1.5rem;
+      border-right: 1px solid rgba(200,152,60,0.14);
+      text-align: center;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .kol-cat:last-child { border-right: none; }
+    .kol-cat:hover { background: rgba(200,152,60,0.05); }
+    .kol-cat-name {
+      font-family: 'Cormorant', serif;
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--deep);
+      margin-bottom: 0.2rem;
+    }
+    .kol-cat-count {
+      font-size: 0.5rem;
+      font-weight: 200;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--stone);
     }
 
-    /* ─── Section 3: Manufaktur & Kontakt ───────────────── */
-    .manufaktur {
-      padding: 8rem 4rem;
-      background: var(--onyx);
+    /* ── SECTION 3: DAS ATELIER ── */
+    .atelier {
+      display: grid;
+      grid-template-columns: 55% 45%;
+      min-height: 700px;
+      position: relative;
+    }
+
+    .atelier-photo { position: relative; min-height: 600px; }
+    /* Gradient blend to content panel */
+    .atelier-photo::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to right, transparent 65%, var(--deep2));
+      pointer-events: none;
+    }
+
+    .atelier-content {
+      background: var(--deep2);
+      padding: 7rem 5rem 7rem 4.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+    }
+    /* Gold left border */
+    .atelier-content::before {
+      content: '';
+      position: absolute; top: 15%; bottom: 15%; left: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+    }
+
+    .atelier-title {
+      font-family: 'Cormorant', serif;
+      font-weight: 300;
+      font-size: clamp(2.5rem, 4vw, 3.6rem);
+      line-height: 1.0;
+      color: var(--cream);
+      margin-bottom: 2.5rem;
+    }
+    .atelier-title em { font-style: italic; color: var(--gold); }
+
+    .atelier-divider {
+      width: 3.5rem; height: 1px;
+      background: linear-gradient(to right, var(--gold), transparent);
+      margin-bottom: 2.5rem;
+    }
+
+    .atelier-text {
+      font-size: 0.84rem;
+      font-weight: 200;
+      line-height: 2;
+      color: rgba(242,234,216,0.46);
+      max-width: 40ch;
+      margin-bottom: 3rem;
+    }
+
+    .atelier-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin-bottom: 3.5rem;
+    }
+    .step {
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+    }
+    .step-num {
+      font-family: 'Cormorant', serif;
+      font-size: 1.6rem;
+      font-weight: 300;
+      color: rgba(200,152,60,0.3);
+      line-height: 1;
+      min-width: 2rem;
+    }
+    .step-title {
+      font-size: 0.72rem;
+      font-weight: 300;
+      letter-spacing: 0.06em;
+      color: var(--cream);
+      margin-bottom: 0.18rem;
+    }
+    .step-desc {
+      font-size: 0.72rem;
+      font-weight: 200;
+      line-height: 1.75;
+      color: rgba(242,234,216,0.38);
+    }
+
+    .atelier-cta {
+      display: inline-flex; align-items: center; gap: 1rem;
+      align-self: flex-start;
+      border: 1px solid rgba(200,152,60,0.42);
+      color: var(--gold);
+      text-decoration: none;
+      font-size: 0.56rem;
+      font-weight: 300;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      padding: 1.05rem 2.4rem;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .atelier-cta:hover { background: rgba(200,152,60,0.08); border-color: var(--gold); }
+
+    /* ── SECTION 4: BESPOKE ── */
+    .bespoke {
+      background: var(--marble);
+      padding: 10rem 4.5rem;
       position: relative;
       overflow: hidden;
     }
-    .manufaktur::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: repeating-linear-gradient(
-        112deg,
-        transparent 0px, transparent 90px,
-        rgba(201,168,76,0.03) 90px, rgba(201,168,76,0.03) 91px
-      );
-      pointer-events: none;
+    /* Marble texture bg photo */
+    .bespoke-bgphoto {
+      position: absolute; inset: 0;
+      opacity: 0.065;
     }
-    .manufaktur-inner {
-      max-width: 1600px;
+    .bespoke-bgphoto img { width: 100%; height: 100%; object-fit: cover; }
+
+    .bespoke-inner {
+      max-width: 1000px;
       margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 6rem;
-      align-items: center;
+      text-align: center;
       position: relative;
       z-index: 1;
     }
-    .manu-left {}
-    .manu-eyebrow {
-      font-size: 0.55rem;
-      font-weight: 300;
-      letter-spacing: 0.3em;
+
+    .bespoke-eyebrow {
+      font-size: 0.54rem;
+      font-weight: 200;
+      letter-spacing: 0.38em;
       text-transform: uppercase;
       color: var(--gold);
-      margin-bottom: 2rem;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
+      margin-bottom: 3.5rem;
+      display: flex; align-items: center; justify-content: center; gap: 2rem;
     }
-    .manu-eyebrow::before {
+    .bespoke-eyebrow::before, .bespoke-eyebrow::after {
       content: '';
-      display: block;
-      width: 2rem;
-      height: 1px;
-      background: var(--gold);
-      opacity: 0.5;
+      flex: 1; height: 1px;
     }
-    .manu-title {
+    .bespoke-eyebrow::before { background: linear-gradient(to right, transparent, var(--gold)); }
+    .bespoke-eyebrow::after  { background: linear-gradient(to left, transparent, var(--gold)); }
+
+    .bespoke-quote {
+      font-family: 'Cormorant', serif;
+      font-weight: 300;
+      font-style: italic;
+      font-size: clamp(1.9rem, 3.2vw, 2.8rem);
+      line-height: 1.45;
+      color: var(--deep);
+      margin-bottom: 1.5rem;
+    }
+    .bespoke-source {
+      font-size: 0.53rem;
+      font-weight: 200;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--stone);
+      margin-bottom: 6rem;
+    }
+
+    /* Service cards */
+    .bespoke-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(200,152,60,0.16);
+      text-align: left;
+      margin-bottom: 4rem;
+    }
+    .bc {
+      background: var(--marble);
+      padding: 2.5rem;
+    }
+    .bc-roman {
+      font-family: 'Cormorant', serif;
+      font-size: 3rem;
+      font-weight: 300;
+      color: rgba(200,152,60,0.2);
+      line-height: 1;
+      margin-bottom: 1.5rem;
+    }
+    .bc-title {
+      font-family: 'Cormorant', serif;
+      font-size: 1.3rem;
+      font-weight: 400;
+      color: var(--deep);
+      margin-bottom: 0.7rem;
+    }
+    .bc-desc {
+      font-size: 0.78rem;
+      font-weight: 200;
+      line-height: 1.9;
+      color: var(--stone);
+    }
+
+    .bespoke-cta {
+      display: inline-flex; align-items: center; gap: 1rem;
+      background: var(--deep);
+      color: var(--gold);
+      text-decoration: none;
+      font-size: 0.57rem;
+      font-weight: 300;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      padding: 1.2rem 3rem;
+      transition: background 0.3s;
+    }
+    .bespoke-cta:hover { background: var(--deep2); }
+
+    /* ── SECTION 5: KONTAKT ── */
+    .kontakt {
+      background: var(--deep);
+      padding: 9rem 4.5rem 6rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .kontakt::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        112deg, transparent 0, transparent 90px,
+        rgba(200,152,60,0.022) 90px, rgba(200,152,60,0.022) 91px
+      );
+      pointer-events: none;
+    }
+    .kontakt-inner {
+      max-width: 1560px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8rem;
+      align-items: start;
+      position: relative; z-index: 1;
+    }
+
+    .kontakt-title {
       font-family: 'Cormorant', serif;
       font-weight: 300;
       font-size: clamp(2.5rem, 4vw, 3.5rem);
       line-height: 1.0;
-      color: var(--marble);
-      letter-spacing: 0.01em;
-      margin-bottom: 2rem;
+      color: var(--cream);
+      margin-top: 1.2rem;
+      margin-bottom: 1.2rem;
     }
-    .manu-title em { font-style: italic; color: var(--gold); }
-    .manu-divider {
-      width: 3rem;
-      height: 1px;
-      background: linear-gradient(to right, var(--gold), transparent);
-      margin-bottom: 2rem;
-    }
-    .manu-body {
-      font-size: 0.85rem;
+    .kontakt-title em { font-style: italic; color: var(--gold); }
+
+    .kontakt-desc {
+      font-size: 0.82rem;
       font-weight: 200;
       line-height: 2;
-      color: rgba(250,250,248,0.45);
-      max-width: 44ch;
-      margin-bottom: 3rem;
+      color: rgba(242,234,216,0.38);
+      max-width: 40ch;
+      margin-bottom: 3.5rem;
     }
-    .manu-contact {
+
+    .kontakt-details {
+      border-left: 1px solid rgba(200,152,60,0.25);
+      padding-left: 2rem;
       display: flex;
       flex-direction: column;
-      gap: 0.75rem;
-      margin-bottom: 2.5rem;
+      gap: 1.25rem;
     }
-    .mc-line {
+    .kd {
       font-size: 0.8rem;
       font-weight: 200;
-      color: rgba(250,250,248,0.4);
+      color: rgba(242,234,216,0.38);
     }
-    .mc-line strong {
-      font-weight: 400;
-      color: rgba(250,250,248,0.75);
-    }
-    .manu-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 1rem;
-      background: transparent;
-      color: var(--gold);
-      text-decoration: none;
+    .kd strong {
+      display: block;
       font-size: 0.6rem;
       font-weight: 300;
-      letter-spacing: 0.3em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      padding: 1.1rem 2rem;
-      border: 1px solid rgba(201,168,76,0.4);
-      transition: background 0.3s, border-color 0.3s;
+      color: rgba(242,234,216,0.62);
+      margin-bottom: 0.2rem;
     }
-    .manu-cta:hover { background: rgba(201,168,76,0.08); border-color: var(--gold); }
-    .manu-photo { height: 520px; }
 
-    /* Gold corner accent */
-    .corner-gold {
-      position: fixed;
-      bottom: 3rem;
-      left: 4rem;
+    .hours-box {
+      border: 1px solid var(--line-g);
+      padding: 2.5rem;
+    }
+    .hours-title {
+      font-family: 'Cormorant SC', serif;
+      font-size: 0.72rem;
+      font-weight: 300;
+      letter-spacing: 0.22em;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+    }
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.8rem 0;
+      border-bottom: 1px solid rgba(200,152,60,0.1);
+    }
+    .hours-row:last-child { border-bottom: none; }
+    .hours-day {
+      font-size: 0.72rem;
+      font-weight: 200;
+      letter-spacing: 0.06em;
+      color: rgba(242,234,216,0.5);
+    }
+    .hours-time {
+      font-size: 0.72rem;
+      font-weight: 300;
+      color: rgba(242,234,216,0.68);
+    }
+
+    /* Footer brand mark */
+    .brand-footer {
+      max-width: 1560px;
+      margin: 5rem auto 0;
+      padding-top: 2.5rem;
+      border-top: 1px solid rgba(200,152,60,0.1);
       display: flex;
       align-items: center;
-      gap: 1rem;
+      justify-content: space-between;
+      position: relative; z-index: 1;
     }
-    .corner-line {
-      width: 2rem;
-      height: 1px;
-      background: var(--gold);
-      opacity: 0.4;
-    }
-    .corner-text {
-      font-size: 0.5rem;
+    .brand-footer-name {
+      font-family: 'Cormorant SC', serif;
+      font-size: 0.9rem;
       font-weight: 300;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--stone);
+      letter-spacing: 0.22em;
+      color: rgba(242,234,216,0.18);
+    }
+    .brand-footer-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(200,152,60,0.12), transparent);
+      margin: 0 3rem;
+    }
+    .brand-footer-year {
+      font-size: 0.52rem;
+      font-weight: 200;
+      letter-spacing: 0.3em;
+      color: rgba(242,234,216,0.18);
     }
   </style>
 </head>
 <body>
+
+  <!-- ── NAV ──────────────────────────────────────── -->
   <nav>
-    <div class="nav-logo">Tess<span>è</span>ra</div>
+    <a href="#" class="nav-brand"><span>A</span>UREM</a>
     <ul class="nav-links">
-      <li><a href="#">Materialien</a></li>
-      <li><a href="#">Referenzen</a></li>
-      <li><a href="#">Manufaktur</a></li>
-      <li><a href="#">Kontakt</a></li>
+      <li><a href="#">Kollektionen</a></li>
+      <li><a href="#">Atelier</a></li>
+      <li><a href="#">Bespoke</a></li>
     </ul>
+    <a href="#" class="nav-reserve">Beratung vereinbaren</a>
   </nav>
 
+  <!-- ── HERO ─────────────────────────────────────── -->
   <section class="hero">
-    <div class="hero-left" style="position:relative;">
-      <div style="position:absolute;inset:0;z-index:0;">
-        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1200&h=1600&q=80" alt="Marmor Naturstein Oberfläche" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.18;" />
+    <div class="hero-l">
+      <div class="hero-side-label">Bijouterie & Goldschmiede-Atelier · Trier · seit 1968</div>
+
+      <div class="hero-eyebrow">Bijouterie & Goldschmiede-Atelier</div>
+      <h1 class="hero-headline">
+        Die Kunst<br>
+        des <strong>Goldes.</strong>
+      </h1>
+      <div class="hero-sub">Aurem, Trier</div>
+      <div class="hero-divider"></div>
+      <p class="hero-desc">
+        Seit 1968 fertigen wir in unserem Trierer Atelier Schmuck
+        von bleibendem Wert. Jedes Stück — handgeschmiedet,
+        unverwechselbar, für die Ewigkeit gemacht.
+      </p>
+      <div class="hero-actions">
+        <a href="#" class="btn-gold">Kollektion entdecken</a>
+        <a href="#" class="btn-ghost-text">Bespoke Service →</a>
       </div>
-      <div class="hero-left-content">
-        <div class="left-eyebrow">Marmor & Naturstein</div>
-        <h1 class="left-headline">
-          Stein.<br>
-          Zeit.<br>
-          <em>Ewigkeit.</em>
-        </h1>
-        <div class="left-divider"></div>
-        <p class="left-tagline">
-          Tessèra fertigt Oberflächen aus den schönsten Natursteinen der Welt.
-          Handwerkliche Perfektion seit drei Generationen.
-        </p>
-        <div class="material-pills">
-          <span class="pill">Carrara</span>
-          <span class="pill">Marquina</span>
-          <span class="pill">Travertin</span>
-          <span class="pill">Onyx</span>
-        </div>
-      </div>
-    </div><!-- end hero-left-content -->
     </div>
 
-    <div class="hero-right">
-      <div class="stat-row">
-        <div class="stat-cell">
-          <div class="stat-num">40<span>+</span></div>
-          <div class="stat-label">Jahre Erfahrung</div>
-        </div>
-        <div class="stat-cell">
-          <div class="stat-num">18</div>
-          <div class="stat-label">Steinarten lagernd</div>
-        </div>
-        <div class="stat-cell">
-          <div class="stat-num">600<span>+</span></div>
-          <div class="stat-label">Realisierte Projekte</div>
-        </div>
-        <div class="stat-cell">
-          <div class="stat-num">3</div>
-          <div class="stat-label">Generationen</div>
-        </div>
-      </div>
+    <div class="hero-r">
+      <img
+        src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=1200&h=1600&q=80"
+        alt="Goldschmuck Ring Aurem Trier"
+        loading="eager"
+      />
+      <div class="hero-divider-line"></div>
+    </div>
 
-      <div class="quote-block">
-        <div class="quote-text">
-          „Marmor ist geronnene Zeit —<br>jede Ader ein Jahrmillionen-Gedicht."
-        </div>
-        <div class="quote-source">Anton Tessèra, Gründer · 1983</div>
-      </div>
+    <div class="scroll-hint">
+      <div class="scroll-line"></div>
+      <div class="scroll-text">Scroll</div>
+    </div>
+  </section>
 
-      <div class="cta-area">
-        <a href="#" class="cta-btn">Beratungstermin vereinbaren</a>
-        <a href="#" class="cta-link">Materialien ansehen →</a>
+  <!-- ── KOLLEKTIONEN ──────────────────────────────── -->
+  <section class="kollektionen">
+    <div class="kollektionen-inner">
+      <div class="eyebrow">Unsere Kollektionen</div>
+      <h2 class="sec-title">Schmuck mit<br><em>Seele & Geschichte.</em></h2>
+
+      <div class="kol-grid">
+
+        <!-- Large card -->
+        <div class="kol-card kol-card--large">
+          <div class="ph" style="flex:1;min-height:420px;">
+            <img src="https://images.unsplash.com/photo-1573408301185-9519f7d0ef11?auto=format&fit=crop&w=800&h=1200&q=80" alt="Diamant Brillant Verlobungsring" loading="lazy" />
+            <div class="kol-ov"></div>
+            <div class="kol-info">
+              <div class="kol-info-name">Éternité — Brillant-Solitaire</div>
+              <div class="kol-info-price">ab 2.800 €</div>
+            </div>
+          </div>
+          <div class="kol-card-body">
+            <div class="kol-card-name">Éternité</div>
+            <div class="kol-card-sub">Verlobungsringe · Brillanten</div>
+            <div class="kol-card-price">ab 2.800 €</div>
+          </div>
+        </div>
+
+        <!-- Small card 1 -->
+        <div class="kol-card">
+          <div class="ph" style="height:280px;">
+            <img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&w=800&h=600&q=80" alt="Goldkette Halskette 18k" loading="lazy" />
+            <div class="kol-ov"></div>
+            <div class="kol-info">
+              <div class="kol-info-name">Aurore — Goldkette</div>
+              <div class="kol-info-price">ab 680 €</div>
+            </div>
+          </div>
+          <div class="kol-card-body">
+            <div class="kol-card-name">Aurore</div>
+            <div class="kol-card-sub">Halsketten · 18k Gold</div>
+            <div class="kol-card-price">ab 680 €</div>
+          </div>
+        </div>
+
+        <!-- Small card 2 -->
+        <div class="kol-card">
+          <div class="ph" style="height:280px;">
+            <img src="https://images.unsplash.com/photo-1583394838336-acd977736f90?auto=format&fit=crop&w=800&h=600&q=80" alt="Ohrringe Tropfen Gold" loading="lazy" />
+            <div class="kol-ov"></div>
+            <div class="kol-info">
+              <div class="kol-info-name">Lumière — Tropfen-Ohrringe</div>
+              <div class="kol-info-price">ab 490 €</div>
+            </div>
+          </div>
+          <div class="kol-card-body">
+            <div class="kol-card-name">Lumière</div>
+            <div class="kol-card-sub">Ohrringe · 14k Gold</div>
+            <div class="kol-card-price">ab 490 €</div>
+          </div>
+        </div>
+
+        <!-- Small card 3 -->
+        <div class="kol-card">
+          <div class="ph" style="height:280px;">
+            <img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=800&h=600&q=80" alt="Goldarmband Armreif" loading="lazy" />
+            <div class="kol-ov"></div>
+            <div class="kol-info">
+              <div class="kol-info-name">Soleil — Armreif</div>
+              <div class="kol-info-price">ab 1.200 €</div>
+            </div>
+          </div>
+          <div class="kol-card-body">
+            <div class="kol-card-name">Soleil</div>
+            <div class="kol-card-sub">Armbänder · 18k Gold</div>
+            <div class="kol-card-price">ab 1.200 €</div>
+          </div>
+        </div>
+
+        <!-- Small card 4 -->
+        <div class="kol-card">
+          <div class="ph" style="height:280px;">
+            <img src="https://images.unsplash.com/photo-1547700055-b61cacebece9?auto=format&fit=crop&w=800&h=600&q=80" alt="Bespoke Schmuck Kollektion" loading="lazy" />
+            <div class="kol-ov"></div>
+            <div class="kol-info">
+              <div class="kol-info-name">Héritage — Unikat</div>
+              <div class="kol-info-price">auf Anfrage</div>
+            </div>
+          </div>
+          <div class="kol-card-body">
+            <div class="kol-card-name">Héritage</div>
+            <div class="kol-card-sub">Bespoke · Unikat</div>
+            <div class="kol-card-price">auf Anfrage</div>
+          </div>
+        </div>
+
+      </div><!-- end kol-grid -->
+
+      <div class="kol-strip">
+        <div class="kol-cat">
+          <div class="kol-cat-name">Ringe</div>
+          <div class="kol-cat-count">24 Modelle</div>
+        </div>
+        <div class="kol-cat">
+          <div class="kol-cat-name">Ketten</div>
+          <div class="kol-cat-count">18 Modelle</div>
+        </div>
+        <div class="kol-cat">
+          <div class="kol-cat-name">Ohrringe</div>
+          <div class="kol-cat-count">31 Modelle</div>
+        </div>
+        <div class="kol-cat">
+          <div class="kol-cat-name">Armbänder</div>
+          <div class="kol-cat-count">12 Modelle</div>
+        </div>
+        <div class="kol-cat">
+          <div class="kol-cat-name">Bespoke</div>
+          <div class="kol-cat-count">Individuell</div>
+        </div>
       </div>
     </div>
   </section>
 
-  <div class="corner-gold">
-    <div class="corner-line"></div>
-    <div class="corner-text">Tessèra · Trier · Naturstein Manufaktur</div>
-  </div>
-
-  <!-- ── Section 2: Materialien & Referenzen ────────────── -->
-  <section class="materialien">
-    <div class="materialien-inner">
-      <div class="mat-eyebrow">Unsere Materialien</div>
-      <h2 class="mat-title">Stein aus aller Welt.<br><em>Verarbeitet in Trier.</em></h2>
-
-      <div class="mat-grid">
-
-        <!-- Carrara -->
-        <div class="mat-card">
-          <div class="ph mat-photo">
-            <img src="https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?auto=format&fit=crop&w=800&h=600&q=80" alt="Carrara Marmor weiß" loading="lazy" />
-            <div class="ph-overlay"></div>
-          </div>
-          <div class="mat-body">
-            <div class="mat-stone">Marmor</div>
-            <div class="mat-name">Bianco Carrara</div>
-            <div class="mat-origin">Aus den Apuanischen Alpen der Toskana. Reinweißer Hintergrund mit zarten grauen Adern — der klassische Marmor der Antike.</div>
-            <div class="mat-tags">
-              <span class="mat-tag">Böden</span>
-              <span class="mat-tag">Bäder</span>
-              <span class="mat-tag">Küchenplatten</span>
-            </div>
+  <!-- ── DAS ATELIER ───────────────────────────────── -->
+  <section class="atelier">
+    <div class="ph atelier-photo">
+      <img src="https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&w=1200&h=1400&q=80" alt="Goldschmiede Atelier Werkstatt Trier" loading="lazy" />
+    </div>
+    <div class="atelier-content">
+      <div class="eyebrow" style="--gold:#C8983C;">Das Atelier</div>
+      <h2 class="atelier-title" style="margin-top:1.2rem;">
+        Handwerk<br>ohne <em>Kompromisse.</em>
+      </h2>
+      <div class="atelier-divider"></div>
+      <p class="atelier-text">
+        In unserer Trierer Werkstatt verbinden wir jahrhundertealtes
+        Goldschmiedehandwerk mit moderner Präzision. Jedes Stück
+        entsteht von der ersten Skizze bis zur Fertigstellung
+        in unseren eigenen Händen.
+      </p>
+      <div class="atelier-steps">
+        <div class="step">
+          <div class="step-num">01</div>
+          <div>
+            <div class="step-title">Beratung & Entwurf</div>
+            <div class="step-desc">Persönliches Gespräch, Skizzen und 3D-Visualisierung Ihres Wunschstücks.</div>
           </div>
         </div>
-
-        <!-- Marquina -->
-        <div class="mat-card">
-          <div class="ph mat-photo">
-            <img src="https://images.unsplash.com/photo-1609501676725-7186f017a4b7?auto=format&fit=crop&w=800&h=600&q=80" alt="Marquina schwarzer Marmor" loading="lazy" />
-            <div class="ph-overlay"></div>
-          </div>
-          <div class="mat-body">
-            <div class="mat-stone">Marmor</div>
-            <div class="mat-name">Negro Marquina</div>
-            <div class="mat-origin">Tiefschwarzer Marmor aus dem Baskenland mit leuchtend weißen Calcit-Adern. Dramatisch, zeitlos, unverwechselbar.</div>
-            <div class="mat-tags">
-              <span class="mat-tag">Akzentwände</span>
-              <span class="mat-tag">Treppen</span>
-              <span class="mat-tag">Waschtische</span>
-            </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <div>
+            <div class="step-title">Handgefertigte Ausführung</div>
+            <div class="step-desc">Jeder Griff mit den Händen eines Meisters — keine Massenproduktion.</div>
           </div>
         </div>
-
-        <!-- Travertin -->
-        <div class="mat-card">
-          <div class="ph mat-photo">
-            <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=800&h=600&q=80" alt="Travertin Naturstein warm" loading="lazy" />
-            <div class="ph-overlay"></div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <div>
+            <div class="step-title">Persönliche Übergabe</div>
+            <div class="step-desc">Mit Echtheitszertifikat und lebenslangem Atelier-Service.</div>
           </div>
-          <div class="mat-body">
-            <div class="mat-stone">Travertin</div>
-            <div class="mat-name">Travertino Romano</div>
-            <div class="mat-origin">Warmer, poröser Kalkstein aus der Region Tivoli. Seit der Antike das Material römischer Monumentalbauten.</div>
-            <div class="mat-tags">
-              <span class="mat-tag">Fassaden</span>
-              <span class="mat-tag">Außenbereiche</span>
-              <span class="mat-tag">Pools</span>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="ref-strip">
-        <div class="ref-cell">
-          <div class="ref-num">600<span>+</span></div>
-          <div class="ref-label">Projekte realisiert</div>
-        </div>
-        <div class="ref-cell">
-          <div class="ref-num">18</div>
-          <div class="ref-label">Steinarten lagernd</div>
-        </div>
-        <div class="ref-cell">
-          <div class="ref-num">40<span>+</span></div>
-          <div class="ref-label">Jahre Erfahrung</div>
-        </div>
-        <div class="ref-cell">
-          <div class="ref-num">3</div>
-          <div class="ref-label">Generationen</div>
         </div>
       </div>
+      <a href="#" class="atelier-cta">Atelier besuchen →</a>
     </div>
   </section>
 
-  <!-- ── Section 3: Manufaktur & Kontakt ────────────────── -->
-  <section class="manufaktur">
-    <div class="manufaktur-inner">
+  <!-- ── BESPOKE ───────────────────────────────────── -->
+  <section class="bespoke">
+    <div class="bespoke-bgphoto">
+      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=2000&h=1200&q=55" alt="" loading="lazy" aria-hidden="true" />
+    </div>
+    <div class="bespoke-inner">
+      <div class="bespoke-eyebrow">Bespoke by Aurem</div>
+      <blockquote class="bespoke-quote">
+        „Gold kennt keine Mode.<br>
+        Es trägt Geschichte — und gibt sie weiter."
+      </blockquote>
+      <div class="bespoke-source">Heinrich Aurem, Gründer · Trier, 1968</div>
 
-      <div class="manu-left">
-        <div class="manu-eyebrow">Unsere Manufaktur</div>
-        <h2 class="manu-title">Handwerk.<br>Seit <em>drei Generationen.</em></h2>
-        <div class="manu-divider"></div>
-        <p class="manu-body">
-          Seit 1983 fertigt die Familie Tessèra Natursteinoberflächen
-          für Privathäuser, Hotels und öffentliche Bauten in der
-          ganzen Region. Jedes Projekt beginnt mit einer persönlichen
-          Beratung — und endet erst, wenn der Stein perfekt sitzt.
-        </p>
-        <div class="manu-contact">
-          <div class="mc-line"><strong>Showroom:</strong> Steinstraße 4, 54290 Trier</div>
-          <div class="mc-line"><strong>Öffnungszeiten:</strong> Mo – Fr 9 – 18 Uhr, Sa 10 – 14 Uhr</div>
-          <div class="mc-line"><strong>Telefon:</strong> +49 651 123 456</div>
-          <div class="mc-line"><strong>E-Mail:</strong> beratung@tessera-trier.de</div>
+      <div class="bespoke-cards">
+        <div class="bc">
+          <div class="bc-roman">I</div>
+          <div class="bc-title">Bespoke Schmuck</div>
+          <div class="bc-desc">Ihr Wunschstück, individuell entworfen und von Meisterhand gefertigt. Kein Stück wie das andere.</div>
         </div>
-        <a href="#" class="manu-cta">Beratungstermin vereinbaren →</a>
+        <div class="bc">
+          <div class="bc-roman">II</div>
+          <div class="bc-title">Restaurierung</div>
+          <div class="bc-desc">Erbstücke, antiker Schmuck und beschädigte Preziosen — wir geben ihnen ihr zweites Leben zurück.</div>
+        </div>
+        <div class="bc">
+          <div class="bc-roman">III</div>
+          <div class="bc-title">Gravur & Veredelung</div>
+          <div class="bc-desc">Widmungen, Initialen, Symbole — eingraviert in Gold, für die Ewigkeit.</div>
+        </div>
       </div>
 
-      <div class="ph manu-photo">
-        <img src="https://images.unsplash.com/photo-1565814329452-e1efa11c5b89?auto=format&fit=crop&w=1200&h=1560&q=80" alt="Tessèra Manufaktur Steinbearbeitung" loading="lazy" />
-        <div class="ph-overlay"></div>
+      <a href="#" class="bespoke-cta">Bespoke Anfrage stellen →</a>
+    </div>
+  </section>
+
+  <!-- ── KONTAKT ───────────────────────────────────── -->
+  <section class="kontakt">
+    <div class="kontakt-inner">
+      <div>
+        <div class="eyebrow" style="color:var(--gold);">Besuchen Sie uns</div>
+        <h2 class="kontakt-title">Aurem<br><em>Trier.</em></h2>
+        <p class="kontakt-desc">
+          Unser Atelier und Showroom liegt im Herzen Triers,
+          unweit der Porta Nigra. Wir freuen uns auf Sie —
+          gerne auch nach Voranmeldung.
+        </p>
+        <div class="kontakt-details">
+          <div class="kd">
+            <strong>Adresse</strong>
+            Simeonstraße 14, 54290 Trier
+          </div>
+          <div class="kd">
+            <strong>Telefon</strong>
+            +49 651 987 654
+          </div>
+          <div class="kd">
+            <strong>E-Mail</strong>
+            atelier@aurem-trier.de
+          </div>
+        </div>
       </div>
 
+      <div>
+        <div class="hours-box">
+          <div class="hours-title">Öffnungszeiten</div>
+          <div class="hours-row">
+            <span class="hours-day">Montag – Freitag</span>
+            <span class="hours-time">10 – 19 Uhr</span>
+          </div>
+          <div class="hours-row">
+            <span class="hours-day">Samstag</span>
+            <span class="hours-time">10 – 17 Uhr</span>
+          </div>
+          <div class="hours-row">
+            <span class="hours-day">Sonntag</span>
+            <span class="hours-time">geschlossen</span>
+          </div>
+          <div class="hours-row">
+            <span class="hours-day">Bespoke-Termine</span>
+            <span class="hours-time">nach Vereinbarung</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="brand-footer">
+      <span class="brand-footer-name">AUREM</span>
+      <div class="brand-footer-line"></div>
+      <span class="brand-footer-year">Bijouterie & Goldschmiede-Atelier · Trier · Gegründet 1968</span>
     </div>
   </section>
 
