@@ -7,634 +7,1241 @@ export const prerender = true;
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
-  <title>Wellenritt — Surfschule & Stand-up-Paddle | Mosel</title>
+  <title>Wellenritt — Surfschule & SUP | Trier an der Mosel</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cabin+Condensed:wght@400;700&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { overflow-x: hidden; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
 
     :root {
-      --ocean: #0891B2;
-      --sand:  #F59E0B;
-      --teal:  #0E7490;
-      --bg:    #F0F9FF;
-      --dark:  #0C2D48;
-      --muted: rgba(12,45,72,0.5);
+      --bg:         #FAF6EE;
+      --sand:       #E8C98A;
+      --sand-lt:    #F5EEDD;
+      --ocean:      #0B4F6B;
+      --ocean-mid:  #1A7BA4;
+      --sun:        #C4891A;
+      --dark:       #111210;
+      --muted:      rgba(17,18,16,0.45);
     }
 
     body {
       background: var(--bg);
       color: var(--dark);
-      font-family: 'Work Sans', sans-serif;
-      min-height: 100vh;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
       overflow-x: hidden;
     }
 
-    /* Wave decoration at bottom */
-    body::after {
+    /* Grain texture */
+    body::before {
       content: '';
       position: fixed;
-      bottom: 0; left: 0; right: 0;
-      height: 6px;
-      background: linear-gradient(90deg,
-        var(--ocean) 0%, var(--teal) 33%, var(--ocean) 66%, var(--sand) 100%);
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.70' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='280' height='280' filter='url(%23n)' opacity='0.028'/%3E%3C/svg%3E");
       pointer-events: none;
-      z-index: 0;
+      z-index: 9998;
     }
 
+    /* Photo utility */
+    .ph { position: relative; overflow: hidden; }
+    .ph img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .ph:hover img { transform: scale(1.05); }
+
+    /* ===== NAV ===== */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
-      z-index: 100;
+      z-index: 200;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 1rem 3rem;
-      background: rgba(240,249,255,0.95);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid rgba(8,145,178,0.15);
+      padding: 2.25rem 4.5rem;
+      transition: background 0.45s ease, padding 0.45s ease, border-color 0.45s ease;
+    }
+    nav.scrolled {
+      background: rgba(250,246,238,0.94);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      padding: 1.25rem 4.5rem;
+      border-bottom: 1px solid rgba(196,137,26,0.14);
     }
     .nav-logo {
-      font-family: 'Cabin Condensed', sans-serif;
-      font-weight: 700;
-      font-size: 1.3rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--ocean);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.65rem;
+      letter-spacing: 0.07em;
+      color: #fff;
+      text-decoration: none;
+      transition: color 0.4s;
     }
+    nav.scrolled .nav-logo { color: var(--ocean); }
     .nav-links {
       display: flex;
-      gap: 2.5rem;
+      gap: 3rem;
       list-style: none;
     }
     .nav-links a {
-      font-size: 0.6rem;
-      font-weight: 500;
-      letter-spacing: 0.12em;
+      font-size: 0.63rem;
+      font-weight: 400;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: rgba(255,255,255,0.7);
       text-decoration: none;
       transition: color 0.2s;
     }
-    .nav-links a:hover { color: var(--ocean); }
-    .nav-book {
-      font-family: 'Cabin Condensed', sans-serif;
-      font-weight: 700;
-      font-size: 0.75rem;
-      letter-spacing: 0.1em;
+    nav.scrolled .nav-links a { color: var(--muted); }
+    .nav-links a:hover, nav.scrolled .nav-links a:hover { color: var(--sun); }
+    .nav-cta {
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: #fff;
-      background: var(--ocean);
-      padding: 0.65rem 1.5rem;
+      color: rgba(255,255,255,0.9);
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.35);
+      padding: 0.7rem 1.7rem;
+      border-radius: 2px;
       text-decoration: none;
-      border-radius: 4px;
-      transition: background 0.2s;
+      transition: background 0.25s, color 0.25s, border-color 0.25s;
     }
-    .nav-book:hover { background: var(--teal); }
+    .nav-cta:hover { border-color: white; color: white; }
+    nav.scrolled .nav-cta {
+      background: var(--ocean);
+      color: #fff;
+      border-color: var(--ocean);
+    }
+    nav.scrolled .nav-cta:hover { background: var(--ocean-mid); border-color: var(--ocean-mid); }
 
+    /* ===== HERO ===== */
     .hero {
-      min-height: 100vh;
-      padding-top: 60px;
-      display: grid;
-      grid-template-columns: 1fr 400px;
+      position: relative;
+      height: 100vh;
+      min-height: 680px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+    }
+    .hero-bg img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center 40%;
+      transition: transform 8s ease;
+    }
+    .hero:hover .hero-bg img { transform: scale(1.03); }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        175deg,
+        rgba(0,0,0,0.08) 0%,
+        rgba(0,0,0,0.04) 30%,
+        rgba(11,79,107,0.52) 72%,
+        rgba(11,79,107,0.88) 100%
+      );
     }
 
-    /* LEFT */
-    .hero-left {
+    /* Scroll cue */
+    .scroll-cue {
+      position: absolute;
+      bottom: 3rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .sc-line {
+      width: 1px;
+      height: 48px;
+      background: rgba(255,255,255,0.3);
+      transform-origin: top;
+      animation: scLine 2.2s ease-in-out infinite;
+    }
+    .sc-text {
+      font-size: 0.5rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+    }
+    @keyframes scLine {
+      0%, 100% { opacity: 1; transform: scaleY(1); }
+      50% { opacity: 0.25; transform: scaleY(0.35); }
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 10;
+      padding: 0 4.5rem 5rem;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 4rem;
+    }
+    .hero-text { flex: 1; }
+    .hero-eyebrow {
+      font-size: 0.62rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 30px; height: 1px;
+      background: var(--sand);
+      flex-shrink: 0;
+    }
+    .hero-headline {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(5.5rem, 12vw, 10.5rem);
+      line-height: 0.9;
+      letter-spacing: 0.03em;
+      color: #fff;
+    }
+    .hero-headline .accent { color: var(--sand); }
+    .hero-tagline {
+      margin-top: 1.5rem;
+      font-size: 0.95rem;
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(255,255,255,0.65);
+      max-width: 40ch;
+      line-height: 1.85;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2.25rem;
+    }
+    .btn-solid {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--dark);
+      background: var(--sand);
+      padding: 0.95rem 2.4rem;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: background 0.25s;
+    }
+    .btn-solid:hover { background: #f5d89a; }
+    .btn-outline-white {
+      font-size: 0.65rem;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.28);
+      padding: 0.95rem 2.4rem;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: border-color 0.25s, color 0.25s;
+    }
+    .btn-outline-white:hover { border-color: rgba(255,255,255,0.7); color: #fff; }
+
+    /* Hero sidebar stats */
+    .hero-stats {
+      flex-shrink: 0;
+      padding-left: 3.5rem;
+      border-left: 1px solid rgba(255,255,255,0.12);
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      min-width: 200px;
+    }
+    .hs-item {
+      padding: 1.1rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .hs-item:last-child { border-bottom: none; }
+    .hs-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.4rem;
+      letter-spacing: 0.04em;
+      color: #fff;
+      line-height: 1;
+    }
+    .hs-label {
+      font-size: 0.57rem;
+      font-weight: 400;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.38);
+      margin-top: 0.2rem;
+    }
+
+    /* ===== VIBE STRIP ===== */
+    .vibe-strip {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      background: var(--ocean);
+    }
+    .vi-item {
+      padding: 2.25rem 2.75rem;
+      border-right: 1px solid rgba(255,255,255,0.07);
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    .vi-item:last-child { border-right: none; }
+    .vi-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.5rem;
+      letter-spacing: 0.04em;
+      color: var(--sand);
+      line-height: 1;
+    }
+    .vi-label {
+      font-size: 0.58rem;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.38);
+    }
+
+    /* ===== MOSEL STORY ===== */
+    .story {
+      padding: 7.5rem 4.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 7rem;
+      align-items: center;
+    }
+    .story-eyebrow {
+      font-size: 0.6rem;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--sun);
+      margin-bottom: 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .story-eyebrow::before {
+      content: '';
+      width: 28px; height: 1px;
+      background: var(--sun);
+      flex-shrink: 0;
+    }
+    .story-headline {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 5.5vw, 5.2rem);
+      line-height: 0.92;
+      letter-spacing: 0.03em;
+      color: var(--dark);
+    }
+    .story-headline .blue { color: var(--ocean); }
+    .story-body {
+      font-size: 0.95rem;
+      font-weight: 300;
+      line-height: 1.95;
+      color: var(--muted);
+      margin-top: 1.75rem;
+      max-width: 46ch;
+    }
+    .story-body strong { font-weight: 500; color: var(--dark); }
+
+    .feature-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .feature-card {
+      display: flex;
+      gap: 1.5rem;
+      padding: 1.6rem;
+      border: 1px solid rgba(196,137,26,0.14);
+      border-radius: 3px;
+      background: rgba(232,201,138,0.08);
+      transition: border-color 0.25s, background 0.25s;
+      cursor: default;
+    }
+    .feature-card:hover {
+      border-color: rgba(196,137,26,0.32);
+      background: rgba(232,201,138,0.18);
+    }
+    .fc-icon { font-size: 1.5rem; flex-shrink: 0; line-height: 1.3; }
+    .fc-name {
+      font-size: 0.84rem;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      color: var(--dark);
+    }
+    .fc-desc {
+      font-size: 0.73rem;
+      font-weight: 300;
+      color: var(--muted);
+      margin-top: 0.3rem;
+      line-height: 1.65;
+    }
+
+    /* ===== COURSES (dark) ===== */
+    .courses {
+      background: var(--dark);
+      padding: 7.5rem 4.5rem;
+    }
+    .section-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 3.5rem;
+      gap: 2rem;
+    }
+    .sec-eyebrow {
+      font-size: 0.6rem;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--sun);
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .sec-eyebrow::before {
+      content: '';
+      width: 28px; height: 1px;
+      background: var(--sun);
+      flex-shrink: 0;
+    }
+    .sec-headline {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 4.5vw, 4rem);
+      line-height: 0.92;
+      letter-spacing: 0.04em;
+      color: #fff;
+    }
+    .sec-headline .ghost { color: rgba(255,255,255,0.18); }
+    .sec-all-link {
+      font-size: 0.62rem;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.14);
+      padding-bottom: 2px;
+      flex-shrink: 0;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .sec-all-link:hover { color: var(--sand); border-color: var(--sand); }
+
+    .courses-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 2px;
+    }
+    .course-card {
+      position: relative;
+      height: 440px;
+      overflow: hidden;
+    }
+    .course-card img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .course-card:hover img { transform: scale(1.08); }
+    .course-grad {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top,
+        rgba(0,0,0,0.82) 0%,
+        rgba(0,0,0,0.18) 55%,
+        transparent 100%
+      );
+    }
+    .course-info {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 2.25rem 2rem;
+    }
+    .ci-badge {
+      display: inline-block;
+      font-size: 0.5rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--dark);
+      background: var(--sand);
+      padding: 0.28rem 0.7rem;
+      border-radius: 2px;
+      margin-bottom: 0.7rem;
+    }
+    .ci-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.85rem;
+      letter-spacing: 0.04em;
+      color: #fff;
+      line-height: 1;
+    }
+    .ci-desc {
+      font-size: 0.7rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.55);
+      margin-top: 0.4rem;
+      line-height: 1.6;
+    }
+    .ci-price {
+      margin-top: 0.9rem;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.25rem;
+      letter-spacing: 0.04em;
+      color: var(--sand);
+    }
+
+    /* ===== GALLERY ===== */
+    .gallery {
+      padding: 7.5rem 4.5rem;
+      background: var(--bg);
+    }
+    .gallery-head {
+      margin-bottom: 3.5rem;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      grid-template-rows: 272px 272px;
+      gap: 1rem;
+    }
+    .gallery-main {
+      grid-row: 1 / 3;
+      border-radius: 3px;
+    }
+    .gallery-side {
+      border-radius: 3px;
+    }
+    .gallery-caption {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 1.4rem 1.6rem;
+      background: linear-gradient(to top, rgba(11,79,107,0.72) 0%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+    .gallery-main:hover .gallery-caption,
+    .gallery-side:hover .gallery-caption { opacity: 1; }
+    .gc-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.15rem;
+      letter-spacing: 0.05em;
+      color: #fff;
+      line-height: 1;
+    }
+    .gc-sub {
+      font-size: 0.62rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.55);
+      margin-top: 0.2rem;
+    }
+
+    /* ===== TOUREN SPLIT ===== */
+    .touren {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 540px;
+    }
+    .tour-photo {
+      position: relative;
+      overflow: hidden;
+    }
+    .tour-photo img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.65s ease;
+    }
+    .touren:hover .tour-photo img { transform: scale(1.04); }
+    .tour-photo-fade {
+      position: absolute; inset: 0;
+      background: linear-gradient(to right, transparent 50%, rgba(11,79,107,0.38) 100%);
+    }
+    .tour-content {
+      background: var(--ocean);
+      padding: 6rem 5.5rem;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: 4rem 4rem 4rem 4.5rem;
-      gap: 2.5rem;
+      gap: 2.25rem;
     }
-
-    .eyebrow {
+    .tour-eyebrow {
+      font-size: 0.6rem;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.38);
       display: flex;
       align-items: center;
-      gap: 0.6rem;
-      font-size: 0.6rem;
-      font-weight: 500;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--ocean);
+      gap: 0.8rem;
     }
-    .eyebrow-dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
+    .tour-eyebrow::before {
+      content: '';
+      width: 28px; height: 1px;
       background: var(--sand);
+      flex-shrink: 0;
     }
-
-    .hero-headline {
-      font-family: 'Cabin Condensed', sans-serif;
-      font-weight: 700;
-      font-size: clamp(3rem, 7vw, 6rem);
-      line-height: 0.95;
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
-      color: var(--dark);
+    .tour-headline {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 5vw, 4.8rem);
+      line-height: 0.9;
+      letter-spacing: 0.04em;
+      color: #fff;
     }
-    .hero-headline .ocean { color: var(--ocean); }
-    .hero-headline .sand { color: var(--sand); }
-
-    .hero-body {
-      font-size: 0.9rem;
+    .tour-body {
+      font-size: 0.92rem;
       font-weight: 300;
-      line-height: 1.9;
-      color: var(--muted);
+      line-height: 1.95;
+      color: rgba(255,255,255,0.58);
       max-width: 44ch;
     }
-
-    /* Course grid */
-    .course-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.6rem;
+    .tour-list { display: flex; flex-direction: column; }
+    .tl-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
     }
-    .course-card {
-      background: #fff;
-      border: 1px solid rgba(8,145,178,0.12);
-      border-radius: 10px;
-      padding: 1.1rem;
-      border-top: 3px solid var(--ocean);
-      transition: border-top-color 0.2s, box-shadow 0.2s;
+    .tl-name {
+      font-size: 0.84rem;
+      font-weight: 400;
+      color: rgba(255,255,255,0.82);
     }
-    .course-card:hover {
-      border-top-color: var(--sand);
-      box-shadow: 0 4px 16px rgba(8,145,178,0.1);
+    .tl-sub {
+      font-size: 0.63rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.32);
+      margin-top: 0.15rem;
     }
-    .cc-name {
-      font-family: 'Cabin Condensed', sans-serif;
-      font-size: 1rem;
-      font-weight: 700;
+    .tl-price {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.25rem;
       letter-spacing: 0.04em;
+      color: var(--sand);
+      flex-shrink: 0;
+      margin-left: 2rem;
+    }
+    .tour-cta {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--dark);
+      background: var(--sand);
+      padding: 0.95rem 2.4rem;
+      border-radius: 2px;
+      text-decoration: none;
+      width: fit-content;
+      transition: background 0.25s;
     }
-    .cc-desc {
-      font-size: 0.68rem;
-      font-weight: 300;
+    .tour-cta:hover { background: #f5d89a; }
+
+    /* ===== CONDITIONS STRIP ===== */
+    .conditions {
+      background: var(--sand-lt);
+      padding: 4rem 4.5rem;
+      border-top: 1px solid rgba(196,137,26,0.15);
+      border-bottom: 1px solid rgba(196,137,26,0.15);
+    }
+    .cond-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+    }
+    .cond-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: 0.06em;
+      color: var(--ocean);
+    }
+    .cond-location {
+      font-size: 0.6rem;
+      font-weight: 400;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .cond-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: rgba(196,137,26,0.12);
+      border: 1px solid rgba(196,137,26,0.12);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .cond-cell {
+      background: var(--sand-lt);
+      padding: 1.5rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+    .cond-icon { font-size: 1.6rem; flex-shrink: 0; }
+    .cond-value {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 0.04em;
+      color: var(--dark);
+      line-height: 1;
+    }
+    .cond-key {
+      font-size: 0.58rem;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
       color: var(--muted);
       margin-top: 0.2rem;
-      line-height: 1.5;
     }
-    .cc-price {
-      font-family: 'Cabin Condensed', sans-serif;
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: var(--ocean);
-      margin-top: 0.6rem;
+    .cond-tag {
+      margin-left: auto;
+      font-size: 0.52rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.65rem;
+      border-radius: 100px;
     }
+    .tag-green { background: rgba(16,185,129,0.15); color: #059669; }
+    .tag-yellow { background: rgba(245,158,11,0.18); color: #b45309; }
 
-    .cta-row {
+    .season-bar {
+      margin-top: 1.75rem;
       display: flex;
       align-items: center;
       gap: 1.5rem;
     }
-    .cta-btn {
-      font-family: 'Cabin Condensed', sans-serif;
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: #fff;
-      background: var(--ocean);
-      padding: 0.9rem 2rem;
-      border-radius: 4px;
-      text-decoration: none;
-      transition: background 0.2s;
-    }
-    .cta-btn:hover { background: var(--teal); }
-    .cta-link {
-      font-size: 0.65rem;
-      font-weight: 400;
-      color: var(--muted);
-      text-decoration: none;
-      border-bottom: 1px solid rgba(12,45,72,0.2);
-      padding-bottom: 1px;
-    }
-
-    /* RIGHT — ocean panel */
-    .hero-right {
-      background: var(--ocean);
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
-
-    .right-header {
-      padding: 3rem 2.5rem 1.5rem;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-    }
-    .rh-label {
-      font-size: 0.55rem;
-      font-weight: 500;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.5);
-      margin-bottom: 0.4rem;
-    }
-    .rh-value {
-      font-family: 'Cabin Condensed', sans-serif;
-      font-size: 1.8rem;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: #fff;
-      line-height: 1;
-    }
-
-    /* Conditions list */
-    .conditions-list {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-    .cond-row {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      padding: 1.1rem 2.5rem;
-      border-bottom: 1px solid rgba(255,255,255,0.07);
-    }
-    .cond-icon { font-size: 1.2rem; flex-shrink: 0; }
-    .cond-info { flex: 1; }
-    .cond-name {
-      font-size: 0.82rem;
-      font-weight: 500;
-      color: rgba(255,255,255,0.85);
-    }
-    .cond-val {
-      font-size: 0.65rem;
-      font-weight: 300;
-      color: rgba(255,255,255,0.45);
-      margin-top: 0.1rem;
-    }
-    .cond-status {
-      font-size: 0.55rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 0.2rem 0.55rem;
-      border-radius: 100px;
-    }
-    .status-green { background: rgba(16,185,129,0.2); color: #34d399; }
-    .status-yellow { background: rgba(245,158,11,0.2); color: #fbbf24; }
-
-    /* Seasonal schedule */
-    .schedule-block {
-      padding: 1.5rem 2.5rem;
-      background: rgba(0,0,0,0.15);
-      border-top: 1px solid rgba(255,255,255,0.1);
-    }
     .sb-label {
-      font-size: 0.55rem;
-      font-weight: 700;
-      letter-spacing: 0.2em;
+      font-size: 0.58rem;
+      font-weight: 400;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.4);
-      margin-bottom: 0.75rem;
+      color: var(--muted);
+      flex-shrink: 0;
     }
     .sb-months {
       display: flex;
       gap: 0.3rem;
+      flex: 1;
     }
-    .sb-month {
+    .sb-m {
       flex: 1;
       text-align: center;
       font-size: 0.5rem;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      padding: 0.3rem 0;
-      border-radius: 3px;
-      color: rgba(255,255,255,0.35);
-      background: rgba(255,255,255,0.06);
-    }
-    .sb-month.active {
-      background: var(--sand);
-      color: var(--dark);
-    }
-
-    /* Photo containers */
-    .ph { position: relative; overflow: hidden; }
-    .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.55s ease; }
-    .ph:hover img { transform: scale(1.05); }
-
-    .section-wrap { max-width: 1600px; margin-left: auto; margin-right: auto; }
-
-    /* Gallery section */
-    .gallery {
-      padding: 5rem 4.5rem;
-      background: var(--bg);
-      border-top: 1px solid rgba(8,145,178,0.12);
-    }
-    .gallery-eyebrow {
-      font-size: 0.6rem;
       font-weight: 500;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--ocean);
-      margin-bottom: 0.5rem;
-    }
-    .gallery-headline {
-      font-family: 'Cabin Condensed', sans-serif;
-      font-weight: 700;
-      font-size: clamp(1.8rem, 3vw, 2.8rem);
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
-      color: var(--dark);
-      margin-bottom: 2.5rem;
-    }
-    .gallery-headline .sand { color: var(--sand); }
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 1rem;
-    }
-    .gallery-item-label {
-      margin-top: 0.6rem;
-      font-family: 'Cabin Condensed', sans-serif;
-      font-size: 0.88rem;
-      font-weight: 700;
       letter-spacing: 0.06em;
       text-transform: uppercase;
-      color: var(--dark);
+      padding: 0.35rem 0;
+      border-radius: 2px;
+      color: rgba(17,18,16,0.25);
+      background: rgba(196,137,26,0.08);
     }
-    .gallery-item-sub {
-      font-size: 0.68rem;
-      font-weight: 300;
-      color: var(--muted);
+    .sb-m.on {
+      background: var(--ocean);
+      color: rgba(255,255,255,0.85);
     }
 
-    /* Touren section */
-    .touren {
-      border-top: 1px solid rgba(8,145,178,0.12);
+    /* ===== FOOTER CTA ===== */
+    .footer-cta {
+      padding: 7.5rem 4.5rem;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      min-height: 460px;
+      gap: 6rem;
+      align-items: center;
+      background: var(--bg);
     }
-    .touren-image {}
-    .touren-content {
-      padding: 4.5rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 1.5rem;
-      background: var(--ocean);
+    .fcta-headline {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 5.5vw, 5rem);
+      line-height: 0.92;
+      letter-spacing: 0.04em;
+      color: var(--dark);
     }
-    .touren-eyebrow {
-      font-size: 0.6rem;
+    .fcta-headline .gold { color: var(--sun); }
+    .fcta-body {
+      font-size: 0.95rem;
+      font-weight: 300;
+      line-height: 1.95;
+      color: var(--muted);
+      margin-bottom: 2.25rem;
+    }
+    .fcta-actions { display: flex; gap: 1rem; }
+    .btn-ocean {
+      font-size: 0.65rem;
       font-weight: 500;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.5);
-    }
-    .touren-headline {
-      font-family: 'Cabin Condensed', sans-serif;
-      font-weight: 700;
-      font-size: clamp(2rem, 3.5vw, 3rem);
-      letter-spacing: 0.02em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       color: #fff;
-      line-height: 1;
-    }
-    .touren-body {
-      font-size: 0.88rem;
-      font-weight: 300;
-      line-height: 1.85;
-      color: rgba(255,255,255,0.6);
-      max-width: 42ch;
-    }
-    .touren-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-    .tour-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.65rem 0;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-      font-size: 0.78rem;
-    }
-    .tour-name { color: rgba(255,255,255,0.85); font-weight: 500; }
-    .tour-price {
-      font-family: 'Cabin Condensed', sans-serif;
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: var(--sand);
-    }
-    .touren-cta {
-      font-family: 'Cabin Condensed', sans-serif;
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ocean);
-      background: #fff;
-      padding: 0.85rem 2rem;
-      border-radius: 4px;
+      background: var(--ocean);
+      padding: 0.95rem 2.4rem;
+      border-radius: 2px;
       text-decoration: none;
-      transition: background 0.2s;
-      width: fit-content;
+      transition: background 0.25s;
     }
-    .touren-cta:hover { background: var(--sand); color: var(--dark); }
+    .btn-ocean:hover { background: var(--ocean-mid); }
+
+    .footer-strip {
+      background: var(--dark);
+      padding: 1.5rem 4.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .fs-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.25rem;
+      letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.28);
+    }
+    .fs-copy {
+      font-size: 0.6rem;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.22);
+    }
+
+    /* ===== FADE-IN ===== */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.75s ease, transform 0.75s ease;
+    }
+    .fade-up.in { opacity: 1; transform: translateY(0); }
+    .d1 { transition-delay: 0.1s; }
+    .d2 { transition-delay: 0.2s; }
+    .d3 { transition-delay: 0.3s; }
   </style>
 </head>
 <body>
-  <nav>
-    <div class="nav-logo">Wellenritt</div>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <a href="#" class="nav-logo">Wellenritt</a>
     <ul class="nav-links">
       <li><a href="#">Kurse</a></li>
       <li><a href="#">Verleih</a></li>
       <li><a href="#">Touren</a></li>
       <li><a href="#">Kontakt</a></li>
     </ul>
-    <a href="#" class="nav-book">Kurs buchen</a>
+    <a href="#" class="nav-cta">Kurs buchen</a>
   </nav>
 
+  <!-- HERO -->
   <section class="hero">
-    <div class="hero-left">
-      <div class="eyebrow">
-        <span class="eyebrow-dot"></span>
-        Surfschule & SUP · Mosel / Trier
+    <div class="hero-bg">
+      <img
+        src="https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&w=2000&h=1200&q=85"
+        alt="Surfer auf einer Welle"
+      />
+    </div>
+    <div class="hero-overlay"></div>
+
+    <div class="scroll-cue">
+      <div class="sc-line"></div>
+      <span class="sc-text">Scroll</span>
+    </div>
+
+    <div class="hero-inner">
+      <div class="hero-text">
+        <div class="hero-eyebrow">Surfschule &amp; SUP · Trier an der Mosel seit 2012</div>
+        <h1 class="hero-headline">
+          WELLEN<br>
+          RITT<span class="accent">.</span>
+        </h1>
+        <p class="hero-tagline">
+          Ja, wir surfen auf der Mosel. Nein, das ist kein Witz.
+          Und ja — es ist verdammt nochmal großartig.
+        </p>
+        <div class="hero-actions">
+          <a href="#" class="btn-solid">Jetzt buchen →</a>
+          <a href="#" class="btn-outline-white">Alle Kurse</a>
+        </div>
       </div>
 
-      <h1 class="hero-headline">
-        <span class="ocean">Wellen</span><br>
-        findest<br>
-        du<br>
-        <span class="sand">überall.</span>
-      </h1>
+      <div class="hero-stats">
+        <div class="hs-item">
+          <div class="hs-num">12+</div>
+          <div class="hs-label">Jahre auf dem Wasser</div>
+        </div>
+        <div class="hs-item">
+          <div class="hs-num">300+</div>
+          <div class="hs-label">Zufriedene Schüler</div>
+        </div>
+        <div class="hs-item">
+          <div class="hs-num">1 Fluss</div>
+          <div class="hs-label">Die Mosel. Unser Ozean.</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-      <p class="hero-body">
-        Surfstunden auf der Mosel? Klingt verrückt.
-        Ist es auch. Genau deshalb lieben wir es.
-        Von Anfänger bis Fortgeschrittener — wir bringen
-        dich aufs Brett.
+  <!-- VIBE STRIP -->
+  <div class="vibe-strip">
+    <div class="vi-item">
+      <div class="vi-num">Mai–Okt</div>
+      <div class="vi-label">Hauptsaison</div>
+    </div>
+    <div class="vi-item">
+      <div class="vi-num">16°C</div>
+      <div class="vi-label">Mosel · Sommerwasser</div>
+    </div>
+    <div class="vi-item">
+      <div class="vi-num">3</div>
+      <div class="vi-label">Spots auf Mosel &amp; Eifel</div>
+    </div>
+    <div class="vi-item">
+      <div class="vi-num">~0,6m</div>
+      <div class="vi-label">Durchschn. Wellenhöhe</div>
+    </div>
+    <div class="vi-item">
+      <div class="vi-num">100%</div>
+      <div class="vi-label">Ehrlich beim Wetter</div>
+    </div>
+  </div>
+
+  <!-- STORY -->
+  <section class="story">
+    <div>
+      <div class="story-eyebrow">Unsere Geschichte</div>
+      <h2 class="story-headline">
+        DIE MOSEL<br>
+        <span class="blue">IST UNSER</span><br>
+        OZEAN.
+      </h2>
+      <p class="story-body">
+        Klar, Tahiti sind wir nicht. Aber was wir haben, ist besser:
+        <strong>einen Fluss, der uns gehört.</strong> Keine Massen,
+        keine Haie, kein Sonnenbrand um 6 Uhr früh.<br><br>
+        Seit 2012 bringen wir Menschen auf Bretter — Anfänger,
+        Rentner, Kinder, Hochzeitsgesellschaften (ja, das kam vor).
+        Surfkurse, SUP, geführte Touren und Trips an die echte Küste.
+      </p>
+    </div>
+
+    <div class="feature-list">
+      <div class="feature-card fade-up">
+        <span class="fc-icon">🏄</span>
+        <div>
+          <div class="fc-name">Surf-Kurse für alle Level</div>
+          <div class="fc-desc">Von "Was ist ein Brett?" bis Fortgeschrittene. Kleine Gruppen, echter Spaß, viel Wasser.</div>
+        </div>
+      </div>
+      <div class="feature-card fade-up d1">
+        <span class="fc-icon">🚣</span>
+        <div>
+          <div class="fc-name">Stand-Up-Paddle</div>
+          <div class="fc-desc">Entspannt auf der Mosel. Morgentour, Sonnenuntergangs-SUP oder Gruppen-Wochenende.</div>
+        </div>
+      </div>
+      <div class="feature-card fade-up d2">
+        <span class="fc-icon">✈️</span>
+        <div>
+          <div class="fc-name">Küsten-Reisen</div>
+          <div class="fc-desc">Bretagne, Ericeira, Fuerteventura — wir organisieren Surf-Trips für dich und deine Crew.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COURSES (dark) -->
+  <section class="courses">
+    <div class="section-head">
+      <div>
+        <div class="sec-eyebrow">Was wir anbieten</div>
+        <h2 class="sec-headline">UNSERE<br><span class="ghost">ANGEBOTE</span></h2>
+      </div>
+      <a href="#" class="sec-all-link">Alle Preise &amp; Termine →</a>
+    </div>
+
+    <div class="courses-grid">
+      <div class="course-card fade-up">
+        <img
+          src="https://images.unsplash.com/photo-1509914398892-963f53e6e2f1?auto=format&fit=crop&w=900&h=700&q=80"
+          alt="Surfen lernen"
+          loading="lazy"
+        />
+        <div class="course-grad"></div>
+        <div class="course-info">
+          <div class="ci-badge">Bestseller</div>
+          <div class="ci-name">Surfen Beginner</div>
+          <div class="ci-desc">2 Stunden · Theorie + Wasser · Board &amp; Neopren inkl.</div>
+          <div class="ci-price">ab 49 €</div>
+        </div>
+      </div>
+
+      <div class="course-card fade-up d1">
+        <img
+          src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=900&h=700&q=80"
+          alt="Stand-Up-Paddle"
+          loading="lazy"
+        />
+        <div class="course-grad"></div>
+        <div class="course-info">
+          <div class="ci-badge">Für alle</div>
+          <div class="ci-name">SUP Basics</div>
+          <div class="ci-desc">Stand-Up-Paddle für Einzel &amp; Gruppen · alle Altersgruppen</div>
+          <div class="ci-price">ab 35 €</div>
+        </div>
+      </div>
+
+      <div class="course-card fade-up d2">
+        <img
+          src="https://images.unsplash.com/photo-1476673160081-cf065607f449?auto=format&fit=crop&w=900&h=700&q=80"
+          alt="Board Verleih"
+          loading="lazy"
+        />
+        <div class="course-grad"></div>
+        <div class="course-info">
+          <div class="ci-badge">Flexibel</div>
+          <div class="ci-name">Board Verleih</div>
+          <div class="ci-desc">Surf- &amp; SUP-Boards · Tagesmiete · alle Größen</div>
+          <div class="ci-price">ab 25 €</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery">
+    <div class="gallery-head">
+      <div class="sec-eyebrow" style="color:var(--sun);">
+        <span style="width:28px;height:1px;background:var(--sun);display:block;flex-shrink:0;"></span>
+        Mosel &amp; Meer
+      </div>
+      <h2 class="sec-headline" style="color:var(--dark);">
+        WASSER.<br>
+        <span style="color:rgba(17,18,16,0.2);">ÜBERALL.</span>
+      </h2>
+    </div>
+
+    <div class="gallery-grid">
+      <div class="gallery-main ph">
+        <img
+          src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&h=900&q=85"
+          alt="Traumstrand Panorama"
+          loading="lazy"
+        />
+        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(11,79,107,0.4) 0%,transparent 55%);pointer-events:none;"></div>
+        <div class="gallery-caption">
+          <div class="gc-name">Unsere Ziele</div>
+          <div class="gc-sub">Bretagne · Ericeira · Fuerteventura</div>
+        </div>
+      </div>
+
+      <div class="gallery-side ph">
+        <img
+          src="https://images.unsplash.com/photo-1471922694854-ff1b63b20054?auto=format&fit=crop&w=800&h=500&q=80"
+          alt="Wellen Nahaufnahme"
+          loading="lazy"
+        />
+        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.35) 0%,transparent 60%);pointer-events:none;"></div>
+        <div class="gallery-caption">
+          <div class="gc-name">Echte Wellen</div>
+          <div class="gc-sub">Auf unseren Küsten-Trips</div>
+        </div>
+      </div>
+
+      <div class="gallery-side ph">
+        <img
+          src="https://images.unsplash.com/photo-1505459668311-8dfac7952bf0?auto=format&fit=crop&w=800&h=500&q=80"
+          alt="Küstenlandschaft"
+          loading="lazy"
+        />
+        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.35) 0%,transparent 60%);pointer-events:none;"></div>
+        <div class="gallery-caption">
+          <div class="gc-name">SUP auf der Mosel</div>
+          <div class="gc-sub">Trier · April bis Oktober</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOUREN SPLIT -->
+  <section class="touren">
+    <div class="tour-photo">
+      <img
+        src="https://images.unsplash.com/photo-1473116763249-2faaef81ccda?auto=format&fit=crop&w=1200&h=1000&q=85"
+        alt="Küstenlandschaft und Touren"
+        loading="lazy"
+      />
+      <div class="tour-photo-fade"></div>
+    </div>
+
+    <div class="tour-content">
+      <div class="tour-eyebrow">Geführte Touren &amp; Trips</div>
+      <h2 class="tour-headline">
+        RAUS<br>
+        AUFS<br>
+        WASSER.
+      </h2>
+      <p class="tour-body">
+        Von der Mosel bis zur Atlantikküste — Tagestouren,
+        Wochenend-Trips und mehrtägige Surf-Camps für
+        Einzelne, Paare und Gruppen bis 12 Personen.
+        Equipment immer inklusive.
       </p>
 
-      <div class="course-grid">
-        <div class="course-card">
-          <div class="cc-name">Surfen Beginner</div>
-          <div class="cc-desc">2 Stunden Einführung, Leihboard</div>
-          <div class="cc-price">ab 49 €</div>
+      <div class="tour-list">
+        <div class="tl-row">
+          <div>
+            <div class="tl-name">Mosel-Morgentour</div>
+            <div class="tl-sub">3 Stunden · max. 8 Personen · Board inkl.</div>
+          </div>
+          <div class="tl-price">ab 45 €</div>
         </div>
-        <div class="course-card">
-          <div class="cc-name">SUP Basics</div>
-          <div class="cc-desc">Stand-up-Paddle, Einzel oder Gruppe</div>
-          <div class="cc-price">ab 35 €</div>
+        <div class="tl-row">
+          <div>
+            <div class="tl-name">Eifel-Seen Wochenende</div>
+            <div class="tl-sub">2 Tage · Camping · SUP &amp; Kanu</div>
+          </div>
+          <div class="tl-price">ab 195 €</div>
         </div>
-        <div class="course-card">
-          <div class="cc-name">Mosel-Tour</div>
-          <div class="cc-desc">Geführte Paddel-Tour, 3 Stunden</div>
-          <div class="cc-price">ab 65 €</div>
+        <div class="tl-row">
+          <div>
+            <div class="tl-name">Bretagne Surf-Camp</div>
+            <div class="tl-sub">5 Tage · Unterkunft &amp; Verpflegung inkl.</div>
+          </div>
+          <div class="tl-price">ab 590 €</div>
         </div>
-        <div class="course-card">
-          <div class="cc-name">Board Verleih</div>
-          <div class="cc-desc">Tagesmiete, alle Größen</div>
-          <div class="cc-price">ab 25 €</div>
+        <div class="tl-row">
+          <div>
+            <div class="tl-name">Ericeira &amp; Fuerteventura</div>
+            <div class="tl-sub">7 Tage · Internationales Surf-Camp</div>
+          </div>
+          <div class="tl-price">Anfrage</div>
         </div>
       </div>
 
-      <div class="cta-row">
-        <a href="#" class="cta-btn">Kurs buchen →</a>
-        <a href="#" class="cta-link">Alle Kurse ansehen</a>
+      <a href="#" class="tour-cta">Tour anfragen →</a>
+    </div>
+  </section>
+
+  <!-- CONDITIONS STRIP -->
+  <section class="conditions">
+    <div class="cond-head">
+      <div class="cond-title">Aktuelle Bedingungen</div>
+      <div class="cond-location">Mosel · Trier · heute</div>
+    </div>
+    <div class="cond-grid">
+      <div class="cond-cell">
+        <span class="cond-icon">🌊</span>
+        <div>
+          <div class="cond-value">0,5m</div>
+          <div class="cond-key">Wellenhöhe</div>
+        </div>
+        <span class="cond-tag tag-green">Gut</span>
+      </div>
+      <div class="cond-cell">
+        <span class="cond-icon">💨</span>
+        <div>
+          <div class="cond-value">14 km/h</div>
+          <div class="cond-key">Wind · SW</div>
+        </div>
+        <span class="cond-tag tag-green">Ideal</span>
+      </div>
+      <div class="cond-cell">
+        <span class="cond-icon">🌡</span>
+        <div>
+          <div class="cond-value">16 °C</div>
+          <div class="cond-key">Wassertemperatur</div>
+        </div>
+        <span class="cond-tag tag-yellow">Neopren</span>
+      </div>
+      <div class="cond-cell">
+        <span class="cond-icon">☀️</span>
+        <div>
+          <div class="cond-value">22 °C</div>
+          <div class="cond-key">Lufttemperatur</div>
+        </div>
+        <span class="cond-tag tag-green">Top</span>
       </div>
     </div>
-
-    <div class="hero-right">
-      <div class="right-header">
-        <div class="rh-label">Aktuelle Bedingungen</div>
-        <div class="rh-value">Mosel · Trier</div>
-      </div>
-
-      <div class="conditions-list">
-        <div class="cond-row">
-          <span class="cond-icon">🌊</span>
-          <div class="cond-info">
-            <div class="cond-name">Wellenhöhe</div>
-            <div class="cond-val">0,4 – 0,6 m · ideal für Anfänger</div>
-          </div>
-          <span class="cond-status status-green">Gut</span>
-        </div>
-        <div class="cond-row">
-          <span class="cond-icon">💨</span>
-          <div class="cond-info">
-            <div class="cond-name">Wind</div>
-            <div class="cond-val">14 km/h · SW</div>
-          </div>
-          <span class="cond-status status-green">Ideal</span>
-        </div>
-        <div class="cond-row">
-          <span class="cond-icon">🌡</span>
-          <div class="cond-info">
-            <div class="cond-name">Wassertemperatur</div>
-            <div class="cond-val">16 °C · Neopren empfohlen</div>
-          </div>
-          <span class="cond-status status-yellow">OK</span>
-        </div>
-        <div class="cond-row">
-          <span class="cond-icon">☀️</span>
-          <div class="cond-info">
-            <div class="cond-name">Wetter heute</div>
-            <div class="cond-val">22 °C · sonnig</div>
-          </div>
-          <span class="cond-status status-green">Top</span>
-        </div>
-      </div>
-
-      <div class="schedule-block">
-        <div class="sb-label">Saison</div>
-        <div class="sb-months">
-          <div class="sb-month">Jan</div>
-          <div class="sb-month">Feb</div>
-          <div class="sb-month">Mär</div>
-          <div class="sb-month active">Apr</div>
-          <div class="sb-month active">Mai</div>
-          <div class="sb-month active">Jun</div>
-          <div class="sb-month active">Jul</div>
-          <div class="sb-month active">Aug</div>
-          <div class="sb-month active">Sep</div>
-          <div class="sb-month active">Okt</div>
-          <div class="sb-month">Nov</div>
-          <div class="sb-month">Dez</div>
-        </div>
+    <div class="season-bar">
+      <span class="sb-label">Saison</span>
+      <div class="sb-months">
+        <div class="sb-m">Jan</div>
+        <div class="sb-m">Feb</div>
+        <div class="sb-m">Mär</div>
+        <div class="sb-m on">Apr</div>
+        <div class="sb-m on">Mai</div>
+        <div class="sb-m on">Jun</div>
+        <div class="sb-m on">Jul</div>
+        <div class="sb-m on">Aug</div>
+        <div class="sb-m on">Sep</div>
+        <div class="sb-m on">Okt</div>
+        <div class="sb-m">Nov</div>
+        <div class="sb-m">Dez</div>
       </div>
     </div>
   </section>
 
-  <!-- SECTION 2: Foto-Galerie -->
-  <section class="gallery">
-    <div class="section-wrap">
-      <div class="gallery-eyebrow">Mosel & Meer</div>
-      <h2 class="gallery-headline">Wasser ist<br><span class="sand">überall.</span></h2>
-      <div class="gallery-grid">
-        <div>
-          <div class="ph" style="height:300px;border-radius:8px;">
-            <img src="https://images.unsplash.com/photo-1483412033650-1015ddeb83d1?auto=format&fit=crop&w=1200&h=800&q=80" alt="Ozean und Strand" loading="lazy"/>
-            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.45) 0%,transparent 65%);pointer-events:none;"></div>
-          </div>
-          <div class="gallery-item-label">SUP auf der Mosel</div>
-          <div class="gallery-item-sub">Trier · Ganzjährig</div>
-        </div>
-        <div>
-          <div class="ph" style="height:300px;border-radius:8px;">
-            <img src="https://images.unsplash.com/photo-1504893524553-b855bce32c67?auto=format&fit=crop&w=1200&h=800&q=80" alt="Küstenlandschaft" loading="lazy"/>
-            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.45) 0%,transparent 65%);pointer-events:none;"></div>
-          </div>
-          <div class="gallery-item-label">Küsten-Camp</div>
-          <div class="gallery-item-sub">Bretagne · Sommer-Trip</div>
-        </div>
-        <div>
-          <div class="ph" style="height:300px;border-radius:8px;">
-            <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=1200&h=800&q=80" alt="Wasser Natur" loading="lazy"/>
-            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.45) 0%,transparent 65%);pointer-events:none;"></div>
-          </div>
-          <div class="gallery-item-label">Naturpaddeln</div>
-          <div class="gallery-item-sub">Eifel-Seen · Herbst</div>
-        </div>
+  <!-- FOOTER CTA -->
+  <section class="footer-cta">
+    <div>
+      <h2 class="fcta-headline">
+        BEREIT FÜR<br>
+        DEINE ERSTE<br>
+        <span class="gold">WELLE?</span>
+      </h2>
+    </div>
+    <div>
+      <p class="fcta-body">
+        Kein Vorwissen nötig. Kein Mut nötig (naja, ein bisschen).
+        Schreib uns, ruf an oder komm einfach vorbei —
+        direkt an der Mosel in Trier.
+      </p>
+      <div class="fcta-actions">
+        <a href="#" class="btn-solid">Kurs buchen →</a>
+        <a href="#" class="btn-ocean">Kontakt aufnehmen</a>
       </div>
     </div>
   </section>
 
-  <!-- SECTION 3: Touren -->
-  <section class="touren">
-    <div class="section-wrap" style="display:grid;grid-template-columns:1fr 1fr;width:100%;">
-      <div class="touren-image">
-        <div class="ph" style="height:100%;min-height:460px;">
-          <img src="https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?auto=format&fit=crop&w=1200&h=800&q=80" alt="Surftouren Natur" loading="lazy"/>
-          <div style="position:absolute;inset:0;background:linear-gradient(to right,transparent 55%,rgba(8,145,178,0.35) 100%);pointer-events:none;"></div>
-        </div>
-      </div>
-      <div class="touren-content">
-        <div class="touren-eyebrow">Geführte Touren</div>
-        <h2 class="touren-headline">Raus<br>aufs<br>Wasser.</h2>
-        <p class="touren-body">
-          Von der Mosel bis zur Atlantikküste — ich organisiere Tagestouren
-          und Wochenend-Trips für Gruppen bis 12 Personen.
-          Equipment inklusive.
-        </p>
-        <div class="touren-list">
-          <div class="tour-item">
-            <span class="tour-name">Mosel-Morgentour (3h)</span>
-            <span class="tour-price">ab 45 €</span>
-          </div>
-          <div class="tour-item">
-            <span class="tour-name">Eifel-Seen Wochenende</span>
-            <span class="tour-price">ab 195 €</span>
-          </div>
-          <div class="tour-item">
-            <span class="tour-name">Bretagne Surf-Camp (5 Tage)</span>
-            <span class="tour-price">ab 590 €</span>
-          </div>
-        </div>
-        <a href="#" class="touren-cta">Tour anfragen →</a>
-      </div>
-    </div>
-  </section>
+  <div class="footer-strip">
+    <span class="fs-logo">Wellenritt</span>
+    <span class="fs-copy">© 2025 Wellenritt Surfschule · Trier an der Mosel</span>
+    <span class="fs-copy">Impressum · Datenschutz</span>
+  </div>
+
+  <script>
+    // Nav scroll
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    // Fade-up on scroll
+    const fadeEls = document.querySelectorAll('.fade-up');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    fadeEls.forEach(el => io.observe(el));
+  </script>
 </body>
 </html>
