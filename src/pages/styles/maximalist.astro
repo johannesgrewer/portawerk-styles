@@ -259,6 +259,115 @@ export const prerender = true;
       color: rgba(26,26,26,0.45);
       text-align: right;
     }
+
+    /* Photo containers */
+    .ph { position: relative; overflow: hidden; }
+    .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.55s ease; }
+    .ph:hover img { transform: scale(1.05); }
+
+    /* Section wrapper */
+    .section-wrap {
+      max-width: 1600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Fundstücke section */
+    .fundstuecke {
+      position: relative;
+      z-index: 1;
+      padding: 4rem;
+      border-top: 3px solid var(--dark);
+      background: var(--cream);
+    }
+    .fundstuecke-label {
+      font-size: 0.52rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--mustard);
+      margin-bottom: 2rem;
+    }
+    .fundstuecke-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1.5rem;
+    }
+    .fundstueck-item {}
+    .fundstueck-caption {
+      margin-top: 0.75rem;
+      font-family: 'Abril Fatface', serif;
+      font-size: 1rem;
+      color: var(--dark);
+    }
+    .fundstueck-sub {
+      font-size: 0.65rem;
+      font-weight: 300;
+      color: rgba(26,26,26,0.5);
+      margin-top: 0.15rem;
+    }
+    .fundstueck-price {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--red);
+      margin-top: 0.35rem;
+    }
+
+    /* Macher section */
+    .macher {
+      position: relative;
+      z-index: 1;
+      border-top: 3px solid var(--dark);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .macher-left {
+      padding: 4rem;
+      background: var(--dark);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1.5rem;
+    }
+    .macher-eyebrow {
+      font-size: 0.52rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--mustard);
+    }
+    .macher-headline {
+      font-family: 'Abril Fatface', serif;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      line-height: 1;
+      color: var(--cream);
+    }
+    .macher-body {
+      font-size: 0.88rem;
+      font-weight: 300;
+      line-height: 1.85;
+      color: rgba(255,248,236,0.55);
+      max-width: 42ch;
+    }
+    .macher-cta {
+      display: inline-block;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--dark);
+      background: var(--mustard);
+      text-decoration: none;
+      padding: 0.85rem 2rem;
+      border: 3px solid var(--mustard);
+      transition: background 0.15s, color 0.15s;
+      width: fit-content;
+    }
+    .macher-cta:hover { background: transparent; color: var(--mustard); }
+    .macher-right {
+      border-left: 3px solid var(--dark);
+    }
   </style>
 </head>
 <body>
@@ -327,6 +436,64 @@ export const prerender = true;
       <div class="right-bottom">
         <div class="rb-tagline">Kein<br>Template.</div>
         <div class="rb-since">Im Herzen<br>Triers seit 2019</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 2: Fundstücke der Woche -->
+  <section class="fundstuecke">
+    <div class="section-wrap">
+      <div class="fundstuecke-label">Fundstücke dieser Woche</div>
+      <div class="fundstuecke-grid">
+        <div class="fundstueck-item">
+          <div class="ph" style="height:320px;border-radius:4px;">
+            <img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=1200&h=800&q=80" alt="Vintage Kleidungsstücke" loading="lazy"/>
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.45) 0%,transparent 65%);pointer-events:none;"></div>
+          </div>
+          <div class="fundstueck-caption">70er Wildlederjacke</div>
+          <div class="fundstueck-sub">Größe M · Cognac · Sehr guter Zustand</div>
+          <div class="fundstueck-price">89 €</div>
+        </div>
+        <div class="fundstueck-item">
+          <div class="ph" style="height:320px;border-radius:4px;">
+            <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1200&h=800&q=80" alt="Vintage Einrichtung" loading="lazy"/>
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.45) 0%,transparent 65%);pointer-events:none;"></div>
+          </div>
+          <div class="fundstueck-caption">Bauhaus Stuhl</div>
+          <div class="fundstueck-sub">1960er · Buche + Leder · Original</div>
+          <div class="fundstueck-price">320 €</div>
+        </div>
+        <div class="fundstueck-item">
+          <div class="ph" style="height:320px;border-radius:4px;">
+            <img src="https://images.unsplash.com/photo-1565814329452-e1efa11c5b89?auto=format&fit=crop&w=1200&h=800&q=80" alt="Kuriositäten und Dekor" loading="lazy"/>
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.45) 0%,transparent 65%);pointer-events:none;"></div>
+          </div>
+          <div class="fundstueck-caption">Keramik-Konvolut</div>
+          <div class="fundstueck-sub">5-teilig · West-Germany · 1970er</div>
+          <div class="fundstueck-price">55 €</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: Lokale Macher -->
+  <section class="macher">
+    <div class="section-wrap" style="display:grid;grid-template-columns:1fr 1fr;width:100%;">
+      <div class="macher-left">
+        <div class="macher-eyebrow">Lokale Macher</div>
+        <h2 class="macher-headline">Gemacht in<br>Trier.</h2>
+        <p class="macher-body">
+          Neben Vintage führe ich handverlesene Stücke von lokalen Kunsthandwerkerinnen,
+          Designerinnen und Produzentinnen aus Trier und der Moselregion.
+          Kein Massenprodukt. Keine Plattform. Nur echte Menschen und echte Arbeit.
+        </p>
+        <a href="#" class="macher-cta">Alle Macher entdecken →</a>
+      </div>
+      <div class="macher-right">
+        <div class="ph" style="height:100%;min-height:400px;">
+          <img src="https://images.unsplash.com/photo-1574484284002-952d92456975?auto=format&fit=crop&w=1200&h=800&q=80" alt="Handwerk und lokale Produktion" loading="lazy"/>
+          <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(26,26,26,0.3) 0%,transparent 60%);pointer-events:none;"></div>
+        </div>
       </div>
     </div>
   </section>

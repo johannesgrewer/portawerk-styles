@@ -126,6 +126,11 @@ export const prerender = true;
       transform: rotate(-45deg);
     }
 
+    /* === PHOTO CONTAINER === */
+    .ph { position: relative; overflow: hidden; }
+    .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.55s ease; }
+    .ph:hover img { transform: scale(1.05); }
+
     /* ===== HERO — TYPE SPECIMEN ===== */
     .hero {
       min-height: 100vh;
@@ -136,6 +141,25 @@ export const prerender = true;
       padding: 8rem 2rem 4rem;
       text-align: center;
       position: relative;
+      max-width: 1600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-photo-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .hero-photo-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.07;
+    }
+    .hero > *:not(.hero-photo-bg) {
+      position: relative;
+      z-index: 1;
     }
 
     .specimen-stack {
@@ -252,6 +276,17 @@ export const prerender = true;
       max-width: 1100px;
       margin: 0 auto;
     }
+    .arbeiten-outer {
+      max-width: 1600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .arbeit-photo {
+      height: 180px;
+      width: 100%;
+      margin-bottom: 1.5rem;
+    }
 
     .section-label {
       font-family: 'EB Garamond', serif;
@@ -360,12 +395,21 @@ export const prerender = true;
       padding: 6rem 2rem 7rem;
       background: #1A1A1A;
       color: #FAF8F5;
+      max-width: 1600px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .werkstatt-inner {
       max-width: 750px;
       margin: 0 auto;
       text-align: center;
+    }
+
+    .werkstatt-photo {
+      height: 320px;
+      max-width: 600px;
+      margin: 0 auto 3.5rem;
     }
 
     .werkstatt .section-label {
@@ -548,6 +592,9 @@ export const prerender = true;
 
   <!-- HERO — TYPE SPECIMEN -->
   <section class="hero" id="hero">
+    <div class="hero-photo-bg">
+      <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=1600&h=900&q=80" alt="Bücher und Typografie" loading="eager"/>
+    </div>
     <div class="specimen-stack">
       <div class="specimen-thin">Letterpress</div>
       <div class="specimen-regular">Letterpress</div>
@@ -570,6 +617,7 @@ export const prerender = true;
   </section>
 
   <!-- SECTION: ARBEITEN -->
+  <div class="arbeiten-outer">
   <section class="arbeiten" id="arbeiten">
     <p class="section-label">Ausgew&auml;hlte Arbeiten</p>
     <h2 class="section-title">Arbeiten</h2>
@@ -578,6 +626,10 @@ export const prerender = true;
 
       <!-- Hochzeitseinladung -->
       <div class="arbeit-card">
+        <div class="ph arbeit-photo">
+          <img src="https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?auto=format&fit=crop&w=800&h=400&q=80" alt="Hochzeitseinladung Letterpress" loading="lazy"/>
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,26,26,0.35) 0%,transparent 60%);pointer-events:none;"></div>
+        </div>
         <div class="arbeit-specimen arbeit-specimen-large">M</div>
         <hr class="arbeit-divider" />
         <h3 class="arbeit-title">Hochzeitseinladung</h3>
@@ -589,6 +641,10 @@ export const prerender = true;
 
       <!-- Weinetiketten -->
       <div class="arbeit-card">
+        <div class="ph arbeit-photo">
+          <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=800&h=400&q=80" alt="Weinetiketten Buchdruck" loading="lazy"/>
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,26,26,0.35) 0%,transparent 60%);pointer-events:none;"></div>
+        </div>
         <div class="arbeit-specimen arbeit-specimen-calligraphic">Riesling</div>
         <hr class="arbeit-divider" />
         <h3 class="arbeit-title">Weinetiketten</h3>
@@ -600,6 +656,10 @@ export const prerender = true;
 
       <!-- Visitenkarten -->
       <div class="arbeit-card">
+        <div class="ph arbeit-photo">
+          <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=800&h=400&q=80" alt="Visitenkarten Tiefprägung" loading="lazy"/>
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,26,26,0.35) 0%,transparent 60%);pointer-events:none;"></div>
+        </div>
         <div class="arbeit-specimen arbeit-specimen-name">Clara<br />Fontaine</div>
         <p class="arbeit-specimen-name-sub">Schriftsetzerin &middot; Trier</p>
         <hr class="arbeit-divider" />
@@ -612,12 +672,18 @@ export const prerender = true;
 
     </div>
   </section>
+  </div>
 
   <!-- SECTION: WERKSTATT -->
   <section class="werkstatt" id="werkstatt">
     <div class="werkstatt-inner">
       <p class="section-label">&Uuml;ber die Werkstatt</p>
       <h2 class="section-title">Clara Fontaine</h2>
+
+      <div class="ph werkstatt-photo">
+        <img src="https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?auto=format&fit=crop&w=1200&h=640&q=80" alt="Letterpress Werkstatt Trier" loading="lazy"/>
+        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,26,26,0.5) 0%,transparent 60%);pointer-events:none;"></div>
+      </div>
 
       <p class="werkstatt-quote">
         Gelernte Schriftsetzerin. Seit 2018 drucke ich in Trier

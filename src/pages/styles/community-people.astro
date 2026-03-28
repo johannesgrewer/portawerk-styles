@@ -179,7 +179,7 @@ export const prerender = true;
     }
 
     .hero-inner {
-      max-width: 1100px;
+      max-width: 1600px;
       width: 100%;
       position: relative;
       display: grid;
@@ -192,6 +192,20 @@ export const prerender = true;
     .hero-text {
       position: relative;
       z-index: 2;
+    }
+
+    .hero-icon {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-icon svg {
+      width: 56px;
+      height: 56px;
+      color: #2563EB;
+      filter: drop-shadow(0 4px 12px rgba(37, 99, 235, 0.25));
     }
 
     .hero-text h1 {
@@ -673,6 +687,14 @@ export const prerender = true;
   <section class="hero">
     <div class="hero-inner">
       <div class="hero-text">
+        <div class="hero-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
         <h1>Gemeinsam<br>geht <span>mehr.</span></h1>
         <div class="hero-subtitle">
           <span>Nachbarschaftsverein Trier-Sued</span>

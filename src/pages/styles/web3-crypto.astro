@@ -147,6 +147,73 @@ export const prerender = true;
     .content-wrapper {
       position: relative;
       z-index: 1;
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+
+    /* ── PHOTO CONTAINERS ── */
+    .ph { cursor: default; }
+    .ph:hover img { transform: scale(1.05); }
+
+    .section-photo {
+      position: relative;
+      overflow: hidden;
+      height: 280px;
+      margin-bottom: 3rem;
+      border: 1px solid rgba(168, 85, 247, 0.15);
+      border-radius: 4px;
+    }
+
+    .section-photo img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.55s ease;
+      filter: brightness(0.55) saturate(0.7);
+    }
+
+    .section-photo:hover img { transform: scale(1.05); }
+
+    .section-photo-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(11,7,24,0.7) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .hero-visual-strip {
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto 2.5rem;
+      position: relative;
+      overflow: hidden;
+      height: 200px;
+      border: 1px solid rgba(34, 211, 238, 0.15);
+      border-radius: 4px;
+      z-index: 2;
+    }
+
+    .hero-visual-strip img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.35) saturate(0.5) hue-rotate(220deg);
+      transition: transform 0.55s ease;
+    }
+
+    .hero-visual-strip:hover img { transform: scale(1.05); }
+
+    .hero-visual-strip-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to top, rgba(11,7,24,0.9) 0%, transparent 50%),
+        linear-gradient(to bottom, rgba(11,7,24,0.9) 0%, transparent 50%);
+      pointer-events: none;
     }
 
     /* ═══════════════════════════════════════════
@@ -894,6 +961,11 @@ export const prerender = true;
       </div>
     </div>
 
+    <div class="hero-visual-strip crypto-reveal">
+      <img src="https://images.unsplash.com/photo-1542736667-069246bdbc6d?auto=format&fit=crop&w=1200&h=400&q=80" alt="Blockchain Netzwerk — abstrakte Technologie" loading="eager" />
+      <div class="hero-visual-strip-overlay"></div>
+    </div>
+
     <h1 class="hero-title crypto-reveal">Chainforge</h1>
     <p class="hero-tagline crypto-reveal">Building trust. On chain.</p>
 
@@ -939,6 +1011,11 @@ export const prerender = true;
     </div>
 
     <p class="services-note crypto-reveal">Alle Audits nach OWASP & SWC Registry Standards.</p>
+
+    <div class="section-photo crypto-reveal">
+      <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=1200&h=600&q=80" alt="Server und Technologie-Infrastruktur" loading="lazy" />
+      <div class="section-photo-overlay"></div>
+    </div>
   </section>
 
   <!-- TRACK RECORD -->
@@ -973,6 +1050,11 @@ export const prerender = true;
           <span class="block-status status-confirmed">Confirmed</span>
         </div>
       </div>
+    </div>
+
+    <div class="section-photo crypto-reveal">
+      <img src="https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=1200&h=600&q=80" alt="Digitale Datenvisualisierung und Code" loading="lazy" />
+      <div class="section-photo-overlay"></div>
     </div>
 
     <div class="founder crypto-reveal glow-on-reveal" id="kontakt">

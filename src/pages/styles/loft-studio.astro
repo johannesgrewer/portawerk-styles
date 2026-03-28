@@ -121,6 +121,9 @@ export const prerender = true;
       z-index: 1;
       display: grid;
       grid-template-columns: 1fr 1fr;
+      max-width: 1600px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     /* LEFT */
@@ -333,6 +336,245 @@ export const prerender = true;
       color: rgba(242,237,229,0.75);
       line-height: 1.6;
     }
+    /* ─── Photo container ──────────────────────────────── */
+    .ph { position: relative; overflow: hidden; }
+    .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.55s ease; }
+    .ph:hover img { transform: scale(1.05); }
+    .ph-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 60%); pointer-events: none; }
+
+    /* ─── Section 2: Räume & Preise ─────────────────────── */
+    .spaces {
+      padding: 7rem 4rem;
+      background: var(--warm);
+      border-top: 1px solid var(--rule);
+    }
+    .spaces-inner {
+      max-width: 1600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .sec-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 4rem;
+    }
+    .sec-tag {
+      font-size: 0.52rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: 0.5rem;
+    }
+    .sec-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      letter-spacing: 0.06em;
+      color: var(--dark);
+      line-height: 1;
+    }
+    .sec-sub {
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: var(--muted);
+      max-width: 38ch;
+      text-align: right;
+      line-height: 1.8;
+    }
+    .spaces-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border: 1px solid var(--rule);
+    }
+    .space-card {
+      background: #fff;
+      border-right: 1px solid var(--rule);
+      overflow: hidden;
+      transition: box-shadow 0.3s;
+    }
+    .space-card:last-child { border-right: none; }
+    .space-card:hover { box-shadow: 0 12px 40px rgba(42,37,32,0.1); z-index: 1; }
+    .sc-photo { height: 260px; }
+    .sc-body { padding: 1.75rem; }
+    .sc-label {
+      font-size: 0.5rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: 0.5rem;
+    }
+    .sc-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      letter-spacing: 0.06em;
+      color: var(--dark);
+      line-height: 1;
+      margin-bottom: 0.75rem;
+    }
+    .sc-desc {
+      font-size: 0.82rem;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.75;
+      margin-bottom: 1.5rem;
+    }
+    .sc-features {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      margin-bottom: 1.5rem;
+    }
+    .sc-feat {
+      font-size: 0.75rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .sc-feat::before {
+      content: '';
+      display: block;
+      width: 4px;
+      height: 4px;
+      background: var(--rust);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .sc-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--rule);
+    }
+    .sc-price {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 0.06em;
+      color: var(--rust);
+    }
+    .sc-price span {
+      font-family: 'Karla', sans-serif;
+      font-size: 0.62rem;
+      font-weight: 300;
+      color: var(--muted);
+      letter-spacing: 0;
+    }
+    .sc-cta {
+      font-size: 0.55rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--dark);
+      background: transparent;
+      border: 1px solid rgba(42,37,32,0.2);
+      padding: 0.5rem 1rem;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+    }
+    .sc-cta:hover { background: var(--rust); color: var(--bg); border-color: var(--rust); }
+
+    /* ─── Section 3: Wer wir sind ───────────────────────── */
+    .about {
+      padding: 7rem 4rem;
+      background: var(--dark);
+    }
+    .about-inner {
+      max-width: 1600px;
+      margin-left: auto;
+      margin-right: auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+    .about-photo { height: 520px; }
+    .about-right {}
+    .about-tag {
+      font-size: 0.52rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: 1.5rem;
+    }
+    .about-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 4.5vw, 4rem);
+      letter-spacing: 0.06em;
+      color: var(--bg);
+      line-height: 1;
+      margin-bottom: 2rem;
+    }
+    .about-title .rust { color: var(--rust); }
+    .about-body {
+      font-size: 0.9rem;
+      font-weight: 300;
+      line-height: 2;
+      color: rgba(242,237,229,0.55);
+      max-width: 46ch;
+      margin-bottom: 3rem;
+    }
+    .about-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border: 1px solid rgba(242,237,229,0.08);
+      margin-bottom: 2.5rem;
+    }
+    .as-cell {
+      padding: 1.5rem;
+      border-right: 1px solid rgba(242,237,229,0.08);
+      text-align: center;
+    }
+    .as-cell:last-child { border-right: none; }
+    .as-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.2rem;
+      letter-spacing: 0.04em;
+      color: var(--rust);
+      line-height: 1;
+    }
+    .as-label {
+      font-size: 0.55rem;
+      font-weight: 300;
+      color: rgba(242,237,229,0.3);
+      margin-top: 0.2rem;
+    }
+    .about-contact {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .ac-line {
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: rgba(242,237,229,0.5);
+    }
+    .ac-line strong {
+      font-weight: 500;
+      color: var(--bg);
+    }
+    .about-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-top: 2rem;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--dark);
+      background: var(--rust);
+      padding: 0.85rem 2rem;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .about-cta:hover { background: var(--bg); }
+
     /* === Animations & Micro-interactions === */
     @keyframes factPulse {
       0%, 100% { transform: scale(1); }
@@ -464,7 +706,12 @@ export const prerender = true;
       </div>
     </div>
 
-    <div class="hero-right">
+    <div class="hero-right" style="position:relative;overflow:hidden;">
+      <div class="ph" style="position:absolute;inset:0;z-index:0;">
+        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&h=1600&q=80" alt="Loft Atelier Atmosphäre" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.55s ease;" />
+        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(42,37,32,0.85) 0%,rgba(42,37,32,0.3) 60%,rgba(42,37,32,0.5) 100%);pointer-events:none;"></div>
+      </div>
+      <div style="position:relative;z-index:1;display:flex;flex-direction:column;height:100%;">
       <div class="right-label">Unsere Residenten</div>
 
       <div class="resident-grid">
@@ -513,7 +760,139 @@ export const prerender = true;
         <div class="ib-label">Besichtigung & Kontakt</div>
         <div class="ib-value">Di + Do 14 – 18 Uhr · offene Tür<br>rohbau-trier.de · hallo@rohbau-trier.de</div>
       </div>
+    </div><!-- end z-index wrapper -->
     </div>
   </section>
+
+  <!-- ── Section 2: Räume & Preise ──────────────────────── -->
+  <section class="spaces">
+    <div class="spaces-inner">
+      <div class="sec-header">
+        <div>
+          <div class="sec-tag">Räume & Preise</div>
+          <div class="sec-title">Dein Atelier.<br>Deine Regeln.</div>
+        </div>
+        <p class="sec-sub">Drei Raumtypen, ein Ort. Vom Einzelatelier bis zur Gemeinschaftshalle — monatlich kündbar, sofort verfügbar.</p>
+      </div>
+
+      <div class="spaces-grid">
+
+        <!-- Kleinatelier -->
+        <div class="space-card">
+          <div class="ph sc-photo">
+            <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800&h=520&q=80" alt="Kleinatelier Einzelarbeitsplatz" loading="lazy" />
+            <div class="ph-overlay"></div>
+          </div>
+          <div class="sc-body">
+            <div class="sc-label">Einzelatelier</div>
+            <div class="sc-name">Kleinatelier</div>
+            <div class="sc-desc">18 m² mit Nordfenster und direktem Tageslicht. Ideal für Malerei, Illustration oder ruhiges Konzeptarbeiten.</div>
+            <div class="sc-features">
+              <div class="sc-feat">18 m² · Naturlicht · Einzelperson</div>
+              <div class="sc-feat">Schlüssel & 24/7 Zugang</div>
+              <div class="sc-feat">Gemeinschaftsküche & Sanitär</div>
+            </div>
+            <div class="sc-footer">
+              <div class="sc-price">380 € <span>/ Monat</span></div>
+              <a href="#" class="sc-cta">Anfragen →</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Doppelatelier -->
+        <div class="space-card">
+          <div class="ph sc-photo">
+            <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=800&h=520&q=80" alt="Doppelatelier zwei Personen" loading="lazy" />
+            <div class="ph-overlay"></div>
+          </div>
+          <div class="sc-body">
+            <div class="sc-label">Doppelatelier</div>
+            <div class="sc-name">Atelier OG-1</div>
+            <div class="sc-desc">34 m² mit Dachfenster unter dem Originaldachstuhl. Für Tandems, Duos oder Künstler, die Raum zum Wachsen brauchen.</div>
+            <div class="sc-features">
+              <div class="sc-feat">34 m² · Dachfenster · 2 Personen</div>
+              <div class="sc-feat">Eigene Ablage & Wandflächen</div>
+              <div class="sc-feat">Lastenlift verfügbar</div>
+            </div>
+            <div class="sc-footer">
+              <div class="sc-price">620 € <span>/ Monat</span></div>
+              <a href="#" class="sc-cta">Anfragen →</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Großatelier -->
+        <div class="space-card">
+          <div class="ph sc-photo">
+            <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&h=520&q=80" alt="Großatelier Hallenfläche" loading="lazy" />
+            <div class="ph-overlay"></div>
+          </div>
+          <div class="sc-body">
+            <div class="sc-label">Großatelier</div>
+            <div class="sc-name">Halle</div>
+            <div class="sc-desc">60 m² offene Fläche mit 5 m hohen Decken. Für Installation, Skulptur, Bühnenbildarbeit oder kollektive Projekte.</div>
+            <div class="sc-features">
+              <div class="sc-feat">60 m² · 5 m Deckenhöhe · Gruppe</div>
+              <div class="sc-feat">Originalindustrieboden</div>
+              <div class="sc-feat">Ausstellungs- & Probennutzung möglich</div>
+            </div>
+            <div class="sc-footer">
+              <div class="sc-price">980 € <span>/ Monat</span></div>
+              <a href="#" class="sc-cta">Besichtigen →</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Section 3: Wer wir sind ────────────────────────── -->
+  <section class="about">
+    <div class="about-inner">
+
+      <div class="ph about-photo">
+        <img src="https://images.unsplash.com/photo-1541518763669-27fef04b14ea?auto=format&fit=crop&w=1200&h=1560&q=80" alt="Kreative Atmosphäre im Rohbau Atelier" loading="lazy" />
+        <div class="ph-overlay"></div>
+      </div>
+
+      <div class="about-right">
+        <div class="about-tag">Wer wir sind</div>
+        <h2 class="about-title">Gemacht für<br>Kreative. <span class="rust">Punkt.</span></h2>
+        <p class="about-body">
+          Rohbau entstand 2019, als eine Gruppe Trierer Künstler
+          eine leerstehende Fabrikhalle mietete und begann, sie
+          selbst auszubauen. Heute teilen sich 32 Kreative
+          1.200 m² Raum — und das Beste: Die Halle ist nie
+          fertig. Das ist das Konzept.
+        </p>
+
+        <div class="about-stats">
+          <div class="as-cell">
+            <div class="as-num">32</div>
+            <div class="as-label">Kreative</div>
+          </div>
+          <div class="as-cell">
+            <div class="as-num">14</div>
+            <div class="as-label">Ateliers</div>
+          </div>
+          <div class="as-cell">
+            <div class="as-num">2019</div>
+            <div class="as-label">Gegründet</div>
+          </div>
+        </div>
+
+        <div class="about-contact">
+          <div class="ac-line"><strong>Adresse:</strong> Industriestraße 12, 54290 Trier-Nord</div>
+          <div class="ac-line"><strong>Offene Tür:</strong> Di + Do, 14 – 18 Uhr</div>
+          <div class="ac-line"><strong>Kontakt:</strong> hallo@rohbau-trier.de</div>
+        </div>
+
+        <a href="#" class="about-cta">Besichtigung anfragen →</a>
+      </div>
+
+    </div>
+  </section>
+
 </body>
 </html>

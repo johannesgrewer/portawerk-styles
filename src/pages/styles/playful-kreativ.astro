@@ -542,6 +542,41 @@ export const prerender = true;
       transform: rotate(-1deg);
     }
 
+    /* Photo container */
+    .ph { position:relative; overflow:hidden; }
+    .ph img { position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.55s ease; }
+    .ph:hover img { transform: scale(1.05); }
+
+    /* Large screen fix */
+    .hero-content { max-width: 1600px; margin-left: auto; margin-right: auto; }
+    .section-inner { max-width: 1600px; }
+
+    /* Photo grid in kurse section */
+    .course-photo-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+    .course-photo-label {
+      font-family: 'Baloo 2', cursive;
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: #2D1B4E;
+      margin-top: 0.6rem;
+      text-align: center;
+    }
+
+    /* Photo strip in team section */
+    .team-photo-strip {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+      border-radius: 24px;
+      overflow: hidden;
+    }
+
     /* ===== FOOTER ===== */
     .footer {
       background: #2D1B4E;
@@ -671,6 +706,30 @@ export const prerender = true;
       <div class="squiggle"></div>
       <p class="section-subtitle">Von Fingerfarbe bis Tonofen &mdash; hier wird ausprobiert, experimentiert und stolz nach Hause getragen.</p>
 
+      <div class="course-photo-row">
+        <div>
+          <div class="ph" style="height:200px;border-radius:16px;">
+            <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=800&h=600&q=80" alt="Kinder malen und basteln" loading="lazy" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.3) 0%,transparent 60%);pointer-events:none;border-radius:16px;"></div>
+          </div>
+          <div class="course-photo-label">Malen & Matschen</div>
+        </div>
+        <div>
+          <div class="ph" style="height:200px;border-radius:16px;">
+            <img src="https://images.unsplash.com/photo-1565814329452-e1efa11c5b89?auto=format&fit=crop&w=800&h=600&q=80" alt="Töpfern mit Kindern" loading="lazy" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.3) 0%,transparent 60%);pointer-events:none;border-radius:16px;"></div>
+          </div>
+          <div class="course-photo-label">Töpfern</div>
+        </div>
+        <div>
+          <div class="ph" style="height:200px;border-radius:16px;">
+            <img src="https://images.unsplash.com/photo-1574484284002-952d92456975?auto=format&fit=crop&w=800&h=600&q=80" alt="Kreatives Gestalten Ferienwerkstatt" loading="lazy" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.3) 0%,transparent 60%);pointer-events:none;border-radius:16px;"></div>
+          </div>
+          <div class="course-photo-label">Ferienwerkstatt</div>
+        </div>
+      </div>
+
       <div class="course-grid">
         <!-- Card 1: Malen & Matschen -->
         <div class="course-card course-card-1">
@@ -740,6 +799,17 @@ export const prerender = true;
       <h2 class="section-title">Das Team</h2>
       <div class="squiggle"></div>
       <p class="section-subtitle">Zwei kreative K&ouml;pfe, ein Ziel: Kinder f&uuml;r Kunst begeistern.</p>
+
+      <div class="team-photo-strip">
+        <div class="ph" style="height:260px;">
+          <img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=1200&h=700&q=80" alt="Kreativwerkstatt Atelier" loading="lazy" />
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(45,27,78,0.35) 0%,transparent 60%);pointer-events:none;"></div>
+        </div>
+        <div class="ph" style="height:260px;">
+          <img src="https://images.unsplash.com/photo-1581078426770-6d336e5042ff?auto=format&fit=crop&w=600&h=700&q=80" alt="Kinder beim Basteln" loading="lazy" />
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(45,27,78,0.35) 0%,transparent 60%);pointer-events:none;"></div>
+        </div>
+      </div>
 
       <div class="team-grid">
         <!-- Sofie -->

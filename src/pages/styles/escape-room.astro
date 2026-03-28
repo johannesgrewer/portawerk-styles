@@ -392,6 +392,71 @@ export const prerender = true;
       transition: background 0.2s;
     }
     .bb-cta:hover { background: #fff; }
+
+    /* ── PHOTO ── */
+    .img-wrap img { display: block; }
+    .img-wrap:hover img { transform: scale(1.05); }
+
+    /* ── ROOMS PREVIEW SECTION ── */
+    .rooms-preview {
+      padding: 5rem 4.5rem;
+      background: var(--panel);
+      border-top: 1px solid var(--rule);
+      position: relative;
+      z-index: 1;
+    }
+    .rooms-preview-inner {
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+    .rp-eyebrow {
+      font-size: 0.48rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+    .rp-title {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text);
+      margin-bottom: 2.5rem;
+    }
+    .rp-title span { color: var(--gold); }
+    .rooms-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+    .room-photo-card {
+      position: relative;
+    }
+    .room-photo-label {
+      position: absolute;
+      bottom: 1rem;
+      left: 1rem;
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text);
+      z-index: 2;
+    }
+    .room-photo-diff {
+      position: absolute;
+      bottom: 1rem;
+      right: 1rem;
+      font-size: 0.48rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      z-index: 2;
+    }
+
     /* === Animations & Micro-interactions === */
     @keyframes colonBlink {
       0%, 49% { opacity: 1; }
@@ -464,8 +529,14 @@ export const prerender = true;
     <a href="#" class="nav-tickets">Jetzt buchen</a>
   </nav>
 
-  <section class="hero">
-    <div class="hero-left">
+  <section class="hero" style="max-width:1600px;margin-left:auto;margin-right:auto;position:relative;">
+    <!-- Hero background photo with dark overlay -->
+    <div style="position:absolute;inset:0;overflow:hidden;z-index:0;">
+      <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&h=900&q=80"
+           alt="Escape Room Atmosphäre" loading="eager"
+           style="width:100%;height:100%;object-fit:cover;opacity:0.18;" />
+    </div>
+    <div class="hero-left" style="position:relative;z-index:1;">
       <div class="timer-badge">
         <span class="tb-pulse"></span>
         Du hast 60 Minuten
@@ -541,9 +612,9 @@ export const prerender = true;
         <a href="#" class="cta-btn">Raum buchen →</a>
         <a href="#" class="cta-link">Gruppenangebote</a>
       </div>
-    </div>
+    </div><!-- end hero-left -->
 
-    <div class="hero-right">
+    <div class="hero-right" style="position:relative;z-index:1;">
       <div class="timer-display">
         <div class="td-label">Dein Countdown</div>
         <div class="td-time">60<span class="colon">:</span>00</div>
@@ -590,5 +661,46 @@ export const prerender = true;
       </div>
     </div>
   </section>
+
+  <!-- RÄUME PREVIEW -->
+  <section class="rooms-preview">
+    <div class="rooms-preview-inner">
+      <div class="rp-eyebrow">Unsere Räume</div>
+      <h2 class="rp-title">Vier Welten. <span>Ein Ziel.</span></h2>
+      <div class="rooms-grid">
+        <div class="room-photo-card">
+          <div class="img-wrap" style="position:relative;overflow:hidden;height:280px;border-radius:4px;">
+            <img src="https://images.unsplash.com/photo-1541518763669-27fef04b14ea?auto=format&fit=crop&w=1200&h=800&q=80"
+                 alt="Das Archiv — Detektiv Noir Escape Room" loading="lazy"
+                 style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.55s ease;" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.75) 0%,transparent 60%);pointer-events:none;"></div>
+          </div>
+          <div class="room-photo-label">Das Archiv</div>
+          <div class="room-photo-diff">Mittel</div>
+        </div>
+        <div class="room-photo-card">
+          <div class="img-wrap" style="position:relative;overflow:hidden;height:280px;border-radius:4px;">
+            <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=1200&h=800&q=80"
+                 alt="Das Labor — Sci-Fi Thriller Escape Room" loading="lazy"
+                 style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.55s ease;" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.75) 0%,transparent 60%);pointer-events:none;"></div>
+          </div>
+          <div class="room-photo-label">Das Labor</div>
+          <div class="room-photo-diff">Schwer</div>
+        </div>
+        <div class="room-photo-card">
+          <div class="img-wrap" style="position:relative;overflow:hidden;height:280px;border-radius:4px;">
+            <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1200&h=800&q=80"
+                 alt="Die Gruft — Horror Escape Room" loading="lazy"
+                 style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.55s ease;" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.75) 0%,transparent 60%);pointer-events:none;"></div>
+          </div>
+          <div class="room-photo-label">Die Gruft</div>
+          <div class="room-photo-diff">Extrem · ab 18</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </body>
 </html>

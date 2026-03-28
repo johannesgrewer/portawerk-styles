@@ -112,6 +112,157 @@ export const prerender = true;
     }
     .nav-contact:hover { opacity: 0.85; }
 
+    /* Photo container */
+    .ph { position: relative; overflow: hidden; }
+    .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.55s ease; }
+    .ph:hover img { transform: scale(1.05); }
+
+    /* Studio section */
+    .section-studio {
+      padding: 7rem 3rem;
+      background: var(--mid);
+      position: relative;
+      z-index: 1;
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+    .s-label {
+      font-size: 0.58rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--purple);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .s-label::before {
+      content: '';
+      display: block;
+      width: 2rem;
+      height: 2px;
+      background: linear-gradient(to right, var(--purple), var(--pink));
+    }
+    .s-heading {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      line-height: 0.9;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      margin-bottom: 3.5rem;
+    }
+    .s-heading .grad {
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .studio-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+    .studio-card {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .studio-card-body {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .sc-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--text);
+    }
+    .sc-desc {
+      font-size: 0.72rem;
+      font-weight: 300;
+      line-height: 1.7;
+      color: rgba(240,230,255,0.45);
+    }
+    .sc-tag {
+      display: inline-block;
+      font-size: 0.52rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.22rem 0.7rem;
+      border-radius: 100px;
+      color: var(--pink);
+      background: rgba(236,72,153,0.1);
+      border: 1px solid rgba(236,72,153,0.2);
+      width: fit-content;
+    }
+
+    /* Booking section */
+    .section-booking {
+      padding: 7rem 3rem;
+      background: var(--bg);
+      position: relative;
+      z-index: 1;
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+    .booking-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    .booking-body {
+      font-size: 0.88rem;
+      font-weight: 300;
+      line-height: 1.9;
+      color: rgba(240,230,255,0.5);
+      max-width: 44ch;
+      margin-bottom: 2rem;
+    }
+    .booking-rates {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-bottom: 2rem;
+    }
+    .br-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.85rem 0;
+      border-bottom: 1px solid rgba(147,51,234,0.1);
+      font-size: 0.8rem;
+    }
+    .br-name { font-weight: 300; color: rgba(240,230,255,0.5); }
+    .br-price {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .booking-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.9rem 2rem;
+      transition: opacity 0.2s;
+    }
+    .booking-cta:hover { opacity: 0.85; }
+
     .hero {
       min-height: 100vh;
       position: relative;

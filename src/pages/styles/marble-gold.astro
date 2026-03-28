@@ -320,6 +320,236 @@ export const prerender = true;
       text-decoration: none;
     }
 
+    /* ─── Photo container ──────────────────────────────── */
+    .ph { position: relative; overflow: hidden; }
+    .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.55s ease; }
+    .ph:hover img { transform: scale(1.05); }
+    .ph-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.45) 0%, transparent 60%); pointer-events: none; }
+
+    /* ─── Large screen constraint ───────────────────────── */
+    .hero { max-width: 1600px; margin-left: auto; margin-right: auto; }
+
+    /* ─── Section 2: Materialien & Referenzen ───────────── */
+    .materialien {
+      padding: 8rem 4rem;
+      background: var(--marble);
+      border-top: 1px solid rgba(201,168,76,0.15);
+      position: relative;
+      z-index: 1;
+    }
+    .materialien-inner { max-width: 1600px; margin: 0 auto; }
+    .mat-eyebrow {
+      font-size: 0.55rem;
+      font-weight: 300;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .mat-eyebrow::before {
+      content: '';
+      display: block;
+      width: 2rem;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.5;
+    }
+    .mat-title {
+      font-family: 'Cormorant', serif;
+      font-weight: 300;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      line-height: 1.1;
+      color: var(--onyx);
+      letter-spacing: 0.01em;
+      margin-bottom: 4rem;
+    }
+    .mat-title em { font-style: italic; color: var(--gold); }
+    .mat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      background: rgba(201,168,76,0.15);
+      margin-bottom: 5rem;
+    }
+    .mat-card {
+      background: var(--marble);
+      overflow: hidden;
+      transition: box-shadow 0.3s;
+    }
+    .mat-card:hover { box-shadow: 0 12px 40px rgba(21,20,25,0.08); z-index: 1; }
+    .mat-photo { height: 300px; }
+    .mat-body { padding: 2rem; }
+    .mat-stone {
+      font-size: 0.5rem;
+      font-weight: 300;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+    .mat-name {
+      font-family: 'Cormorant', serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: var(--onyx);
+      margin-bottom: 0.6rem;
+    }
+    .mat-origin {
+      font-size: 0.75rem;
+      font-weight: 300;
+      color: var(--stone);
+      line-height: 1.7;
+      margin-bottom: 1.25rem;
+    }
+    .mat-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .mat-tag {
+      font-size: 0.5rem;
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid rgba(201,168,76,0.3);
+      padding: 0.25rem 0.65rem;
+    }
+
+    /* Referenz-Strip */
+    .ref-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      border: 1px solid rgba(201,168,76,0.2);
+    }
+    .ref-cell {
+      padding: 2rem;
+      border-right: 1px solid rgba(201,168,76,0.15);
+      text-align: center;
+    }
+    .ref-cell:last-child { border-right: none; }
+    .ref-num {
+      font-family: 'Cormorant', serif;
+      font-size: 2.5rem;
+      font-weight: 300;
+      color: var(--onyx);
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+    .ref-num span { color: var(--gold); font-size: 1.6rem; }
+    .ref-label {
+      font-size: 0.55rem;
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+
+    /* ─── Section 3: Manufaktur & Kontakt ───────────────── */
+    .manufaktur {
+      padding: 8rem 4rem;
+      background: var(--onyx);
+      position: relative;
+      overflow: hidden;
+    }
+    .manufaktur::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        112deg,
+        transparent 0px, transparent 90px,
+        rgba(201,168,76,0.03) 90px, rgba(201,168,76,0.03) 91px
+      );
+      pointer-events: none;
+    }
+    .manufaktur-inner {
+      max-width: 1600px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+    .manu-left {}
+    .manu-eyebrow {
+      font-size: 0.55rem;
+      font-weight: 300;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .manu-eyebrow::before {
+      content: '';
+      display: block;
+      width: 2rem;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.5;
+    }
+    .manu-title {
+      font-family: 'Cormorant', serif;
+      font-weight: 300;
+      font-size: clamp(2.5rem, 4vw, 3.5rem);
+      line-height: 1.0;
+      color: var(--marble);
+      letter-spacing: 0.01em;
+      margin-bottom: 2rem;
+    }
+    .manu-title em { font-style: italic; color: var(--gold); }
+    .manu-divider {
+      width: 3rem;
+      height: 1px;
+      background: linear-gradient(to right, var(--gold), transparent);
+      margin-bottom: 2rem;
+    }
+    .manu-body {
+      font-size: 0.85rem;
+      font-weight: 200;
+      line-height: 2;
+      color: rgba(250,250,248,0.45);
+      max-width: 44ch;
+      margin-bottom: 3rem;
+    }
+    .manu-contact {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 2.5rem;
+    }
+    .mc-line {
+      font-size: 0.8rem;
+      font-weight: 200;
+      color: rgba(250,250,248,0.4);
+    }
+    .mc-line strong {
+      font-weight: 400;
+      color: rgba(250,250,248,0.75);
+    }
+    .manu-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      background: transparent;
+      color: var(--gold);
+      text-decoration: none;
+      font-size: 0.6rem;
+      font-weight: 300;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      padding: 1.1rem 2rem;
+      border: 1px solid rgba(201,168,76,0.4);
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .manu-cta:hover { background: rgba(201,168,76,0.08); border-color: var(--gold); }
+    .manu-photo { height: 520px; }
+
     /* Gold corner accent */
     .corner-gold {
       position: fixed;
@@ -356,7 +586,10 @@ export const prerender = true;
   </nav>
 
   <section class="hero">
-    <div class="hero-left">
+    <div class="hero-left" style="position:relative;">
+      <div style="position:absolute;inset:0;z-index:0;">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1200&h=1600&q=80" alt="Marmor Naturstein Oberfläche" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.18;" />
+      </div>
       <div class="hero-left-content">
         <div class="left-eyebrow">Marmor & Naturstein</div>
         <h1 class="left-headline">
@@ -376,6 +609,7 @@ export const prerender = true;
           <span class="pill">Onyx</span>
         </div>
       </div>
+    </div><!-- end hero-left-content -->
     </div>
 
     <div class="hero-right">
@@ -416,5 +650,122 @@ export const prerender = true;
     <div class="corner-line"></div>
     <div class="corner-text">Tessèra · Trier · Naturstein Manufaktur</div>
   </div>
+
+  <!-- ── Section 2: Materialien & Referenzen ────────────── -->
+  <section class="materialien">
+    <div class="materialien-inner">
+      <div class="mat-eyebrow">Unsere Materialien</div>
+      <h2 class="mat-title">Stein aus aller Welt.<br><em>Verarbeitet in Trier.</em></h2>
+
+      <div class="mat-grid">
+
+        <!-- Carrara -->
+        <div class="mat-card">
+          <div class="ph mat-photo">
+            <img src="https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?auto=format&fit=crop&w=800&h=600&q=80" alt="Carrara Marmor weiß" loading="lazy" />
+            <div class="ph-overlay"></div>
+          </div>
+          <div class="mat-body">
+            <div class="mat-stone">Marmor</div>
+            <div class="mat-name">Bianco Carrara</div>
+            <div class="mat-origin">Aus den Apuanischen Alpen der Toskana. Reinweißer Hintergrund mit zarten grauen Adern — der klassische Marmor der Antike.</div>
+            <div class="mat-tags">
+              <span class="mat-tag">Böden</span>
+              <span class="mat-tag">Bäder</span>
+              <span class="mat-tag">Küchenplatten</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Marquina -->
+        <div class="mat-card">
+          <div class="ph mat-photo">
+            <img src="https://images.unsplash.com/photo-1609501676725-7186f017a4b7?auto=format&fit=crop&w=800&h=600&q=80" alt="Marquina schwarzer Marmor" loading="lazy" />
+            <div class="ph-overlay"></div>
+          </div>
+          <div class="mat-body">
+            <div class="mat-stone">Marmor</div>
+            <div class="mat-name">Negro Marquina</div>
+            <div class="mat-origin">Tiefschwarzer Marmor aus dem Baskenland mit leuchtend weißen Calcit-Adern. Dramatisch, zeitlos, unverwechselbar.</div>
+            <div class="mat-tags">
+              <span class="mat-tag">Akzentwände</span>
+              <span class="mat-tag">Treppen</span>
+              <span class="mat-tag">Waschtische</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Travertin -->
+        <div class="mat-card">
+          <div class="ph mat-photo">
+            <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=800&h=600&q=80" alt="Travertin Naturstein warm" loading="lazy" />
+            <div class="ph-overlay"></div>
+          </div>
+          <div class="mat-body">
+            <div class="mat-stone">Travertin</div>
+            <div class="mat-name">Travertino Romano</div>
+            <div class="mat-origin">Warmer, poröser Kalkstein aus der Region Tivoli. Seit der Antike das Material römischer Monumentalbauten.</div>
+            <div class="mat-tags">
+              <span class="mat-tag">Fassaden</span>
+              <span class="mat-tag">Außenbereiche</span>
+              <span class="mat-tag">Pools</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="ref-strip">
+        <div class="ref-cell">
+          <div class="ref-num">600<span>+</span></div>
+          <div class="ref-label">Projekte realisiert</div>
+        </div>
+        <div class="ref-cell">
+          <div class="ref-num">18</div>
+          <div class="ref-label">Steinarten lagernd</div>
+        </div>
+        <div class="ref-cell">
+          <div class="ref-num">40<span>+</span></div>
+          <div class="ref-label">Jahre Erfahrung</div>
+        </div>
+        <div class="ref-cell">
+          <div class="ref-num">3</div>
+          <div class="ref-label">Generationen</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Section 3: Manufaktur & Kontakt ────────────────── -->
+  <section class="manufaktur">
+    <div class="manufaktur-inner">
+
+      <div class="manu-left">
+        <div class="manu-eyebrow">Unsere Manufaktur</div>
+        <h2 class="manu-title">Handwerk.<br>Seit <em>drei Generationen.</em></h2>
+        <div class="manu-divider"></div>
+        <p class="manu-body">
+          Seit 1983 fertigt die Familie Tessèra Natursteinoberflächen
+          für Privathäuser, Hotels und öffentliche Bauten in der
+          ganzen Region. Jedes Projekt beginnt mit einer persönlichen
+          Beratung — und endet erst, wenn der Stein perfekt sitzt.
+        </p>
+        <div class="manu-contact">
+          <div class="mc-line"><strong>Showroom:</strong> Steinstraße 4, 54290 Trier</div>
+          <div class="mc-line"><strong>Öffnungszeiten:</strong> Mo – Fr 9 – 18 Uhr, Sa 10 – 14 Uhr</div>
+          <div class="mc-line"><strong>Telefon:</strong> +49 651 123 456</div>
+          <div class="mc-line"><strong>E-Mail:</strong> beratung@tessera-trier.de</div>
+        </div>
+        <a href="#" class="manu-cta">Beratungstermin vereinbaren →</a>
+      </div>
+
+      <div class="ph manu-photo">
+        <img src="https://images.unsplash.com/photo-1565814329452-e1efa11c5b89?auto=format&fit=crop&w=1200&h=1560&q=80" alt="Tessèra Manufaktur Steinbearbeitung" loading="lazy" />
+        <div class="ph-overlay"></div>
+      </div>
+
+    </div>
+  </section>
+
 </body>
 </html>

@@ -106,6 +106,8 @@ export const prerender = true;
       padding-top: 57px;
       display: grid;
       grid-template-columns: 1fr 440px;
+      max-width: 1400px;
+      margin: 0 auto;
     }
 
     /* LEFT */
@@ -318,6 +320,11 @@ export const prerender = true;
     .burgers {
       padding: 6rem 5rem;
       background: var(--dark);
+    }
+
+    .burgers-inner {
+      max-width: 1400px;
+      margin: 0 auto;
     }
     .burgers-head {
       display: flex;
@@ -581,6 +588,7 @@ export const prerender = true;
 
   <!-- ===== SECTION 2: BURGERS ===== -->
   <section class="burgers">
+    <div class="burgers-inner">
     <div class="burgers-head">
       <div>
         <div class="burgers-eyebrow">Unsere Klassiker</div>
@@ -619,6 +627,7 @@ export const prerender = true;
           <div class="burger-price">6,50 €</div>
         </div>
       </div>
+    </div>
     </div>
   </section>
 

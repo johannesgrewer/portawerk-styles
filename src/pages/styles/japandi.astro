@@ -223,6 +223,126 @@ export const prerender = true;
       background: linear-gradient(to bottom, transparent, rgba(122,139,118,0.3), transparent);
       pointer-events: none;
     }
+
+    /* ── PHOTO CONTAINERS ── */
+    .ph { position: relative; overflow: hidden; }
+    .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.55s ease; }
+    .ph:hover img { transform: scale(1.05); }
+
+    /* ── SECTION 2 — KOLLEKTION ── */
+    .collection {
+      padding: 7rem 4rem;
+      border-top: 1px solid rgba(42,40,36,0.1);
+    }
+    .collection-inner {
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+    .collection-eyebrow {
+      font-size: 0.6rem;
+      font-weight: 300;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #7A8B76;
+      margin-bottom: 1rem;
+    }
+    .collection-title {
+      font-family: 'Noto Serif', serif;
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      font-weight: 300;
+      font-style: italic;
+      color: #2A2824;
+      margin-bottom: 4rem;
+      line-height: 1.3;
+    }
+    .collection-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+    .collection-item {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .collection-item-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .ci-name {
+      font-family: 'Noto Serif', serif;
+      font-size: 1rem;
+      font-weight: 300;
+      color: #2A2824;
+      letter-spacing: 0.04em;
+    }
+    .ci-desc {
+      font-size: 0.72rem;
+      font-weight: 300;
+      color: rgba(42,40,36,0.5);
+      line-height: 1.6;
+    }
+    .ci-price {
+      font-size: 0.7rem;
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      color: #7A8B76;
+    }
+
+    /* ── SECTION 3 — PHILOSOPHIE ── */
+    .philosophy {
+      padding: 7rem 4rem;
+      border-top: 1px solid rgba(42,40,36,0.1);
+      background: #F5F2EC;
+    }
+    .philosophy-inner {
+      max-width: 1600px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+    .philosophy-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    .philosophy-eyebrow {
+      font-size: 0.6rem;
+      font-weight: 300;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #7A8B76;
+    }
+    .philosophy-title {
+      font-family: 'Noto Serif', serif;
+      font-size: clamp(1.6rem, 2.5vw, 2.5rem);
+      font-weight: 300;
+      font-style: italic;
+      color: #2A2824;
+      line-height: 1.3;
+    }
+    .philosophy-body {
+      font-size: 0.85rem;
+      font-weight: 300;
+      line-height: 1.9;
+      color: rgba(42,40,36,0.65);
+      max-width: 42ch;
+    }
+    .philosophy-divider {
+      width: 3rem;
+      height: 1px;
+      background: #7A8B76;
+    }
+
+    @media (max-width: 900px) {
+      .collection { padding: 4rem 2rem; }
+      .collection-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .philosophy { padding: 4rem 2rem; }
+      .philosophy-inner { grid-template-columns: 1fr; gap: 3rem; }
+    }
   </style>
 </head>
 <body>
@@ -286,5 +406,74 @@ export const prerender = true;
     <div class="stamp-jp">間</div>
     <div class="stamp-de">Trier</div>
   </div>
+
+  <!-- SECTION 2 — KOLLEKTION -->
+  <section class="collection">
+    <div class="collection-inner">
+      <div class="collection-eyebrow">Aktuelle Kollektion</div>
+      <h2 class="collection-title">Objekte, die atmen.</h2>
+      <div class="collection-grid">
+
+        <div class="collection-item">
+          <div class="ph" style="height:340px;">
+            <img src="https://images.unsplash.com/photo-1574484284002-952d92456975?auto=format&fit=crop&w=1200&h=800&q=80" alt="Japandi Regal Hinoki" loading="lazy"/>
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(42,40,36,0.2) 0%,transparent 60%);pointer-events:none;"></div>
+          </div>
+          <div class="collection-item-meta">
+            <div class="ci-name">Regal Hinoki</div>
+            <div class="ci-desc">Japanische Zeder, geölt. Offene Fachstruktur nach dem Prinzip der sichtbaren Konstruktion.</div>
+            <div class="ci-price">ab 1.480 €</div>
+          </div>
+        </div>
+
+        <div class="collection-item">
+          <div class="ph" style="height:340px;">
+            <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1200&h=800&q=80" alt="Sessel Ma No Isu" loading="lazy"/>
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(42,40,36,0.2) 0%,transparent 60%);pointer-events:none;"></div>
+          </div>
+          <div class="collection-item-meta">
+            <div class="ci-name">Sessel Ma No Isu</div>
+            <div class="ci-desc">Eiche gekalkt, Leinen naturfarben. Der Raum zwischen den Armlehnen ist Teil des Designs.</div>
+            <div class="ci-price">ab 2.200 €</div>
+          </div>
+        </div>
+
+        <div class="collection-item">
+          <div class="ph" style="height:340px;">
+            <img src="https://images.unsplash.com/photo-1565814329452-e1efa11c5b89?auto=format&fit=crop&w=1200&h=800&q=80" alt="Beistelltisch Shizen" loading="lazy"/>
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(42,40,36,0.2) 0%,transparent 60%);pointer-events:none;"></div>
+          </div>
+          <div class="collection-item-meta">
+            <div class="ci-name">Beistelltisch Shizen</div>
+            <div class="ci-desc">Massiver Walnuss, unbehandelt. Jedes Stück ist ein Unikat — die Maserung bestimmt die Form.</div>
+            <div class="ci-price">ab 680 €</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3 — PHILOSOPHIE -->
+  <section class="philosophy">
+    <div class="philosophy-inner">
+      <div class="ph" style="height:500px;">
+        <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=1200&h=800&q=80" alt="Ma Interior Atelier Trier" loading="lazy"/>
+        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(42,40,36,0.15) 0%,transparent 60%);pointer-events:none;"></div>
+      </div>
+      <div class="philosophy-text">
+        <div class="philosophy-eyebrow">Unsere Haltung</div>
+        <h2 class="philosophy-title">Weniger ist nicht<br>Verzicht — es ist<br>Klarheit.</h2>
+        <div class="philosophy-divider"></div>
+        <p class="philosophy-body">
+          Wir entwerfen keine Räume, wir befreien sie. Jedes Objekt, das wir wählen,
+          muss seinen Platz verdienen. Japandis Stärke liegt nicht im Sichtbaren,
+          sondern im Bewussten Weglassen — im Ma, dem bedeutsamen Zwischenraum.
+        </p>
+        <a href="#" class="cta-btn">Beratungsgespräch anfragen →</a>
+      </div>
+    </div>
+  </section>
+
 </body>
 </html>

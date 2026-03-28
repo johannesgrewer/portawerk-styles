@@ -254,6 +254,171 @@ export const prerender = true;
     @keyframes expandLine {
       to { opacity: 1; transform: scaleX(1); }
     }
+
+    /* === PHOTO CONTAINER === */
+    .ph { position: relative; overflow: hidden; }
+    .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.55s ease; }
+    .ph:hover img { transform: scale(1.05); }
+
+    /* === PORTFOLIO SECTION === */
+    .portfolio {
+      background: #0A0A0A;
+      padding: 6rem 3.5rem;
+      max-width: 1600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .port-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.5rem;
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(240,237,232,0.35);
+      margin-bottom: 0.75rem;
+    }
+    .port-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      color: #F0EDE8;
+      letter-spacing: 0.04em;
+      margin-bottom: 3rem;
+    }
+    .port-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3px;
+    }
+    .port-card {
+      position: relative;
+      overflow: hidden;
+    }
+    .port-card-inner {
+      height: 380px;
+    }
+    .port-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(10,10,10,0.85) 0%, transparent 55%);
+      pointer-events: none;
+      transition: background 0.4s ease;
+    }
+    .port-card:hover .port-card-overlay {
+      background: linear-gradient(to top, rgba(230,57,70,0.6) 0%, transparent 70%);
+    }
+    .port-card-info {
+      position: absolute;
+      bottom: 1.25rem;
+      left: 1.25rem;
+      z-index: 2;
+    }
+    .port-card-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.5rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #E63946;
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+    .port-card-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      color: #F0EDE8;
+      letter-spacing: 0.06em;
+    }
+
+    /* === ARTISTS SECTION === */
+    .artists {
+      background: #111111;
+      padding: 6rem 3.5rem;
+      max-width: 1600px;
+      margin-left: auto;
+      margin-right: auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    .artists-photo {
+      height: 520px;
+      border: 1px solid rgba(240,237,232,0.08);
+    }
+    .artists-content {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    .artists-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.5rem;
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(240,237,232,0.35);
+    }
+    .artists-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 4vw, 3.8rem);
+      color: #F0EDE8;
+      letter-spacing: 0.04em;
+      line-height: 1.0;
+    }
+    .artists-title .red { color: #E63946; }
+    .artists-body {
+      font-family: 'DM Mono', monospace;
+      font-weight: 300;
+      font-size: 0.78rem;
+      line-height: 1.9;
+      color: rgba(240,237,232,0.55);
+    }
+    .artists-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .artist-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid rgba(240,237,232,0.08);
+    }
+    .artist-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #E63946;
+      flex-shrink: 0;
+    }
+    .artist-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      color: #F0EDE8;
+      letter-spacing: 0.06em;
+      flex: 1;
+    }
+    .artist-spec {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.5rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(240,237,232,0.35);
+    }
+    .artists-cta {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #F0EDE8;
+      background: #E63946;
+      padding: 1rem 2rem;
+      text-decoration: none;
+      width: fit-content;
+      transition: background 0.2s;
+    }
+    .artists-cta:hover { background: #c42d3a; }
   </style>
 </head>
 <body>
@@ -285,5 +450,84 @@ export const prerender = true;
     </div>
 
   </section>
+
+  <!-- PORTFOLIO -->
+  <section class="portfolio">
+    <p class="port-label">02 / Arbeiten</p>
+    <h2 class="port-title">Portfolio.</h2>
+    <div class="port-grid">
+
+      <div class="port-card">
+        <div class="ph port-card-inner">
+          <img src="https://images.unsplash.com/photo-1542736667-069246bdbc6d?auto=format&fit=crop&w=1200&h=800&q=80" alt="Blackwork Tattoo" loading="lazy"/>
+        </div>
+        <div class="port-card-overlay"></div>
+        <div class="port-card-info">
+          <span class="port-card-tag">Blackwork</span>
+          <div class="port-card-name">Geometrie & Linie</div>
+        </div>
+      </div>
+
+      <div class="port-card">
+        <div class="ph port-card-inner">
+          <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=1200&h=800&q=80" alt="Fine Line Tattoo" loading="lazy"/>
+        </div>
+        <div class="port-card-overlay"></div>
+        <div class="port-card-info">
+          <span class="port-card-tag">Fine Line</span>
+          <div class="port-card-name">Botanik & Flora</div>
+        </div>
+      </div>
+
+      <div class="port-card">
+        <div class="ph port-card-inner">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1200&h=800&q=80" alt="Traditional Tattoo" loading="lazy"/>
+        </div>
+        <div class="port-card-overlay"></div>
+        <div class="port-card-info">
+          <span class="port-card-tag">Traditional</span>
+          <div class="port-card-name">Flash & Klassik</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ARTISTS + BOOKING -->
+  <section class="artists">
+    <div class="ph artists-photo">
+      <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&h=800&q=80" alt="Nadelwerk Studio Trier" loading="lazy"/>
+      <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.45) 0%,transparent 60%);pointer-events:none;"></div>
+    </div>
+    <div class="artists-content">
+      <p class="artists-label">03 / Das Team</p>
+      <h2 class="artists-title">Unsere <span class="red">Artists.</span></h2>
+      <p class="artists-body">
+        Drei Charaktere, drei Handschriften —
+        ein gemeinsamer Anspruch: jedes Motiv
+        sitzt für immer. Termine nach Absprache,
+        Custom-Anfragen willkommen.
+      </p>
+      <div class="artists-list">
+        <div class="artist-item">
+          <span class="artist-dot"></span>
+          <span class="artist-name">Jana Krause</span>
+          <span class="artist-spec">Fine Line · Botanical</span>
+        </div>
+        <div class="artist-item">
+          <span class="artist-dot"></span>
+          <span class="artist-name">Marc Thiel</span>
+          <span class="artist-spec">Blackwork · Geometric</span>
+        </div>
+        <div class="artist-item">
+          <span class="artist-dot"></span>
+          <span class="artist-name">Sari Nowak</span>
+          <span class="artist-spec">Traditional · Illustrative</span>
+        </div>
+      </div>
+      <a href="#" class="artists-cta">Termin anfragen →</a>
+    </div>
+  </section>
+
 </body>
 </html>

@@ -255,6 +255,144 @@ export const prerender = true;
       color: rgba(226,224,240,0.3);
       margin-top: 0.2rem;
     }
+
+    /* Photo container */
+    .ph { position: relative; overflow: hidden; }
+    .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.55s ease; }
+    .ph:hover img { transform: scale(1.05); }
+
+    /* Angebote section */
+    .section-angebote {
+      padding: 7rem 3rem;
+      background: var(--mid);
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+    .s-label {
+      font-size: 0.58rem;
+      font-weight: 300;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(226,224,240,0.3);
+      margin-bottom: 0.75rem;
+    }
+    .s-heading {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 300;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 3.5rem;
+    }
+    .s-heading strong {
+      font-weight: 600;
+      background: linear-gradient(90deg, var(--violet), var(--sky));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .angebote-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+    .angebot-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: border-color 0.3s;
+    }
+    .angebot-card:hover { border-color: rgba(167,139,250,0.2); }
+    .angebot-body {
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .angebot-title {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: var(--text);
+    }
+    .angebot-desc {
+      font-size: 0.75rem;
+      font-weight: 300;
+      line-height: 1.7;
+      color: rgba(226,224,240,0.45);
+    }
+    .angebot-price {
+      display: inline-block;
+      font-size: 0.55rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.75rem;
+      border-radius: 100px;
+      color: var(--violet);
+      background: rgba(167,139,250,0.12);
+      border: 1px solid rgba(167,139,250,0.2);
+      margin-top: 0.25rem;
+      width: fit-content;
+    }
+
+    /* Retreat section */
+    .section-retreat {
+      padding: 7rem 3rem;
+      background: var(--bg);
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+    .retreat-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    .retreat-text {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .retreat-body {
+      font-size: 0.88rem;
+      font-weight: 300;
+      line-height: 1.9;
+      color: rgba(226,224,240,0.5);
+      max-width: 44ch;
+    }
+    .retreat-details {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .rd-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.65rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 0.78rem;
+    }
+    .rd-key { font-weight: 300; color: rgba(226,224,240,0.35); }
+    .rd-val { font-weight: 400; color: var(--text); }
+    .retreat-cta {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: var(--bg);
+      background: linear-gradient(90deg, var(--violet), var(--sky));
+      text-decoration: none;
+      padding: 0.9rem 2.25rem;
+      border-radius: 100px;
+      box-shadow: 0 4px 20px rgba(167,139,250,0.25);
+      display: inline-block;
+      transition: opacity 0.2s;
+    }
+    .retreat-cta:hover { opacity: 0.9; }
   </style>
 </head>
 <body>
@@ -324,5 +462,89 @@ export const prerender = true;
       </div>
     </div>
   </section>
+
+  <!-- SECTION 2: Angebote -->
+  <div style="background:var(--mid); position:relative; z-index:1;">
+    <section class="section-angebote">
+      <div class="s-label">Angebote</div>
+      <h2 class="s-heading">Wähle deinen<br><strong>Weg nach innen.</strong></h2>
+      <div class="angebote-grid">
+        <div class="angebot-card">
+          <div class="ph" style="height:240px;">
+            <img src="https://images.unsplash.com/photo-1545389336-cf090694435e?auto=format&fit=crop&w=800&h=600&q=80" alt="Klangbad Session" loading="lazy" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,18,0.7) 0%,transparent 60%);pointer-events:none;"></div>
+          </div>
+          <div class="angebot-body">
+            <div class="angebot-title">Klangbad</div>
+            <div class="angebot-desc">Tibetische Klangschalen, Gongs und Stimmgabeln. 60 Minuten tiefe Entspannung im Gruppenrahmen — maximal 12 Personen.</div>
+            <div class="angebot-price">75 € / Person</div>
+          </div>
+        </div>
+        <div class="angebot-card">
+          <div class="ph" style="height:240px;">
+            <img src="https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?auto=format&fit=crop&w=800&h=600&q=80" alt="Atemarbeit" loading="lazy" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,18,0.7) 0%,transparent 60%);pointer-events:none;"></div>
+          </div>
+          <div class="angebot-body">
+            <div class="angebot-title">Atemarbeit</div>
+            <div class="angebot-desc">Transformative Breathwork-Sessions für Stressabbau, mentale Klarheit und emotionale Verarbeitung. Einzel oder Gruppe.</div>
+            <div class="angebot-price">90 € / Session</div>
+          </div>
+        </div>
+        <div class="angebot-card">
+          <div class="ph" style="height:240px;">
+            <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&h=600&q=80" alt="Meditation" loading="lazy" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,18,0.7) 0%,transparent 60%);pointer-events:none;"></div>
+          </div>
+          <div class="angebot-body">
+            <div class="angebot-title">Meditation</div>
+            <div class="angebot-desc">Geführte Einzel- und Gruppenmeditationen, 45–90 Min. Verschiedene Techniken: Vipassana, Body Scan, Visualisierung.</div>
+            <div class="angebot-price">ab 45 € / Person</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- SECTION 3: Retreat & Kontakt -->
+  <div style="background:var(--bg); position:relative; z-index:1;">
+    <section class="section-retreat">
+      <div class="retreat-inner">
+        <div class="retreat-text">
+          <div class="s-label">Wochenend-Retreat</div>
+          <h2 class="s-heading" style="margin-bottom:0;">Zwei Tage.<br><strong>Echter Wandel.</strong></h2>
+          <p class="retreat-body">
+            Unser Retreat-Format verbindet Klangarbeit, Atemübungen und stille Meditation
+            zu einem intensiven Wochenende. Kleine Gruppen, persönliche Begleitung,
+            tief in der Eifel.
+          </p>
+          <div class="retreat-details">
+            <div class="rd-row">
+              <span class="rd-key">Nächster Termin</span>
+              <span class="rd-val">12.–13. April 2026</span>
+            </div>
+            <div class="rd-row">
+              <span class="rd-key">Ort</span>
+              <span class="rd-val">Landhaus Steinborn, Eifel</span>
+            </div>
+            <div class="rd-row">
+              <span class="rd-key">Teilnehmer</span>
+              <span class="rd-val">Max. 10 Personen</span>
+            </div>
+            <div class="rd-row">
+              <span class="rd-key">Preis</span>
+              <span class="rd-val">320 € inkl. Unterkunft & Verpflegung</span>
+            </div>
+          </div>
+          <a href="#" class="retreat-cta">Platz reservieren →</a>
+        </div>
+        <div class="ph" style="height:520px; border-radius:20px;">
+          <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=800&h=1000&q=80" alt="Retreat in der Natur" loading="lazy" />
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,18,0.45) 0%,transparent 60%);pointer-events:none;"></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
 </body>
 </html>

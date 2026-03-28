@@ -214,6 +214,155 @@ export const prerender = true;
     .corner.tr { top: 2rem; right: 3rem; }
     .corner.bl { bottom: 2rem; left: 3rem; }
     .corner.br { bottom: 2rem; right: 3rem; }
+
+    /* Photo container */
+    .ph { position: relative; overflow: hidden; }
+    .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.55s ease; }
+    .ph:hover img { transform: scale(1.05); }
+
+    /* Page wrapper */
+    .page-wrap { max-width: 1600px; margin-left: auto; margin-right: auto; }
+
+    /* Section: Arbeiten */
+    .works-section {
+      position: relative;
+      z-index: 1;
+      padding: 7rem 4rem;
+      border-top: 1px solid rgba(232,213,176,0.08);
+    }
+    .section-eyebrow {
+      font-size: 0.5rem;
+      font-weight: 200;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: #E8D5B0;
+      margin-bottom: 3rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .section-eyebrow::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(232,213,176,0.15);
+    }
+    .works-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(232,213,176,0.08);
+    }
+    .work-card {
+      position: relative;
+      background: #050505;
+    }
+    .work-card-meta {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 1.5rem;
+      z-index: 2;
+    }
+    .work-card-label {
+      font-size: 0.45rem;
+      font-weight: 200;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(232,213,176,0.5);
+      margin-bottom: 0.4rem;
+    }
+    .work-card-title {
+      font-family: 'Cormorant', serif;
+      font-weight: 300;
+      font-size: 1.1rem;
+      color: #FFFFF0;
+    }
+
+    /* Section: Leistungen + Kontakt */
+    .services-section {
+      position: relative;
+      z-index: 1;
+      padding: 7rem 4rem;
+      border-top: 1px solid rgba(232,213,176,0.08);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+    }
+    .service-list-noir {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .service-list-noir li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 0;
+      border-bottom: 1px solid rgba(232,213,176,0.07);
+    }
+    .svc-name {
+      font-family: 'Cormorant', serif;
+      font-weight: 300;
+      font-size: 1.25rem;
+      color: #FFFFF0;
+    }
+    .svc-tag {
+      font-size: 0.42rem;
+      font-weight: 200;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(232,213,176,0.3);
+    }
+    .section-headline {
+      font-family: 'Cormorant', serif;
+      font-weight: 300;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.2;
+      color: #FFFFF0;
+      margin-bottom: 2rem;
+    }
+    .section-headline em { font-style: italic; color: #E8D5B0; }
+    .contact-block {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .contact-line {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    .contact-label {
+      font-size: 0.45rem;
+      font-weight: 200;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(232,213,176,0.3);
+    }
+    .contact-value {
+      font-size: 0.85rem;
+      font-weight: 200;
+      color: rgba(255,255,240,0.7);
+      letter-spacing: 0.05em;
+    }
+    .contact-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      text-decoration: none;
+      color: #050505;
+      background: #E8D5B0;
+      font-size: 0.5rem;
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      padding: 0.9rem 2rem;
+      margin-top: 1rem;
+      align-self: flex-start;
+      transition: background 0.3s;
+    }
+    .contact-cta:hover { background: #FFFFF0; }
   </style>
 </head>
 <body>
@@ -231,6 +380,8 @@ export const prerender = true;
       <li><a href="#">Kontakt</a></li>
     </ul>
   </nav>
+
+  <div class="page-wrap">
 
   <section class="hero">
     <div class="accent-line"></div>
@@ -258,6 +409,98 @@ export const prerender = true;
       <a href="#" class="cta-link">Arbeiten sehen →</a>
     </div>
   </section>
+
+  <!-- SECTION 2: Arbeiten -->
+  <section class="works-section">
+    <div class="section-eyebrow">002 — Ausgewählte Arbeiten</div>
+    <div class="works-grid">
+      <div class="work-card">
+        <div class="ph" style="height:380px;">
+          <img src="https://images.unsplash.com/photo-1542736667-069246bdbc6d?auto=format&fit=crop&w=1200&h=800&q=80" alt="Kurzfilm Produktion" loading="lazy"/>
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.75) 0%,transparent 55%);pointer-events:none;"></div>
+        </div>
+        <div class="work-card-meta">
+          <div class="work-card-label">Kurzfilm · 2025</div>
+          <div class="work-card-title">Der stille Raum</div>
+        </div>
+      </div>
+      <div class="work-card">
+        <div class="ph" style="height:380px;">
+          <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&h=800&q=80" alt="Portrait Fotografie" loading="lazy"/>
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.75) 0%,transparent 55%);pointer-events:none;"></div>
+        </div>
+        <div class="work-card-meta">
+          <div class="work-card-label">Portrait · 2025</div>
+          <div class="work-card-title">Gesichter der Stadt</div>
+        </div>
+      </div>
+      <div class="work-card">
+        <div class="ph" style="height:380px;">
+          <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=1200&h=800&q=80" alt="Werbefilm Produktion" loading="lazy"/>
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.75) 0%,transparent 55%);pointer-events:none;"></div>
+        </div>
+        <div class="work-card-meta">
+          <div class="work-card-label">Werbefilm · 2024</div>
+          <div class="work-card-title">Mosella Weingut</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: Leistungen + Kontakt -->
+  <section class="services-section">
+    <div>
+      <div class="section-eyebrow">003 — Leistungen</div>
+      <h2 class="section-headline">Was wir<br>für dich <em>schaffen.</em></h2>
+      <ul class="service-list-noir">
+        <li>
+          <span class="svc-name">Kinofilm & Kurzfilm</span>
+          <span class="svc-tag">Konzept bis Schnitt</span>
+        </li>
+        <li>
+          <span class="svc-name">Portrait & Editorial</span>
+          <span class="svc-tag">Fotografie</span>
+        </li>
+        <li>
+          <span class="svc-name">Werbefilm & Content</span>
+          <span class="svc-tag">Marken · Produkt</span>
+        </li>
+        <li>
+          <span class="svc-name">Musikvideo</span>
+          <span class="svc-tag">Künstler · Labels</span>
+        </li>
+        <li>
+          <span class="svc-name">Dokumentarfilm</span>
+          <span class="svc-tag">People · Orte</span>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <div class="section-eyebrow">004 — Kontakt</div>
+      <h2 class="section-headline">Ein Projekt<br>im <em>Kopf?</em></h2>
+      <div class="contact-block">
+        <div class="contact-line">
+          <span class="contact-label">Studio</span>
+          <span class="contact-value">Void Film & Bildproduktion, Trier</span>
+        </div>
+        <div class="contact-line">
+          <span class="contact-label">E-Mail</span>
+          <span class="contact-value">hallo@void-trier.de</span>
+        </div>
+        <div class="contact-line">
+          <span class="contact-label">Telefon</span>
+          <span class="contact-value">+49 651 / 123 456 7</span>
+        </div>
+        <div class="contact-line">
+          <span class="contact-label">Verfügbarkeit</span>
+          <span class="contact-value">Neue Projekte ab Mai 2026</span>
+        </div>
+        <a href="#" class="contact-cta">Anfrage stellen →</a>
+      </div>
+    </div>
+  </section>
+
+  </div><!-- /page-wrap -->
 
   <div class="formats">
     <div class="format-item">

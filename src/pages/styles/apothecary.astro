@@ -102,8 +102,10 @@ export const prerender = true;
       position: relative;
       z-index: 1;
       display: grid;
-      grid-template-columns: 1fr 300px;
+      grid-template-columns: 1fr 380px;
       padding-top: 57px;
+      max-width: 1440px;
+      margin: 0 auto;
     }
 
     /* LEFT */
@@ -305,6 +307,8 @@ export const prerender = true;
       padding: 6rem 5rem;
       background: var(--green);
       border-top: 1px solid rgba(184,150,62,0.12);
+      max-width: 1440px;
+      margin: 0 auto;
     }
     .prod-head {
       display: flex;
@@ -386,6 +390,8 @@ export const prerender = true;
       display: grid;
       grid-template-columns: 1fr 1fr;
       min-height: 560px;
+      max-width: 1440px;
+      margin: 0 auto;
     }
     .atelier-photo {
       position: relative;
@@ -594,6 +600,24 @@ export const prerender = true;
         <div class="prod-card-info">
           <p class="prod-card-label">Herbae siccatae</p>
           <h3 class="prod-card-name">Tees & Mischungen</h3>
+        </div>
+      </div>
+      <div class="prod-card">
+        <img src="https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?auto=format&fit=crop&w=800&h=380&q=80"
+             alt="Kräuterrezepturen und Apothekengläser" loading="lazy" />
+        <div class="prod-card-overlay"></div>
+        <div class="prod-card-info">
+          <p class="prod-card-label">Oleum et unguentum</p>
+          <h3 class="prod-card-name">Salben & Balsame</h3>
+        </div>
+      </div>
+      <div class="prod-card">
+        <img src="https://images.unsplash.com/photo-1542736667-069246bdbc6d?auto=format&fit=crop&w=800&h=380&q=80"
+             alt="Botanische Heilpflanzen Nahaufnahme" loading="lazy" />
+        <div class="prod-card-overlay"></div>
+        <div class="prod-card-info">
+          <p class="prod-card-label">Botanica</p>
+          <h3 class="prod-card-name">Blüten & Wurzeln</h3>
         </div>
       </div>
     </div>

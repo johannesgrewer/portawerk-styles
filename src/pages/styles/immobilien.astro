@@ -419,6 +419,204 @@ export const prerender = true;
       .nav-links { display: none; }
       .stats-row { gap: 0; }
     }
+
+    /* ── PHOTO CONTAINERS ── */
+    .ph { position: relative; overflow: hidden; }
+    .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.55s ease; }
+    .ph:hover img { transform: scale(1.05); }
+
+    /* ── SECTION 2 — OBJEKTE ── */
+    .listings {
+      background: #F5F7FA;
+      padding: 80px 32px;
+    }
+    .listings-inner {
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+    .listings-overline {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: #B8960C;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .listings-overline::before {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 2px;
+      background: #B8960C;
+      flex-shrink: 0;
+    }
+    .listings-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(26px, 3vw, 38px);
+      font-weight: 700;
+      color: #1A2B3C;
+      margin-bottom: 48px;
+      line-height: 1.2;
+    }
+    .listings-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+    .listing-card {
+      background: #FFFFFF;
+      border: 1px solid #E8ECF0;
+      overflow: hidden;
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+    }
+    .listing-card:hover {
+      box-shadow: 0 12px 40px rgba(26,43,60,0.1);
+      transform: translateY(-4px);
+    }
+    .listing-tag {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: #B8960C;
+      color: #fff;
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      z-index: 2;
+    }
+    .listing-info {
+      padding: 20px 24px 24px;
+    }
+    .listing-price {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: #1A2B3C;
+      margin-bottom: 6px;
+    }
+    .listing-address {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      color: #4A5D6E;
+      margin-bottom: 14px;
+    }
+    .listing-details {
+      display: flex;
+      gap: 16px;
+      padding-top: 14px;
+      border-top: 1px solid #E8ECF0;
+    }
+    .listing-detail {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: #8A9BAC;
+      text-transform: uppercase;
+    }
+    .listing-detail span {
+      display: block;
+      font-size: 13px;
+      font-weight: 400;
+      color: #1A2B3C;
+      text-transform: none;
+      letter-spacing: 0;
+      margin-top: 2px;
+    }
+
+    /* ── SECTION 3 — BEWERTUNG ── */
+    .valuation {
+      padding: 80px 32px;
+      background: #FFFFFF;
+    }
+    .valuation-inner {
+      max-width: 1600px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .valuation-photo {
+      border: 4px solid #B8960C;
+    }
+    .valuation-overline {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: #B8960C;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .valuation-overline::before {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 2px;
+      background: #B8960C;
+      flex-shrink: 0;
+    }
+    .valuation-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(24px, 2.8vw, 36px);
+      font-weight: 700;
+      color: #1A2B3C;
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+    .valuation-body {
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: #4A5D6E;
+      margin-bottom: 32px;
+      max-width: 42ch;
+    }
+    .valuation-cta {
+      display: inline-block;
+      padding: 14px 32px;
+      background: transparent;
+      border: 2px solid #B8960C;
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #B8960C;
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+      transition: color 0.35s ease;
+    }
+    .valuation-cta::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: #B8960C;
+      transform: translateY(101%);
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .valuation-cta:hover::before { transform: translateY(0); }
+    .valuation-cta:hover { color: #FFFFFF; }
+    .valuation-cta span { position: relative; z-index: 1; }
+
+    @media (max-width: 900px) {
+      .listings-grid { grid-template-columns: 1fr; }
+      .valuation-inner { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -496,6 +694,90 @@ export const prerender = true;
       <span class="scroll-label">Scrollen</span>
     </div>
   </main>
+
+  <!-- SECTION 2 — OBJEKTE -->
+  <section class="listings">
+    <div class="listings-inner">
+      <p class="listings-overline">Aktuelle Objekte</p>
+      <h2 class="listings-title">Ausgewählte Immobilien</h2>
+      <div class="listings-grid">
+
+        <div class="listing-card">
+          <div class="ph" style="height:220px;">
+            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&h=800&q=80" alt="Einfamilienhaus Trier-Olewig" loading="lazy"/>
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,43,60,0.3) 0%,transparent 60%);pointer-events:none;"></div>
+            <div class="listing-tag">Neu</div>
+          </div>
+          <div class="listing-info">
+            <div class="listing-price">€ 485.000</div>
+            <div class="listing-address">Trier-Olewig · Rieslingstraße 14</div>
+            <div class="listing-details">
+              <div class="listing-detail">Typ<span>Einfamilienhaus</span></div>
+              <div class="listing-detail">Wohnfl.<span>148 m²</span></div>
+              <div class="listing-detail">Zimmer<span>5</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="listing-card">
+          <div class="ph" style="height:220px;">
+            <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&h=800&q=80" alt="Stadtwohnung Trier Innenstadt" loading="lazy"/>
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,43,60,0.3) 0%,transparent 60%);pointer-events:none;"></div>
+            <div class="listing-tag">Reserviert</div>
+          </div>
+          <div class="listing-info">
+            <div class="listing-price">€ 298.000</div>
+            <div class="listing-address">Trier-Innenstadt · Kornmarkt 7</div>
+            <div class="listing-details">
+              <div class="listing-detail">Typ<span>ETW</span></div>
+              <div class="listing-detail">Wohnfl.<span>82 m²</span></div>
+              <div class="listing-detail">Zimmer<span>3</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="listing-card">
+          <div class="ph" style="height:220px;">
+            <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&h=800&q=80" alt="Villa Trier-Tarforst" loading="lazy"/>
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,43,60,0.3) 0%,transparent 60%);pointer-events:none;"></div>
+            <div class="listing-tag">Exklusiv</div>
+          </div>
+          <div class="listing-info">
+            <div class="listing-price">€ 1.250.000</div>
+            <div class="listing-address">Trier-Tarforst · Auf der Höhe 3</div>
+            <div class="listing-details">
+              <div class="listing-detail">Typ<span>Villa</span></div>
+              <div class="listing-detail">Wohnfl.<span>310 m²</span></div>
+              <div class="listing-detail">Zimmer<span>8</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3 — KOSTENLOSE BEWERTUNG -->
+  <section class="valuation">
+    <div class="valuation-inner">
+      <div class="valuation-photo">
+        <div class="ph" style="height:420px;">
+          <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1200&h=800&q=80" alt="Moselhome Beratung" loading="lazy"/>
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,43,60,0.15) 0%,transparent 60%);pointer-events:none;"></div>
+        </div>
+      </div>
+      <div>
+        <p class="valuation-overline">Kostenloser Service</p>
+        <h2 class="valuation-title">Was ist Ihre Immobilie wert?</h2>
+        <p class="valuation-body">
+          Ich bewerte Ihre Immobilie ehrlich, marktgerecht und ohne Verpflichtung.
+          Mit über zwölf Jahren Erfahrung im Trierer Raum kenne ich jeden Stadtteil —
+          und was Käufer dort wirklich zahlen.
+        </p>
+        <a href="#" class="valuation-cta"><span>Kostenlose Bewertung anfragen</span></a>
+      </div>
+    </div>
+  </section>
 
   <script>
     // Entrance animations

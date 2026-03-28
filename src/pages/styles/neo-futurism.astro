@@ -7,7 +7,7 @@ export const prerender = true;
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
-  <title>Nexum — Technologieberatung & Innovation | Trier</title>
+  <title>FORM+ — Architekturstudio für Smart Buildings & Wohnkonzepte | Trier</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
@@ -295,74 +295,312 @@ export const prerender = true;
       font-weight: 400;
       color: var(--dark);
     }
+
+    /* Photo containers */
+    .ph { position: relative; overflow: hidden; }
+    .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.55s ease; }
+    .ph:hover img { transform: scale(1.05); }
+
+    .section-wrap {
+      max-width: 1600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Projects section */
+    .projects {
+      padding: 6rem 4.5rem;
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid rgba(15,23,42,0.06);
+      background: var(--bg);
+    }
+    .proj-eyebrow {
+      font-size: 0.58rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--sky);
+      margin-bottom: 0.6rem;
+    }
+    .proj-headline {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      letter-spacing: -0.03em;
+      color: var(--dark);
+      margin-bottom: 3rem;
+    }
+    .proj-headline .grad {
+      background: linear-gradient(90deg, var(--sky), var(--violet));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .proj-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1.5rem;
+    }
+    .proj-card {}
+    .proj-meta {
+      margin-top: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .proj-name {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--dark);
+      letter-spacing: -0.01em;
+    }
+    .proj-type {
+      font-size: 0.58rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--sky);
+      background: rgba(14,165,233,0.08);
+      border: 1px solid rgba(14,165,233,0.18);
+      padding: 0.2rem 0.6rem;
+      border-radius: 100px;
+    }
+    .proj-desc {
+      font-size: 0.78rem;
+      font-weight: 300;
+      color: var(--muted);
+      margin-top: 0.35rem;
+      line-height: 1.6;
+    }
+
+    /* Studio section */
+    .studio {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid rgba(15,23,42,0.06);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 500px;
+    }
+    .studio-image-col {}
+    .studio-content {
+      padding: 5rem 4.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1.5rem;
+      background: var(--dark);
+    }
+    .studio-eyebrow {
+      font-size: 0.58rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--sky);
+    }
+    .studio-headline {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: clamp(1.8rem, 2.8vw, 2.5rem);
+      letter-spacing: -0.03em;
+      color: #fff;
+      line-height: 1.1;
+    }
+    .studio-body {
+      font-size: 0.88rem;
+      font-weight: 300;
+      line-height: 1.85;
+      color: rgba(255,255,255,0.5);
+      max-width: 44ch;
+    }
+    .studio-stats {
+      display: flex;
+      gap: 2.5rem;
+    }
+    .stat-item {}
+    .stat-num {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 2rem;
+      letter-spacing: -0.03em;
+      background: linear-gradient(90deg, var(--sky), var(--violet));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .stat-label {
+      font-size: 0.62rem;
+      font-weight: 400;
+      color: rgba(255,255,255,0.35);
+      margin-top: 0.1rem;
+    }
+    .studio-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: #fff;
+      background: linear-gradient(90deg, var(--sky), var(--violet));
+      text-decoration: none;
+      padding: 0.85rem 2rem;
+      border-radius: 100px;
+      box-shadow: 0 4px 16px rgba(14,165,233,0.25);
+      transition: box-shadow 0.2s, opacity 0.2s;
+      width: fit-content;
+    }
+    .studio-cta:hover { opacity: 0.9; }
   </style>
 </head>
 <body>
   <nav>
-    <div class="nav-logo">Ne<span>xum</span></div>
+    <div class="nav-logo">FORM<span>+</span></div>
     <ul class="nav-links">
+      <li><a href="#">Projekte</a></li>
       <li><a href="#">Leistungen</a></li>
-      <li><a href="#">Referenzen</a></li>
-      <li><a href="#">Team</a></li>
-      <li><a href="#">Insights</a></li>
+      <li><a href="#">Studio</a></li>
+      <li><a href="#">Kontakt</a></li>
     </ul>
-    <a href="#" class="nav-cta">Gespräch starten</a>
+    <a href="#" class="nav-cta">Projekt anfragen</a>
   </nav>
 
   <section class="hero">
     <div class="hero-left">
-      <div class="pill-tag">Technologieberatung · Trier</div>
+      <div class="pill-tag">Architektur · Smart Buildings · Trier</div>
 
       <h1 class="hero-headline">
-        Zukunft ist<br>
-        eine <span class="grad">Entscheidung.</span>
+        Räume, die<br>
+        <span class="grad">mitdenken.</span>
       </h1>
 
       <p class="hero-body">
-        Wir helfen Unternehmen, digitale Veränderung nicht
-        zu erleiden, sondern zu gestalten. Strategisch,
-        technisch, menschlich.
+        Wir entwerfen Wohnkonzepte und Smart Buildings,
+        die Architektur mit intelligenter Technologie verbinden.
+        Nachhaltig, zukunftssicher, bewohnbar.
       </p>
 
       <div class="service-pills">
-        <span class="sp">Digital Strategy</span>
-        <span class="sp">Cloud Migration</span>
-        <span class="sp">AI Integration</span>
-        <span class="sp">Process Design</span>
-        <span class="sp">Change Management</span>
+        <span class="sp">Smart Home Integration</span>
+        <span class="sp">Wohnkonzepte</span>
+        <span class="sp">Bürogebäude</span>
+        <span class="sp">Nachhaltiges Bauen</span>
+        <span class="sp">Bestandssanierung</span>
       </div>
 
       <div class="cta-row">
         <a href="#" class="cta-btn">Erstgespräch buchen →</a>
-        <a href="#" class="cta-link">Referenzen ansehen</a>
+        <a href="#" class="cta-link">Projekte ansehen</a>
       </div>
     </div>
 
     <div class="hero-right">
       <div class="metric-card">
-        <div class="metric-icon mi-sky">🚀</div>
+        <div class="metric-icon mi-sky">🏗</div>
         <div class="metric-text">
-          <div class="metric-num">120+</div>
-          <div class="metric-label">Abgeschlossene Projekte</div>
+          <div class="metric-num">48</div>
+          <div class="metric-label">Realisierte Projekte</div>
         </div>
       </div>
       <div class="metric-card">
         <div class="metric-icon mi-violet">⚡</div>
         <div class="metric-text">
-          <div class="metric-num">3× schneller</div>
-          <div class="metric-label">Ø Digitalisierungsgeschwindigkeit</div>
+          <div class="metric-num">A+</div>
+          <div class="metric-label">Ø Energieeffizienzklasse</div>
         </div>
       </div>
       <div class="metric-card">
-        <div class="metric-icon mi-dark">🏆</div>
+        <div class="metric-icon mi-dark">🌿</div>
         <div class="metric-text">
-          <div class="metric-num">94%</div>
-          <div class="metric-label">Kundenzufriedenheit</div>
+          <div class="metric-num">−62%</div>
+          <div class="metric-label">CO₂ vs. Neubaustandard</div>
         </div>
       </div>
       <div class="contact-card">
         <div class="cc-label">Nächste Verfügbarkeit</div>
-        <div class="cc-value">Di, 25. März · 14:00 Uhr</div>
+        <div class="cc-value">Mi, 26. März · 10:00 Uhr</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 2: Projekte -->
+  <section class="projects">
+    <div class="section-wrap">
+      <p class="proj-eyebrow">Referenzen</p>
+      <h2 class="proj-headline">Ausgewählte <span class="grad">Projekte.</span></h2>
+      <div class="proj-grid">
+        <div class="proj-card">
+          <div class="ph" style="height:280px;border-radius:12px;">
+            <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&h=800&q=80" alt="Modernes Bürogebäude" loading="lazy"/>
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.45) 0%,transparent 65%);pointer-events:none;border-radius:12px;"></div>
+          </div>
+          <div class="proj-meta">
+            <div class="proj-name">Turm 7 — Bürokomplex</div>
+            <span class="proj-type">Smart Office</span>
+          </div>
+          <div class="proj-desc">8.400 m² · vollständig vernetztes Gebäude · Trier-Nord · 2024</div>
+        </div>
+        <div class="proj-card">
+          <div class="ph" style="height:280px;border-radius:12px;">
+            <img src="https://images.unsplash.com/photo-1572116469696-31de0f17cc34?auto=format&fit=crop&w=1200&h=800&q=80" alt="Futuristische Architektur" loading="lazy"/>
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.45) 0%,transparent 65%);pointer-events:none;border-radius:12px;"></div>
+          </div>
+          <div class="proj-meta">
+            <div class="proj-name">Wohnanlage Moselblick</div>
+            <span class="proj-type">Smart Living</span>
+          </div>
+          <div class="proj-desc">24 Einheiten · Energieklasse A+ · Saarburg · 2023</div>
+        </div>
+        <div class="proj-card">
+          <div class="ph" style="height:280px;border-radius:12px;">
+            <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=1200&h=800&q=80" alt="Architektur Detail" loading="lazy"/>
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.45) 0%,transparent 65%);pointer-events:none;border-radius:12px;"></div>
+          </div>
+          <div class="proj-meta">
+            <div class="proj-name">Villa Porta — Sanierung</div>
+            <span class="proj-type">Bestand + KI</span>
+          </div>
+          <div class="proj-desc">Gründerzeit-Villa · Smart Retrofit · Trier-Mitte · 2025</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: Studio -->
+  <section class="studio">
+    <div class="section-wrap" style="display:grid;grid-template-columns:1fr 1fr;width:100%;">
+      <div class="studio-image-col">
+        <div class="ph" style="height:100%;min-height:480px;">
+          <img src="https://images.unsplash.com/photo-1542736667-069246bdbc6d?auto=format&fit=crop&w=1200&h=800&q=80" alt="Studio Innenraum" loading="lazy"/>
+          <div style="position:absolute;inset:0;background:linear-gradient(to right,transparent 60%,rgba(15,23,42,0.4) 100%);pointer-events:none;"></div>
+        </div>
+      </div>
+      <div class="studio-content">
+        <div class="studio-eyebrow">Das Studio</div>
+        <h2 class="studio-headline">Architektur<br>neu gedacht.</h2>
+        <p class="studio-body">
+          FORM+ wurde 2018 in Trier gegründet mit einer klaren These:
+          Gebäude müssen aktiv zum Leben der Bewohner beitragen —
+          durch Technologie, Materialwahl und eine Architektur,
+          die sich anpasst statt einzuschränken.
+        </p>
+        <div class="studio-stats">
+          <div class="stat-item">
+            <div class="stat-num">7</div>
+            <div class="stat-label">Architekten im Team</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">2018</div>
+            <div class="stat-label">Gegründet in Trier</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">3×</div>
+            <div class="stat-label">BDA-nominiert</div>
+          </div>
+        </div>
+        <a href="#" class="studio-cta">Studio kennenlernen →</a>
       </div>
     </div>
   </section>

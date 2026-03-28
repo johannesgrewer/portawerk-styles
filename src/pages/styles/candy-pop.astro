@@ -319,6 +319,193 @@ export const prerender = true;
       0%, 100% { transform: translateY(0) rotate(0deg); }
       50%       { transform: translateY(-12px) rotate(5deg); }
     }
+
+    /* Photo container */
+    .ph { position: relative; overflow: hidden; }
+    .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.55s ease; }
+    .ph:hover img { transform: scale(1.05); }
+
+    /* Section 2 — Produkte */
+    .products-section {
+      position: relative;
+      z-index: 1;
+      padding: 5rem 4rem;
+      background: white;
+    }
+    .products-inner {
+      max-width: 1600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .section-label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--pink);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.75rem;
+    }
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 1.5rem;
+      height: 2px;
+      background: var(--pink);
+    }
+    .section-headline {
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 700;
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--dark);
+      margin-bottom: 2.5rem;
+    }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+    }
+    .product-card {
+      background: var(--bg);
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1.5px solid rgba(255,107,157,0.1);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(255,107,157,0.15);
+    }
+    .product-info {
+      padding: 1.1rem 1.25rem 1.25rem;
+    }
+    .product-tag {
+      font-size: 0.58rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(61,26,46,0.35);
+      margin-bottom: 0.3rem;
+    }
+    .product-name {
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--dark);
+      margin-bottom: 0.5rem;
+    }
+    .product-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .product-price {
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: var(--pink);
+    }
+    .product-btn {
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: white;
+      background: var(--pink);
+      border: none;
+      padding: 0.4rem 0.9rem;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .product-btn:hover { background: var(--lavender); }
+
+    /* Section 3 — About / Öffnungszeiten */
+    .about-section {
+      position: relative;
+      z-index: 1;
+      padding: 5rem 4rem;
+      background: var(--bg);
+    }
+    .about-inner {
+      max-width: 1600px;
+      margin-left: auto;
+      margin-right: auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .about-photo-wrap {
+      position: relative;
+    }
+    .about-badge-float {
+      position: absolute;
+      bottom: 1.5rem;
+      left: 1.5rem;
+      background: white;
+      border-radius: 16px;
+      padding: 1rem 1.25rem;
+      box-shadow: 0 8px 24px rgba(255,107,157,0.18);
+      border: 1.5px solid rgba(255,107,157,0.12);
+      z-index: 2;
+    }
+    .abf-title {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--dark);
+      margin-bottom: 0.15rem;
+    }
+    .abf-sub {
+      font-size: 0.65rem;
+      color: rgba(61,26,46,0.45);
+    }
+    .about-content {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    .about-text {
+      font-size: 0.95rem;
+      font-weight: 300;
+      line-height: 1.85;
+      color: rgba(61,26,46,0.65);
+    }
+    .hours-block {
+      background: white;
+      border-radius: 16px;
+      padding: 1.5rem;
+      border: 1.5px solid rgba(255,107,157,0.1);
+    }
+    .hours-title {
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--dark);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.4rem 0;
+      border-bottom: 1px solid rgba(61,26,46,0.05);
+      font-size: 0.78rem;
+    }
+    .hours-row:last-child { border-bottom: none; }
+    .hr-day { color: rgba(61,26,46,0.55); font-weight: 400; }
+    .hr-time { color: var(--dark); font-weight: 600; }
+    .address-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.82rem;
+      color: rgba(61,26,46,0.55);
+    }
+    .address-row strong { color: var(--dark); }
   </style>
 </head>
 <body>
@@ -407,6 +594,115 @@ export const prerender = true;
           <span class="stars">★★★★★</span>
           <span class="rating-text">4,9</span>
           <span class="rating-sub">· 284 Bewertungen</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2: Produkte -->
+  <section class="products-section">
+    <div class="products-inner">
+      <div class="section-label">Unsere Highlights</div>
+      <h2 class="section-headline">Was dich erwartet</h2>
+      <div class="product-grid">
+
+        <div class="product-card">
+          <div class="ph" style="height:220px;">
+            <img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=1200&h=800&q=80" alt="Bunter Bubble Tea" loading="lazy" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.35) 0%,transparent 60%);pointer-events:none;"></div>
+          </div>
+          <div class="product-info">
+            <div class="product-tag">Klassiker</div>
+            <div class="product-name">Brown Sugar Milk Tea</div>
+            <div class="product-footer">
+              <span class="product-price">4,90 €</span>
+              <button class="product-btn">+ Wählen</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="ph" style="height:220px;">
+            <img src="https://images.unsplash.com/photo-1565814329452-e1efa11c5b89?auto=format&fit=crop&w=1200&h=800&q=80" alt="Candy Jar" loading="lazy" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.35) 0%,transparent 60%);pointer-events:none;"></div>
+          </div>
+          <div class="product-info">
+            <div class="product-tag">Spezialität</div>
+            <div class="product-name">Candy Jar Mix</div>
+            <div class="product-footer">
+              <span class="product-price">5,90 €</span>
+              <button class="product-btn">+ Wählen</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="ph" style="height:220px;">
+            <img src="https://images.unsplash.com/photo-1574484284002-952d92456975?auto=format&fit=crop&w=1200&h=800&q=80" alt="Rainbow Cake" loading="lazy" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.35) 0%,transparent 60%);pointer-events:none;"></div>
+          </div>
+          <div class="product-info">
+            <div class="product-tag">Torte</div>
+            <div class="product-name">Rainbow Layer Cake</div>
+            <div class="product-footer">
+              <span class="product-price">6,50 €</span>
+              <button class="product-btn">+ Wählen</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <div class="ph" style="height:220px;">
+            <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1200&h=800&q=80" alt="Soft Ice Cream" loading="lazy" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.35) 0%,transparent 60%);pointer-events:none;"></div>
+          </div>
+          <div class="product-info">
+            <div class="product-tag">Saisonal</div>
+            <div class="product-name">Matcha Soft Ice</div>
+            <div class="product-footer">
+              <span class="product-price">3,90 €</span>
+              <button class="product-btn">+ Wählen</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3: About / Öffnungszeiten -->
+  <section class="about-section">
+    <div class="about-inner">
+      <div class="about-photo-wrap">
+        <div class="ph" style="height:480px;border-radius:24px;">
+          <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=1200&h=800&q=80" alt="Zuckerwatte Atmosphäre" loading="lazy" />
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(255,107,157,0.25) 0%,transparent 60%);pointer-events:none;border-radius:24px;"></div>
+        </div>
+        <div class="about-badge-float">
+          <div class="abf-title">Simeonstraße 12, Trier</div>
+          <div class="abf-sub">Direkt in der Fußgängerzone</div>
+        </div>
+      </div>
+
+      <div class="about-content">
+        <div>
+          <div class="section-label">Über uns</div>
+          <h2 class="section-headline">Gemacht mit Liebe.<br>Gebacken in Trier.</h2>
+        </div>
+        <p class="about-text">
+          Zuckerwatte ist kein gewöhnlicher Süßwarenladen — wir backen täglich frisch, mixen Bubble Tea nach Bestellung und verwenden echte Zutaten ohne Fertigmischungen. Unser kleines Team steht seit 2021 für handgemachte Qualität, die man schmeckt.
+        </p>
+
+        <div class="hours-block">
+          <div class="hours-title">Öffnungszeiten</div>
+          <div class="hours-row"><span class="hr-day">Mo – Fr</span><span class="hr-time">10:00 – 19:00 Uhr</span></div>
+          <div class="hours-row"><span class="hr-day">Samstag</span><span class="hr-time">10:00 – 20:00 Uhr</span></div>
+          <div class="hours-row"><span class="hr-day">Sonntag</span><span class="hr-time">12:00 – 18:00 Uhr</span></div>
+        </div>
+
+        <div class="address-row">
+          <span>📍</span>
+          <span><strong>Zuckerwatte</strong> · Simeonstraße 12 · 54290 Trier</span>
         </div>
       </div>
     </div>

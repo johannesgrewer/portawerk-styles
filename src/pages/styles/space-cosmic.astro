@@ -294,6 +294,9 @@ export const prerender = true;
       background: var(--surface);
       border-top: 1px solid var(--border);
     }
+    .shows-inner {
+      max-width: 1600px; margin: 0 auto;
+    }
     .sec-head {
       display: flex; align-items: flex-end; justify-content: space-between;
       margin-bottom: 3.5rem;
@@ -331,71 +334,17 @@ export const prerender = true;
     .sc-art {
       height: 176px; position: relative; overflow: hidden;
       background: var(--bg); border-bottom: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: center;
     }
-
-    /* Black hole */
-    .bh-wrap { position: relative; display: flex; align-items: center; justify-content: center; }
-    .bh-glow {
-      position: absolute; width: 130px; height: 130px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(255,100,20,.16) 0%, transparent 65%);
+    .sc-art img {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; transition: transform 0.55s ease;
     }
-    .bh-ring { position: absolute; border-radius: 50%; border: 0 solid transparent; }
-    .bh-r1 { width: 88px; height: 28px; border: 2.5px solid rgba(255,140,20,.55); box-shadow: 0 0 14px rgba(255,110,0,.35); }
-    .bh-r2 { width: 124px; height: 40px; border: 1.5px solid rgba(255,100,0,.25); }
-    .bh-r3 { width: 162px; height: 52px; border: 1px solid rgba(255,80,0,.1); }
-    .bh-core {
-      width: 34px; height: 34px; border-radius: 50%; background: #000;
-      box-shadow: 0 0 0 10px rgba(255,130,20,.2), 0 0 0 20px rgba(255,80,0,.08);
-      z-index: 2;
-      animation: bhPulse 3s ease-in-out infinite;
-    }
-    @keyframes bhPulse {
-      0%,100%{ box-shadow: 0 0 0 10px rgba(255,130,20,.2), 0 0 0 20px rgba(255,80,0,.08); }
-      50%{ box-shadow: 0 0 0 14px rgba(255,130,20,.28), 0 0 0 28px rgba(255,80,0,.12); }
-    }
-
-    /* Saturn */
-    .sat-wrap { position: relative; display: flex; align-items: center; justify-content: center; }
-    .sat-ball {
-      width: 72px; height: 72px; border-radius: 50%; z-index: 2;
-      background: radial-gradient(circle at 38% 36%, #7BA8D8, #2A5898 55%, #122848);
-      box-shadow: -6px -5px 18px rgba(255,255,255,.12) inset, 0 0 28px rgba(40,100,200,.3);
-    }
-    .sat-ring {
-      position: absolute; border-radius: 50%;
-      border: 7px solid rgba(180,155,90,.42);
-      width: 140px; height: 28px;
-      box-shadow: 0 0 14px rgba(180,155,90,.12);
-      z-index: 1;
-    }
-    .sat-ring-shadow {
-      position: absolute; bottom: 28px;
-      width: 72px; height: 12px;
-      background: rgba(0,0,0,.5); border-radius: 50%; z-index: 3;
-    }
-
-    /* Moon phases */
-    .moon-row {
-      display: flex; align-items: center; gap: 12px;
-    }
-    .mp {
-      width: 30px; height: 30px; border-radius: 50%; position: relative; overflow: hidden;
-    }
-    .mp-new  { background: #080816; border: 1px solid rgba(232,224,248,.2); }
-    .mp-cres { background: #C8C0E0; box-shadow: -9px 0 0 5px #080816 inset; }
-    .mp-half { background: linear-gradient(90deg, #080816 50%, #C8C0E0 50%); }
-    .mp-full { background: #D0C8EC; box-shadow: 0 0 16px rgba(208,200,236,.45); }
-
-    /* Nebula */
-    .neb-bg {
+    .sc-art:hover img { transform: scale(1.05); }
+    .sc-art-overlay {
       position: absolute; inset: 0;
-      background:
-        radial-gradient(ellipse 58% 52% at 38% 52%, rgba(107,47,160,.65) 0%, transparent 60%),
-        radial-gradient(ellipse 48% 60% at 65% 42%, rgba(30,120,188,.42) 0%, transparent 55%),
-        radial-gradient(ellipse 42% 42% at 55% 58%, rgba(200,60,110,.32) 0%, transparent 50%);
+      background: linear-gradient(to top, rgba(3,5,14,0.65) 0%, transparent 60%);
+      pointer-events: none;
     }
-    .neb-s { position: absolute; border-radius: 50%; background: #fff; }
 
     /* Show card body */
     .sc-body {
@@ -441,6 +390,9 @@ export const prerender = true;
       position: relative; z-index: 1;
       padding: 7rem 5rem;
       border-top: 1px solid var(--border);
+    }
+    .kuppel-inner {
+      max-width: 1600px; margin: 0 auto;
       display: grid; grid-template-columns: 1fr 480px;
       gap: 6rem; align-items: center;
     }
@@ -730,6 +682,7 @@ export const prerender = true;
 
 <!-- Shows -->
 <section class="shows">
+  <div class="shows-inner">
   <div class="sec-head">
     <div>
       <div class="sec-eyebrow">Aktuelle Vorführungen</div>
@@ -742,13 +695,8 @@ export const prerender = true;
     <!-- 1: Schwarze Löcher -->
     <div class="sc">
       <div class="sc-art">
-        <div class="bh-wrap">
-          <div class="bh-glow"></div>
-          <div class="bh-r3 bh-ring"></div>
-          <div class="bh-r2 bh-ring"></div>
-          <div class="bh-r1 bh-ring"></div>
-          <div class="bh-core"></div>
-        </div>
+        <img src="https://images.unsplash.com/photo-1542736667-069246bdbc6d?auto=format&fit=crop&w=800&h=400&q=80" alt="Schwarzes Loch kosmisch" loading="lazy" />
+        <div class="sc-art-overlay"></div>
       </div>
       <div class="sc-body">
         <div class="sc-tag">Physik · Raumzeit</div>
@@ -768,11 +716,8 @@ export const prerender = true;
     <!-- 2: Saturn -->
     <div class="sc">
       <div class="sc-art">
-        <div class="sat-wrap">
-          <div class="sat-ring"></div>
-          <div class="sat-ball"></div>
-          <div class="sat-ring-shadow"></div>
-        </div>
+        <img src="https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=800&h=400&q=80" alt="Saturn Planet Ringe" loading="lazy" />
+        <div class="sc-art-overlay"></div>
       </div>
       <div class="sc-body">
         <div class="sc-tag">Sonnensystem · Planeten</div>
@@ -792,12 +737,8 @@ export const prerender = true;
     <!-- 3: Mondphasen -->
     <div class="sc">
       <div class="sc-art">
-        <div class="moon-row">
-          <div class="mp mp-new"></div>
-          <div class="mp mp-cres"></div>
-          <div class="mp mp-half"></div>
-          <div class="mp mp-full"></div>
-        </div>
+        <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=800&h=400&q=80" alt="Mond Nacht Himmel" loading="lazy" />
+        <div class="sc-art-overlay"></div>
       </div>
       <div class="sc-body">
         <div class="sc-tag">Kinder · Familie</div>
@@ -817,12 +758,8 @@ export const prerender = true;
     <!-- 4: Nebula -->
     <div class="sc">
       <div class="sc-art">
-        <div class="neb-bg"></div>
-        <div class="neb-s" style="width:2px;height:2px;top:25%;left:30%"></div>
-        <div class="neb-s" style="width:1px;height:1px;top:40%;left:55%"></div>
-        <div class="neb-s" style="width:2px;height:2px;top:60%;left:70%"></div>
-        <div class="neb-s" style="width:1px;height:1px;top:20%;left:75%"></div>
-        <div class="neb-s" style="width:3px;height:3px;top:50%;left:40%;box-shadow:0 0 6px rgba(255,255,255,.5)"></div>
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=800&h=400&q=80" alt="Kosmischer Nebel Universum" loading="lazy" />
+        <div class="sc-art-overlay"></div>
       </div>
       <div class="sc-body">
         <div class="sc-tag">Astrophysik · Entstehung</div>
@@ -839,10 +776,12 @@ export const prerender = true;
       </div>
     </div>
   </div>
+  </div><!-- /.shows-inner -->
 </section>
 
 <!-- Die Kuppel -->
 <section class="kuppel">
+  <div class="kuppel-inner">
   <div>
     <div class="kup-eyebrow">Technik &amp; Ausstattung</div>
     <h2 class="kup-h2"><span class="gold">12 Meter</span> Kuppel.<br>4K Projektion.</h2>
@@ -887,6 +826,7 @@ export const prerender = true;
     </div>
     <div class="orrery-label">Modell · Inneres Sonnensystem · nicht maßstabsgetreu</div>
   </div>
+  </div><!-- /.kuppel-inner -->
 </section>
 
 </body>

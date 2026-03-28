@@ -315,6 +315,165 @@ export const prerender = true;
       from { opacity: 0; transform: translateY(100%); }
       to   { opacity: 1; transform: translateY(0); }
     }
+
+    /* ── IMG-WRAP ── */
+    .img-wrap { position: relative; overflow: hidden; }
+    .img-wrap img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.55s ease; }
+    .img-wrap:hover img { transform: scale(1.05); }
+    .img-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 60%); pointer-events: none; }
+
+    /* ── SECTION 2: Portfolio Grid ── */
+    .section-portfolio {
+      padding: 6rem 3rem;
+      max-width: 1600px;
+      margin: 0 auto;
+      background: #FAFAF9;
+    }
+    .portfolio-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 2.5rem;
+    }
+    .portfolio-header h2 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      line-height: 0.9;
+      color: #0A0A0A;
+    }
+    .portfolio-header h2 span { color: #B8860B; }
+    .portfolio-header p {
+      font-family: 'Spectral', serif;
+      font-style: italic;
+      font-size: 0.88rem;
+      color: rgba(10,10,10,0.45);
+      max-width: 22ch;
+      text-align: right;
+    }
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+    .portfolio-item {
+      position: relative;
+      cursor: pointer;
+    }
+    .portfolio-item-label {
+      position: absolute;
+      bottom: 1rem;
+      left: 1rem;
+      z-index: 2;
+    }
+    .portfolio-item-label .p-type {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #B8860B;
+      display: block;
+      margin-bottom: 2px;
+    }
+    .portfolio-item-label .p-title {
+      font-family: 'Spectral', serif;
+      font-style: italic;
+      font-size: 0.82rem;
+      color: rgba(250,250,249,0.85);
+    }
+
+    @media (max-width: 900px) {
+      .portfolio-grid { grid-template-columns: repeat(2, 1fr); }
+      .section-portfolio { padding: 4rem 1.5rem; }
+      .portfolio-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .portfolio-header p { text-align: left; }
+    }
+
+    /* ── SECTION 3: Studio Split ── */
+    .section-studio {
+      max-width: 1600px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .studio-photo {
+      min-height: 560px;
+    }
+    .studio-info {
+      background: #0A0A0A;
+      padding: 5rem 4.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .studio-eyebrow {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 300;
+      font-size: 0.65rem;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: #B8860B;
+      margin-bottom: 2rem;
+    }
+    .studio-info h2 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: clamp(2.2rem, 4vw, 3.5rem);
+      text-transform: uppercase;
+      line-height: 0.9;
+      color: #FAFAF9;
+      margin-bottom: 2.5rem;
+    }
+    .studio-info h2 span { color: #B8860B; }
+    .service-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-bottom: 3rem;
+    }
+    .service-list li {
+      font-family: 'Spectral', serif;
+      font-size: 0.9rem;
+      color: rgba(250,250,249,0.65);
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(250,250,249,0.08);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .service-list li::before {
+      content: '';
+      display: block;
+      width: 20px;
+      height: 1px;
+      background: #B8860B;
+      flex-shrink: 0;
+    }
+    .studio-cta {
+      display: inline-block;
+      background: #B8860B;
+      color: #FAFAF9;
+      padding: 0.9rem 2.2rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-decoration: none;
+      align-self: flex-start;
+      transition: background 0.3s;
+    }
+    .studio-cta:hover { background: #FAFAF9; color: #0A0A0A; }
+
+    @media (max-width: 900px) {
+      .section-studio { grid-template-columns: 1fr; }
+      .studio-photo { min-height: 320px; }
+      .studio-info { padding: 4rem 2rem; }
+    }
   </style>
 </head>
 <body>
@@ -390,5 +549,106 @@ export const prerender = true;
       </div>
     </div>
   </section>
+
+  <!-- SECTION 2: Portfolio Grid -->
+  <section class="section-portfolio">
+    <div class="portfolio-header">
+      <h2>Port<span>folio</span></h2>
+      <p>Auswahl aus 840 Shootings seit 2017</p>
+    </div>
+    <div class="portfolio-grid">
+
+      <div class="portfolio-item">
+        <div class="img-wrap" style="height: 380px;">
+          <img src="https://images.unsplash.com/photo-1519225421980-f680e246b69d?auto=format&fit=crop&w=800&h=600&q=80" alt="Portrait Fotografie" loading="lazy" />
+          <div class="img-overlay"></div>
+        </div>
+        <div class="portfolio-item-label">
+          <span class="p-type">Portrait</span>
+          <span class="p-title">Lena K. — Business</span>
+        </div>
+      </div>
+
+      <div class="portfolio-item">
+        <div class="img-wrap" style="height: 380px;">
+          <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=800&h=600&q=80" alt="Editorial Fotografie" loading="lazy" />
+          <div class="img-overlay"></div>
+        </div>
+        <div class="portfolio-item-label">
+          <span class="p-type">Editorial</span>
+          <span class="p-title">Mode Kampagne</span>
+        </div>
+      </div>
+
+      <div class="portfolio-item">
+        <div class="img-wrap" style="height: 380px;">
+          <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=800&h=600&q=80" alt="Produkt Fotografie" loading="lazy" />
+          <div class="img-overlay"></div>
+        </div>
+        <div class="portfolio-item-label">
+          <span class="p-type">Produkt</span>
+          <span class="p-title">Kosmetik Brand</span>
+        </div>
+      </div>
+
+      <div class="portfolio-item">
+        <div class="img-wrap" style="height: 380px;">
+          <img src="https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?auto=format&fit=crop&w=800&h=600&q=80" alt="Werbefotografie" loading="lazy" />
+          <div class="img-overlay"></div>
+        </div>
+        <div class="portfolio-item-label">
+          <span class="p-type">Werbung</span>
+          <span class="p-title">Automotive</span>
+        </div>
+      </div>
+
+      <div class="portfolio-item">
+        <div class="img-wrap" style="height: 380px;">
+          <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&w=800&h=600&q=80" alt="Menschen Fotografie" loading="lazy" />
+          <div class="img-overlay"></div>
+        </div>
+        <div class="portfolio-item-label">
+          <span class="p-type">Menschen</span>
+          <span class="p-title">Familie — Outdoor</span>
+        </div>
+      </div>
+
+      <div class="portfolio-item">
+        <div class="img-wrap" style="height: 380px;">
+          <img src="https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?auto=format&fit=crop&w=800&h=600&q=80" alt="Architektur Fotografie" loading="lazy" />
+          <div class="img-overlay"></div>
+        </div>
+        <div class="portfolio-item-label">
+          <span class="p-type">Architektur</span>
+          <span class="p-title">Innenraum — Hotel</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECTION 3: Studio Info Split -->
+  <section class="section-studio">
+    <div class="img-wrap studio-photo">
+      <img src="https://images.unsplash.com/photo-1606216794074-735e91aa2c92?auto=format&fit=crop&w=1200&h=800&q=80" alt="Frame Studio Trier" loading="lazy" />
+      <div class="img-overlay"></div>
+    </div>
+
+    <div class="studio-info">
+      <p class="studio-eyebrow">Das Studio · Trier</p>
+      <h2>Raum für<br><span>Bilder.</span></h2>
+
+      <ul class="service-list">
+        <li>Portrait & Bewerbungsfotos</li>
+        <li>Editorial & Mode</li>
+        <li>Kommerzielle Werbung</li>
+        <li>Produkt & Packshot</li>
+        <li>Architektur & Interieur</li>
+      </ul>
+
+      <a href="#" class="studio-cta">Shooting buchen →</a>
+    </div>
+  </section>
+
 </body>
 </html>

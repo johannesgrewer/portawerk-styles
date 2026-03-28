@@ -120,6 +120,9 @@ export const prerender = true;
       padding-top: 48px;
       min-height: 100vh;
       border-bottom: 3px double #1A1A1A;
+      max-width: 1600px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .masthead {
@@ -761,6 +764,12 @@ export const prerender = true;
     <div class="books-grid">
       <!-- Feature Book -->
       <div class="book-feature">
+        <div class="hero-image-wrapper" style="float:none;width:100%;margin:0 0 1.5rem 0;">
+          <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&w=700&h=380&q=80"
+               alt="Aufgeschlagenes Buch in warmem Licht" loading="lazy"
+               style="filter:grayscale(20%) contrast(1.05);" />
+          <span class="hero-image-caption">Empfehlung der Woche</span>
+        </div>
         <span class="book-genre">Roman</span>
         <h3 class="book-title">Das Licht am Ende</h3>
         <p class="book-author">Tomas Gonzalez</p>
@@ -807,6 +816,15 @@ export const prerender = true;
       <p class="section-subtitle">Literatur lebt, wenn man ihr zuhoert.</p>
     </div>
 
+    <!-- Lesungen Atmosphäre-Foto -->
+    <div class="hero-image-wrapper" style="float:none;width:100%;margin:0 0 2.5rem 0;">
+      <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=1100&h=400&q=80"
+           alt="Lesung in einer Buchhandlung — Publikum und Licht"
+           loading="lazy"
+           style="filter:grayscale(25%) contrast(1.05);" />
+      <span class="hero-image-caption">Lesungen und Veranstaltungen im Zwischenzeilen</span>
+    </div>
+
     <div class="events-grid">
       <div class="events-list">
         <div class="event-item">
@@ -827,6 +845,13 @@ export const prerender = true;
       </div>
 
       <div class="owner-section">
+        <div class="hero-image-wrapper" style="float:none;width:100%;margin:0 0 1.5rem 0;">
+          <img src="https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=700&h=320&q=80"
+               alt="Buchhandlung Regal — Bücher in warmem Licht"
+               loading="lazy"
+               style="filter:grayscale(20%) contrast(1.05);" />
+          <span class="hero-image-caption">Zwischenzeilen, Nagelstraße 12</span>
+        </div>
         <h3 class="owner-name">Katharina Meier</h3>
         <p class="owner-role">Inhaberin seit 2016</p>
         <p class="owner-text">

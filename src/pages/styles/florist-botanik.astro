@@ -434,6 +434,152 @@ export const prerender = true;
       .center-line { display: none; }
       .image-frame { height: 100%; max-height: none; }
     }
+
+    /* ── IMG-WRAP ── */
+    .img-wrap { position: relative; overflow: hidden; }
+    .img-wrap img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.55s ease; }
+    .img-wrap:hover img { transform: scale(1.05); }
+    .img-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 60%); pointer-events: none; }
+
+    /* ── SECTION 2: Pflanzengrid ── */
+    .section-plants {
+      padding: 6rem 4rem;
+      max-width: 1600px;
+      margin: 0 auto;
+      background: #F9F6F0;
+    }
+    .section-plants .section-label {
+      font-family: 'Lora', serif;
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #C4853A;
+      margin-bottom: 1rem;
+    }
+    .section-plants h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 300;
+      font-style: italic;
+      color: #2A3028;
+      margin-bottom: 3rem;
+    }
+    .plant-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+    .plant-card {
+      position: relative;
+    }
+    .plant-name {
+      margin-top: 0.75rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      font-weight: 500;
+      font-style: italic;
+      color: #3B5C3A;
+    }
+    .plant-latin {
+      font-family: 'Lora', serif;
+      font-size: 9px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #8a9e87;
+      margin-top: 2px;
+    }
+
+    @media (max-width: 900px) {
+      .plant-grid { grid-template-columns: repeat(2, 1fr); }
+      .section-plants { padding: 4rem 2rem; }
+    }
+
+    /* ── SECTION 3: Kontakt Split ── */
+    .section-contact {
+      max-width: 1600px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .contact-text {
+      background: #EEE8DE;
+      padding: 6rem 5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .contact-text .section-label {
+      font-family: 'Lora', serif;
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #C4853A;
+      margin-bottom: 1rem;
+    }
+    .contact-text h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 3vw, 2.8rem);
+      font-weight: 300;
+      font-style: italic;
+      color: #2A3028;
+      margin-bottom: 2.5rem;
+    }
+    .hours-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      margin-bottom: 2.5rem;
+    }
+    .hours-list li {
+      display: flex;
+      justify-content: space-between;
+      font-family: 'Lora', serif;
+      font-size: 0.82rem;
+      color: #3B5C3A;
+      border-bottom: 1px solid rgba(59, 92, 58, 0.12);
+      padding-bottom: 0.9rem;
+    }
+    .hours-list li .day {
+      font-weight: 400;
+      letter-spacing: 0.05em;
+    }
+    .hours-list li .time {
+      color: #8a9e87;
+      font-size: 0.78rem;
+    }
+    .contact-address {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-style: italic;
+      color: #3B5C3A;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+    .contact-cta {
+      display: inline-block;
+      padding: 12px 28px;
+      border: 1.5px solid #3B5C3A;
+      font-family: 'Lora', serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #3B5C3A;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      align-self: flex-start;
+    }
+    .contact-cta:hover { background: #3B5C3A; color: #F9F6F0; }
+    .contact-photo {
+      min-height: 500px;
+    }
+
+    @media (max-width: 900px) {
+      .section-contact { grid-template-columns: 1fr; }
+      .contact-text { padding: 4rem 2rem; }
+      .contact-photo { min-height: 320px; }
+    }
   </style>
 </head>
 <body>
@@ -509,6 +655,78 @@ export const prerender = true;
       <div class="scroll-line"></div>
     </div>
   </main>
+
+  <!-- SECTION 2: Pflanzensorten Grid -->
+  <section class="section-plants">
+    <p class="section-label">Sortiment · Saison 2024</p>
+    <h2>Unsere Pflanzen</h2>
+    <div class="plant-grid">
+
+      <div class="plant-card">
+        <div class="img-wrap" style="height: 320px;">
+          <img src="https://images.unsplash.com/photo-1465495976277-27b30e1dc5d7?auto=format&fit=crop&w=800&h=600&q=80" alt="Monstera" loading="lazy" />
+          <div class="img-overlay"></div>
+        </div>
+        <p class="plant-name">Monstera</p>
+        <p class="plant-latin">Monstera deliciosa</p>
+      </div>
+
+      <div class="plant-card">
+        <div class="img-wrap" style="height: 320px;">
+          <img src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=800&h=600&q=80" alt="Orchideen" loading="lazy" />
+          <div class="img-overlay"></div>
+        </div>
+        <p class="plant-name">Orchideen</p>
+        <p class="plant-latin">Orchidaceae</p>
+      </div>
+
+      <div class="plant-card">
+        <div class="img-wrap" style="height: 320px;">
+          <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&h=600&q=80" alt="Philodendron" loading="lazy" />
+          <div class="img-overlay"></div>
+        </div>
+        <p class="plant-name">Philodendron</p>
+        <p class="plant-latin">Philodendron hederaceum</p>
+      </div>
+
+      <div class="plant-card">
+        <div class="img-wrap" style="height: 320px;">
+          <img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=800&h=600&q=80" alt="Sukkulenten" loading="lazy" />
+          <div class="img-overlay"></div>
+        </div>
+        <p class="plant-name">Sukkulenten</p>
+        <p class="plant-latin">Succulent mix</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECTION 3: Kontakt + Öffnungszeiten -->
+  <section class="section-contact">
+    <div class="contact-text">
+      <p class="section-label">Atelier · Trier Altstadt</p>
+      <h2>Besucht uns</h2>
+
+      <ul class="hours-list">
+        <li><span class="day">Montag – Freitag</span><span class="time">09:00 – 18:30</span></li>
+        <li><span class="day">Samstag</span><span class="time">09:00 – 16:00</span></li>
+        <li><span class="day">Sonntag</span><span class="time">Geschlossen</span></li>
+      </ul>
+
+      <p class="contact-address">
+        Grünzeit Botanik Atelier<br>
+        Simeonstraße 14<br>
+        54290 Trier
+      </p>
+
+      <a href="#" class="contact-cta">Anfrage senden</a>
+    </div>
+
+    <div class="img-wrap contact-photo">
+      <img src="https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?auto=format&fit=crop&w=1200&h=800&q=80" alt="Botanik Atelier Grünzeit Innenraum" loading="lazy" />
+      <div class="img-overlay"></div>
+    </div>
+  </section>
 
   <script>
     // Staggered entrance on load

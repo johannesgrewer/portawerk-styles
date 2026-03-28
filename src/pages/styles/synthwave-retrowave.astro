@@ -318,6 +318,183 @@ export const prerender = true;
     }
     .corner.tl { top: 5rem; left: 2rem; }
     .corner.tr { top: 5rem; right: 2rem; }
+
+    /* Photo container */
+    .ph { position: relative; overflow: hidden; }
+    .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.55s ease; }
+    .ph:hover img { transform: scale(1.05); }
+
+    /* Page wrap */
+    .page-wrap { max-width: 1600px; margin-left: auto; margin-right: auto; }
+
+    /* Section 2: Releases */
+    .releases-section {
+      position: relative;
+      z-index: 2;
+      padding: 7rem 3rem;
+      border-top: 1px solid rgba(255,0,255,0.12);
+    }
+    .sec-eyebrow-sw {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.5rem;
+      font-weight: 400;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      text-shadow: 0 0 10px rgba(0,255,255,0.5);
+      margin-bottom: 2.5rem;
+    }
+    .sec-headline-sw {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      font-size: clamp(1.8rem, 4vw, 3.5rem);
+      line-height: 1;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--magenta);
+      text-shadow: 0 0 20px rgba(255,0,255,0.5), 0 0 40px rgba(255,0,255,0.2);
+      margin-bottom: 3.5rem;
+    }
+    .releases-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(255,0,255,0.15);
+    }
+    .release-card {
+      background: var(--bg);
+      position: relative;
+    }
+    .release-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(13,0,26,0.85) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 1;
+    }
+    .release-tint {
+      position: absolute;
+      inset: 0;
+      background: rgba(123,0,255,0.25);
+      mix-blend-mode: multiply;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .release-meta {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 1.5rem;
+      z-index: 2;
+    }
+    .release-type {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.42rem;
+      font-weight: 400;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 0.4rem;
+    }
+    .release-title {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: #FFFFFF;
+      letter-spacing: 0.05em;
+      text-shadow: 0 0 12px rgba(255,0,255,0.4);
+    }
+
+    /* Section 3: Events */
+    .events-section {
+      position: relative;
+      z-index: 2;
+      padding: 7rem 3rem;
+      border-top: 1px solid rgba(255,0,255,0.12);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    .events-photo-wrap {
+      position: relative;
+    }
+    .events-photo-glow {
+      position: absolute;
+      inset: -2px;
+      background: linear-gradient(135deg, var(--magenta), var(--purple), var(--cyan));
+      opacity: 0.4;
+      filter: blur(12px);
+      z-index: 0;
+    }
+    .events-content {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    .event-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .event-item {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 1.25rem 0;
+      border-bottom: 1px solid rgba(255,0,255,0.1);
+    }
+    .event-date {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      font-size: 0.7rem;
+      color: var(--magenta);
+      text-shadow: 0 0 8px rgba(255,0,255,0.5);
+      min-width: 80px;
+    }
+    .event-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      flex: 1;
+    }
+    .event-name {
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.85);
+    }
+    .event-location {
+      font-size: 0.58rem;
+      font-weight: 200;
+      letter-spacing: 0.15em;
+      color: rgba(255,255,255,0.3);
+      text-transform: uppercase;
+    }
+    .event-ticket {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.48rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--cyan);
+      padding: 0.35rem 0.75rem;
+      text-decoration: none;
+      box-shadow: 0 0 10px rgba(0,255,255,0.35);
+      white-space: nowrap;
+    }
+    .merch-cta {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: linear-gradient(90deg, var(--magenta), var(--purple));
+      text-decoration: none;
+      padding: 0.9rem 2rem;
+      align-self: flex-start;
+      box-shadow: 0 0 20px rgba(255,0,255,0.35);
+    }
   </style>
 </head>
 <body>
@@ -340,6 +517,8 @@ export const prerender = true;
     </ul>
     <a href="#" class="nav-btn">Tickets</a>
   </nav>
+
+  <div class="page-wrap">
 
   <section class="hero">
     <div class="eyebrow">Music & Event Production · Trier</div>
@@ -384,5 +563,98 @@ export const prerender = true;
       </div>
     </div>
   </section>
+
+  <!-- SECTION 2: Releases -->
+  <section class="releases-section">
+    <div class="sec-eyebrow-sw">// Latest Releases</div>
+    <h2 class="sec-headline-sw">Neue Musik</h2>
+    <div class="releases-grid">
+      <div class="release-card">
+        <div class="ph" style="height:340px;">
+          <img src="https://images.unsplash.com/photo-1542736667-069246bdbc6d?auto=format&fit=crop&w=1200&h=800&q=80" alt="Chrome Horizon Album" loading="lazy"/>
+        </div>
+        <div class="release-tint"></div>
+        <div class="release-overlay"></div>
+        <div class="release-meta">
+          <div class="release-type">Album · 2025</div>
+          <div class="release-title">Chrome Horizon</div>
+        </div>
+      </div>
+      <div class="release-card">
+        <div class="ph" style="height:340px;">
+          <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=1200&h=800&q=80" alt="Midnight Protocol EP" loading="lazy"/>
+        </div>
+        <div class="release-tint"></div>
+        <div class="release-overlay"></div>
+        <div class="release-meta">
+          <div class="release-type">EP · 2024</div>
+          <div class="release-title">Midnight Protocol</div>
+        </div>
+      </div>
+      <div class="release-card">
+        <div class="ph" style="height:340px;">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1200&h=800&q=80" alt="Neon City Nights Single" loading="lazy"/>
+        </div>
+        <div class="release-tint"></div>
+        <div class="release-overlay"></div>
+        <div class="release-meta">
+          <div class="release-type">Single · 2024</div>
+          <div class="release-title">Neon City Nights</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: Events + Merch -->
+  <section class="events-section">
+    <div class="events-content">
+      <div class="sec-eyebrow-sw">// Upcoming Shows</div>
+      <h2 class="sec-headline-sw">Live Events</h2>
+      <div class="event-list">
+        <div class="event-item">
+          <div class="event-date">15 APR</div>
+          <div class="event-info">
+            <span class="event-name">Neon Drive Live — Release Show</span>
+            <span class="event-location">Trier · Exhaus</span>
+          </div>
+          <a href="#" class="event-ticket">Tickets</a>
+        </div>
+        <div class="event-item">
+          <div class="event-date">03 MAI</div>
+          <div class="event-info">
+            <span class="event-name">Retrowave Night Vol. 12</span>
+            <span class="event-location">Köln · Gewölbe</span>
+          </div>
+          <a href="#" class="event-ticket">Tickets</a>
+        </div>
+        <div class="event-item">
+          <div class="event-date">21 JUN</div>
+          <div class="event-info">
+            <span class="event-name">Synthwave Summer Festival</span>
+            <span class="event-location">Berlin · Tresor</span>
+          </div>
+          <a href="#" class="event-ticket">Tickets</a>
+        </div>
+        <div class="event-item">
+          <div class="event-date">08 JUL</div>
+          <div class="event-info">
+            <span class="event-name">Chrome Horizon Tour — Frankfurt</span>
+            <span class="event-location">Frankfurt · Batschkapp</span>
+          </div>
+          <a href="#" class="event-ticket">Tickets</a>
+        </div>
+      </div>
+      <a href="#" class="merch-cta">Merch Shop →</a>
+    </div>
+    <div class="events-photo-wrap" style="position:relative;">
+      <div class="events-photo-glow"></div>
+      <div class="ph" style="height:500px;position:relative;z-index:1;">
+        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&h=1600&q=80" alt="Live Show Atmosphäre" loading="lazy"/>
+        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(13,0,26,0.6) 0%,transparent 50%);pointer-events:none;"></div>
+      </div>
+    </div>
+  </section>
+
+  </div><!-- /page-wrap -->
 </body>
 </html>

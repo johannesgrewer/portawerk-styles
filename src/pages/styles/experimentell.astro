@@ -212,6 +212,24 @@ export const prerender = true;
       padding: 6rem 2rem 4rem;
       background: #F5F5F5;
       overflow: hidden;
+      max-width: 1600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .aktuell__bg-photo {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .aktuell__bg-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(100%);
+      mix-blend-mode: multiply;
+      opacity: 0.35;
     }
 
     .aktuell__label {
@@ -329,9 +347,45 @@ export const prerender = true;
       min-height: 70vh;
       padding: 6rem 2rem 4rem;
       background: #FAFAFA;
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 4rem;
+      align-items: start;
+      max-width: 1600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .manifest__content {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
+      position: relative;
+      z-index: 1;
+    }
+
+    .manifest__photo {
+      position: relative;
+      overflow: hidden;
+      align-self: stretch;
+      min-height: 480px;
+      border: 2px solid #0A0A0A;
+      transform: rotate(1.5deg);
+    }
+
+    .manifest__photo img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(100%) contrast(1.1);
+      mix-blend-mode: multiply;
+      transition: transform 0.55s ease;
+    }
+
+    .manifest__photo:hover img {
+      transform: scale(1.05);
     }
 
     .manifest__text {
@@ -412,6 +466,16 @@ export const prerender = true;
     .manifest__closing {
       position: relative;
       z-index: 1;
+    }
+
+    @media (max-width: 900px) {
+      .manifest {
+        grid-template-columns: 1fr;
+      }
+      .manifest__photo {
+        min-height: 300px;
+        transform: rotate(0deg);
+      }
     }
 
     /* ===== SCROLL REVEAL ===== */
@@ -548,7 +612,7 @@ export const prerender = true;
 <body>
 
   <!-- ===== HERO — BROKEN GRID ===== -->
-  <section class="hero">
+  <section class="hero" style="max-width:1600px;margin-left:auto;margin-right:auto;">
     <div class="hero__noise"></div>
 
     <span class="hero__title-left">STOR</span>
@@ -581,6 +645,10 @@ export const prerender = true;
 
   <!-- ===== SECTION 2 — AKTUELL ===== -->
   <section class="aktuell reveal">
+    <div class="aktuell__bg-photo">
+      <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=1600&h=900&q=80" alt="Ausstellungsraum" loading="lazy" />
+    </div>
+
     <span class="aktuell__label">Aktuell</span>
 
     <div class="aktuell__main">
@@ -601,29 +669,35 @@ export const prerender = true;
 
   <!-- ===== SECTION 3 — MANIFEST ===== -->
   <section class="manifest reveal">
-    <span class="manifest__bg-letter">S</span>
+    <div class="manifest__content">
+      <span class="manifest__bg-letter">S</span>
 
-    <p class="manifest__text">
-      Wir zeigen keine <span class="struck">schoene</span> Kunst.<br />
-      Wir zeigen Kunst die <span class="red">stoert</span><br />
-      <span class="blue">unbequem</span> ist<br />
-      nachdenken lasst.
-    </p>
+      <p class="manifest__text">
+        Wir zeigen keine <span class="struck">schoene</span> Kunst.<br />
+        Wir zeigen Kunst die <span class="red">stoert</span><br />
+        <span class="blue">unbequem</span> ist<br />
+        nachdenken lasst.
+      </p>
 
-    <div class="manifest__divider"></div>
+      <div class="manifest__divider"></div>
 
-    <div class="manifest__info">
-      <strong>Offnungszeiten</strong><br />
-      Do — Sa &nbsp; 14:00 — 20:00<br />
-      So &nbsp; 11:00 — 18:00<br />
-      Mo — Mi &nbsp; geschlossen<br /><br />
-      <strong>Adresse</strong><br />
-      Neustrasse 12<br />
-      54290 Trier<br /><br />
-      kontakt@stoerung-trier.de
+      <div class="manifest__info">
+        <strong>Offnungszeiten</strong><br />
+        Do — Sa &nbsp; 14:00 — 20:00<br />
+        So &nbsp; 11:00 — 18:00<br />
+        Mo — Mi &nbsp; geschlossen<br /><br />
+        <strong>Adresse</strong><br />
+        Neustrasse 12<br />
+        54290 Trier<br /><br />
+        kontakt@stoerung-trier.de
+      </div>
+
+      <p class="manifest__closing">Eintritt frei. Meinungen auch.</p>
     </div>
 
-    <p class="manifest__closing">Eintritt frei. Meinungen auch.</p>
+    <div class="manifest__photo">
+      <img src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&h=1000&q=80" alt="Zeitgenoessisches Kunstwerk" loading="lazy" />
+    </div>
   </section>
 
   <script>

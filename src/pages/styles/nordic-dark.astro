@@ -272,6 +272,15 @@ export const prerender = true;
       padding: 2rem 2.5rem;
       border-top: 1px solid rgba(122,158,142,0.12);
     }
+
+    /* Large screen constraint */
+    .section-wrap {
+      max-width: 1600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .img-wrap:hover img { transform: scale(1.05); }
     .bb-label {
       font-size: 0.5rem;
       font-weight: 400;
@@ -372,32 +381,126 @@ export const prerender = true;
       </div>
     </div>
 
-    <div class="hero-right">
-      <div class="temp-block">
+    <div class="hero-right" style="position:relative;">
+      <!-- Hero photo behind the temp blocks -->
+      <div style="position:absolute;inset:0;overflow:hidden;z-index:0;">
+        <img src="https://images.unsplash.com/photo-1542736667-069246bdbc6d?auto=format&fit=crop&w=800&h=1200&q=80"
+             alt="Dunkle nordische Atmosphäre" loading="eager"
+             style="width:100%;height:100%;object-fit:cover;opacity:0.18;" />
+      </div>
+      <div class="temp-block" style="position:relative;z-index:1;">
         <div class="tb-label">Finnische Sauna</div>
         <div class="tb-temp">90<span class="unit"> °C</span></div>
         <div class="tb-name">Kiuas Traditionsofen</div>
         <div class="tb-note">Trockene Wärme · Aufguss auf Anfrage</div>
       </div>
-      <div class="temp-block">
+      <div class="temp-block" style="position:relative;z-index:1;">
         <div class="tb-label">Dampfbad</div>
         <div class="tb-temp">45<span class="unit"> °C</span></div>
         <div class="tb-name">Hammam-Stil</div>
         <div class="tb-note">100 % Luftfeuchtigkeit · Kräuteressenzen</div>
       </div>
-      <div class="temp-block">
+      <div class="temp-block" style="position:relative;z-index:1;">
         <div class="tb-label">Tauchbecken</div>
         <div class="tb-temp">10<span class="unit"> °C</span></div>
         <div class="tb-name">Kaltbad Isbad</div>
         <div class="tb-note">Durchblutungsfördernd · täglich frisch</div>
       </div>
 
-      <div class="booking-block">
+      <div class="booking-block" style="position:relative;z-index:1;">
         <div class="bb-label">Öffnungszeiten</div>
         <div class="bb-hours">Di – So<br>14:00 – 22:00 Uhr</div>
         <div class="bb-price">Tageskarte ab <strong>38 €</strong></div>
       </div>
     </div>
   </section>
+
+  <!-- SECTION 2 — Rituale mit Fotos -->
+  <section style="padding: 5rem 2rem; background: var(--mid);">
+    <div class="section-wrap">
+      <div style="text-align:center; margin-bottom: 3rem;">
+        <p style="font-family:'DM Sans',sans-serif; font-size:0.55rem; font-weight:400; letter-spacing:0.3em; text-transform:uppercase; color:var(--sage); margin-bottom:0.75rem;">Die Erfahrung</p>
+        <h2 style="font-family:'Fraunces',serif; font-weight:300; font-size:clamp(2rem,4vw,3.2rem); color:var(--text); letter-spacing:0.01em;">Rituale &amp; <em style="font-style:italic;color:var(--sage);">Stille</em></h2>
+      </div>
+
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; max-width:1200px; margin:0 auto;">
+
+        <div class="img-wrap" style="position:relative;overflow:hidden;height:280px;">
+          <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=1200&h=800&q=80"
+               alt="Dunkle Sauna Atmosphäre" loading="lazy"
+               style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.55s ease;" />
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.55) 0%,transparent 60%);pointer-events:none;"></div>
+          <div style="position:absolute;bottom:1.25rem;left:1.25rem;">
+            <p style="font-family:'Fraunces',serif;font-weight:300;font-size:1rem;color:var(--cream);">Finnische Sauna</p>
+            <p style="font-family:'DM Sans',sans-serif;font-size:0.65rem;color:rgba(232,228,220,0.55);letter-spacing:0.1em;text-transform:uppercase;">90 °C · Kiuas Ofen</p>
+          </div>
+        </div>
+
+        <div class="img-wrap" style="position:relative;overflow:hidden;height:280px;">
+          <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&h=800&q=80"
+               alt="Eiskaltes Tauchbecken" loading="lazy"
+               style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.55s ease;" />
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.55) 0%,transparent 60%);pointer-events:none;"></div>
+          <div style="position:absolute;bottom:1.25rem;left:1.25rem;">
+            <p style="font-family:'Fraunces',serif;font-weight:300;font-size:1rem;color:var(--cream);">Kaltbad Isbad</p>
+            <p style="font-family:'DM Sans',sans-serif;font-size:0.65rem;color:rgba(232,228,220,0.55);letter-spacing:0.1em;text-transform:uppercase;">10 °C · Täglich frisch</p>
+          </div>
+        </div>
+
+        <div class="img-wrap" style="position:relative;overflow:hidden;height:280px;">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1200&h=800&q=80"
+               alt="Ruheraum nordisches Spa" loading="lazy"
+               style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.55s ease;" />
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.55) 0%,transparent 60%);pointer-events:none;"></div>
+          <div style="position:absolute;bottom:1.25rem;left:1.25rem;">
+            <p style="font-family:'Fraunces',serif;font-weight:300;font-size:1rem;color:var(--cream);">Ruheraum Hvila</p>
+            <p style="font-family:'DM Sans',sans-serif;font-size:0.65rem;color:rgba(232,228,220,0.55);letter-spacing:0.1em;text-transform:uppercase;">Stille · Kräutertee</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3 — Atmosphäre Split -->
+  <section style="padding: 5rem 2rem; background: var(--dark);">
+    <div class="section-wrap">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center; max-width:1200px; margin:0 auto;">
+
+        <div class="img-wrap" style="position:relative;overflow:hidden;height:420px;">
+          <img src="https://images.unsplash.com/photo-1541518763669-27fef04b14ea?auto=format&fit=crop&w=1200&h=900&q=80"
+               alt="Nordische dunkle Landschaft" loading="lazy"
+               style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.55s ease;" />
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.45) 0%,transparent 60%);pointer-events:none;"></div>
+        </div>
+
+        <div>
+          <p style="font-family:'DM Sans',sans-serif;font-size:0.55rem;font-weight:400;letter-spacing:0.3em;text-transform:uppercase;color:var(--sage);margin-bottom:1.25rem;">Öffnungszeiten &amp; Preise</p>
+          <h2 style="font-family:'Fraunces',serif;font-weight:300;font-size:clamp(1.8rem,3.5vw,2.8rem);color:var(--text);line-height:1.2;margin-bottom:1.5rem;">Der Abend<br><em style="font-style:italic;color:var(--sage);">gehört dir.</em></h2>
+          <div style="width:2.5rem;height:1px;background:var(--sage);opacity:0.5;margin-bottom:1.5rem;"></div>
+          <p style="font-family:'DM Sans',sans-serif;font-size:0.88rem;font-weight:300;line-height:2;color:var(--muted);margin-bottom:2rem;">
+            Kvällen ist kein Hotel, kein Fitnessstudio. Es ist ein Ort für Menschen, die kurz aufhören wollen — mit allem. Dienstag bis Sonntag, ab 14 Uhr.
+          </p>
+          <div style="display:flex;flex-direction:column;gap:0.75rem;border-top:1px solid rgba(122,158,142,0.15);padding-top:1.5rem;">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:0.75rem;border-bottom:1px solid rgba(122,158,142,0.08);">
+              <span style="font-family:'DM Sans',sans-serif;font-size:0.82rem;color:var(--text);">Tageskarte</span>
+              <span style="font-family:'Fraunces',serif;font-weight:300;font-size:1.1rem;color:var(--cream);">38 €</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:0.75rem;border-bottom:1px solid rgba(122,158,142,0.08);">
+              <span style="font-family:'DM Sans',sans-serif;font-size:0.82rem;color:var(--text);">Abendritual (ab 18 Uhr)</span>
+              <span style="font-family:'Fraunces',serif;font-weight:300;font-size:1.1rem;color:var(--cream);">28 €</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <span style="font-family:'DM Sans',sans-serif;font-size:0.82rem;color:var(--text);">Monatskarte</span>
+              <span style="font-family:'Fraunces',serif;font-weight:300;font-size:1.1rem;color:var(--cream);">89 €</span>
+            </div>
+          </div>
+          <a href="#" style="display:inline-block;margin-top:2rem;font-family:'DM Sans',sans-serif;font-size:0.58rem;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:var(--bg);background:var(--sage);padding:0.95rem 2.2rem;text-decoration:none;transition:background 0.3s;">Termin buchen →</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
 </body>
 </html>

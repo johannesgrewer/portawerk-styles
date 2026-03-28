@@ -797,6 +797,56 @@ export const prerender = true;
     @keyframes heroFadeIn {
       to { opacity: 1; transform: translateY(0); }
     }
+
+    /* ── PHOTO CONTAINERS ── */
+    .ph { position: relative; overflow: hidden; }
+    .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.55s ease; }
+    .ph:hover img { transform: scale(1.05); }
+
+    /* ── PHOTO SECTION ── */
+    .photo-section {
+      position: relative;
+      padding: 6rem 2rem;
+    }
+    .photo-section-inner {
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+    .photo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 3.5rem;
+    }
+    .photo-card {
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid var(--glass-border);
+    }
+    .photo-card-info {
+      padding: 1.25rem 1.5rem;
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-top: 1px solid var(--glass-border);
+    }
+    .photo-card-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+    .photo-card-sub {
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: var(--text-muted);
+    }
+
+    /* large screen wrappers */
+    .section-inner,
+    .hero-content {
+      max-width: 1600px;
+    }
   </style>
 </head>
 <body>
@@ -945,6 +995,47 @@ export const prerender = true;
       <div class="contact-row">
         <a href="tel:+4965112345678" class="contact-link">+49 651 123 456 78</a>
         <a href="mailto:info@cloudbase-trier.de" class="contact-link">info@cloudbase-trier.de</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PHOTO SECTION — REFERENZEN -->
+  <div class="section-divider"></div>
+  <section class="photo-section" id="referenzen">
+    <div class="photo-section-inner">
+      <p class="section-label">Einblicke</p>
+      <h2 class="section-title">Aus der Praxis</h2>
+      <div class="photo-grid">
+        <div class="photo-card">
+          <div class="ph" style="height:220px;">
+            <img src="https://images.unsplash.com/photo-1483412033650-1015ddeb83d1?auto=format&fit=crop&w=1200&h=800&q=80" alt="Server-Infrastruktur" loading="lazy"/>
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(15,14,26,0.7) 0%,transparent 60%);pointer-events:none;"></div>
+          </div>
+          <div class="photo-card-info">
+            <div class="photo-card-title">Cloud-Infrastruktur</div>
+            <div class="photo-card-sub">Hochverfügbare Systeme · Frankfurt</div>
+          </div>
+        </div>
+        <div class="photo-card">
+          <div class="ph" style="height:220px;">
+            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1200&h=800&q=80" alt="Managed IT Support" loading="lazy"/>
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(15,14,26,0.7) 0%,transparent 60%);pointer-events:none;"></div>
+          </div>
+          <div class="photo-card-info">
+            <div class="photo-card-title">Managed IT</div>
+            <div class="photo-card-sub">24/7 Monitoring · Remote & Vor-Ort</div>
+          </div>
+        </div>
+        <div class="photo-card">
+          <div class="ph" style="height:220px;">
+            <img src="https://images.unsplash.com/photo-1542736667-069246bdbc6d?auto=format&fit=crop&w=1200&h=800&q=80" alt="Security & Compliance" loading="lazy"/>
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(15,14,26,0.7) 0%,transparent 60%);pointer-events:none;"></div>
+          </div>
+          <div class="photo-card-info">
+            <div class="photo-card-title">Security & Compliance</div>
+            <div class="photo-card-sub">ISO 27001 · DSGVO-konform</div>
+          </div>
+        </div>
       </div>
     </div>
   </section>

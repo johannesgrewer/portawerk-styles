@@ -153,7 +153,7 @@ export const prerender = true;
     }
 
     .hero-inner {
-      max-width: 1200px;
+      max-width: 1600px;
       margin: 0 auto;
       width: 100%;
       display: grid;
@@ -276,9 +276,103 @@ export const prerender = true;
     }
 
     /* ===== SECTION: SERVICES ===== */
+    /* Photo containers */
+    .ph { position: relative; overflow: hidden; }
+    .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.55s ease; }
+    .ph:hover img { transform: scale(1.05); }
+
+    .section-wrap { max-width: 1600px; margin-left: auto; margin-right: auto; }
+
+    /* Photo showcase section */
+    .photo-showcase {
+      padding: 5rem 2rem;
+      background: #FAFAFA;
+      border-top: 1px solid rgba(0,0,0,0.06);
+    }
+    .ps-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      background: linear-gradient(135deg, #6366F1, #F472B6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.6rem;
+    }
+    .ps-headline {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #1E1E2E;
+      margin-bottom: 2.5rem;
+    }
+    .ps-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      gap: 1.25rem;
+    }
+    .ps-item-label {
+      margin-top: 0.75rem;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #1E1E2E;
+      letter-spacing: -0.01em;
+    }
+    .ps-item-sub {
+      font-size: 0.82rem;
+      color: #64748B;
+      margin-top: 0.15rem;
+    }
+
+    /* CTA section */
+    .cta-section {
+      padding: 5rem 2rem;
+      background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 50%, #F472B6 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-section-inner {
+      max-width: 1600px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .cta-section-text h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #fff;
+      margin-bottom: 1rem;
+      line-height: 1.1;
+    }
+    .cta-section-text p {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+    .cta-section-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 0.9rem 2.25rem;
+      border-radius: 50px;
+      background: #fff;
+      color: #6366F1;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .cta-section-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0,0,0,0.15); }
+    .cta-section-photo { border-radius: 20px; overflow: hidden; box-shadow: 0 24px 64px rgba(0,0,0,0.2); }
+
     .services {
       padding: 6rem 2rem;
-      max-width: 1200px;
+      max-width: 1600px;
       margin: 0 auto;
     }
 
@@ -425,6 +519,7 @@ export const prerender = true;
     .farbberatung {
       padding: 6rem 2rem;
       background: #F0FDF4;
+      max-width: 100%;
       position: relative;
       overflow: hidden;
     }
@@ -875,6 +970,57 @@ export const prerender = true;
               <div class="swatch-hex">#78716C</div>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PHOTO SHOWCASE -->
+  <section class="photo-showcase" id="arbeiten">
+    <div class="section-wrap">
+      <p class="ps-label">Referenzen</p>
+      <h2 class="ps-headline">Farbe in der Praxis.</h2>
+      <div class="ps-grid">
+        <div>
+          <div class="ph" style="height:340px;border-radius:16px;">
+            <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1200&h=800&q=80" alt="Farbgestaltung Innenraum" loading="lazy"/>
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.4) 0%,transparent 65%);pointer-events:none;border-radius:16px;"></div>
+          </div>
+          <div class="ps-item-label">Wohnzimmer · Porta-Terrakotta</div>
+          <div class="ps-item-sub">Spachteltechnik · Trier 2025</div>
+        </div>
+        <div>
+          <div class="ph" style="height:340px;border-radius:16px;">
+            <img src="https://images.unsplash.com/photo-1574484284002-952d92456975?auto=format&fit=crop&w=800&h=800&q=80" alt="Kreative Farbgestaltung" loading="lazy"/>
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.4) 0%,transparent 65%);pointer-events:none;border-radius:16px;"></div>
+          </div>
+          <div class="ps-item-label">Büro · Spektrum-Indigo</div>
+          <div class="ps-item-sub">Innenraumkonzept · Saarburg 2024</div>
+        </div>
+        <div>
+          <div class="ph" style="height:340px;border-radius:16px;">
+            <img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&h=800&q=80" alt="Fassadengestaltung" loading="lazy"/>
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.4) 0%,transparent 65%);pointer-events:none;border-radius:16px;"></div>
+          </div>
+          <div class="ps-item-label">Fassade · Moselgrau + Oleander</div>
+          <div class="ps-item-sub">Farbkonzept · Konz 2024</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA SECTION -->
+  <section class="cta-section">
+    <div class="cta-section-inner">
+      <div class="cta-section-text">
+        <h2>Dein Raum.<br>Deine Farbe.</h2>
+        <p>Kostenlose Erstberatung vor Ort — ich analysiere Licht, Raum und Zweck und entwickle ein Farbkonzept, das wirklich passt.</p>
+        <a href="/#kontakt" class="cta-section-btn">Beratung anfragen &rarr;</a>
+      </div>
+      <div class="cta-section-photo">
+        <div class="ph" style="height:320px;">
+          <img src="https://images.unsplash.com/photo-1565814329452-e1efa11c5b89?auto=format&fit=crop&w=1200&h=800&q=80" alt="Farbberatung" loading="lazy"/>
+          <div style="position:absolute;inset:0;background:rgba(99,102,241,0.15);pointer-events:none;"></div>
         </div>
       </div>
     </div>

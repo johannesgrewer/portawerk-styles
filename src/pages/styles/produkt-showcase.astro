@@ -151,6 +151,9 @@ export const prerender = true;
       justify-content: center;
       padding: 10rem 2rem 6rem;
       text-align: center;
+      max-width: 1600px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .hero-image-wrapper {
@@ -316,6 +319,11 @@ export const prerender = true;
     /* ── Handarbeit ── */
     .handarbeit {
       background: var(--bg);
+    }
+
+    .handarbeit-inner {
+      max-width: 1200px;
+      margin: 0 auto;
     }
 
     .handarbeit-intro {
@@ -610,7 +618,7 @@ export const prerender = true;
         <div class="product-image-wrapper">
           <img
             class="product-image"
-            src="https://images.unsplash.com/photo-1524484485831-a92ffc0de03f?w=800&q=80&auto=format"
+            src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80&auto=format"
             alt="Mosel No.1 — Pendelleuchte aus Messing"
             loading="lazy"
           />
@@ -644,7 +652,7 @@ export const prerender = true;
         <div class="product-image-wrapper">
           <img
             class="product-image"
-            src="https://images.unsplash.com/photo-1540932239986-30128078f3c5?w=800&q=80&auto=format"
+            src="https://images.unsplash.com/photo-1507473885765-e6ed057ab3fe?w=800&q=80&auto=format"
             alt="Amphora — Stehleuchte aus Keramik"
             loading="lazy"
           />
@@ -656,11 +664,46 @@ export const prerender = true;
         <p class="product-price"><span>ab </span>560&thinsp;&euro;</p>
       </div>
 
+      <!-- Eifel -->
+      <div class="product-card fade-in fade-in-delay-1">
+        <div class="product-image-wrapper">
+          <img
+            class="product-image"
+            src="https://images.unsplash.com/photo-1565814329452-e1efa11c5b89?w=800&q=80&auto=format"
+            alt="Eifel — Wandleuchte aus Eisen"
+            loading="lazy"
+          />
+        </div>
+        <h3 class="product-name">Eifel</h3>
+        <p class="product-type">Wandleuchte</p>
+        <p class="product-materials">Eisen, geschwärzt</p>
+        <p class="product-description">Industrielle Stärke, handgeschmiedet für rauhe Räume</p>
+        <p class="product-price"><span>ab </span>290&thinsp;&euro;</p>
+      </div>
+
+      <!-- Saar -->
+      <div class="product-card fade-in fade-in-delay-2">
+        <div class="product-image-wrapper">
+          <img
+            class="product-image"
+            src="https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=800&q=80&auto=format"
+            alt="Saar — Deckenleuchte minimalistisch"
+            loading="lazy"
+          />
+        </div>
+        <h3 class="product-name">Saar</h3>
+        <p class="product-type">Deckenleuchte</p>
+        <p class="product-materials">Aluminium, mattiert</p>
+        <p class="product-description">Flache Geometrie, maximale Lichtverteilung</p>
+        <p class="product-price"><span>ab </span>445&thinsp;&euro;</p>
+      </div>
+
     </div>
   </section>
 
   <!-- SECTION 3 — Handarbeit -->
   <section class="section handarbeit" id="handarbeit">
+    <div class="handarbeit-inner">
     <p class="section-label fade-in">Handarbeit</p>
     <h2 class="section-title fade-in">Jede Leuchte entsteht hier.</h2>
     <p class="handarbeit-intro fade-in">
@@ -698,6 +741,7 @@ export const prerender = true;
         Werkstatt in Trier &mdash; Termine nach Vereinbarung.<br />
         <a href="mailto:hallo@formwerk-trier.de">hallo@formwerk-trier.de</a>
       </p>
+    </div>
     </div>
   </section>
 

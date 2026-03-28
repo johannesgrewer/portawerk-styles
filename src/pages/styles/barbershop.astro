@@ -52,11 +52,15 @@ export const prerender = true;
       position: fixed;
       top: 5px; left: 0; right: 0;
       z-index: 100;
+      background: var(--navy);
+    }
+    .nav-inner {
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 1.1rem 3.5rem;
-      background: var(--navy);
+      max-width: 1600px;
+      margin: 0 auto;
     }
     .nav-logo {
       font-family: 'Oswald', sans-serif;
@@ -96,11 +100,18 @@ export const prerender = true;
     }
     .nav-book:hover { background: var(--red); color: #fff; }
 
+    .hero-wrap {
+      background: var(--bg);
+    }
+
     .hero {
       min-height: 100vh;
       padding-top: 62px;
       display: grid;
       grid-template-columns: 1fr 420px;
+      max-width: 1600px;
+      margin: 0 auto;
+      width: 100%;
     }
 
     /* LEFT */
@@ -375,6 +386,8 @@ export const prerender = true;
     .cuts {
       padding: 6rem 5rem;
       background: var(--dark);
+      max-width: 1600px;
+      margin: 0 auto;
     }
     .cuts-head {
       display: flex;
@@ -462,6 +475,8 @@ export const prerender = true;
       display: grid;
       grid-template-columns: 1fr 1fr;
       min-height: 540px;
+      max-width: 1600px;
+      margin: 0 auto;
     }
     .shop-photo {
       position: relative;
@@ -544,16 +559,19 @@ export const prerender = true;
   <div class="barber-stripe"></div>
 
   <nav>
-    <div class="nav-logo">Klinge <span>&</span> Kamm</div>
-    <ul class="nav-links">
-      <li><a href="#">Leistungen</a></li>
-      <li><a href="#">Team</a></li>
-      <li><a href="#">Produkte</a></li>
-      <li><a href="#">Kontakt</a></li>
-    </ul>
-    <a href="#" class="nav-book">Termin buchen</a>
+    <div class="nav-inner">
+      <div class="nav-logo">Klinge <span>&</span> Kamm</div>
+      <ul class="nav-links">
+        <li><a href="#">Leistungen</a></li>
+        <li><a href="#">Team</a></li>
+        <li><a href="#">Produkte</a></li>
+        <li><a href="#">Kontakt</a></li>
+      </ul>
+      <a href="#" class="nav-book">Termin buchen</a>
+    </div>
   </nav>
 
+  <div class="hero-wrap">
   <section class="hero">
     <div class="hero-left">
       <div class="eyebrow">
@@ -642,6 +660,7 @@ export const prerender = true;
       </div>
     </div>
   </section>
+  </div>
 
   <!-- ===== SECTION 2: CUTS ===== -->
   <section class="cuts">

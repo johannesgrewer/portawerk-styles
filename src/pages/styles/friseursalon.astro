@@ -106,6 +106,24 @@ export const prerender = true;
       overflow: hidden;
     }
 
+    /* Hero background photo */
+    .hero-left-photo {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .hero-left-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      filter: brightness(0.35);
+    }
+    .hero-left > *:not(.hero-left-photo) {
+      position: relative;
+      z-index: 1;
+    }
+
     /* Gold accent line */
     .hero-left::before {
       content: '';
@@ -431,6 +449,53 @@ export const prerender = true;
       line-height: 1.6;
     }
 
+    /* ── TEAM PHOTO AVATAR ── */
+    .team-avatar-photo {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-bottom: 1rem;
+      border: 2px solid rgba(212,168,83,0.3);
+      flex-shrink: 0;
+    }
+    .team-avatar-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+
+    /* ── FOTOGRID DIVIDER ── */
+    .foto-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      background: var(--black);
+    }
+    .foto-grid-item {
+      position: relative;
+      overflow: hidden;
+      height: 280px;
+    }
+    .foto-grid-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.55s ease;
+      filter: brightness(0.8);
+    }
+    .foto-grid-item:hover img {
+      transform: scale(1.05);
+      filter: brightness(0.95);
+    }
+    .foto-grid-item-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(26,26,26,0.6) 0%, transparent 50%);
+    }
+
     /* ── ANIMATIONS ── */
     /* Service items lift on hover */
     .service-item { transition: background 0.2s, transform 0.2s; }
@@ -521,6 +586,10 @@ export const prerender = true;
   <!-- HERO -->
   <section class="hero">
     <div class="hero-left">
+      <div class="hero-left-photo">
+        <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=900&h=600&q=80"
+             alt="Friseursalon Atmosphäre" loading="eager" />
+      </div>
       <p class="hero-tag">Friseursalon · Trier-Mitte · Seit 2015</p>
       <h1 class="hero-headline">
         Dein Stil.<br>
@@ -656,6 +725,25 @@ export const prerender = true;
     </div>
   </section>
 
+  <!-- FOTOGRID DIVIDER -->
+  <div class="foto-grid">
+    <div class="foto-grid-item">
+      <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=600&h=280&q=80"
+           alt="Haarstyling im Salon" loading="lazy" />
+      <div class="foto-grid-item-overlay"></div>
+    </div>
+    <div class="foto-grid-item">
+      <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&h=280&q=80"
+           alt="Colorationsarbeiten" loading="lazy" />
+      <div class="foto-grid-item-overlay"></div>
+    </div>
+    <div class="foto-grid-item">
+      <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=600&h=280&q=80"
+           alt="Professionelles Styling" loading="lazy" />
+      <div class="foto-grid-item-overlay"></div>
+    </div>
+  </div>
+
   <!-- TEAM -->
   <section class="team-section">
     <div class="team-header">
@@ -665,25 +753,33 @@ export const prerender = true;
 
     <div class="team-grid">
       <div class="team-card">
-        <div class="team-avatar">MH</div>
+        <div class="team-avatar-photo">
+          <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&h=200&q=80" alt="Mia Haarwerk" loading="lazy" />
+        </div>
         <div class="team-name">MIA HAARWERK</div>
         <div class="team-role">Inhaberin & Stylistin</div>
         <p class="team-spec">Colorationen, Schnitte, Balayage. 12 Jahre Erfahrung.</p>
       </div>
       <div class="team-card">
-        <div class="team-avatar">JS</div>
+        <div class="team-avatar-photo">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&h=200&q=80" alt="Jan Schulte" loading="lazy" />
+        </div>
         <div class="team-name">JAN SCHULTE</div>
         <div class="team-role">Hair Stylist</div>
         <p class="team-spec">Herrenhaarschnitte, Fades, Klassisches Barbering.</p>
       </div>
       <div class="team-card">
-        <div class="team-avatar">LK</div>
+        <div class="team-avatar-photo">
+          <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=200&h=200&q=80" alt="Lena Klein" loading="lazy" />
+        </div>
         <div class="team-name">LENA KLEIN</div>
         <div class="team-role">Color Spezialistin</div>
         <p class="team-spec">Highlights, Blondierungen, Korrekturen und Bondingpflege.</p>
       </div>
       <div class="team-card">
-        <div class="team-avatar">TR</div>
+        <div class="team-avatar-photo">
+          <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&h=200&q=80" alt="Tom Richter" loading="lazy" />
+        </div>
         <div class="team-name">TOM RICHTER</div>
         <div class="team-role">Stylist & Azubi-Betreuer</div>
         <p class="team-spec">Damenschnitte, Brautfrisuren, Nachwuchsausbildung.</p>

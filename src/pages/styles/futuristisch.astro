@@ -43,6 +43,13 @@ export const prerender = true;
 
     body { overflow-x: hidden; }
 
+    /* Max-width wrapper — keeps HUD density on ultrawide */
+    .page-wrapper {
+      max-width: 1920px;
+      margin: 0 auto;
+      position: relative;
+    }
+
     ::selection { background: var(--primary); color: var(--bg); }
 
     /* ═══════════════════════════════════════════
@@ -54,15 +61,23 @@ export const prerender = true;
       left: 0;
       right: 0;
       z-index: 100;
-      padding: 0 2rem;
       height: 64px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
       background: rgba(10, 14, 23, 0.85);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid rgba(0, 240, 255, 0.1);
+    }
+
+    .nav-inner {
+      width: 100%;
+      max-width: 1920px;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
     .nav-logo {
@@ -425,8 +440,95 @@ export const prerender = true;
     }
 
     .section-inner {
-      max-width: 1100px;
+      max-width: 1280px;
       margin: 0 auto;
+    }
+
+    /* ═══════════════════════════════════════════
+       PHOTO FRAMES — HUD style
+    ═══════════════════════════════════════════ */
+    .photo-wrap {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .photo-wrap img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.55s ease;
+    }
+
+    .photo-wrap:hover img {
+      transform: scale(1.05);
+    }
+
+    /* Hero background photo */
+    .hero-bg-photo {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .hero-bg-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    /* Photo grid in stations section */
+    .stations-photo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      margin-top: 3rem;
+      border: 1px solid rgba(0, 240, 255, 0.15);
+    }
+
+    .stations-photo-grid .photo-wrap {
+      height: 220px;
+    }
+
+    .stations-photo-grid .photo-wrap:first-child {
+      grid-column: 1 / -1;
+      height: 280px;
+    }
+
+    /* Cyan border frame for photos */
+    .photo-hud-frame {
+      border: 1px solid rgba(0, 240, 255, 0.2);
+      box-shadow: 0 0 20px rgba(0, 240, 255, 0.06), inset 0 0 20px rgba(0, 240, 255, 0.03);
+      position: relative;
+    }
+
+    /* Corner brackets — HUD aesthetic */
+    .photo-hud-frame::before,
+    .photo-hud-frame::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .photo-hud-frame::before {
+      top: -1px;
+      left: -1px;
+      border-top: 2px solid var(--primary);
+      border-left: 2px solid var(--primary);
+      box-shadow: -2px -2px 8px var(--glow-cyan);
+    }
+
+    .photo-hud-frame::after {
+      bottom: -1px;
+      right: -1px;
+      border-bottom: 2px solid var(--primary);
+      border-right: 2px solid var(--primary);
+      box-shadow: 2px 2px 8px var(--glow-cyan);
     }
 
     .section-label {
@@ -979,6 +1081,33 @@ export const prerender = true;
     /* ═══════════════════════════════════════════
        RESPONSIVE
     ═══════════════════════════════════════════ */
+    @media (min-width: 1920px) {
+      .section-inner {
+        max-width: 1600px;
+      }
+
+      .stations-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+      }
+
+      .hero-content {
+        max-width: 1000px;
+      }
+
+      .hero-headline {
+        font-size: 5.5rem;
+      }
+
+      section {
+        padding: 8rem 4rem;
+      }
+
+      .stations-photo-grid {
+        gap: 4px;
+      }
+    }
+
     @media (max-width: 900px) {
       .stations-grid {
         grid-template-columns: 1fr;
@@ -1038,17 +1167,21 @@ export const prerender = true;
   <!-- Scan-line overlay -->
   <div class="scanlines" aria-hidden="true"></div>
 
+  <div class="page-wrapper">
+
   <!-- NAV -->
   <nav class="nav">
-    <a href="/#hero" class="nav-logo">Neo<span>volt</span></a>
-    <ul class="nav-links">
-      <li><a href="/#hero">Start</a></li>
-      <li><a href="/#stationen">Stationen</a></li>
-      <li><a href="/#vision">Vision</a></li>
-    </ul>
-    <button class="nav-hamburger" aria-label="Menu" onclick="document.querySelector('.mobile-menu').classList.toggle('active')">
-      <span></span><span></span><span></span>
-    </button>
+    <div class="nav-inner">
+      <a href="/#hero" class="nav-logo">Neo<span>volt</span></a>
+      <ul class="nav-links">
+        <li><a href="/#hero">Start</a></li>
+        <li><a href="/#stationen">Stationen</a></li>
+        <li><a href="/#vision">Vision</a></li>
+      </ul>
+      <button class="nav-hamburger" aria-label="Menu" onclick="document.querySelector('.mobile-menu').classList.toggle('active')">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </nav>
 
   <!-- Mobile Menu -->
@@ -1060,6 +1193,12 @@ export const prerender = true;
 
   <!-- HERO -->
   <section class="hero" id="hero">
+    <!-- Background photo with dark overlay to preserve HUD readability -->
+    <div class="hero-bg-photo" aria-hidden="true">
+      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1920&h=1080&q=80" alt="" loading="eager" />
+      <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,14,23,0.95) 0%,rgba(10,14,23,0.75) 50%,rgba(10,14,23,0.55) 100%);pointer-events:none;"></div>
+    </div>
+
     <!-- Animated scan-sweep line -->
     <div class="hero-scan-line" aria-hidden="true"></div>
 
@@ -1173,6 +1312,26 @@ export const prerender = true;
         </div>
 
       </div>
+
+      <!-- Photo grid — real EV/tech atmosphere -->
+      <div class="stations-photo-grid" style="margin-top:3rem;">
+        <div class="photo-wrap photo-hud-frame" style="height:280px;grid-column:1/-1;">
+          <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1200&h=560&q=80" alt="Neovolt Ladestation im Einsatz" loading="lazy" />
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,14,23,0.7) 0%,transparent 55%);pointer-events:none;z-index:1;"></div>
+          <div style="position:absolute;bottom:1.25rem;left:1.5rem;z-index:2;font-family:'Share Tech Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(0,240,255,0.8);">// NeoFast 150 · Standort Trier-Nord</div>
+        </div>
+        <div class="photo-wrap photo-hud-frame" style="height:200px;">
+          <img src="https://images.unsplash.com/photo-1572116469696-31de0f17cc34?auto=format&fit=crop&w=600&h=400&q=80" alt="Elektrofahrzeug beim Laden" loading="lazy" />
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,14,23,0.65) 0%,transparent 60%);pointer-events:none;z-index:1;"></div>
+          <div style="position:absolute;bottom:1rem;left:1rem;z-index:2;font-family:'Share Tech Mono',monospace;font-size:0.6rem;letter-spacing:0.12em;color:rgba(0,240,255,0.7);">// DC Fast · 150 kW</div>
+        </div>
+        <div class="photo-wrap photo-hud-frame" style="height:200px;">
+          <img src="https://images.unsplash.com/photo-1542736667-069246bdbc6d?auto=format&fit=crop&w=600&h=400&q=80" alt="Moderne Ladeinfrastruktur" loading="lazy" />
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,14,23,0.65) 0%,transparent 60%);pointer-events:none;z-index:1;"></div>
+          <div style="position:absolute;bottom:1rem;left:1rem;z-index:2;font-family:'Share Tech Mono',monospace;font-size:0.6rem;letter-spacing:0.12em;color:rgba(179,71,234,0.85);">// NeoHome 11 · Wallbox</div>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -1266,6 +1425,8 @@ export const prerender = true;
   <footer class="footer">
     <p class="footer-text"><span>Neovolt</span> // E-Mobilitat & Ladestationen // Trier, Deutschland // Demo-Website</p>
   </footer>
+
+  </div><!-- /.page-wrapper -->
 
 <script>
   // ── 1. IntersectionObserver: Scroll Reveals with glow entrance ────────────

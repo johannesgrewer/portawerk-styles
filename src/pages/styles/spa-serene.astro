@@ -322,9 +322,167 @@ export const prerender = true;
       font-size: 0.9rem;
       color: var(--dark);
     }
+
+    /* Photo container */
+    .ph { position: relative; overflow: hidden; }
+    .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.55s ease; }
+    .ph:hover img { transform: scale(1.05); }
+
+    /* Page wrap */
+    .page-wrap { max-width: 1600px; margin-left: auto; margin-right: auto; }
+
+    /* Section 2: Behandlungen */
+    .treatments-section {
+      position: relative;
+      z-index: 1;
+      padding: 7rem 5rem;
+      background: var(--stone);
+      border-top: 1px solid rgba(44,40,37,0.08);
+    }
+    .sec-eyebrow {
+      font-size: 0.58rem;
+      font-weight: 300;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--teal);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .sec-eyebrow::before { content: ''; width: 2rem; height: 1px; background: var(--teal); opacity: 0.5; }
+    .sec-headline {
+      font-family: 'Cormorant', serif;
+      font-weight: 300;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1.2;
+      color: var(--dark);
+      margin-bottom: 3.5rem;
+    }
+    .sec-headline em { font-style: italic; color: var(--teal); }
+    .treatment-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .t-card {
+      background: #F2EDE6;
+      display: flex;
+      flex-direction: column;
+    }
+    .t-card-body {
+      padding: 1.75rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .t-card-name {
+      font-family: 'Cormorant', serif;
+      font-size: 1.3rem;
+      font-weight: 400;
+      color: var(--dark);
+    }
+    .t-card-desc {
+      font-size: 0.8rem;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--muted);
+      flex: 1;
+    }
+    .t-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(44,40,37,0.08);
+    }
+    .t-card-duration {
+      font-size: 0.6rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+    }
+    .t-card-price {
+      font-family: 'Cormorant', serif;
+      font-size: 1.1rem;
+      color: var(--teal);
+    }
+
+    /* Section 3: Erlebnis + Buchung */
+    .experience-section {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-top: 1px solid rgba(44,40,37,0.08);
+    }
+    .exp-left {
+      position: relative;
+    }
+    .exp-right {
+      padding: 6rem 5rem;
+      background: #F2EDE6;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 2rem;
+    }
+    .testimonial-quote {
+      font-family: 'Cormorant', serif;
+      font-size: clamp(1.3rem, 2.5vw, 2rem);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.5;
+      color: var(--dark);
+    }
+    .testimonial-author {
+      font-size: 0.6rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .booking-block {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(44,40,37,0.1);
+    }
+    .booking-label {
+      font-size: 0.58rem;
+      font-weight: 300;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--teal);
+    }
+    .booking-info {
+      font-size: 0.82rem;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--muted);
+    }
+    .booking-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--teal);
+      color: var(--stone);
+      text-decoration: none;
+      font-size: 0.6rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 1rem 2rem;
+      align-self: flex-start;
+      transition: background 0.3s;
+    }
+    .booking-btn:hover { background: var(--dark); }
   </style>
 </head>
 <body>
+  <div class="page-wrap">
   <nav>
     <div class="nav-logo">Ruhe <span>&</span> Raum</div>
     <ul class="nav-links">
@@ -417,5 +575,83 @@ export const prerender = true;
       </div>
     </div>
   </section>
+
+  <!-- SECTION 2: Behandlungen mit Fotos -->
+  <section class="treatments-section">
+    <div class="sec-eyebrow">Unsere Behandlungen</div>
+    <h2 class="sec-headline">Rituale für<br>Körper & <em>Geist.</em></h2>
+    <div class="treatment-cards">
+      <div class="t-card">
+        <div class="ph" style="height:260px;">
+          <img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=1200&h=800&q=80" alt="Hot Stone Massage" loading="lazy"/>
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(44,40,37,0.3) 0%,transparent 60%);pointer-events:none;"></div>
+        </div>
+        <div class="t-card-body">
+          <div class="t-card-name">Hot Stone Massage</div>
+          <p class="t-card-desc">Warme Basaltsteine lösen tiefe Verspannungen und fördern die Durchblutung. Ein Ritual für vollständige Schwere und Wärme.</p>
+          <div class="t-card-footer">
+            <span class="t-card-duration">90 Minuten</span>
+            <span class="t-card-price">98 €</span>
+          </div>
+        </div>
+      </div>
+      <div class="t-card">
+        <div class="ph" style="height:260px;">
+          <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1200&h=800&q=80" alt="Gesichtsbehandlung" loading="lazy"/>
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(44,40,37,0.3) 0%,transparent 60%);pointer-events:none;"></div>
+        </div>
+        <div class="t-card-body">
+          <div class="t-card-name">Naturkosmetik-Facial</div>
+          <p class="t-card-desc">Tiefenreinigung, Peeling und Maske mit zertifizierten Bio-Produkten. Haut die atmet — sichtbar und spürbar.</p>
+          <div class="t-card-footer">
+            <span class="t-card-duration">50 Minuten</span>
+            <span class="t-card-price">65 €</span>
+          </div>
+        </div>
+      </div>
+      <div class="t-card">
+        <div class="ph" style="height:260px;">
+          <img src="https://images.unsplash.com/photo-1574484284002-952d92456975?auto=format&fit=crop&w=1200&h=800&q=80" alt="Aromaöl Ritual" loading="lazy"/>
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(44,40,37,0.3) 0%,transparent 60%);pointer-events:none;"></div>
+        </div>
+        <div class="t-card-body">
+          <div class="t-card-name">Aromaöl-Ritual</div>
+          <p class="t-card-desc">Handgemischte ätherische Öle in einer geführten Ganzkörperanwendung. Für tiefste Entspannung und innere Ruhe.</p>
+          <div class="t-card-footer">
+            <span class="t-card-duration">75 Minuten</span>
+            <span class="t-card-price">85 €</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: Erlebnis + Buchung -->
+  <section class="experience-section">
+    <div class="exp-left">
+      <div class="ph" style="height:100%;min-height:500px;">
+        <img src="https://images.unsplash.com/photo-1548839140-29a749e1cf4d?auto=format&fit=crop&w=1200&h=1600&q=80" alt="Spa Atmosphäre" loading="lazy"/>
+        <div style="position:absolute;inset:0;background:linear-gradient(to right,transparent 60%,#F2EDE6 100%);pointer-events:none;"></div>
+      </div>
+    </div>
+    <div class="exp-right">
+      <div class="sec-eyebrow">Was Gäste sagen</div>
+      <blockquote class="testimonial-quote">
+        „Ich bin nach zwei Stunden als ein anderer Mensch rausgegangen. Ruhe & Raum ist kein Wellness-Studio — es ist ein Zustand."
+      </blockquote>
+      <p class="testimonial-author">— Marie K., Stammkundin seit 2021</p>
+      <div class="booking-block">
+        <div class="booking-label">Termin buchen</div>
+        <p class="booking-info">
+          Telefonisch oder online buchbar.<br>
+          Di – Sa, 9 – 20 Uhr · Trierer Str. 14, 54290 Trier<br>
+          Tel: +49 651 / 987 65 43
+        </p>
+        <a href="#" class="booking-btn">Jetzt Termin buchen →</a>
+      </div>
+    </div>
+  </section>
+
+  </div><!-- /page-wrap -->
 </body>
 </html>

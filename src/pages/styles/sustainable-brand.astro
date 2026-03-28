@@ -132,7 +132,15 @@ export const prerender = true;
       z-index: 1;
       display: grid;
       grid-template-columns: 1fr 1fr;
+      max-width: 1600px;
+      margin-left: auto;
+      margin-right: auto;
     }
+
+    /* === PHOTO CONTAINER === */
+    .ph { position: relative; overflow: hidden; }
+    .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.55s ease; }
+    .ph:hover img { transform: scale(1.05); }
 
     /* LEFT */
     .hero-left {
@@ -221,6 +229,12 @@ export const prerender = true;
       justify-content: center;
       font-size: 0.9rem;
       flex-shrink: 0;
+      overflow: hidden;
+    }
+    .ci-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
     .ci-info { flex: 1; }
     .ci-name {
@@ -333,10 +347,19 @@ export const prerender = true;
       border-radius: 6px;
       padding: 1.1rem;
     }
-    .pc-emoji {
-      font-size: 1.4rem;
-      margin-bottom: 0.5rem;
+    .pc-photo {
+      height: 110px;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 0.75rem;
     }
+    .pc-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.55s ease;
+    }
+    .product-card:hover .pc-photo img { transform: scale(1.05); }
     .pc-name {
       font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: 0.82rem;
@@ -497,7 +520,7 @@ export const prerender = true;
 
       <div class="category-list">
         <div class="cat-item">
-          <div class="ci-icon">🍳</div>
+          <div class="ci-icon"><img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=64&h=64&q=80" alt="Küche"/></div>
           <div class="ci-info">
             <div class="ci-name">Küche & Kochen</div>
             <div class="ci-count">48 Produkte · Bienenwachstuch bis Kompost-Set</div>
@@ -505,7 +528,7 @@ export const prerender = true;
           <span class="ci-arrow">→</span>
         </div>
         <div class="cat-item">
-          <div class="ci-icon">🧴</div>
+          <div class="ci-icon"><img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=64&h=64&q=80" alt="Bad & Pflege"/></div>
           <div class="ci-info">
             <div class="ci-name">Bad & Pflege</div>
             <div class="ci-count">35 Produkte · Festes Shampoo bis Bambuszahnbürste</div>
@@ -513,7 +536,7 @@ export const prerender = true;
           <span class="ci-arrow">→</span>
         </div>
         <div class="cat-item">
-          <div class="ci-icon">🏡</div>
+          <div class="ci-icon"><img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=64&h=64&q=80" alt="Haushalt"/></div>
           <div class="ci-info">
             <div class="ci-name">Haushalt & Reinigung</div>
             <div class="ci-count">29 Produkte · Seife bis Wäschenetz</div>
@@ -550,25 +573,25 @@ export const prerender = true;
 
       <div class="product-grid">
         <div class="product-card">
-          <div class="pc-emoji">🫙</div>
+          <div class="pc-photo"><img src="https://images.unsplash.com/photo-1574484284002-952d92456975?auto=format&fit=crop&w=400&h=220&q=80" alt="Weck-Starter Set" loading="lazy"/></div>
           <div class="pc-name">Weck-Starter Set</div>
           <div class="pc-desc">6 Gläser, alle Größen</div>
           <span class="pc-tag">Bestseller</span>
         </div>
         <div class="product-card">
-          <div class="pc-emoji">🌿</div>
+          <div class="pc-photo"><img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=400&h=220&q=80" alt="Bienenwachstuch" loading="lazy"/></div>
           <div class="pc-name">Bienenwachstuch 3er</div>
           <div class="pc-desc">Regionale Bienenwachs</div>
           <span class="pc-tag">Lokal</span>
         </div>
         <div class="product-card">
-          <div class="pc-emoji">🧹</div>
+          <div class="pc-photo"><img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=400&h=220&q=80" alt="Kochbürste Bambus" loading="lazy"/></div>
           <div class="pc-name">Kochbürste Bambus</div>
           <div class="pc-desc">Pflanzenfasern, kompostierbar</div>
           <span class="pc-tag">Neu</span>
         </div>
         <div class="product-card">
-          <div class="pc-emoji">💧</div>
+          <div class="pc-photo"><img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=400&h=220&q=80" alt="Wasserfilter-Karaffe" loading="lazy"/></div>
           <div class="pc-name">Wasserfilter-Karaffe</div>
           <div class="pc-desc">Ersetzt 500 PET-Flaschen</div>
           <span class="pc-tag">Top-Deal</span>

@@ -237,6 +237,163 @@ export const prerender = true;
       from { opacity: 0; transform: translateY(24px); }
       to   { opacity: 1; transform: translateY(0); }
     }
+
+    /* ── IMG-WRAP ── */
+    .img-wrap { position: relative; overflow: hidden; }
+    .img-wrap img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.55s ease; }
+    .img-wrap:hover img { transform: scale(1.05); }
+    .img-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.45) 0%, transparent 60%); pointer-events: none; }
+
+    /* ── SECTION 2: Foto-Galerie ── */
+    .section-gallery {
+      padding: 6rem 4rem;
+      max-width: 1600px;
+      margin: 0 auto;
+      background: #FAF6F1;
+    }
+    .gallery-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .gallery-eyebrow {
+      font-size: 0.65rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: #C4956A;
+      margin-bottom: 1rem;
+    }
+    .gallery-header h2 {
+      font-family: 'Gilda Display', serif;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      color: #2C1A0E;
+      letter-spacing: 0.02em;
+      margin-bottom: 0.5rem;
+    }
+    .gallery-header p {
+      font-size: 0.82rem;
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(44, 26, 14, 0.55);
+      letter-spacing: 0.06em;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+    .gallery-item-label {
+      position: absolute;
+      bottom: 1.2rem;
+      left: 1.2rem;
+      z-index: 2;
+    }
+    .gallery-item-label span {
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(245, 237, 227, 0.85);
+    }
+
+    @media (max-width: 900px) {
+      .gallery-grid { grid-template-columns: 1fr; }
+      .section-gallery { padding: 4rem 2rem; }
+    }
+
+    /* ── SECTION 3: Leistungen + CTA ── */
+    .section-services {
+      max-width: 1600px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: #FAF6F1;
+    }
+    .services-text {
+      padding: 6rem 5rem;
+      border-right: 1px solid rgba(196, 149, 106, 0.25);
+    }
+    .services-eyebrow {
+      font-size: 0.65rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: #C4956A;
+      margin-bottom: 1.5rem;
+    }
+    .services-text h2 {
+      font-family: 'Gilda Display', serif;
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      color: #2C1A0E;
+      line-height: 1.2;
+      margin-bottom: 2.5rem;
+    }
+    .services-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .services-list li {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      padding: 1.1rem 0;
+      border-bottom: 1px solid rgba(196, 149, 106, 0.2);
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: rgba(44, 26, 14, 0.75);
+      letter-spacing: 0.04em;
+    }
+    .services-list li .svc-diamond {
+      width: 5px; height: 5px;
+      background: #C4956A;
+      transform: rotate(45deg);
+      flex-shrink: 0;
+    }
+    .services-cta-wrap {
+      padding: 6rem 5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      background: #2C1A0E;
+    }
+    .services-cta-wrap h3 {
+      font-family: 'Gilda Display', serif;
+      font-size: clamp(1.6rem, 2.5vw, 2.4rem);
+      color: #F5EDE3;
+      line-height: 1.25;
+      margin-bottom: 1.5rem;
+    }
+    .services-cta-wrap p {
+      font-size: 0.82rem;
+      font-weight: 300;
+      color: rgba(245, 237, 227, 0.6);
+      line-height: 1.8;
+      max-width: 32ch;
+      margin-bottom: 2.5rem;
+    }
+    .services-btn {
+      border: 1px solid rgba(196, 149, 106, 0.8);
+      color: #F5EDE3;
+      padding: 0.9rem 2.2rem;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      background: transparent;
+      transition: all 0.35s;
+    }
+    .services-btn:hover {
+      background: rgba(196, 149, 106, 0.2);
+      border-color: #C4956A;
+    }
+
+    @media (max-width: 900px) {
+      .section-services { grid-template-columns: 1fr; }
+      .services-text { border-right: none; border-bottom: 1px solid rgba(196,149,106,0.25); padding: 4rem 2rem; }
+      .services-cta-wrap { padding: 4rem 2rem; }
+    }
   </style>
 </head>
 <body>
@@ -250,7 +407,7 @@ export const prerender = true;
     </ul>
   </nav>
 
-  <section class="hero">
+  <section class="hero" style="max-width:1600px;margin-left:auto;margin-right:auto;">
     <div class="hero-bg"></div>
     <div class="hero-overlay"></div>
 
@@ -297,5 +454,62 @@ export const prerender = true;
       </div>
     </div>
   </section>
+
+  <!-- SECTION 2: Foto-Galerie -->
+  <section class="section-gallery">
+    <div class="gallery-header">
+      <p class="gallery-eyebrow">Momente · Trier & Mosel</p>
+      <h2>Unvergessliche Augenblicke</h2>
+      <p>Jede Hochzeit ist einzigartig — und verdient es, so festgehalten zu werden.</p>
+    </div>
+
+    <div class="gallery-grid">
+
+      <div class="img-wrap" style="height: 420px; position: relative;">
+        <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1200&h=800&q=80" alt="Hochzeit Zeremonie" loading="lazy" />
+        <div class="img-overlay"></div>
+        <div class="gallery-item-label"><span>Zeremonie</span></div>
+      </div>
+
+      <div class="img-wrap" style="height: 420px; position: relative;">
+        <img src="https://images.unsplash.com/photo-1519225421980-f680e246b69d?auto=format&fit=crop&w=1200&h=800&q=80" alt="Hochzeit Empfang" loading="lazy" />
+        <div class="img-overlay"></div>
+        <div class="gallery-item-label"><span>Empfang</span></div>
+      </div>
+
+      <div class="img-wrap" style="height: 420px; position: relative;">
+        <img src="https://images.unsplash.com/photo-1606216794074-735e91aa2c92?auto=format&fit=crop&w=1200&h=800&q=80" alt="Brautpaar" loading="lazy" />
+        <div class="img-overlay"></div>
+        <div class="gallery-item-label"><span>Brautpaar</span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECTION 3: Leistungen + CTA -->
+  <section class="section-services">
+    <div class="services-text">
+      <p class="services-eyebrow">Was wir bieten</p>
+      <h2>Vollständige Planung.<br>Von Anfang an.</h2>
+      <ul class="services-list">
+        <li><span class="svc-diamond"></span>Komplettplanung & Koordination</li>
+        <li><span class="svc-diamond"></span>Location-Scouting & Buchung</li>
+        <li><span class="svc-diamond"></span>Floristik & Dekoration</li>
+        <li><span class="svc-diamond"></span>Catering & Menüplanung</li>
+        <li><span class="svc-diamond"></span>Musik & Entertainment</li>
+        <li><span class="svc-diamond"></span>Foto & Video Koordination</li>
+      </ul>
+    </div>
+
+    <div class="services-cta-wrap">
+      <h3>Bereit für euren großen Tag?</h3>
+      <p>
+        In einem unverbindlichen Erstgespräch lernen wir eure Wünsche kennen
+        und zeigen, wie wir euren Tag unvergesslich machen.
+      </p>
+      <a href="#" class="services-btn">Beratungsgespräch buchen</a>
+    </div>
+  </section>
+
 </body>
 </html>

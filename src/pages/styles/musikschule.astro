@@ -425,6 +425,95 @@ export const prerender = true;
     }
     .nav-probe:hover { letter-spacing: 0.02em; }
 
+    /* ── PHOTO ── */
+    .img-wrap img { display: block; }
+    .img-wrap:hover img { transform: scale(1.05); }
+
+    /* ── PHOTO SECTIONS ── */
+    .photos-section {
+      padding: 5rem 4.5rem;
+      background: var(--warm);
+      border-top: 1px solid var(--rule);
+      position: relative;
+      z-index: 1;
+    }
+    .photos-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+    .photo-caption {
+      font-size: 0.58rem;
+      font-weight: 400;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.75rem;
+    }
+
+    /* ── ABOUT SECTION ── */
+    .about-section {
+      padding: 5rem 4.5rem;
+      background: var(--bg);
+      border-top: 1px solid var(--rule);
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+    .about-eyebrow {
+      font-size: 0.52rem;
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 1rem;
+    }
+    .about-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      line-height: 1.2;
+      color: var(--ink);
+      margin-bottom: 1.5rem;
+    }
+    .about-title em { font-style: italic; font-weight: 400; color: var(--amber); }
+    .about-body {
+      font-size: 0.88rem;
+      font-weight: 300;
+      line-height: 2;
+      color: var(--muted);
+      margin-bottom: 2rem;
+    }
+    .about-facts {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      border-top: 1px solid var(--rule);
+      padding-top: 1.5rem;
+    }
+    .fact-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1;
+    }
+    .fact-label {
+      font-size: 0.58rem;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.25rem;
+    }
+
   </style>
 </head>
 <body>
@@ -442,7 +531,7 @@ export const prerender = true;
     <a href="#" class="nav-probe">Probestunde anfragen</a>
   </nav>
 
-  <section class="hero">
+  <section class="hero" style="max-width:1600px;margin-left:auto;margin-right:auto;">
     <div class="hero-left">
       <div class="eyebrow">Musikschule & Konservatorium · Trier</div>
 
@@ -552,5 +641,78 @@ export const prerender = true;
       </div>
     </div>
   </section>
+
+  <!-- FOTO-SEKTION -->
+  <section class="photos-section">
+    <div class="photos-grid">
+      <div>
+        <div class="img-wrap" style="position:relative;overflow:hidden;height:280px;border-radius:4px;">
+          <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=1200&h=800&q=80"
+               alt="Klavier — Musikschule Tonart Trier" loading="lazy"
+               style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.55s ease;" />
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.5) 0%,transparent 60%);pointer-events:none;"></div>
+        </div>
+        <div class="photo-caption">Klavier</div>
+      </div>
+      <div>
+        <div class="img-wrap" style="position:relative;overflow:hidden;height:280px;border-radius:4px;">
+          <img src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=1200&h=800&q=80"
+               alt="Gitarrenunterricht — Musikschule Tonart" loading="lazy"
+               style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.55s ease;" />
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.5) 0%,transparent 60%);pointer-events:none;"></div>
+        </div>
+        <div class="photo-caption">Gitarre</div>
+      </div>
+      <div>
+        <div class="img-wrap" style="position:relative;overflow:hidden;height:280px;border-radius:4px;">
+          <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=1200&h=800&q=80"
+               alt="Musikinstrumente — Unterricht in Trier" loading="lazy"
+               style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.55s ease;" />
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.5) 0%,transparent 60%);pointer-events:none;"></div>
+        </div>
+        <div class="photo-caption">Instrumente</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ÜBER UNS -->
+  <section style="padding:5rem 4.5rem;background:var(--bg);border-top:1px solid var(--rule);position:relative;z-index:1;">
+    <div style="max-width:1600px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;">
+      <div>
+        <div style="font-size:0.52rem;font-weight:400;letter-spacing:0.3em;text-transform:uppercase;color:var(--amber);margin-bottom:1rem;">Unsere Philosophie</div>
+        <h2 style="font-family:'Cormorant Garamond',serif;font-weight:600;font-size:clamp(1.8rem,3vw,2.8rem);line-height:1.2;color:var(--ink);margin-bottom:1.5rem;">Musik ist mehr<br>als <em style="font-style:italic;font-weight:400;color:var(--amber);">Technik.</em></h2>
+        <p style="font-size:0.88rem;font-weight:300;line-height:2;color:var(--muted);margin-bottom:2rem;">Seit 1994 begleiten wir Schülerinnen und Schüler jeden Alters auf ihrem musikalischen Weg. Ob erstes Kinderlied oder Konservatoriumsvorbereitung — wir passen das Tempo dem Menschen an, nicht umgekehrt.</p>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;border-top:1px solid var(--rule);padding-top:1.5rem;">
+          <div>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:600;color:var(--ink);line-height:1;">30+</div>
+            <div style="font-size:0.58rem;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-top:0.25rem;">Lehrkräfte</div>
+          </div>
+          <div>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:600;color:var(--ink);line-height:1;">12</div>
+            <div style="font-size:0.58rem;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-top:0.25rem;">Instrumente</div>
+          </div>
+          <div>
+            <div style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:600;color:var(--ink);line-height:1;">450+</div>
+            <div style="font-size:0.58rem;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-top:0.25rem;">Schüler</div>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:1.25rem;">
+        <div style="background:var(--warm);border:1px solid var(--rule);padding:1.5rem;">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:var(--ink);margin-bottom:0.4rem;">Probestunde</div>
+          <p style="font-size:0.82rem;font-weight:300;color:var(--muted);line-height:1.7;">Jeder Einstieg beginnt kostenlos. Lern deine Lehrkraft kennen, bevor du dich entscheidest.</p>
+        </div>
+        <div style="background:var(--warm);border:1px solid var(--rule);padding:1.5rem;">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:var(--ink);margin-bottom:0.4rem;">Erwachsene willkommen</div>
+          <p style="font-size:0.82rem;font-weight:300;color:var(--muted);line-height:1.7;">Musik lernen hat kein Alter. Wir unterrichten Einsteiger ab 5 bis ins hohe Alter — ohne Druck, ohne Vergleiche.</p>
+        </div>
+        <div style="background:var(--warm);border:1px solid var(--rule);padding:1.5rem;">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:var(--ink);margin-bottom:0.4rem;">Konzerte & Auftritte</div>
+          <p style="font-size:0.82rem;font-weight:300;color:var(--muted);line-height:1.7;">Unsere Schüler treten auf — wer möchte. Frühjahrskonzert, Kammermusikabend, Tag der offenen Tür.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </body>
 </html>

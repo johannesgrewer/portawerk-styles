@@ -217,6 +217,157 @@ export const prerender = true;
     .tick-sep {
       color: rgba(10,10,10,0.3);
     }
+
+    /* Photo container */
+    .ph { position: relative; overflow: hidden; }
+    .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.55s ease; }
+    .ph:hover img { transform: scale(1.05); }
+
+    /* Sections */
+    .section-services {
+      padding: 7rem 4rem;
+      background: var(--dark);
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+    .section-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,208,0,0.5);
+      margin-bottom: 0.75rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+    }
+    .section-heading {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: clamp(2rem, 5vw, 4rem);
+      text-transform: uppercase;
+      line-height: 0.9;
+      letter-spacing: -0.01em;
+      color: var(--white);
+      margin-bottom: 3.5rem;
+    }
+    .section-heading span { color: var(--yellow); }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(255,255,255,0.05);
+    }
+    .svc-card {
+      background: var(--dark);
+      padding: 2.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      transition: background 0.2s;
+    }
+    .svc-card:hover { background: #111; }
+    .svc-card-ph {
+      height: 220px;
+      border-radius: 0;
+    }
+    .svc-card-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      color: var(--white);
+    }
+    .svc-card-desc {
+      font-size: 0.75rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.35);
+      line-height: 1.7;
+    }
+    .svc-card-price {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--yellow);
+      margin-top: auto;
+    }
+
+    /* Contact section */
+    .section-contact {
+      background: var(--yellow);
+      padding: 7rem 4rem;
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+    .contact-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+    .contact-left {}
+    .contact-heading {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      text-transform: uppercase;
+      line-height: 0.88;
+      letter-spacing: -0.01em;
+      color: var(--dark);
+      margin-bottom: 1.5rem;
+    }
+    .contact-body {
+      font-size: 0.88rem;
+      font-weight: 300;
+      color: rgba(10,10,10,0.65);
+      line-height: 1.8;
+      max-width: 38ch;
+      margin-bottom: 2rem;
+    }
+    .contact-cta {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--yellow);
+      background: var(--dark);
+      text-decoration: none;
+      padding: 0.8rem 2rem;
+      display: inline-block;
+      transition: background 0.2s;
+    }
+    .contact-cta:hover { background: #222; }
+    .contact-right {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .contact-info-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      border-bottom: 1px solid rgba(10,10,10,0.12);
+      padding-bottom: 1.25rem;
+    }
+    .contact-info-row:last-child { border-bottom: none; }
+    .ci-label {
+      font-size: 0.52rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: rgba(10,10,10,0.35);
+      font-family: 'Barlow Condensed', sans-serif;
+    }
+    .ci-val {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--dark);
+      letter-spacing: 0.01em;
+    }
   </style>
 </head>
 <body>
@@ -291,5 +442,77 @@ export const prerender = true;
       <span class="tick-sep">✦</span>
     </div>
   </div>
+
+  <!-- SECTION 2: Leistungen mit Fotos -->
+  <div style="background:var(--dark); padding-bottom: 32px;">
+    <section class="section-services">
+      <div class="section-label">Leistungen</div>
+      <h2 class="section-heading">Was wir<br><span>produzieren.</span></h2>
+      <div class="services-grid">
+        <div class="svc-card">
+          <div class="ph svc-card-ph" style="height:220px;">
+            <img src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=800&h=500&q=80" alt="Podcast Aufnahme" loading="lazy" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.55) 0%,transparent 60%);pointer-events:none;"></div>
+          </div>
+          <div class="svc-card-name">Podcast</div>
+          <div class="svc-card-desc">Professionelle Mehrspur-Aufnahmen, Schnitt, Mastering und Veröffentlichung auf allen Plattformen. Einzelfolge oder Staffel.</div>
+          <div class="svc-card-price">ab 120 € / Folge</div>
+        </div>
+        <div class="svc-card">
+          <div class="ph svc-card-ph" style="height:220px;">
+            <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&h=500&q=80" alt="Voice-Over Studio" loading="lazy" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.55) 0%,transparent 60%);pointer-events:none;"></div>
+          </div>
+          <div class="svc-card-name">Voice-Over</div>
+          <div class="svc-card-desc">Werbespots, Erklärvideos, Telefonansagen, Hörbücher. Studioqualität für Film, Funk und digitale Medien.</div>
+          <div class="svc-card-price">ab 60 € / Stunde</div>
+        </div>
+        <div class="svc-card">
+          <div class="ph svc-card-ph" style="height:220px;">
+            <img src="https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=800&h=500&q=80" alt="Sprachcoaching" loading="lazy" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.55) 0%,transparent 60%);pointer-events:none;"></div>
+          </div>
+          <div class="svc-card-name">Coaching</div>
+          <div class="svc-card-desc">Stimm- und Sprachcoaching für Unternehmer, Speaker und Moderatoren. Einzelstunden oder Intensiv-Pakete.</div>
+          <div class="svc-card-price">ab 80 € / Einheit</div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- SECTION 3: Kontakt -->
+  <div style="background:var(--yellow);">
+    <section class="section-contact">
+      <div class="contact-inner">
+        <div class="contact-left">
+          <div class="contact-heading">Studio<br>buchen.</div>
+          <p class="contact-body">
+            Kein langes Briefing. Einfach anrufen oder schreiben —
+            wir finden gemeinsam die passende Session für dein Projekt.
+          </p>
+          <a href="#" class="contact-cta">Jetzt anfragen →</a>
+        </div>
+        <div class="contact-right">
+          <div class="contact-info-row">
+            <span class="ci-label">Adresse</span>
+            <span class="ci-val">Fleischstraße 12, 54290 Trier</span>
+          </div>
+          <div class="contact-info-row">
+            <span class="ci-label">Telefon</span>
+            <span class="ci-val">0651 / 492 38 70</span>
+          </div>
+          <div class="contact-info-row">
+            <span class="ci-label">E-Mail</span>
+            <span class="ci-val">studio@laut-trier.de</span>
+          </div>
+          <div class="contact-info-row">
+            <span class="ci-label">Öffnungszeiten</span>
+            <span class="ci-val">Mo – Fr · 9 – 20 Uhr</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
 </body>
 </html>

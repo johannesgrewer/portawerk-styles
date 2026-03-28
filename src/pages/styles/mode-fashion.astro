@@ -249,6 +249,142 @@ export const prerender = true;
     @keyframes growDown {
       to { height: clamp(80px, 12vh, 140px); }
     }
+
+    /* Photo containers */
+    .ph { position: relative; overflow: hidden; }
+    .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.55s ease; }
+    .ph:hover img { transform: scale(1.05); }
+
+    .section-wrap { max-width: 1600px; margin-left: auto; margin-right: auto; }
+
+    /* Collection section */
+    .collection {
+      padding: 6rem 4rem;
+      background: #F5F4F0;
+      border-top: 1px solid rgba(26,26,26,0.08);
+    }
+    .coll-eyebrow {
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      font-size: 0.62rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(26,26,26,0.4);
+      margin-bottom: 0.6rem;
+    }
+    .coll-headline {
+      font-family: 'Bodoni Moda', serif;
+      font-weight: 700;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      letter-spacing: -0.01em;
+      color: #1A1A1A;
+      margin-bottom: 3rem;
+      line-height: 1.05;
+    }
+    .coll-headline em {
+      font-style: italic;
+      font-weight: 400;
+    }
+    .coll-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 1px;
+      background: rgba(26,26,26,0.1);
+    }
+    .coll-item {
+      background: #F5F4F0;
+      overflow: hidden;
+    }
+    .coll-info {
+      padding: 1rem 1.25rem 1.5rem;
+    }
+    .coll-name {
+      font-family: 'Bodoni Moda', serif;
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: #1A1A1A;
+    }
+    .coll-material {
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(26,26,26,0.4);
+      margin-top: 0.2rem;
+    }
+    .coll-price {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: #8B0000;
+      margin-top: 0.5rem;
+    }
+
+    /* Lookbook / brand section */
+    .lookbook {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 520px;
+      border-top: 1px solid rgba(26,26,26,0.08);
+    }
+    .lookbook-image {}
+    .lookbook-content {
+      padding: 5rem 4rem;
+      background: #1A1A1A;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1.75rem;
+    }
+    .lb-eyebrow {
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      font-size: 0.62rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+    }
+    .lb-headline {
+      font-family: 'Bodoni Moda', serif;
+      font-weight: 700;
+      font-size: clamp(2rem, 3.5vw, 3.2rem);
+      line-height: 1.0;
+      letter-spacing: -0.01em;
+      color: #F5F4F0;
+    }
+    .lb-headline em {
+      font-style: italic;
+      font-weight: 400;
+      color: rgba(245,244,240,0.6);
+    }
+    .lb-body {
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      font-size: 0.9rem;
+      line-height: 1.85;
+      color: rgba(255,255,255,0.45);
+      max-width: 42ch;
+    }
+    .lb-divider {
+      width: 40px;
+      height: 1px;
+      background: #8B0000;
+    }
+    .lb-cta {
+      font-family: 'Jost', sans-serif;
+      font-weight: 400;
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #F5F4F0;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(245,244,240,0.3);
+      padding-bottom: 0.2rem;
+      width: fit-content;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .lb-cta:hover { color: #fff; border-color: #fff; }
   </style>
 </head>
 <body>
@@ -287,6 +423,84 @@ export const prerender = true;
       <p class="hero__image-label" aria-hidden="true">Frühjahr / Sommer</p>
     </div>
 
+  </section>
+
+  <!-- SECTION 2: Kollektion SS 26 -->
+  <section class="collection">
+    <div class="section-wrap">
+      <div class="coll-eyebrow">SS 26 — Kollektion</div>
+      <h2 class="coll-headline">Weniger Stücke.<br><em>Mehr Haltung.</em></h2>
+      <div class="coll-grid">
+        <div class="coll-item">
+          <div class="ph" style="height:380px;">
+            <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=800&h=1000&q=80" alt="Mode Kollektion" loading="lazy"/>
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.35) 0%,transparent 55%);pointer-events:none;"></div>
+          </div>
+          <div class="coll-info">
+            <div class="coll-name">Mantel No. 03</div>
+            <div class="coll-material">Wollgemisch · Beige</div>
+            <div class="coll-price">490 €</div>
+          </div>
+        </div>
+        <div class="coll-item">
+          <div class="ph" style="height:380px;">
+            <img src="https://images.unsplash.com/photo-1547826039-a3e6db4c2527?auto=format&fit=crop&w=800&h=1000&q=80" alt="Modekollektion Detail" loading="lazy"/>
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.35) 0%,transparent 55%);pointer-events:none;"></div>
+          </div>
+          <div class="coll-info">
+            <div class="coll-name">Kleid No. 07</div>
+            <div class="coll-material">Leinen · Ecru</div>
+            <div class="coll-price">285 €</div>
+          </div>
+        </div>
+        <div class="coll-item">
+          <div class="ph" style="height:380px;">
+            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=800&h=1000&q=80" alt="Fashion Editorial" loading="lazy"/>
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.35) 0%,transparent 55%);pointer-events:none;"></div>
+          </div>
+          <div class="coll-info">
+            <div class="coll-name">Bluse No. 12</div>
+            <div class="coll-material">Seide · Ivory</div>
+            <div class="coll-price">195 €</div>
+          </div>
+        </div>
+        <div class="coll-item">
+          <div class="ph" style="height:380px;">
+            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=800&h=1000&q=80" alt="Fashion Portrait" loading="lazy"/>
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.35) 0%,transparent 55%);pointer-events:none;"></div>
+          </div>
+          <div class="coll-info">
+            <div class="coll-name">Hose No. 02</div>
+            <div class="coll-material">Baumwolle · Anthrazit</div>
+            <div class="coll-price">165 €</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: Atelier & Lookbook -->
+  <section class="lookbook">
+    <div class="section-wrap" style="display:grid;grid-template-columns:1fr 1fr;width:100%;">
+      <div class="lookbook-image">
+        <div class="ph" style="height:100%;min-height:520px;">
+          <img src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&w=1200&h=800&q=80" alt="Atelier LINIE" loading="lazy"/>
+          <div style="position:absolute;inset:0;background:linear-gradient(to right,transparent 55%,rgba(26,26,26,0.5) 100%);pointer-events:none;"></div>
+        </div>
+      </div>
+      <div class="lookbook-content">
+        <div class="lb-eyebrow">Das Atelier</div>
+        <h2 class="lb-headline">Jedes Stück<br>ist eine <em>Entscheidung.</em></h2>
+        <div class="lb-divider"></div>
+        <p class="lb-body">
+          LINIE entsteht in einem kleinen Atelier in der Trierer Innenstadt.
+          Jedes Stück wird in limitierter Auflage produziert —
+          aus natürlichen Materialien, mit Schneiderinnen aus der Region.
+          Kein Fast Fashion. Keine Saison-Überproduktion.
+        </p>
+        <a href="#" class="lb-cta">Atelier besuchen &rarr;</a>
+      </div>
+    </div>
   </section>
 
   <script>

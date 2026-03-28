@@ -284,6 +284,100 @@ export const prerender = true;
     .hero-headline .outline { transition: -webkit-text-stroke-color 0.4s; }
     .hero-headline .outline:hover { -webkit-text-stroke-color: rgba(255,255,255,0.5); }
 
+    /* Photo containers */
+    .ph { position: relative; overflow: hidden; }
+    .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.55s ease; }
+    .ph:hover img { transform: scale(1.05); }
+
+    .section-wrap { max-width: 1600px; margin-left: auto; margin-right: auto; }
+
+    /* Atmosphere section */
+    .atmosphere {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 4rem 3.5rem;
+      background: var(--black);
+    }
+    .atmo-label {
+      font-size: 0.5rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.2);
+      margin-bottom: 2rem;
+    }
+    .atmo-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 1px;
+      background: rgba(255,255,255,0.06);
+    }
+    .atmo-cell {
+      background: var(--black);
+      overflow: hidden;
+    }
+    .atmo-caption {
+      padding: 1rem 1.25rem;
+      font-family: 'Anton', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+    }
+
+    /* Sound system section */
+    .soundsystem {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 420px;
+    }
+    .sound-image-col {}
+    .sound-content {
+      padding: 4rem 3.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1.5rem;
+      border-left: 1px solid rgba(255,255,255,0.06);
+    }
+    .sound-label {
+      font-size: 0.5rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--red);
+    }
+    .sound-headline {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: var(--white);
+      line-height: 0.95;
+    }
+    .sound-body {
+      font-size: 0.72rem;
+      line-height: 1.85;
+      color: rgba(255,255,255,0.35);
+      max-width: 42ch;
+    }
+    .sound-specs {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .spec-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      font-size: 0.62rem;
+    }
+    .spec-name { color: rgba(255,255,255,0.35); letter-spacing: 0.1em; text-transform: uppercase; }
+    .spec-val { font-family: 'Anton', sans-serif; font-size: 0.85rem; color: var(--white); letter-spacing: 0.06em; }
   </style>
 </head>
 <body>
@@ -359,6 +453,74 @@ export const prerender = true;
     <div class="bottom-bar">
       <div class="bb-text">Mitglied werden · Presale-Zugang · Keine Warteschlange</div>
       <a href="#" class="bb-cta">Tickets kaufen →</a>
+    </div>
+  </section>
+
+  <!-- SECTION 2: Atmosphäre -->
+  <section class="atmosphere">
+    <div class="section-wrap">
+      <div class="atmo-label">Der Keller — Atmosphäre</div>
+      <div class="atmo-grid">
+        <div class="atmo-cell">
+          <div class="ph" style="height:340px;">
+            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&h=800&q=80" alt="Club Atmosphäre" loading="lazy"/>
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.6) 0%,transparent 60%);pointer-events:none;"></div>
+          </div>
+          <div class="atmo-caption">Hauptfloor</div>
+        </div>
+        <div class="atmo-cell">
+          <div class="ph" style="height:340px;">
+            <img src="https://images.unsplash.com/photo-1541518763669-27fef04b14ea?auto=format&fit=crop&w=800&h=800&q=80" alt="Club Licht" loading="lazy"/>
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.6) 0%,transparent 60%);pointer-events:none;"></div>
+          </div>
+          <div class="atmo-caption">Lichtanlage</div>
+        </div>
+        <div class="atmo-cell">
+          <div class="ph" style="height:340px;">
+            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=800&h=800&q=80" alt="Underground Venue" loading="lazy"/>
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.6) 0%,transparent 60%);pointer-events:none;"></div>
+          </div>
+          <div class="atmo-caption">Außenbereich</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: Soundsystem & Location -->
+  <section class="soundsystem">
+    <div class="section-wrap" style="display:grid;grid-template-columns:1fr 1fr;width:100%;">
+      <div class="sound-image-col">
+        <div class="ph" style="height:100%;min-height:420px;">
+          <img src="https://images.unsplash.com/photo-1542736667-069246bdbc6d?auto=format&fit=crop&w=1200&h=800&q=80" alt="Soundsystem" loading="lazy"/>
+          <div style="position:absolute;inset:0;background:rgba(0,0,0,0.4);pointer-events:none;"></div>
+        </div>
+      </div>
+      <div class="sound-content">
+        <div class="sound-label">Soundsystem & Location</div>
+        <h2 class="sound-headline">Funktion<br>ist<br>alles.</h2>
+        <p class="sound-body">
+          Kein Showroom. Kein VIP-Bereich. Nur ein Raum, ein System,
+          eine Lautstärke. Das Funktion One läuft seit 2021 ohne Unterbrechung.
+        </p>
+        <div class="sound-specs">
+          <div class="spec-row">
+            <span class="spec-name">Anlage</span>
+            <span class="spec-val">Funktion One Evo 5</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-name">Leistung</span>
+            <span class="spec-val">28.000 W RMS</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-name">Fläche</span>
+            <span class="spec-val">320 m²</span>
+          </div>
+          <div class="spec-row">
+            <span class="spec-name">Eingang</span>
+            <span class="spec-val">Industriestr. 9 · Trier</span>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 </body>

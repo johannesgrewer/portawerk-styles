@@ -476,6 +476,11 @@ export const prerender = true;
     }
     .nav-logo-mark { transition: transform 0.3s ease; }
 
+    /* ── PHOTO ── */
+    .img-wrap { display: block; }
+    .img-wrap img { display: block; }
+    .img-wrap:hover img { transform: scale(1.05); }
+
     /* ── FOOTER ── */
     footer {
       background: var(--white);
@@ -527,7 +532,7 @@ export const prerender = true;
   </nav>
 
   <!-- HERO -->
-  <section class="hero">
+  <section class="hero" style="max-width:1600px;margin-left:auto;margin-right:auto;">
     <div class="hero-left">
       <div class="hero-eyebrow">
         <span class="eyebrow-dot"></span>
@@ -545,6 +550,14 @@ export const prerender = true;
     </div>
 
     <div class="hero-right">
+      <!-- Photo 1: clinical/medical -->
+      <div class="img-wrap" style="position:relative;overflow:hidden;height:200px;border-radius:4px;grid-column:1/-1;margin-bottom:0.25rem;">
+        <img src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&w=1200&h=800&q=80"
+             alt="Arztpraxis Konsultation" loading="lazy"
+             style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.55s ease;" />
+        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.5) 0%,transparent 60%);pointer-events:none;"></div>
+      </div>
+
       <div class="info-card">
         <div class="info-icon">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4AADCF" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
@@ -570,9 +583,17 @@ export const prerender = true;
   </section>
 
   <!-- LEISTUNGEN -->
-  <section class="leistungen-section">
+  <section class="leistungen-section" style="max-width:1600px;margin-left:auto;margin-right:auto;">
     <p class="section-eyebrow">Unser Angebot</p>
     <h2 class="section-title">Was wir für Sie tun</h2>
+
+    <!-- Photo 2: medical setting -->
+    <div class="img-wrap" style="position:relative;overflow:hidden;height:280px;border-radius:4px;margin-bottom:3rem;">
+      <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=1200&h=800&q=80"
+           alt="Medizinische Behandlung in der Praxis" loading="lazy"
+           style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.55s ease;" />
+      <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.5) 0%,transparent 60%);pointer-events:none;"></div>
+    </div>
 
     <div class="leistungen-grid">
       <div class="leistung-card">
@@ -609,7 +630,7 @@ export const prerender = true;
   </section>
 
   <!-- ÜBER -->
-  <section class="about-section">
+  <section class="about-section" style="max-width:1600px;margin-left:auto;margin-right:auto;">
     <div class="about-text">
       <p class="about-eyebrow">Die Praxis</p>
       <h2 class="about-title">Medizin braucht<br>Zeit und Vertrauen.</h2>
@@ -636,6 +657,13 @@ export const prerender = true;
     </div>
 
     <div class="doctor-profile">
+      <!-- Photo 3: professional clinical -->
+      <div class="img-wrap" style="position:relative;overflow:hidden;height:220px;border-radius:8px;margin-bottom:1.5rem;">
+        <img src="https://images.unsplash.com/photo-1580136579312-94651dfd596d?auto=format&fit=crop&w=1200&h=800&q=80"
+             alt="Dr. Helene Voss — Ärztin in Trier" loading="lazy"
+             style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.55s ease;" />
+        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.5) 0%,transparent 60%);pointer-events:none;"></div>
+      </div>
       <div class="doctor-avatar">HV</div>
       <div class="doctor-name">Dr. med. Helene Voss</div>
       <div class="doctor-title">Fachärztin für Allgemeinmedizin</div>

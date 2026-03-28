@@ -313,6 +313,273 @@ export const prerender = true;
       color: rgba(10,10,10,0.45);
       margin-top: 0.2rem;
     }
+
+    /* ── PHOTO HOVER ── */
+    .ph:hover img { transform: scale(1.05); }
+
+    /* ── SECTION 2: ARBEITEN ── */
+    .arbeiten {
+      border-top: 2px solid var(--black);
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+
+    .arbeiten-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: 2px solid var(--black);
+    }
+
+    .arbeiten-title-block {
+      padding: 3rem 4rem;
+      border-right: 2px solid var(--black);
+    }
+
+    .arbeiten-eyebrow {
+      font-size: 0.55rem;
+      font-weight: 500;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .arbeiten-h {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+    }
+
+    .arbeiten-h .outline {
+      -webkit-text-stroke: 2px var(--black);
+      color: transparent;
+    }
+
+    .arbeiten-meta {
+      padding: 3rem 4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      gap: 0.5rem;
+    }
+
+    .arbeiten-count {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(3rem, 6vw, 5rem);
+      line-height: 1;
+      color: var(--yellow);
+      -webkit-text-stroke: 2px var(--black);
+    }
+
+    .arbeiten-count-label {
+      font-size: 0.58rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .arbeiten-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .arbeit-card {
+      border-right: 2px solid var(--black);
+      border-bottom: 2px solid var(--black);
+    }
+
+    .arbeit-card:nth-child(3) { border-right: none; }
+    .arbeit-card:nth-child(4),
+    .arbeit-card:nth-child(5),
+    .arbeit-card:nth-child(6) { border-bottom: none; }
+    .arbeit-card:nth-child(6) { border-right: none; }
+
+    .arbeit-photo {
+      position: relative;
+      overflow: hidden;
+      height: 220px;
+      border-bottom: 2px solid var(--black);
+    }
+
+    .arbeit-photo img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.55s ease;
+    }
+
+    .arbeit-photo:hover img { transform: scale(1.05); }
+
+    .arbeit-photo-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(10,10,10,0.4) 0%, transparent 55%);
+      pointer-events: none;
+    }
+
+    .arbeit-body {
+      padding: 1.5rem;
+      background: var(--white);
+    }
+
+    .arbeit-card:nth-child(even) .arbeit-body {
+      background: var(--yellow);
+    }
+
+    .arbeit-num {
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .arbeit-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--black);
+      margin-bottom: 0.2rem;
+    }
+
+    .arbeit-type {
+      font-size: 0.6rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ── SECTION 3: STUDIO ── */
+    .studio {
+      border-top: 2px solid var(--black);
+      max-width: 1600px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .studio-photo-col {
+      border-right: 2px solid var(--black);
+      position: relative;
+      overflow: hidden;
+      min-height: 500px;
+    }
+
+    .studio-photo-col img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.55s ease;
+    }
+
+    .studio-photo-col:hover img { transform: scale(1.05); }
+
+    .studio-content {
+      padding: 4rem;
+      background: var(--yellow);
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      justify-content: center;
+    }
+
+    .studio-eyebrow {
+      font-size: 0.55rem;
+      font-weight: 500;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(10,10,10,0.5);
+    }
+
+    .studio-h {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      line-height: 1;
+      letter-spacing: -0.02em;
+      color: var(--black);
+    }
+
+    .studio-h .outline {
+      -webkit-text-stroke: 2px var(--black);
+      color: transparent;
+    }
+
+    .studio-body {
+      font-size: 0.88rem;
+      font-weight: 300;
+      line-height: 1.9;
+      color: rgba(10,10,10,0.65);
+      max-width: 42ch;
+    }
+
+    .studio-facts {
+      display: flex;
+      flex-direction: column;
+      border: 2px solid var(--black);
+    }
+
+    .sf-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid rgba(10,10,10,0.12);
+    }
+
+    .sf-row:last-child { border-bottom: none; }
+
+    .sf-label {
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .sf-value {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--black);
+    }
+
+    .studio-cta {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--white);
+      background: var(--black);
+      padding: 0.9rem 2rem;
+      text-decoration: none;
+      transition: background 0.2s;
+      align-self: flex-start;
+    }
+
+    .studio-cta:hover { background: #333; }
+
+    @media (max-width: 900px) {
+      .arbeiten-header { grid-template-columns: 1fr; }
+      .arbeiten-title-block { border-right: none; border-bottom: 2px solid var(--black); }
+      .arbeiten-grid { grid-template-columns: 1fr 1fr; }
+      .arbeit-card:nth-child(3) { border-right: 2px solid var(--black); }
+      .arbeit-card:nth-child(2) { border-right: none; }
+      .arbeit-card:nth-child(4) { border-bottom: 2px solid var(--black); }
+      .arbeit-card:nth-child(5) { border-bottom: 2px solid var(--black); }
+      .studio { grid-template-columns: 1fr; }
+      .studio-photo-col { min-height: 320px; border-right: none; border-bottom: 2px solid var(--black); }
+    }
   </style>
 </head>
 <body>
@@ -426,5 +693,140 @@ export const prerender = true;
       </div>
     </div>
   </section>
+
+  <!-- ── SECTION 2: ARBEITEN ── -->
+  <div class="arbeiten">
+    <div class="arbeiten-header">
+      <div class="arbeiten-title-block">
+        <div class="arbeiten-eyebrow">Ausgewählte Projekte · 2021–2025</div>
+        <h2 class="arbeiten-h">
+          Was wir<br>
+          zuletzt<br>
+          <span class="outline">gebaut</span><br>
+          haben.
+        </h2>
+      </div>
+      <div class="arbeiten-meta">
+        <div class="arbeiten-count">74</div>
+        <div class="arbeiten-count-label">Projekte abgeschlossen</div>
+      </div>
+    </div>
+
+    <div class="arbeiten-grid">
+
+      <div class="arbeit-card">
+        <div class="arbeit-photo ph">
+          <img src="https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?auto=format&fit=crop&w=800&h=500&q=80" alt="Mosel Vinothek Brand Identity" loading="lazy" />
+          <div class="arbeit-photo-overlay"></div>
+        </div>
+        <div class="arbeit-body">
+          <div class="arbeit-num">01 · 2024</div>
+          <div class="arbeit-name">Mosel Vinothek</div>
+          <div class="arbeit-type">Brand Identity · Weinhandel Trier</div>
+        </div>
+      </div>
+
+      <div class="arbeit-card">
+        <div class="arbeit-photo ph">
+          <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=800&h=500&q=80" alt="Stadtwerk Magazin Editorial" loading="lazy" />
+          <div class="arbeit-photo-overlay"></div>
+        </div>
+        <div class="arbeit-body">
+          <div class="arbeit-num">02 · 2024</div>
+          <div class="arbeit-name">Stadtwerk Magazin</div>
+          <div class="arbeit-type">Editorial Design · 120 Seiten</div>
+        </div>
+      </div>
+
+      <div class="arbeit-card">
+        <div class="arbeit-photo ph">
+          <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=800&h=500&q=80" alt="Kern & Co. Corporate Design" loading="lazy" />
+          <div class="arbeit-photo-overlay"></div>
+        </div>
+        <div class="arbeit-body">
+          <div class="arbeit-num">03 · 2023</div>
+          <div class="arbeit-name">Kern &amp; Co.</div>
+          <div class="arbeit-type">Corporate CD · Geschäftsausstattung</div>
+        </div>
+      </div>
+
+      <div class="arbeit-card">
+        <div class="arbeit-photo ph">
+          <img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=800&h=500&q=80" alt="Lautstark Festival Kampagne" loading="lazy" />
+          <div class="arbeit-photo-overlay"></div>
+        </div>
+        <div class="arbeit-body">
+          <div class="arbeit-num">04 · 2023</div>
+          <div class="arbeit-name">Lautstark Festival</div>
+          <div class="arbeit-type">Kampagne · Poster + Digital</div>
+        </div>
+      </div>
+
+      <div class="arbeit-card">
+        <div class="arbeit-photo ph">
+          <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=800&h=500&q=80" alt="Buchhandlung Seite Verpackung" loading="lazy" />
+          <div class="arbeit-photo-overlay"></div>
+        </div>
+        <div class="arbeit-body">
+          <div class="arbeit-num">05 · 2023</div>
+          <div class="arbeit-name">Buchhandlung Seite</div>
+          <div class="arbeit-type">Verpackungsdesign · Geschenksets</div>
+        </div>
+      </div>
+
+      <div class="arbeit-card">
+        <div class="arbeit-photo ph">
+          <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&h=500&q=80" alt="Trierer Weinfest Papeterie" loading="lazy" />
+          <div class="arbeit-photo-overlay"></div>
+        </div>
+        <div class="arbeit-body">
+          <div class="arbeit-num">06 · 2022</div>
+          <div class="arbeit-name">Trierer Weinfest</div>
+          <div class="arbeit-type">Print · Programm + Plakate</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── SECTION 3: STUDIO ── -->
+  <div class="studio">
+    <div class="studio-photo-col">
+      <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=900&h=800&q=80" alt="Doppel Studio — Anna und Paul bei der Arbeit" loading="lazy" />
+    </div>
+    <div class="studio-content">
+      <div class="studio-eyebrow">Das Studio · Trier, seit 2021</div>
+      <h2 class="studio-h">
+        Kein<br>
+        Agentur-<br>
+        <span class="outline">Bullshit.</span>
+      </h2>
+      <p class="studio-body">
+        Anna macht Konzept und Art Direction. Paul macht Design und Typografie.
+        Wir arbeiten zu zweit — bewusst. Kein Account-Manager, keine Zwischenebene.
+        Du sprichst direkt mit den Leuten, die dein Projekt umsetzen.
+      </p>
+      <div class="studio-facts">
+        <div class="sf-row">
+          <span class="sf-label">Projektlaufzeit</span>
+          <span class="sf-value">2–6 Wochen</span>
+        </div>
+        <div class="sf-row">
+          <span class="sf-label">Mindestbudget</span>
+          <span class="sf-value">ab 1.200 €</span>
+        </div>
+        <div class="sf-row">
+          <span class="sf-label">Freie Slots 2025</span>
+          <span class="sf-value">3 Projekte</span>
+        </div>
+        <div class="sf-row">
+          <span class="sf-label">Antwortzeit</span>
+          <span class="sf-value">innerhalb 24 h</span>
+        </div>
+      </div>
+      <a href="mailto:hallo@doppel-studio.de" class="studio-cta">Jetzt anfragen →</a>
+    </div>
+  </div>
+
 </body>
 </html>

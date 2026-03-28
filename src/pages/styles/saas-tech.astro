@@ -137,7 +137,209 @@ export const prerender = true;
       z-index: 1;
       display: grid;
       grid-template-columns: 1fr 1fr;
+      max-width: 1600px;
+      margin-left: auto;
+      margin-right: auto;
     }
+
+    /* === PHOTO CONTAINER === */
+    .ph { position: relative; overflow: hidden; }
+    .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.55s ease; }
+    .ph:hover img { transform: scale(1.05); }
+
+    /* === FEATURES SECTION === */
+    .features-section {
+      padding: 6rem 4rem;
+      background: var(--white);
+      position: relative;
+      z-index: 1;
+      max-width: 1600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .features-label {
+      font-size: 0.52rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--indigo);
+      margin-bottom: 0.75rem;
+    }
+    .features-title {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 600;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      color: #0F172A;
+      letter-spacing: -0.02em;
+      margin-bottom: 3.5rem;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .feature-card {
+      border: 1px solid rgba(99,102,241,0.1);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .feature-card:hover {
+      box-shadow: 0 12px 32px rgba(99,102,241,0.1);
+      transform: translateY(-4px);
+    }
+    .fc-photo { height: 200px; }
+    .fc-body {
+      padding: 1.5rem;
+    }
+    .fc-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: rgba(99,102,241,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      margin-bottom: 0.85rem;
+    }
+    .fc-title {
+      font-family: 'Manrope', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #0F172A;
+      margin-bottom: 0.4rem;
+    }
+    .fc-desc {
+      font-size: 0.78rem;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* === PRICING SECTION === */
+    .pricing-section {
+      padding: 6rem 4rem;
+      background: var(--light);
+      position: relative;
+      z-index: 1;
+      max-width: 1600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .pricing-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+    .pricing-title {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 600;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      color: #0F172A;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.75rem;
+    }
+    .pricing-sub {
+      font-size: 0.88rem;
+      font-weight: 300;
+      color: var(--muted);
+    }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .plan-card {
+      background: var(--white);
+      border: 1px solid rgba(99,102,241,0.12);
+      border-radius: 12px;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .plan-card:hover {
+      box-shadow: 0 12px 32px rgba(99,102,241,0.1);
+      transform: translateY(-4px);
+    }
+    .plan-card.plan-featured {
+      border-color: var(--indigo);
+      background: linear-gradient(135deg, rgba(99,102,241,0.04), var(--white));
+    }
+    .plan-badge {
+      font-size: 0.45rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: var(--indigo);
+      color: #fff;
+      padding: 0.2rem 0.6rem;
+      border-radius: 100px;
+      width: fit-content;
+    }
+    .plan-name {
+      font-family: 'Manrope', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .plan-price {
+      font-family: 'Manrope', sans-serif;
+      font-weight: 600;
+      font-size: 2.2rem;
+      color: #0F172A;
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+    .plan-price span {
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: var(--muted);
+    }
+    .plan-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      flex: 1;
+    }
+    .plan-features li {
+      font-size: 0.75rem;
+      font-weight: 300;
+      color: #0F172A;
+      padding-left: 1.25rem;
+      position: relative;
+      line-height: 1.5;
+    }
+    .plan-features li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--indigo);
+      font-size: 0.65rem;
+    }
+    .plan-cta {
+      font-family: 'Manrope', sans-serif;
+      font-size: 0.62rem;
+      font-weight: 600;
+      text-align: center;
+      padding: 0.75rem;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+      background: rgba(99,102,241,0.08);
+      color: var(--indigo);
+    }
+    .plan-card.plan-featured .plan-cta {
+      background: var(--indigo);
+      color: #fff;
+    }
+    .plan-cta:hover { background: var(--indigo); color: #fff; }
 
     /* LEFT */
     .hero-left {
@@ -614,5 +816,102 @@ export const prerender = true;
       </div>
     </div>
   </section>
+
+  <!-- FEATURES SECTION -->
+  <section class="features-section">
+    <p class="features-label">Warum Fluxr</p>
+    <h2 class="features-title">Alles was dein Team braucht.</h2>
+    <div class="features-grid">
+
+      <div class="feature-card">
+        <div class="ph fc-photo">
+          <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&h=800&q=80" alt="Workflow Automatisierung" loading="lazy"/>
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.45) 0%,transparent 60%);pointer-events:none;"></div>
+        </div>
+        <div class="fc-body">
+          <div class="fc-icon">⚡</div>
+          <div class="fc-title">Visueller Workflow Builder</div>
+          <p class="fc-desc">Drag & Drop statt Code. Verbinde deine Tools in Minuten — ohne Entwickler, ohne Frustration.</p>
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="ph fc-photo">
+          <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&h=800&q=80" alt="Team Collaboration" loading="lazy"/>
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.45) 0%,transparent 60%);pointer-events:none;"></div>
+        </div>
+        <div class="fc-body">
+          <div class="fc-icon">👥</div>
+          <div class="fc-title">Team-Workflows in Echtzeit</div>
+          <p class="fc-desc">Gemeinsam an Automatisierungen arbeiten. Änderungen live — alle sehen sofort was passiert.</p>
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="ph fc-photo">
+          <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&h=800&q=80" alt="Analytics Dashboard" loading="lazy"/>
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.45) 0%,transparent 60%);pointer-events:none;"></div>
+        </div>
+        <div class="fc-body">
+          <div class="fc-icon">📊</div>
+          <div class="fc-title">Analytics & Monitoring</div>
+          <p class="fc-desc">Sieh genau was läuft, was fehlschlägt und wo Zeit gespart wird — mit einem Blick auf dein Dashboard.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PRICING SECTION -->
+  <section class="pricing-section">
+    <div class="pricing-header">
+      <p class="features-label">Preise</p>
+      <h2 class="pricing-title">Einfach. Transparent. Fair.</h2>
+      <p class="pricing-sub">14 Tage kostenlos testen — keine Kreditkarte nötig.</p>
+    </div>
+    <div class="pricing-grid">
+
+      <div class="plan-card">
+        <div class="plan-name">Starter</div>
+        <div class="plan-price">0 <span>€ / Monat</span></div>
+        <ul class="plan-features">
+          <li>5 aktive Workflows</li>
+          <li>50 Ausführungen / Monat</li>
+          <li>10 Integrationen</li>
+          <li>Community Support</li>
+        </ul>
+        <a href="#" class="plan-cta">Kostenlos starten →</a>
+      </div>
+
+      <div class="plan-card plan-featured">
+        <span class="plan-badge">Beliebteste Wahl</span>
+        <div class="plan-name">Pro</div>
+        <div class="plan-price">49 <span>€ / Monat</span></div>
+        <ul class="plan-features">
+          <li>Unbegrenzte Workflows</li>
+          <li>10.000 Ausführungen / Monat</li>
+          <li>200+ Integrationen</li>
+          <li>Echtzeit-Monitoring</li>
+          <li>Priority Support</li>
+        </ul>
+        <a href="#" class="plan-cta">14 Tage kostenlos →</a>
+      </div>
+
+      <div class="plan-card">
+        <div class="plan-name">Team</div>
+        <div class="plan-price">149 <span>€ / Monat</span></div>
+        <ul class="plan-features">
+          <li>Alles aus Pro</li>
+          <li>Unbegrenzte Ausführungen</li>
+          <li>Team-Collaboration</li>
+          <li>SSO & SAML</li>
+          <li>Dedicated Account Manager</li>
+        </ul>
+        <a href="#" class="plan-cta">Demo anfragen →</a>
+      </div>
+
+    </div>
+  </section>
+
 </body>
 </html>

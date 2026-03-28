@@ -257,6 +257,193 @@ export const prerender = true;
     }
     .corner-mark.bl { bottom: 1.5rem; left: 2rem; }
     .corner-mark.br { bottom: 1.5rem; right: 2rem; }
+
+    /* Photo container */
+    .ph { position:relative; overflow:hidden; }
+    .ph img { position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.55s ease; }
+    .ph:hover img { transform: scale(1.05); }
+
+    /* Portfolio section */
+    .portfolio-section {
+      background: #fff;
+      padding: 6rem 0;
+      border-top: 1px solid #000;
+    }
+    .portfolio-inner {
+      max-width: 1600px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0 5rem;
+    }
+    .port-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      margin-bottom: 4rem;
+      align-items: end;
+    }
+    .port-eyebrow {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.55rem;
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.3);
+      margin-bottom: 0.75rem;
+    }
+    .port-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      line-height: 0.9;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      color: #000;
+    }
+    .port-title .outline {
+      -webkit-text-stroke: 2px #000;
+      color: transparent;
+    }
+    .port-desc {
+      font-size: 0.88rem;
+      font-weight: 300;
+      line-height: 1.9;
+      color: rgba(0,0,0,0.45);
+      max-width: 42ch;
+    }
+    .port-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 2px;
+    }
+    .port-item {}
+    .port-meta {
+      padding: 0.75rem 0 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+    }
+    .pm-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.5rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      color: rgba(0,0,0,0.2);
+    }
+    .pm-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.5);
+    }
+
+    /* Studio section */
+    .studio-section {
+      background: #000;
+      padding: 6rem 0;
+    }
+    .studio-inner {
+      max-width: 1600px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0 5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+    .studio-photo-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+    }
+    .studio-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+    .studio-eyebrow {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.55rem;
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+    }
+    .studio-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: clamp(2.5rem, 4vw, 4rem);
+      line-height: 0.9;
+      text-transform: uppercase;
+      color: #fff;
+    }
+    .studio-title .outline {
+      -webkit-text-stroke: 1px rgba(255,255,255,0.4);
+      color: transparent;
+    }
+    .studio-body {
+      font-size: 0.88rem;
+      font-weight: 300;
+      line-height: 1.9;
+      color: rgba(255,255,255,0.35);
+      max-width: 40ch;
+    }
+    .studio-specs {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .spec-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .sr-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.55rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.2);
+    }
+    .sr-value {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.6);
+    }
+    .studio-cta {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #000;
+      background: #fff;
+      padding: 0.85rem 2rem;
+      text-decoration: none;
+      border: 1px solid #fff;
+      transition: background 0.15s, color 0.15s;
+      width: fit-content;
+    }
+    .studio-cta:hover { background: #000; color: #fff; }
+
+    /* Large screen fix */
+    @media (min-width: 1600px) {
+      .hero {
+        max-width: 1600px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
   </style>
 </head>
 <body>
@@ -330,5 +517,106 @@ export const prerender = true;
       </div>
     </div>
   </section>
+
+  <!-- PORTFOLIO SECTION -->
+  <section class="portfolio-section">
+    <div class="portfolio-inner">
+      <div class="port-header">
+        <div>
+          <div class="port-eyebrow">Ausgewählte Arbeiten</div>
+          <h2 class="port-title">Das<br><span class="outline">Bild</span><br>zählt.</h2>
+        </div>
+        <p class="port-desc">
+          800 Shootings. Jedes davon mit einer Idee dahinter.
+          Portrait, Produkt, Editorial — hier ist eine Auswahl
+          der Arbeiten, auf die wir stolz sind.
+        </p>
+      </div>
+      <div class="port-grid">
+        <div class="port-item">
+          <div class="ph" style="height:360px;">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1200&h=900&q=80" alt="Portrait Shooting" loading="lazy" style="filter:grayscale(100%);" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.5) 0%,transparent 60%);pointer-events:none;"></div>
+          </div>
+          <div class="port-meta">
+            <span class="pm-num">01</span>
+            <span class="pm-title">Portrait · Editorial</span>
+          </div>
+        </div>
+        <div class="port-item">
+          <div class="ph" style="height:360px;">
+            <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1200&h=900&q=80" alt="Produkt Shooting" loading="lazy" style="filter:grayscale(100%);" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.5) 0%,transparent 60%);pointer-events:none;"></div>
+          </div>
+          <div class="port-meta">
+            <span class="pm-num">02</span>
+            <span class="pm-title">Produkt · Werbung</span>
+          </div>
+        </div>
+        <div class="port-item">
+          <div class="ph" style="height:360px;">
+            <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=1200&h=900&q=80" alt="Architektur Shooting" loading="lazy" style="filter:grayscale(100%);" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.5) 0%,transparent 60%);pointer-events:none;"></div>
+          </div>
+          <div class="port-meta">
+            <span class="pm-num">03</span>
+            <span class="pm-title">Architektur · Raum</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STUDIO SECTION -->
+  <section class="studio-section">
+    <div class="studio-inner">
+      <div class="studio-photo-col">
+        <div class="ph" style="height:420px;">
+          <img src="https://images.unsplash.com/photo-1547826039-a3e6db4c2527?auto=format&fit=crop&w=800&h=1050&q=80" alt="Studio Innenansicht" loading="lazy" style="filter:grayscale(100%);" />
+        </div>
+        <div style="display:flex;flex-direction:column;gap:2px;margin-top:3rem;">
+          <div class="ph" style="height:200px;">
+            <img src="https://images.unsplash.com/photo-1471193945509-9ad0617afabf?auto=format&fit=crop&w=800&h=500&q=80" alt="Kamera Equipment" loading="lazy" style="filter:grayscale(80%);" />
+          </div>
+          <div class="ph" style="height:200px;">
+            <img src="https://images.unsplash.com/photo-1606216794074-735e91aa2c92?auto=format&fit=crop&w=800&h=500&q=80" alt="Lichtsetzung Studio" loading="lazy" style="filter:grayscale(80%);" />
+          </div>
+        </div>
+      </div>
+      <div class="studio-text">
+        <div class="studio-eyebrow">Das Studio</div>
+        <h2 class="studio-title">120 m².<br><span class="outline">Kein</span><br>Kompromiss.</h2>
+        <p class="studio-body">
+          Daylight-Studio, Kunstlicht-Setup, Cyclorama-Wand.
+          Alles vorhanden — damit das Bild stimmt,
+          nicht der Zufall.
+        </p>
+        <div class="studio-specs">
+          <div class="spec-row">
+            <span class="sr-label">Fläche</span>
+            <span class="sr-value">120 m² Gesamt</span>
+          </div>
+          <div class="spec-row">
+            <span class="sr-label">Licht</span>
+            <span class="sr-value">Daylight + Profoto D2</span>
+          </div>
+          <div class="spec-row">
+            <span class="sr-label">Hintergründe</span>
+            <span class="sr-value">Weiß, Schwarz, Grau, Cyclorama</span>
+          </div>
+          <div class="spec-row">
+            <span class="sr-label">Lieferzeit</span>
+            <span class="sr-value">48h nach Shooting</span>
+          </div>
+          <div class="spec-row">
+            <span class="sr-label">Standort</span>
+            <span class="sr-value">Trier-Nord · kostenlos parken</span>
+          </div>
+        </div>
+        <a href="#" class="studio-cta">Shooting anfragen →</a>
+      </div>
+    </div>
+  </section>
+
 </body>
 </html>

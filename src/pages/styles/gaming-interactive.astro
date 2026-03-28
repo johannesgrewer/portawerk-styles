@@ -296,9 +296,32 @@ export const prerender = true;
       padding: 120px 24px 80px;
       text-align: center;
       position: relative;
-      background:
-        radial-gradient(ellipse at 50% 0%, rgba(57, 255, 20, 0.06) 0%, transparent 60%),
-        #0D0D0D;
+      overflow: hidden;
+      background: #0D0D0D;
+    }
+
+    .hero-bg-photo {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .hero-bg-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.25;
+      display: block;
+    }
+    .hero-bg-photo::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(57,255,20,0.08) 0%, transparent 60%);
+    }
+
+    .hero > *:not(.hero-bg-photo) {
+      position: relative;
+      z-index: 1;
     }
 
     .boot-terminal {
@@ -821,6 +844,10 @@ export const prerender = true;
 
   <!-- HERO — BOOT SCREEN -->
   <section class="hero">
+    <div class="hero-bg-photo">
+      <img src="https://images.unsplash.com/photo-1542736667-069246bdbc6d?auto=format&fit=crop&w=1600&h=900&q=80"
+           alt="Gaming Setup — Respawn Trier" loading="eager" />
+    </div>
     <div class="boot-terminal">
       <span class="boot-line boot-line-1">&gt; LOADING RESPAWN.EXE...</span>
       <span class="boot-line boot-line-2">&gt; LOCATION: TRIER</span>

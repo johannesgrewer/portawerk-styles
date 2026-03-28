@@ -175,6 +175,8 @@ export const prerender = true;
       text-transform: uppercase; color: var(--amber);
     }
 
+    .img-wrap:hover img { transform: scale(1.05); }
+
     .mosaic {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -186,12 +188,13 @@ export const prerender = true;
     }
     .avatar-circle {
       width: 64px; height: 64px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'Nunito', sans-serif; font-weight: 800;
-      font-size: 1.1rem; color: #fff;
+      overflow: hidden; position: relative;
       transition: transform .2s;
     }
     .avatar-circle:hover { transform: scale(1.08); }
+    .avatar-circle img {
+      width: 100%; height: 100%; object-fit: cover;
+    }
     .avatar-name {
       font-size: .56rem; font-weight: 600; color: var(--dark);
       text-align: center; line-height: 1.2;
@@ -602,42 +605,58 @@ export const prerender = true;
 
     <div class="mosaic">
       <div class="avatar">
-        <div class="avatar-circle av-1">SK</div>
+        <div class="avatar-circle">
+          <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=128&h=128&q=80" alt="Sarah K." loading="lazy" />
+        </div>
         <div class="avatar-name">Sarah K.</div>
         <div class="avatar-role">Beratung</div>
       </div>
       <div class="avatar">
-        <div class="avatar-circle av-2">MT</div>
+        <div class="avatar-circle">
+          <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=128&h=128&q=80" alt="Marc T." loading="lazy" />
+        </div>
         <div class="avatar-name">Marc T.</div>
         <div class="avatar-role">Sozialarbeit</div>
       </div>
       <div class="avatar">
-        <div class="avatar-circle av-3">LM</div>
+        <div class="avatar-circle">
+          <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=128&h=128&q=80" alt="Lisa M." loading="lazy" />
+        </div>
         <div class="avatar-name">Lisa M.</div>
         <div class="avatar-role">Leitung</div>
       </div>
       <div class="avatar">
-        <div class="avatar-circle av-4">JB</div>
+        <div class="avatar-circle">
+          <img src="https://images.unsplash.com/photo-1507473885765-e6ed057ab3fe?auto=format&fit=crop&w=128&h=128&q=80" alt="Jonas B." loading="lazy" />
+        </div>
         <div class="avatar-name">Jonas B.</div>
         <div class="avatar-role">Jugendarbeit</div>
       </div>
       <div class="avatar">
-        <div class="avatar-circle av-5">AW</div>
+        <div class="avatar-circle">
+          <img src="https://images.unsplash.com/photo-1541518763669-27fef04b14ea?auto=format&fit=crop&w=128&h=128&q=80" alt="Anna W." loading="lazy" />
+        </div>
         <div class="avatar-name">Anna W.</div>
         <div class="avatar-role">Beratung</div>
       </div>
       <div class="avatar">
-        <div class="avatar-circle av-6">TR</div>
+        <div class="avatar-circle">
+          <img src="https://images.unsplash.com/photo-1521341057461-6eb5f40b07ab?auto=format&fit=crop&w=128&h=128&q=80" alt="Tom R." loading="lazy" />
+        </div>
         <div class="avatar-name">Tom R.</div>
         <div class="avatar-role">Kriseninterv.</div>
       </div>
       <div class="avatar">
-        <div class="avatar-circle av-7">KH</div>
+        <div class="avatar-circle">
+          <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=128&h=128&q=80" alt="Karin H." loading="lazy" />
+        </div>
         <div class="avatar-name">Karin H.</div>
         <div class="avatar-role">Familie</div>
       </div>
       <div class="avatar">
-        <div class="avatar-circle av-8">PL</div>
+        <div class="avatar-circle">
+          <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=128&h=128&q=80" alt="Paul L." loading="lazy" />
+        </div>
         <div class="avatar-name">Paul L.</div>
         <div class="avatar-role">Gruppen</div>
       </div>

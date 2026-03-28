@@ -264,9 +264,207 @@ export const prerender = true;
     .bottom-cell.highlight { background: #FF2D00; }
     .bottom-cell.highlight .bottom-cell-num,
     .bottom-cell.highlight .bottom-cell-label { color: #F0EDE8; }
+
+    /* Photo container */
+    .ph { position: relative; overflow: hidden; }
+    .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.55s ease; }
+    .ph:hover img { transform: scale(1.05); }
+
+    /* Page wrap */
+    .page-wrap { max-width: 1600px; margin-left: auto; margin-right: auto; }
+
+    /* Section 2: Portfolio */
+    .portfolio-section {
+      border-top: 3px solid #1A1A1A;
+    }
+    .section-header-bar {
+      display: flex;
+      align-items: stretch;
+      border-bottom: 2px solid #1A1A1A;
+    }
+    .section-header-num {
+      background: #FF2D00;
+      color: #F0EDE8;
+      padding: 1rem 1.5rem;
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      border-right: 2px solid #1A1A1A;
+      display: flex;
+      align-items: center;
+    }
+    .section-header-title {
+      padding: 1rem 1.5rem;
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(26,26,26,0.45);
+      display: flex;
+      align-items: center;
+      border-right: 2px solid #1A1A1A;
+      flex: 1;
+    }
+    .section-header-tag {
+      margin-left: auto;
+      padding: 1rem 1.5rem;
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(26,26,26,0.3);
+      display: flex;
+      align-items: center;
+      border-left: 2px solid #1A1A1A;
+    }
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .portfolio-card {
+      border-right: 2px solid #1A1A1A;
+      border-bottom: 2px solid #1A1A1A;
+      display: flex;
+      flex-direction: column;
+    }
+    .portfolio-card:nth-child(2n) { border-right: none; }
+    .portfolio-card:nth-last-child(-n+2) { border-bottom: none; }
+    .portfolio-card-photo {
+      position: relative;
+    }
+    .portfolio-card-body {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      border-top: 2px solid #1A1A1A;
+    }
+    .portfolio-card-label {
+      font-size: 0.48rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(26,26,26,0.35);
+    }
+    .portfolio-card-title {
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #1A1A1A;
+      text-transform: uppercase;
+    }
+    .portfolio-card-tags {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-top: 0.25rem;
+    }
+    .p-tag {
+      font-size: 0.45rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.6rem;
+      border: 2px solid #1A1A1A;
+      color: #1A1A1A;
+    }
+    .p-tag.red { background: #FF2D00; color: #F0EDE8; border-color: #FF2D00; }
+
+    /* Section 3: Kontakt + Prozess */
+    .contact-section-brut {
+      border-top: 3px solid #1A1A1A;
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .contact-left {
+      padding: 3rem;
+      border-right: 2px solid #1A1A1A;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    .contact-right {
+      display: flex;
+      flex-direction: column;
+    }
+    .brut-contact-label {
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(26,26,26,0.4);
+      margin-bottom: 0.75rem;
+    }
+    .brut-contact-value {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #1A1A1A;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+    }
+    .brut-contact-value.small {
+      font-size: 0.82rem;
+      font-weight: 300;
+      letter-spacing: 0.02em;
+      text-transform: none;
+    }
+    .availability-block {
+      background: #FF2D00;
+      padding: 1.5rem;
+    }
+    .avail-label {
+      font-size: 0.5rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(240,237,232,0.7);
+      margin-bottom: 0.5rem;
+    }
+    .avail-status {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #F0EDE8;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+    }
+    .process-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+    }
+    .process-item {
+      display: flex;
+      align-items: stretch;
+      border-bottom: 2px solid #1A1A1A;
+    }
+    .process-item:last-child { border-bottom: none; }
+    .process-num {
+      background: #1A1A1A;
+      color: #F0EDE8;
+      padding: 1rem 1.25rem;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      border-right: 2px solid #1A1A1A;
+      display: flex;
+      align-items: center;
+      min-width: 60px;
+    }
+    .process-text {
+      padding: 1rem 1.25rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: #1A1A1A;
+      display: flex;
+      align-items: center;
+    }
   </style>
 </head>
 <body>
+  <div class="page-wrap">
   <nav>
     <div class="nav-logo">BLOC</div>
     <ul class="nav-links">
@@ -343,5 +541,145 @@ export const prerender = true;
       </div>
     </div>
   </section>
+
+  <!-- SECTION 2: Portfolio -->
+  <section class="portfolio-section">
+    <div class="section-header-bar">
+      <div class="section-header-num">002</div>
+      <div class="section-header-title">Ausgewählte Projekte</div>
+      <div class="section-header-tag">2022 – 2025</div>
+    </div>
+    <div class="portfolio-grid">
+      <div class="portfolio-card">
+        <div class="portfolio-card-photo">
+          <div class="ph" style="height:280px;">
+            <img src="https://images.unsplash.com/photo-1471193945509-9ad0617afabf?auto=format&fit=crop&w=1200&h=800&q=80" alt="Brand Identity Projekt" loading="lazy"/>
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,26,26,0.5) 0%,transparent 60%);pointer-events:none;"></div>
+          </div>
+        </div>
+        <div class="portfolio-card-body">
+          <div class="portfolio-card-label">Corporate Identity · 2025</div>
+          <div class="portfolio-card-title">Weingut Mertes — Brand Relaunch</div>
+          <div class="portfolio-card-tags">
+            <span class="p-tag red">CI</span>
+            <span class="p-tag">Print</span>
+            <span class="p-tag">Packaging</span>
+          </div>
+        </div>
+      </div>
+      <div class="portfolio-card">
+        <div class="portfolio-card-photo">
+          <div class="ph" style="height:280px;">
+            <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&h=800&q=80" alt="Editorial Design Projekt" loading="lazy"/>
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,26,26,0.5) 0%,transparent 60%);pointer-events:none;"></div>
+          </div>
+        </div>
+        <div class="portfolio-card-body">
+          <div class="portfolio-card-label">Editorial Design · 2024</div>
+          <div class="portfolio-card-title">Trier Magazin — Jahresausgabe</div>
+          <div class="portfolio-card-tags">
+            <span class="p-tag red">Editorial</span>
+            <span class="p-tag">Print</span>
+            <span class="p-tag">Foto</span>
+          </div>
+        </div>
+      </div>
+      <div class="portfolio-card">
+        <div class="portfolio-card-photo">
+          <div class="ph" style="height:280px;">
+            <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&h=800&q=80" alt="Art Direction Projekt" loading="lazy"/>
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,26,26,0.5) 0%,transparent 60%);pointer-events:none;"></div>
+          </div>
+        </div>
+        <div class="portfolio-card-body">
+          <div class="portfolio-card-label">Art Direction · 2024</div>
+          <div class="portfolio-card-title">Architekturbüro Lenz — Visual System</div>
+          <div class="portfolio-card-tags">
+            <span class="p-tag red">Art Direction</span>
+            <span class="p-tag">Digital</span>
+          </div>
+        </div>
+      </div>
+      <div class="portfolio-card">
+        <div class="portfolio-card-photo">
+          <div class="ph" style="height:280px;">
+            <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=1200&h=800&q=80" alt="Motion Design Projekt" loading="lazy"/>
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,26,26,0.5) 0%,transparent 60%);pointer-events:none;"></div>
+          </div>
+        </div>
+        <div class="portfolio-card-body">
+          <div class="portfolio-card-label">Motion & Digital · 2023</div>
+          <div class="portfolio-card-title">Startup Klinix — Launch Campaign</div>
+          <div class="portfolio-card-tags">
+            <span class="p-tag red">Motion</span>
+            <span class="p-tag">Digital</span>
+            <span class="p-tag">Social</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: Kontakt + Prozess -->
+  <section class="contact-section-brut">
+    <div class="section-header-bar">
+      <div class="section-header-num">003</div>
+      <div class="section-header-title">Kontakt & Prozess</div>
+      <div class="section-header-tag">hello@bloc-studio.de</div>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-left">
+        <div>
+          <div class="brut-contact-label">Studio</div>
+          <div class="brut-contact-value">BLOC</div>
+        </div>
+        <div>
+          <div class="brut-contact-label">Standort</div>
+          <div class="brut-contact-value">Trier, DE</div>
+        </div>
+        <div>
+          <div class="brut-contact-label">Kontakt</div>
+          <div class="brut-contact-value small">hello@bloc-studio.de<br>+49 651 / 456 78 90</div>
+        </div>
+        <div>
+          <div class="brut-contact-label">Projektstart</div>
+          <div class="brut-contact-value small">Anfrage → Briefing → Angebot<br>Typisch 2–3 Wochen Vorlauf</div>
+        </div>
+        <div class="availability-block">
+          <div class="avail-label">Verfügbarkeit</div>
+          <div class="avail-status">Q2 2026 frei</div>
+        </div>
+      </div>
+      <div class="contact-right">
+        <div class="section-header-bar" style="border-left:none;">
+          <div class="section-header-title" style="border-right:none;">Der Prozess</div>
+        </div>
+        <ul class="process-list">
+          <li class="process-item">
+            <span class="process-num">01</span>
+            <span class="process-text">Anfrage per Mail — kurze Projektbeschreibung genügt</span>
+          </li>
+          <li class="process-item">
+            <span class="process-num">02</span>
+            <span class="process-text">Briefing-Call (30 Min) — Ziele, Zielgruppe, Budget</span>
+          </li>
+          <li class="process-item">
+            <span class="process-num">03</span>
+            <span class="process-text">Konzept & Angebot innerhalb von 5 Werktagen</span>
+          </li>
+          <li class="process-item">
+            <span class="process-num">04</span>
+            <span class="process-text">Produktion mit 2 Feedback-Runden inklusive</span>
+          </li>
+          <li class="process-item">
+            <span class="process-num">05</span>
+            <span class="process-text">Übergabe aller Dateien + Nutzungsrechte</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  </div><!-- /page-wrap -->
 </body>
 </html>

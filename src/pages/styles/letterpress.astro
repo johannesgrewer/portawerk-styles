@@ -85,6 +85,9 @@ export const prerender = true;
       z-index: 1;
       display: grid;
       grid-template-columns: 1fr 1fr;
+      max-width: 1600px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .hero-left {
@@ -204,6 +207,8 @@ export const prerender = true;
       padding: 7rem 4.5rem;
       position: relative; z-index: 1;
       border-top: 2px solid var(--ink);
+      max-width: 1600px;
+      margin: 0 auto;
     }
 
     .sec-header {
@@ -437,6 +442,8 @@ export const prerender = true;
       padding: 7rem 4.5rem;
       position: relative; z-index: 1;
       border-top: 2px solid var(--ink);
+      max-width: 1600px;
+      margin: 0 auto;
     }
 
     .ws-inner {
@@ -490,6 +497,39 @@ export const prerender = true;
     }
     .step-desc {
       font-size: 0.85rem; line-height: 1.7; color: var(--muted);
+    }
+
+    /* Process photo strip */
+    .process-photos {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      margin-top: 2.5rem;
+    }
+
+    .process-photo {
+      position: relative;
+      overflow: hidden;
+      height: 180px;
+    }
+
+    .process-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: sepia(0.15) contrast(1.05);
+      transition: transform 0.6s ease;
+    }
+
+    .process-photo:hover img {
+      transform: scale(1.04);
+    }
+
+    .process-photo::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(28,26,23,0.35) 0%, transparent 60%);
     }
 
     /* Right: Materials + Press info */
@@ -804,6 +844,23 @@ export const prerender = true;
               <div class="step-title">Veredeln — Finish & Versand</div>
               <div class="step-desc">Schneiden, Falzen, Verpacken. Jede Sendung wird handgeprüft, in Seidenpapier eingeschlagen und in stabilen Kartons versendet — weltweit.</div>
             </div>
+          </div>
+        </div>
+
+        <div class="process-photos">
+          <div class="process-photo">
+            <img
+              src="https://images.unsplash.com/photo-1504893524553-b855bce32c67?auto=format&fit=crop&w=600&h=360&q=80"
+              alt="Letterpress Presse in Betrieb"
+              loading="lazy"
+            />
+          </div>
+          <div class="process-photo">
+            <img
+              src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=600&h=360&q=80"
+              alt="Detailaufnahme Drucktype und Papier"
+              loading="lazy"
+            />
           </div>
         </div>
       </div>

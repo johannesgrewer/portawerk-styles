@@ -442,6 +442,10 @@ export const prerender = true;
       letter-spacing: 0.05em;
     }
 
+    /* ── PHOTO ── */
+    .img-wrap img { display: block; }
+    .img-wrap:hover img { transform: scale(1.05); }
+
     /* ── ANIMATIONS ── */
     /* Wine rows already have hover — add smooth left-border reveal */
     .wine-row::before {
@@ -525,7 +529,7 @@ export const prerender = true;
   </nav>
 
   <!-- HERO -->
-  <section class="hero">
+  <section class="hero" style="max-width:1600px;margin-left:auto;margin-right:auto;">
     <div class="hero-left">
       <p class="hero-eyebrow">Weinhandlung & Bar · Trier Innenstadt</p>
       <h1 class="hero-headline">
@@ -539,7 +543,14 @@ export const prerender = true;
       </div>
     </div>
 
-    <div class="hero-right">
+    <div class="hero-right" style="flex-direction:column;gap:1.5rem;">
+      <!-- Photo 1: wine cellar / bottles -->
+      <div class="img-wrap" style="position:relative;overflow:hidden;height:200px;border-radius:4px;width:100%;">
+        <img src="https://images.unsplash.com/photo-1567013127542-490d483063b2?auto=format&fit=crop&w=1200&h=800&q=80"
+             alt="Weinkeller — Domaine Lefèvre Trier" loading="lazy"
+             style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.55s ease;" />
+        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.5) 0%,transparent 60%);pointer-events:none;"></div>
+      </div>
       <div class="bottle-card">
         <span class="bottle-badge">Weinempfehlung</span>
         <div class="bottle-year">2021</div>
@@ -555,7 +566,14 @@ export const prerender = true;
   </section>
 
   <!-- SORTIMENT -->
-  <section class="sortiment-section">
+  <section class="sortiment-section" style="max-width:1600px;margin-left:auto;margin-right:auto;">
+    <!-- Photo 2: wine glass / tasting -->
+    <div class="img-wrap" style="position:relative;overflow:hidden;height:280px;border-radius:4px;margin-bottom:3.5rem;">
+      <img src="https://images.unsplash.com/photo-1559526324-593bc073d938?auto=format&fit=crop&w=1200&h=800&q=80"
+           alt="Weinverkostung — Sortiment Domaine Lefèvre" loading="lazy"
+           style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.55s ease;" />
+      <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.5) 0%,transparent 60%);pointer-events:none;"></div>
+    </div>
     <div class="section-intro">
       <div>
         <p class="section-eyebrow">Aktuell im Angebot</p>
@@ -605,8 +623,15 @@ export const prerender = true;
   </section>
 
   <!-- TASTING -->
-  <section class="tasting-section">
+  <section class="tasting-section" style="max-width:1600px;margin-left:auto;margin-right:auto;">
     <div class="tasting-aside">
+      <!-- Photo 3: vineyard -->
+      <div class="img-wrap" style="position:relative;overflow:hidden;height:220px;border-radius:4px;margin-bottom:2rem;">
+        <img src="https://images.unsplash.com/photo-1474722883778-792e7990302f?auto=format&fit=crop&w=1200&h=800&q=80"
+             alt="Weingut — Erzeuger und Weinberge" loading="lazy"
+             style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.55s ease;" />
+        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.4) 0%,transparent 60%);pointer-events:none;"></div>
+      </div>
       <p class="section-eyebrow">Beratung & Erlebnis</p>
       <blockquote class="tasting-pull">"Wein zu verstehen bedeutet nicht, ihn zu erklären — es bedeutet, ihn zu erleben."</blockquote>
       <p class="tasting-sub">Wir bieten persönliche Weinberatung, kuratierte Verkostungsabende und maßgeschneiderte Weinpakete für besondere Anlässe. Kein Fachvokabular, keine Scheu — nur gute Weine in guter Gesellschaft.</p>

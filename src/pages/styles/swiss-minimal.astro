@@ -225,6 +225,183 @@ export const prerender = true;
       padding-bottom: 2px;
     }
 
+    /* ── IMG-WRAP ── */
+    .img-wrap { position: relative; overflow: hidden; }
+    .img-wrap img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.55s ease; }
+    .img-wrap:hover img { transform: scale(1.05); }
+    .img-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.45) 0%, transparent 60%); pointer-events: none; }
+
+    /* ── SECTION 2: Arbeiten ── */
+    .section-work {
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 5rem 3rem 4rem;
+      border-top: 1px solid #1A1A1A;
+      position: relative;
+      z-index: 1;
+      background: #FFFFFF;
+    }
+    .work-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: end;
+      margin-bottom: 3rem;
+      border-bottom: 1px solid #1A1A1A;
+      padding-bottom: 2rem;
+    }
+    .work-header h2 {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #E8210A;
+    }
+    .work-header p {
+      font-size: 0.75rem;
+      font-weight: 300;
+      color: #555;
+      text-align: right;
+      line-height: 1.6;
+    }
+    .work-list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border: 1px solid #1A1A1A;
+    }
+    .work-item {
+      padding: 0;
+      border-right: 1px solid #1A1A1A;
+      position: relative;
+      overflow: hidden;
+    }
+    .work-item:last-child { border-right: none; }
+    .work-item-photo {
+      display: block;
+    }
+    .work-item-meta {
+      padding: 1.25rem 1.5rem;
+      border-top: 1px solid #1A1A1A;
+    }
+    .work-item-num {
+      font-size: 0.5rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #E8210A;
+      margin-bottom: 0.4rem;
+    }
+    .work-item-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #1A1A1A;
+      margin-bottom: 0.25rem;
+    }
+    .work-item-type {
+      font-size: 0.6rem;
+      font-weight: 300;
+      color: #888;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 900px) {
+      .work-list { grid-template-columns: 1fr; }
+      .work-item { border-right: none; border-bottom: 1px solid #1A1A1A; }
+      .work-header { grid-template-columns: 1fr; gap: 1rem; }
+      .work-header p { text-align: left; }
+      .section-work { padding: 4rem 1.5rem; }
+    }
+
+    /* ── SECTION 3: Kontakt ── */
+    .section-contact {
+      max-width: 1600px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-top: 1px solid #1A1A1A;
+      position: relative;
+      z-index: 1;
+      background: #FFFFFF;
+    }
+    .contact-left {
+      padding: 5rem 3rem;
+      border-right: 1px solid #1A1A1A;
+    }
+    .contact-left h2 {
+      font-size: clamp(2.5rem, 5vw, 5rem);
+      font-weight: 900;
+      line-height: 0.9;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+      color: #1A1A1A;
+      margin-bottom: 3rem;
+    }
+    .contact-left h2 span { color: #E8210A; }
+    .contact-details {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    .contact-detail-item {
+      border-left: 3px solid #E8210A;
+      padding-left: 1.5rem;
+    }
+    .contact-detail-item .cd-label {
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 0.3rem;
+    }
+    .contact-detail-item .cd-value {
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: #1A1A1A;
+    }
+    .contact-right {
+      padding: 5rem 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .contact-right p {
+      font-size: 0.8rem;
+      font-weight: 300;
+      line-height: 1.8;
+      color: #555;
+      max-width: 34ch;
+      margin-bottom: 3rem;
+    }
+    .contact-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: #E8210A;
+      color: #FFFFFF;
+      text-decoration: none;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 1rem 2rem;
+      align-self: flex-start;
+      transition: background 0.2s;
+    }
+    .contact-cta:hover { background: #1A1A1A; }
+    .contact-photo-wrap {
+      margin-top: auto;
+    }
+
+    @media (max-width: 900px) {
+      .section-contact { grid-template-columns: 1fr; }
+      .contact-left { border-right: none; border-bottom: 1px solid #1A1A1A; padding: 4rem 1.5rem; }
+      .contact-right { padding: 4rem 1.5rem; }
+    }
+
     /* Bottom bar */
     .bottom-bar {
       position: fixed;
@@ -262,7 +439,7 @@ export const prerender = true;
     </ul>
   </nav>
 
-  <section class="hero">
+  <section class="hero" style="max-width:1600px;margin-left:auto;margin-right:auto;">
     <div class="hero-left">
       <div class="hero-label">Visuelle Kommunikation — Trier</div>
 
@@ -310,6 +487,82 @@ export const prerender = true;
         <a href="#" class="cta-btn">Projekt anfragen →</a>
         <a href="#" class="cta-link">Arbeiten ansehen</a>
       </div>
+    </div>
+  </section>
+
+  <!-- SECTION 2: Arbeiten -->
+  <section class="section-work">
+    <div class="work-header">
+      <h2>Ausgewählte Arbeiten</h2>
+      <p>Corporate Identity · Editorial · Signage<br>Ausgewählte Projekte 2021–2024</p>
+    </div>
+    <div class="work-list">
+
+      <div class="work-item">
+        <div class="img-wrap work-item-photo" style="height:260px;">
+          <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=800&h=600&q=80" alt="Corporate Identity Projekt" loading="lazy" />
+          <div class="img-overlay"></div>
+        </div>
+        <div class="work-item-meta">
+          <div class="work-item-num">01</div>
+          <div class="work-item-title">Haus Meier AG</div>
+          <div class="work-item-type">Corporate Identity</div>
+        </div>
+      </div>
+
+      <div class="work-item">
+        <div class="img-wrap work-item-photo" style="height:260px;">
+          <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=800&h=600&q=80" alt="Editorial Design Projekt" loading="lazy" />
+          <div class="img-overlay"></div>
+        </div>
+        <div class="work-item-meta">
+          <div class="work-item-num">02</div>
+          <div class="work-item-title">Forum Trier</div>
+          <div class="work-item-type">Editorial Design</div>
+        </div>
+      </div>
+
+      <div class="work-item">
+        <div class="img-wrap work-item-photo" style="height:260px;">
+          <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=800&h=600&q=80" alt="Signage Projekt" loading="lazy" />
+          <div class="img-overlay"></div>
+        </div>
+        <div class="work-item-meta">
+          <div class="work-item-num">03</div>
+          <div class="work-item-title">Mosella Hotel</div>
+          <div class="work-item-type">Signage & Leitsystem</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECTION 3: Kontakt -->
+  <section class="section-contact">
+    <div class="contact-left">
+      <h2>Projekt<br><span>anfragen.</span></h2>
+      <div class="contact-details">
+        <div class="contact-detail-item">
+          <div class="cd-label">Standort</div>
+          <div class="cd-value">Trier, Rheinland-Pfalz</div>
+        </div>
+        <div class="contact-detail-item">
+          <div class="cd-label">E-Mail</div>
+          <div class="cd-value">hello@bueroviertrier.de</div>
+        </div>
+        <div class="contact-detail-item">
+          <div class="cd-label">Telefon</div>
+          <div class="cd-value">+49 651 123 456</div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-right">
+      <p>
+        Gutes Design beginnt mit einem Gespräch.
+        Schreib uns — wir melden uns innerhalb von 24 Stunden
+        und besprechen, was dein Projekt braucht.
+      </p>
+      <a href="#" class="contact-cta">Gespräch anfragen →</a>
     </div>
   </section>
 

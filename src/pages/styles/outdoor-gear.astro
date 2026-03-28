@@ -172,6 +172,7 @@ export const prerender = true;
       cursor: default;
     }
     .gear-item:hover { border-top-color: var(--orange); }
+    .img-wrap:hover img { transform: scale(1.05); }
     .gi-icon { font-size: 1.1rem; }
     .gi-name {
       font-family: 'Montserrat', sans-serif;
@@ -443,7 +444,7 @@ export const prerender = true;
     <a href="#" class="nav-shop">Shop</a>
   </nav>
 
-  <section class="hero">
+  <section class="hero" style="max-width:1600px;margin-left:auto;margin-right:auto;">
     <div class="hero-left">
       <div class="location-tag">
         <span class="lt-line"></span>
@@ -467,22 +468,42 @@ export const prerender = true;
 
       <div class="gear-list">
         <div class="gear-item">
-          <span class="gi-icon">🎒</span>
+          <div class="img-wrap" style="position:relative;overflow:hidden;height:120px;border-radius:4px;margin-bottom:0.5rem;">
+            <img src="https://images.unsplash.com/photo-1504893524553-b855bce32c67?auto=format&fit=crop&w=400&h=300&q=80"
+                 alt="Rucksack auf Bergtour" loading="lazy"
+                 style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.55s ease;" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.4) 0%,transparent 55%);pointer-events:none;"></div>
+          </div>
           <div class="gi-name">Rucksäcke</div>
           <div class="gi-count">64 Modelle ab 28L</div>
         </div>
         <div class="gear-item">
-          <span class="gi-icon">🥾</span>
+          <div class="img-wrap" style="position:relative;overflow:hidden;height:120px;border-radius:4px;margin-bottom:0.5rem;">
+            <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=400&h=300&q=80"
+                 alt="Wanderschuhe auf Felsweg" loading="lazy"
+                 style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.55s ease;" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.4) 0%,transparent 55%);pointer-events:none;"></div>
+          </div>
           <div class="gi-name">Schuhe</div>
           <div class="gi-count">Wander- & Kletter-</div>
         </div>
         <div class="gear-item">
-          <span class="gi-icon">⛺</span>
+          <div class="img-wrap" style="position:relative;overflow:hidden;height:120px;border-radius:4px;margin-bottom:0.5rem;">
+            <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=400&h=300&q=80"
+                 alt="Zelt in Berglandschaft" loading="lazy"
+                 style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.55s ease;" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.4) 0%,transparent 55%);pointer-events:none;"></div>
+          </div>
           <div class="gi-name">Zelte & Biwak</div>
           <div class="gi-count">3-Jahreszeiten & Winter</div>
         </div>
         <div class="gear-item">
-          <span class="gi-icon">🧭</span>
+          <div class="img-wrap" style="position:relative;overflow:hidden;height:120px;border-radius:4px;margin-bottom:0.5rem;">
+            <img src="https://images.unsplash.com/photo-1483412033650-1015ddeb83d1?auto=format&fit=crop&w=400&h=300&q=80"
+                 alt="Topografische Karte und Kompass" loading="lazy"
+                 style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.55s ease;" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.4) 0%,transparent 55%);pointer-events:none;"></div>
+          </div>
           <div class="gi-name">Navigation</div>
           <div class="gi-count">Karten, GPS, Kompass</div>
         </div>

@@ -263,6 +263,156 @@ export const prerender = true;
     @keyframes fadeIn {
       to { opacity: 1; }
     }
+
+    /* Photo container */
+    .ph { position: relative; overflow: hidden; }
+    .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.55s ease; }
+    .ph:hover img { transform: scale(1.05); }
+
+    /* Produkte section */
+    .section-produkte {
+      padding: 7rem 3rem;
+      background: #F5EDE0;
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+    .s-wave {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .s-wave-line { width: 40px; height: 1px; background: #D4B483; }
+    .s-heading {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      color: #7B4F2E;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.5rem;
+    }
+    .s-sub {
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      font-size: 0.78rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #D4B483;
+      margin-bottom: 3.5rem;
+    }
+    .produkte-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+    .prod-card {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      background: #FBF6EE;
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(123,79,46,0.07);
+    }
+    .prod-card-body {
+      padding: 1.25rem 1.25rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .prod-card-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: #3D2B18;
+    }
+    .prod-card-desc {
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      font-size: 0.75rem;
+      line-height: 1.7;
+      color: rgba(61,43,24,0.6);
+    }
+    .prod-card-price {
+      font-family: 'Lato', sans-serif;
+      font-weight: 400;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: #D4B483;
+      margin-top: 0.25rem;
+    }
+
+    /* Öffnungszeiten & Kontakt section */
+    .section-kontakt {
+      padding: 7rem 3rem;
+      background: #3D2B18;
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+    .kontakt-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+    .kontakt-heading {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: #FBF6EE;
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
+    }
+    .kontakt-body {
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      font-size: 0.82rem;
+      line-height: 1.8;
+      color: rgba(251,246,238,0.55);
+      max-width: 38ch;
+      margin-bottom: 2rem;
+    }
+    .kontakt-cta {
+      display: inline-block;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #3D2B18;
+      background: #D4B483;
+      text-decoration: none;
+      padding: 0.8rem 2rem;
+      transition: background 0.3s;
+    }
+    .kontakt-cta:hover { background: #FBF6EE; }
+    .hours-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.85rem 0;
+      border-bottom: 1px solid rgba(251,246,238,0.08);
+      font-family: 'Lato', sans-serif;
+      font-size: 0.8rem;
+    }
+    .hours-day { font-weight: 300; color: rgba(251,246,238,0.45); }
+    .hours-time { font-weight: 400; color: rgba(251,246,238,0.8); }
+    .hours-closed { color: rgba(251,246,238,0.25); }
+    .kontakt-address {
+      margin-top: 2rem;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 300;
+      color: rgba(251,246,238,0.35);
+      line-height: 1.7;
+      letter-spacing: 0.06em;
+    }
   </style>
 </head>
 <body>
@@ -320,5 +470,93 @@ export const prerender = true;
     </div>
 
   </section>
+
+  <!-- SECTION 2: Produkte -->
+  <div style="background:#F5EDE0;">
+    <section class="section-produkte">
+      <div class="s-wave">
+        <div class="s-wave-line"></div>
+        <svg width="32" height="10" viewBox="0 0 32 10" fill="none"><path d="M0 5 C4 1, 7 9, 11 5 S18 1, 21 5 S28 9, 32 5" stroke="#D4B483" stroke-width="1.2" fill="none" stroke-linecap="round"/></svg>
+        <div class="s-wave-line"></div>
+      </div>
+      <h2 class="s-heading">Aus unserer Backstube</h2>
+      <p class="s-sub">Täglich frisch · Handgemacht · Ohne Kompromisse</p>
+      <div class="produkte-grid">
+        <div class="prod-card">
+          <div class="ph" style="height:260px;">
+            <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&h=600&q=80" alt="Frische Backwaren" loading="lazy" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(61,43,24,0.35) 0%,transparent 60%);pointer-events:none;"></div>
+          </div>
+          <div class="prod-card-body">
+            <div class="prod-card-title">Sauerteigbrot</div>
+            <div class="prod-card-desc">48 Stunden Teigruhe, Dinkel & Roggen aus der Region. Knusprige Kruste, saftige Krume.</div>
+            <div class="prod-card-price">ab 4,80 €</div>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="ph" style="height:260px;">
+            <img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&h=600&q=80" alt="Croissants und Gebäck" loading="lazy" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(61,43,24,0.35) 0%,transparent 60%);pointer-events:none;"></div>
+          </div>
+          <div class="prod-card-body">
+            <div class="prod-card-title">Croissants & Plunder</div>
+            <div class="prod-card-desc">Butterblätterteig nach französischer Art, täglich frisch. Natur, Mandel, Schokolade.</div>
+            <div class="prod-card-price">ab 2,20 €</div>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="ph" style="height:260px;">
+            <img src="https://images.unsplash.com/photo-1601924994987-69e26d50dc26?auto=format&fit=crop&w=800&h=600&q=80" alt="Café Spezialitäten" loading="lazy" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(61,43,24,0.35) 0%,transparent 60%);pointer-events:none;"></div>
+          </div>
+          <div class="prod-card-body">
+            <div class="prod-card-title">Café & Kuchen</div>
+            <div class="prod-card-desc">Saisonale Tortenspezialitäten, hausgemachte Marmeladen und Spezialitätenkaffee aus der Moselregion.</div>
+            <div class="prod-card-price">ab 3,50 €</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- SECTION 3: Öffnungszeiten & Kontakt -->
+  <div style="background:#3D2B18;">
+    <section class="section-kontakt">
+      <div class="kontakt-inner">
+        <div>
+          <h2 class="kontakt-heading">Wir freuen uns<br>auf deinen Besuch.</h2>
+          <p class="kontakt-body">
+            Kein Lärm, keine Hektik. Nur frisches Brot, guter Kaffee
+            und ein Stuhl mit Aussicht auf die Trierer Altstadt.
+            Bring Zeit mit — oder nicht. Auch To-go ist herzlich willkommen.
+          </p>
+          <a href="#" class="kontakt-cta">Anfahrt & Karte →</a>
+          <div class="kontakt-address">
+            Simeonstraße 28 · 54290 Trier<br>
+            0651 / 284 19 63 · hallo@brotkrume-trier.de
+          </div>
+        </div>
+        <div class="hours-list">
+          <div class="hours-row">
+            <span class="hours-day">Dienstag – Freitag</span>
+            <span class="hours-time">7:00 – 18:00</span>
+          </div>
+          <div class="hours-row">
+            <span class="hours-day">Samstag</span>
+            <span class="hours-time">7:00 – 14:00</span>
+          </div>
+          <div class="hours-row">
+            <span class="hours-day">Sonntag</span>
+            <span class="hours-time">8:00 – 13:00</span>
+          </div>
+          <div class="hours-row">
+            <span class="hours-day">Montag</span>
+            <span class="hours-closed">Ruhetag</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
 </body>
 </html>

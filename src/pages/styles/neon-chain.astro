@@ -314,6 +314,242 @@ export const prerender = true;
       margin: 0 -2px;
     }
     .chain-link:nth-child(even) { transform: rotate(90deg); }
+
+    /* Photo container */
+    .ph { position:relative; overflow:hidden; }
+    .ph img { position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.55s ease; }
+    .ph:hover img { transform: scale(1.05); }
+
+    /* Styles gallery section */
+    .styles-section {
+      background: var(--mid);
+      padding: 6rem 0;
+      position: relative;
+      z-index: 1;
+    }
+    .styles-inner {
+      max-width: 1600px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0 4rem;
+    }
+    .styles-header {
+      margin-bottom: 3rem;
+    }
+    .styles-eyebrow {
+      font-size: 0.55rem;
+      font-weight: 400;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      text-shadow: 0 0 8px rgba(0,245,255,0.4);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .styles-eyebrow::before {
+      content: '';
+      display: block;
+      width: 1.5rem;
+      height: 1px;
+      background: var(--cyan);
+      box-shadow: 0 0 6px rgba(0,245,255,0.8);
+    }
+    .styles-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 6vw, 5rem);
+      letter-spacing: 0.05em;
+      color: var(--text);
+      line-height: 0.95;
+    }
+    .styles-title .red {
+      color: var(--red);
+      text-shadow: 0 0 20px rgba(255,46,99,0.6);
+    }
+    .styles-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1px;
+      background: rgba(0,245,255,0.08);
+    }
+    .style-card {
+      background: var(--bg);
+      padding: 0;
+      position: relative;
+      cursor: pointer;
+    }
+    .style-card-body {
+      padding: 1.25rem 1.5rem 1.5rem;
+    }
+    .sc-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      color: rgba(0,245,255,0.25);
+      margin-bottom: 0.4rem;
+    }
+    .sc-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 0.06em;
+      color: var(--text);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+    .sc-desc {
+      font-size: 0.72rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.3);
+      line-height: 1.6;
+    }
+    .sc-tags {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+      margin-top: 0.75rem;
+    }
+    .sc-tag {
+      font-size: 0.52rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.6rem;
+      border: 1px solid rgba(0,245,255,0.2);
+      color: rgba(0,245,255,0.5);
+    }
+
+    /* Artists section */
+    .artists-section {
+      background: var(--bg);
+      padding: 6rem 0;
+      position: relative;
+      z-index: 1;
+    }
+    .artists-inner {
+      max-width: 1600px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0 4rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    .artists-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    .artists-eyebrow {
+      font-size: 0.55rem;
+      font-weight: 400;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--red);
+      text-shadow: 0 0 8px rgba(255,46,99,0.4);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .artists-eyebrow::before {
+      content: '';
+      display: block;
+      width: 1.5rem;
+      height: 1px;
+      background: var(--red);
+    }
+    .artists-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      letter-spacing: 0.03em;
+      color: var(--text);
+      line-height: 0.9;
+    }
+    .artists-title .cyan {
+      color: var(--cyan);
+      text-shadow: 0 0 20px rgba(0,245,255,0.6);
+    }
+    .artists-body {
+      font-size: 0.8rem;
+      font-weight: 300;
+      line-height: 1.85;
+      color: rgba(255,255,255,0.35);
+      max-width: 38ch;
+    }
+    .artist-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border-top: 1px solid rgba(0,245,255,0.1);
+    }
+    .artist-row {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 1.25rem;
+      align-items: center;
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(0,245,255,0.06);
+      cursor: default;
+      transition: background 0.15s;
+    }
+    .artist-row:hover { background: rgba(0,245,255,0.03); }
+    .ar-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      color: rgba(0,245,255,0.2);
+      width: 1.5rem;
+    }
+    .ar-info {}
+    .ar-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.06em;
+      color: var(--text);
+    }
+    .ar-spec {
+      font-size: 0.65rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.3);
+      margin-top: 0.1rem;
+    }
+    .ar-years {
+      font-size: 0.6rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      color: rgba(0,245,255,0.4);
+    }
+    .artists-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: var(--cyan);
+      color: var(--bg);
+      text-decoration: none;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.12em;
+      padding: 0.75rem 2rem;
+      box-shadow: 0 0 24px rgba(0,245,255,0.25);
+      transition: box-shadow 0.2s;
+      width: fit-content;
+    }
+    .artists-cta:hover { box-shadow: 0 0 40px rgba(0,245,255,0.5); }
+    .artists-photos {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+    }
+
+    /* Large screen fix */
+    @media (min-width: 1600px) {
+      .hero {
+        max-width: 1600px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
   </style>
 </head>
 <body>
@@ -389,5 +625,129 @@ export const prerender = true;
     <div class="chain-link"></div><div class="chain-link"></div>
     <div class="chain-link"></div>
   </div>
+
+  <!-- STYLES GALLERY SECTION -->
+  <section class="styles-section">
+    <div class="styles-inner">
+      <div class="styles-header">
+        <div class="styles-eyebrow">Unsere Stile</div>
+        <h2 class="styles-title">Dein Style.<br><span class="red">Dein Skin.</span></h2>
+      </div>
+      <div class="styles-grid">
+        <div class="style-card">
+          <div class="ph" style="height:240px;">
+            <img src="https://images.unsplash.com/photo-1542736667-069246bdbc6d?auto=format&fit=crop&w=1200&h=800&q=80" alt="Blackwork Tattoo" loading="lazy" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.7) 0%,transparent 60%);pointer-events:none;"></div>
+          </div>
+          <div class="style-card-body">
+            <div class="sc-num">01</div>
+            <div class="sc-name">Blackwork</div>
+            <div class="sc-desc">Starke Kontraste, klare Formen. Kein Graubereich — nur Entscheidungen.</div>
+            <div class="sc-tags">
+              <span class="sc-tag">Bold</span>
+              <span class="sc-tag">Geometric</span>
+            </div>
+          </div>
+        </div>
+        <div class="style-card">
+          <div class="ph" style="height:240px;">
+            <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=1200&h=800&q=80" alt="Fine Line Tattoo" loading="lazy" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.7) 0%,transparent 60%);pointer-events:none;"></div>
+          </div>
+          <div class="style-card-body">
+            <div class="sc-num">02</div>
+            <div class="sc-name">Fine Line</div>
+            <div class="sc-desc">Präzision auf der Haut. Jede Linie hat ihren Grund — kein Strich zu viel.</div>
+            <div class="sc-tags">
+              <span class="sc-tag">Delicate</span>
+              <span class="sc-tag">Minimal</span>
+            </div>
+          </div>
+        </div>
+        <div class="style-card">
+          <div class="ph" style="height:240px;">
+            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1200&h=800&q=80" alt="Japanese Traditional Tattoo" loading="lazy" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.7) 0%,transparent 60%);pointer-events:none;"></div>
+          </div>
+          <div class="style-card-body">
+            <div class="sc-num">03</div>
+            <div class="sc-name">Japanese</div>
+            <div class="sc-desc">Tradition, neu interpretiert. Drachen, Wellen, Blüten — mit Respekt vor dem Original.</div>
+            <div class="sc-tags">
+              <span class="sc-tag">Traditional</span>
+              <span class="sc-tag">Color</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARTISTS SECTION -->
+  <section class="artists-section">
+    <div class="artists-inner">
+      <div class="artists-text">
+        <div class="artists-eyebrow">Das Team</div>
+        <h2 class="artists-title">4 Artists.<br><span class="cyan">1 Anspruch.</span></h2>
+        <p class="artists-body">
+          Jeder bei Chain Ink hat seinen eigenen Stil —
+          aber alle teilen dieselbe Überzeugung: Tattoos
+          sind keine Dekoration. Sie sind Entscheidungen.
+        </p>
+        <div class="artist-list">
+          <div class="artist-row">
+            <span class="ar-num">01</span>
+            <div class="ar-info">
+              <div class="ar-name">Kai Brenner</div>
+              <div class="ar-spec">Blackwork · Geometric · Custom</div>
+            </div>
+            <span class="ar-years">8 Jahre</span>
+          </div>
+          <div class="artist-row">
+            <span class="ar-num">02</span>
+            <div class="ar-info">
+              <div class="ar-name">Mia Voss</div>
+              <div class="ar-spec">Fine Line · Botanical · Portrait</div>
+            </div>
+            <span class="ar-years">5 Jahre</span>
+          </div>
+          <div class="artist-row">
+            <span class="ar-num">03</span>
+            <div class="ar-info">
+              <div class="ar-name">Tariq El-Amin</div>
+              <div class="ar-spec">Japanese · Neo-Trad · Color</div>
+            </div>
+            <span class="ar-years">11 Jahre</span>
+          </div>
+          <div class="artist-row">
+            <span class="ar-num">04</span>
+            <div class="ar-info">
+              <div class="ar-name">Lena Struck</div>
+              <div class="ar-spec">Geometric · Ornamental · Dotwork</div>
+            </div>
+            <span class="ar-years">6 Jahre</span>
+          </div>
+        </div>
+        <a href="#" class="artists-cta">Session buchen →</a>
+      </div>
+      <div class="artists-photos">
+        <div class="ph" style="height:500px;">
+          <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&h=1000&q=80" alt="Tattoo Artist bei der Arbeit" loading="lazy" />
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.5) 0%,transparent 50%);pointer-events:none;"></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:1px;margin-top:2rem;">
+          <div class="ph" style="height:245px;">
+            <img src="https://images.unsplash.com/photo-1541518763669-27fef04b14ea?auto=format&fit=crop&w=800&h=600&q=80" alt="Tattoo Studio Atmosphäre" loading="lazy" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.5) 0%,transparent 50%);pointer-events:none;"></div>
+          </div>
+          <div class="ph" style="height:245px;">
+            <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=800&h=600&q=80" alt="Custom Tattoo Design" loading="lazy" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.5) 0%,transparent 50%);pointer-events:none;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </body>
 </html>

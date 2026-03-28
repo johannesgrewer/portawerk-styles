@@ -277,9 +277,167 @@ export const prerender = true;
     .fan-bar:nth-child(7)  { height: 30px; }
     .fan-bar:nth-child(8)  { height: 24px; }
     .fan-bar:nth-child(9)  { height: 16px; }
+
+    /* Photo container */
+    .ph { position: relative; overflow: hidden; }
+    .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.55s ease; }
+    .ph:hover img { transform: scale(1.05); }
+
+    /* Page wrap */
+    .page-wrap { max-width: 1600px; margin-left: auto; margin-right: auto; }
+
+    /* Section 2: Eventräume */
+    .rooms-section {
+      position: relative;
+      z-index: 1;
+      padding: 7rem 4rem;
+      border-top: 1px solid rgba(184,150,62,0.15);
+    }
+    .ad-sec-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+    .ad-orn-line { width: 40px; height: 1px; background: var(--gold); opacity: 0.4; }
+    .ad-orn-text {
+      font-size: 0.5rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: rgba(184,150,62,0.6);
+    }
+    .ad-sec-headline {
+      font-family: 'Cinzel Decorative', serif;
+      font-weight: 400;
+      font-size: clamp(1.8rem, 3.5vw, 3rem);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ivory);
+      margin-bottom: 1rem;
+    }
+    .ad-sec-headline .gold { color: var(--gold); }
+    .ad-sec-sub {
+      font-size: 0.82rem;
+      font-style: italic;
+      line-height: 1.8;
+      color: rgba(245,237,208,0.45);
+      max-width: 55ch;
+      margin-bottom: 4rem;
+    }
+    .rooms-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(184,150,62,0.15);
+    }
+    .room-card {
+      background: var(--mid);
+      position: relative;
+    }
+    .room-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(14,11,6,0.85) 0%, rgba(14,11,6,0.2) 50%, transparent 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+    .room-meta {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 1.75rem;
+      z-index: 2;
+    }
+    .room-capacity {
+      font-size: 0.48rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(184,150,62,0.65);
+      margin-bottom: 0.4rem;
+    }
+    .room-name {
+      font-family: 'Cinzel Decorative', serif;
+      font-weight: 400;
+      font-size: 1.1rem;
+      color: var(--ivory);
+      letter-spacing: 0.08em;
+    }
+
+    /* Section 3: Kontakt + Reservierung */
+    .contact-section {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-top: 1px solid rgba(184,150,62,0.15);
+    }
+    .contact-photo-col { position: relative; }
+    .contact-content-col {
+      padding: 6rem 4rem;
+      background: var(--mid);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 2.5rem;
+    }
+    .contact-deco {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .contact-deco .orn-line { width: 40px; height: 1px; background: var(--gold); opacity: 0.4; }
+    .contact-deco .orn-chevron { font-size: 0.6rem; color: var(--gold); opacity: 0.5; }
+    .contact-headline {
+      font-family: 'Cinzel Decorative', serif;
+      font-weight: 400;
+      font-size: clamp(1.5rem, 3vw, 2.5rem);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ivory);
+      line-height: 1.3;
+    }
+    .contact-headline .gold { color: var(--gold); }
+    .contact-details {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .contact-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(184,150,62,0.08);
+    }
+    .contact-row:last-child { border-bottom: none; }
+    .c-label {
+      font-size: 0.47rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(184,150,62,0.5);
+    }
+    .c-value {
+      font-size: 0.85rem;
+      font-style: italic;
+      color: rgba(245,237,208,0.65);
+    }
+    .reserve-btn {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 0.5rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--dark);
+      background: var(--gold);
+      text-decoration: none;
+      padding: 1.1rem 2.5rem;
+      border: 1px solid var(--gold);
+      align-self: flex-start;
+      transition: background 0.3s, color 0.3s;
+    }
+    .reserve-btn:hover { background: transparent; color: var(--gold); }
   </style>
 </head>
 <body>
+  <div class="page-wrap">
   <nav>
     <div class="nav-logo">Palais Sieben</div>
     <ul class="nav-links">
@@ -347,6 +505,95 @@ export const prerender = true;
       </div>
     </div>
   </section>
+
+  <!-- SECTION 2: Eventräume mit Fotos -->
+  <section class="rooms-section">
+    <div class="ad-sec-eyebrow">
+      <div class="ad-orn-line"></div>
+      <span class="ad-orn-text">II — Die Räume</span>
+      <div class="ad-orn-line"></div>
+    </div>
+    <h2 class="ad-sec-headline"><span class="gold">Sieben</span> Räume.<br>Eine Vision.</h2>
+    <p class="ad-sec-sub">
+      Vom intimen Salon für zwölf Gäste bis zum großen Ballsaal für vierhundertfünfzig —
+      jeder Raum trägt die Handschrift des Art Déco und die Stille von hundert Jahren Geschichte.
+    </p>
+    <div class="rooms-grid">
+      <div class="room-card">
+        <div class="ph" style="height:360px;">
+          <img src="https://images.unsplash.com/photo-1609501676725-7186f017a4b7?auto=format&fit=crop&w=1200&h=800&q=80" alt="Der Ballsaal" loading="lazy"/>
+        </div>
+        <div class="room-overlay"></div>
+        <div class="room-meta">
+          <div class="room-capacity">Bis 450 Gäste</div>
+          <div class="room-name">Der Ballsaal</div>
+        </div>
+      </div>
+      <div class="room-card">
+        <div class="ph" style="height:360px;">
+          <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=1200&h=800&q=80" alt="Der Spiegelsalon" loading="lazy"/>
+        </div>
+        <div class="room-overlay"></div>
+        <div class="room-meta">
+          <div class="room-capacity">Bis 80 Gäste</div>
+          <div class="room-name">Der Spiegelsalon</div>
+        </div>
+      </div>
+      <div class="room-card">
+        <div class="ph" style="height:360px;">
+          <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1200&h=800&q=80" alt="Die Bibliothek" loading="lazy"/>
+        </div>
+        <div class="room-overlay"></div>
+        <div class="room-meta">
+          <div class="room-capacity">Bis 30 Gäste</div>
+          <div class="room-name">Die Bibliothek</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: Kontakt + Reservierung -->
+  <section class="contact-section">
+    <div class="contact-photo-col">
+      <div class="ph" style="height:100%;min-height:560px;">
+        <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1200&h=1600&q=80" alt="Palais Sieben Abend" loading="lazy"/>
+        <div style="position:absolute;inset:0;background:linear-gradient(to right,transparent 50%,rgba(26,18,8,0.95) 100%);pointer-events:none;"></div>
+      </div>
+    </div>
+    <div class="contact-content-col">
+      <div class="contact-deco">
+        <div class="orn-line"></div>
+        <span class="orn-chevron">◆</span>
+        <div class="orn-line"></div>
+      </div>
+      <h2 class="contact-headline">Ihr <span class="gold">Anlass</span><br>verdient mehr.</h2>
+      <div class="contact-details">
+        <div class="contact-row">
+          <span class="c-label">Adresse</span>
+          <span class="c-value">Palais Sieben, Simeonstraße 7, 54290 Trier</span>
+        </div>
+        <div class="contact-row">
+          <span class="c-label">Telefon</span>
+          <span class="c-value">+49 651 / 700 07 00</span>
+        </div>
+        <div class="contact-row">
+          <span class="c-label">E-Mail</span>
+          <span class="c-value">events@palais-sieben.de</span>
+        </div>
+        <div class="contact-row">
+          <span class="c-label">Besichtigungen</span>
+          <span class="c-value">Mo – Fr, 10 – 17 Uhr · nach Vereinbarung</span>
+        </div>
+        <div class="contact-row">
+          <span class="c-label">Catering</span>
+          <span class="c-value">Hauseigene Küche · externe Partner möglich</span>
+        </div>
+      </div>
+      <a href="#" class="reserve-btn">Besichtigung vereinbaren</a>
+    </div>
+  </section>
+
+  </div><!-- /page-wrap -->
 
   <div class="fan-deco">
     <div class="fan-bar"></div>

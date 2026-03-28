@@ -100,6 +100,9 @@ export const prerender = true;
       align-items: center;
       gap: 3rem;
       min-height: 520px;
+      max-width: 1600px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     /* Grain texture */
@@ -334,6 +337,13 @@ export const prerender = true;
     .tap-section {
       background: var(--cream);
       padding: 5rem 3rem;
+    }
+
+    .tap-section-inner,
+    .process-section-inner {
+      max-width: 1600px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .section-header {
@@ -675,6 +685,7 @@ export const prerender = true;
 
   <!-- TAP LIST -->
   <section class="tap-section">
+  <div class="tap-section-inner">
     <div class="section-header">
       <div>
         <p class="section-eyebrow">Was heute zapft</p>
@@ -762,10 +773,11 @@ export const prerender = true;
         </div>
       </div>
     </div>
+  </div><!-- /tap-section-inner -->
   </section>
 
   <!-- PROCESS -->
-  <section class="process-section">
+  <section class="process-section" style="max-width:1600px;margin-left:auto;margin-right:auto;">
     <div class="process-text">
       <p class="section-eyebrow" style="color:var(--amber);font-size:.65rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;margin-bottom:.5rem;">Handwerk</p>
       <h2 class="section-title" style="font-family:var(--ff-disp);font-size:2.8rem;letter-spacing:.04em;color:#fff;line-height:1;margin-bottom:1.5rem;">WIE WIR<br>BRAUEN</h2>

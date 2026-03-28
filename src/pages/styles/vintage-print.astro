@@ -312,6 +312,153 @@ export const prerender = true;
       border-radius: 50%;
       opacity: 0.6;
     }
+
+    /* Photo container */
+    .ph { position: relative; overflow: hidden; }
+    .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.55s ease; }
+    .ph:hover img { transform: scale(1.05); }
+
+    /* Produkte section */
+    .section-produkte {
+      padding: 6rem 3.5rem;
+      background: var(--paper);
+      position: relative;
+      z-index: 1;
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+    .prod-issue {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 0.5rem;
+    }
+    .prod-heading {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      text-transform: uppercase;
+      line-height: 0.9;
+      letter-spacing: -0.02em;
+      color: var(--navy);
+      margin-bottom: 3.5rem;
+    }
+    .prod-heading .accent { color: var(--red); }
+
+    .produkte-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.5rem;
+    }
+    .prod-card {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .prod-photo {
+      border: 6px solid #E8DCC8;
+      box-shadow: 0 2px 12px rgba(26,39,68,0.1);
+    }
+    .prod-card-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--navy);
+    }
+    .prod-card-desc {
+      font-size: 0.72rem;
+      font-style: italic;
+      line-height: 1.7;
+      color: rgba(26,39,68,0.6);
+    }
+    .prod-card-price {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--red);
+    }
+
+    /* Prozess section */
+    .section-prozess {
+      padding: 6rem 3.5rem;
+      background: var(--navy);
+      position: relative;
+      z-index: 1;
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+    .prozess-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+    .prozess-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    .prozess-heading {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      text-transform: uppercase;
+      line-height: 0.9;
+      letter-spacing: -0.02em;
+      color: var(--paper);
+    }
+    .prozess-heading .accent { color: #F5C842; }
+    .prozess-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .pstep {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      border-bottom: 1px dashed rgba(242,232,213,0.12);
+      padding-bottom: 1rem;
+    }
+    .pstep-num {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: 0.7rem;
+      color: #F5C842;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+    .pstep-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: var(--paper);
+      margin-bottom: 0.2rem;
+    }
+    .pstep-desc {
+      font-size: 0.65rem;
+      font-style: italic;
+      color: rgba(242,232,213,0.5);
+      line-height: 1.6;
+    }
+    .prozess-cta {
+      display: inline-block;
+      background: #F5C842;
+      color: var(--navy);
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-style: italic;
+      font-size: 0.85rem;
+      padding: 0.9rem 2rem;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+    .prozess-cta:hover { background: var(--paper); }
   </style>
 </head>
 <body>
@@ -393,5 +540,83 @@ export const prerender = true;
       </div>
     </div>
   </section>
+
+  <!-- SECTION 2: Produkte -->
+  <div style="background:var(--paper); position:relative; z-index:1;">
+    <section class="section-produkte">
+      <div class="prod-issue">Drucksachen No. 002</div>
+      <h2 class="prod-heading">Was wir<br><span class="accent">drucken.</span></h2>
+      <div class="produkte-grid">
+        <div class="prod-card">
+          <div class="ph prod-photo" style="height:280px;">
+            <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=800&h=700&q=80" alt="Risodruck Poster" loading="lazy" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,39,68,0.4) 0%,transparent 60%);pointer-events:none;"></div>
+          </div>
+          <div class="prod-card-title">Riso-Poster</div>
+          <div class="prod-card-desc">Zweifarbiger Risografiedruck auf 120 g Recyclingpapier. Jede Auflage ein kleines Unikat — charakteristische Körnung inklusive.</div>
+          <div class="prod-card-price">ab 45 € — 25 Stück</div>
+        </div>
+        <div class="prod-card">
+          <div class="ph prod-photo" style="height:280px;">
+            <img src="https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?auto=format&fit=crop&w=800&h=700&q=80" alt="Zine Buchbinderei" loading="lazy" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,39,68,0.4) 0%,transparent 60%);pointer-events:none;"></div>
+          </div>
+          <div class="prod-card-title">Zines & Hefte</div>
+          <div class="prod-card-desc">Selbst verlegte Publikationen, Kataloge und Magazine. Risodruck mit handgebundener Fadenheftung oder Klammerheftung.</div>
+          <div class="prod-card-price">ab 80 € — 25 Stück</div>
+        </div>
+        <div class="prod-card">
+          <div class="ph prod-photo" style="height:280px;">
+            <img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=800&h=700&q=80" alt="Visitenkarten Letterpress" loading="lazy" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,39,68,0.4) 0%,transparent 60%);pointer-events:none;"></div>
+          </div>
+          <div class="prod-card-title">Karten & Einladungen</div>
+          <div class="prod-card-desc">Visitenkarten, Hochzeitseinladungen, Event-Flyer. Letterpress auf Karton, spürbar geprägt, unvergesslich.</div>
+          <div class="prod-card-price">ab 60 € — 50 Stück</div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- SECTION 3: Prozess & Kontakt -->
+  <div style="background:var(--navy); position:relative; z-index:1;">
+    <section class="section-prozess">
+      <div class="prozess-inner">
+        <div class="prozess-text">
+          <div style="font-family:'Playfair Display',serif;font-weight:900;font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:#F5C842;">Druckauftrag</div>
+          <h2 class="prozess-heading">So läuft's<br><span class="accent">ab.</span></h2>
+          <div class="prozess-steps">
+            <div class="pstep">
+              <div class="pstep-num">01</div>
+              <div>
+                <div class="pstep-title">Datei oder Konzept einreichen</div>
+                <div class="pstep-desc">Druckfertige PDF, Illustrator-Datei oder Entwurf — wir beraten auch ohne fertige Vorlage.</div>
+              </div>
+            </div>
+            <div class="pstep">
+              <div class="pstep-num">02</div>
+              <div>
+                <div class="pstep-title">Angebot & Andruckproof</div>
+                <div class="pstep-desc">Wir schicken ein verbindliches Angebot plus einen Andruck zum Freigeben. Kein Druck ohne dein OK.</div>
+              </div>
+            </div>
+            <div class="pstep">
+              <div class="pstep-num">03</div>
+              <div>
+                <div class="pstep-title">Druck & Lieferung</div>
+                <div class="pstep-desc">7–14 Werktage Produktionszeit. Abholung in Trier-Nord oder Versand deutschlandweit.</div>
+              </div>
+            </div>
+          </div>
+          <a href="#" class="prozess-cta">Druckauftrag anfragen →</a>
+        </div>
+        <div class="ph" style="height:500px; border: 8px solid rgba(242,232,213,0.08);">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=800&h=1000&q=80" alt="Druckwerkstatt" loading="lazy" />
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,39,68,0.5) 0%,transparent 60%);pointer-events:none;"></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
 </body>
 </html>
