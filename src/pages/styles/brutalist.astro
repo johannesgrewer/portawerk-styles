@@ -10,676 +10,1014 @@ export const prerender = true;
   <title>BLOC — Grafikdesign & Art Direction | Trier</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { overflow-x: hidden; }
-    body {
-      background: #F0EDE8;
-      color: #1A1A1A;
-      font-family: 'Space Grotesk', monospace, sans-serif;
-      min-height: 100vh;
-      overflow-x: hidden;
+    html { overflow-x: hidden; scroll-behavior: smooth; }
+
+    :root {
+      --bg: #F0EDE8;
+      --ink: #1A1A1A;
+      --red: #FF2D00;
+      --border: 2px solid #1A1A1A;
+      --border-heavy: 3px solid #1A1A1A;
     }
 
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Space Grotesk', sans-serif;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    img { display: block; }
+
+    /* ─── UTILITIES ─── */
+    .mono { font-family: 'Space Mono', monospace; }
+    .ph { position: relative; overflow: hidden; }
+    .ph img {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; transition: transform 0.6s ease;
+    }
+    .ph:hover img { transform: scale(1.04); }
+    .overlay-dark {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(26,26,26,0.65) 0%, transparent 55%);
+      pointer-events: none;
+    }
+
+    /* ─── NAV ─── */
     nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      align-items: stretch;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
       height: 52px;
-      border-bottom: 3px solid #1A1A1A;
-      background: #F0EDE8;
+      display: flex; align-items: stretch;
+      border-bottom: var(--border-heavy);
+      background: var(--bg);
     }
     .nav-logo {
-      display: flex;
-      align-items: center;
+      display: flex; align-items: center;
       padding: 0 1.5rem;
-      font-size: 1.1rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      color: #F0EDE8;
-      background: #1A1A1A;
-      border-right: 3px solid #1A1A1A;
-      text-transform: uppercase;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.9rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--bg); background: var(--ink);
+      border-right: var(--border-heavy);
+      white-space: nowrap;
     }
     .nav-links {
-      display: flex;
-      list-style: none;
-      height: 100%;
+      display: flex; list-style: none; height: 100%;
     }
-    .nav-links li {
-      border-right: 2px solid #1A1A1A;
-    }
+    .nav-links li { border-right: var(--border); }
     .nav-links a {
-      display: flex;
-      align-items: center;
-      padding: 0 1.25rem;
-      height: 100%;
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: #1A1A1A;
-      text-decoration: none;
-      transition: background 0.1s, color 0.1s;
+      display: flex; align-items: center;
+      padding: 0 1.2rem; height: 100%;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.55rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--ink); transition: background 0.1s, color 0.1s;
     }
-    .nav-links a:hover { background: #FF2D00; color: #F0EDE8; }
+    .nav-links a:hover { background: var(--red); color: var(--bg); }
     .nav-right {
-      margin-left: auto;
-      display: flex;
-      align-items: center;
-      padding: 0 1.5rem;
-      border-left: 2px solid #1A1A1A;
-      font-size: 0.55rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
+      margin-left: auto; display: flex; align-items: center;
+      padding: 0 1.5rem; border-left: var(--border);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.5rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
       color: rgba(26,26,26,0.4);
     }
 
+    /* ─── MARQUEE ─── */
+    .marquee-strip {
+      margin-top: 52px;
+      background: var(--ink);
+      border-bottom: var(--border-heavy);
+      overflow: hidden; height: 36px;
+      display: flex; align-items: center;
+    }
+    .marquee-track {
+      display: flex; gap: 0;
+      animation: marquee 28s linear infinite;
+      white-space: nowrap;
+    }
+    .marquee-track span {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.5rem; font-weight: 700;
+      letter-spacing: 0.25em; text-transform: uppercase;
+      color: rgba(240,237,232,0.55);
+      padding: 0 2rem;
+    }
+    .marquee-track span.accent { color: var(--red); }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ─── HERO ─── */
     .hero {
-      min-height: 100vh;
-      padding-top: 52px;
       display: grid;
       grid-template-rows: auto 1fr auto;
     }
-
-    /* TOP BAR */
     .top-bar {
-      display: flex;
-      border-bottom: 2px solid #1A1A1A;
+      display: flex; border-bottom: var(--border);
     }
     .top-cell {
-      flex: 1;
-      padding: 1rem 1.5rem;
-      border-right: 2px solid #1A1A1A;
-      font-size: 0.55rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: rgba(26,26,26,0.4);
+      flex: 1; padding: 0.85rem 1.5rem;
+      border-right: var(--border);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.48rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(26,26,26,0.38);
     }
     .top-cell:last-child { border-right: none; }
-    .top-cell.accent { background: #FF2D00; color: #F0EDE8; }
+    .top-cell.accent { background: var(--red); color: var(--bg); }
 
-    /* MAIN */
     .hero-main {
       display: grid;
-      grid-template-columns: 1fr 380px;
-      border-bottom: 2px solid #1A1A1A;
+      grid-template-columns: 1fr 420px;
+      border-bottom: var(--border);
+      min-height: calc(100vh - 52px - 36px - 39px - 64px);
     }
 
+    /* Left */
     .hero-left {
-      padding: 3rem 3rem 3rem 3rem;
-      border-right: 2px solid #1A1A1A;
-      display: flex;
-      flex-direction: column;
+      padding: 3.5rem 3rem;
+      border-right: var(--border);
+      display: flex; flex-direction: column;
       justify-content: space-between;
     }
-
-    .hero-num {
-      font-size: 0.6rem;
-      font-weight: 700;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      margin-bottom: 2rem;
-      color: rgba(26,26,26,0.35);
+    .hero-index {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.5rem; font-weight: 700;
+      letter-spacing: 0.28em; text-transform: uppercase;
+      color: rgba(26,26,26,0.3);
+      margin-bottom: 2.5rem;
     }
-
-    .hero-headline {
-      font-size: clamp(4.5rem, 10vw, 9rem);
+    h1.hero-headline {
+      font-size: clamp(4rem, 9.5vw, 8.5rem);
       font-weight: 700;
       line-height: 0.88;
       letter-spacing: -0.04em;
       text-transform: uppercase;
     }
     .hero-headline .stroke {
-      -webkit-text-stroke: 3px #1A1A1A;
+      -webkit-text-stroke: 2.5px var(--ink);
       color: transparent;
     }
-    .hero-headline .fill { color: #1A1A1A; }
-    .hero-headline .red { color: #FF2D00; }
+    .hero-headline .fill { color: var(--ink); }
+    .hero-headline .red { color: var(--red); }
 
-    .hero-bottom-row {
-      display: flex;
-      align-items: flex-end;
+    .hero-foot {
+      display: flex; align-items: flex-end;
       justify-content: space-between;
-      margin-top: 3rem;
-      gap: 2rem;
+      margin-top: 3rem; gap: 2rem;
     }
     .hero-tagline {
-      font-size: 0.9rem;
-      font-weight: 300;
-      line-height: 1.6;
-      max-width: 32ch;
-      color: rgba(26,26,26,0.65);
+      font-size: 0.875rem; font-weight: 300;
+      line-height: 1.65; max-width: 30ch;
+      color: rgba(26,26,26,0.6);
     }
     .cta-btn {
-      display: inline-block;
-      background: #FF2D00;
-      color: #F0EDE8;
-      text-decoration: none;
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      padding: 1rem 1.75rem;
+      display: inline-flex; align-items: center;
+      background: var(--red); color: var(--bg);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      padding: 0.9rem 1.6rem;
+      border: 3px solid var(--red);
       white-space: nowrap;
-      border: 3px solid #FF2D00;
       transition: background 0.1s, color 0.1s;
     }
-    .cta-btn:hover { background: #F0EDE8; color: #FF2D00; }
+    .cta-btn:hover { background: var(--bg); color: var(--red); }
 
-    /* RIGHT COLUMN */
+    /* Right */
     .hero-right {
-      display: flex;
-      flex-direction: column;
+      display: flex; flex-direction: column;
     }
-    .right-top {
-      background: #1A1A1A;
-      color: #F0EDE8;
-      padding: 2.5rem 2rem;
+    .hero-photo-panel {
       flex: 1;
-      display: flex;
-      flex-direction: column;
+    }
+    .hero-photo-panel .ph {
+      height: 100%; min-height: 320px;
+    }
+    .hero-services {
+      background: var(--ink);
+      padding: 1.75rem 1.75rem;
+      border-top: var(--border-heavy);
+    }
+    .services-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.45rem; font-weight: 700;
+      letter-spacing: 0.25em; text-transform: uppercase;
+      color: rgba(240,237,232,0.35);
+      margin-bottom: 1rem;
+    }
+    .services-list {
+      list-style: none; display: flex;
+      flex-direction: column; gap: 0;
+    }
+    .services-list li {
+      display: flex; align-items: center;
       justify-content: space-between;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid rgba(240,237,232,0.08);
+      font-size: 0.72rem; font-weight: 500;
+      letter-spacing: 0.03em; color: var(--bg);
     }
-    .right-label {
-      font-size: 0.55rem;
-      font-weight: 700;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: rgba(240,237,232,0.4);
-      margin-bottom: 1.5rem;
-    }
-    .service-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
-    .service-list li {
-      display: flex;
-      align-items: center;
+    .services-list li:last-child { border-bottom: none; }
+    .svc-arrow { color: var(--red); }
+    .hero-year-bar {
+      display: flex; align-items: center;
       justify-content: space-between;
-      padding: 0.75rem 0;
-      border-bottom: 1px solid rgba(240,237,232,0.1);
-      font-size: 0.75rem;
-      font-weight: 500;
-      letter-spacing: 0.04em;
-      color: #F0EDE8;
+      padding: 1rem 1.75rem;
+      border-top: var(--border-heavy);
     }
-    .service-list li:last-child { border-bottom: none; }
-    .service-arrow { color: #FF2D00; }
-
-    .right-bottom {
-      border-top: 3px solid #1A1A1A;
-      padding: 1.5rem 2rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .year-badge {
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: #FF2D00;
-      line-height: 1;
+    .year-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 2rem; font-weight: 700;
+      color: var(--red); line-height: 1;
       letter-spacing: -0.04em;
     }
-    .founded-text {
-      font-size: 0.55rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: rgba(26,26,26,0.35);
-      text-align: right;
+    .year-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.45rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(26,26,26,0.3); text-align: right;
     }
 
-    /* BOTTOM GRID */
-    .bottom-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
+    /* Stats bar */
+    .stats-bar {
+      display: grid; grid-template-columns: repeat(4, 1fr);
     }
-    .bottom-cell {
+    .stat-cell {
       padding: 1.25rem 1.5rem;
-      border-right: 2px solid #1A1A1A;
+      border-right: var(--border);
     }
-    .bottom-cell:last-child { border-right: none; }
-    .bottom-cell-num {
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: #1A1A1A;
-      line-height: 1;
-      margin-bottom: 0.2rem;
+    .stat-cell:last-child { border-right: none; }
+    .stat-num {
+      font-size: 1.5rem; font-weight: 700;
+      line-height: 1; margin-bottom: 0.2rem;
     }
-    .bottom-cell-label {
-      font-size: 0.55rem;
-      font-weight: 500;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: rgba(26,26,26,0.4);
+    .stat-lbl {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.45rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(26,26,26,0.38);
     }
-    .bottom-cell.highlight { background: #FF2D00; }
-    .bottom-cell.highlight .bottom-cell-num,
-    .bottom-cell.highlight .bottom-cell-label { color: #F0EDE8; }
+    .stat-cell.hl { background: var(--red); }
+    .stat-cell.hl .stat-num,
+    .stat-cell.hl .stat-lbl { color: var(--bg); }
 
-    /* Photo container */
-    .ph { position: relative; overflow: hidden; }
-    .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.55s ease; }
-    .ph:hover img { transform: scale(1.05); }
+    /* ─── SECTION HEADER BAR ─── */
+    .sec-bar {
+      display: flex; align-items: stretch;
+      border-top: var(--border-heavy);
+      border-bottom: var(--border);
+    }
+    .sec-bar-num {
+      background: var(--red); color: var(--bg);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.52rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      padding: 0.9rem 1.4rem;
+      border-right: var(--border);
+      display: flex; align-items: center;
+    }
+    .sec-bar-title {
+      flex: 1; padding: 0.9rem 1.4rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.5rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(26,26,26,0.42);
+      display: flex; align-items: center;
+      border-right: var(--border);
+    }
+    .sec-bar-tag {
+      padding: 0.9rem 1.4rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.48rem; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: rgba(26,26,26,0.28);
+      display: flex; align-items: center;
+    }
 
-    /* Page wrap */
-    .page-wrap { max-width: 1600px; margin-left: auto; margin-right: auto; }
-
-    /* Section 2: Portfolio */
-    .portfolio-section {
-      border-top: 3px solid #1A1A1A;
-    }
-    .section-header-bar {
-      display: flex;
-      align-items: stretch;
-      border-bottom: 2px solid #1A1A1A;
-    }
-    .section-header-num {
-      background: #FF2D00;
-      color: #F0EDE8;
-      padding: 1rem 1.5rem;
-      font-size: 0.55rem;
-      font-weight: 700;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      border-right: 2px solid #1A1A1A;
-      display: flex;
-      align-items: center;
-    }
-    .section-header-title {
-      padding: 1rem 1.5rem;
-      font-size: 0.55rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: rgba(26,26,26,0.45);
-      display: flex;
-      align-items: center;
-      border-right: 2px solid #1A1A1A;
-      flex: 1;
-    }
-    .section-header-tag {
-      margin-left: auto;
-      padding: 1rem 1.5rem;
-      font-size: 0.55rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: rgba(26,26,26,0.3);
-      display: flex;
-      align-items: center;
-      border-left: 2px solid #1A1A1A;
-    }
-    .portfolio-grid {
+    /* ─── SECTION 002: PORTFOLIO ─── */
+    /* Featured row */
+    .portfolio-featured {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: 2fr 1fr;
+      border-bottom: var(--border);
     }
-    .portfolio-card {
-      border-right: 2px solid #1A1A1A;
-      border-bottom: 2px solid #1A1A1A;
-      display: flex;
-      flex-direction: column;
-    }
-    .portfolio-card:nth-child(2n) { border-right: none; }
-    .portfolio-card:nth-last-child(-n+2) { border-bottom: none; }
-    .portfolio-card-photo {
+    .featured-photo {
+      height: 480px;
+      border-right: var(--border);
       position: relative;
     }
-    .portfolio-card-body {
+    .featured-label-strip {
+      position: absolute; bottom: 0; left: 0; right: 0;
       padding: 1.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      border-top: 2px solid #1A1A1A;
+      background: linear-gradient(to top, rgba(26,26,26,0.88) 0%, transparent 100%);
+      z-index: 2;
     }
-    .portfolio-card-label {
-      font-size: 0.48rem;
-      font-weight: 700;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: rgba(26,26,26,0.35);
+    .featured-year {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.45rem; font-weight: 700;
+      letter-spacing: 0.25em; text-transform: uppercase;
+      color: rgba(240,237,232,0.55);
+      margin-bottom: 0.4rem;
     }
-    .portfolio-card-title {
-      font-size: 1rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      color: #1A1A1A;
-      text-transform: uppercase;
+    .featured-title {
+      font-size: 1.5rem; font-weight: 700;
+      letter-spacing: -0.02em; text-transform: uppercase;
+      color: var(--bg); line-height: 1.1;
     }
-    .portfolio-card-tags {
-      display: flex;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-      margin-top: 0.25rem;
+    .featured-tags {
+      display: flex; gap: 0.4rem; flex-wrap: wrap;
+      margin-top: 0.6rem;
     }
-    .p-tag {
-      font-size: 0.45rem;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      padding: 0.25rem 0.6rem;
-      border: 2px solid #1A1A1A;
-      color: #1A1A1A;
+    .tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.42rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      padding: 0.22rem 0.55rem;
+      border: 1.5px solid rgba(240,237,232,0.5);
+      color: var(--bg);
     }
-    .p-tag.red { background: #FF2D00; color: #F0EDE8; border-color: #FF2D00; }
+    .tag.red { background: var(--red); border-color: var(--red); }
 
-    /* Section 3: Kontakt + Prozess */
-    .contact-section-brut {
-      border-top: 3px solid #1A1A1A;
+    .featured-side {
+      display: flex; flex-direction: column;
     }
-    .contact-grid {
+    .featured-side-card {
+      flex: 1; display: flex; flex-direction: column;
+      border-bottom: var(--border);
+    }
+    .featured-side-card:last-child { border-bottom: none; }
+    .side-photo { height: 200px; }
+    .side-card-body {
+      padding: 1.25rem;
+      border-top: var(--border);
+      flex: 1;
+    }
+    .side-card-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.42rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(26,26,26,0.32);
+      margin-bottom: 0.4rem;
+    }
+    .side-card-title {
+      font-size: 0.875rem; font-weight: 700;
+      letter-spacing: -0.01em; text-transform: uppercase;
+      color: var(--ink); line-height: 1.2;
+    }
+    .side-card-tags {
+      display: flex; gap: 0.35rem; flex-wrap: wrap;
+      margin-top: 0.6rem;
+    }
+    .tag-dark {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.4rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 0.2rem 0.5rem;
+      border: 1.5px solid var(--ink);
+      color: var(--ink);
+    }
+    .tag-dark.red { background: var(--red); border-color: var(--red); color: var(--bg); }
+
+    /* Bottom row */
+    .portfolio-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-bottom: var(--border-heavy);
+    }
+    .portfolio-card-sm {
+      border-right: var(--border);
+      display: flex; flex-direction: column;
+    }
+    .portfolio-card-sm:last-child { border-right: none; }
+    .sm-photo { height: 220px; }
+    .sm-body {
+      padding: 1.25rem;
+      border-top: var(--border);
+    }
+
+    /* ─── SECTION 003: MANIFESTO ─── */
+    .manifesto-section {
+      background: var(--ink);
+      border-bottom: var(--border-heavy);
+    }
+    .manifesto-sec-bar {
+      display: flex; align-items: stretch;
+      border-bottom: 2px solid rgba(240,237,232,0.12);
+    }
+    .manifesto-sec-bar .sec-bar-num { border-right-color: rgba(240,237,232,0.12); }
+    .manifesto-sec-bar .sec-bar-title {
+      color: rgba(240,237,232,0.28);
+      border-right-color: rgba(240,237,232,0.12);
+    }
+    .manifesto-sec-bar .sec-bar-tag { color: rgba(240,237,232,0.18); }
+    .manifesto-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
     }
+    .manifesto-left {
+      padding: 4rem 3rem;
+      border-right: 2px solid rgba(240,237,232,0.1);
+      display: flex; flex-direction: column;
+      justify-content: space-between;
+    }
+    .manifesto-big {
+      font-size: clamp(4.5rem, 10vw, 9rem);
+      font-weight: 700; line-height: 0.85;
+      letter-spacing: -0.04em; text-transform: uppercase;
+    }
+    .manifesto-big .outline {
+      -webkit-text-stroke: 2px var(--bg);
+      color: transparent;
+    }
+    .manifesto-big .solid { color: var(--bg); }
+    .manifesto-big .accent { color: var(--red); -webkit-text-stroke: 0; }
+    .manifesto-text {
+      margin-top: 3rem;
+      font-size: 0.9rem; font-weight: 300;
+      line-height: 1.75; color: rgba(240,237,232,0.55);
+      max-width: 44ch;
+      border-top: 1px solid rgba(240,237,232,0.15);
+      padding-top: 2rem;
+    }
+    .manifesto-right {
+      display: flex; flex-direction: column;
+    }
+    .manifesto-photo { flex: 1; min-height: 380px; }
+    .manifesto-quote-bar {
+      padding: 1.5rem 2rem;
+      border-top: 2px solid rgba(240,237,232,0.12);
+      display: flex; align-items: center; gap: 1.5rem;
+    }
+    .manifesto-quote-mark {
+      font-size: 3rem; font-weight: 700; color: var(--red); line-height: 1;
+      font-family: 'Space Mono', monospace;
+    }
+    .manifesto-quote-text {
+      font-size: 0.82rem; font-style: italic;
+      color: rgba(240,237,232,0.48); line-height: 1.55;
+    }
+
+    /* ─── SECTION 004: KONTAKT ─── */
+    .contact-section { }
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+    }
     .contact-left {
-      padding: 3rem;
-      border-right: 2px solid #1A1A1A;
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
+      padding: 3rem; border-right: var(--border);
+      display: flex; flex-direction: column; gap: 2rem;
     }
-    .contact-right {
-      display: flex;
-      flex-direction: column;
+    .contact-field-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.45rem; font-weight: 700;
+      letter-spacing: 0.25em; text-transform: uppercase;
+      color: rgba(26,26,26,0.35);
+      margin-bottom: 0.4rem;
     }
-    .brut-contact-label {
-      font-size: 0.55rem;
-      font-weight: 700;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: rgba(26,26,26,0.4);
-      margin-bottom: 0.75rem;
+    .contact-field-value {
+      font-size: 1rem; font-weight: 700;
+      letter-spacing: -0.01em; text-transform: uppercase; color: var(--ink);
     }
-    .brut-contact-value {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: #1A1A1A;
-      letter-spacing: -0.02em;
-      text-transform: uppercase;
+    .contact-field-value.light {
+      font-size: 0.85rem; font-weight: 300;
+      letter-spacing: 0.01em; text-transform: none;
     }
-    .brut-contact-value.small {
-      font-size: 0.82rem;
-      font-weight: 300;
-      letter-spacing: 0.02em;
-      text-transform: none;
-    }
-    .availability-block {
-      background: #FF2D00;
-      padding: 1.5rem;
+    .avail-block {
+      background: var(--red); padding: 1.5rem;
+      display: flex; align-items: center;
+      justify-content: space-between;
     }
     .avail-label {
-      font-size: 0.5rem;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.45rem; font-weight: 700;
+      letter-spacing: 0.22em; text-transform: uppercase;
       color: rgba(240,237,232,0.7);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.3rem;
     }
     .avail-status {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #F0EDE8;
-      letter-spacing: -0.03em;
+      font-size: 1.3rem; font-weight: 700;
+      color: var(--bg); letter-spacing: -0.02em;
       text-transform: uppercase;
     }
-    .process-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
+    .avail-dot {
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: var(--bg);
+      box-shadow: 0 0 0 4px rgba(240,237,232,0.35);
     }
+    .contact-right { display: flex; flex-direction: column; }
+    .process-header {
+      padding: 0.9rem 1.4rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.5rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(26,26,26,0.42);
+      border-bottom: var(--border);
+    }
+    .process-list { list-style: none; }
     .process-item {
-      display: flex;
-      align-items: stretch;
-      border-bottom: 2px solid #1A1A1A;
+      display: flex; align-items: stretch;
+      border-bottom: var(--border);
     }
     .process-item:last-child { border-bottom: none; }
     .process-num {
-      background: #1A1A1A;
-      color: #F0EDE8;
-      padding: 1rem 1.25rem;
-      font-size: 0.65rem;
-      font-weight: 700;
+      background: var(--ink); color: var(--bg);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem; font-weight: 700;
       letter-spacing: 0.1em;
-      border-right: 2px solid #1A1A1A;
-      display: flex;
-      align-items: center;
-      min-width: 60px;
+      padding: 1rem 1.25rem;
+      border-right: var(--border);
+      display: flex; align-items: center;
+      min-width: 58px;
     }
     .process-text {
       padding: 1rem 1.25rem;
-      font-size: 0.75rem;
-      font-weight: 500;
-      color: #1A1A1A;
-      display: flex;
-      align-items: center;
+      font-size: 0.78rem; font-weight: 400;
+      color: var(--ink); display: flex; align-items: center;
+      line-height: 1.5;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      border-top: var(--border-heavy);
+      display: flex; align-items: center;
+      padding: 0;
+    }
+    .footer-logo {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      padding: 1.1rem 1.5rem;
+      background: var(--ink); color: var(--bg);
+      border-right: var(--border-heavy);
+    }
+    .footer-text {
+      padding: 1.1rem 1.5rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.45rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(26,26,26,0.3);
+    }
+    .footer-copy {
+      margin-left: auto;
+      padding: 1.1rem 1.5rem;
+      border-left: var(--border);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.45rem; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: rgba(26,26,26,0.25);
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      .hero-main { grid-template-columns: 1fr; }
+      .hero-photo-panel { display: none; }
+      .hero-services { border-top: var(--border-heavy); }
+      .portfolio-featured { grid-template-columns: 1fr; }
+      .featured-side { display: none; }
+      .portfolio-row { grid-template-columns: 1fr 1fr; }
+      .manifesto-grid { grid-template-columns: 1fr; }
+      .manifesto-right { display: none; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .contact-left { border-right: none; border-bottom: var(--border); }
+    }
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      .top-bar { flex-wrap: wrap; }
+      .top-cell { min-width: 50%; border-bottom: var(--border); }
+      .stats-bar { grid-template-columns: repeat(2, 1fr); }
+      .stats-bar .stat-cell:nth-child(2) { border-right: none; }
+      .stats-bar .stat-cell:nth-child(3) { border-right: var(--border); }
+      .portfolio-row { grid-template-columns: 1fr; }
+      .portfolio-card-sm { border-right: none; border-bottom: var(--border); }
+      .portfolio-card-sm:last-child { border-bottom: none; }
+      .hero-left { padding: 2rem 1.5rem; }
+      .manifesto-left { padding: 2.5rem 1.5rem; }
+      .contact-left { padding: 2rem 1.5rem; }
     }
   </style>
 </head>
 <body>
-  <div class="page-wrap">
-  <nav>
-    <div class="nav-logo">BLOC</div>
-    <ul class="nav-links">
-      <li><a href="#">Projekte</a></li>
-      <li><a href="#">Services</a></li>
-      <li><a href="#">Studio</a></li>
-      <li><a href="#">Kontakt</a></li>
-    </ul>
-    <div class="nav-right">Trier · DE</div>
-  </nav>
 
-  <section class="hero">
-    <div class="top-bar">
-      <div class="top-cell">Grafikdesign & Art Direction</div>
-      <div class="top-cell accent">Verfügbar — Q2 2026</div>
-      <div class="top-cell">Trier, Rheinland-Pfalz</div>
-      <div class="top-cell">hello@bloc-studio.de</div>
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">BLOC</div>
+  <ul class="nav-links">
+    <li><a href="#">Projekte</a></li>
+    <li><a href="#">Services</a></li>
+    <li><a href="#">Studio</a></li>
+    <li><a href="#">Kontakt</a></li>
+  </ul>
+  <div class="nav-right mono">Trier · DE</div>
+</nav>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-track">
+    <span>BLOC Studio</span>
+    <span class="accent">✦</span>
+    <span>Grafikdesign</span>
+    <span class="accent">✦</span>
+    <span>Art Direction</span>
+    <span class="accent">✦</span>
+    <span>Corporate Identity</span>
+    <span class="accent">✦</span>
+    <span>Editorial Design</span>
+    <span class="accent">✦</span>
+    <span>Trier · Rheinland-Pfalz</span>
+    <span class="accent">✦</span>
+    <span>Seit 2016</span>
+    <span class="accent">✦</span>
+    <span>Keine Kompromisse</span>
+    <span class="accent">✦</span>
+    <!-- duplicate for seamless loop -->
+    <span>BLOC Studio</span>
+    <span class="accent">✦</span>
+    <span>Grafikdesign</span>
+    <span class="accent">✦</span>
+    <span>Art Direction</span>
+    <span class="accent">✦</span>
+    <span>Corporate Identity</span>
+    <span class="accent">✦</span>
+    <span>Editorial Design</span>
+    <span class="accent">✦</span>
+    <span>Trier · Rheinland-Pfalz</span>
+    <span class="accent">✦</span>
+    <span>Seit 2016</span>
+    <span class="accent">✦</span>
+    <span>Keine Kompromisse</span>
+    <span class="accent">✦</span>
+  </div>
+</div>
+
+<!-- ──────────────────────────────────── -->
+<!-- SECTION 001 — HERO                  -->
+<!-- ──────────────────────────────────── -->
+<section class="hero">
+  <div class="top-bar">
+    <div class="top-cell">Grafikdesign & Art Direction</div>
+    <div class="top-cell accent">Verfügbar — Q2 2026</div>
+    <div class="top-cell">Trier, Rheinland-Pfalz</div>
+    <div class="top-cell">hello@bloc-studio.de</div>
+  </div>
+
+  <div class="hero-main">
+    <div class="hero-left">
+      <div>
+        <div class="hero-index">001 — Studio</div>
+        <h1 class="hero-headline">
+          <span class="stroke">De</span><span class="fill">sign</span><br>
+          <span class="fill">das nicht</span><br>
+          <span class="fill">um </span><span class="red">Er</span><span class="fill">laub</span><br>
+          <span class="fill">nis </span><span class="stroke">fragt.</span>
+        </h1>
+      </div>
+      <div class="hero-foot">
+        <p class="hero-tagline">
+          BLOC ist ein Designstudio für Marken, die auffallen wollen —
+          und nicht fragen müssen, ob sie das dürfen.
+        </p>
+        <a href="#" class="cta-btn">Projekt starten →</a>
+      </div>
     </div>
 
-    <div class="hero-main">
-      <div class="hero-left">
+    <div class="hero-right">
+      <div class="hero-photo-panel">
+        <div class="ph" style="height:100%;min-height:340px;">
+          <img
+            src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=840&h=700&q=80"
+            alt="BLOC Designstudio Trier — Workspace"
+            loading="eager"
+          />
+          <div class="overlay-dark"></div>
+        </div>
+      </div>
+      <div class="hero-services">
+        <div class="services-label">Leistungen</div>
+        <ul class="services-list">
+          <li>Corporate Identity <span class="svc-arrow">→</span></li>
+          <li>Editorial Design <span class="svc-arrow">→</span></li>
+          <li>Packaging & Print <span class="svc-arrow">→</span></li>
+          <li>Art Direction <span class="svc-arrow">→</span></li>
+          <li>Motion & Digital <span class="svc-arrow">→</span></li>
+        </ul>
+      </div>
+      <div class="hero-year-bar">
+        <div class="year-num">2016</div>
+        <div class="year-label">Studio<br>gegründet</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats-bar">
+    <div class="stat-cell">
+      <div class="stat-num">80+</div>
+      <div class="stat-lbl">Projekte</div>
+    </div>
+    <div class="stat-cell hl">
+      <div class="stat-num">12</div>
+      <div class="stat-lbl">Auszeichnungen</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num">3</div>
+      <div class="stat-lbl">Kontinente</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num">1</div>
+      <div class="stat-lbl">Regel: keine</div>
+    </div>
+  </div>
+</section>
+
+<!-- ──────────────────────────────────── -->
+<!-- SECTION 002 — PORTFOLIO             -->
+<!-- ──────────────────────────────────── -->
+<section>
+  <div class="sec-bar">
+    <div class="sec-bar-num">002</div>
+    <div class="sec-bar-title">Ausgewählte Projekte</div>
+    <div class="sec-bar-tag">2022 – 2025</div>
+  </div>
+
+  <!-- Featured + 2 side cards -->
+  <div class="portfolio-featured">
+    <div class="featured-photo">
+      <div class="ph" style="height:480px;">
+        <img
+          src="https://images.unsplash.com/photo-1541701494587-cb58502866ab?auto=format&fit=crop&w=1200&h=800&q=80"
+          alt="Weingut Mertes — Brand Relaunch"
+          loading="lazy"
+        />
+        <div class="overlay-dark"></div>
+      </div>
+      <div class="featured-label-strip">
+        <div class="featured-year mono">Corporate Identity · 2025</div>
+        <div class="featured-title">Weingut Mertes<br>Brand Relaunch</div>
+        <div class="featured-tags">
+          <span class="tag red">CI</span>
+          <span class="tag">Print</span>
+          <span class="tag">Packaging</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="featured-side">
+      <div class="featured-side-card">
+        <div class="side-photo">
+          <div class="ph" style="height:100%;">
+            <img
+              src="https://images.unsplash.com/photo-1586953208448-b95a79798f07?auto=format&fit=crop&w=600&h=400&q=80"
+              alt="Trier Magazin — Editorial Design"
+              loading="lazy"
+            />
+            <div class="overlay-dark"></div>
+          </div>
+        </div>
+        <div class="side-card-body">
+          <div class="side-card-label">Editorial Design · 2024</div>
+          <div class="side-card-title">Trier Magazin — Jahresausgabe</div>
+          <div class="side-card-tags">
+            <span class="tag-dark red">Editorial</span>
+            <span class="tag-dark">Print</span>
+          </div>
+        </div>
+      </div>
+      <div class="featured-side-card">
+        <div class="side-photo">
+          <div class="ph" style="height:100%;">
+            <img
+              src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&h=400&q=80"
+              alt="Architekturbüro Lenz — Visual System"
+              loading="lazy"
+            />
+            <div class="overlay-dark"></div>
+          </div>
+        </div>
+        <div class="side-card-body">
+          <div class="side-card-label">Art Direction · 2024</div>
+          <div class="side-card-title">Architekturbüro Lenz — Visual System</div>
+          <div class="side-card-tags">
+            <span class="tag-dark red">Art Direction</span>
+            <span class="tag-dark">Digital</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3-col row -->
+  <div class="portfolio-row">
+    <div class="portfolio-card-sm">
+      <div class="sm-photo">
+        <div class="ph" style="height:100%;">
+          <img
+            src="https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=800&h=500&q=80"
+            alt="Startup Klinix — Launch Campaign"
+            loading="lazy"
+          />
+          <div class="overlay-dark"></div>
+        </div>
+      </div>
+      <div class="sm-body">
+        <div class="side-card-label">Motion & Digital · 2023</div>
+        <div class="side-card-title">Klinix — Launch Campaign</div>
+        <div class="side-card-tags">
+          <span class="tag-dark red">Motion</span>
+          <span class="tag-dark">Social</span>
+        </div>
+      </div>
+    </div>
+    <div class="portfolio-card-sm">
+      <div class="sm-photo">
+        <div class="ph" style="height:100%;">
+          <img
+            src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=800&h=500&q=80"
+            alt="Moselgold Weinhandlung — Packaging"
+            loading="lazy"
+          />
+          <div class="overlay-dark"></div>
+        </div>
+      </div>
+      <div class="sm-body">
+        <div class="side-card-label">Packaging · 2023</div>
+        <div class="side-card-title">Moselgold — Flaschenserie</div>
+        <div class="side-card-tags">
+          <span class="tag-dark red">Packaging</span>
+          <span class="tag-dark">Print</span>
+        </div>
+      </div>
+    </div>
+    <div class="portfolio-card-sm">
+      <div class="sm-photo">
+        <div class="ph" style="height:100%;">
+          <img
+            src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=800&h=500&q=80"
+            alt="Studio Haas — Brand Identity"
+            loading="lazy"
+          />
+          <div class="overlay-dark"></div>
+        </div>
+      </div>
+      <div class="sm-body">
+        <div class="side-card-label">Corporate Identity · 2022</div>
+        <div class="side-card-title">Studio Haas — Markenidentität</div>
+        <div class="side-card-tags">
+          <span class="tag-dark red">CI</span>
+          <span class="tag-dark">Brand</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ──────────────────────────────────── -->
+<!-- SECTION 003 — MANIFESTO             -->
+<!-- ──────────────────────────────────── -->
+<section class="manifesto-section">
+  <div class="sec-bar manifesto-sec-bar">
+    <div class="sec-bar-num">003</div>
+    <div class="sec-bar-title">Studio & Haltung</div>
+    <div class="sec-bar-tag">Trier seit 2016</div>
+  </div>
+
+  <div class="manifesto-grid">
+    <div class="manifesto-left">
+      <div>
+        <div class="manifesto-big">
+          <span class="outline">Gut</span><br>
+          <span class="solid">reicht</span><br>
+          <span class="accent">nicht.</span>
+        </div>
+        <p class="manifesto-text">
+          Wir machen Design, das eine Meinung hat. Keine Kompromisslösungen,
+          keine Ausschüsse, keine Abstimmungen per E-Mail-Kette.
+          BLOC arbeitet direkt, schnell und mit vollem Einsatz —
+          von der ersten Skizze bis zur Druckfahne.
+          Wer ein Briefing schickt, bekommt keine PowerPoint zurück.
+          Er bekommt Arbeit, die hält.
+        </p>
+      </div>
+      <div style="margin-top:3rem;display:flex;gap:2rem;flex-wrap:wrap;">
         <div>
-          <div class="hero-num">001 — Studio</div>
-          <h1 class="hero-headline">
-            <span class="stroke">De</span><span class="fill">sign</span><br>
-            <span class="fill">das nicht</span><br>
-            <span class="fill">um </span><span class="red">Er</span><span class="fill">laub</span><br>
-            <span class="fill">nis</span> <span class="stroke">fragt.</span>
-          </h1>
+          <div class="contact-field-label" style="color:rgba(240,237,232,0.3);">Gegründet</div>
+          <div style="font-family:'Space Mono',monospace;font-size:1.5rem;font-weight:700;color:var(--red);">2016</div>
         </div>
-        <div class="hero-bottom-row">
-          <p class="hero-tagline">
-            BLOC ist ein Designstudio für Marken, die auffallen wollen.
-            Kein Mainstream. Keine Kompromisse.
-          </p>
-          <a href="#" class="cta-btn">Projekt starten →</a>
+        <div>
+          <div class="contact-field-label" style="color:rgba(240,237,232,0.3);">Team</div>
+          <div style="font-family:'Space Mono',monospace;font-size:1.5rem;font-weight:700;color:var(--bg);">4</div>
         </div>
-      </div>
-
-      <div class="hero-right">
-        <div class="right-top">
-          <div class="right-label">Leistungen</div>
-          <ul class="service-list">
-            <li>Corporate Identity <span class="service-arrow">→</span></li>
-            <li>Editorial Design <span class="service-arrow">→</span></li>
-            <li>Packaging & Print <span class="service-arrow">→</span></li>
-            <li>Art Direction <span class="service-arrow">→</span></li>
-            <li>Motion & Digital <span class="service-arrow">→</span></li>
-          </ul>
-        </div>
-        <div class="right-bottom">
-          <div class="year-badge">2016</div>
-          <div class="founded-text">Studio<br>gegründet</div>
+        <div>
+          <div class="contact-field-label" style="color:rgba(240,237,232,0.3);">Standort</div>
+          <div style="font-family:'Space Mono',monospace;font-size:1.5rem;font-weight:700;color:var(--bg);">TRIER</div>
         </div>
       </div>
     </div>
 
-    <div class="bottom-grid">
-      <div class="bottom-cell">
-        <div class="bottom-cell-num">80+</div>
-        <div class="bottom-cell-label">Projekte</div>
+    <div class="manifesto-right">
+      <div class="manifesto-photo">
+        <div class="ph" style="height:100%;min-height:380px;">
+          <img
+            src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&h=700&q=80"
+            alt="BLOC Designstudio — Arbeitsprozess"
+            loading="lazy"
+          />
+          <div style="position:absolute;inset:0;background:rgba(26,26,26,0.25);pointer-events:none;"></div>
+        </div>
       </div>
-      <div class="bottom-cell highlight">
-        <div class="bottom-cell-num">12</div>
-        <div class="bottom-cell-label">Auszeichnungen</div>
-      </div>
-      <div class="bottom-cell">
-        <div class="bottom-cell-num">3</div>
-        <div class="bottom-cell-label">Kontinente</div>
-      </div>
-      <div class="bottom-cell">
-        <div class="bottom-cell-num">1</div>
-        <div class="bottom-cell-label">Regel: keine</div>
+      <div class="manifesto-quote-bar">
+        <div class="manifesto-quote-mark">"</div>
+        <div class="manifesto-quote-text">
+          Design ohne Haltung ist Dekoration.<br>
+          Dekoration interessiert uns nicht.
+        </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- SECTION 2: Portfolio -->
-  <section class="portfolio-section">
-    <div class="section-header-bar">
-      <div class="section-header-num">002</div>
-      <div class="section-header-title">Ausgewählte Projekte</div>
-      <div class="section-header-tag">2022 – 2025</div>
-    </div>
-    <div class="portfolio-grid">
-      <div class="portfolio-card">
-        <div class="portfolio-card-photo">
-          <div class="ph" style="height:280px;">
-            <img src="https://images.unsplash.com/photo-1471193945509-9ad0617afabf?auto=format&fit=crop&w=1200&h=800&q=80" alt="Brand Identity Projekt" loading="lazy"/>
-            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,26,26,0.5) 0%,transparent 60%);pointer-events:none;"></div>
-          </div>
-        </div>
-        <div class="portfolio-card-body">
-          <div class="portfolio-card-label">Corporate Identity · 2025</div>
-          <div class="portfolio-card-title">Weingut Mertes — Brand Relaunch</div>
-          <div class="portfolio-card-tags">
-            <span class="p-tag red">CI</span>
-            <span class="p-tag">Print</span>
-            <span class="p-tag">Packaging</span>
-          </div>
-        </div>
-      </div>
-      <div class="portfolio-card">
-        <div class="portfolio-card-photo">
-          <div class="ph" style="height:280px;">
-            <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&h=800&q=80" alt="Editorial Design Projekt" loading="lazy"/>
-            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,26,26,0.5) 0%,transparent 60%);pointer-events:none;"></div>
-          </div>
-        </div>
-        <div class="portfolio-card-body">
-          <div class="portfolio-card-label">Editorial Design · 2024</div>
-          <div class="portfolio-card-title">Trier Magazin — Jahresausgabe</div>
-          <div class="portfolio-card-tags">
-            <span class="p-tag red">Editorial</span>
-            <span class="p-tag">Print</span>
-            <span class="p-tag">Foto</span>
-          </div>
-        </div>
-      </div>
-      <div class="portfolio-card">
-        <div class="portfolio-card-photo">
-          <div class="ph" style="height:280px;">
-            <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&h=800&q=80" alt="Art Direction Projekt" loading="lazy"/>
-            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,26,26,0.5) 0%,transparent 60%);pointer-events:none;"></div>
-          </div>
-        </div>
-        <div class="portfolio-card-body">
-          <div class="portfolio-card-label">Art Direction · 2024</div>
-          <div class="portfolio-card-title">Architekturbüro Lenz — Visual System</div>
-          <div class="portfolio-card-tags">
-            <span class="p-tag red">Art Direction</span>
-            <span class="p-tag">Digital</span>
-          </div>
-        </div>
-      </div>
-      <div class="portfolio-card">
-        <div class="portfolio-card-photo">
-          <div class="ph" style="height:280px;">
-            <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=1200&h=800&q=80" alt="Motion Design Projekt" loading="lazy"/>
-            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,26,26,0.5) 0%,transparent 60%);pointer-events:none;"></div>
-          </div>
-        </div>
-        <div class="portfolio-card-body">
-          <div class="portfolio-card-label">Motion & Digital · 2023</div>
-          <div class="portfolio-card-title">Startup Klinix — Launch Campaign</div>
-          <div class="portfolio-card-tags">
-            <span class="p-tag red">Motion</span>
-            <span class="p-tag">Digital</span>
-            <span class="p-tag">Social</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+<!-- ──────────────────────────────────── -->
+<!-- SECTION 004 — KONTAKT & PROZESS     -->
+<!-- ──────────────────────────────────── -->
+<section class="contact-section">
+  <div class="sec-bar">
+    <div class="sec-bar-num">004</div>
+    <div class="sec-bar-title">Kontakt & Prozess</div>
+    <div class="sec-bar-tag">hello@bloc-studio.de</div>
+  </div>
 
-  <!-- SECTION 3: Kontakt + Prozess -->
-  <section class="contact-section-brut">
-    <div class="section-header-bar">
-      <div class="section-header-num">003</div>
-      <div class="section-header-title">Kontakt & Prozess</div>
-      <div class="section-header-tag">hello@bloc-studio.de</div>
-    </div>
-    <div class="contact-grid">
-      <div class="contact-left">
-        <div>
-          <div class="brut-contact-label">Studio</div>
-          <div class="brut-contact-value">BLOC</div>
+  <div class="contact-grid">
+    <div class="contact-left">
+      <div>
+        <div class="contact-field-label">Studio</div>
+        <div class="contact-field-value">BLOC</div>
+      </div>
+      <div>
+        <div class="contact-field-label">Standort</div>
+        <div class="contact-field-value">Trier, DE</div>
+      </div>
+      <div>
+        <div class="contact-field-label">Kontakt</div>
+        <div class="contact-field-value light">
+          hello@bloc-studio.de<br>+49 651 / 456 78 90
         </div>
-        <div>
-          <div class="brut-contact-label">Standort</div>
-          <div class="brut-contact-value">Trier, DE</div>
+      </div>
+      <div>
+        <div class="contact-field-label">Projektstart</div>
+        <div class="contact-field-value light">
+          Anfrage → Briefing → Angebot<br>
+          Typisch 2–3 Wochen Vorlauf
         </div>
+      </div>
+      <div class="avail-block">
         <div>
-          <div class="brut-contact-label">Kontakt</div>
-          <div class="brut-contact-value small">hello@bloc-studio.de<br>+49 651 / 456 78 90</div>
-        </div>
-        <div>
-          <div class="brut-contact-label">Projektstart</div>
-          <div class="brut-contact-value small">Anfrage → Briefing → Angebot<br>Typisch 2–3 Wochen Vorlauf</div>
-        </div>
-        <div class="availability-block">
           <div class="avail-label">Verfügbarkeit</div>
           <div class="avail-status">Q2 2026 frei</div>
         </div>
-      </div>
-      <div class="contact-right">
-        <div class="section-header-bar" style="border-left:none;">
-          <div class="section-header-title" style="border-right:none;">Der Prozess</div>
-        </div>
-        <ul class="process-list">
-          <li class="process-item">
-            <span class="process-num">01</span>
-            <span class="process-text">Anfrage per Mail — kurze Projektbeschreibung genügt</span>
-          </li>
-          <li class="process-item">
-            <span class="process-num">02</span>
-            <span class="process-text">Briefing-Call (30 Min) — Ziele, Zielgruppe, Budget</span>
-          </li>
-          <li class="process-item">
-            <span class="process-num">03</span>
-            <span class="process-text">Konzept & Angebot innerhalb von 5 Werktagen</span>
-          </li>
-          <li class="process-item">
-            <span class="process-num">04</span>
-            <span class="process-text">Produktion mit 2 Feedback-Runden inklusive</span>
-          </li>
-          <li class="process-item">
-            <span class="process-num">05</span>
-            <span class="process-text">Übergabe aller Dateien + Nutzungsrechte</span>
-          </li>
-        </ul>
+        <div class="avail-dot"></div>
       </div>
     </div>
-  </section>
 
-  </div><!-- /page-wrap -->
+    <div class="contact-right">
+      <div class="process-header">Der Prozess</div>
+      <ul class="process-list">
+        <li class="process-item">
+          <span class="process-num">01</span>
+          <span class="process-text">Anfrage per Mail — kurze Projektbeschreibung genügt</span>
+        </li>
+        <li class="process-item">
+          <span class="process-num">02</span>
+          <span class="process-text">Briefing-Call (30 Min) — Ziele, Zielgruppe, Budget</span>
+        </li>
+        <li class="process-item">
+          <span class="process-num">03</span>
+          <span class="process-text">Konzept & Angebot innerhalb von 5 Werktagen</span>
+        </li>
+        <li class="process-item">
+          <span class="process-num">04</span>
+          <span class="process-text">Produktion mit 2 Feedback-Runden inklusive</span>
+        </li>
+        <li class="process-item">
+          <span class="process-num">05</span>
+          <span class="process-text">Übergabe aller Dateien + vollständige Nutzungsrechte</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">BLOC</div>
+  <div class="footer-text">Grafikdesign & Art Direction · Trier · hello@bloc-studio.de</div>
+  <div class="footer-copy">© 2026 BLOC Studio</div>
+</footer>
+
 </body>
 </html>
