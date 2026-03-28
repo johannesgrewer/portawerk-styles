@@ -17,27 +17,47 @@ export const prerender = true;
 
     :root {
       --cream: #E8DCC8;
-      --dark: #1A1816;
       --gold: #A68B6B;
       --bg: #121110;
-      --text: #E8DCC8;
       --font-display: "Italiana", Georgia, serif;
       --font-body: "Raleway", system-ui, sans-serif;
     }
 
     html {
       background: var(--bg);
-      color: var(--text);
+      color: var(--cream);
       font-family: var(--font-body);
       font-weight: 300;
       -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
       scroll-behavior: smooth;
     }
 
     body { overflow-x: hidden; }
-
+    img { display: block; max-width: 100%; }
     ::selection { background: var(--gold); color: var(--bg); }
+
+    /* ═══════════════════════════════════════════
+       GLOBAL FILM GRAIN — fixed over everything
+    ═══════════════════════════════════════════ */
+    .global-grain {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: 0.025;
+      mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 200px 200px;
+      animation: grainShift 0.45s steps(3) infinite;
+    }
+
+    @keyframes grainShift {
+      0%   { transform: translate(0, 0); }
+      33%  { transform: translate(-3px, 2px); }
+      66%  { transform: translate(2px, -3px); }
+      100% { transform: translate(0, 0); }
+    }
 
     /* ═══════════════════════════════════════════
        FILM FRAME COUNTER — corner decoration
@@ -56,21 +76,36 @@ export const prerender = true;
     }
 
     /* ═══════════════════════════════════════════
+       SCENE DIVIDER — thin gold separator
+    ═══════════════════════════════════════════ */
+    .scene-divider {
+      border: none;
+      height: 1px;
+      background: linear-gradient(
+        to right,
+        transparent 0%,
+        rgba(166, 139, 107, 0.15) 20%,
+        rgba(166, 139, 107, 0.35) 50%,
+        rgba(166, 139, 107, 0.15) 80%,
+        transparent 100%
+      );
+      margin: 0;
+    }
+
+    /* ═══════════════════════════════════════════
        SECTION FADE-IN FROM DARKNESS
     ═══════════════════════════════════════════ */
     .fade-section {
       opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                  transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transform: translateY(28px);
+      transition: opacity 1.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  transform 1.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
 
     .fade-section.is-visible {
       opacity: 1;
       transform: translateY(0);
     }
-
-    img { display: block; max-width: 100%; }
 
     /* ═══════════════════════════════════════════
        HERO — Full-Bleed Photo with Overlay Type
@@ -83,7 +118,7 @@ export const prerender = true;
       overflow: hidden;
     }
 
-    /* Letterbox bars — thin cinematic bars */
+    /* Letterbox bars — cinematic top/bottom */
     .hero::before,
     .hero::after {
       content: "";
@@ -92,11 +127,19 @@ export const prerender = true;
       right: 0;
       height: 3.5vh;
       background: var(--bg);
-      z-index: 4;
+      z-index: 6;
       pointer-events: none;
     }
     .hero::before { top: 0; }
     .hero::after { bottom: 0; }
+
+    /* Parallax wrapper — receives scroll translate, keeps Ken Burns on img */
+    .hero-parallax-wrap {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      will-change: transform;
+    }
 
     /* Ken Burns — slow zoom 30s cycle */
     .hero-image {
@@ -116,27 +159,89 @@ export const prerender = true;
       100% { transform: scale(1.03) translate(0.3%, 0.2%); }
     }
 
-    /* Film grain overlay — CSS SVG noise */
+    /* Film grain — Hero-specific layer */
     .hero-grain {
       position: absolute;
       inset: 0;
       z-index: 2;
       pointer-events: none;
-      opacity: 0.045;
+      opacity: 0.03;
       mix-blend-mode: overlay;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
       background-repeat: repeat;
       background-size: 180px 180px;
-      animation: grainShift 0.5s steps(3) infinite;
     }
 
-    @keyframes grainShift {
-      0%   { transform: translate(0, 0); }
-      33%  { transform: translate(-2px, 1px); }
-      66%  { transform: translate(1px, -2px); }
-      100% { transform: translate(0, 0); }
+    /* Lens Flare — subtle warm glow, upper-right area */
+    .lens-flare {
+      position: absolute;
+      top: 20%;
+      right: 27%;
+      width: 1px;
+      height: 1px;
+      z-index: 4;
+      pointer-events: none;
+      animation: flarePulse 9s ease-in-out infinite;
     }
 
+    @keyframes flarePulse {
+      0%, 100% { opacity: 0.55; }
+      50%       { opacity: 1; }
+    }
+
+    /* Main warm glow */
+    .lens-flare::before {
+      content: "";
+      position: absolute;
+      width: 360px;
+      height: 360px;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background: radial-gradient(
+        circle,
+        rgba(255, 235, 175, 0.09) 0%,
+        rgba(255, 215, 135, 0.04) 38%,
+        transparent 65%
+      );
+    }
+
+    /* Secondary smaller orb — offset */
+    .lens-flare::after {
+      content: "";
+      position: absolute;
+      width: 70px;
+      height: 70px;
+      transform: translate(110px, 90px);
+      border-radius: 50%;
+      background: radial-gradient(
+        circle,
+        rgba(255, 248, 215, 0.1) 0%,
+        transparent 70%
+      );
+    }
+
+    /* Light ray across the frame */
+    .lens-flare-ray {
+      position: absolute;
+      top: 20.5%;
+      left: 0;
+      right: 0;
+      height: 1px;
+      transform: rotate(-4deg);
+      background: linear-gradient(
+        to right,
+        transparent 5%,
+        rgba(255, 235, 175, 0.04) 28%,
+        rgba(255, 248, 210, 0.12) 50%,
+        rgba(255, 235, 175, 0.04) 72%,
+        transparent 95%
+      );
+      pointer-events: none;
+      z-index: 4;
+      animation: flarePulse 9s ease-in-out infinite;
+    }
+
+    /* Dark gradient overlay */
     .hero-overlay {
       position: absolute;
       inset: 0;
@@ -144,9 +249,9 @@ export const prerender = true;
       background: linear-gradient(
         to bottom,
         rgba(18, 17, 16, 0.15) 0%,
-        rgba(18, 17, 16, 0.3) 40%,
-        rgba(18, 17, 16, 0.7) 70%,
-        rgba(18, 17, 16, 0.92) 100%
+        rgba(18, 17, 16, 0.28) 40%,
+        rgba(18, 17, 16, 0.72) 70%,
+        rgba(18, 17, 16, 0.93) 100%
       );
     }
 
@@ -187,22 +292,18 @@ export const prerender = true;
     .hero-headline .word:nth-child(3) { animation-delay: 1.4s; }
 
     @keyframes wordReveal {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .hero-sub {
       margin-top: 1.5rem;
-      font-family: var(--font-body);
       font-size: clamp(0.65rem, 1.2vw, 0.85rem);
       font-weight: 400;
       letter-spacing: 0.25em;
       text-transform: uppercase;
       color: var(--gold);
       opacity: 0;
-      animation: fadeUp 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 2.0s forwards;
+      animation: fadeUp 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 2.1s forwards;
     }
 
     @keyframes fadeUp {
@@ -227,19 +328,129 @@ export const prerender = true;
       width: 1px;
       height: 100%;
       background: var(--gold);
-      animation: scrollLine 2s ease-in-out infinite, breathingPulse 3s ease-in-out infinite;
+      animation: scrollLine 2s ease-in-out infinite;
     }
 
     @keyframes scrollLine {
-      0% { transform: translateY(-100%); opacity: 0; }
-      30% { opacity: 1; }
-      70% { opacity: 1; }
+      0%   { transform: translateY(-100%); opacity: 0; }
+      30%  { opacity: 1; }
+      70%  { opacity: 1; }
       100% { transform: translateY(100%); opacity: 0; }
     }
 
-    @keyframes breathingPulse {
-      0%, 100% { box-shadow: 0 0 2px rgba(166, 139, 107, 0.2); }
-      50%      { box-shadow: 0 0 8px rgba(166, 139, 107, 0.6); }
+    /* ═══════════════════════════════════════════
+       INTERLUDE — Atmospheric Quote Section
+    ═══════════════════════════════════════════ */
+    .interlude {
+      position: relative;
+      height: 85vh;
+      min-height: 480px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Letterbox on interlude too */
+    .interlude::before,
+    .interlude::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 2.5vh;
+      background: var(--bg);
+      z-index: 5;
+      pointer-events: none;
+    }
+    .interlude::before { top: 0; }
+    .interlude::after { bottom: 0; }
+
+    .interlude-bg-wrap {
+      position: absolute;
+      inset: -12%;
+      will-change: transform;
+    }
+
+    .interlude-bg {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      /* Cinematic color grade: slightly desaturated, dim */
+      filter: brightness(0.32) saturate(0.75);
+    }
+
+    /* Warm/teal cinematic split-grade overlay */
+    .interlude-grade {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        145deg,
+        rgba(20, 32, 42, 0.45) 0%,
+        rgba(18, 17, 16, 0.15) 50%,
+        rgba(42, 28, 12, 0.45) 100%
+      );
+      mix-blend-mode: color;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .interlude-content {
+      position: relative;
+      z-index: 3;
+      text-align: center;
+      padding: 0 clamp(1.5rem, 6vw, 5rem);
+      max-width: 760px;
+    }
+
+    .interlude-eyebrow {
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 2.5rem;
+      display: block;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 1.2s ease 0.15s,
+                  transform 1.2s ease 0.15s;
+    }
+
+    .interlude.is-visible .interlude-eyebrow {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .interlude-quote {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 4.5vw, 3.4rem);
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1.38;
+      color: var(--cream);
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 1.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.45s,
+                  transform 1.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.45s;
+    }
+
+    .interlude.is-visible .interlude-quote {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .interlude-attribution {
+      margin-top: 2rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(232, 220, 200, 0.4);
+      opacity: 0;
+      transition: opacity 1.8s ease 1.2s;
+    }
+
+    .interlude.is-visible .interlude-attribution {
+      opacity: 1;
     }
 
     /* ═══════════════════════════════════════════
@@ -251,8 +462,7 @@ export const prerender = true;
       margin: 0 auto;
     }
 
-    .arbeiten-label {
-      font-family: var(--font-body);
+    .section-label {
       font-size: 0.7rem;
       font-weight: 400;
       letter-spacing: 0.3em;
@@ -272,62 +482,72 @@ export const prerender = true;
       position: relative;
       overflow: hidden;
       cursor: crosshair;
-      border: 1px solid transparent;
-      /* Staggered entrance animation */
-      opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                  transform 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      /* Clip-path reveal — more cinematic than translateY */
+      clip-path: inset(0 0 100% 0);
+      transition: clip-path 1.15s cubic-bezier(0.77, 0, 0.175, 1),
                   border-color 0.5s ease;
+      border: 1px solid transparent;
     }
 
     .gallery-item.is-visible {
-      opacity: 1;
-      transform: translateY(0);
+      clip-path: inset(0 0 0% 0);
     }
 
     .gallery-item:hover {
-      border-color: rgba(166, 139, 107, 0.5);
+      border-color: rgba(166, 139, 107, 0.45);
     }
 
     .gallery-item img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: filter 0.5s ease, transform 0.6s ease;
-      filter: brightness(0.85);
+      /* Cinematic: slightly desaturated + lifted blacks */
+      filter: brightness(0.83) contrast(1.05) saturate(0.82);
+      transition: filter 0.65s ease, transform 0.7s ease;
     }
 
     .gallery-item:hover img {
-      filter: brightness(1.05);
-      transform: scale(1.02);
+      filter: brightness(0.98) contrast(1.05) saturate(0.88);
+      transform: scale(1.03);
+    }
+
+    /* Per-image film grain overlay */
+    .gallery-item::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.045;
+      mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 150px 150px;
     }
 
     .gallery-caption {
       position: absolute;
       bottom: 0.75rem;
       left: 1rem;
-      font-family: var(--font-body);
       font-size: 0.65rem;
       font-weight: 400;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: rgba(232, 220, 200, 0.6);
+      color: rgba(232, 220, 200, 0.5);
       transition: color 0.4s ease;
+      z-index: 1;
     }
 
     .gallery-item:hover .gallery-caption {
       color: rgba(232, 220, 200, 0.9);
     }
 
-    /* Item 1 — wide letterbox 21:9 spanning left */
+    /* Item 1 — wide letterbox spanning left */
     .gallery-item-1 {
       grid-column: 1 / 8;
       grid-row: 1 / 5;
       aspect-ratio: 21 / 9;
     }
 
-    /* Item 2 — portrait 2:3 on the right */
+    /* Item 2 — portrait right */
     .gallery-item-2 {
       grid-column: 8 / 13;
       grid-row: 1 / 8;
@@ -337,21 +557,21 @@ export const prerender = true;
       aspect-ratio: 2 / 3;
     }
 
-    /* Item 3 — square, below item 1 left side */
+    /* Item 3 — square, below item 1 left */
     .gallery-item-3 {
       grid-column: 1 / 5;
       grid-row: 5 / 11;
       aspect-ratio: 1 / 1;
     }
 
-    /* Item 4 — letterbox wide, below item 1 right side */
+    /* Item 4 — letterbox wide, lower right */
     .gallery-item-4 {
       grid-column: 5 / 13;
       grid-row: 8 / 12;
       aspect-ratio: 21 / 9;
     }
 
-    /* Item 5 — wide cinematic bottom */
+    /* Item 5 — full-width cinematic strip */
     .gallery-item-5 {
       grid-column: 1 / 13;
       grid-row: 12 / 16;
@@ -359,7 +579,99 @@ export const prerender = true;
     }
 
     /* ═══════════════════════════════════════════
-       SECTION 3 — Ueber mich
+       PAKETE — typographic pricing section
+    ═══════════════════════════════════════════ */
+    .pakete {
+      padding: clamp(5rem, 12vw, 9rem) clamp(1.5rem, 5vw, 3rem);
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .pakete-intro {
+      text-align: center;
+      margin-bottom: clamp(3rem, 6vw, 5rem);
+    }
+
+    .pakete-intro h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 400;
+      color: var(--cream);
+      margin-bottom: 1rem;
+    }
+
+    .pakete-intro p {
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
+      color: rgba(232, 220, 200, 0.45);
+      max-width: 440px;
+      margin: 0 auto;
+      line-height: 1.75;
+    }
+
+    .pakete-grid {
+      display: grid;
+      grid-template-columns: 1fr 1px 1fr 1px 1fr;
+    }
+
+    .pakete-divider-v {
+      background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(166, 139, 107, 0.22) 20%,
+        rgba(166, 139, 107, 0.35) 50%,
+        rgba(166, 139, 107, 0.22) 80%,
+        transparent 100%
+      );
+    }
+
+    .paket {
+      padding: clamp(1.5rem, 3vw, 2.5rem) clamp(1rem, 2.5vw, 2rem);
+      text-align: center;
+    }
+
+    .paket-nummer {
+      display: block;
+      font-family: "Courier New", monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      opacity: 0.7;
+    }
+
+    .paket-name {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+      font-weight: 400;
+      color: var(--cream);
+      margin-bottom: 1.2rem;
+    }
+
+    .paket-preis {
+      font-size: 0.72rem;
+      letter-spacing: 0.28em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+
+    .paket-liste {
+      list-style: none;
+      text-align: left;
+      font-size: 0.78rem;
+      line-height: 2.1;
+      color: rgba(232, 220, 200, 0.55);
+    }
+
+    .paket-liste li::before {
+      content: "— ";
+      color: var(--gold);
+      opacity: 0.55;
+    }
+
+    /* ═══════════════════════════════════════════
+       UEBER — About section
     ═══════════════════════════════════════════ */
     .ueber {
       padding: clamp(5rem, 12vw, 10rem) clamp(1.5rem, 5vw, 3rem);
@@ -371,12 +683,20 @@ export const prerender = true;
       margin: 0 auto;
     }
 
-    /* Portrait with warm vignette */
+    /* Portrait fades in with subtle scale */
     .ueber-portrait-wrap {
       position: relative;
       width: 140px;
       height: 140px;
       margin-bottom: 2rem;
+      opacity: 0;
+      transform: scale(0.9);
+      transition: opacity 1.5s ease, transform 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .ueber-portrait-wrap.is-visible {
+      opacity: 1;
+      transform: scale(1);
     }
 
     .ueber-portrait {
@@ -384,7 +704,7 @@ export const prerender = true;
       height: 140px;
       border-radius: 50%;
       object-fit: cover;
-      filter: grayscale(30%) brightness(0.9);
+      filter: grayscale(30%) brightness(0.88);
     }
 
     .ueber-portrait-wrap::after {
@@ -395,8 +715,8 @@ export const prerender = true;
       background: radial-gradient(
         circle,
         transparent 50%,
-        rgba(166, 139, 107, 0.12) 70%,
-        rgba(18, 17, 16, 0.4) 100%
+        rgba(166, 139, 107, 0.1) 70%,
+        rgba(18, 17, 16, 0.45) 100%
       );
       pointer-events: none;
     }
@@ -409,19 +729,17 @@ export const prerender = true;
       margin-bottom: 2rem;
     }
 
-    /* Poetic quote — elegant italic reveal */
     .ueber-text {
-      font-family: var(--font-body);
       font-size: clamp(1rem, 1.8vw, 1.2rem);
       font-weight: 300;
-      line-height: 1.8;
+      line-height: 1.85;
       color: var(--cream);
       font-style: italic;
       margin-bottom: 3rem;
       opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s,
-                  transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s;
+      transform: translateY(18px);
+      transition: opacity 1.3s ease 0.3s,
+                  transform 1.3s ease 0.3s;
     }
 
     .ueber-text.is-visible {
@@ -429,36 +747,44 @@ export const prerender = true;
       transform: translateY(0);
     }
 
-    /* Contact links — gold glow on hover */
     .ueber-contact {
-      font-family: var(--font-body);
-      font-size: 0.75rem;
-      font-weight: 400;
+      font-size: 0.74rem;
       letter-spacing: 0.15em;
       color: var(--gold);
-      transition: text-shadow 0.4s ease;
-    }
-
-    .ueber-contact:hover {
-      text-shadow: 0 0 12px rgba(166, 139, 107, 0.5),
-                   0 0 24px rgba(166, 139, 107, 0.2);
     }
 
     .ueber-contact a {
       color: var(--gold);
       text-decoration: none;
-      transition: text-shadow 0.4s ease, color 0.3s ease;
+      transition: color 0.3s ease;
     }
 
     .ueber-contact a:hover {
       color: var(--cream);
-      text-shadow: 0 0 12px rgba(166, 139, 107, 0.5),
-                   0 0 24px rgba(166, 139, 107, 0.2);
     }
 
     /* ═══════════════════════════════════════════
        RESPONSIVE
     ═══════════════════════════════════════════ */
+    @media (max-width: 900px) {
+      .pakete-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .pakete-divider-v {
+        display: none;
+      }
+
+      .paket {
+        border-bottom: 1px solid rgba(166, 139, 107, 0.12);
+        padding: 2rem 0.5rem;
+      }
+
+      .paket:last-child {
+        border-bottom: none;
+      }
+    }
+
     @media (max-width: 768px) {
       .gallery-grid {
         grid-template-columns: 1fr;
@@ -475,44 +801,45 @@ export const prerender = true;
         grid-row: auto;
       }
 
-      .gallery-item-1 { aspect-ratio: 21 / 9; }
+      .gallery-item-1 { aspect-ratio: 16 / 9; }
       .gallery-item-2 { aspect-ratio: 3 / 4; }
       .gallery-item-3 { aspect-ratio: 1 / 1; }
-      .gallery-item-4 { aspect-ratio: 21 / 9; }
-      .gallery-item-5 { aspect-ratio: 21 / 9; }
-
+      .gallery-item-4 { aspect-ratio: 16 / 9; }
+      .gallery-item-5 { aspect-ratio: 16 / 9; }
       .gallery-item-2 img { aspect-ratio: unset; }
 
-      .hero-content {
-        padding-bottom: 15vh;
-      }
+      .hero-content { padding-bottom: 15vh; }
 
-      .ueber-portrait-wrap {
-        width: 110px;
-        height: 110px;
-      }
+      .ueber-portrait-wrap,
+      .ueber-portrait { width: 110px; height: 110px; }
 
-      .ueber-portrait {
-        width: 110px;
-        height: 110px;
-      }
+      .interlude { height: 70vh; }
     }
   </style>
 </head>
 <body>
+
+  <!-- Global Film Grain — spans entire page -->
+  <div class="global-grain" aria-hidden="true"></div>
 
   <!-- Film frame counter — fixed corner decoration -->
   <div class="film-frame-counter" aria-hidden="true">001</div>
 
   <!-- ═══ HERO ═══ -->
   <section class="hero">
-    <img
-      class="hero-image"
-      src="https://images.unsplash.com/photo-1519741497674-611481863552?w=1920&q=80&auto=format"
-      alt="Hochzeitsfotografie — Brautpaar im Licht"
-      loading="eager"
-    />
+    <!-- Parallax wrapper keeps Ken Burns and scroll-parallax separate -->
+    <div class="hero-parallax-wrap">
+      <img
+        class="hero-image"
+        src="https://images.unsplash.com/photo-1519741497674-611481863552?w=1920&q=80&auto=format"
+        alt="Hochzeitsfotografie — Brautpaar im Licht"
+        loading="eager"
+      />
+    </div>
     <div class="hero-grain" aria-hidden="true"></div>
+    <!-- CSS Lens Flare -->
+    <div class="lens-flare" aria-hidden="true"></div>
+    <div class="lens-flare-ray" aria-hidden="true"></div>
     <div class="hero-overlay"></div>
     <div class="hero-content">
       <h1 class="hero-headline">
@@ -525,9 +852,31 @@ export const prerender = true;
     <div class="scroll-indicator"></div>
   </section>
 
+  <!-- ═══ INTERLUDE — atmospheric quote with parallax bg ═══ -->
+  <section class="interlude fade-section">
+    <div class="interlude-bg-wrap">
+      <img
+        class="interlude-bg"
+        src="https://images.unsplash.com/photo-1469371670807-013ccf25f16a?w=1600&q=80&auto=format"
+        alt="Hochzeitsfeier — atmosphärischer Moment"
+        loading="lazy"
+      />
+    </div>
+    <div class="interlude-grade" aria-hidden="true"></div>
+    <div class="interlude-content">
+      <span class="interlude-eyebrow">Lichtfang &middot; 2025</span>
+      <blockquote class="interlude-quote">
+        "Es sind nicht die perfekten Posen&mdash;<br />es sind die Blicke, die vergessen,<br />dass eine Kamera dabei ist."
+      </blockquote>
+      <p class="interlude-attribution">Julian Wehr</p>
+    </div>
+  </section>
+
+  <hr class="scene-divider" />
+
   <!-- ═══ ARBEITEN ═══ -->
   <section class="arbeiten fade-section">
-    <p class="arbeiten-label">Arbeiten</p>
+    <p class="section-label">Arbeiten</p>
     <div class="gallery-grid">
       <div class="gallery-item gallery-item-1">
         <img
@@ -572,6 +921,55 @@ export const prerender = true;
     </div>
   </section>
 
+  <hr class="scene-divider" />
+
+  <!-- ═══ PAKETE ═══ -->
+  <section class="pakete fade-section">
+    <div class="pakete-intro">
+      <h2>Kapitel wählen</h2>
+      <p>Jede Hochzeit ist ein eigenes Drehbuch. Ich begleite euch vom ersten Licht bis zum letzten Tanz.</p>
+    </div>
+    <div class="pakete-grid">
+      <div class="paket">
+        <span class="paket-nummer">P &mdash; 001</span>
+        <h3 class="paket-name">Elopement</h3>
+        <p class="paket-preis">ab 1.200 &euro;</p>
+        <ul class="paket-liste">
+          <li>Bis zu 4 Stunden</li>
+          <li>Standesamtliche Trauung</li>
+          <li>Bis zu 300 Bilder</li>
+          <li>Online-Galerie</li>
+        </ul>
+      </div>
+      <div class="pakete-divider-v" aria-hidden="true"></div>
+      <div class="paket">
+        <span class="paket-nummer">P &mdash; 002</span>
+        <h3 class="paket-name">Classic</h3>
+        <p class="paket-preis">ab 2.400 &euro;</p>
+        <ul class="paket-liste">
+          <li>Ganzer Tag</li>
+          <li>Getting Ready bis Feier</li>
+          <li>Bis zu 700 Bilder</li>
+          <li>Albumdesign inklusive</li>
+        </ul>
+      </div>
+      <div class="pakete-divider-v" aria-hidden="true"></div>
+      <div class="paket">
+        <span class="paket-nummer">P &mdash; 003</span>
+        <h3 class="paket-name">Epic</h3>
+        <p class="paket-preis">ab 3.800 &euro;</p>
+        <ul class="paket-liste">
+          <li>Zwei Tage</li>
+          <li>Zweiter Fotograf</li>
+          <li>Alle Bilder, unbegrenzt</li>
+          <li>Folio-Box + Album</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <hr class="scene-divider" />
+
   <!-- ═══ UEBER MICH ═══ -->
   <section class="ueber fade-section">
     <div class="ueber-portrait-wrap">
@@ -588,7 +986,7 @@ export const prerender = true;
       Ich fotografiere das Gefühl, wenn alles stimmt.
     </p>
     <p class="ueber-contact">
-      Anfragen: julian@lichtfang.de &middot; 0176 — 33 44 55 66
+      Anfragen: <a href="mailto:julian@lichtfang.de">julian@lichtfang.de</a> &middot; 0176 &mdash; 33 44 55 66
     </p>
   </section>
 
@@ -607,13 +1005,13 @@ export const prerender = true;
           }
         });
       },
-      { threshold: 0.08 }
+      { threshold: 0.05 }
     );
 
     fadeSections.forEach((el) => sectionObserver.observe(el));
 
     // ═══════════════════════════════════════════
-    // GALLERY ITEMS — staggered IntersectionObserver
+    // GALLERY ITEMS — clip-path stagger
     // ═══════════════════════════════════════════
     const galleryItems = document.querySelectorAll('.gallery-item');
 
@@ -621,16 +1019,15 @@ export const prerender = true;
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            const itemIndex = parseInt(entry.target.dataset.galleryIndex, 10);
-            const delayMs = itemIndex * 100;
+            const idx = parseInt(entry.target.dataset.galleryIndex, 10);
             setTimeout(() => {
               entry.target.classList.add('is-visible');
-            }, delayMs);
+            }, idx * 130);
             galleryObserver.unobserve(entry.target);
           }
         });
       },
-      { threshold: 0.05 }
+      { threshold: 0.04 }
     );
 
     galleryItems.forEach((item, index) => {
@@ -639,7 +1036,26 @@ export const prerender = true;
     });
 
     // ═══════════════════════════════════════════
-    // UEBER-TEXT — separate observer for delayed child
+    // PORTRAIT — separate observer for scale-in
+    // ═══════════════════════════════════════════
+    const portraitWrap = document.querySelector('.ueber-portrait-wrap');
+    if (portraitWrap) {
+      const portraitObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              portraitObserver.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.3 }
+      );
+      portraitObserver.observe(portraitWrap);
+    }
+
+    // ═══════════════════════════════════════════
+    // UEBER-TEXT — delayed child reveal
     // ═══════════════════════════════════════════
     const ueberText = document.querySelector('.ueber-text');
     if (ueberText) {
@@ -662,29 +1078,26 @@ export const prerender = true;
     // ═══════════════════════════════════════════
     const frameCounter = document.querySelector('.film-frame-counter');
 
-    // Milestones: scroll progress thresholds → frame number
     const frameMilestones = [
-      { threshold: 0.0,  frame: '001' },
-      { threshold: 0.25, frame: '002' },
-      { threshold: 0.55, frame: '003' },
-      { threshold: 0.85, frame: '004' },
+      { threshold: 0.00, frame: '001' },
+      { threshold: 0.18, frame: '002' },
+      { threshold: 0.40, frame: '003' },
+      { threshold: 0.62, frame: '004' },
+      { threshold: 0.82, frame: '005' },
     ];
 
     function updateFrameCounter() {
-      const scrollTop    = window.scrollY;
-      const docHeight    = document.documentElement.scrollHeight - window.innerHeight;
-      const scrollRatio  = docHeight > 0 ? scrollTop / docHeight : 0;
+      const scrollTop   = window.scrollY;
+      const docHeight   = document.documentElement.scrollHeight - window.innerHeight;
+      const ratio       = docHeight > 0 ? scrollTop / docHeight : 0;
 
-      let currentFrame = '001';
-      for (const milestone of frameMilestones) {
-        if (scrollRatio >= milestone.threshold) {
-          currentFrame = milestone.frame;
-        }
+      let frame = '001';
+      for (const m of frameMilestones) {
+        if (ratio >= m.threshold) frame = m.frame;
       }
 
-      if (frameCounter && frameCounter.textContent !== currentFrame) {
-        frameCounter.textContent = currentFrame;
-        // Subtle flash on change
+      if (frameCounter && frameCounter.textContent !== frame) {
+        frameCounter.textContent = frame;
         frameCounter.style.color = 'rgba(166, 139, 107, 0.75)';
         setTimeout(() => {
           frameCounter.style.color = 'rgba(166, 139, 107, 0.35)';
@@ -695,20 +1108,32 @@ export const prerender = true;
     window.addEventListener('scroll', updateFrameCounter, { passive: true });
 
     // ═══════════════════════════════════════════
-    // HERO IMAGE — subtle scroll parallax
+    // HERO PARALLAX — on wrapper, not on img
+    // Keeps Ken Burns animation running on the img
     // ═══════════════════════════════════════════
-    const heroImage = document.querySelector('.hero-image');
+    const heroParallaxWrap = document.querySelector('.hero-parallax-wrap');
 
     function updateHeroParallax() {
-      const scrollY = window.scrollY;
-      // Move the image up at half scroll speed — max shift kept modest
-      const shift = scrollY * 0.25;
-      if (heroImage) {
-        heroImage.style.transform = `translateY(${shift}px)`;
-      }
+      if (!heroParallaxWrap) return;
+      const shift = window.scrollY * 0.22;
+      heroParallaxWrap.style.transform = `translateY(${shift}px)`;
     }
 
     window.addEventListener('scroll', updateHeroParallax, { passive: true });
+
+    // ═══════════════════════════════════════════
+    // INTERLUDE PARALLAX — background moves slower than scroll
+    // ═══════════════════════════════════════════
+    const interludeBgWrap = document.querySelector('.interlude-bg-wrap');
+
+    function updateInterludeParallax() {
+      if (!interludeBgWrap) return;
+      const rect  = interludeBgWrap.parentElement.getBoundingClientRect();
+      const shift = (-rect.top) * 0.18;
+      interludeBgWrap.style.transform = `translateY(${shift}px)`;
+    }
+
+    window.addEventListener('scroll', updateInterludeParallax, { passive: true });
   </script>
 </body>
 </html>
