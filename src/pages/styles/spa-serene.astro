@@ -10,41 +10,42 @@ export const prerender = true;
   <title>Ruhe & Raum — Day Spa & Massagen | Trier</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;1,300;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@200;300;400&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { overflow-x: hidden; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
 
     :root {
-      --stone: #F9F6F1;
-      --teal:  #7E9E9F;
-      --sand:  #C4A882;
-      --dark:  #2C2825;
-      --muted: rgba(44,40,37,0.45);
+      --cream:  #F6F2EC;
+      --warm:   #EDE6DB;
+      --sage:   #7A9185;
+      --sage-lt:#A4BDB5;
+      --sand:   #BFA07A;
+      --earth:  #1C1917;
+      --bark:   #6B5240;
+      --fog:    rgba(28,25,23,0.45);
+      --fog-lt: rgba(28,25,23,0.22);
     }
 
     body {
-      background: var(--stone);
-      color: var(--dark);
-      font-family: 'Lato', sans-serif;
-      min-height: 100vh;
+      background: var(--cream);
+      color: var(--earth);
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
       overflow-x: hidden;
     }
 
-    /* Subtle linen texture */
-    body::before {
+    /* Subtle grain overlay */
+    body::after {
       content: '';
       position: fixed;
       inset: 0;
-      background-image:
-        repeating-linear-gradient(
-          0deg, transparent, transparent 3px,
-          rgba(44,40,37,0.012) 3px, rgba(44,40,37,0.012) 4px
-        );
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='250' height='250' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
       pointer-events: none;
-      z-index: 0;
+      z-index: 9999;
     }
 
+    /* ===== NAV ===== */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -52,606 +53,877 @@ export const prerender = true;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 1.75rem 4rem;
-      background: rgba(249,246,241,0.9);
-      backdrop-filter: blur(10px);
+      padding: 2.25rem 4.5rem;
+      transition: background 0.4s ease, padding 0.4s ease, border-color 0.4s ease;
+    }
+    nav.scrolled {
+      background: rgba(246,242,236,0.93);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      padding: 1.25rem 4.5rem;
+      border-bottom: 1px solid rgba(28,25,23,0.07);
     }
     .nav-logo {
       font-family: 'Cormorant', serif;
-      font-weight: 300;
-      font-size: 1.3rem;
-      letter-spacing: 0.08em;
-      color: var(--dark);
+      font-size: 1.15rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      color: white;
+      transition: color 0.4s;
+      text-decoration: none;
     }
-    .nav-logo span { color: var(--teal); font-style: italic; }
+    .nav-logo em { font-style: italic; }
+    nav.scrolled .nav-logo { color: var(--earth); }
     .nav-links {
       display: flex;
-      gap: 2.5rem;
+      gap: 3rem;
       list-style: none;
     }
     .nav-links a {
-      font-size: 0.62rem;
+      font-size: 0.6rem;
       font-weight: 300;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.25em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: rgba(255,255,255,0.65);
       text-decoration: none;
       transition: color 0.3s;
     }
-    .nav-links a:hover { color: var(--teal); }
+    nav.scrolled .nav-links a { color: var(--fog); }
+    .nav-links a:hover { color: white; }
+    nav.scrolled .nav-links a:hover { color: var(--sage); }
     .nav-cta {
-      font-size: 0.6rem;
+      font-size: 0.58rem;
       font-weight: 400;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--stone);
-      background: var(--teal);
-      padding: 0.6rem 1.25rem;
+      color: white;
+      border: 1px solid rgba(255,255,255,0.4);
+      padding: 0.6rem 1.6rem;
       text-decoration: none;
-      transition: background 0.3s;
+      transition: all 0.3s;
     }
-    .nav-cta:hover { background: var(--dark); }
+    nav.scrolled .nav-cta { color: var(--sage); border-color: rgba(122,145,133,0.5); }
+    .nav-cta:hover { background: white; color: var(--earth); border-color: white; }
+    nav.scrolled .nav-cta:hover { background: var(--sage); color: white; border-color: var(--sage); }
 
+    /* ===== HERO ===== */
     .hero {
-      min-height: 100vh;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
       position: relative;
-      z-index: 1;
-    }
-
-    /* LEFT */
-    .hero-left {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 8rem 4rem 4rem 5rem;
-      gap: 2.5rem;
-    }
-
-    .eyebrow {
+      height: 100vh;
+      min-height: 680px;
       display: flex;
       align-items: center;
-      gap: 1rem;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+    }
+    .hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.06);
+      transition: transform 9s ease;
+    }
+    .hero.loaded .hero-bg img { transform: scale(1); }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        160deg,
+        rgba(28,25,23,0.2) 0%,
+        rgba(28,25,23,0.52) 55%,
+        rgba(28,25,23,0.68) 100%
+      );
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+      padding: 0 2rem;
+    }
+    .hero-overline {
       font-size: 0.58rem;
       font-weight: 300;
-      letter-spacing: 0.28em;
+      letter-spacing: 0.38em;
       text-transform: uppercase;
-      color: var(--teal);
-    }
-    .eyebrow::before {
-      content: '';
-      display: block;
-      width: 2rem;
-      height: 1px;
-      background: var(--teal);
-      opacity: 0.5;
-    }
-
-    .hero-headline {
-      font-family: 'Cormorant', serif;
-      font-weight: 300;
-      font-size: clamp(2.8rem, 5vw, 4.5rem);
-      line-height: 1.2;
-      color: var(--dark);
-      letter-spacing: 0.01em;
-    }
-    .hero-headline em {
-      font-style: italic;
-      color: var(--teal);
-    }
-
-    .hero-body {
-      font-size: 0.85rem;
-      font-weight: 300;
-      line-height: 1.9;
-      color: var(--muted);
-      max-width: 40ch;
-    }
-
-    /* Treatments */
-    .treatments {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      border-top: 1px solid rgba(44,40,37,0.1);
-    }
-    .treatment-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1rem 0;
-      border-bottom: 1px solid rgba(44,40,37,0.07);
-      cursor: default;
-      transition: padding-left 0.3s;
-    }
-    .treatment-row:hover { padding-left: 0.5rem; }
-    .treatment-name {
-      font-family: 'Cormorant', serif;
-      font-size: 1rem;
-      font-weight: 400;
-      color: var(--dark);
-    }
-    .treatment-meta {
+      color: rgba(255,255,255,0.55);
       display: flex;
       align-items: center;
       gap: 1.5rem;
     }
-    .treatment-duration {
-      font-size: 0.62rem;
-      font-weight: 300;
-      color: var(--muted);
-      letter-spacing: 0.08em;
+    .hero-overline::before,
+    .hero-overline::after {
+      content: '';
+      display: block;
+      width: 2.5rem;
+      height: 1px;
+      background: rgba(255,255,255,0.35);
     }
-    .treatment-price {
+    .hero-headline {
       font-family: 'Cormorant', serif;
-      font-size: 1rem;
-      font-weight: 400;
-      color: var(--teal);
+      font-size: clamp(4.5rem, 10vw, 9rem);
+      font-weight: 300;
+      line-height: 1.0;
+      letter-spacing: -0.01em;
+      color: white;
     }
-
-    .cta-row {
+    .hero-headline em {
+      font-style: italic;
+      font-weight: 300;
+    }
+    .hero-sub {
+      font-size: 0.85rem;
+      font-weight: 200;
+      letter-spacing: 0.06em;
+      color: rgba(255,255,255,0.65);
+      max-width: 42ch;
+      line-height: 1.85;
+    }
+    .hero-actions {
       display: flex;
       align-items: center;
-      gap: 2rem;
+      gap: 2.5rem;
+      margin-top: 0.5rem;
     }
-    .cta-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.75rem;
-      background: var(--teal);
-      color: var(--stone);
-      text-decoration: none;
+    .btn-fill {
       font-size: 0.6rem;
       font-weight: 400;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      padding: 1rem 2rem;
-      transition: background 0.3s;
-    }
-    .cta-btn:hover { background: var(--dark); }
-    .cta-link {
-      font-size: 0.6rem;
-      font-weight: 300;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--muted);
-      text-decoration: none;
-    }
-
-    /* RIGHT — decorative panel */
-    .hero-right {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 8rem 4rem 4rem;
-      gap: 3rem;
-      background: #F2EDE6;
-    }
-
-    /* Bamboo lines */
-    .bamboo-lines {
-      position: absolute;
-      top: 0; bottom: 0; right: 4rem;
-      width: 1px;
-      background: linear-gradient(to bottom, transparent 10%, rgba(126,158,159,0.15) 30%, rgba(126,158,159,0.15) 70%, transparent 90%);
-    }
-    .bamboo-lines::before {
-      content: '';
-      position: absolute;
-      top: 0; bottom: 0;
-      right: 2rem;
-      width: 1px;
-      background: inherit;
-      opacity: 0.6;
-    }
-
-    .circle-badge {
-      width: 180px;
-      height: 180px;
-      border-radius: 50%;
-      border: 1px solid rgba(126,158,159,0.3);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0.3rem;
-      position: relative;
-    }
-    .circle-badge::before {
-      content: '';
-      position: absolute;
-      inset: 8px;
-      border-radius: 50%;
-      border: 1px solid rgba(126,158,159,0.15);
-    }
-    .badge-main {
-      font-family: 'Cormorant', serif;
-      font-size: 2.8rem;
-      font-weight: 300;
-      color: var(--teal);
-      line-height: 1;
-    }
-    .badge-sub {
-      font-size: 0.52rem;
-      font-weight: 300;
       letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--muted);
+      background: var(--sage);
+      color: white;
+      padding: 1rem 2.75rem;
+      text-decoration: none;
+      transition: background 0.3s;
     }
-
-    .right-copy {
-      font-family: 'Cormorant', serif;
-      font-size: 1.5rem;
+    .btn-fill:hover { background: var(--bark); }
+    .hero-ghost {
+      font-size: 0.6rem;
       font-weight: 300;
-      font-style: italic;
-      line-height: 1.5;
-      text-align: center;
-      color: var(--dark);
-      max-width: 22ch;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      padding-bottom: 2px;
+      transition: all 0.3s;
     }
+    .hero-ghost:hover { color: white; border-color: rgba(255,255,255,0.6); }
 
-    .info-pills {
+    /* Scroll cue */
+    .hero-scroll-cue {
+      position: absolute;
+      bottom: 2.75rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 0.6rem;
-      width: 100%;
     }
-    .info-pill {
-      width: 100%;
-      max-width: 260px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.75rem 1.25rem;
-      background: rgba(249,246,241,0.8);
-      border: 1px solid rgba(44,40,37,0.08);
-    }
-    .pill-label {
-      font-size: 0.6rem;
+    .hero-scroll-cue span {
+      font-size: 0.5rem;
       font-weight: 300;
-      letter-spacing: 0.15em;
+      letter-spacing: 0.3em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: rgba(255,255,255,0.35);
     }
-    .pill-value {
-      font-family: 'Cormorant', serif;
-      font-size: 0.9rem;
-      color: var(--dark);
+    .scroll-bar {
+      width: 1px;
+      height: 3.5rem;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.55), transparent);
+      animation: scrollBar 2.2s ease-in-out infinite;
+    }
+    @keyframes scrollBar {
+      0%, 100% { opacity: 0.35; }
+      50% { opacity: 0.85; }
     }
 
-    /* Photo container */
+    /* ===== REVEAL ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(1.75rem);
+      transition: opacity 0.85s ease, transform 0.85s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .d1 { transition-delay: 0.1s; }
+    .d2 { transition-delay: 0.2s; }
+    .d3 { transition-delay: 0.3s; }
+    .d4 { transition-delay: 0.45s; }
+
+    /* ===== SHARED ===== */
     .ph { position: relative; overflow: hidden; }
-    .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.55s ease; }
-    .ph:hover img { transform: scale(1.05); }
+    .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.65s ease; }
+    .ph:hover img { transform: scale(1.04); }
 
-    /* Page wrap */
-    .page-wrap { max-width: 1600px; margin-left: auto; margin-right: auto; }
-
-    /* Section 2: Behandlungen */
-    .treatments-section {
-      position: relative;
-      z-index: 1;
-      padding: 7rem 5rem;
-      background: var(--stone);
-      border-top: 1px solid rgba(44,40,37,0.08);
-    }
-    .sec-eyebrow {
-      font-size: 0.58rem;
+    .sec-label {
+      font-size: 0.57rem;
       font-weight: 300;
-      letter-spacing: 0.28em;
+      letter-spacing: 0.32em;
       text-transform: uppercase;
-      color: var(--teal);
+      color: var(--sage);
       display: flex;
       align-items: center;
       gap: 1rem;
-      margin-bottom: 1.5rem;
     }
-    .sec-eyebrow::before { content: ''; width: 2rem; height: 1px; background: var(--teal); opacity: 0.5; }
-    .sec-headline {
+    .sec-label::before { content: ''; width: 2rem; height: 1px; background: var(--sage); opacity: 0.65; }
+
+    .sec-h2 {
       font-family: 'Cormorant', serif;
+      font-size: clamp(2.4rem, 4.5vw, 3.8rem);
       font-weight: 300;
-      font-size: clamp(2rem, 4vw, 3.2rem);
-      line-height: 1.2;
-      color: var(--dark);
-      margin-bottom: 3.5rem;
+      line-height: 1.15;
+      color: var(--earth);
     }
-    .sec-headline em { font-style: italic; color: var(--teal); }
-    .treatment-cards {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-    }
-    .t-card {
-      background: #F2EDE6;
-      display: flex;
-      flex-direction: column;
-    }
-    .t-card-body {
-      padding: 1.75rem;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-    .t-card-name {
+    .sec-h2 em { font-style: italic; color: var(--sage); }
+
+    .sec-ghost-num {
       font-family: 'Cormorant', serif;
-      font-size: 1.3rem;
-      font-weight: 400;
-      color: var(--dark);
-    }
-    .t-card-desc {
-      font-size: 0.8rem;
+      font-size: clamp(6rem, 12vw, 11rem);
       font-weight: 300;
-      line-height: 1.7;
-      color: var(--muted);
-      flex: 1;
-    }
-    .t-card-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding-top: 1rem;
-      border-top: 1px solid rgba(44,40,37,0.08);
-    }
-    .t-card-duration {
-      font-size: 0.6rem;
-      font-weight: 300;
-      letter-spacing: 0.1em;
-      color: var(--muted);
-    }
-    .t-card-price {
-      font-family: 'Cormorant', serif;
-      font-size: 1.1rem;
-      color: var(--teal);
+      color: rgba(28,25,23,0.05);
+      line-height: 1;
+      letter-spacing: -0.04em;
+      position: absolute;
+      top: -2rem;
+      right: 0;
+      user-select: none;
+      pointer-events: none;
     }
 
-    /* Section 3: Erlebnis + Buchung */
-    .experience-section {
-      position: relative;
-      z-index: 1;
+    /* ===== INTRO BAND ===== */
+    .intro-band {
+      padding: 4.5rem 6rem;
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      border-top: 1px solid rgba(44,40,37,0.08);
+      grid-template-columns: 1fr 2fr 1fr;
+      align-items: center;
+      gap: 4rem;
+      border-bottom: 1px solid rgba(28,25,23,0.07);
+      background: var(--cream);
     }
-    .exp-left {
+    .band-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .band-stat.right { align-items: flex-end; text-align: right; }
+    .band-stat-num {
+      font-family: 'Cormorant', serif;
+      font-size: clamp(2.2rem, 3.5vw, 3.2rem);
+      font-weight: 300;
+      color: var(--sage);
+      line-height: 1;
+    }
+    .band-stat-label {
+      font-size: 0.58rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--fog);
+    }
+    .band-quote {
+      text-align: center;
+      padding: 0 2rem;
+      border-left: 1px solid rgba(28,25,23,0.1);
+      border-right: 1px solid rgba(28,25,23,0.1);
+    }
+    .band-quote blockquote {
+      font-family: 'Cormorant', serif;
+      font-size: clamp(1.1rem, 2vw, 1.5rem);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.65;
+      color: var(--earth);
+    }
+
+    /* ===== SECTION 2: BEHANDLUNGEN ===== */
+    .treatments-section {
+      padding: 8rem 6rem;
+      background: var(--cream);
+    }
+    .sec-header {
       position: relative;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 4.5rem;
+      gap: 4rem;
     }
-    .exp-right {
-      padding: 6rem 5rem;
-      background: #F2EDE6;
+    .sec-header-left {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      flex-shrink: 0;
+    }
+    .sec-header-body {
+      max-width: 38ch;
+      font-size: 0.85rem;
+      font-weight: 300;
+      line-height: 1.9;
+      color: var(--fog);
+      padding-bottom: 0.25rem;
+    }
+
+    /* Treatment list: row layout with thumbnail */
+    .t-list {
+      display: flex;
+      flex-direction: column;
+    }
+    .t-row {
+      display: grid;
+      grid-template-columns: 110px 1fr auto;
+      align-items: stretch;
+      border-top: 1px solid rgba(28,25,23,0.08);
+      transition: background 0.3s;
+      cursor: default;
+    }
+    .t-row:last-child { border-bottom: 1px solid rgba(28,25,23,0.08); }
+    .t-row:hover { background: rgba(122,145,133,0.04); }
+    .t-thumb {
+      overflow: hidden;
+      width: 110px;
+    }
+    .t-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.55s ease;
+    }
+    .t-row:hover .t-thumb img { transform: scale(1.07); }
+    .t-body {
+      padding: 1.75rem 2.5rem;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      gap: 2rem;
+      gap: 0.5rem;
     }
-    .testimonial-quote {
+    .t-name {
       font-family: 'Cormorant', serif;
-      font-size: clamp(1.3rem, 2.5vw, 2rem);
-      font-weight: 300;
-      font-style: italic;
-      line-height: 1.5;
-      color: var(--dark);
+      font-size: 1.45rem;
+      font-weight: 400;
+      color: var(--earth);
     }
-    .testimonial-author {
-      font-size: 0.6rem;
+    .t-desc {
+      font-size: 0.8rem;
       font-weight: 300;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--muted);
+      line-height: 1.75;
+      color: var(--fog);
+      max-width: 52ch;
     }
-    .booking-block {
+    .t-aside {
       display: flex;
       flex-direction: column;
-      gap: 0.75rem;
-      padding-top: 2rem;
-      border-top: 1px solid rgba(44,40,37,0.1);
+      align-items: flex-end;
+      justify-content: center;
+      padding: 1.75rem 0 1.75rem 2rem;
+      min-width: 110px;
+      gap: 0.4rem;
     }
-    .booking-label {
+    .t-price {
+      font-family: 'Cormorant', serif;
+      font-size: 1.6rem;
+      font-weight: 300;
+      color: var(--earth);
+    }
+    .t-dur {
       font-size: 0.58rem;
       font-weight: 300;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: var(--teal);
+      letter-spacing: 0.12em;
+      color: var(--fog);
     }
-    .booking-info {
-      font-size: 0.82rem;
-      font-weight: 300;
-      line-height: 1.7;
-      color: var(--muted);
+
+    .sec-cta-row {
+      margin-top: 3.5rem;
+      display: flex;
+      justify-content: center;
     }
-    .booking-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.75rem;
-      background: var(--teal);
-      color: var(--stone);
-      text-decoration: none;
+    .btn-outline {
       font-size: 0.6rem;
       font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--earth);
+      border: 1px solid rgba(28,25,23,0.22);
+      padding: 1rem 2.75rem;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    .btn-outline:hover {
+      background: var(--earth);
+      color: var(--cream);
+      border-color: var(--earth);
+    }
+
+    /* ===== SECTION 3: AMBIENTE ===== */
+    .ambiente-section {
+      background: var(--warm);
+      padding: 8rem 0 7rem;
+    }
+    .ambiente-inner { padding: 0 6rem; }
+    .ambiente-grid {
+      display: grid;
+      grid-template-columns: 2.1fr 1fr 1.25fr;
+      grid-template-rows: 295px 295px;
+      gap: 0.9rem;
+      margin-top: 4rem;
+    }
+    .ag1 { grid-column: 1; grid-row: 1 / 3; }
+    .ag2 { grid-column: 2; grid-row: 1; }
+    .ag3 { grid-column: 3; grid-row: 1; }
+    .ag4 { grid-column: 2 / 4; grid-row: 2; }
+
+    /* ===== SECTION 4: BUCHUNG ===== */
+    .booking-section {
+      background: var(--earth);
+      padding: 9rem 6rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8rem;
+      align-items: center;
+    }
+    .booking-left {
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+    .booking-left .sec-label { color: rgba(255,255,255,0.4); }
+    .booking-left .sec-label::before { background: rgba(255,255,255,0.25); }
+    .booking-h2 {
+      font-family: 'Cormorant', serif;
+      font-size: clamp(2.6rem, 4.5vw, 3.8rem);
+      font-weight: 300;
+      line-height: 1.15;
+      color: white;
+    }
+    .booking-h2 em { font-style: italic; color: var(--sage-lt); }
+    .booking-desc {
+      font-size: 0.85rem;
+      font-weight: 300;
+      line-height: 1.9;
+      color: rgba(255,255,255,0.5);
+      max-width: 40ch;
+    }
+    .booking-details {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .b-detail {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.25rem;
+      padding: 1.35rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .b-detail:first-child { border-top: 1px solid rgba(255,255,255,0.07); }
+    .b-icon {
+      width: 2rem;
+      height: 2rem;
+      border: 1px solid rgba(255,255,255,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+    .b-icon svg {
+      width: 0.88rem;
+      height: 0.88rem;
+      stroke: var(--sage-lt);
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .b-text {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+    .b-label {
+      font-size: 0.56rem;
+      font-weight: 300;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      padding: 1rem 2rem;
-      align-self: flex-start;
+      color: rgba(255,255,255,0.3);
+    }
+    .b-value {
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.6;
+    }
+    .booking-actions {
+      display: flex;
+      align-items: center;
+      gap: 2.25rem;
+      padding-top: 0.5rem;
+    }
+    .btn-sage {
+      font-size: 0.6rem;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: white;
+      background: var(--sage);
+      padding: 1rem 2.75rem;
+      text-decoration: none;
       transition: background 0.3s;
     }
-    .booking-btn:hover { background: var(--dark); }
+    .btn-sage:hover { background: #638a7b; }
+    .booking-ghost-link {
+      font-size: 0.58rem;
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.38);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+      padding-bottom: 2px;
+      transition: all 0.3s;
+    }
+    .booking-ghost-link:hover { color: rgba(255,255,255,0.72); border-color: rgba(255,255,255,0.45); }
+
+    .booking-right {
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+    }
+    .booking-photo { height: 380px; }
+    .testimonial-card {
+      padding: 2rem 2.25rem;
+      border: 1px solid rgba(255,255,255,0.07);
+      background: rgba(255,255,255,0.025);
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    .t-quote {
+      font-family: 'Cormorant', serif;
+      font-size: 1.1rem;
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.65;
+      color: rgba(255,255,255,0.75);
+    }
+    .t-author {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .t-author-line {
+      width: 1.5rem;
+      height: 1px;
+      background: var(--sage-lt);
+      flex-shrink: 0;
+    }
+    .t-author-name {
+      font-size: 0.56rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.32);
+    }
   </style>
 </head>
 <body>
-  <div class="page-wrap">
-  <nav>
-    <div class="nav-logo">Ruhe <span>&</span> Raum</div>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <a href="#" class="nav-logo">Ruhe <em>&</em> Raum</a>
     <ul class="nav-links">
-      <li><a href="#">Behandlungen</a></li>
-      <li><a href="#">Pakete</a></li>
-      <li><a href="#">Gutscheine</a></li>
+      <li><a href="#behandlungen">Behandlungen</a></li>
+      <li><a href="#ambiente">Ambiente</a></li>
+      <li><a href="#buchung">Gutscheine</a></li>
     </ul>
-    <a href="#" class="nav-cta">Termin buchen</a>
+    <a href="#buchung" class="nav-cta">Termin buchen</a>
   </nav>
 
-  <section class="hero">
-    <div class="hero-left">
-      <div class="eyebrow">Day Spa · Trier</div>
-
+  <!-- ===== HERO ===== -->
+  <section class="hero" id="hero">
+    <div class="hero-bg">
+      <img
+        src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=2000&h=1200&q=85"
+        alt="Spa Ruhe & Raum Trier"
+      />
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-overline">Day Spa &nbsp;·&nbsp; Trier &nbsp;·&nbsp; Seit 2015</div>
       <h1 class="hero-headline">
         Ankommen.<br>
         Loslassen.<br>
         <em>Sein.</em>
       </h1>
-
-      <p class="hero-body">
+      <p class="hero-sub">
         Ein Ort für tiefe Entspannung — fernab des Alltags.
         Handverlesene Behandlungen, natürliche Produkte,
         ein Team das zuhört.
       </p>
-
-      <div class="treatments">
-        <div class="treatment-row">
-          <span class="treatment-name">Hot Stone Massage</span>
-          <div class="treatment-meta">
-            <span class="treatment-duration">90 Min</span>
-            <span class="treatment-price">98 €</span>
-          </div>
-        </div>
-        <div class="treatment-row">
-          <span class="treatment-name">Tiefenentspannung</span>
-          <div class="treatment-meta">
-            <span class="treatment-duration">60 Min</span>
-            <span class="treatment-price">72 €</span>
-          </div>
-        </div>
-        <div class="treatment-row">
-          <span class="treatment-name">Aromaöl-Ritual</span>
-          <div class="treatment-meta">
-            <span class="treatment-duration">75 Min</span>
-            <span class="treatment-price">85 €</span>
-          </div>
-        </div>
-        <div class="treatment-row">
-          <span class="treatment-name">Gesichtsbehandlung</span>
-          <div class="treatment-meta">
-            <span class="treatment-duration">50 Min</span>
-            <span class="treatment-price">65 €</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="cta-row">
-        <a href="#" class="cta-btn">Termin buchen</a>
-        <a href="#" class="cta-link">Alle Behandlungen →</a>
+      <div class="hero-actions">
+        <a href="#buchung" class="btn-fill">Termin buchen</a>
+        <a href="#behandlungen" class="hero-ghost">Alle Behandlungen</a>
       </div>
     </div>
-
-    <div class="hero-right">
-      <div class="bamboo-lines"></div>
-
-      <div class="circle-badge">
-        <div class="badge-main">10</div>
-        <div class="badge-sub">Jahre Erfahrung</div>
-      </div>
-
-      <p class="right-copy">
-        „Körper und Geist brauchen<br>
-        denselben Raum — Stille."
-      </p>
-
-      <div class="info-pills">
-        <div class="info-pill">
-          <span class="pill-label">Öffnungszeiten</span>
-          <span class="pill-value">Di – Sa, 9 – 20 Uhr</span>
-        </div>
-        <div class="info-pill">
-          <span class="pill-label">Parken</span>
-          <span class="pill-value">Kostenlos, direkt vorm Haus</span>
-        </div>
-        <div class="info-pill">
-          <span class="pill-label">Gutscheine</span>
-          <span class="pill-value">Online & vor Ort erhältlich</span>
-        </div>
-      </div>
+    <div class="hero-scroll-cue">
+      <div class="scroll-bar"></div>
+      <span>Entdecken</span>
     </div>
   </section>
 
-  <!-- SECTION 2: Behandlungen mit Fotos -->
-  <section class="treatments-section">
-    <div class="sec-eyebrow">Unsere Behandlungen</div>
-    <h2 class="sec-headline">Rituale für<br>Körper & <em>Geist.</em></h2>
-    <div class="treatment-cards">
-      <div class="t-card">
-        <div class="ph" style="height:260px;">
-          <img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=1200&h=800&q=80" alt="Hot Stone Massage" loading="lazy"/>
-          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(44,40,37,0.3) 0%,transparent 60%);pointer-events:none;"></div>
-        </div>
-        <div class="t-card-body">
-          <div class="t-card-name">Hot Stone Massage</div>
-          <p class="t-card-desc">Warme Basaltsteine lösen tiefe Verspannungen und fördern die Durchblutung. Ein Ritual für vollständige Schwere und Wärme.</p>
-          <div class="t-card-footer">
-            <span class="t-card-duration">90 Minuten</span>
-            <span class="t-card-price">98 €</span>
-          </div>
-        </div>
-      </div>
-      <div class="t-card">
-        <div class="ph" style="height:260px;">
-          <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1200&h=800&q=80" alt="Gesichtsbehandlung" loading="lazy"/>
-          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(44,40,37,0.3) 0%,transparent 60%);pointer-events:none;"></div>
-        </div>
-        <div class="t-card-body">
-          <div class="t-card-name">Naturkosmetik-Facial</div>
-          <p class="t-card-desc">Tiefenreinigung, Peeling und Maske mit zertifizierten Bio-Produkten. Haut die atmet — sichtbar und spürbar.</p>
-          <div class="t-card-footer">
-            <span class="t-card-duration">50 Minuten</span>
-            <span class="t-card-price">65 €</span>
-          </div>
-        </div>
-      </div>
-      <div class="t-card">
-        <div class="ph" style="height:260px;">
-          <img src="https://images.unsplash.com/photo-1574484284002-952d92456975?auto=format&fit=crop&w=1200&h=800&q=80" alt="Aromaöl Ritual" loading="lazy"/>
-          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(44,40,37,0.3) 0%,transparent 60%);pointer-events:none;"></div>
-        </div>
-        <div class="t-card-body">
-          <div class="t-card-name">Aromaöl-Ritual</div>
-          <p class="t-card-desc">Handgemischte ätherische Öle in einer geführten Ganzkörperanwendung. Für tiefste Entspannung und innere Ruhe.</p>
-          <div class="t-card-footer">
-            <span class="t-card-duration">75 Minuten</span>
-            <span class="t-card-price">85 €</span>
-          </div>
-        </div>
-      </div>
+  <!-- INTRO BAND -->
+  <div class="intro-band reveal">
+    <div class="band-stat">
+      <span class="band-stat-num">10+</span>
+      <span class="band-stat-label">Jahre Erfahrung</span>
     </div>
-  </section>
-
-  <!-- SECTION 3: Erlebnis + Buchung -->
-  <section class="experience-section">
-    <div class="exp-left">
-      <div class="ph" style="height:100%;min-height:500px;">
-        <img src="https://images.unsplash.com/photo-1548839140-29a749e1cf4d?auto=format&fit=crop&w=1200&h=1600&q=80" alt="Spa Atmosphäre" loading="lazy"/>
-        <div style="position:absolute;inset:0;background:linear-gradient(to right,transparent 60%,#F2EDE6 100%);pointer-events:none;"></div>
-      </div>
-    </div>
-    <div class="exp-right">
-      <div class="sec-eyebrow">Was Gäste sagen</div>
-      <blockquote class="testimonial-quote">
-        „Ich bin nach zwei Stunden als ein anderer Mensch rausgegangen. Ruhe & Raum ist kein Wellness-Studio — es ist ein Zustand."
+    <div class="band-quote">
+      <blockquote>
+        „Körper und Geist brauchen denselben Raum — Stille."
       </blockquote>
-      <p class="testimonial-author">— Marie K., Stammkundin seit 2021</p>
-      <div class="booking-block">
-        <div class="booking-label">Termin buchen</div>
-        <p class="booking-info">
-          Telefonisch oder online buchbar.<br>
-          Di – Sa, 9 – 20 Uhr · Trierer Str. 14, 54290 Trier<br>
-          Tel: +49 651 / 987 65 43
+    </div>
+    <div class="band-stat right">
+      <span class="band-stat-num">3.200</span>
+      <span class="band-stat-label">Zufriedene Gäste</span>
+    </div>
+  </div>
+
+  <!-- ===== SECTION 2: BEHANDLUNGEN ===== -->
+  <section class="treatments-section" id="behandlungen">
+    <div class="sec-header reveal">
+      <div class="sec-header-left">
+        <span class="sec-label">Unsere Rituale</span>
+        <h2 class="sec-h2">Für Körper<br>&amp; <em>Geist.</em></h2>
+      </div>
+      <p class="sec-header-body">
+        Jede Behandlung ist eine Einladung zur vollständigen Stille.
+        Natürliche Öle, warme Steine, bewusste Berührung —
+        wir begleiten dich in tiefste Entspannung.
+      </p>
+      <span class="sec-ghost-num">01</span>
+    </div>
+
+    <div class="t-list">
+      <div class="t-row reveal d1">
+        <div class="t-thumb">
+          <img
+            src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=400&h=300&q=80"
+            alt="Hot Stone Massage" loading="lazy"
+          />
+        </div>
+        <div class="t-body">
+          <div class="t-name">Hot Stone Massage</div>
+          <p class="t-desc">Warme Basaltsteine lösen tiefe Verspannungen und fördern die Durchblutung. Ein Ritual für vollständige Schwere und Wärme.</p>
+        </div>
+        <div class="t-aside">
+          <span class="t-price">98 €</span>
+          <span class="t-dur">90 Minuten</span>
+        </div>
+      </div>
+
+      <div class="t-row reveal d2">
+        <div class="t-thumb">
+          <img
+            src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=400&h=300&q=80"
+            alt="Naturkosmetik-Facial" loading="lazy"
+          />
+        </div>
+        <div class="t-body">
+          <div class="t-name">Naturkosmetik-Facial</div>
+          <p class="t-desc">Tiefenreinigung, Peeling und Maske mit zertifizierten Bio-Produkten. Haut die atmet — sichtbar und spürbar.</p>
+        </div>
+        <div class="t-aside">
+          <span class="t-price">65 €</span>
+          <span class="t-dur">50 Minuten</span>
+        </div>
+      </div>
+
+      <div class="t-row reveal d3">
+        <div class="t-thumb">
+          <img
+            src="https://images.unsplash.com/photo-1519823551278-64ac92734fb1?auto=format&fit=crop&w=400&h=300&q=80"
+            alt="Aromaöl-Ritual" loading="lazy"
+          />
+        </div>
+        <div class="t-body">
+          <div class="t-name">Aromaöl-Ritual</div>
+          <p class="t-desc">Handgemischte ätherische Öle in einer geführten Ganzkörperanwendung. Für tiefste Entspannung und innere Ruhe.</p>
+        </div>
+        <div class="t-aside">
+          <span class="t-price">85 €</span>
+          <span class="t-dur">75 Minuten</span>
+        </div>
+      </div>
+
+      <div class="t-row reveal d4">
+        <div class="t-thumb">
+          <img
+            src="https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=400&h=300&q=80"
+            alt="Tiefenentspannung" loading="lazy"
+          />
+        </div>
+        <div class="t-body">
+          <div class="t-name">Tiefenentspannung</div>
+          <p class="t-desc">Eine ganzheitliche Rückenmassage mit langen, langsamen Ausstreichungen. Stressabbau auf tiefster Ebene.</p>
+        </div>
+        <div class="t-aside">
+          <span class="t-price">72 €</span>
+          <span class="t-dur">60 Minuten</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec-cta-row reveal">
+      <a href="#" class="btn-outline">Alle Behandlungen ansehen</a>
+    </div>
+  </section>
+
+  <!-- ===== SECTION 3: AMBIENTE ===== -->
+  <section class="ambiente-section" id="ambiente">
+    <div class="ambiente-inner">
+      <div class="sec-header reveal" style="margin-bottom:0; position:relative;">
+        <div class="sec-header-left">
+          <span class="sec-label">Das Ambiente</span>
+          <h2 class="sec-h2">Raum für<br>deine <em>Stille.</em></h2>
+        </div>
+        <p class="sec-header-body reveal d2">
+          Unser Spa in Trier ist ein sorgfältig gestalteter Rückzugsort — warm, still und fern vom Alltag.
+          Jedes Detail dient deiner Ruhe.
         </p>
-        <a href="#" class="booking-btn">Jetzt Termin buchen →</a>
+        <span class="sec-ghost-num">02</span>
+      </div>
+
+      <div class="ambiente-grid">
+        <div class="ph ag1 reveal">
+          <img
+            src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&w=900&h=1200&q=80"
+            alt="Spa Ruheraum" loading="lazy"
+          />
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(28,25,23,0.22) 0%,transparent 55%);pointer-events:none;"></div>
+        </div>
+        <div class="ph ag2 reveal d1">
+          <img
+            src="https://images.unsplash.com/photo-1507652313519-d4e9174996dd?auto=format&fit=crop&w=600&h=600&q=80"
+            alt="Wellness Kerzen" loading="lazy"
+          />
+        </div>
+        <div class="ph ag3 reveal d2">
+          <img
+            src="https://images.unsplash.com/photo-1578996953841-b187dbe4bc8a?auto=format&fit=crop&w=700&h=600&q=80"
+            alt="Spa Sauna" loading="lazy"
+          />
+        </div>
+        <div class="ph ag4 reveal d3">
+          <img
+            src="https://images.unsplash.com/photo-1560618604-71f3c50a2c64?auto=format&fit=crop&w=1400&h=500&q=80"
+            alt="Spa Entspannung" loading="lazy"
+          />
+        </div>
       </div>
     </div>
   </section>
 
-  </div><!-- /page-wrap -->
+  <!-- ===== SECTION 4: BUCHUNG ===== -->
+  <section class="booking-section" id="buchung">
+    <div class="booking-left reveal">
+      <span class="sec-label">Termin &amp; Buchung</span>
+      <h2 class="booking-h2">Dein Termin<br>wartet auf<br><em>dich.</em></h2>
+      <p class="booking-desc">
+        Einfach anrufen oder online buchen. Wir freuen uns auf dich —
+        in unserem Spa mitten in Trier.
+      </p>
+      <div class="booking-details">
+        <div class="b-detail">
+          <div class="b-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+          </div>
+          <div class="b-text">
+            <span class="b-label">Öffnungszeiten</span>
+            <span class="b-value">Dienstag bis Samstag<br>9:00 – 20:00 Uhr</span>
+          </div>
+        </div>
+        <div class="b-detail">
+          <div class="b-icon">
+            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div class="b-text">
+            <span class="b-label">Adresse</span>
+            <span class="b-value">Trierer Str. 14 · 54290 Trier<br>Kostenlos parken direkt vorm Haus</span>
+          </div>
+        </div>
+        <div class="b-detail">
+          <div class="b-icon">
+            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13 19.79 19.79 0 0 1 1.61 4.39 2 2 0 0 1 3.58 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </div>
+          <div class="b-text">
+            <span class="b-label">Telefon</span>
+            <span class="b-value">+49 651 / 987 65 43</span>
+          </div>
+        </div>
+      </div>
+      <div class="booking-actions">
+        <a href="#" class="btn-sage">Jetzt buchen</a>
+        <a href="#" class="booking-ghost-link">Gutschein schenken</a>
+      </div>
+    </div>
+
+    <div class="booking-right reveal d2">
+      <div class="ph booking-photo">
+        <img
+          src="https://images.unsplash.com/photo-1548839140-29a749e1cf4d?auto=format&fit=crop&w=1000&h=760&q=80"
+          alt="Massageraum Ruhe & Raum" loading="lazy"
+        />
+        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(28,25,23,0.45) 0%,transparent 65%);pointer-events:none;"></div>
+      </div>
+      <div class="testimonial-card">
+        <p class="t-quote">
+          „Ich bin nach zwei Stunden als ein anderer Mensch rausgegangen.
+          Ruhe &amp; Raum ist kein Wellness-Studio — es ist ein Zustand."
+        </p>
+        <div class="t-author">
+          <div class="t-author-line"></div>
+          <span class="t-author-name">Marie K. · Stammkundin seit 2021</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Scrolled nav
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 70);
+    }, { passive: true });
+
+    // Hero Ken Burns on load
+    const hero = document.getElementById('hero');
+    const heroImg = hero.querySelector('.hero-bg img');
+    const markLoaded = () => hero.classList.add('loaded');
+    heroImg.complete ? markLoaded() : heroImg.addEventListener('load', markLoaded);
+
+    // Scroll reveal
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible');
+            observer.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+
 </body>
 </html>
