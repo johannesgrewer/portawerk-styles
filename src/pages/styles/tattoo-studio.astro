@@ -9,525 +9,903 @@ export const prerender = true;
   <title>Nadelwerk — Tattoo & Illustration Trier</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat:wght@700&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    html {
-      overflow-x: hidden;
-      height: 100%;
-    }
+    html { overflow-x: hidden; }
 
     body {
       overflow-x: hidden;
-      height: 100%;
       background: #0A0A0A;
       color: #F0EDE8;
       font-family: 'DM Mono', monospace;
     }
 
-    /* ---- Film grain overlay ---- */
+    /* ─── Photo container helper ─── */
+    .ph { position: relative; overflow: hidden; }
+    .ph img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.65s cubic-bezier(0.22,1,0.36,1);
+    }
+    .ph:hover img { transform: scale(1.05); }
+
+    /* ─── Utility ─── */
+    .label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.5rem;
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(240,237,232,0.35);
+      display: block;
+    }
+
+    /* ══════════════════════════════════════
+       HERO
+    ══════════════════════════════════════ */
     .hero {
       position: relative;
       width: 100vw;
       height: 100vh;
+      min-height: 600px;
       overflow: hidden;
     }
 
+    /* film grain */
     .hero::after {
       content: '';
       position: absolute;
       inset: -50%;
-      width: 200%;
-      height: 200%;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
-      opacity: 0.12;
+      width: 200%; height: 200%;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+      opacity: 0.13;
       pointer-events: none;
       z-index: 20;
       animation: grainShift 0.12s steps(1) infinite;
     }
 
     @keyframes grainShift {
-      0%   { transform: translate(0, 0); }
-      25%  { transform: translate(-2%, 1%); }
-      50%  { transform: translate(1%, -2%); }
-      75%  { transform: translate(2%, 2%); }
-      100% { transform: translate(-1%, 0%); }
+      0%   { transform: translate(0,0); }
+      25%  { transform: translate(-2%,1%); }
+      50%  { transform: translate(1%,-2%); }
+      75%  { transform: translate(2%,2%); }
+      100% { transform: translate(-1%,0%); }
     }
 
-    /* ---- Background image ---- */
     .hero__bg {
-      position: absolute;
-      inset: 0;
-      background-image: url('https://images.unsplash.com/photo-1567324216289-5b5b8c4f5e45?w=1400&q=80&auto=format');
+      position: absolute; inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1605106702842-01a887a31122?auto=format&fit=crop&w=1600&q=80');
       background-size: cover;
-      background-position: center;
+      background-position: center 35%;
       z-index: 0;
-      transition: filter 0.6s ease;
+      transition: transform 8s ease;
     }
+    .hero:hover .hero__bg { transform: scale(1.03); }
 
-    .hero:hover .hero__bg {
-      filter: saturate(1.6) hue-rotate(340deg) brightness(0.9);
-    }
-
-    /* Gradient overlay */
     .hero__overlay {
-      position: absolute;
-      inset: 0;
+      position: absolute; inset: 0;
       background: linear-gradient(
-        to bottom,
-        rgba(10,10,10,0.2) 0%,
-        rgba(10,10,10,0.45) 50%,
-        rgba(10,10,10,0.85) 100%
+        135deg,
+        rgba(10,10,10,0.72) 0%,
+        rgba(10,10,10,0.35) 45%,
+        rgba(10,10,10,0.78) 100%
       );
       z-index: 1;
     }
 
-    /* ---- Red diagonal line ---- */
-    .hero__diagonal {
-      position: absolute;
-      z-index: 5;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
+    /* diagonal red line */
+    .hero__slash {
+      position: absolute; inset: 0;
       overflow: hidden;
+      pointer-events: none;
+      z-index: 5;
     }
-
-    .hero__diagonal::after {
+    .hero__slash::after {
       content: '';
       position: absolute;
-      width: 2px;
-      height: 180%;
+      width: 1px; height: 180%;
       background: #E63946;
-      top: -40%;
-      left: 52%;
-      transform: rotate(22deg);
-      transform-origin: top center;
+      top: -40%; left: 55%;
+      transform: rotate(18deg);
+      transform-origin: top;
       opacity: 0;
-      animation: fadeIn 0.6s ease forwards 2.4s;
+      animation: fadeIn 0.5s ease forwards 2.6s;
     }
 
-    /* ---- Content layout ---- */
     .hero__content {
-      position: relative;
-      z-index: 10;
-      width: 100%;
-      height: 100%;
+      position: relative; z-index: 10;
+      width: 100%; height: 100%;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: 3.5rem 3.5rem 3rem;
+      padding: clamp(2rem, 5vw, 3.5rem);
     }
 
-    /* Top section — brand name */
-    .hero__top {
+    /* nav bar */
+    .hero__nav {
       display: flex;
-      flex-direction: column;
+      justify-content: space-between;
       align-items: flex-start;
     }
-
-    .hero__name-top {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(5rem, 14vw, 13rem);
-      line-height: 0.88;
-      color: #F0EDE8;
-      letter-spacing: 0.02em;
-      opacity: 0;
-      transform: translateX(-40px);
-      animation: slideRight 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards 0.3s;
-    }
-
-    .hero__red-rule {
-      width: clamp(5rem, 14vw, 13rem);
-      height: 3px;
-      background: #E63946;
-      margin: 0.3rem 0;
-      opacity: 0;
-      transform: scaleX(0);
-      transform-origin: left;
-      animation: expandLine 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards 0.85s;
-    }
-
-    .hero__name-bottom {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(5rem, 14vw, 13rem);
-      line-height: 0.88;
-      color: #F0EDE8;
-      letter-spacing: 0.02em;
-      opacity: 0;
-      transform: translateX(-40px);
-      animation: slideRight 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards 0.5s;
-    }
-
-    /* Bottom section */
-    .hero__bottom {
-      display: flex;
-      flex-direction: column;
-      gap: 0.9rem;
-    }
-
-    .hero__sub {
+    .hero__nav-brand {
       font-family: 'DM Mono', monospace;
-      font-weight: 300;
-      font-size: clamp(0.55rem, 1vw, 0.72rem);
+      font-size: 0.5rem;
       letter-spacing: 0.3em;
       text-transform: uppercase;
-      color: rgba(240, 237, 232, 0.65);
+      color: rgba(240,237,232,0.45);
       opacity: 0;
-      transform: translateY(12px);
-      animation: riseIn 0.7s ease forwards 1.3s;
+      animation: fadeIn 0.6s ease forwards 0.1s;
     }
-
-    .hero__tagline {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(2rem, 5vw, 4rem);
-      color: #F0EDE8;
-      letter-spacing: 0.04em;
+    .hero__nav-links {
+      display: flex; gap: 2rem;
       opacity: 0;
-      transform: translateY(12px);
-      animation: riseIn 0.7s ease forwards 1.6s;
+      animation: fadeIn 0.6s ease forwards 0.2s;
     }
-
-    /* ---- Scroll indicator ---- */
-    .hero__scroll {
-      position: absolute;
-      bottom: 2.5rem;
-      right: 3.5rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.5rem;
-      z-index: 10;
-      opacity: 0;
-      animation: fadeIn 0.8s ease forwards 2.8s;
-    }
-
-    .hero__scroll-label {
+    .hero__nav-link {
       font-family: 'DM Mono', monospace;
       font-size: 0.5rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: rgba(240,237,232,0.4);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .hero__nav-link:hover { color: #E63946; }
+
+    /* headline */
+    .hero__headline {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .hero__word {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(5.5rem, 16vw, 14rem);
+      line-height: 0.86;
+      color: #F0EDE8;
+      letter-spacing: 0.01em;
+      opacity: 0;
+      transform: translateX(-50px);
+    }
+    .hero__word--1 { animation: slideRight 0.75s cubic-bezier(0.22,1,0.36,1) forwards 0.35s; }
+    .hero__word--2 { animation: slideRight 0.75s cubic-bezier(0.22,1,0.36,1) forwards 0.55s; }
+
+    .hero__rule {
+      width: clamp(5.5rem, 16vw, 14rem);
+      height: 3px;
+      background: #E63946;
+      margin: 0.25rem 0;
+      opacity: 0;
+      transform: scaleX(0);
+      transform-origin: left;
+      animation: expandLine 0.6s cubic-bezier(0.22,1,0.36,1) forwards 0.95s;
+    }
+
+    /* bottom info row */
+    .hero__bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    .hero__meta {
+      display: flex; flex-direction: column; gap: 0.7rem;
+    }
+    .hero__location {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.52rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(240,237,232,0.5);
+      opacity: 0;
+      animation: riseIn 0.7s ease forwards 1.4s;
+    }
+    .hero__tagline {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(1.8rem, 4.5vw, 3.8rem);
+      color: #F0EDE8;
+      letter-spacing: 0.04em;
+      opacity: 0;
+      animation: riseIn 0.7s ease forwards 1.65s;
+    }
+    .hero__caveat {
+      font-family: 'Caveat', cursive;
+      font-size: clamp(1.2rem, 2.5vw, 1.7rem);
+      color: #E63946;
+      opacity: 0;
+      animation: riseIn 0.7s ease forwards 1.9s;
+    }
+
+    /* scroll indicator */
+    .hero__scroll {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 0.5rem;
+      opacity: 0;
+      animation: fadeIn 0.8s ease forwards 3s;
+    }
+    .hero__scroll-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.48rem; letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(240,237,232,0.3);
       writing-mode: vertical-rl;
     }
-
     .hero__scroll-line {
-      width: 1px;
-      height: 60px;
-      background: #E63946;
-      position: relative;
-      overflow: hidden;
+      width: 1px; height: 56px;
+      background: rgba(240,237,232,0.12);
+      position: relative; overflow: hidden;
     }
-
     .hero__scroll-line::after {
       content: '';
-      position: absolute;
-      top: -100%;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(240,237,232,0.2);
+      position: absolute; top: -100%; left: 0;
+      width: 100%; height: 50%;
+      background: #E63946;
       animation: scrollPulse 1.8s ease-in-out infinite;
     }
-
     @keyframes scrollPulse {
-      0%   { top: -100%; opacity: 1; }
-      100% { top: 100%;  opacity: 0; }
+      0%   { top: -50%; opacity: 1; }
+      100% { top: 110%; opacity: 0; }
     }
 
-    /* ---- Keyframes ---- */
+    /* ─── Keyframes ─── */
+    @keyframes riseIn   { to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn   { to { opacity: 1; } }
+    @keyframes slideRight { to { opacity: 1; transform: translateX(0); } }
+    @keyframes expandLine { to { opacity: 1; transform: scaleX(1); } }
 
-    @keyframes riseIn {
-      to { opacity: 1; transform: translateY(0); }
+    /* ══════════════════════════════════════
+       INTRO STRIP
+    ══════════════════════════════════════ */
+    .intro-strip {
+      background: #E63946;
+      padding: 1rem clamp(2rem, 5vw, 3.5rem);
+      display: flex;
+      gap: 3rem;
+      overflow: hidden;
     }
-
-    @keyframes fadeIn {
-      to { opacity: 1; }
-    }
-
-    @keyframes slideRight {
-      to { opacity: 1; transform: translateX(0); }
-    }
-
-    @keyframes expandLine {
-      to { opacity: 1; transform: scaleX(1); }
-    }
-
-    /* === PHOTO CONTAINER === */
-    .ph { position: relative; overflow: hidden; }
-    .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.55s ease; }
-    .ph:hover img { transform: scale(1.05); }
-
-    /* === PORTFOLIO SECTION === */
-    .portfolio {
-      background: #0A0A0A;
-      padding: 6rem 3.5rem;
-      max-width: 1600px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .port-label {
+    .intro-strip__item {
       font-family: 'DM Mono', monospace;
       font-size: 0.5rem;
-      font-weight: 400;
-      letter-spacing: 0.3em;
+      letter-spacing: 0.25em;
       text-transform: uppercase;
-      color: rgba(240,237,232,0.35);
-      margin-bottom: 0.75rem;
+      color: rgba(10,10,10,0.8);
+      white-space: nowrap;
     }
-    .port-title {
+    .intro-strip__sep {
+      color: rgba(10,10,10,0.4);
+    }
+
+    /* ══════════════════════════════════════
+       PORTFOLIO
+    ══════════════════════════════════════ */
+    .portfolio {
+      padding: 6rem clamp(2rem, 5vw, 3.5rem);
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 3rem;
+    }
+    .section-header__left { display: flex; flex-direction: column; gap: 0.6rem; }
+    .section-title {
       font-family: 'Bebas Neue', sans-serif;
       font-size: clamp(2.5rem, 5vw, 4rem);
       color: #F0EDE8;
       letter-spacing: 0.04em;
-      margin-bottom: 3rem;
+      line-height: 1;
     }
+    .section-caveat {
+      font-family: 'Caveat', cursive;
+      font-size: clamp(1rem, 2vw, 1.35rem);
+      color: rgba(240,237,232,0.3);
+    }
+    .section-header__link {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.52rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(240,237,232,0.35);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(240,237,232,0.15);
+      padding-bottom: 0.15rem;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .section-header__link:hover { color: #E63946; border-color: #E63946; }
+
+    /* Featured row */
+    .port-featured {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 3px;
+      margin-bottom: 3px;
+    }
+    .port-featured__main { height: 520px; }
+    .port-featured__stack {
+      display: grid;
+      grid-template-rows: 1fr 1fr;
+      gap: 3px;
+    }
+    .port-featured__stack .ph { height: 100%; }
+
+    /* Regular grid */
     .port-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 3px;
     }
+    .port-grid .ph { height: 320px; }
+
+    /* Card overlay + info */
     .port-card {
       position: relative;
-      overflow: hidden;
     }
-    .port-card-inner {
-      height: 380px;
-    }
-    .port-card-overlay {
-      position: absolute;
-      inset: 0;
+    .port-overlay {
+      position: absolute; inset: 0;
       background: linear-gradient(to top, rgba(10,10,10,0.85) 0%, transparent 55%);
-      pointer-events: none;
       transition: background 0.4s ease;
+      pointer-events: none;
     }
-    .port-card:hover .port-card-overlay {
-      background: linear-gradient(to top, rgba(230,57,70,0.6) 0%, transparent 70%);
+    .port-card:hover .port-overlay {
+      background: linear-gradient(to top, rgba(230,57,70,0.65) 0%, transparent 65%);
     }
-    .port-card-info {
+    .port-info {
       position: absolute;
-      bottom: 1.25rem;
-      left: 1.25rem;
+      bottom: 1.25rem; left: 1.25rem;
       z-index: 2;
     }
-    .port-card-tag {
+    .port-tag {
       font-family: 'DM Mono', monospace;
-      font-size: 0.5rem;
+      font-size: 0.48rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: #E63946;
       display: block;
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.2rem;
     }
-    .port-card-name {
+    .port-name {
       font-family: 'Bebas Neue', sans-serif;
       font-size: 1.4rem;
       color: #F0EDE8;
       letter-spacing: 0.06em;
     }
 
-    /* === ARTISTS SECTION === */
+    /* ══════════════════════════════════════
+       ARTISTS
+    ══════════════════════════════════════ */
     .artists {
-      background: #111111;
-      padding: 6rem 3.5rem;
+      background: #0F0F0F;
+      padding: 6rem clamp(2rem, 5vw, 3.5rem);
+    }
+    .artists__inner {
       max-width: 1600px;
-      margin-left: auto;
-      margin-right: auto;
+      margin: 0 auto;
+    }
+    .artists__header {
+      display: flex;
+      flex-direction: column; gap: 0.6rem;
+      margin-bottom: 3.5rem;
+    }
+    .artists__grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 5rem;
-      align-items: center;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
     }
-    .artists-photo {
-      height: 520px;
-      border: 1px solid rgba(240,237,232,0.08);
+    .artist-card {
+      position: relative;
+      overflow: hidden;
     }
-    .artists-content {
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
+    .artist-card__photo { height: 480px; }
+    .artist-card__overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0.2) 50%, transparent 75%);
+      pointer-events: none;
     }
-    .artists-label {
+    .artist-card:hover .artist-card__overlay {
+      background: linear-gradient(to top, rgba(10,10,10,0.95) 0%, rgba(230,57,70,0.15) 60%, transparent 85%);
+    }
+    .artist-card__content {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 1.75rem 1.5rem;
+      z-index: 2;
+    }
+    .artist-card__number {
       font-family: 'DM Mono', monospace;
-      font-size: 0.5rem;
-      font-weight: 400;
-      letter-spacing: 0.3em;
+      font-size: 0.45rem;
+      letter-spacing: 0.25em;
       text-transform: uppercase;
-      color: rgba(240,237,232,0.35);
+      color: #E63946;
+      display: block;
+      margin-bottom: 0.4rem;
     }
-    .artists-title {
+    .artist-card__name {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(2.5rem, 4vw, 3.8rem);
-      color: #F0EDE8;
-      letter-spacing: 0.04em;
-      line-height: 1.0;
-    }
-    .artists-title .red { color: #E63946; }
-    .artists-body {
-      font-family: 'DM Mono', monospace;
-      font-weight: 300;
-      font-size: 0.78rem;
-      line-height: 1.9;
-      color: rgba(240,237,232,0.55);
-    }
-    .artists-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-    }
-    .artist-item {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      padding: 0.75rem 0;
-      border-bottom: 1px solid rgba(240,237,232,0.08);
-    }
-    .artist-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: #E63946;
-      flex-shrink: 0;
-    }
-    .artist-name {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.1rem;
+      font-size: 1.8rem;
       color: #F0EDE8;
       letter-spacing: 0.06em;
-      flex: 1;
+      display: block;
+      margin-bottom: 0.3rem;
     }
-    .artist-spec {
+    .artist-card__spec {
       font-family: 'DM Mono', monospace;
       font-size: 0.5rem;
       letter-spacing: 0.15em;
       text-transform: uppercase;
-      color: rgba(240,237,232,0.35);
+      color: rgba(240,237,232,0.45);
+      display: block;
+      margin-bottom: 0.9rem;
     }
-    .artists-cta {
+    .artist-card__tags {
+      display: flex; flex-wrap: wrap; gap: 0.4rem;
+    }
+    .artist-tag {
       font-family: 'DM Mono', monospace;
-      font-size: 0.62rem;
-      font-weight: 500;
+      font-size: 0.45rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
+      color: rgba(240,237,232,0.55);
+      border: 1px solid rgba(240,237,232,0.12);
+      padding: 0.2rem 0.5rem;
+    }
+    .artist-card:hover .artist-tag {
+      border-color: rgba(230,57,70,0.4);
+      color: rgba(240,237,232,0.75);
+    }
+
+    /* ══════════════════════════════════════
+       ATMOSPHERE STRIP
+    ══════════════════════════════════════ */
+    .atmo-strip {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 3px;
+      height: 380px;
+    }
+
+    /* ══════════════════════════════════════
+       BOOKING
+    ══════════════════════════════════════ */
+    .booking {
+      padding: 6rem clamp(2rem, 5vw, 3.5rem);
+      max-width: 1600px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    .booking__left {
+      display: flex; flex-direction: column; gap: 2rem;
+    }
+    .booking__eyebrow {
+      display: flex; flex-direction: column; gap: 0.6rem;
+    }
+    .booking__title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
       color: #F0EDE8;
+      letter-spacing: 0.04em;
+      line-height: 1.0;
+    }
+    .booking__title .red { color: #E63946; }
+    .booking__body {
+      font-family: 'DM Mono', monospace;
+      font-weight: 300;
+      font-size: 0.75rem;
+      line-height: 2;
+      color: rgba(240,237,232,0.5);
+      max-width: 38ch;
+    }
+    .booking__info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(240,237,232,0.07);
+    }
+    .booking__info-item { display: flex; flex-direction: column; gap: 0.35rem; }
+    .booking__info-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.45rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(240,237,232,0.3);
+    }
+    .booking__info-value {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      color: rgba(240,237,232,0.7);
+      line-height: 1.6;
+    }
+    .booking__caveat {
+      font-family: 'Caveat', cursive;
+      font-size: 1.5rem;
+      color: rgba(240,237,232,0.2);
+      font-style: normal;
+    }
+
+    /* Right: CTA panel */
+    .booking__right {
+      background: #111111;
+      border: 1px solid rgba(240,237,232,0.06);
+      padding: 3rem;
+      display: flex; flex-direction: column; gap: 2rem;
+    }
+    .booking__cta-headline {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      color: #F0EDE8;
+      letter-spacing: 0.04em;
+      line-height: 1.1;
+    }
+    .booking__steps {
+      display: flex; flex-direction: column; gap: 1rem;
+      padding: 1.5rem 0;
+      border-top: 1px solid rgba(240,237,232,0.06);
+      border-bottom: 1px solid rgba(240,237,232,0.06);
+    }
+    .booking__step {
+      display: flex; gap: 1rem; align-items: flex-start;
+    }
+    .booking__step-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.2rem;
+      color: #E63946;
+      line-height: 1;
+      min-width: 1.5rem;
+    }
+    .booking__step-text {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.62rem;
+      line-height: 1.7;
+      color: rgba(240,237,232,0.5);
+    }
+    .booking__step-text strong {
+      color: rgba(240,237,232,0.8);
+      font-weight: 500;
+    }
+    .booking__btn {
+      display: block;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #0A0A0A;
       background: #E63946;
-      padding: 1rem 2rem;
+      padding: 1.1rem 2rem;
+      text-align: center;
       text-decoration: none;
-      width: fit-content;
       transition: background 0.2s;
     }
-    .artists-cta:hover { background: #c42d3a; }
+    .booking__btn:hover { background: #c42d3a; }
+    .booking__btn-sub {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.48rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(240,237,232,0.25);
+      text-align: center;
+    }
+
+    /* ══════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════ */
+    .footer {
+      background: #080808;
+      border-top: 1px solid rgba(240,237,232,0.06);
+      padding: 2.5rem clamp(2rem, 5vw, 3.5rem);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer__brand {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 0.08em;
+      color: rgba(240,237,232,0.2);
+    }
+    .footer__brand span { color: #E63946; }
+    .footer__copy {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.45rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(240,237,232,0.15);
+    }
+    .footer__address {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.5rem;
+      letter-spacing: 0.1em;
+      color: rgba(240,237,232,0.2);
+      text-align: right;
+      line-height: 1.8;
+    }
   </style>
 </head>
 <body>
-  <section class="hero">
 
+  <!-- ══ HERO ══ -->
+  <section class="hero">
     <div class="hero__bg"></div>
     <div class="hero__overlay"></div>
-    <div class="hero__diagonal"></div>
+    <div class="hero__slash"></div>
 
     <div class="hero__content">
 
-      <div class="hero__top">
-        <div class="hero__name-top">NADEL</div>
-        <div class="hero__red-rule"></div>
-        <div class="hero__name-bottom">WERK</div>
+      <nav class="hero__nav">
+        <span class="hero__nav-brand">Nadelwerk Studio · Trier</span>
+        <div class="hero__nav-links">
+          <a href="#portfolio" class="hero__nav-link">Portfolio</a>
+          <a href="#artists" class="hero__nav-link">Artists</a>
+          <a href="#booking" class="hero__nav-link">Booking</a>
+        </div>
+      </nav>
+
+      <div class="hero__headline">
+        <div class="hero__word hero__word--1">NADEL</div>
+        <div class="hero__rule"></div>
+        <div class="hero__word hero__word--2">WERK</div>
       </div>
 
       <div class="hero__bottom">
-        <p class="hero__sub">Tattoo &amp; Illustration &nbsp;·&nbsp; Trier</p>
-        <p class="hero__tagline">Haut als Leinwand.</p>
+        <div class="hero__meta">
+          <span class="hero__location">Tattoo &amp; Illustration &nbsp;·&nbsp; Trier, Moselstraße 14</span>
+          <div class="hero__tagline">Haut als Leinwand.</div>
+          <div class="hero__caveat">— seit 2016 in Trier</div>
+        </div>
+        <div class="hero__scroll" aria-hidden="true">
+          <span class="hero__scroll-label">Scroll</span>
+          <div class="hero__scroll-line"></div>
+        </div>
       </div>
 
     </div>
-
-    <!-- Scroll indicator -->
-    <div class="hero__scroll" aria-hidden="true">
-      <span class="hero__scroll-label">Scroll</span>
-      <div class="hero__scroll-line"></div>
-    </div>
-
   </section>
 
-  <!-- PORTFOLIO -->
-  <section class="portfolio">
-    <p class="port-label">02 / Arbeiten</p>
-    <h2 class="port-title">Portfolio.</h2>
+  <!-- ══ INTRO STRIP ══ -->
+  <div class="intro-strip">
+    <span class="intro-strip__item">Custom Tattoos</span>
+    <span class="intro-strip__sep">·</span>
+    <span class="intro-strip__item">Blackwork</span>
+    <span class="intro-strip__sep">·</span>
+    <span class="intro-strip__item">Fine Line</span>
+    <span class="intro-strip__sep">·</span>
+    <span class="intro-strip__item">Traditional</span>
+    <span class="intro-strip__sep">·</span>
+    <span class="intro-strip__item">Neo-Traditional</span>
+    <span class="intro-strip__sep">·</span>
+    <span class="intro-strip__item">Geometric</span>
+    <span class="intro-strip__sep">·</span>
+    <span class="intro-strip__item">Illustrative</span>
+    <span class="intro-strip__sep">·</span>
+    <span class="intro-strip__item">Cover-Up</span>
+    <span class="intro-strip__sep">·</span>
+    <span class="intro-strip__item">Walk-In möglich</span>
+  </div>
+
+  <!-- ══ PORTFOLIO ══ -->
+  <section class="portfolio" id="portfolio">
+    <div class="section-header">
+      <div class="section-header__left">
+        <span class="label">02 / Arbeiten</span>
+        <h2 class="section-title">Portfolio.</h2>
+        <span class="section-caveat">handgemacht. für immer.</span>
+      </div>
+      <a href="#" class="section-header__link">Alle Arbeiten →</a>
+    </div>
+
+    <!-- Featured row (large + 2 stacked) -->
+    <div class="port-featured">
+      <div class="port-card ph port-featured__main">
+        <img src="https://images.unsplash.com/photo-1542736667-069246bdbc6d?auto=format&fit=crop&w=1200&h=800&q=80" alt="Geometric Blackwork" loading="lazy" />
+        <div class="port-overlay"></div>
+        <div class="port-info">
+          <span class="port-tag">Blackwork · Geometric</span>
+          <div class="port-name">Linien & Formen</div>
+        </div>
+      </div>
+      <div class="port-featured__stack">
+        <div class="port-card ph">
+          <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=800&h=500&q=80" alt="Fine Line Botanik" loading="lazy" />
+          <div class="port-overlay"></div>
+          <div class="port-info">
+            <span class="port-tag">Fine Line</span>
+            <div class="port-name">Botanik & Flora</div>
+          </div>
+        </div>
+        <div class="port-card ph">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=800&h=500&q=80" alt="Traditional Flash" loading="lazy" />
+          <div class="port-overlay"></div>
+          <div class="port-info">
+            <span class="port-tag">Traditional</span>
+            <div class="port-name">Flash & Klassik</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grid row -->
     <div class="port-grid">
-
-      <div class="port-card">
-        <div class="ph port-card-inner">
-          <img src="https://images.unsplash.com/photo-1542736667-069246bdbc6d?auto=format&fit=crop&w=1200&h=800&q=80" alt="Blackwork Tattoo" loading="lazy"/>
-        </div>
-        <div class="port-card-overlay"></div>
-        <div class="port-card-info">
-          <span class="port-card-tag">Blackwork</span>
-          <div class="port-card-name">Geometrie & Linie</div>
+      <div class="port-card ph">
+        <img src="https://images.unsplash.com/photo-1611501275019-9b5cda994e8d?auto=format&fit=crop&w=800&h=600&q=80" alt="Skull Tattoo" loading="lazy" />
+        <div class="port-overlay"></div>
+        <div class="port-info">
+          <span class="port-tag">Illustrative</span>
+          <div class="port-name">Skull & Roses</div>
         </div>
       </div>
-
-      <div class="port-card">
-        <div class="ph port-card-inner">
-          <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=1200&h=800&q=80" alt="Fine Line Tattoo" loading="lazy"/>
-        </div>
-        <div class="port-card-overlay"></div>
-        <div class="port-card-info">
-          <span class="port-card-tag">Fine Line</span>
-          <div class="port-card-name">Botanik & Flora</div>
+      <div class="port-card ph">
+        <img src="https://images.unsplash.com/photo-1564482736535-4dddeeac5b7b?auto=format&fit=crop&w=800&h=600&q=80" alt="Neo-Traditional" loading="lazy" />
+        <div class="port-overlay"></div>
+        <div class="port-info">
+          <span class="port-tag">Neo-Traditional</span>
+          <div class="port-name">Aquarell & Farbe</div>
         </div>
       </div>
-
-      <div class="port-card">
-        <div class="ph port-card-inner">
-          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1200&h=800&q=80" alt="Traditional Tattoo" loading="lazy"/>
-        </div>
-        <div class="port-card-overlay"></div>
-        <div class="port-card-info">
-          <span class="port-card-tag">Traditional</span>
-          <div class="port-card-name">Flash & Klassik</div>
+      <div class="port-card ph">
+        <img src="https://images.unsplash.com/photo-1598971861713-54ad16a7e72e?auto=format&fit=crop&w=800&h=600&q=80" alt="Tattoo Artist" loading="lazy" />
+        <div class="port-overlay"></div>
+        <div class="port-info">
+          <span class="port-tag">Studio</span>
+          <div class="port-name">Behind The Needle</div>
         </div>
       </div>
-
     </div>
   </section>
 
-  <!-- ARTISTS + BOOKING -->
-  <section class="artists">
-    <div class="ph artists-photo">
-      <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&h=800&q=80" alt="Nadelwerk Studio Trier" loading="lazy"/>
-      <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.45) 0%,transparent 60%);pointer-events:none;"></div>
+  <!-- ══ ARTISTS ══ -->
+  <section class="artists" id="artists">
+    <div class="artists__inner">
+      <div class="artists__header">
+        <span class="label">03 / Das Team</span>
+        <h2 class="section-title">Die Artists.</h2>
+        <span class="section-caveat">drei Handschriften. ein Anspruch.</span>
+      </div>
+      <div class="artists__grid">
+
+        <div class="artist-card">
+          <div class="ph artist-card__photo">
+            <img src="https://images.unsplash.com/photo-1554151228-14d9def656e4?auto=format&fit=crop&w=800&h=1000&q=80" alt="Jana Krause" loading="lazy" />
+          </div>
+          <div class="artist-card__overlay"></div>
+          <div class="artist-card__content">
+            <span class="artist-card__number">Artist 01</span>
+            <span class="artist-card__name">Jana Krause</span>
+            <span class="artist-card__spec">Fine Line · Botanical · Minimal</span>
+            <div class="artist-card__tags">
+              <span class="artist-tag">Fine Line</span>
+              <span class="artist-tag">Botanical</span>
+              <span class="artist-tag">Lettering</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="artist-card">
+          <div class="ph artist-card__photo">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&h=1000&q=80" alt="Marc Thiel" loading="lazy" />
+          </div>
+          <div class="artist-card__overlay"></div>
+          <div class="artist-card__content">
+            <span class="artist-card__number">Artist 02</span>
+            <span class="artist-card__name">Marc Thiel</span>
+            <span class="artist-card__spec">Blackwork · Geometric · Dark Art</span>
+            <div class="artist-card__tags">
+              <span class="artist-tag">Blackwork</span>
+              <span class="artist-tag">Geometric</span>
+              <span class="artist-tag">Cover-Up</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="artist-card">
+          <div class="ph artist-card__photo">
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=800&h=1000&q=80" alt="Sari Nowak" loading="lazy" />
+          </div>
+          <div class="artist-card__overlay"></div>
+          <div class="artist-card__content">
+            <span class="artist-card__number">Artist 03</span>
+            <span class="artist-card__name">Sari Nowak</span>
+            <span class="artist-card__spec">Traditional · Neo-Trad · Illustrative</span>
+            <div class="artist-card__tags">
+              <span class="artist-tag">Traditional</span>
+              <span class="artist-tag">Neo-Trad</span>
+              <span class="artist-tag">Flash</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
-    <div class="artists-content">
-      <p class="artists-label">03 / Das Team</p>
-      <h2 class="artists-title">Unsere <span class="red">Artists.</span></h2>
-      <p class="artists-body">
-        Drei Charaktere, drei Handschriften —
-        ein gemeinsamer Anspruch: jedes Motiv
-        sitzt für immer. Termine nach Absprache,
-        Custom-Anfragen willkommen.
+  </section>
+
+  <!-- ══ ATMOSPHERE STRIP ══ -->
+  <div class="atmo-strip">
+    <div class="ph">
+      <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&h=600&q=80" alt="Tattoo Studio Nadelwerk" loading="lazy" />
+      <div style="position:absolute;inset:0;background:linear-gradient(to right, transparent 60%, rgba(10,10,10,0.6));pointer-events:none;"></div>
+    </div>
+    <div class="ph">
+      <img src="https://images.unsplash.com/photo-1590246814991-d9943c26a18a?auto=format&fit=crop&w=600&h=400&q=80" alt="Tattoo Maschine" loading="lazy" />
+    </div>
+    <div class="ph">
+      <img src="https://images.unsplash.com/photo-1565058379802-bbe93b2f703a?auto=format&fit=crop&w=600&h=400&q=80" alt="Studio Detail" loading="lazy" />
+    </div>
+  </div>
+
+  <!-- ══ BOOKING ══ -->
+  <section class="booking" id="booking">
+
+    <div class="booking__left">
+      <div class="booking__eyebrow">
+        <span class="label">04 / Termin</span>
+        <h2 class="booking__title">Dein Motiv.<br /><span class="red">Dein Datum.</span></h2>
+      </div>
+      <p class="booking__body">
+        Jeder Termin beginnt mit einem Gespräch.
+        Wir hören zu, denken mit — und entwerfen
+        gemeinsam mit dir ein Motiv, das dir passt.
+        Keine Schublade. Kein Konfektionslook.
       </p>
-      <div class="artists-list">
-        <div class="artist-item">
-          <span class="artist-dot"></span>
-          <span class="artist-name">Jana Krause</span>
-          <span class="artist-spec">Fine Line · Botanical</span>
+      <blockquote class="booking__caveat">
+        "Ein Tattoo ist nicht einfach ein Bild.<br />Es ist eine Entscheidung."
+      </blockquote>
+      <div class="booking__info-grid">
+        <div class="booking__info-item">
+          <span class="booking__info-label">Adresse</span>
+          <span class="booking__info-value">Moselstraße 14<br />54290 Trier</span>
         </div>
-        <div class="artist-item">
-          <span class="artist-dot"></span>
-          <span class="artist-name">Marc Thiel</span>
-          <span class="artist-spec">Blackwork · Geometric</span>
+        <div class="booking__info-item">
+          <span class="booking__info-label">Öffnungszeiten</span>
+          <span class="booking__info-value">Di–Fr · 11–19 Uhr<br />Sa · 10–17 Uhr</span>
         </div>
-        <div class="artist-item">
-          <span class="artist-dot"></span>
-          <span class="artist-name">Sari Nowak</span>
-          <span class="artist-spec">Traditional · Illustrative</span>
+        <div class="booking__info-item">
+          <span class="booking__info-label">Kontakt</span>
+          <span class="booking__info-value">info@nadelwerk.de<br />0651 · 123 456 78</span>
+        </div>
+        <div class="booking__info-item">
+          <span class="booking__info-label">Walk-In</span>
+          <span class="booking__info-value">Di–Do · ab 15 Uhr<br />(je nach Verfügbarkeit)</span>
         </div>
       </div>
-      <a href="#" class="artists-cta">Termin anfragen →</a>
     </div>
+
+    <div class="booking__right">
+      <h3 class="booking__cta-headline">Terminanfrage<br />in 3 Schritten.</h3>
+      <div class="booking__steps">
+        <div class="booking__step">
+          <span class="booking__step-num">01</span>
+          <span class="booking__step-text"><strong>Motiv beschreiben</strong> — Referenzbilder, Stil, Platzierung und ungefähre Größe per E-Mail schicken.</span>
+        </div>
+        <div class="booking__step">
+          <span class="booking__step-num">02</span>
+          <span class="booking__step-text"><strong>Beratungsgespräch</strong> — Wir melden uns innerhalb von 48h und klären alle Details.</span>
+        </div>
+        <div class="booking__step">
+          <span class="booking__step-num">03</span>
+          <span class="booking__step-text"><strong>Termin buchen</strong> — Terminbestätigung + Entwurfsfreigabe. Anzahlung sichert deinen Slot.</span>
+        </div>
+      </div>
+      <a href="mailto:info@nadelwerk.de" class="booking__btn">Jetzt Termin anfragen →</a>
+      <p class="booking__btn-sub">Antwort innerhalb von 48 Stunden</p>
+    </div>
+
   </section>
+
+  <!-- ══ FOOTER ══ -->
+  <footer class="footer">
+    <div class="footer__brand">NADEL<span>WERK</span></div>
+    <span class="footer__copy">© 2025 Nadelwerk — Tattoo & Illustration</span>
+    <address class="footer__address" style="font-style:normal;">
+      Moselstraße 14 · 54290 Trier<br />
+      info@nadelwerk.de
+    </address>
+  </footer>
 
 </body>
 </html>
