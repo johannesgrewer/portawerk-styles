@@ -7,71 +7,58 @@ export const prerender = true;
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
-  <title>Seitenblick — Buchhandlung & Lesecafé | Trier</title>
+  <title>Seitenblick — Buchhandlung &amp; Lesecafé | Trier</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Nunito:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Lora:ital,wght@0,400;1,400&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { overflow-x: hidden; }
+    html { overflow-x: hidden; scroll-behavior: smooth; }
 
     :root {
-      --brown:  #3D2B1F;
-      --rust:   #B5451B;
-      --bg:     #FAF6EF;
-      --warm:   #F5EFE4;
-      --paper:  #EDE4D4;
-      --muted:  rgba(61,43,31,0.45);
-      --rule:   rgba(61,43,31,0.1);
+      --cream:   #FAF7F2;
+      --warm:    #F3E9D8;
+      --paper:   #EAD9C0;
+      --brown:   #2C1A0E;
+      --mid:     #5C3820;
+      --sienna:  #9B3A18;
+      --rust:    #C04828;
+      --gold:    #C8853A;
+      --muted:   rgba(44,26,14,0.45);
+      --rule:    rgba(44,26,14,0.09);
     }
 
     body {
-      background: var(--bg);
+      background: var(--cream);
       color: var(--brown);
-      font-family: 'Nunito', sans-serif;
-      min-height: 100vh;
+      font-family: 'Source Sans 3', sans-serif;
       overflow-x: hidden;
     }
 
-    /* Paper grain texture */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: repeating-linear-gradient(
-        90deg,
-        transparent 0px,
-        transparent 60px,
-        rgba(61,43,31,0.008) 60px,
-        rgba(61,43,31,0.008) 61px
-      );
-      pointer-events: none;
-      z-index: 0;
-    }
-
+    /* ─── NAV ─── */
     nav {
       position: fixed;
-      top: 0; left: 0; right: 0;
+      inset: 0 0 auto;
       z-index: 100;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 1.25rem 4rem;
-      background: rgba(250,246,239,0.97);
-      backdrop-filter: blur(8px);
+      padding: 1.2rem 3.5rem;
+      background: rgba(250,247,242,0.96);
+      backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--rule);
     }
     .nav-logo {
-      font-family: 'Lora', serif;
-      font-weight: 600;
-      font-size: 1.15rem;
-      letter-spacing: 0.04em;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
       color: var(--brown);
     }
     .nav-logo span {
       font-weight: 400;
       font-style: italic;
-      color: var(--rust);
+      color: var(--sienna);
     }
     .nav-links {
       display: flex;
@@ -79,163 +66,159 @@ export const prerender = true;
       list-style: none;
     }
     .nav-links a {
-      font-family: 'Lora', serif;
-      font-size: 0.8rem;
+      font-size: 0.775rem;
       font-weight: 400;
+      letter-spacing: 0.06em;
       color: var(--muted);
       text-decoration: none;
       transition: color 0.2s;
     }
     .nav-links a:hover { color: var(--brown); }
-    .nav-cafe {
-      font-family: 'Nunito', sans-serif;
-      font-size: 0.58rem;
-      font-weight: 500;
+    .nav-cta {
+      font-size: 0.65rem;
+      font-weight: 600;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--rust);
-      border: 1px solid var(--rust);
-      padding: 0.5rem 1.25rem;
+      color: var(--sienna);
+      border: 1.5px solid var(--sienna);
+      padding: 0.55rem 1.4rem;
       text-decoration: none;
-      transition: background 0.2s, color 0.2s;
-      border-radius: 2px;
+      transition: all 0.2s;
     }
-    .nav-cafe:hover { background: var(--rust); color: #fff; }
+    .nav-cta:hover { background: var(--sienna); color: #fff; }
 
+    /* ─── HERO ─── */
     .hero {
       min-height: 100vh;
-      padding-top: 68px;
-      position: relative;
-      z-index: 1;
+      padding-top: 64px;
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      max-width: 1600px;
-      margin-left: auto;
-      margin-right: auto;
+      grid-template-columns: 52% 48%;
     }
-
-    /* LEFT */
     .hero-left {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: 5rem 4rem 5rem 4.5rem;
-      gap: 2.5rem;
+      padding: 5rem 4.5rem 5rem 5rem;
+      gap: 2rem;
       border-right: 1px solid var(--rule);
     }
-
     .eyebrow {
-      font-family: 'Lora', serif;
-      font-style: italic;
-      font-size: 0.82rem;
-      color: var(--rust);
-    }
-
-    .hero-headline {
-      font-family: 'Lora', serif;
+      font-size: 0.65rem;
       font-weight: 600;
-      font-size: clamp(2.8rem, 5vw, 4.2rem);
-      line-height: 1.2;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--sienna);
+    }
+    .hero-headline {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: clamp(3rem, 5vw, 4.8rem);
+      line-height: 1.1;
       color: var(--brown);
     }
     .hero-headline em {
-      font-weight: 400;
       font-style: italic;
-      color: var(--rust);
+      font-weight: 400;
+      color: var(--sienna);
     }
-
-    .rust-rule {
-      width: 3rem;
-      height: 1px;
-      background: var(--rust);
+    .hero-rule {
+      width: 2.5rem;
+      height: 2px;
+      background: var(--gold);
     }
-
     .hero-body {
-      font-size: 0.9rem;
-      font-weight: 300;
-      line-height: 2;
+      font-family: 'Lora', serif;
+      font-size: 0.95rem;
+      font-weight: 400;
+      line-height: 1.9;
       color: var(--muted);
-      max-width: 44ch;
+      max-width: 42ch;
     }
 
-    /* Book picks */
-    .book-list {
-      display: flex;
-      flex-direction: column;
+    /* Book widget */
+    .book-widget {
       border: 1px solid var(--rule);
-      border-radius: 4px;
-      overflow: hidden;
       background: #fff;
+      overflow: hidden;
     }
-    .bl-header {
+    .bw-header {
       background: var(--brown);
-      padding: 0.45rem 1rem;
-      font-family: 'Nunito', sans-serif;
-      font-size: 0.52rem;
-      font-weight: 500;
-      letter-spacing: 0.18em;
+      padding: 0.55rem 1.1rem;
+      font-size: 0.55rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: rgba(250,246,239,0.5);
+      color: rgba(250,247,242,0.4);
     }
-    .book-row {
+    .bw-row {
       display: flex;
       align-items: center;
       gap: 0.85rem;
-      padding: 0.85rem 1rem;
+      padding: 0.9rem 1.1rem;
       border-bottom: 1px solid var(--rule);
+      transition: background 0.2s;
+      cursor: default;
     }
-    .book-row:last-child { border-bottom: none; }
-    .br-spine {
-      width: 6px;
+    .bw-row:last-child { border-bottom: none; }
+    .bw-row:hover { background: rgba(44,26,14,0.03); }
+    .bw-spine {
+      width: 5px;
       align-self: stretch;
       border-radius: 1px;
       flex-shrink: 0;
+      min-height: 36px;
+      transition: transform 0.2s;
     }
-    .br-info { flex: 1; }
-    .br-title {
-      font-family: 'Lora', serif;
-      font-size: 0.88rem;
+    .bw-row:hover .bw-spine { transform: scaleY(1.15); }
+    .bw-info { flex: 1; min-width: 0; }
+    .bw-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.85rem;
       font-weight: 600;
       color: var(--brown);
+      transition: color 0.2s;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
-    .br-author {
-      font-size: 0.62rem;
-      font-weight: 300;
-      color: var(--muted);
+    .bw-row:hover .bw-title { color: var(--sienna); }
+    .bw-author {
+      font-family: 'Lora', serif;
+      font-size: 0.67rem;
       font-style: italic;
-      margin-top: 0.05rem;
+      color: var(--muted);
+      margin-top: 0.1rem;
     }
-    .br-tag {
-      font-size: 0.48rem;
-      font-weight: 500;
+    .bw-tag {
+      font-size: 0.5rem;
+      font-weight: 600;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      padding: 0.2rem 0.5rem;
+      padding: 0.22rem 0.55rem;
       background: var(--warm);
       color: var(--muted);
-      border-radius: 2px;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
-
-    .cta-row {
+    .hero-cta {
       display: flex;
       align-items: center;
       gap: 1.5rem;
     }
-    .cta-btn {
-      font-family: 'Nunito', sans-serif;
-      font-size: 0.6rem;
-      font-weight: 500;
+    .btn-primary {
+      font-size: 0.62rem;
+      font-weight: 600;
       letter-spacing: 0.14em;
       text-transform: uppercase;
       color: #fff;
       background: var(--brown);
-      padding: 0.9rem 2rem;
+      padding: 0.95rem 2.2rem;
       text-decoration: none;
-      border-radius: 2px;
       transition: background 0.2s;
+      white-space: nowrap;
     }
-    .cta-btn:hover { background: var(--rust); }
-    .cta-link {
+    .btn-primary:hover { background: var(--sienna); }
+    .btn-ghost {
       font-family: 'Lora', serif;
       font-size: 0.88rem;
       font-style: italic;
@@ -243,279 +226,479 @@ export const prerender = true;
       text-decoration: none;
       border-bottom: 1px solid var(--rule);
       padding-bottom: 1px;
+      transition: color 0.2s, border-color 0.2s;
+      white-space: nowrap;
     }
+    .btn-ghost:hover { color: var(--sienna); border-color: var(--sienna); }
 
-    /* RIGHT */
+    /* Hero right: atmospheric photo */
     .hero-right {
-      background: var(--warm);
-      display: flex;
-      flex-direction: column;
-      padding: 5rem 4rem;
-      gap: 2.5rem;
-    }
-
-    .right-label {
-      font-family: 'Nunito', sans-serif;
-      font-size: 0.52rem;
-      font-weight: 500;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    /* Pull quote */
-    .pull-quote {
-      border-left: 3px solid var(--rust);
-      padding-left: 1.5rem;
-    }
-    .pq-text {
-      font-family: 'Lora', serif;
-      font-size: 1.15rem;
-      font-weight: 400;
-      font-style: italic;
-      color: var(--brown);
-      line-height: 1.6;
-    }
-    .pq-source {
-      font-size: 0.6rem;
-      font-weight: 300;
-      color: var(--muted);
-      margin-top: 0.6rem;
-      letter-spacing: 0.06em;
-    }
-
-    /* Genre pills */
-    .genre-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-    }
-    .genre-pill {
-      font-family: 'Lora', serif;
-      font-size: 0.78rem;
-      font-style: italic;
-      color: var(--brown);
-      background: #fff;
-      border: 1px solid var(--rule);
-      padding: 0.4rem 0.85rem;
-      border-radius: 100px;
-    }
-    .genre-pill.active {
-      background: var(--brown);
-      color: var(--bg);
-      border-color: var(--brown);
-    }
-
-    /* Café info */
-    .cafe-block {
-      background: var(--brown);
-      border-radius: 6px;
-      padding: 1.5rem;
-      margin-top: auto;
-    }
-    .cb-label {
-      font-size: 0.5rem;
-      font-weight: 500;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: rgba(250,246,239,0.3);
-      margin-bottom: 0.5rem;
-    }
-    .cb-title {
-      font-family: 'Lora', serif;
-      font-size: 1rem;
-      font-weight: 600;
-      color: rgba(250,246,239,0.9);
-      margin-bottom: 0.4rem;
-    }
-    .cb-text {
-      font-size: 0.78rem;
-      font-weight: 300;
-      color: rgba(250,246,239,0.55);
-      line-height: 1.7;
-    }
-    .cb-hours {
-      margin-top: 0.75rem;
-      font-size: 0.62rem;
-      font-weight: 400;
-      color: var(--rust);
-      letter-spacing: 0.04em;
-    }
-    /* === Animations & Micro-interactions === */
-    @keyframes quoteGrow {
-      from { border-left-width: 0; padding-left: 0; opacity: 0; }
-      to   { border-left-width: 3px; padding-left: 1.5rem; opacity: 1; }
-    }
-
-    .book-row {
-      transition: background 0.2s, padding-left 0.25s;
-      cursor: default;
-    }
-    .book-row:hover {
-      background: rgba(61,43,31,0.04);
-      padding-left: 0.5rem;
-    }
-    .br-title { transition: color 0.2s; }
-    .book-row:hover .br-title { color: var(--rust); }
-    .br-spine {
-      transition: transform 0.2s;
-    }
-    .book-row:hover .br-spine { transform: scaleY(1.15); }
-
-    .genre-pill {
-      transition: background 0.2s, color 0.2s, border-color 0.2s;
-      cursor: default;
-    }
-    .genre-pill:not(.active):hover {
-      background: var(--brown);
-      color: var(--bg);
-      border-color: var(--brown);
-    }
-
-    .pull-quote {
-      animation: quoteGrow 0.6s ease-out both;
-      animation-delay: 0.2s;
-    }
-
-    .cafe-block {
-      transition: box-shadow 0.3s;
-      cursor: default;
-    }
-    .cafe-block:hover {
-      box-shadow: inset 0 0 0 1px rgba(181,69,27,0.3);
-    }
-
-    .cta-btn {
       position: relative;
       overflow: hidden;
     }
-    .cta-btn::after {
-      content: '';
+    .hero-right img {
       position: absolute;
-      top: 0; left: -60%;
-      width: 40%;
+      inset: 0;
+      width: 100%;
       height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
-      transition: left 0.5s;
+      object-fit: cover;
+      filter: sepia(14%) brightness(0.9);
+      transition: transform 10s ease;
     }
-    .cta-btn:hover::after { left: 150%; }
-
-
-    /* ===== SECTION 2 — BÜCHER ===== */
-    .buecher {
-      padding: 6rem 5rem;
-      background: var(--warm);
-      border-top: 1px solid var(--rule);
-      max-width: 1600px;
-      margin-left: auto;
-      margin-right: auto;
+    .hero-right:hover img { transform: scale(1.04); }
+    .hero-right-gradient {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to right,
+        rgba(250,247,242,0.2) 0%,
+        transparent 35%
+      ),
+      linear-gradient(
+        to top,
+        rgba(44,26,14,0.65) 0%,
+        transparent 55%
+      );
     }
-    .buecher-head {
+    .hero-right-caption {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 2.5rem;
+      right: 2.5rem;
+    }
+    .hrc-quote {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-style: italic;
+      font-weight: 400;
+      color: rgba(250,247,242,0.88);
+      line-height: 1.55;
+      max-width: 30ch;
+      margin-bottom: 0.65rem;
+    }
+    .hrc-source {
+      font-size: 0.6rem;
+      font-weight: 400;
+      color: rgba(250,247,242,0.45);
+      letter-spacing: 0.08em;
+    }
+
+    /* ─── SECTION HEADER (shared) ─── */
+    .section-head {
       display: flex;
       align-items: flex-end;
       justify-content: space-between;
-      margin-bottom: 3rem;
+      margin-bottom: 3.5rem;
       padding-bottom: 2rem;
       border-bottom: 1px solid var(--rule);
     }
-    .buecher-eyebrow {
-      font-size: 0.55rem;
-      font-weight: 700;
-      letter-spacing: 0.26em;
+    .sh-eyebrow {
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.24em;
       text-transform: uppercase;
-      color: var(--rust);
+      color: var(--sienna);
       margin-bottom: 0.6rem;
     }
-    .buecher-title {
-      font-family: 'Libre Baskerville', serif;
-      font-size: clamp(1.8rem, 3.5vw, 3rem);
+    .sh-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 3.5vw, 3.2rem);
       font-weight: 700;
       color: var(--brown);
       line-height: 1.1;
     }
-    .buecher-title em { font-style: italic; color: var(--rust); }
-    .buecher-link {
-      font-size: 0.6rem;
-      font-weight: 700;
+    .sh-title em { font-style: italic; font-weight: 400; color: var(--sienna); }
+    .sh-link {
+      font-size: 0.62rem;
+      font-weight: 600;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--muted);
       text-decoration: none;
-      border-bottom: 1px solid rgba(61,43,31,0.2);
+      border-bottom: 1px solid rgba(44,26,14,0.2);
       padding-bottom: 2px;
       white-space: nowrap;
+      flex-shrink: 0;
+      margin-left: 2rem;
       transition: color 0.2s;
     }
-    .buecher-link:hover { color: var(--rust); }
+    .sh-link:hover { color: var(--sienna); }
 
-    .book-photo-grid {
+    /* ─── SECTION 2: EMPFEHLUNGEN ─── */
+    .empfehlungen {
+      padding: 6rem 5rem;
+      background: var(--warm);
+      border-top: 1px solid var(--rule);
+    }
+    .book-editorial {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: 5fr 7fr;
       gap: 2px;
+      min-height: 500px;
     }
-    .book-photo-card {
+    .book-feature {
       position: relative;
       overflow: hidden;
+      min-height: 400px;
     }
-    .book-photo-card img {
-      width: 100%;
-      height: 400px;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.55s ease;
-      filter: sepia(10%);
-    }
-    .book-photo-card:hover img { transform: scale(1.05); filter: sepia(0%); }
-    .book-photo-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(61,43,31,0.85) 0%, transparent 55%);
-    }
-    .book-photo-info {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      padding: 2rem;
-    }
-    .book-photo-genre {
-      font-size: 0.5rem;
-      font-weight: 700;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--rust);
-      margin-bottom: 0.4rem;
-    }
-    .book-photo-title {
-      font-family: 'Libre Baskerville', serif;
-      font-size: 1.1rem;
-      font-style: italic;
-      color: #FAF6EF;
-      line-height: 1.3;
-    }
-
-    /* ===== SECTION 3 — LESECAFÉ ===== */
-    .lesecafe {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      min-height: 560px;
-      max-width: 1600px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .lc-photo {
-      position: relative;
-      overflow: hidden;
-    }
-    .lc-photo img {
+    .book-feature img {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      display: block;
       filter: sepia(8%);
+      transition: transform 0.65s ease, filter 0.65s ease;
     }
-    .lc-text {
+    .book-feature:hover img { transform: scale(1.04); filter: sepia(0%); }
+    .book-feature-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(44,26,14,0.9) 0%,
+        rgba(44,26,14,0.2) 55%,
+        transparent 100%
+      );
+    }
+    .book-feature-info {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 2.5rem;
+    }
+    .bfi-badge {
+      display: inline-block;
+      font-size: 0.5rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid rgba(200,133,58,0.45);
+      padding: 0.25rem 0.65rem;
+      margin-bottom: 0.85rem;
+    }
+    .bfi-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 2.5vw, 2.2rem);
+      font-weight: 700;
+      font-style: italic;
+      color: #FAF7F2;
+      line-height: 1.25;
+      margin-bottom: 0.35rem;
+    }
+    .bfi-author {
+      font-family: 'Lora', serif;
+      font-size: 0.75rem;
+      font-style: italic;
+      font-weight: 400;
+      color: rgba(250,247,242,0.55);
+      margin-bottom: 1rem;
+    }
+    .bfi-desc {
+      font-size: 0.82rem;
+      font-weight: 300;
+      color: rgba(250,247,242,0.5);
+      line-height: 1.75;
+      max-width: 36ch;
+    }
+    .book-side {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .book-small {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      min-height: 160px;
+    }
+    .book-small img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: sepia(8%);
+      transition: transform 0.55s ease, filter 0.55s ease;
+    }
+    .book-small:hover img { transform: scale(1.06); filter: sepia(0%); }
+    .book-small-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(44,26,14,0.82) 0%, transparent 65%);
+    }
+    .book-small-info {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+    .bsi-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.95rem;
+      font-style: italic;
+      color: #FAF7F2;
+      line-height: 1.3;
+    }
+    .bsi-tag {
+      font-size: 0.48rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      white-space: nowrap;
+      margin-left: 0.75rem;
+      flex-shrink: 0;
+    }
+
+    /* ─── SECTION 3: LESUNGEN ─── */
+    .lesungen {
+      padding: 6rem 5rem;
       background: var(--brown);
+    }
+    .lesungen .section-head {
+      border-bottom-color: rgba(250,247,242,0.08);
+    }
+    .lesungen .sh-eyebrow { color: var(--gold); }
+    .lesungen .sh-title { color: #FAF7F2; }
+    .lesungen .sh-title em { color: var(--gold); }
+    .lesungen .sh-link {
+      color: rgba(250,247,242,0.3);
+      border-color: rgba(250,247,242,0.18);
+    }
+    .lesungen .sh-link:hover { color: var(--gold); }
+    .event-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(250,247,242,0.07);
+    }
+    .event-card {
+      background: var(--brown);
+      padding: 2.5rem;
+      transition: background 0.25s;
+      cursor: default;
+    }
+    .event-card:hover { background: rgba(200,133,58,0.07); }
+    .event-date {
+      display: flex;
+      align-items: baseline;
+      gap: 0.4rem;
+      margin-bottom: 1.75rem;
+    }
+    .ed-day {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem;
+      font-weight: 900;
+      color: rgba(250,247,242,0.07);
+      line-height: 1;
+    }
+    .ed-month {
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .event-label {
+      font-size: 0.5rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(250,247,242,0.22);
+      margin-bottom: 0.5rem;
+    }
+    .event-author {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: rgba(250,247,242,0.9);
+      margin-bottom: 0.2rem;
+    }
+    .event-book {
+      font-family: 'Lora', serif;
+      font-size: 0.85rem;
+      font-style: italic;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+    .event-desc {
+      font-size: 0.82rem;
+      font-weight: 300;
+      color: rgba(250,247,242,0.42);
+      line-height: 1.8;
+    }
+    .event-footer {
+      margin-top: 1.75rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid rgba(250,247,242,0.07);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .event-time {
+      font-size: 0.6rem;
+      font-weight: 400;
+      color: rgba(250,247,242,0.28);
+      letter-spacing: 0.05em;
+    }
+    .event-link {
+      font-size: 0.58rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(200,133,58,0.3);
+      padding-bottom: 1px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: border-color 0.2s;
+    }
+    .event-link:hover { border-color: var(--gold); }
+
+    /* ─── SECTION 4: ÜBER UNS ─── */
+    .ueber-uns {
+      display: grid;
+      grid-template-columns: 42% 58%;
+      min-height: 600px;
+      border-top: 1px solid var(--rule);
+    }
+    .uu-text {
+      background: var(--cream);
+      padding: 6rem 4.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1.75rem;
+      border-right: 1px solid var(--rule);
+    }
+    .uu-eyebrow {
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--sienna);
+    }
+    .uu-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 2.8vw, 2.6rem);
+      font-weight: 700;
+      color: var(--brown);
+      line-height: 1.2;
+    }
+    .uu-title em { font-style: italic; font-weight: 400; color: var(--sienna); }
+    .uu-body {
+      font-family: 'Lora', serif;
+      font-size: 0.9rem;
+      font-weight: 400;
+      line-height: 1.95;
+      color: var(--muted);
+      max-width: 46ch;
+    }
+    .uu-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      padding-top: 1.75rem;
+      border-top: 1px solid var(--rule);
+    }
+    .uu-stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--brown);
+      line-height: 1;
+    }
+    .uu-stat-label {
+      font-family: 'Lora', serif;
+      font-size: 0.62rem;
+      font-style: italic;
+      font-weight: 400;
+      color: var(--muted);
+      margin-top: 0.3rem;
+    }
+    .uu-photo {
+      position: relative;
+      overflow: hidden;
+    }
+    .uu-photo img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: sepia(10%) brightness(0.9);
+      transition: transform 10s ease;
+    }
+    .uu-photo:hover img { transform: scale(1.03); }
+    .uu-photo::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: linear-gradient(to right, rgba(250,247,242,0.18) 0%, transparent 25%);
+    }
+
+    /* ─── SECTION 5: LESECAFÉ ─── */
+    .lesecafe {
+      display: grid;
+      grid-template-columns: 55% 45%;
+      min-height: 580px;
+      border-top: 1px solid var(--rule);
+    }
+    .lc-photo-wrap {
+      display: flex;
+      flex-direction: column;
+    }
+    .lc-photo-main {
+      flex: 2;
+      position: relative;
+      overflow: hidden;
+      min-height: 200px;
+    }
+    .lc-photo-main img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: sepia(8%);
+      transition: transform 0.65s ease;
+    }
+    .lc-photo-main:hover img { transform: scale(1.04); }
+    .lc-photo-sub {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 120px;
+    }
+    .lc-photo-sub-item {
+      position: relative;
+      overflow: hidden;
+    }
+    .lc-photo-sub-item + .lc-photo-sub-item {
+      border-left: 2px solid var(--cream);
+    }
+    .lc-photo-sub-item img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: sepia(8%);
+      transition: transform 0.55s ease;
+    }
+    .lc-photo-sub-item:hover img { transform: scale(1.07); }
+    /* thin divider between main and sub */
+    .lc-photo-main + .lc-photo-sub {
+      border-top: 2px solid var(--cream);
+    }
+    .lc-content {
+      background: var(--warm);
       padding: 5rem 4rem;
       display: flex;
       flex-direction: column;
@@ -523,83 +706,181 @@ export const prerender = true;
       gap: 1.75rem;
     }
     .lc-eyebrow {
-      font-size: 0.55rem;
-      font-weight: 700;
-      letter-spacing: 0.26em;
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--rust);
+      color: var(--sienna);
     }
     .lc-title {
-      font-family: 'Libre Baskerville', serif;
-      font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 2.6vw, 2.4rem);
       font-weight: 700;
-      font-style: italic;
-      color: var(--bg);
-      line-height: 1.25;
+      color: var(--brown);
+      line-height: 1.2;
     }
+    .lc-title em { font-style: italic; font-weight: 400; color: var(--sienna); }
     .lc-body {
+      font-family: 'Lora', serif;
       font-size: 0.88rem;
       font-weight: 400;
-      line-height: 1.95;
-      color: rgba(250,246,239,0.55);
-      max-width: 46ch;
+      line-height: 1.9;
+      color: var(--muted);
+      max-width: 44ch;
+    }
+    .lc-menu {
+      border-top: 1px solid var(--rule);
+      padding-top: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .lc-menu-item {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+    }
+    .lci-name {
+      font-family: 'Lora', serif;
+      font-size: 0.85rem;
+      font-style: italic;
+      color: var(--brown);
+      white-space: nowrap;
+    }
+    .lci-dots {
+      flex: 1;
+      border-bottom: 1px dotted rgba(44,26,14,0.18);
+    }
+    .lci-price {
+      font-size: 0.75rem;
+      font-weight: 300;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .lc-hours {
+      font-family: 'Lora', serif;
+      font-size: 0.72rem;
+      font-style: italic;
+      font-weight: 400;
+      color: var(--muted);
     }
     .lc-cta {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
       font-size: 0.62rem;
-      font-weight: 700;
+      font-weight: 600;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--bg);
-      background: var(--rust);
-      padding: 0.9rem 2rem;
+      color: #fff;
+      background: var(--brown);
+      padding: 0.95rem 2rem;
       text-decoration: none;
       align-self: flex-start;
       transition: background 0.2s;
     }
-    .lc-cta:hover { background: #9a3a14; }
+    .lc-cta:hover { background: var(--sienna); }
 
-    @media (max-width: 1024px) {
-      .book-photo-grid { grid-template-columns: 1fr 1fr; }
-      .book-photo-card:last-child { grid-column: 1 / -1; }
-      .book-photo-card:last-child img { height: 280px; }
-      .lesecafe { grid-template-columns: 1fr; }
-      .lc-photo { height: 380px; position: relative; }
-      .lc-photo img { position: absolute; }
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--brown);
+      padding: 2.75rem 5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
     }
-    @media (max-width: 768px) {
-      .buecher { padding: 4rem 2rem; }
-      .book-photo-grid { grid-template-columns: 1fr; }
-      .book-photo-card:last-child { grid-column: auto; }
-      .book-photo-card img, .book-photo-card:last-child img { height: 280px; }
-      .lc-text { padding: 3.5rem 2rem; }
+    .footer-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: rgba(250,247,242,0.75);
+    }
+    .footer-brand span { font-weight: 400; font-style: italic; color: var(--gold); }
+    .footer-center {
+      text-align: center;
+      font-family: 'Lora', serif;
+      font-size: 0.7rem;
+      font-style: italic;
+      font-weight: 400;
+      color: rgba(250,247,242,0.28);
+      line-height: 1.65;
+    }
+    .footer-right {
+      text-align: right;
+      font-family: 'Lora', serif;
+      font-size: 0.7rem;
+      font-style: italic;
+      font-weight: 300;
+      color: rgba(250,247,242,0.28);
+      line-height: 1.7;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 1100px) {
+      nav { padding: 1.1rem 2rem; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { height: 55vw; min-height: 360px; }
+      .hero-left { padding: 4rem 2.5rem 3rem; }
+      .empfehlungen { padding: 4rem 2.5rem; }
+      .book-editorial { grid-template-columns: 1fr; min-height: auto; }
+      .book-feature { min-height: 360px; }
+      .book-side { flex-direction: row; min-height: 220px; }
+      .book-small { min-height: 220px; }
+      .lesungen { padding: 4rem 2.5rem; }
+      .event-grid { grid-template-columns: 1fr 1fr; }
+      .ueber-uns { grid-template-columns: 1fr; }
+      .uu-photo { height: 380px; }
+      .uu-text { padding: 4rem 2.5rem; }
+      .lesecafe { grid-template-columns: 1fr; }
+      .lc-photo-wrap { min-height: 420px; }
+      .lc-content { padding: 3.5rem 2.5rem; }
+      footer { padding: 2.5rem 2rem; flex-direction: column; text-align: center; }
+      .footer-right { text-align: center; }
+    }
+    @media (max-width: 640px) {
+      .hero-left { padding: 3rem 1.5rem 2.5rem; }
+      .hero-headline { font-size: 2.8rem; }
+      .hero-right { height: 72vw; }
+      .empfehlungen { padding: 3rem 1.5rem; }
+      .book-side { flex-direction: column; min-height: auto; }
+      .book-small { min-height: 200px; }
+      .lesungen { padding: 3rem 1.5rem; }
+      .event-grid { grid-template-columns: 1fr; }
+      .uu-text { padding: 3rem 1.5rem; }
+      .uu-stats { grid-template-columns: 1fr 1fr; }
+      .lc-content { padding: 3rem 1.5rem; }
+      .lc-photo-sub { grid-template-columns: 1fr; }
+      .lc-photo-sub-item + .lc-photo-sub-item { border-left: none; border-top: 2px solid var(--cream); }
+      .lc-photo-sub-item { min-height: 140px; }
     }
   </style>
 </head>
 <body>
+
   <nav>
     <div class="nav-logo">Seiten<span>blick</span></div>
     <ul class="nav-links">
-      <li><a href="#">Neu & Empfohlen</a></li>
+      <li><a href="#">Neu &amp; Empfohlen</a></li>
       <li><a href="#">Genre</a></li>
       <li><a href="#">Lesungen</a></li>
       <li><a href="#">Café</a></li>
     </ul>
-    <a href="#" class="nav-cafe">Tisch reservieren</a>
+    <a href="#" class="nav-cta">Tisch reservieren</a>
   </nav>
 
+  <!-- ─── HERO ─── -->
   <section class="hero">
     <div class="hero-left">
-      <div class="eyebrow">Buchhandlung & Lesecafé · Trier</div>
+      <div class="eyebrow">Buchhandlung &amp; Lesecafé · Trier</div>
 
       <h1 class="hero-headline">
         Jedes Buch<br>
         ein <em>Anfang.</em>
       </h1>
 
-      <div class="rust-rule"></div>
+      <div class="hero-rule"></div>
 
       <p class="hero-body">
         Hier riecht es nach Papier und Kaffee.
@@ -608,142 +889,303 @@ export const prerender = true;
         und für gut befunden haben.
       </p>
 
-      <div class="book-list">
-        <div class="bl-header">Unsere Empfehlungen</div>
-        <div class="book-row">
-          <div class="br-spine" style="background:#B5451B;"></div>
-          <div class="br-info">
-            <div class="br-title">Der Gesang der Flusskrebse</div>
-            <div class="br-author">Delia Owens · Roman</div>
+      <div class="book-widget">
+        <div class="bw-header">Unsere aktuellen Empfehlungen</div>
+        <div class="bw-row">
+          <div class="bw-spine" style="background:#B5451B;"></div>
+          <div class="bw-info">
+            <div class="bw-title">Der Gesang der Flusskrebse</div>
+            <div class="bw-author">Delia Owens · Roman</div>
           </div>
-          <span class="br-tag">Lesetipp</span>
+          <span class="bw-tag">Lesetipp</span>
         </div>
-        <div class="book-row">
-          <div class="br-spine" style="background:#3D2B1F;"></div>
-          <div class="br-info">
-            <div class="br-title">Stoner</div>
-            <div class="br-author">John Williams · Roman</div>
+        <div class="bw-row">
+          <div class="bw-spine" style="background:#3D2B1F;"></div>
+          <div class="bw-info">
+            <div class="bw-title">Stoner</div>
+            <div class="bw-author">John Williams · Roman</div>
           </div>
-          <span class="br-tag">Klassiker</span>
+          <span class="bw-tag">Klassiker</span>
         </div>
-        <div class="book-row">
-          <div class="br-spine" style="background:#7A5C3E;"></div>
-          <div class="br-info">
-            <div class="br-title">Atemschaukel</div>
-            <div class="br-author">Herta Müller · Roman</div>
+        <div class="bw-row">
+          <div class="bw-spine" style="background:#7A5C3E;"></div>
+          <div class="bw-info">
+            <div class="bw-title">Atemschaukel</div>
+            <div class="bw-author">Herta Müller · Roman</div>
           </div>
-          <span class="br-tag">Literatur</span>
+          <span class="bw-tag">Literatur</span>
+        </div>
+        <div class="bw-row">
+          <div class="bw-spine" style="background:#C8853A;"></div>
+          <div class="bw-info">
+            <div class="bw-title">Die Eleganz des Igels</div>
+            <div class="bw-author">Muriel Barbery · Roman</div>
+          </div>
+          <span class="bw-tag">Neu</span>
         </div>
       </div>
 
-      <div class="cta-row">
-        <a href="#" class="cta-btn">Alle Bücher entdecken</a>
-        <a href="#" class="cta-link">Lesung anfragen</a>
+      <div class="hero-cta">
+        <a href="#" class="btn-primary">Alle Bücher entdecken</a>
+        <a href="#" class="btn-ghost">Lesung anfragen</a>
       </div>
     </div>
 
     <div class="hero-right">
-      <div class="right-label">Aus unserem Herzen</div>
-
-      <div class="pull-quote">
-        <div class="pq-text">
-          „Ein Buch ist ein Spiegel.
-          Wenn ein Affe hineinschaut,
-          kann kein Apostel herausschauen."
+      <img
+        src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=1000&q=85"
+        alt="Buchhandlung Seitenblick — Innenansicht mit hohen Regalen" />
+      <div class="hero-right-gradient"></div>
+      <div class="hero-right-caption">
+        <div class="hrc-quote">
+          „Ein Buch ist ein Spiegel. Wenn ein Affe hineinschaut, kann kein Apostel herausschauen."
         </div>
-        <div class="pq-source">— Georg Christoph Lichtenberg</div>
-      </div>
-
-      <div class="right-label">Genres im Haus</div>
-
-      <div class="genre-grid">
-        <span class="genre-pill active">Belletristik</span>
-        <span class="genre-pill">Sachbuch</span>
-        <span class="genre-pill">Lyrik</span>
-        <span class="genre-pill active">Kinder & Jugend</span>
-        <span class="genre-pill">Philosophie</span>
-        <span class="genre-pill">Geschichte</span>
-        <span class="genre-pill">Kriminalroman</span>
-        <span class="genre-pill active">Regionales</span>
-        <span class="genre-pill">Reise</span>
-        <span class="genre-pill">Bildband</span>
-      </div>
-
-      <div class="cafe-block">
-        <div class="cb-label">Unser Lesecafé</div>
-        <div class="cb-title">Kaffee & Kuchen zum Buch</div>
-        <div class="cb-text">
-          Im hinteren Teil des Ladens gibt es fünf Tische,
-          zwei Sofas und einen Ofen. Wer kauft, darf bleiben.
-          Espresso, Filterkaffee, selbst gebackener Kuchen.
-        </div>
-        <div class="cb-hours">Mo – Sa: 9:30 – 19:00 · So: 11:00 – 17:00</div>
+        <div class="hrc-source">— Georg Christoph Lichtenberg</div>
       </div>
     </div>
   </section>
 
-  <!-- ===== SECTION 2: BÜCHER ===== -->
-  <section class="buecher">
-    <div class="buecher-head">
+  <!-- ─── SECTION 2: EMPFEHLUNGEN ─── -->
+  <section class="empfehlungen">
+    <div class="section-head">
       <div>
-        <div class="buecher-eyebrow">Handverlesen & empfohlen</div>
-        <h2 class="buecher-title">Bücher, die<br><em>bleiben.</em></h2>
+        <div class="sh-eyebrow">Handverlesen &amp; empfohlen</div>
+        <h2 class="sh-title">Bücher, die<br><em>bleiben.</em></h2>
       </div>
-      <a href="#" class="buecher-link">Alle Empfehlungen →</a>
+      <a href="#" class="sh-link">Alle Empfehlungen →</a>
     </div>
-    <div class="book-photo-grid">
-      <div class="book-photo-card">
-        <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=800&h=600&q=80"
-             alt="Bücher im Regal" loading="lazy" />
-        <div class="book-photo-overlay"></div>
-        <div class="book-photo-info">
-          <div class="book-photo-genre">Belletristik</div>
-          <div class="book-photo-title">Der Gesang<br>der Flusskrebse</div>
+
+    <div class="book-editorial">
+      <!-- Feature: Empfehlung des Monats -->
+      <div class="book-feature">
+        <img
+          src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=800&q=80"
+          alt="Alte Bücher Atmosphäre" loading="lazy" />
+        <div class="book-feature-overlay"></div>
+        <div class="book-feature-info">
+          <span class="bfi-badge">Empfehlung des Monats</span>
+          <div class="bfi-title">Der Gesang<br>der Flusskrebse</div>
+          <div class="bfi-author">Delia Owens</div>
+          <p class="bfi-desc">
+            Ein stiller, tiefer Roman über das Aufwachsen am Rand der Gesellschaft —
+            und über die Natur als einzigen Zufluchtsort.
+          </p>
         </div>
       </div>
-      <div class="book-photo-card">
-        <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=800&h=600&q=80"
-             alt="Aufgeschlagenes Buch" loading="lazy" />
-        <div class="book-photo-overlay"></div>
-        <div class="book-photo-info">
-          <div class="book-photo-genre">Klassiker</div>
-          <div class="book-photo-title">Stoner</div>
+
+      <!-- Kleinere Bücher rechts -->
+      <div class="book-side">
+        <div class="book-small">
+          <img
+            src="https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=700&h=350&q=80"
+            alt="Bücher im Regal" loading="lazy" />
+          <div class="book-small-overlay"></div>
+          <div class="book-small-info">
+            <div class="bsi-title">Stoner</div>
+            <span class="bsi-tag">Klassiker</span>
+          </div>
         </div>
-      </div>
-      <div class="book-photo-card">
-        <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=800&h=600&q=80"
-             alt="Gemütliche Leseecke" loading="lazy" />
-        <div class="book-photo-overlay"></div>
-        <div class="book-photo-info">
-          <div class="book-photo-genre">Literatur</div>
-          <div class="book-photo-title">Atemschaukel</div>
+        <div class="book-small">
+          <img
+            src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=700&h=350&q=80"
+            alt="Gemütliche Buchhandlung" loading="lazy" />
+          <div class="book-small-overlay"></div>
+          <div class="book-small-info">
+            <div class="bsi-title">Atemschaukel</div>
+            <span class="bsi-tag">Literatur</span>
+          </div>
+        </div>
+        <div class="book-small">
+          <img
+            src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&w=700&h=350&q=80"
+            alt="Buch und Kaffee" loading="lazy" />
+          <div class="book-small-overlay"></div>
+          <div class="book-small-info">
+            <div class="bsi-title">Die Eleganz des Igels</div>
+            <span class="bsi-tag">Neu</span>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===== SECTION 3: LESECAFÉ ===== -->
-  <section class="lesecafe">
-    <div class="lc-photo">
-      <img src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=900&h=700&q=80"
-           alt="Buchhandlung Atmosphäre mit Holzregalen" loading="lazy" />
+  <!-- ─── SECTION 3: LESUNGEN ─── -->
+  <section class="lesungen">
+    <div class="section-head">
+      <div>
+        <div class="sh-eyebrow">Kommende Veranstaltungen</div>
+        <h2 class="sh-title">Lesungen &amp;<br><em>Gespräche.</em></h2>
+      </div>
+      <a href="#" class="sh-link">Alle Veranstaltungen →</a>
     </div>
-    <div class="lc-text">
-      <div class="lc-eyebrow">Der Ort</div>
-      <h2 class="lc-title">"Wer kauft,<br>darf bleiben."</h2>
-      <p class="lc-body">
-        Im hinteren Teil des Ladens stehen fünf Tische,
-        zwei alte Sofas und ein Kachelofen. Es gibt
-        Espresso, Filterkaffee und selbst gebackenen Kuchen —
-        jeden Tag eine andere Sorte.
+
+    <div class="event-grid">
+      <div class="event-card">
+        <div class="event-date">
+          <span class="ed-day">14</span>
+          <span class="ed-month">Apr</span>
+        </div>
+        <div class="event-label">Lesung &amp; Signierung</div>
+        <div class="event-author">Judith Schalansky</div>
+        <div class="event-book">Verzeichnis einiger Verluste</div>
+        <p class="event-desc">
+          Die Berliner Autorin liest aus ihrem vielbeachteten Werk über
+          das, was unwiederbringlich verloren geht — und wie Literatur
+          dagegen ankämpft.
+        </p>
+        <div class="event-footer">
+          <span class="event-time">19:00 Uhr · Eintritt 8 €</span>
+          <a href="#" class="event-link">Platz reservieren</a>
+        </div>
+      </div>
+
+      <div class="event-card">
+        <div class="event-date">
+          <span class="ed-day">22</span>
+          <span class="ed-month">Apr</span>
+        </div>
+        <div class="event-label">Buchpremiere</div>
+        <div class="event-author">Thomas Hürlimann</div>
+        <div class="event-book">Das Gartenhaus</div>
+        <p class="event-desc">
+          Der Schweizer Autor präsentiert seinen neuen Roman. Ein Gespräch
+          über Erinnerung, Architektur und das Schreiben als Akt
+          des Erinnerns.
+        </p>
+        <div class="event-footer">
+          <span class="event-time">18:30 Uhr · Eintritt frei</span>
+          <a href="#" class="event-link">Platz reservieren</a>
+        </div>
+      </div>
+
+      <div class="event-card">
+        <div class="event-date">
+          <span class="ed-day">03</span>
+          <span class="ed-month">Mai</span>
+        </div>
+        <div class="event-label">Literaturgespräch</div>
+        <div class="event-author">Lyrik-Salon Trier</div>
+        <div class="event-book">Gedichte für Neugierige</div>
+        <p class="event-desc">
+          Monatlicher Treff für alle, die sich für Lyrik interessieren —
+          egal ob erfahrene Leser oder komplette Einsteiger.
+          Mit Rotwein und Gebäck.
+        </p>
+        <div class="event-footer">
+          <span class="event-time">20:00 Uhr · Eintritt 5 €</span>
+          <a href="#" class="event-link">Mehr erfahren</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SECTION 4: ÜBER UNS ─── -->
+  <section class="ueber-uns">
+    <div class="uu-text">
+      <div class="uu-eyebrow">Seit 1987 in Trier</div>
+      <h2 class="uu-title">Eine Buchhandlung<br>mit <em>Geschichte.</em></h2>
+      <p class="uu-body">
+        Was 1987 als kleiner Laden in der Fleischstraße begann, ist heute
+        ein lebendiger Ort des Lesens, Treffens und Nachdenkens.
+        Inhabergeführt, ohne Filialdenken und ohne Algorithmen.
       </p>
-      <p class="lc-body">
-        Kein WLAN-Passwort auf Kassenbon. Kein Zeitlimit.
-        Wer ein Buch kauft, gehört dazu.
+      <p class="uu-body">
+        Unser Sortiment wird nicht von Verlagsvertretern zusammengestellt,
+        sondern von uns — durch das Lesen, durch Gespräche mit Stammkunden,
+        durch echte Neugier.
       </p>
+      <div class="uu-stats">
+        <div>
+          <div class="uu-stat-num">37</div>
+          <div class="uu-stat-label">Jahre in Trier</div>
+        </div>
+        <div>
+          <div class="uu-stat-num">8.000</div>
+          <div class="uu-stat-label">Titel im Haus</div>
+        </div>
+        <div>
+          <div class="uu-stat-num">60+</div>
+          <div class="uu-stat-label">Lesungen pro Jahr</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="uu-photo">
+      <img
+        src="https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=1000&q=82"
+        alt="Seitenblick Buchhandlung — Innenansicht mit warmem Licht" loading="lazy" />
+    </div>
+  </section>
+
+  <!-- ─── SECTION 5: LESECAFÉ ─── -->
+  <section class="lesecafe">
+    <div class="lc-photo-wrap">
+      <div class="lc-photo-main">
+        <img
+          src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=80"
+          alt="Kaffee und Buch im Lesecafé" loading="lazy" />
+      </div>
+      <div class="lc-photo-sub">
+        <div class="lc-photo-sub-item">
+          <img
+            src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=500&q=80"
+            alt="Frischer Espresso" loading="lazy" />
+        </div>
+        <div class="lc-photo-sub-item">
+          <img
+            src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=500&q=80"
+            alt="Gemütliche Leseecke" loading="lazy" />
+        </div>
+      </div>
+    </div>
+
+    <div class="lc-content">
+      <div class="lc-eyebrow">Das Lesecafé</div>
+      <h2 class="lc-title">Wer kauft,<br>darf <em>bleiben.</em></h2>
+      <p class="lc-body">
+        Im hinteren Teil des Ladens stehen fünf Tische, zwei alte Sofas
+        und ein Kachelofen. Kein WLAN-Passwort auf dem Kassenbon.
+        Kein Zeitlimit. Wer ein Buch kauft, gehört dazu.
+      </p>
+      <div class="lc-menu">
+        <div class="lc-menu-item">
+          <span class="lci-name">Espresso</span>
+          <span class="lci-dots"></span>
+          <span class="lci-price">2,50 €</span>
+        </div>
+        <div class="lc-menu-item">
+          <span class="lci-name">Filterkaffee</span>
+          <span class="lci-dots"></span>
+          <span class="lci-price">2,80 €</span>
+        </div>
+        <div class="lc-menu-item">
+          <span class="lci-name">Kuchen des Tages</span>
+          <span class="lci-dots"></span>
+          <span class="lci-price">3,80 €</span>
+        </div>
+        <div class="lc-menu-item">
+          <span class="lci-name">Tee &amp; Gebäck</span>
+          <span class="lci-dots"></span>
+          <span class="lci-price">4,20 €</span>
+        </div>
+      </div>
+      <p class="lc-hours">Mo – Sa: 9:30 – 19:00 Uhr · So: 11:00 – 17:00 Uhr</p>
       <a href="#" class="lc-cta">Tisch reservieren →</a>
     </div>
   </section>
+
+  <!-- ─── FOOTER ─── -->
+  <footer>
+    <div class="footer-brand">Seiten<span>blick</span></div>
+    <div class="footer-center">
+      Unabhängige Buchhandlung &amp; Lesecafé seit 1987<br>
+      Fleischstraße 12 · 54290 Trier
+    </div>
+    <div class="footer-right">
+      Tel: 0651 / 123 45 67<br>
+      info@seitenblick-trier.de
+    </div>
+  </footer>
 
 </body>
 </html>
