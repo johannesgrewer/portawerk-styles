@@ -9,506 +9,691 @@ export const prerender = true;
   <title>LINIE — Conceptstore & Modeatelier Trier</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,700;1,6..96,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,300;0,6..96,400;0,6..96,700;1,6..96,300;1,6..96,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html {
-      overflow-x: hidden;
-      height: 100%;
-    }
-
+    html { overflow-x: hidden; scroll-behavior: smooth; }
     body {
-      overflow-x: hidden;
-      height: 100%;
       background: #F5F4F0;
       color: #1A1A1A;
       font-family: 'Jost', sans-serif;
+      overflow-x: hidden;
     }
 
-    .hero {
-      display: flex;
-      width: 100vw;
-      height: 100vh;
-      position: relative;
-      overflow: hidden;
+    /* ---- UTILITY ---- */
+    .ph { position: relative; overflow: hidden; }
+    .ph img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
+    .ph:hover img { transform: scale(1.04); }
 
-    /* Vertical running text on far left edge */
-    .hero__vertical-label {
-      position: absolute;
-      left: 0;
-      top: 50%;
-      transform: translateY(-50%) rotate(-90deg);
-      transform-origin: center center;
-      font-family: 'Jost', sans-serif;
-      font-weight: 300;
-      font-size: 0.6rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: #1A1A1A;
-      white-space: nowrap;
-      z-index: 10;
-      opacity: 0;
-      animation: fadeIn 0.8s ease forwards 3.2s;
-      writing-mode: vertical-rl;
-      text-orientation: mixed;
-      transform: rotate(180deg);
-      width: 1.5rem;
+    /* ---- NAV ---- */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: space-between;
+      padding: 1.5rem 3rem;
+      mix-blend-mode: difference;
     }
-
-    /* Left panel */
-    .hero__left {
-      width: 45%;
-      height: 100%;
-      background: #F5F4F0;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 5vh 4vw 5vh 3.5rem;
-      position: relative;
-      z-index: 2;
-    }
-
-    .hero__season {
-      font-family: 'Jost', sans-serif;
-      font-weight: 300;
-      font-size: 0.65rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: #1A1A1A;
-      opacity: 0;
-      transform: translateY(10px);
-      animation: riseIn 0.6s ease forwards 0.3s;
-      margin-bottom: 2.5rem;
-    }
-
-    .hero__brand {
+    .nav-logo {
       font-family: 'Bodoni Moda', serif;
       font-weight: 700;
-      font-size: clamp(4.5rem, 9vw, 8.5rem);
-      line-height: 0.92;
-      letter-spacing: -0.02em;
-      color: #1A1A1A;
-      margin-bottom: 2rem;
-      overflow: hidden;
+      font-size: 1.05rem;
+      letter-spacing: 0.18em;
+      color: #F5F4F0;
+      text-decoration: none;
     }
-
-    .hero__brand .letter {
-      display: inline-block;
-      opacity: 0;
-      transform: translateY(110%);
-      animation: letterRise 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
     }
-
-    .hero__tagline {
-      font-family: 'Bodoni Moda', serif;
-      font-style: italic;
-      font-size: clamp(1rem, 1.6vw, 1.35rem);
-      font-weight: 400;
-      color: #1A1A1A;
-      opacity: 0;
-      transform: translateY(8px);
-      animation: riseIn 0.7s ease forwards 1.8s;
-      margin-bottom: 2.5rem;
-      letter-spacing: 0.01em;
-    }
-
-    .hero__divider {
-      width: 100%;
-      height: 1px;
-      background: #1A1A1A;
-      opacity: 0;
-      transform: scaleX(0);
-      transform-origin: left center;
-      animation: expandLine 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards 2.2s;
-      margin-bottom: 1.2rem;
-    }
-
-    .hero__atelier {
+    .nav-links a {
       font-family: 'Jost', sans-serif;
       font-weight: 300;
-      font-size: 0.65rem;
-      letter-spacing: 0.3em;
+      font-size: 0.58rem;
+      letter-spacing: 0.28em;
       text-transform: uppercase;
-      color: #1A1A1A;
-      opacity: 0;
-      transform: translateY(8px);
-      animation: riseIn 0.6s ease forwards 2.6s;
+      color: #F5F4F0;
+      text-decoration: none;
+      opacity: 0.65;
+      transition: opacity 0.2s;
     }
+    .nav-links a:hover { opacity: 1; }
 
-    .hero__accent-dot {
-      display: inline-block;
-      width: 4px;
-      height: 4px;
-      background: #8B0000;
-      border-radius: 50%;
-      margin: 0 0.6em;
-      vertical-align: middle;
-    }
-
-    /* Right panel — image */
-    .hero__right {
-      width: 55%;
-      height: 100%;
+    /* ---- HERO ---- */
+    .hero {
       position: relative;
+      width: 100vw;
+      height: 100vh;
       overflow: hidden;
+      background: #111;
     }
-
-    .hero__image {
-      width: 100%;
-      height: 100%;
+    .hero-bg {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
       object-fit: cover;
-      object-position: center top;
-      display: block;
-      filter: grayscale(100%);
-      animation: colorReveal 1.5s ease forwards 2s;
+      object-position: center 25%;
+      filter: grayscale(100%) brightness(0.6);
+      transform: scale(1.04);
+      animation: heroBg 10s ease forwards, colorShift 2.5s ease forwards 1.8s;
+    }
+    @keyframes heroBg {
+      to { transform: scale(1); }
+    }
+    @keyframes colorShift {
+      to { filter: grayscale(15%) brightness(0.65); }
     }
 
-    /* Thin left border/shadow between panels */
-    .hero__right::before {
-      content: '';
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(0,0,0,0.82) 0%,
+        rgba(0,0,0,0.15) 45%,
+        transparent 70%
+      );
+      z-index: 1;
+    }
+    /* Top vignette */
+    .hero-overlay-top {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, transparent 25%);
+      z-index: 1;
+    }
+
+    /* Red accent line */
+    .hero-accent {
       position: absolute;
-      left: 0;
       top: 0;
-      bottom: 0;
+      right: 5.5rem;
       width: 2px;
-      background: #F5F4F0;
+      height: 0;
+      background: #8B0000;
       z-index: 3;
+      animation: growDown 1.4s cubic-bezier(0.22, 1, 0.36, 1) forwards 1.2s;
     }
+    @keyframes growDown { to { height: clamp(100px, 18vh, 170px); } }
 
-    /* Vertical accent line on the right panel */
-    .hero__image-label {
+    /* Right vertical label */
+    .hero-issue {
       position: absolute;
-      right: 1.5rem;
-      bottom: 3rem;
+      right: 3rem;
+      bottom: 3.5rem;
+      z-index: 4;
+      writing-mode: vertical-rl;
       font-family: 'Jost', sans-serif;
       font-weight: 300;
       font-size: 0.55rem;
       letter-spacing: 0.25em;
       text-transform: uppercase;
-      color: rgba(245, 244, 240, 0.75);
-      z-index: 4;
-      writing-mode: vertical-rl;
+      color: rgba(245,244,240,0.3);
       opacity: 0;
-      animation: fadeIn 0.8s ease forwards 3.4s;
+      animation: fadeIn 0.8s ease forwards 3.5s;
     }
 
-    /* Red accent mark */
-    .hero__red-mark {
+    .hero-content {
       position: absolute;
-      top: 5vh;
-      right: 0;
-      width: 3px;
-      height: 0;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 4rem 4.5rem;
+      z-index: 2;
+    }
+    .hero-season {
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      font-size: 0.58rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(245,244,240,0.45);
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.7em;
+      opacity: 0;
+      transform: translateY(8px);
+      animation: riseIn 0.6s ease forwards 0.4s;
+    }
+    .hero-dot {
+      display: inline-block;
+      width: 4px; height: 4px;
       background: #8B0000;
-      z-index: 5;
-      animation: growDown 1s cubic-bezier(0.22, 1, 0.36, 1) forwards 0.8s;
+      border-radius: 50%;
+      flex-shrink: 0;
     }
-
-    /* Issue number / editorial detail */
-    .hero__issue {
-      position: absolute;
-      bottom: 3rem;
-      left: 3.5rem;
-      font-family: 'Jost', sans-serif;
-      font-weight: 300;
-      font-size: 0.6rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: rgba(26,26,26,0.35);
-      opacity: 0;
-      animation: fadeIn 0.8s ease forwards 3s;
-    }
-
-    /* ---- Keyframes ---- */
-
-    @keyframes riseIn {
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes fadeIn {
-      to { opacity: 1; }
-    }
-
-    @keyframes letterRise {
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes expandLine {
-      to { opacity: 1; transform: scaleX(1); }
-    }
-
-    @keyframes colorReveal {
-      to { filter: grayscale(0%); }
-    }
-
-    @keyframes growDown {
-      to { height: clamp(80px, 12vh, 140px); }
-    }
-
-    /* Photo containers */
-    .ph { position: relative; overflow: hidden; }
-    .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.55s ease; }
-    .ph:hover img { transform: scale(1.05); }
-
-    .section-wrap { max-width: 1600px; margin-left: auto; margin-right: auto; }
-
-    /* Collection section */
-    .collection {
-      padding: 6rem 4rem;
-      background: #F5F4F0;
-      border-top: 1px solid rgba(26,26,26,0.08);
-    }
-    .coll-eyebrow {
-      font-family: 'Jost', sans-serif;
-      font-weight: 300;
-      font-size: 0.62rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: rgba(26,26,26,0.4);
-      margin-bottom: 0.6rem;
-    }
-    .coll-headline {
+    .hero-title {
       font-family: 'Bodoni Moda', serif;
       font-weight: 700;
-      font-size: clamp(2rem, 4vw, 3.5rem);
-      letter-spacing: -0.01em;
-      color: #1A1A1A;
-      margin-bottom: 3rem;
-      line-height: 1.05;
-    }
-    .coll-headline em {
-      font-style: italic;
-      font-weight: 400;
-    }
-    .coll-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr 1fr;
-      gap: 1px;
-      background: rgba(26,26,26,0.1);
-    }
-    .coll-item {
-      background: #F5F4F0;
+      font-size: clamp(7rem, 17vw, 17rem);
+      line-height: 0.82;
+      letter-spacing: -0.03em;
+      color: #F5F4F0;
+      margin-bottom: 2.5rem;
       overflow: hidden;
     }
-    .coll-info {
-      padding: 1rem 1.25rem 1.5rem;
+    .hero-title .letter {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(115%);
+      animation: letterRise 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
     }
-    .coll-name {
+    .hero-bottom {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      opacity: 0;
+      animation: riseIn 0.7s ease forwards 2.8s;
+    }
+    .hero-tagline {
       font-family: 'Bodoni Moda', serif;
-      font-size: 0.95rem;
+      font-style: italic;
+      font-size: clamp(1rem, 1.8vw, 1.55rem);
+      font-weight: 300;
+      color: rgba(245,244,240,0.7);
+      line-height: 1.5;
+    }
+    .hero-meta {
+      text-align: right;
+    }
+    .hero-meta p {
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      font-size: 0.58rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(245,244,240,0.3);
+      line-height: 2.2;
+    }
+
+    /* ---- KEYFRAMES ---- */
+    @keyframes riseIn { to { opacity: 1; transform: translateY(0); } }
+    @keyframes letterRise { to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { to { opacity: 1; } }
+
+    /* ---- SECTION 2: LOOKBOOK ---- */
+    .lookbook {
+      padding: 6.5rem 4rem 6rem;
+      background: #F5F4F0;
+    }
+    .lookbook-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 2.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid rgba(26,26,26,0.1);
+    }
+    .section-eyebrow {
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      font-size: 0.58rem;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: rgba(26,26,26,0.32);
+      margin-bottom: 0.45rem;
+    }
+    .section-headline {
+      font-family: 'Bodoni Moda', serif;
+      font-weight: 700;
+      font-size: clamp(2.2rem, 3.8vw, 3.2rem);
+      line-height: 1.0;
+      letter-spacing: -0.01em;
+      color: #1A1A1A;
+    }
+    .section-headline em { font-style: italic; font-weight: 400; }
+    .section-sub {
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(26,26,26,0.35);
+      text-align: right;
+      line-height: 1.9;
+    }
+
+    /* Asymmetric lookbook grid */
+    .lookbook-grid {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr 0.85fr;
+      grid-template-rows: 460px 260px;
+      gap: 4px;
+    }
+    .lb-cell { overflow: hidden; position: relative; }
+    .lb-cell-1 { grid-column: 1; grid-row: 1 / 3; }
+    .lb-cell-2 { grid-column: 2; grid-row: 1; }
+    .lb-cell-3 { grid-column: 3; grid-row: 1; }
+    .lb-cell-4 { grid-column: 2 / 4; grid-row: 2; }
+
+    .lb-caption {
+      position: absolute;
+      bottom: 1rem;
+      left: 1rem;
+      z-index: 3;
+      background: rgba(245,244,240,0.93);
+      padding: 0.5rem 0.8rem;
+    }
+    .lb-caption-name {
+      font-family: 'Bodoni Moda', serif;
+      font-size: 0.78rem;
       font-weight: 400;
       color: #1A1A1A;
     }
-    .coll-material {
+    .lb-caption-price {
       font-family: 'Jost', sans-serif;
+      font-size: 0.58rem;
       font-weight: 300;
-      font-size: 0.6rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: rgba(26,26,26,0.4);
-      margin-top: 0.2rem;
-    }
-    .coll-price {
-      font-family: 'Jost', sans-serif;
-      font-size: 0.85rem;
-      font-weight: 400;
       color: #8B0000;
-      margin-top: 0.5rem;
+      letter-spacing: 0.12em;
+      margin-top: 0.15rem;
     }
 
-    /* Lookbook / brand section */
-    .lookbook {
+    /* ---- SECTION 3: BRAND STORY ---- */
+    .brand-story {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      min-height: 520px;
-      border-top: 1px solid rgba(26,26,26,0.08);
+      min-height: 580px;
     }
-    .lookbook-image {}
-    .lookbook-content {
-      padding: 5rem 4rem;
-      background: #1A1A1A;
+    .bs-text {
+      background: #111;
+      padding: 6.5rem 5rem;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      gap: 1.75rem;
+      gap: 2.25rem;
     }
-    .lb-eyebrow {
-      font-family: 'Jost', sans-serif;
-      font-weight: 300;
-      font-size: 0.62rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.3);
-    }
-    .lb-headline {
+    .bs-number {
       font-family: 'Bodoni Moda', serif;
-      font-weight: 700;
-      font-size: clamp(2rem, 3.5vw, 3.2rem);
-      line-height: 1.0;
-      letter-spacing: -0.01em;
-      color: #F5F4F0;
+      font-weight: 300;
+      font-size: clamp(5rem, 10vw, 9rem);
+      line-height: 1;
+      color: rgba(255,255,255,0.05);
+      letter-spacing: -0.04em;
+      align-self: flex-start;
+      margin-top: -1rem;
     }
-    .lb-headline em {
-      font-style: italic;
-      font-weight: 400;
-      color: rgba(245,244,240,0.6);
-    }
-    .lb-body {
+    .bs-eyebrow {
       font-family: 'Jost', sans-serif;
       font-weight: 300;
-      font-size: 0.9rem;
-      line-height: 1.85;
-      color: rgba(255,255,255,0.45);
-      max-width: 42ch;
+      font-size: 0.58rem;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.22);
     }
-    .lb-divider {
-      width: 40px;
+    .bs-quote {
+      font-family: 'Bodoni Moda', serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(1.4rem, 2.4vw, 2.1rem);
+      line-height: 1.45;
+      color: #F5F4F0;
+      letter-spacing: 0.01em;
+      position: relative;
+      padding-left: 1.8rem;
+    }
+    .bs-quote::before {
+      content: '"';
+      font-family: 'Bodoni Moda', serif;
+      font-size: 3.5rem;
+      line-height: 0;
+      color: #8B0000;
+      position: absolute;
+      top: 0.9rem;
+      left: 0;
+      font-style: normal;
+    }
+    .bs-divider {
+      width: 36px;
       height: 1px;
       background: #8B0000;
     }
-    .lb-cta {
+    .bs-body {
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      font-size: 0.83rem;
+      line-height: 1.95;
+      color: rgba(255,255,255,0.32);
+      max-width: 44ch;
+    }
+    .bs-cta {
+      display: inline-block;
       font-family: 'Jost', sans-serif;
       font-weight: 400;
-      font-size: 0.65rem;
-      letter-spacing: 0.25em;
+      font-size: 0.58rem;
+      letter-spacing: 0.3em;
       text-transform: uppercase;
       color: #F5F4F0;
       text-decoration: none;
-      border-bottom: 1px solid rgba(245,244,240,0.3);
-      padding-bottom: 0.2rem;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      padding-bottom: 0.3rem;
       width: fit-content;
-      transition: border-color 0.2s, color 0.2s;
+      transition: border-color 0.2s;
     }
-    .lb-cta:hover { color: #fff; border-color: #fff; }
+    .bs-cta:hover { border-color: #8B0000; }
+    .bs-image {
+      position: relative;
+      overflow: hidden;
+    }
+    .bs-image img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      filter: grayscale(25%);
+      transition: transform 0.8s ease;
+    }
+    .bs-image:hover img { transform: scale(1.04); }
+    .bs-image::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(139,0,0,0.1) 0%, transparent 55%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* ---- SECTION 4: STORE / KONTAKT ---- */
+    .store {
+      padding: 6.5rem 4rem;
+      background: #F5F4F0;
+      border-top: 1px solid rgba(26,26,26,0.08);
+    }
+    .store-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    .store-info h2 {
+      font-family: 'Bodoni Moda', serif;
+      font-weight: 700;
+      font-size: clamp(2.2rem, 3.8vw, 3.2rem);
+      line-height: 1.0;
+      letter-spacing: -0.01em;
+      color: #1A1A1A;
+      margin-bottom: 2.5rem;
+    }
+    .store-info h2 em { font-style: italic; font-weight: 400; }
+    .store-detail { margin-bottom: 1.6rem; }
+    .store-label {
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      font-size: 0.56rem;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: rgba(26,26,26,0.3);
+      margin-bottom: 0.35rem;
+    }
+    .store-value {
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      font-size: 0.88rem;
+      line-height: 1.75;
+      color: #1A1A1A;
+    }
+    .store-accent {
+      display: inline-block;
+      width: 3px; height: 3px;
+      background: #8B0000;
+      border-radius: 50%;
+      margin: 0 0.5em;
+      vertical-align: middle;
+    }
+    .store-btn {
+      display: inline-block;
+      margin-top: 2.2rem;
+      font-family: 'Jost', sans-serif;
+      font-weight: 400;
+      font-size: 0.58rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #F5F4F0;
+      background: #1A1A1A;
+      text-decoration: none;
+      padding: 0.9rem 2.2rem;
+      transition: background 0.2s;
+    }
+    .store-btn:hover { background: #8B0000; }
+
+    /* Store photo grid */
+    .store-photos {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 4px;
+    }
+    .store-photos .ph { height: 260px; }
+    .store-photos .ph:first-child {
+      grid-column: 1 / 3;
+      height: 320px;
+    }
+
+    /* ---- FOOTER ---- */
+    footer {
+      padding: 1.75rem 4rem;
+      background: #111;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer-brand {
+      font-family: 'Bodoni Moda', serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.18em;
+      color: rgba(245,244,240,0.35);
+    }
+    .footer-note {
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      font-size: 0.52rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(245,244,240,0.18);
+    }
   </style>
 </head>
 <body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">LINIE</a>
+    <ul class="nav-links">
+      <li><a href="#">Kollektion</a></li>
+      <li><a href="#">Atelier</a></li>
+      <li><a href="#">Store</a></li>
+      <li><a href="#">Kontakt</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
   <section class="hero">
+    <img
+      class="hero-bg"
+      src="https://images.unsplash.com/photo-1509631179647-0177331693ae?w=1800&q=85&auto=format"
+      alt="LINIE Fashion"
+      loading="eager"
+      decoding="async"
+    />
+    <div class="hero-overlay"></div>
+    <div class="hero-overlay-top"></div>
+    <div class="hero-accent"></div>
+    <p class="hero-issue" aria-hidden="true">No. 08 · SS 2026 · Trier</p>
 
-    <!-- Far-left vertical label -->
-    <div class="hero__vertical-label" aria-hidden="true">Conceptstore &amp; Modeatelier</div>
-
-    <!-- Left content panel -->
-    <div class="hero__left">
-      <p class="hero__season">SS 26 <span class="hero__accent-dot"></span> Kollektion</p>
-
-      <h1 class="hero__brand" aria-label="LINIE">
-        <!-- Letters injected by JS for stagger -->
-      </h1>
-
-      <p class="hero__tagline">Weniger. Besser.</p>
-
-      <div class="hero__divider"></div>
-
-      <p class="hero__atelier">Atelier Trier</p>
-
-      <p class="hero__issue">No. 08 — 2026</p>
-    </div>
-
-    <!-- Right image panel -->
-    <div class="hero__right">
-      <img
-        class="hero__image"
-        src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=80&auto=format"
-        alt="Linie Modekollektion"
-        loading="eager"
-        decoding="async"
-      />
-      <div class="hero__red-mark"></div>
-      <p class="hero__image-label" aria-hidden="true">Frühjahr / Sommer</p>
-    </div>
-
-  </section>
-
-  <!-- SECTION 2: Kollektion SS 26 -->
-  <section class="collection">
-    <div class="section-wrap">
-      <div class="coll-eyebrow">SS 26 — Kollektion</div>
-      <h2 class="coll-headline">Weniger Stücke.<br><em>Mehr Haltung.</em></h2>
-      <div class="coll-grid">
-        <div class="coll-item">
-          <div class="ph" style="height:380px;">
-            <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=800&h=1000&q=80" alt="Mode Kollektion" loading="lazy"/>
-            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.35) 0%,transparent 55%);pointer-events:none;"></div>
-          </div>
-          <div class="coll-info">
-            <div class="coll-name">Mantel No. 03</div>
-            <div class="coll-material">Wollgemisch · Beige</div>
-            <div class="coll-price">490 €</div>
-          </div>
-        </div>
-        <div class="coll-item">
-          <div class="ph" style="height:380px;">
-            <img src="https://images.unsplash.com/photo-1547826039-a3e6db4c2527?auto=format&fit=crop&w=800&h=1000&q=80" alt="Modekollektion Detail" loading="lazy"/>
-            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.35) 0%,transparent 55%);pointer-events:none;"></div>
-          </div>
-          <div class="coll-info">
-            <div class="coll-name">Kleid No. 07</div>
-            <div class="coll-material">Leinen · Ecru</div>
-            <div class="coll-price">285 €</div>
-          </div>
-        </div>
-        <div class="coll-item">
-          <div class="ph" style="height:380px;">
-            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=800&h=1000&q=80" alt="Fashion Editorial" loading="lazy"/>
-            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.35) 0%,transparent 55%);pointer-events:none;"></div>
-          </div>
-          <div class="coll-info">
-            <div class="coll-name">Bluse No. 12</div>
-            <div class="coll-material">Seide · Ivory</div>
-            <div class="coll-price">195 €</div>
-          </div>
-        </div>
-        <div class="coll-item">
-          <div class="ph" style="height:380px;">
-            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=800&h=1000&q=80" alt="Fashion Portrait" loading="lazy"/>
-            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.35) 0%,transparent 55%);pointer-events:none;"></div>
-          </div>
-          <div class="coll-info">
-            <div class="coll-name">Hose No. 02</div>
-            <div class="coll-material">Baumwolle · Anthrazit</div>
-            <div class="coll-price">165 €</div>
-          </div>
+    <div class="hero-content">
+      <p class="hero-season">
+        <span>SS 26</span>
+        <span class="hero-dot"></span>
+        <span>Neue Kollektion</span>
+      </p>
+      <h1 class="hero-title" aria-label="LINIE"></h1>
+      <div class="hero-bottom">
+        <p class="hero-tagline">Weniger. Besser.<br>Kleidung, die bleibt.</p>
+        <div class="hero-meta">
+          <p>Conceptstore &amp; Modeatelier</p>
+          <p>Trier — Seit 2019</p>
+          <p>8 Pieces · Natural Fibers</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- SECTION 3: Atelier & Lookbook -->
+  <!-- SECTION 2: LOOKBOOK -->
   <section class="lookbook">
-    <div class="section-wrap" style="display:grid;grid-template-columns:1fr 1fr;width:100%;">
-      <div class="lookbook-image">
-        <div class="ph" style="height:100%;min-height:520px;">
-          <img src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&w=1200&h=800&q=80" alt="Atelier LINIE" loading="lazy"/>
-          <div style="position:absolute;inset:0;background:linear-gradient(to right,transparent 55%,rgba(26,26,26,0.5) 100%);pointer-events:none;"></div>
+    <div class="lookbook-header">
+      <div>
+        <div class="section-eyebrow">SS 26 — Lookbook</div>
+        <h2 class="section-headline">Frühjahr &amp;<br><em>Sommer.</em></h2>
+      </div>
+      <div class="section-sub">
+        8 Pieces<br>
+        Limitierte Edition<br>
+        Natural Fibers Only
+      </div>
+    </div>
+
+    <div class="lookbook-grid">
+      <!-- Tall left -->
+      <div class="lb-cell lb-cell-1">
+        <div class="ph" style="height:100%;">
+          <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=800&h=1200&q=80" alt="Lookbook Editorial" loading="lazy"/>
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.5) 0%,transparent 45%);pointer-events:none;"></div>
+        </div>
+        <div class="lb-caption">
+          <div class="lb-caption-name">Kleid No. 04</div>
+          <div class="lb-caption-price">295 € — Leinen · Ecru</div>
         </div>
       </div>
-      <div class="lookbook-content">
-        <div class="lb-eyebrow">Das Atelier</div>
-        <h2 class="lb-headline">Jedes Stück<br>ist eine <em>Entscheidung.</em></h2>
-        <div class="lb-divider"></div>
-        <p class="lb-body">
-          LINIE entsteht in einem kleinen Atelier in der Trierer Innenstadt.
-          Jedes Stück wird in limitierter Auflage produziert —
-          aus natürlichen Materialien, mit Schneiderinnen aus der Region.
-          Kein Fast Fashion. Keine Saison-Überproduktion.
-        </p>
-        <a href="#" class="lb-cta">Atelier besuchen &rarr;</a>
+
+      <!-- Top mid -->
+      <div class="lb-cell lb-cell-2">
+        <div class="ph" style="height:100%;">
+          <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=800&h=700&q=80" alt="Mode Editorial" loading="lazy"/>
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.4) 0%,transparent 50%);pointer-events:none;"></div>
+        </div>
+        <div class="lb-caption">
+          <div class="lb-caption-name">Bluse No. 11</div>
+          <div class="lb-caption-price">185 € — Seide · Ivory</div>
+        </div>
+      </div>
+
+      <!-- Top right -->
+      <div class="lb-cell lb-cell-3">
+        <div class="ph" style="height:100%;">
+          <img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=600&h=700&q=80" alt="Fashion Detail" loading="lazy"/>
+        </div>
+      </div>
+
+      <!-- Bottom wide -->
+      <div class="lb-cell lb-cell-4">
+        <div class="ph" style="height:100%;">
+          <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=1400&h=400&q=80" alt="Fashion Editorial" loading="lazy" style="object-position:center 25%;"/>
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.45) 0%,transparent 50%);pointer-events:none;"></div>
+        </div>
+        <div class="lb-caption" style="bottom:1rem;right:1rem;left:auto;">
+          <div class="lb-caption-name">Mantel No. 02</div>
+          <div class="lb-caption-price">540 € — Wollgemisch · Camel</div>
+        </div>
       </div>
     </div>
   </section>
+
+  <!-- SECTION 3: BRAND STORY -->
+  <section class="brand-story">
+    <div class="bs-text">
+      <div class="bs-number" aria-hidden="true">08</div>
+      <div class="bs-eyebrow">Das Atelier · Trier</div>
+      <blockquote class="bs-quote">
+        Kleidung, die bleibt.<br>
+        Materialien, die atmen.<br>
+        Formen, die schweigen.
+      </blockquote>
+      <div class="bs-divider"></div>
+      <p class="bs-body">
+        LINIE entsteht in einem kleinen Atelier in der Trierer Altstadt.
+        Acht bis zwölf Stücke pro Saison — nicht mehr.
+        Jedes in limitierter Auflage, aus natürlichen Materialien,
+        gefertigt mit Schneiderinnen aus der Region.
+        Kein Fast Fashion. Keine Überproduktion.
+        Nur das, was bleibt.
+      </p>
+      <a href="#" class="bs-cta">Atelier besuchen &rarr;</a>
+    </div>
+    <div class="bs-image">
+      <img
+        src="https://images.unsplash.com/photo-1566206091558-7f218b696731?auto=format&fit=crop&w=900&h=900&q=80"
+        alt="LINIE Atelier"
+        loading="lazy"
+      />
+    </div>
+  </section>
+
+  <!-- SECTION 4: STORE / KONTAKT -->
+  <section class="store">
+    <div class="store-inner">
+      <div class="store-info">
+        <h2>Store<br><em>&amp; Atelier.</em></h2>
+
+        <div class="store-detail">
+          <div class="store-label">Adresse</div>
+          <div class="store-value">
+            Simeonstraße 14<br>
+            54290 Trier
+          </div>
+        </div>
+
+        <div class="store-detail">
+          <div class="store-label">Öffnungszeiten</div>
+          <div class="store-value">
+            Di–Fr <span class="store-accent"></span> 10–18 Uhr<br>
+            Sa <span class="store-accent"></span> 10–16 Uhr
+          </div>
+        </div>
+
+        <div class="store-detail">
+          <div class="store-label">Kontakt</div>
+          <div class="store-value">
+            hallo@linie-trier.de<br>
+            +49 651 123 45 67
+          </div>
+        </div>
+
+        <a href="#" class="store-btn">Termin vereinbaren</a>
+      </div>
+
+      <div class="store-photos">
+        <div class="ph">
+          <img src="https://images.unsplash.com/photo-1581044777550-4cfa60707c03?auto=format&fit=crop&w=900&h=500&q=80" alt="LINIE Store" loading="lazy"/>
+        </div>
+        <div class="ph">
+          <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=500&h=400&q=80" alt="Mode Detail" loading="lazy"/>
+        </div>
+        <div class="ph">
+          <img src="https://images.unsplash.com/photo-1564257577-c699af005a1c?auto=format&fit=crop&w=500&h=400&q=80" alt="Kollektion Detail" loading="lazy"/>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-brand">LINIE</span>
+    <span class="footer-note">Conceptstore &amp; Modeatelier · Trier</span>
+    <span class="footer-note">SS 26 · © 2026</span>
+  </footer>
 
   <script>
-    // Stagger brand name letters
     const brand = 'LINIE';
-    const brandEl = document.querySelector('.hero__brand');
-    const delays = [0.6, 0.75, 0.9, 1.05, 1.2];
-
+    const brandEl = document.querySelector('.hero-title');
+    const delays = [0.5, 0.65, 0.8, 0.95, 1.1];
     brand.split('').forEach((char, i) => {
       const span = document.createElement('span');
       span.classList.add('letter');
