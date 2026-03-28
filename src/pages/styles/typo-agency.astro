@@ -1,0 +1,1106 @@
+---
+export const prerender = true;
+---
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Raster & Co. — Design Studio Trier</title>
+  <meta name="description" content="Raster & Co. ist ein Design Studio aus Trier. Wir arbeiten im Raster. Wir denken in Systemen." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@200;300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── RESET ─────────────────────────────────────────────────── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { overflow-x: hidden; scroll-behavior: smooth; }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ─── TOKENS ────────────────────────────────────────────────── */
+    :root {
+      --bg:       #FAFAF8;
+      --bg2:      #F2F1EE;
+      --fg:       #0A0A0A;
+      --fg-mid:   #4A4A4A;
+      --fg-dim:   #8A8A8A;
+      --accent:   #D01F1F;       /* Schweizer Rot */
+      --border:   #0A0A0A;
+      --border-light: rgba(10,10,10,0.12);
+      --font-display: 'Space Grotesk', system-ui, sans-serif;
+      --font-body:    'Outfit', system-ui, sans-serif;
+      --grid: clamp(1.5rem, 5vw, 4rem);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--font-body);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    ::selection { background: var(--accent); color: #FAFAF8; }
+
+    /* ─── NAV ───────────────────────────────────────────────────── */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      padding: 1.75rem var(--grid);
+      background: var(--bg);
+      border-bottom: 1px solid var(--border-light);
+    }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-center {
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--fg-dim);
+    }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      justify-content: flex-end;
+    }
+    .nav-links a {
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--fg-mid);
+      transition: color 0.2s ease;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    @media (max-width: 640px) {
+      .nav { grid-template-columns: 1fr auto; }
+      .nav-center { display: none; }
+      .nav-links { gap: 1.5rem; }
+      .nav-links a:not(:last-child) { display: none; }
+    }
+
+    /* ─── RULE LINE ─────────────────────────────────────────────── */
+    .rule {
+      display: block;
+      width: 100%;
+      height: 1px;
+      background: var(--border);
+    }
+    .rule-accent {
+      background: var(--accent);
+    }
+
+    /* ─── HERO ──────────────────────────────────────────────────── */
+    .hero {
+      padding-top: calc(4.5rem + 1px); /* nav height */
+      padding-bottom: 0;
+      overflow: hidden;
+    }
+    .hero-meta-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.9rem var(--grid);
+      border-bottom: 1px solid var(--border-light);
+    }
+    .hero-meta-bar span {
+      font-family: var(--font-display);
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--fg-dim);
+    }
+    .hero-meta-bar .tag {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: calc(100svh - 6.5rem);
+    }
+    .hero-left {
+      padding: clamp(3rem, 6vw, 7rem) var(--grid);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-right: 1px solid var(--border-light);
+    }
+    .hero-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 3rem;
+    }
+    .hero-eyebrow-line {
+      width: 2.5rem;
+      height: 1px;
+      background: var(--accent);
+    }
+    .hero-eyebrow-text {
+      font-family: var(--font-display);
+      font-size: 0.65rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--fg-mid);
+    }
+    .hero-headline {
+      font-family: var(--font-display);
+      font-size: clamp(4rem, 9vw, 10rem);
+      font-weight: 700;
+      line-height: 0.9;
+      letter-spacing: -0.04em;
+      color: var(--fg);
+    }
+    .hero-headline em {
+      font-style: normal;
+      color: var(--accent);
+    }
+    .hero-bottom {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 2rem;
+      margin-top: 4rem;
+    }
+    .hero-sub {
+      font-family: var(--font-body);
+      font-size: clamp(0.95rem, 1.5vw, 1.15rem);
+      font-weight: 300;
+      line-height: 1.65;
+      color: var(--fg-mid);
+      max-width: 28ch;
+    }
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 2rem;
+      border: 1px solid var(--fg);
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: background 0.2s ease, color 0.2s ease;
+      white-space: nowrap;
+    }
+    .hero-cta:hover { background: var(--fg); color: var(--bg); }
+    .hero-cta-arrow { transition: transform 0.2s ease; }
+    .hero-cta:hover .hero-cta-arrow { transform: translateX(4px); }
+
+    .hero-right {
+      position: relative;
+      background: var(--fg);
+      overflow: hidden;
+    }
+    .hero-right-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.6;
+      mix-blend-mode: luminosity;
+      transition: transform 0.8s ease;
+    }
+    .hero-right:hover .hero-right-img { transform: scale(1.04); }
+    .hero-right-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(208,31,31,0.15) 0%, transparent 60%);
+    }
+    .hero-right-number {
+      position: absolute;
+      bottom: var(--grid);
+      left: var(--grid);
+      font-family: var(--font-display);
+      font-size: 8rem;
+      font-weight: 700;
+      line-height: 1;
+      color: rgba(250,250,248,0.08);
+      letter-spacing: -0.04em;
+      pointer-events: none;
+      user-select: none;
+    }
+    .hero-right-caption {
+      position: absolute;
+      bottom: var(--grid);
+      right: var(--grid);
+      font-family: var(--font-display);
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(250,250,248,0.5);
+    }
+
+    @media (max-width: 768px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero-right { min-height: 45vw; }
+      .hero-headline { font-size: clamp(3.5rem, 14vw, 5rem); }
+    }
+
+    /* ─── CLIENTS TICKER ────────────────────────────────────────── */
+    .clients-bar {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border-light);
+      overflow: hidden;
+      padding: 1rem 0;
+    }
+    .clients-track {
+      display: flex;
+      gap: 0;
+      animation: ticker 22s linear infinite;
+      width: max-content;
+    }
+    .clients-track:hover { animation-play-state: paused; }
+    .clients-item {
+      flex-shrink: 0;
+      padding: 0 3rem;
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--fg-dim);
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+    .clients-dot {
+      width: 4px; height: 4px;
+      background: var(--accent);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ─── SECTION UTILITY ───────────────────────────────────────── */
+    .section {
+      padding: clamp(5rem, 10vw, 9rem) var(--grid);
+    }
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 4rem;
+    }
+    .section-label-num {
+      font-family: var(--font-display);
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+    }
+    .section-label-text {
+      font-family: var(--font-display);
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--fg-dim);
+    }
+
+    /* ─── WORK SECTION ──────────────────────────────────────────── */
+    .work { background: var(--bg); }
+
+    .work-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: end;
+      margin-bottom: 5rem;
+      padding-bottom: 4rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .work-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 5vw, 5rem);
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -0.03em;
+    }
+    .work-title span { color: var(--accent); }
+    .work-desc {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--fg-mid);
+      max-width: 38ch;
+    }
+
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 1.5rem;
+    }
+    .case-item {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .case-item--large { grid-column: span 7; }
+    .case-item--small { grid-column: span 5; }
+    .case-item--wide  { grid-column: span 12; }
+    .case-item--mid   { grid-column: span 6; }
+
+    .case-img-wrap {
+      position: relative;
+      overflow: hidden;
+      background: var(--bg2);
+    }
+    .case-item--large  .case-img-wrap { aspect-ratio: 4/3; }
+    .case-item--small  .case-img-wrap { aspect-ratio: 3/4; }
+    .case-item--mid    .case-img-wrap { aspect-ratio: 16/9; }
+
+    .case-img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      filter: grayscale(20%);
+    }
+    .case-item:hover .case-img { transform: scale(1.05); filter: grayscale(0%); }
+
+    .case-img-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(10,10,10,0.7) 0%, transparent 55%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    .case-item:hover .case-img-overlay { opacity: 1; }
+
+    .case-tag {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background: var(--bg);
+      padding: 0.3rem 0.7rem;
+      font-family: var(--font-display);
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--fg);
+    }
+
+    .case-cta {
+      position: absolute;
+      bottom: 1.25rem;
+      right: 1.25rem;
+      width: 2.5rem; height: 2.5rem;
+      background: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: scale(0.7);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    .case-item:hover .case-cta { opacity: 1; transform: scale(1); }
+    .case-cta svg { width: 1rem; height: 1rem; stroke: #FAFAF8; }
+
+    .case-info { padding: 1.25rem 0 0; }
+    .case-counter {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      margin-bottom: 0.35rem;
+    }
+    .case-name {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+      margin-bottom: 0.25rem;
+    }
+    .case-type {
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: var(--fg-dim);
+      letter-spacing: 0.02em;
+    }
+
+    @media (max-width: 900px) {
+      .case-item--large,
+      .case-item--small,
+      .case-item--mid   { grid-column: span 12; }
+      .case-item--large .case-img-wrap,
+      .case-item--small .case-img-wrap { aspect-ratio: 16/9; }
+      .work-header { grid-template-columns: 1fr; }
+    }
+
+    /* ─── DIVIDER NUMBER ────────────────────────────────────────── */
+    .divider-num {
+      padding: clamp(3rem, 6vw, 5rem) var(--grid);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border-light);
+      background: var(--bg2);
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 2rem;
+    }
+    .stat-item { text-align: center; }
+    .stat-num {
+      display: block;
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+    .stat-num.red { color: var(--accent); }
+    .stat-label {
+      display: block;
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--fg-dim);
+      margin-top: 0.5rem;
+    }
+
+    /* ─── ABOUT SECTION ─────────────────────────────────────────── */
+    .about { background: var(--fg); color: var(--bg); }
+
+    .about .section-label-num { color: var(--accent); }
+    .about .section-label-text { color: rgba(250,250,248,0.4); }
+
+    .about-inner {
+      display: grid;
+      grid-template-columns: 5fr 4fr;
+      gap: clamp(3rem, 6vw, 7rem);
+      align-items: start;
+    }
+
+    .about-headline {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 4.5vw, 4.5rem);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.035em;
+      margin-bottom: 2.5rem;
+    }
+    .about-headline em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .about-body {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+    .about-body p {
+      font-family: var(--font-body);
+      font-size: 1.05rem;
+      font-weight: 300;
+      line-height: 1.75;
+      color: rgba(250,250,248,0.7);
+    }
+    .about-body p strong {
+      font-weight: 500;
+      color: rgba(250,250,248,0.95);
+    }
+
+    .about-right { padding-top: 0.5rem; }
+
+    .about-img-wrap {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 3/4;
+      margin-bottom: 2rem;
+    }
+    .about-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.75;
+      transition: transform 0.7s ease;
+    }
+    .about-img-wrap:hover .about-img { transform: scale(1.04); }
+    .about-img-accent {
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 4px; height: 60%;
+      background: var(--accent);
+    }
+
+    .about-principles {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .about-principles li {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.9rem 0;
+      border-bottom: 1px solid rgba(250,250,248,0.08);
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      color: rgba(250,250,248,0.75);
+    }
+    .about-principles li::before {
+      content: '';
+      width: 0.5rem; height: 0.5rem;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 768px) {
+      .about-inner { grid-template-columns: 1fr; }
+      .about-right { order: -1; }
+      .about-img-wrap { aspect-ratio: 16/9; }
+    }
+
+    /* ─── CONTACT SECTION ───────────────────────────────────────── */
+    .contact { background: var(--bg); }
+
+    .contact-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(3rem, 6vw, 7rem);
+      align-items: start;
+    }
+
+    .contact-headline {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 6vw, 6rem);
+      font-weight: 700;
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+      margin-bottom: 2rem;
+    }
+    .contact-headline em {
+      font-style: normal;
+      color: var(--accent);
+      display: block;
+    }
+
+    .contact-sub {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--fg-mid);
+      max-width: 35ch;
+      margin-bottom: 3rem;
+    }
+
+    .contact-link-big {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-family: var(--font-display);
+      font-size: clamp(1rem, 2vw, 1.4rem);
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      border-top: 1px solid var(--border);
+      padding: 1.25rem 0;
+      transition: color 0.2s ease;
+    }
+    .contact-link-big:hover { color: var(--accent); }
+    .contact-link-big svg { width: 1.25rem; height: 1.25rem; stroke: currentColor; }
+    .contact-link-big:first-of-type { border-top: 1px solid var(--border); }
+
+    .contact-form { padding-top: 0.5rem; }
+
+    .form-row { margin-bottom: 0.1rem; }
+    .form-field {
+      width: 100%;
+      padding: 1.1rem 0;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--border-light);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: var(--fg);
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+    .form-field::placeholder { color: var(--fg-dim); }
+    .form-field:focus { border-color: var(--accent); }
+
+    .form-select {
+      appearance: none;
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' stroke='%238A8A8A' stroke-width='1.5'%3E%3Cpath d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0 center;
+      padding-right: 1.5rem;
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 6rem;
+    }
+
+    .form-submit {
+      margin-top: 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .btn-submit {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 2.25rem;
+      background: var(--fg);
+      color: var(--bg);
+      border: none;
+      cursor: pointer;
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: background 0.2s ease;
+    }
+    .btn-submit:hover { background: var(--accent); }
+    .btn-submit svg { width: 1rem; height: 1rem; stroke: currentColor; }
+    .form-note {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      color: var(--fg-dim);
+    }
+
+    @media (max-width: 768px) {
+      .contact-inner { grid-template-columns: 1fr; }
+    }
+
+    /* ─── FOOTER ────────────────────────────────────────────────── */
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem var(--grid);
+      background: var(--fg);
+      color: var(--bg);
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 1rem;
+    }
+    .footer-left {
+      font-family: var(--font-display);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(250,250,248,0.4);
+    }
+    .footer-logo {
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .footer-logo span { color: var(--accent); }
+    .footer-right {
+      display: flex;
+      gap: 2rem;
+      justify-content: flex-end;
+    }
+    .footer-right a {
+      font-family: var(--font-display);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(250,250,248,0.4);
+      transition: color 0.2s ease;
+    }
+    .footer-right a:hover { color: rgba(250,250,248,0.9); }
+    @media (max-width: 640px) {
+      .footer { grid-template-columns: 1fr; text-align: center; }
+      .footer-right { justify-content: center; }
+    }
+
+    /* ─── SCROLL ANIMATIONS ─────────────────────────────────────── */
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    [data-reveal].visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    [data-reveal-delay="1"] { transition-delay: 0.1s; }
+    [data-reveal-delay="2"] { transition-delay: 0.2s; }
+    [data-reveal-delay="3"] { transition-delay: 0.3s; }
+    [data-reveal-delay="4"] { transition-delay: 0.4s; }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="#" class="nav-logo">Raster<span>&</span>Co.</a>
+    <span class="nav-center">Design Studio Trier</span>
+    <div class="nav-links">
+      <a href="#work">Arbeiten</a>
+      <a href="#about">Studio</a>
+      <a href="#contact">Kontakt</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <!-- Meta bar -->
+    <div class="hero-meta-bar">
+      <span>Gründung 2019 — Trier</span>
+      <span class="tag">Derzeit verfügbar</span>
+      <span>Branding · UX · Editorial</span>
+    </div>
+
+    <!-- Split grid -->
+    <div class="hero-grid">
+      <!-- Left: Typography -->
+      <div class="hero-left">
+        <div>
+          <div class="hero-eyebrow">
+            <div class="hero-eyebrow-line"></div>
+            <span class="hero-eyebrow-text">Design Studio</span>
+          </div>
+          <h1 class="hero-headline">
+            Form<br>
+            folgt<br>
+            <em>Funktion.</em>
+          </h1>
+        </div>
+        <div class="hero-bottom">
+          <p class="hero-sub">
+            Wir arbeiten im Raster. Wir denken in Systemen. Wir gestalten für Menschen — nicht für Trends.
+          </p>
+          <a href="#work" class="hero-cta">
+            Arbeiten sehen
+            <svg class="hero-cta-arrow" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Right: Image -->
+      <div class="hero-right">
+        <img
+          class="hero-right-img"
+          src="https://images.unsplash.com/photo-1541462608143-67571c6738dd?auto=format&fit=crop&w=1200&h=900&q=80"
+          alt="Design Studio Workspace"
+          loading="eager"
+        />
+        <div class="hero-right-overlay"></div>
+        <div class="hero-right-number">01</div>
+        <span class="hero-right-caption">Studio · Trier</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLIENTS TICKER -->
+  <div class="clients-bar">
+    <div class="clients-track">
+      <!-- doubled for seamless loop -->
+      <span class="clients-item"><span class="clients-dot"></span>Stadtwerke Trier</span>
+      <span class="clients-item"><span class="clients-dot"></span>Hotel Porta Nigra</span>
+      <span class="clients-item"><span class="clients-dot"></span>Mosel Weingut</span>
+      <span class="clients-item"><span class="clients-dot"></span>Bitburger Group</span>
+      <span class="clients-item"><span class="clients-dot"></span>Universität Trier</span>
+      <span class="clients-item"><span class="clients-dot"></span>Trier Tourismus</span>
+      <span class="clients-item"><span class="clients-dot"></span>VRT Verkehrsverbund</span>
+      <span class="clients-item"><span class="clients-dot"></span>Palais Walderdorff</span>
+      <span class="clients-item"><span class="clients-dot"></span>Stadtwerke Trier</span>
+      <span class="clients-item"><span class="clients-dot"></span>Hotel Porta Nigra</span>
+      <span class="clients-item"><span class="clients-dot"></span>Mosel Weingut</span>
+      <span class="clients-item"><span class="clients-dot"></span>Bitburger Group</span>
+      <span class="clients-item"><span class="clients-dot"></span>Universität Trier</span>
+      <span class="clients-item"><span class="clients-dot"></span>Trier Tourismus</span>
+      <span class="clients-item"><span class="clients-dot"></span>VRT Verkehrsverbund</span>
+      <span class="clients-item"><span class="clients-dot"></span>Palais Walderdorff</span>
+    </div>
+  </div>
+
+  <!-- WORK -->
+  <section class="work section" id="work">
+    <div class="section-label" data-reveal>
+      <span class="section-label-num">02</span>
+      <span class="section-label-text">Ausgewählte Arbeiten</span>
+    </div>
+
+    <div class="work-header" data-reveal>
+      <h2 class="work-title">Ausge-<br>wählte<br><span>Projekte.</span></h2>
+      <p class="work-desc">Jedes Projekt ist ein eigenständiges System. Wir entwickeln keine Templates — wir entwickeln Lösungen, die bleiben.</p>
+    </div>
+
+    <div class="work-grid">
+      <!-- Case 1 — Large -->
+      <div class="case-item case-item--large" data-reveal data-reveal-delay="1">
+        <div class="case-img-wrap">
+          <img class="case-img"
+            src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1000&h=750&q=80"
+            alt="Brand Identity Projekt"
+            loading="lazy"
+          />
+          <div class="case-img-overlay"></div>
+          <span class="case-tag">Brand Identity</span>
+          <div class="case-cta">
+            <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+        <div class="case-info">
+          <span class="case-counter">— 01</span>
+          <div class="case-name">Mosel Weinkultur</div>
+          <div class="case-type">Brand Identity · Packaging · Webdesign</div>
+        </div>
+      </div>
+
+      <!-- Case 2 — Small -->
+      <div class="case-item case-item--small" data-reveal data-reveal-delay="2">
+        <div class="case-img-wrap">
+          <img class="case-img"
+            src="https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?auto=format&fit=crop&w=700&h=900&q=80"
+            alt="Typografie Editorial"
+            loading="lazy"
+          />
+          <div class="case-img-overlay"></div>
+          <span class="case-tag">Editorial</span>
+          <div class="case-cta">
+            <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+        <div class="case-info">
+          <span class="case-counter">— 02</span>
+          <div class="case-name">Jahresbericht 2024</div>
+          <div class="case-type">Editorial Design · Print</div>
+        </div>
+      </div>
+
+      <!-- Case 3 — Mid -->
+      <div class="case-item case-item--mid" data-reveal data-reveal-delay="1">
+        <div class="case-img-wrap">
+          <img class="case-img"
+            src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=900&h=506&q=80"
+            alt="Website Redesign"
+            loading="lazy"
+          />
+          <div class="case-img-overlay"></div>
+          <span class="case-tag">Digital</span>
+          <div class="case-cta">
+            <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+        <div class="case-info">
+          <span class="case-counter">— 03</span>
+          <div class="case-name">Stadtwerke Trier</div>
+          <div class="case-type">Web Design · Design System</div>
+        </div>
+      </div>
+
+      <!-- Case 4 — Mid -->
+      <div class="case-item case-item--mid" data-reveal data-reveal-delay="2">
+        <div class="case-img-wrap">
+          <img class="case-img"
+            src="https://images.unsplash.com/photo-1572044162444-ad60f128bdea?auto=format&fit=crop&w=900&h=506&q=80"
+            alt="Signage System"
+            loading="lazy"
+          />
+          <div class="case-img-overlay"></div>
+          <span class="case-tag">Leitsystem</span>
+          <div class="case-cta">
+            <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+        <div class="case-info">
+          <span class="case-counter">— 04</span>
+          <div class="case-name">Museum Schatzhaus</div>
+          <div class="case-type">Signage · Leitsystem · Print</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS DIVIDER -->
+  <div class="divider-num">
+    <div class="stat-item" data-reveal>
+      <span class="stat-num red">47</span>
+      <span class="stat-label">Abgeschlossene Projekte</span>
+    </div>
+    <div class="stat-item" data-reveal data-reveal-delay="2">
+      <span class="stat-num">6</span>
+      <span class="stat-label">Jahre im Raster</span>
+    </div>
+    <div class="stat-item" data-reveal data-reveal-delay="3">
+      <span class="stat-num red">3</span>
+      <span class="stat-label">Personen im Studio</span>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section class="about section" id="about">
+    <div class="section-label" data-reveal>
+      <span class="section-label-num">03</span>
+      <span class="section-label-text">Das Studio</span>
+    </div>
+
+    <div class="about-inner">
+      <div>
+        <h2 class="about-headline" data-reveal>
+          Gutes Design<br>
+          braucht kein<br>
+          <em>Ornament.</em>
+        </h2>
+        <div class="about-body" data-reveal data-reveal-delay="1">
+          <p>
+            Raster&nbsp;&amp; Co. wurde 2019 in Trier gegründet. Wir sind ein kleines Studio mit <strong>großem Anspruch</strong> — spezialisiert auf Markenidentitäten, Editorial Design und digitale Erlebnisse.
+          </p>
+          <p>
+            Unsere Arbeit basiert auf den Prinzipien der <strong>Internationalen Typographischen Schule</strong>: Klarheit, Präzision, Funktion. Wir glauben, dass gutes Design keine Erklärung braucht.
+          </p>
+          <p>
+            Wir arbeiten mit mittelständischen Unternehmen, Kulturinstitutionen und wachsenden Marken zusammen — immer dann, wenn Design ein System sein soll, kein Zufall.
+          </p>
+        </div>
+      </div>
+
+      <div class="about-right" data-reveal data-reveal-delay="2">
+        <div class="about-img-wrap">
+          <img class="about-img"
+            src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=700&h=900&q=80"
+            alt="Studio Innenraum"
+            loading="lazy"
+          />
+          <div class="about-img-accent"></div>
+        </div>
+        <ul class="about-principles">
+          <li>Raster vor Chaos</li>
+          <li>Typografie als Stimme</li>
+          <li>Weniger, aber besser</li>
+          <li>System vor Oberfläche</li>
+          <li>Qualität ist keine Option</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact section" id="contact">
+    <div class="section-label" data-reveal>
+      <span class="section-label-num">04</span>
+      <span class="section-label-text">Kontakt</span>
+    </div>
+
+    <div class="contact-inner">
+      <div data-reveal>
+        <h2 class="contact-headline">
+          Lass uns<br>
+          <em>sprechen.</em>
+        </h2>
+        <p class="contact-sub">
+          Neues Projekt? Interesse an einer Zusammenarbeit? Wir freuen uns auf jedes gute Briefing.
+        </p>
+
+        <a href="mailto:hallo@raster-co.de" class="contact-link-big">
+          hallo@raster-co.de
+          <svg fill="none" stroke-width="1.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="tel:+4965147110" class="contact-link-big">
+          +49 651 471 10
+          <svg fill="none" stroke-width="1.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#" class="contact-link-big">
+          Simeonstraße 12, 54290 Trier
+          <svg fill="none" stroke-width="1.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <div class="contact-form" data-reveal data-reveal-delay="2">
+        <form onsubmit="return false;">
+          <div class="form-row">
+            <input class="form-field" type="text" placeholder="Name" autocomplete="off" />
+          </div>
+          <div class="form-row">
+            <input class="form-field" type="email" placeholder="E-Mail" autocomplete="off" />
+          </div>
+          <div class="form-row">
+            <select class="form-field form-select">
+              <option value="" disabled selected>Projekttyp</option>
+              <option>Brand Identity</option>
+              <option>Webdesign</option>
+              <option>Editorial</option>
+              <option>Design System</option>
+              <option>Sonstiges</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <textarea class="form-field form-textarea" placeholder="Kurzbeschreibung Ihres Projekts …"></textarea>
+          </div>
+          <div class="form-submit">
+            <button class="btn-submit" type="submit">
+              Anfrage senden
+              <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+            <span class="form-note">Wir antworten innerhalb von 24h.</span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <span class="footer-left">© 2025 Raster & Co. Design Studio</span>
+    <a href="#" class="footer-logo">Raster<span>&</span>Co.</a>
+    <div class="footer-right">
+      <a href="#">Impressum</a>
+      <a href="#">Datenschutz</a>
+      <a href="#">LinkedIn</a>
+    </div>
+  </footer>
+
+  <script>
+    /* Scroll reveal */
+    const revealEls = document.querySelectorAll('[data-reveal]');
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible');
+            observer.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
+    revealEls.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
