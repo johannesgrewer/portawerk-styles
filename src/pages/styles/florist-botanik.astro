@@ -6,768 +6,1370 @@ export const prerender = true;
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Grünzeit — Blumen & Botanik Atelier</title>
+  <title>Grünzeit — Blumen & Botanik Atelier, Trier</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Lora:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    html {
-      overflow-x: hidden;
+    :root {
+      --cream: #F9F6F0;
+      --cream-dark: #EEE8DE;
+      --cream-blush: #F2E8E4;
+      --green-deep: #1C281B;
+      --green-forest: #3B5C3A;
+      --green-sage: #8a9e87;
+      --green-mist: #EEF2E8;
+      --amber: #C4853A;
+      --blush: #B8796E;
+      --text: #2A3028;
     }
+
+    html { overflow-x: hidden; scroll-behavior: smooth; }
 
     body {
       overflow-x: hidden;
-      background-color: #F9F6F0;
-      color: #2A3028;
+      background: var(--cream);
+      color: var(--text);
       font-family: 'Lora', serif;
     }
 
-    /* Paper grain texture */
+    /* Grain overlay */
     body::before {
       content: '';
       position: fixed;
       inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-      background-repeat: repeat;
-      background-size: 180px 180px;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      background-size: 180px;
       pointer-events: none;
-      z-index: 100;
-      opacity: 0.5;
+      z-index: 9999;
+      opacity: 0.45;
     }
+
+    /* ── NAVIGATION ── */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 64px;
+      height: 70px;
+      transition: background 0.4s ease, box-shadow 0.4s ease;
+    }
+    .nav.scrolled {
+      background: rgba(249, 246, 240, 0.95);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 1px 0 rgba(59, 92, 58, 0.1);
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--green-forest);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav-logo-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--amber);
+      flex-shrink: 0;
+      margin-bottom: 2px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: 'Lora', serif;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text);
+      text-decoration: none;
+      opacity: 0.55;
+      transition: opacity 0.3s ease;
+    }
+    .nav-links a:hover { opacity: 1; }
 
     /* ── HERO ── */
     .hero {
-      display: flex;
-      height: 100vh;
-      min-height: 700px;
+      display: grid;
+      grid-template-columns: 46% 54%;
+      min-height: 100vh;
+      padding-top: 70px;
       position: relative;
       overflow: hidden;
     }
 
-    /* ── LEFT COLUMN ── */
     .hero-left {
-      flex: 0 0 42%;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: 60px 48px 60px 64px;
+      padding: 80px 56px 80px 80px;
       position: relative;
       z-index: 2;
     }
 
-    .label-latin {
-      font-family: 'Lora', serif;
-      font-size: 9px;
-      font-weight: 400;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: #C4853A;
-      opacity: 0;
-      transform: translateY(18px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-
-    .label-latin.visible { opacity: 1; transform: translateY(0); }
-
-    .headline-group {
-      margin-top: 20px;
-    }
-
-    .hl-small {
-      display: block;
+    /* Large decorative initial */
+    .hero-initial {
+      position: absolute;
+      top: 50%;
+      left: -60px;
+      transform: translateY(-55%);
       font-family: 'Cormorant Garamond', serif;
-      font-size: 13px;
-      font-weight: 400;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: #3B5C3A;
-      opacity: 0;
-      transform: translateY(22px);
-      transition: opacity 0.75s 0.1s ease, transform 0.75s 0.1s ease;
-    }
-
-    .hl-small.visible { opacity: 1; transform: translateY(0); }
-
-    .hl-main {
-      display: block;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(58px, 6.5vw, 88px);
+      font-size: 420px;
       font-weight: 300;
       font-style: italic;
-      line-height: 0.92;
-      color: #2A3028;
-      margin-top: 6px;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(59, 92, 58, 0.055);
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+      z-index: 0;
     }
 
-    .hl-main .word {
-      display: inline-block;
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
+    .hero-eyebrow {
+      font-family: 'Lora', serif;
+      font-size: 9px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--amber);
+      position: relative;
+      z-index: 1;
     }
 
-    .hl-main .word.visible { opacity: 1; transform: translateY(0); }
+    .hero-title {
+      position: relative;
+      z-index: 1;
+      margin-top: 20px;
+      line-height: 0.88;
+    }
 
-    .hl-accent {
+    .title-clip {
+      overflow: hidden;
       display: block;
+    }
+
+    .title-clip .inner {
+      display: block;
+      transform: translateY(105%);
+      opacity: 0;
+      transition: transform 0.95s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.9s ease;
+    }
+
+    .title-clip .inner.visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .hero-t1 {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(58px, 6.5vw, 88px);
+      font-size: clamp(62px, 7vw, 100px);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--text);
+    }
+
+    .hero-t2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(62px, 7vw, 100px);
       font-weight: 600;
       font-style: italic;
-      line-height: 0.92;
-      color: #3B5C3A;
+      color: var(--green-forest);
     }
 
-    .hl-accent .word {
-      display: inline-block;
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
-
-    .hl-accent .word.visible { opacity: 1; transform: translateY(0); }
-
-    /* Decorative divider — hand-drawn feel */
-    .divider-botanical {
-      margin: 32px 0 28px;
+    .hero-divider {
+      margin: 30px 0 26px;
       opacity: 0;
       transform: scaleX(0);
-      transform-origin: left center;
-      transition: opacity 0.9s 0.5s ease, transform 0.9s 0.5s ease;
+      transform-origin: left;
+      transition: transform 1s 0.5s ease, opacity 1s 0.5s ease;
+      position: relative;
+      z-index: 1;
     }
+    .hero-divider.visible { opacity: 1; transform: scaleX(1); }
 
-    .divider-botanical.visible { opacity: 1; transform: scaleX(1); }
-
-    .tagline {
+    .hero-tagline {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 18px;
-      font-weight: 400;
+      font-size: 17px;
       font-style: italic;
-      color: #3B5C3A;
-      line-height: 1.5;
-      opacity: 0;
-      transform: translateY(16px);
-      transition: opacity 0.8s 0.6s ease, transform 0.8s 0.6s ease;
+      color: var(--green-forest);
+      line-height: 1.6;
+      max-width: 320px;
+      position: relative;
+      z-index: 1;
     }
 
-    .tagline.visible { opacity: 1; transform: translateY(0); }
-
-    .label-secondary {
+    .hero-meta {
       font-family: 'Lora', serif;
       font-size: 9px;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: #8a9e87;
-      margin-top: 16px;
-      opacity: 0;
-      transform: translateY(14px);
-      transition: opacity 0.7s 0.65s ease, transform 0.7s 0.65s ease;
+      color: var(--green-sage);
+      margin-top: 10px;
+      position: relative;
+      z-index: 1;
     }
 
-    .label-secondary.visible { opacity: 1; transform: translateY(0); }
-
-    .cta-group {
-      margin-top: 40px;
+    .hero-cta {
       display: flex;
       align-items: center;
-      gap: 28px;
-      opacity: 0;
-      transform: translateY(18px);
-      transition: opacity 0.8s 0.8s ease, transform 0.8s 0.8s ease;
-    }
-
-    .cta-group.visible { opacity: 1; transform: translateY(0); }
-
-    .cta-btn {
-      display: inline-block;
-      padding: 13px 28px;
-      border: 1.5px solid #3B5C3A;
-      font-family: 'Lora', serif;
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: #3B5C3A;
-      text-decoration: none;
+      gap: 32px;
+      margin-top: 40px;
       position: relative;
-      overflow: hidden;
-      transition: color 0.35s ease;
+      z-index: 1;
     }
 
-    .cta-btn::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: #3B5C3A;
-      transform: translateX(-101%);
-      transition: transform 0.35s ease;
-    }
-
-    .cta-btn:hover::before { transform: translateX(0); }
-    .cta-btn:hover { color: #F9F6F0; }
-
-    .cta-btn span { position: relative; z-index: 1; }
-
-    .cta-link {
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      padding: 13px 28px;
+      background: var(--green-forest);
       font-family: 'Lora', serif;
-      font-size: 11px;
-      letter-spacing: 0.12em;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: #C4853A;
+      color: var(--cream);
       text-decoration: none;
-      border-bottom: 1px solid rgba(196, 133, 58, 0.4);
+      transition: background 0.3s ease;
+    }
+    .btn-primary:hover { background: var(--green-deep); }
+
+    .btn-ghost {
+      font-family: 'Lora', serif;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--amber);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(196, 133, 58, 0.35);
       padding-bottom: 2px;
       transition: border-color 0.3s ease;
     }
+    .btn-ghost:hover { border-color: var(--amber); }
 
-    .cta-link:hover { border-color: #C4853A; }
-
-    /* ── CENTER BOTANICAL LINE ── */
-    .center-line {
-      position: absolute;
-      left: 42%;
-      top: 0;
-      bottom: 0;
-      width: 1px;
-      z-index: 3;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0;
-      padding: 40px 0;
-      pointer-events: none;
-    }
-
-    .center-line svg {
-      flex-shrink: 0;
-    }
-
-    .center-line-stem {
-      flex: 1;
-      width: 1px;
-      background: linear-gradient(to bottom, transparent, #3B5C3A 20%, #3B5C3A 80%, transparent);
-      opacity: 0.25;
-    }
-
-    /* ── RIGHT COLUMN ── */
+    /* Hero right */
     .hero-right {
-      flex: 1;
       position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 48px 56px 48px 72px;
     }
 
-    .image-frame {
-      width: 100%;
-      height: 80vh;
-      max-height: 680px;
-      position: relative;
-      opacity: 0;
-      transform: translateY(24px) scale(0.98);
-      transition: opacity 1.1s 0.3s ease, transform 1.1s 0.3s ease;
+    .hero-image-wrap {
+      position: absolute;
+      inset: 20px 20px 20px 0;
+      overflow: hidden;
     }
 
-    .image-frame.visible {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-
-    .image-frame img {
+    .hero-image-wrap img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       object-position: center;
-      display: block;
-      clip-path: polygon(0 3%, 4% 0, 96% 0, 100% 4%, 100% 97%, 95% 100%, 5% 100%, 0 97%);
-      transition: transform 8s ease-in-out;
+      transition: transform 8s ease;
     }
+    .hero-image-wrap:hover img { transform: scale(1.04); }
 
-    .image-frame:hover img {
-      transform: scale(1.04);
-    }
-
-    /* Organic accent border */
-    .image-frame::before {
-      content: '';
+    /* Floating info card */
+    .hero-float-card {
       position: absolute;
-      inset: -8px;
-      border: 1.5px solid rgba(59, 92, 58, 0.18);
-      clip-path: polygon(0 4%, 5% 0, 95% 0, 100% 5%, 100% 96%, 94% 100%, 6% 100%, 0 95%);
-      z-index: 1;
+      bottom: 64px;
+      left: 40px;
+      background: var(--cream);
+      padding: 18px 24px;
+      z-index: 3;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    }
+
+    .hero-float-label {
+      font-family: 'Lora', serif;
+      font-size: 8px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 6px;
+    }
+
+    .hero-float-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 15px;
+      font-style: italic;
+      color: var(--text);
+      line-height: 1.45;
+    }
+
+    /* Scroll hint */
+    .scroll-hint {
+      position: absolute;
+      bottom: 36px;
+      left: 80px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 3;
+    }
+
+    .scroll-hint-line {
+      width: 40px;
+      height: 1px;
+      background: linear-gradient(to right, var(--green-sage), transparent);
+      animation: scrollLineAnim 2.2s ease-in-out infinite;
+    }
+    @keyframes scrollLineAnim {
+      0%, 100% { transform: scaleX(1); opacity: 0.45; }
+      50% { transform: scaleX(1.4); opacity: 1; }
+    }
+
+    .scroll-hint-text {
+      font-family: 'Lora', serif;
+      font-size: 8px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--green-sage);
+    }
+
+    /* ── IMG-WRAP UTILITY ── */
+    .img-wrap { position: relative; overflow: hidden; }
+    .img-wrap img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.65s ease;
+    }
+    .img-wrap:hover img { transform: scale(1.06); }
+
+    .img-overlay-dark {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(28, 40, 27, 0.55) 0%, transparent 55%);
+      pointer-events: none;
+    }
+    .img-overlay-light {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(42, 48, 40, 0.28) 0%, transparent 50%);
       pointer-events: none;
     }
 
-    /* Accent dot top-right */
-    .image-frame::after {
-      content: '';
-      position: absolute;
-      top: -12px;
-      right: -12px;
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      background: #C4853A;
-      opacity: 0.7;
-      z-index: 2;
-    }
-
-    /* Image caption */
-    .image-caption {
-      position: absolute;
-      bottom: -32px;
-      right: 0;
+    /* ── SECTION LABELS ── */
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
       font-family: 'Lora', serif;
       font-size: 9px;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.28em;
       text-transform: uppercase;
-      color: #8a9e87;
+      color: var(--amber);
+    }
+    .section-label::before {
+      content: '';
+      display: inline-block;
+      width: 22px;
+      height: 1px;
+      background: var(--amber);
+      opacity: 0.55;
+      flex-shrink: 0;
     }
 
-    /* Bottom-left accent label */
-    .location-tag {
-      position: absolute;
-      bottom: 28px;
-      left: 64px;
+    .section-h2 {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 11px;
-      font-weight: 400;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: #C4853A;
-      opacity: 0;
-      transition: opacity 1s 1.1s ease;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--text);
+      line-height: 1.0;
     }
 
-    .location-tag.visible { opacity: 1; }
+    /* ── ANIMATION UTILITIES ── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
 
-    /* ── SCROLL INDICATOR ── */
-    .scroll-indicator {
-      position: absolute;
-      bottom: 32px;
-      right: 56px;
+    .fade-in-left {
+      opacity: 0;
+      transform: translateX(-24px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    .fade-in-left.visible { opacity: 1; transform: translateX(0); }
+
+    .fade-in-right {
+      opacity: 0;
+      transform: translateX(24px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    .fade-in-right.visible { opacity: 1; transform: translateX(0); }
+
+    .d1 { transition-delay: 0.1s; }
+    .d2 { transition-delay: 0.2s; }
+    .d3 { transition-delay: 0.3s; }
+    .d4 { transition-delay: 0.4s; }
+    .d5 { transition-delay: 0.5s; }
+
+    /* ── SECTION 2: ARRANGEMENTS ── */
+    .section-arrangements {
+      background: var(--cream);
+      padding: 7rem 0 0;
+    }
+
+    .arr-header {
+      padding: 0 80px;
+      margin-bottom: 4rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: end;
+    }
+
+    .arr-header .section-label { margin-bottom: 14px; }
+    .arr-header .section-h2 { font-size: clamp(2.2rem, 3.8vw, 3.4rem); }
+
+    .arr-header-right p {
+      font-family: 'Lora', serif;
+      font-size: 0.88rem;
+      line-height: 1.85;
+      color: var(--green-sage);
+      margin-bottom: 16px;
+    }
+
+    /* Main: large left photo + right column */
+    .arr-main {
+      padding: 0 80px;
+      display: grid;
+      grid-template-columns: 1.45fr 1fr;
+      gap: 32px;
+      margin-bottom: 0;
+    }
+
+    .arr-featured-img { height: 560px; }
+
+    .arr-featured-caption {
+      margin-top: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .arr-featured-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      font-style: italic;
+      color: var(--text);
+    }
+
+    .arr-featured-price {
+      font-family: 'Lora', serif;
+      font-size: 0.78rem;
+      color: var(--green-sage);
+      letter-spacing: 0.06em;
+    }
+
+    .arr-secondary {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      opacity: 0;
-      transition: opacity 1s 1.3s ease;
+      gap: 20px;
     }
 
-    .scroll-indicator.visible { opacity: 1; }
+    .arr-secondary .section-label { margin-bottom: 4px; }
 
-    .scroll-text {
+    .arr-secondary .section-h2 {
+      font-size: clamp(1.5rem, 2.2vw, 2rem);
+      margin-bottom: 12px;
+    }
+
+    .arr-secondary > p {
       font-family: 'Lora', serif;
-      font-size: 9px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: #8a9e87;
-      writing-mode: vertical-rl;
+      font-size: 0.86rem;
+      line-height: 1.85;
+      color: var(--green-sage);
     }
 
-    .scroll-line {
-      width: 1px;
-      height: 48px;
-      background: linear-gradient(to bottom, #8a9e87, transparent);
-      animation: scrollPulse 2s ease-in-out infinite;
-    }
-
-    @keyframes scrollPulse {
-      0%, 100% { opacity: 0.4; transform: scaleY(1); }
-      50% { opacity: 1; transform: scaleY(1.15); }
-    }
-
-    /* ── BACKGROUND ORGANIC CIRCLES ── */
-    .bg-circle {
-      position: absolute;
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .bg-circle-1 {
-      width: 600px;
-      height: 600px;
-      top: -200px;
-      right: -100px;
-      background: radial-gradient(circle, rgba(238, 242, 232, 0.6) 0%, transparent 70%);
-    }
-
-    .bg-circle-2 {
-      width: 300px;
-      height: 300px;
-      bottom: -80px;
-      left: 30%;
-      background: radial-gradient(circle, rgba(196, 133, 58, 0.06) 0%, transparent 70%);
-    }
-
-    /* ── YEAR TAG ── */
-    .year-tag {
-      position: absolute;
-      top: 32px;
-      right: 56px;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 11px;
-      font-weight: 300;
-      letter-spacing: 0.22em;
-      color: #b8c5b6;
-    }
-
-    @media (max-width: 900px) {
-      .hero {
-        flex-direction: column;
-        height: auto;
-        min-height: 100vh;
-      }
-      .hero-left {
-        flex: none;
-        padding: 80px 32px 40px;
-      }
-      .hero-right {
-        flex: none;
-        padding: 0 32px 60px;
-        height: 50vh;
-      }
-      .center-line { display: none; }
-      .image-frame { height: 100%; max-height: none; }
-    }
-
-    /* ── IMG-WRAP ── */
-    .img-wrap { position: relative; overflow: hidden; }
-    .img-wrap img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.55s ease; }
-    .img-wrap:hover img { transform: scale(1.05); }
-    .img-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 60%); pointer-events: none; }
-
-    /* ── SECTION 2: Pflanzengrid ── */
-    .section-plants {
-      padding: 6rem 4rem;
-      max-width: 1600px;
-      margin: 0 auto;
-      background: #F9F6F0;
-    }
-    .section-plants .section-label {
-      font-family: 'Lora', serif;
-      font-size: 9px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: #C4853A;
-      margin-bottom: 1rem;
-    }
-    .section-plants h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2rem, 3.5vw, 3rem);
-      font-weight: 300;
-      font-style: italic;
-      color: #2A3028;
-      margin-bottom: 3rem;
-    }
-    .plant-grid {
+    .arr-small-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1.5rem;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: auto;
+      flex: 1;
+      align-self: flex-end;
     }
-    .plant-card {
+
+    .arr-small-label {
+      margin-top: 8px;
+      font-family: 'Lora', serif;
+      font-size: 8px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--green-sage);
+    }
+
+    /* Categories row */
+    .arr-categories {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(59, 92, 58, 0.09);
+      margin-top: 4rem;
+      border-top: 1px solid rgba(59, 92, 58, 0.09);
+    }
+
+    .category-card {
+      background: var(--cream);
+      padding: 40px 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
       position: relative;
+      overflow: hidden;
+      transition: background 0.3s ease;
+      cursor: default;
     }
-    .plant-name {
-      margin-top: 0.75rem;
+    .category-card:hover { background: var(--green-mist); }
+
+    .category-num {
+      position: absolute;
+      top: 20px;
+      right: 28px;
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.05rem;
-      font-weight: 500;
+      font-size: 52px;
+      font-weight: 300;
       font-style: italic;
-      color: #3B5C3A;
+      color: rgba(59, 92, 58, 0.08);
+      line-height: 1;
     }
-    .plant-latin {
+
+    .category-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.45rem;
+      font-style: italic;
+      color: var(--text);
+    }
+
+    .category-desc {
+      font-family: 'Lora', serif;
+      font-size: 0.82rem;
+      line-height: 1.75;
+      color: var(--green-sage);
+    }
+
+    .category-price {
       font-family: 'Lora', serif;
       font-size: 9px;
       letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: #8a9e87;
-      margin-top: 2px;
+      color: var(--amber);
+      margin-top: 6px;
     }
 
-    @media (max-width: 900px) {
-      .plant-grid { grid-template-columns: repeat(2, 1fr); }
-      .section-plants { padding: 4rem 2rem; }
+    /* ── SECTION 3: WORKSHOPS ── */
+    .section-workshops {
+      background: var(--green-deep);
+      padding: 7rem 80px;
+      position: relative;
+      overflow: hidden;
     }
 
-    /* ── SECTION 3: Kontakt Split ── */
-    .section-contact {
-      max-width: 1600px;
-      margin: 0 auto;
+    .workshops-bg-ring {
+      position: absolute;
+      width: 720px;
+      height: 720px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      top: 50%;
+      right: -220px;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+
+    .workshops-bg-ring-2 {
+      position: absolute;
+      width: 480px;
+      height: 480px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      top: 50%;
+      right: -80px;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+
+    .workshops-header {
       display: grid;
       grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      margin-bottom: 5rem;
+      position: relative;
+      z-index: 1;
     }
-    .contact-text {
-      background: #EEE8DE;
-      padding: 6rem 5rem;
+
+    .workshops-header-left .section-label {
+      color: rgba(196, 133, 58, 0.85);
+      margin-bottom: 18px;
+    }
+    .workshops-header-left .section-label::before { background: rgba(196, 133, 58, 0.55); }
+
+    .workshops-header-left .section-h2 {
+      font-size: clamp(2.2rem, 3.8vw, 3.4rem);
+      color: #EEF2E8;
+    }
+
+    .workshops-header-right {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      gap: 20px;
+    }
+
+    .workshops-header-right p {
+      font-family: 'Lora', serif;
+      font-size: 0.88rem;
+      line-height: 1.85;
+      color: rgba(238, 242, 232, 0.55);
+    }
+
+    .btn-light {
+      display: inline-flex;
+      align-items: center;
+      padding: 12px 26px;
+      border: 1.5px solid rgba(238, 242, 232, 0.3);
+      font-family: 'Lora', serif;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(238, 242, 232, 0.75);
+      text-decoration: none;
+      align-self: flex-start;
+      transition: all 0.3s ease;
+    }
+    .btn-light:hover {
+      background: rgba(238, 242, 232, 0.08);
+      border-color: rgba(238, 242, 232, 0.6);
+    }
+
+    .workshops-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .workshop-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      overflow: hidden;
+      transition: border-color 0.3s ease, background 0.3s ease;
+    }
+    .workshop-card:hover {
+      background: rgba(255, 255, 255, 0.07);
+      border-color: rgba(59, 92, 58, 0.45);
+    }
+
+    .workshop-img { height: 230px; }
+
+    .workshop-body { padding: 26px 26px 30px; }
+
+    .workshop-tag {
+      display: inline-block;
+      font-family: 'Lora', serif;
+      font-size: 8px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 10px;
+    }
+
+    .workshop-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-style: italic;
+      color: #EEF2E8;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+
+    .workshop-desc {
+      font-family: 'Lora', serif;
+      font-size: 0.81rem;
+      line-height: 1.8;
+      color: rgba(238, 242, 232, 0.5);
+      margin-bottom: 18px;
+    }
+
+    .workshop-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .workshop-date {
+      font-family: 'Lora', serif;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      color: rgba(238, 242, 232, 0.45);
+    }
+
+    .workshop-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      font-style: italic;
+      color: var(--amber);
+    }
+
+    /* ── SECTION 4: HOCHZEITEN ── */
+    .section-weddings {
+      background: var(--cream-blush);
+    }
+
+    .weddings-hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 580px;
+    }
+
+    .weddings-text {
+      padding: 80px;
       display: flex;
       flex-direction: column;
       justify-content: center;
     }
-    .contact-text .section-label {
-      font-family: 'Lora', serif;
-      font-size: 9px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: #C4853A;
-      margin-bottom: 1rem;
+
+    .weddings-text .section-label {
+      color: var(--blush);
+      margin-bottom: 18px;
     }
-    .contact-text h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2rem, 3vw, 2.8rem);
-      font-weight: 300;
-      font-style: italic;
-      color: #2A3028;
-      margin-bottom: 2.5rem;
-    }
-    .hours-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.9rem;
-      margin-bottom: 2.5rem;
-    }
-    .hours-list li {
-      display: flex;
-      justify-content: space-between;
-      font-family: 'Lora', serif;
-      font-size: 0.82rem;
-      color: #3B5C3A;
-      border-bottom: 1px solid rgba(59, 92, 58, 0.12);
-      padding-bottom: 0.9rem;
-    }
-    .hours-list li .day {
-      font-weight: 400;
-      letter-spacing: 0.05em;
-    }
-    .hours-list li .time {
-      color: #8a9e87;
-      font-size: 0.78rem;
-    }
-    .contact-address {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1rem;
-      font-style: italic;
-      color: #3B5C3A;
-      line-height: 1.7;
-      margin-bottom: 2rem;
-    }
-    .contact-cta {
-      display: inline-block;
-      padding: 12px 28px;
-      border: 1.5px solid #3B5C3A;
-      font-family: 'Lora', serif;
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: #3B5C3A;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      align-self: flex-start;
-    }
-    .contact-cta:hover { background: #3B5C3A; color: #F9F6F0; }
-    .contact-photo {
-      min-height: 500px;
+    .weddings-text .section-label::before { background: var(--blush); }
+
+    .weddings-text .section-h2 {
+      font-size: clamp(2.4rem, 4.5vw, 4rem);
+      margin-bottom: 22px;
     }
 
-    @media (max-width: 900px) {
+    .weddings-text p {
+      font-family: 'Lora', serif;
+      font-size: 0.88rem;
+      line-height: 1.85;
+      color: rgba(42, 48, 40, 0.6);
+      max-width: 380px;
+      margin-bottom: 30px;
+    }
+
+    .btn-blush {
+      display: inline-flex;
+      align-items: center;
+      padding: 13px 28px;
+      border: 1.5px solid var(--blush);
+      font-family: 'Lora', serif;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--blush);
+      text-decoration: none;
+      align-self: flex-start;
+      transition: all 0.35s ease;
+    }
+    .btn-blush:hover { background: var(--blush); color: #fff; }
+
+    .weddings-main-img {
+      position: relative;
+      overflow: hidden;
+    }
+    .weddings-main-img img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.9s ease;
+    }
+    .weddings-main-img:hover img { transform: scale(1.04); }
+
+    /* Wedding gallery 3-col */
+    .weddings-gallery {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .wedding-gallery-item {
+      position: relative;
+      overflow: hidden;
+      height: 360px;
+    }
+
+    .wedding-gallery-item img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s ease;
+    }
+    .wedding-gallery-item:hover img { transform: scale(1.07); }
+
+    .wedding-gallery-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(28, 40, 27, 0);
+      transition: background 0.4s ease;
+      display: flex;
+      align-items: flex-end;
+      padding: 24px;
+    }
+    .wedding-gallery-item:hover .wedding-gallery-overlay { background: rgba(28, 40, 27, 0.35); }
+
+    .wedding-gallery-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      font-style: italic;
+      color: #fff;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .wedding-gallery-item:hover .wedding-gallery-label { opacity: 1; transform: translateY(0); }
+
+    /* Wedding services strip */
+    .weddings-services {
+      background: var(--cream-blush);
+      padding: 4rem 80px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 48px;
+      border-top: 1px solid rgba(184, 121, 110, 0.12);
+    }
+
+    .ws-item {}
+
+    .ws-numeral {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.8rem;
+      font-style: italic;
+      font-weight: 300;
+      color: rgba(184, 121, 110, 0.28);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .ws-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-style: italic;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .ws-desc {
+      font-family: 'Lora', serif;
+      font-size: 0.8rem;
+      line-height: 1.75;
+      color: var(--green-sage);
+    }
+
+    /* ── SECTION 5: KONTAKT ── */
+    .section-contact {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .contact-left {
+      background: var(--green-mist);
+      padding: 7rem 72px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .contact-left .section-label { margin-bottom: 18px; }
+
+    .contact-left .section-h2 {
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      margin-bottom: 3rem;
+    }
+
+    .hours-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 2.5rem;
+    }
+
+    .hours-table tr { border-bottom: 1px solid rgba(59, 92, 58, 0.12); }
+
+    .hours-table td {
+      padding: 13px 0;
+      font-family: 'Lora', serif;
+      font-size: 0.84rem;
+      color: var(--green-forest);
+    }
+
+    .hours-table td:last-child {
+      text-align: right;
+      color: var(--green-sage);
+      font-size: 0.8rem;
+    }
+
+    .contact-address {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      font-style: italic;
+      color: var(--green-forest);
+      line-height: 1.75;
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-phone {
+      display: inline-block;
+      font-family: 'Lora', serif;
+      font-size: 0.82rem;
+      color: var(--amber);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      border-bottom: 1px solid rgba(196, 133, 58, 0.3);
+      padding-bottom: 1px;
+      margin-bottom: 2rem;
+      transition: border-color 0.3s ease;
+    }
+    .contact-phone:hover { border-color: var(--amber); }
+
+    .contact-right {
+      position: relative;
+      min-height: 600px;
+      overflow: hidden;
+    }
+
+    .contact-right img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.9s ease;
+    }
+    .contact-right:hover img { transform: scale(1.04); }
+
+    /* ── FOOTER ── */
+    .footer {
+      background: var(--green-deep);
+      padding: 44px 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-style: italic;
+      color: rgba(238, 242, 232, 0.65);
+    }
+
+    .footer-copy {
+      font-family: 'Lora', serif;
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(238, 242, 232, 0.3);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1100px) {
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-left { padding: 100px 48px 60px; }
+      .hero-right { min-height: 60vh; }
+      .hero-image-wrap { inset: 0; }
+      .hero-float-card { bottom: 32px; left: 24px; }
+      .scroll-hint { left: 48px; }
+      .arr-header { grid-template-columns: 1fr; gap: 24px; }
+      .arr-main { grid-template-columns: 1fr; padding: 0 48px; }
+      .arr-categories { grid-template-columns: 1fr; }
+      .workshops-header { grid-template-columns: 1fr; gap: 28px; }
+      .workshops-grid { grid-template-columns: 1fr; }
+      .weddings-hero { grid-template-columns: 1fr; }
+      .weddings-main-img { min-height: 380px; }
+      .weddings-gallery { grid-template-columns: 1fr 1fr; }
+      .weddings-services { grid-template-columns: 1fr 1fr; }
       .section-contact { grid-template-columns: 1fr; }
-      .contact-text { padding: 4rem 2rem; }
-      .contact-photo { min-height: 320px; }
+      .contact-right { min-height: 380px; }
+    }
+
+    @media (max-width: 768px) {
+      .nav { padding: 0 24px; }
+      .nav-links { display: none; }
+      .hero-left { padding: 80px 24px 48px; }
+      .hero-initial { display: none; }
+      .arr-header, .arr-main { padding: 0 24px; }
+      .section-workshops { padding: 5rem 24px; }
+      .weddings-text { padding: 48px 24px; }
+      .weddings-services { padding: 3rem 24px; grid-template-columns: 1fr 1fr; gap: 28px; }
+      .weddings-gallery { grid-template-columns: 1fr; }
+      .contact-left { padding: 5rem 24px; }
+      .footer { flex-direction: column; text-align: center; padding: 36px 24px; gap: 12px; }
     }
   </style>
 </head>
 <body>
-  <main class="hero">
-    <div class="bg-circle bg-circle-1"></div>
-    <div class="bg-circle bg-circle-2"></div>
 
-    <div class="year-tag">Est. 2017</div>
+  <!-- NAVIGATION -->
+  <nav class="nav" id="mainNav">
+    <a href="/" class="nav-logo">
+      Grünzeit
+      <span class="nav-logo-dot"></span>
+      Atelier
+    </a>
+    <ul class="nav-links">
+      <li><a href="#arrangements">Arrangements</a></li>
+      <li><a href="#workshops">Workshops</a></li>
+      <li><a href="#hochzeiten">Hochzeiten</a></li>
+      <li><a href="#kontakt">Kontakt</a></li>
+    </ul>
+  </nav>
 
-    <!-- LEFT -->
+  <!-- HERO -->
+  <main class="hero" id="home">
     <div class="hero-left">
-      <span class="label-latin animate-item">Plantae · Floralis · Atelier</span>
+      <span class="hero-initial" aria-hidden="true">G</span>
 
-      <div class="headline-group">
-        <span class="hl-small animate-item">Grünzeit</span>
-        <span class="hl-main">
-          <span class="word">Blumen</span>
-        </span>
-        <span class="hl-accent">
-          <span class="word">&amp; Botanik</span>
-        </span>
+      <span class="hero-eyebrow fade-in">Plantae · Floralis · Trier · Est. 2017</span>
+
+      <div class="hero-title" style="margin-top: 20px;">
+        <span class="title-clip hero-t1"><span class="inner">Blumen &amp;</span></span>
+        <span class="title-clip hero-t2"><span class="inner">Botanik</span></span>
       </div>
 
-      <svg class="divider-botanical animate-item" width="220" height="28" viewBox="0 0 220 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M0 14 C30 14 40 6 60 14 C80 22 90 6 110 14 C130 22 140 8 160 14" stroke="#3B5C3A" stroke-width="0.8" stroke-linecap="round" fill="none" opacity="0.5"/>
-        <circle cx="170" cy="14" r="2" fill="#C4853A" opacity="0.6"/>
-        <line x1="175" y1="14" x2="220" y2="14" stroke="#3B5C3A" stroke-width="0.8" opacity="0.3"/>
-        <circle cx="55" cy="6" r="1.5" fill="#3B5C3A" opacity="0.35"/>
-        <circle cx="105" cy="22" r="1.5" fill="#3B5C3A" opacity="0.35"/>
+      <svg class="hero-divider fade-in d4" width="210" height="24" viewBox="0 0 210 24" fill="none">
+        <path d="M0 12 C18 12 28 4 48 12 C68 20 78 4 98 12 C118 20 128 6 148 12" stroke="#3B5C3A" stroke-width="0.8" stroke-linecap="round" opacity="0.4" fill="none"/>
+        <circle cx="156" cy="12" r="2" fill="#C4853A" opacity="0.55"/>
+        <line x1="162" y1="12" x2="210" y2="12" stroke="#3B5C3A" stroke-width="0.7" opacity="0.28"/>
       </svg>
 
-      <p class="tagline animate-item">"Pflanzen, die erzählen."</p>
-      <span class="label-secondary animate-item">Trier Altstadt · Atelier & Ausstellung</span>
+      <p class="hero-tagline fade-in d4">"Wir komponieren Natur — für die kleinen und großen Momente des Lebens."</p>
+      <span class="hero-meta fade-in d5">Atelier &amp; Ausstellung · Simeonstraße 14</span>
 
-      <div class="cta-group animate-item">
-        <a href="#" class="cta-btn"><span>Atelier besuchen</span></a>
-        <a href="#" class="cta-link">Sortiment</a>
+      <div class="hero-cta fade-in d5">
+        <a href="#arrangements" class="btn-primary">Sortiment entdecken</a>
+        <a href="#kontakt" class="btn-ghost">Atelier besuchen</a>
       </div>
     </div>
 
-    <!-- CENTER BOTANICAL LINE -->
-    <div class="center-line">
-      <div class="center-line-stem"></div>
-      <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-        <circle cx="6" cy="6" r="4" stroke="#3B5C3A" stroke-width="0.8" opacity="0.4"/>
-        <circle cx="6" cy="6" r="1.5" fill="#C4853A" opacity="0.5"/>
-      </svg>
-      <div class="center-line-stem"></div>
-      <svg width="20" height="32" viewBox="0 0 20 32" fill="none">
-        <path d="M10 0 C10 0 0 8 0 16 C0 24 10 32 10 32" stroke="#3B5C3A" stroke-width="0.7" opacity="0.3" fill="none"/>
-        <path d="M10 0 C10 0 20 8 20 16 C20 24 10 32 10 32" stroke="#3B5C3A" stroke-width="0.7" opacity="0.3" fill="none"/>
-      </svg>
-      <div class="center-line-stem"></div>
-    </div>
-
-    <!-- RIGHT -->
     <div class="hero-right">
-      <div class="image-frame animate-item" id="imageFrame">
+      <div class="hero-image-wrap fade-in-right">
         <img
-          src="https://images.unsplash.com/photo-1490750967868-88df5691cc45?w=900&q=80&auto=format"
-          alt="Botanik Atelier Grünzeit"
+          src="https://images.unsplash.com/photo-1490750967868-88df5691cc45?auto=format&fit=crop&w=1200&h=1000&q=85"
+          alt="Grünzeit Botanik Atelier"
           loading="eager"
         />
-        <span class="image-caption">Sorte Atropa · Sommer 2024</span>
       </div>
 
-      <span class="location-tag animate-item">Trier, Mosel</span>
+      <div class="hero-float-card fade-in d5">
+        <p class="hero-float-label">Saison · Frühjahr 2025</p>
+        <p class="hero-float-text">Frische Arrangements<br>aus regionalem Anbau</p>
+      </div>
     </div>
 
-    <!-- SCROLL INDICATOR -->
-    <div class="scroll-indicator animate-item">
-      <span class="scroll-text">Scrollen</span>
-      <div class="scroll-line"></div>
+    <div class="scroll-hint fade-in d5">
+      <div class="scroll-hint-line"></div>
+      <span class="scroll-hint-text">Entdecken</span>
     </div>
   </main>
 
-  <!-- SECTION 2: Pflanzensorten Grid -->
-  <section class="section-plants">
-    <p class="section-label">Sortiment · Saison 2024</p>
-    <h2>Unsere Pflanzen</h2>
-    <div class="plant-grid">
+  <!-- SECTION 2: ARRANGEMENTS -->
+  <section class="section-arrangements" id="arrangements">
+    <div class="arr-header">
+      <div class="arr-header-left">
+        <p class="section-label fade-in">Unser Atelier</p>
+        <h2 class="section-h2 fade-in d1">Arrangements<br>&amp; Sträuße</h2>
+      </div>
+      <div class="arr-header-right fade-in d2">
+        <p>Jedes Arrangement ist ein Unikat — mit Sorgfalt aus saisonalen Blüten komponiert. Von der schlichten Schönheit des Einzelstiels bis zum üppigen Brautstrauß.</p>
+        <a href="#" class="btn-ghost">Alle ansehen</a>
+      </div>
+    </div>
 
-      <div class="plant-card">
-        <div class="img-wrap" style="height: 320px;">
-          <img src="https://images.unsplash.com/photo-1465495976277-27b30e1dc5d7?auto=format&fit=crop&w=800&h=600&q=80" alt="Monstera" loading="lazy" />
-          <div class="img-overlay"></div>
+    <div class="arr-main">
+      <div class="arr-featured fade-in-left">
+        <div class="img-wrap arr-featured-img">
+          <img src="https://images.unsplash.com/photo-1487530811176-3780de880c2d?auto=format&fit=crop&w=900&h=700&q=85" alt="Saisonaler Strauß" loading="lazy" />
+          <div class="img-overlay-light"></div>
         </div>
-        <p class="plant-name">Monstera</p>
-        <p class="plant-latin">Monstera deliciosa</p>
+        <div class="arr-featured-caption">
+          <span class="arr-featured-name">Frühlingskomposition No. 7</span>
+          <span class="arr-featured-price">ab 38 €</span>
+        </div>
       </div>
 
-      <div class="plant-card">
-        <div class="img-wrap" style="height: 320px;">
-          <img src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=800&h=600&q=80" alt="Orchideen" loading="lazy" />
-          <div class="img-overlay"></div>
-        </div>
-        <p class="plant-name">Orchideen</p>
-        <p class="plant-latin">Orchidaceae</p>
-      </div>
+      <div class="arr-secondary fade-in-right d1">
+        <p class="section-label">Handwerk</p>
+        <h3 class="section-h2" style="font-size: clamp(1.5rem, 2.2vw, 2.1rem);">Sorgfalt in<br>jedem Detail</h3>
+        <p>Wir arbeiten ausschließlich mit frischen, saisonalen Blüten aus regionalem Anbau und ausgewählten europäischen Schnittblumen. Kein Kunstschnee, keine Plastik — nur pure Natur.</p>
+        <a href="#" class="btn-ghost" style="display: inline-block; margin-top: -4px;">Entstehung ansehen</a>
 
-      <div class="plant-card">
-        <div class="img-wrap" style="height: 320px;">
-          <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&h=600&q=80" alt="Philodendron" loading="lazy" />
-          <div class="img-overlay"></div>
+        <div class="arr-small-grid">
+          <div>
+            <div class="img-wrap" style="height: 175px;">
+              <img src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=400&h=400&q=80" alt="Orchideen Detail" loading="lazy" />
+            </div>
+            <p class="arr-small-label">Orchideen</p>
+          </div>
+          <div>
+            <div class="img-wrap" style="height: 175px;">
+              <img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=400&h=400&q=80" alt="Saison-Selektion" loading="lazy" />
+            </div>
+            <p class="arr-small-label">Saison-Selektion</p>
+          </div>
         </div>
-        <p class="plant-name">Philodendron</p>
-        <p class="plant-latin">Philodendron hederaceum</p>
       </div>
+    </div>
 
-      <div class="plant-card">
-        <div class="img-wrap" style="height: 320px;">
-          <img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=800&h=600&q=80" alt="Sukkulenten" loading="lazy" />
-          <div class="img-overlay"></div>
-        </div>
-        <p class="plant-name">Sukkulenten</p>
-        <p class="plant-latin">Succulent mix</p>
+    <div class="arr-categories">
+      <div class="category-card fade-in">
+        <span class="category-num">01</span>
+        <h4 class="category-title">Saisonale Sträuße</h4>
+        <p class="category-desc">Die Schönheit der Jahreszeit, gebündelt. Täglich frische Arrangements aus dem, was gerade blüht.</p>
+        <span class="category-price">Ab 18 €</span>
       </div>
-
+      <div class="category-card fade-in d1">
+        <span class="category-num">02</span>
+        <h4 class="category-title">Trauerflor</h4>
+        <p class="category-desc">Mit Würde und Stille gestaltet. Kränze, Gestecke und Sargbepflanzung für den letzten Abschied.</p>
+        <span class="category-price">Auf Anfrage</span>
+      </div>
+      <div class="category-card fade-in d2">
+        <span class="category-num">03</span>
+        <h4 class="category-title">Geschenkarrangements</h4>
+        <p class="category-desc">Blumen als Sprache der Zuneigung. Persönlich verpackt, mit Karte und Lieferung in Trier.</p>
+        <span class="category-price">Ab 28 €</span>
+      </div>
     </div>
   </section>
 
-  <!-- SECTION 3: Kontakt + Öffnungszeiten -->
-  <section class="section-contact">
-    <div class="contact-text">
-      <p class="section-label">Atelier · Trier Altstadt</p>
-      <h2>Besucht uns</h2>
+  <!-- SECTION 3: WORKSHOPS -->
+  <section class="section-workshops" id="workshops">
+    <div class="workshops-bg-ring"></div>
+    <div class="workshops-bg-ring-2"></div>
 
-      <ul class="hours-list">
-        <li><span class="day">Montag – Freitag</span><span class="time">09:00 – 18:30</span></li>
-        <li><span class="day">Samstag</span><span class="time">09:00 – 16:00</span></li>
-        <li><span class="day">Sonntag</span><span class="time">Geschlossen</span></li>
-      </ul>
+    <div class="workshops-header">
+      <div class="workshops-header-left">
+        <p class="section-label fade-in">Bildung &amp; Handwerk</p>
+        <h2 class="section-h2 fade-in d1">Floristik<br>lernen</h2>
+      </div>
+      <div class="workshops-header-right fade-in d2">
+        <p>In unseren Workshops lernst du das Handwerk der Floristik — von der Grundbindung bis zum großen Hochzeitsgesteck. Kleine Gruppen, persönliche Betreuung, viel Praxis.</p>
+        <a href="#" class="btn-light">Alle Termine ansehen</a>
+      </div>
+    </div>
 
-      <p class="contact-address">
+    <div class="workshops-grid">
+      <div class="workshop-card fade-in">
+        <div class="img-wrap workshop-img">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=600&h=400&q=80" alt="Grundkurs Floristik" loading="lazy" />
+          <div class="img-overlay-dark"></div>
+        </div>
+        <div class="workshop-body">
+          <span class="workshop-tag">Einsteiger</span>
+          <h3 class="workshop-title">Grundkurs Floristik</h3>
+          <p class="workshop-desc">Bindetechniken, Materialkunde, Farbenlehre — alles für deinen ersten eigenen Strauß.</p>
+          <div class="workshop-meta">
+            <span class="workshop-date">Sa, 12. April · 3 Std.</span>
+            <span class="workshop-price">65 €</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="workshop-card fade-in d1">
+        <div class="img-wrap workshop-img">
+          <img src="https://images.unsplash.com/photo-1523349177820-5e024c7ef8b1?auto=format&fit=crop&w=600&h=400&q=80" alt="Bridal Florals Workshop" loading="lazy" />
+          <div class="img-overlay-dark"></div>
+        </div>
+        <div class="workshop-body">
+          <span class="workshop-tag">Fortgeschritten</span>
+          <h3 class="workshop-title">Bridal Florals</h3>
+          <p class="workshop-desc">Brautsträuße, Boutonnieren, Tischdekoration — intensive Vorbereitung für das schönste Fest.</p>
+          <div class="workshop-meta">
+            <span class="workshop-date">So, 27. April · 5 Std.</span>
+            <span class="workshop-price">110 €</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="workshop-card fade-in d2">
+        <div class="img-wrap workshop-img">
+          <img src="https://images.unsplash.com/photo-1465495976277-27b30e1dc5d7?auto=format&fit=crop&w=600&h=400&q=80" alt="Saisonwechsel Workshop" loading="lazy" />
+          <div class="img-overlay-dark"></div>
+        </div>
+        <div class="workshop-body">
+          <span class="workshop-tag">Alle Level</span>
+          <h3 class="workshop-title">Saisonwechsel</h3>
+          <p class="workshop-desc">Türkränze, Tischgestecke und Dekorationen passend zu dem, was gerade blüht.</p>
+          <div class="workshop-meta">
+            <span class="workshop-date">Sa, 3. Mai · 2,5 Std.</span>
+            <span class="workshop-price">45 €</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: HOCHZEITEN & EVENTS -->
+  <section class="section-weddings" id="hochzeiten">
+    <div class="weddings-hero">
+      <div class="weddings-text">
+        <p class="section-label fade-in">Euer großer Tag</p>
+        <h2 class="section-h2 fade-in d1">Hochzeiten<br>&amp; Events</h2>
+        <p class="fade-in d2">Von der intimen Standesamtfeier bis zur großen Gartenparty — wir begleiten euch von der ersten Idee bis zum letzten Blütenblatt. Jede Hochzeit bekommt ihr eigenes florales Konzept.</p>
+        <a href="#kontakt" class="btn-blush fade-in d3">Beratungsgespräch anfragen</a>
+      </div>
+      <div class="weddings-main-img fade-in-right">
+        <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=900&h=700&q=85" alt="Hochzeitsblumen Grünzeit" loading="lazy" />
+      </div>
+    </div>
+
+    <div class="weddings-gallery">
+      <div class="wedding-gallery-item fade-in">
+        <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=600&h=500&q=80" alt="Tischgesteck" loading="lazy" />
+        <div class="wedding-gallery-overlay">
+          <span class="wedding-gallery-label">Tischgesteck</span>
+        </div>
+      </div>
+      <div class="wedding-gallery-item fade-in d1">
+        <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=600&h=500&q=80" alt="Brautstrauß" loading="lazy" />
+        <div class="wedding-gallery-overlay">
+          <span class="wedding-gallery-label">Brautstrauß</span>
+        </div>
+      </div>
+      <div class="wedding-gallery-item fade-in d2">
+        <img src="https://images.unsplash.com/photo-1499156286416-f5f4d24394b5?auto=format&fit=crop&w=600&h=500&q=80" alt="Raumdekoration" loading="lazy" />
+        <div class="wedding-gallery-overlay">
+          <span class="wedding-gallery-label">Raumdekoration</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="weddings-services">
+      <div class="ws-item fade-in">
+        <p class="ws-numeral">I</p>
+        <h4 class="ws-title">Konzeptberatung</h4>
+        <p class="ws-desc">Gemeinsam entwickeln wir euer florales Konzept für jeden Raum und Moment.</p>
+      </div>
+      <div class="ws-item fade-in d1">
+        <p class="ws-numeral">II</p>
+        <h4 class="ws-title">Brautstrauß</h4>
+        <p class="ws-desc">Dein persönlicher Strauß — handgebunden, einmalig, auf dich abgestimmt.</p>
+      </div>
+      <div class="ws-item fade-in d2">
+        <p class="ws-numeral">III</p>
+        <h4 class="ws-title">Raumdekoration</h4>
+        <p class="ws-desc">Tischgestecke, Säulen, Torbögen — der ganze Raum in Blüte.</p>
+      </div>
+      <div class="ws-item fade-in d3">
+        <p class="ws-numeral">IV</p>
+        <h4 class="ws-title">Aufbau &amp; Lieferung</h4>
+        <p class="ws-desc">Wir liefern und dekorieren direkt an eurem Festort in der Region Trier.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5: KONTAKT -->
+  <section class="section-contact" id="kontakt">
+    <div class="contact-left">
+      <p class="section-label fade-in">Öffnungszeiten &amp; Adresse</p>
+      <h2 class="section-h2 fade-in d1">Besucht<br>uns</h2>
+
+      <table class="hours-table fade-in d2">
+        <tr>
+          <td>Montag – Freitag</td>
+          <td>09:00 – 18:30</td>
+        </tr>
+        <tr>
+          <td>Samstag</td>
+          <td>09:00 – 16:00</td>
+        </tr>
+        <tr>
+          <td>Sonntag</td>
+          <td>Geschlossen</td>
+        </tr>
+      </table>
+
+      <p class="contact-address fade-in d3">
         Grünzeit Botanik Atelier<br>
         Simeonstraße 14<br>
         54290 Trier
       </p>
 
-      <a href="#" class="contact-cta">Anfrage senden</a>
+      <a href="tel:+496512123456" class="contact-phone fade-in d3">+49 (0) 651 212 345 6</a>
+
+      <a href="#" class="btn-primary fade-in d4" style="align-self: flex-start;">Anfrage senden</a>
     </div>
 
-    <div class="img-wrap contact-photo">
-      <img src="https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?auto=format&fit=crop&w=1200&h=800&q=80" alt="Botanik Atelier Grünzeit Innenraum" loading="lazy" />
-      <div class="img-overlay"></div>
+    <div class="contact-right fade-in-right">
+      <img src="https://images.unsplash.com/photo-1506277886164-e25aa3f4ef7f?auto=format&fit=crop&w=1200&h=900&q=85" alt="Grünzeit Atelier Innenraum" loading="lazy" />
     </div>
   </section>
 
-  <script>
-    // Staggered entrance on load
-    const items = document.querySelectorAll('.animate-item');
-    const words = document.querySelectorAll('.word');
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p class="footer-logo">Grünzeit</p>
+    <p class="footer-copy">Blumen &amp; Botanik Atelier · Trier · Est. 2017</p>
+    <p class="footer-copy">© 2025 Grünzeit. Alle Rechte vorbehalten.</p>
+  </footer>
 
-    // Animate words with custom stagger
-    const wordDelays = [0.2, 0.35];
-    words.forEach((word, i) => {
-      word.style.transitionDelay = wordDelays[i] ? wordDelays[i] + 's' : '0.2s';
+  <script>
+    // Nav scroll behavior
+    const nav = document.getElementById('mainNav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+
+    // Hero title clip animation
+    const titleInners = document.querySelectorAll('.title-clip .inner');
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        titleInners.forEach((el, i) => {
+          setTimeout(() => el.classList.add('visible'), i * 130);
+        });
+      }, 80);
     });
 
-    // Observer for all .animate-item elements
+    // IntersectionObserver for all fade elements
+    const fadeEls = document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right, .hero-divider');
+
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
-          // Also trigger words inside
-          entry.target.querySelectorAll('.word').forEach(w => w.classList.add('visible'));
+          observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.12 });
 
-    items.forEach(item => observer.observe(item));
+    fadeEls.forEach(el => observer.observe(el));
 
-    // Trigger immediately for hero items (already in view)
-    requestAnimationFrame(() => {
-      items.forEach((item, i) => {
-        setTimeout(() => {
-          item.classList.add('visible');
-          item.querySelectorAll('.word').forEach(w => w.classList.add('visible'));
-        }, i * 80);
+    // Trigger hero elements immediately
+    setTimeout(() => {
+      document.querySelectorAll('.hero .fade-in, .hero .fade-in-right, .hero .hero-divider').forEach((el, i) => {
+        setTimeout(() => el.classList.add('visible'), 200 + i * 90);
       });
-    });
+    }, 50);
 
-    // Subtle parallax on image
-    const imageFrame = document.getElementById('imageFrame');
-    if (imageFrame) {
+    // Subtle hero image parallax
+    const heroImageWrap = document.querySelector('.hero-image-wrap');
+    if (heroImageWrap) {
       window.addEventListener('scroll', () => {
-        const scrollY = window.scrollY;
-        imageFrame.style.transform = `translateY(${scrollY * 0.08}px)`;
+        if (window.scrollY < window.innerHeight * 1.2) {
+          heroImageWrap.style.transform = `translateY(${window.scrollY * 0.07}px)`;
+        }
       }, { passive: true });
     }
   </script>
