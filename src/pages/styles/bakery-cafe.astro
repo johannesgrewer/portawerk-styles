@@ -9,235 +9,219 @@ export const prerender = true;
   <title>Brotkrume — Handwerksbäckerei & Café Trier</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400&family=Dancing+Script:wght@500;600&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { overflow-x: hidden; scroll-behavior: smooth; }
 
-    html {
-      overflow-x: hidden;
-      height: 100%;
+    :root {
+      --bg:          #FBF6EE;
+      --bg-alt:      #F3E8D6;
+      --dark:        #2E1F0E;
+      --dark-mid:    #3D2B18;
+      --brown:       #7B4F2E;
+      --gold:        #C9A96E;
+      --text:        #3D2B18;
+      --text-muted:  rgba(61, 43, 24, 0.52);
+      --ff-display:  'Playfair Display', Georgia, serif;
+      --ff-body:     'Lato', system-ui, sans-serif;
+      --ff-script:   'Dancing Script', cursive;
     }
 
     body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--ff-body);
       overflow-x: hidden;
-      height: 100%;
-      background: #FBF6EE;
-      color: #3D2B18;
-      font-family: 'Lato', sans-serif;
     }
 
-    /* ---- Paper texture background ---- */
-    body::before {
+    /* Paper texture */
+    body::after {
       content: '';
       position: fixed;
       inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23paper)' opacity='0.045'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23p)' opacity='0.04'/%3E%3C/svg%3E");
       pointer-events: none;
       z-index: 0;
     }
 
-    /* ---- Hero ---- */
+    /* Photo container */
+    .ph { position: relative; overflow: hidden; }
+    .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.65s ease; }
+    .ph:hover img { transform: scale(1.06); }
+
+    /* Ornament row */
+    .ornament {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+    .ornament-line { height: 1px; background: var(--gold); flex: 0 0 36px; }
+    .ornament-script {
+      font-family: var(--ff-script);
+      font-size: 1.05rem;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    /* Shared section label */
+    .s-script {
+      font-family: var(--ff-script);
+      font-size: clamp(1rem, 1.8vw, 1.3rem);
+      color: var(--gold);
+      margin-bottom: 0.4rem;
+    }
+    .s-heading {
+      font-family: var(--ff-display);
+      font-weight: 700;
+      font-size: clamp(2rem, 4.5vw, 3.2rem);
+      color: var(--brown);
+      letter-spacing: 0.02em;
+      line-height: 1.1;
+      margin-bottom: 0.75rem;
+    }
+    .s-sub {
+      font-size: clamp(0.58rem, 1vw, 0.72rem);
+      font-weight: 300;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    /* ======================== */
+    /* HERO                     */
+    /* ======================== */
     .hero {
       position: relative;
-      width: 100vw;
-      height: 100vh;
+      width: 100%;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 3rem 2rem;
-      gap: 0;
-      z-index: 1;
+      overflow: hidden;
     }
 
-    /* ---- Wavy divider (top) ---- */
-    .hero__wave {
+    .hero__bg { position: absolute; inset: 0; }
+    .hero__bg img { width: 100%; height: 100%; object-fit: cover; object-position: center 35%; }
+
+    .hero__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(20, 10, 2, 0.1) 0%,
+        rgba(20, 10, 2, 0.52) 50%,
+        rgba(20, 10, 2, 0.72) 100%
+      );
+    }
+
+    .hero__content {
+      position: relative;
+      z-index: 2;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 1rem;
-      margin-bottom: 2rem;
-      opacity: 0;
-      transform: translateY(16px);
-      animation: riseIn 0.8s ease forwards 0.2s;
-    }
-
-    .hero__wave-line {
-      width: 60px;
-      height: 1px;
-      background: #D4B483;
-    }
-
-    .hero__wave svg {
-      color: #D4B483;
-    }
-
-    /* ---- Brand name ---- */
-    .hero__brand {
-      font-family: 'Playfair Display', serif;
-      font-weight: 700;
-      font-size: clamp(2.8rem, 7vw, 6.5rem);
-      color: #7B4F2E;
-      letter-spacing: 0.08em;
       text-align: center;
-      line-height: 1;
+      padding: 3rem 2rem;
+    }
+
+    .hero__eyebrow {
+      font-family: var(--ff-script);
+      font-size: clamp(1.1rem, 2.5vw, 1.55rem);
+      color: var(--gold);
       opacity: 0;
-      transform: translateY(20px);
-      animation: riseIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards 0.45s;
-      margin-bottom: 0.6rem;
+      transform: translateY(12px);
+      animation: riseIn 0.8s ease forwards 0.2s;
+      margin-bottom: 0.7rem;
+    }
+
+    .hero__brand {
+      font-family: var(--ff-display);
+      font-weight: 700;
+      font-size: clamp(3.8rem, 11vw, 9rem);
+      color: #FBF6EE;
+      letter-spacing: 0.14em;
+      line-height: 1;
+      text-shadow: 0 4px 48px rgba(0,0,0,0.45);
+      opacity: 0;
+      transform: translateY(28px);
+      animation: riseIn 1s cubic-bezier(0.22, 1, 0.36, 1) forwards 0.45s;
+      margin-bottom: 0.55rem;
     }
 
     .hero__sub-brand {
-      font-family: 'Lato', sans-serif;
+      font-size: clamp(0.52rem, 1vw, 0.68rem);
       font-weight: 300;
-      font-size: clamp(0.6rem, 1.2vw, 0.78rem);
-      letter-spacing: 0.35em;
+      letter-spacing: 0.42em;
       text-transform: uppercase;
-      color: #D4B483;
-      text-align: center;
+      color: rgba(251, 246, 238, 0.6);
       opacity: 0;
-      transform: translateY(14px);
-      animation: riseIn 0.8s ease forwards 0.75s;
+      transform: translateY(12px);
+      animation: riseIn 0.8s ease forwards 0.85s;
       margin-bottom: 2.2rem;
     }
 
-    /* ---- Image frame ---- */
-    .hero__image-wrap {
-      position: relative;
+    .hero__divider {
+      width: 56px;
+      height: 1px;
+      background: var(--gold);
       opacity: 0;
-      transform: translateY(24px);
-      animation: riseIn 1s cubic-bezier(0.22, 1, 0.36, 1) forwards 1s;
+      animation: fadeIn 0.8s ease forwards 1.1s;
       margin-bottom: 2rem;
     }
 
-    /* Cream frame border */
-    .hero__image-frame {
-      border: 10px solid #F0E6D3;
-      border-radius: 6px;
-      overflow: hidden;
-      box-shadow:
-        0 4px 24px rgba(123, 79, 46, 0.12),
-        0 1px 3px rgba(123, 79, 46, 0.08);
-      position: relative;
-    }
-
-    .hero__image {
-      display: block;
-      width: clamp(280px, 55vw, 640px);
-      height: clamp(160px, 28vh, 300px);
-      object-fit: cover;
-      object-position: center 60%;
-    }
-
-    /* ---- Steam animations ---- */
-    .steam-container {
-      position: absolute;
-      top: -36px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 2.2rem;
-      pointer-events: none;
-      opacity: 0;
-      animation: fadeIn 0.6s ease forwards 2.2s;
-    }
-
-    .steam {
-      width: 8px;
-      height: 32px;
-      border-radius: 50%;
-      animation: steamRise 2.2s ease-in-out infinite;
-    }
-
-    .steam:nth-child(1) { animation-delay: 0s; }
-    .steam:nth-child(2) { animation-delay: 0.55s; }
-    .steam:nth-child(3) { animation-delay: 1.1s; }
-
-    @keyframes steamRise {
-      0% {
-        transform: translateY(0) scaleX(1) rotate(0deg);
-        opacity: 0;
-        background: rgba(212, 180, 131, 0.5);
-        filter: blur(3px);
-      }
-      30% {
-        opacity: 0.7;
-      }
-      60% {
-        transform: translateY(-28px) scaleX(1.6) rotate(-4deg);
-        opacity: 0.4;
-        filter: blur(5px);
-      }
-      100% {
-        transform: translateY(-50px) scaleX(2.2) rotate(6deg);
-        opacity: 0;
-        filter: blur(8px);
-      }
-    }
-
-    /* ---- Tagline ---- */
     .hero__tagline {
-      font-family: 'Playfair Display', serif;
+      font-family: var(--ff-display);
       font-style: italic;
       font-weight: 400;
-      font-size: clamp(1.3rem, 3.5vw, 2.4rem);
-      color: #3D2B18;
-      text-align: center;
+      font-size: clamp(1.15rem, 2.8vw, 1.9rem);
+      color: rgba(251, 246, 238, 0.92);
       opacity: 0;
-      transform: translateY(14px);
-      animation: riseIn 0.8s ease forwards 1.55s;
-      margin-bottom: 1.6rem;
+      transform: translateY(12px);
+      animation: riseIn 0.8s ease forwards 1.3s;
+      margin-bottom: 2.5rem;
     }
 
-    /* ---- Opening hours ---- */
-    .hero__hours {
-      font-family: 'Lato', sans-serif;
+    .hero__meta {
+      font-size: clamp(0.5rem, 0.9vw, 0.62rem);
       font-weight: 300;
-      font-size: clamp(0.6rem, 1.1vw, 0.72rem);
-      letter-spacing: 0.18em;
+      letter-spacing: 0.3em;
       text-transform: uppercase;
-      color: rgba(61, 43, 24, 0.5);
-      text-align: center;
+      color: rgba(251, 246, 238, 0.38);
       opacity: 0;
-      transform: translateY(10px);
-      animation: riseIn 0.8s ease forwards 1.9s;
+      animation: fadeIn 0.8s ease forwards 1.85s;
     }
+    .hero__meta .sep { color: var(--gold); margin: 0 0.6em; opacity: 0.7; }
 
-    /* ---- Wheat accent dots ---- */
-    .hero__hours .dot {
-      color: #D4B483;
-      margin: 0 0.4em;
-    }
-
-    /* ---- Scroll indicator ---- */
     .hero__scroll {
       position: absolute;
       bottom: 2.2rem;
       left: 50%;
       transform: translateX(-50%);
+      z-index: 2;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.45rem;
       opacity: 0;
-      animation: fadeIn 0.8s ease forwards 2.6s;
+      animation: fadeIn 0.8s ease forwards 2.5s;
     }
-
     .hero__scroll-label {
-      font-family: 'Lato', sans-serif;
-      font-size: 0.5rem;
-      letter-spacing: 0.25em;
+      font-size: 0.46rem;
+      letter-spacing: 0.32em;
       text-transform: uppercase;
-      color: rgba(61,43,24,0.35);
+      color: rgba(251, 246, 238, 0.28);
+      font-family: var(--ff-body);
     }
-
     .hero__scroll-line {
       width: 1px;
-      height: 40px;
-      background: #D4B483;
+      height: 48px;
+      background: rgba(201, 169, 110, 0.35);
       position: relative;
       overflow: hidden;
     }
-
     .hero__scroll-line::after {
       content: '';
       position: absolute;
@@ -245,297 +229,497 @@ export const prerender = true;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(251, 246, 238, 0.6);
-      animation: scrollPulse 2s ease-in-out infinite 0.5s;
+      background: rgba(201, 169, 110, 0.9);
+      animation: scrollPulse 2.4s ease-in-out infinite 0.6s;
     }
 
-    @keyframes scrollPulse {
-      0%   { top: -100%; opacity: 1; }
-      100% { top: 100%;  opacity: 0; }
+    /* ======================== */
+    /* SORTIMENT                */
+    /* ======================== */
+    .section-sortiment {
+      padding: clamp(4.5rem, 8vw, 7rem) clamp(1.5rem, 5vw, 4rem);
+      background: var(--bg-alt);
+      position: relative;
+      z-index: 1;
     }
+    .section-sortiment > .inner { max-width: 1200px; margin: 0 auto; }
 
-    /* ---- Keyframes ---- */
+    .section-header { margin-bottom: clamp(2.5rem, 5vw, 4rem); }
 
-    @keyframes riseIn {
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes fadeIn {
-      to { opacity: 1; }
-    }
-
-    /* Photo container */
-    .ph { position: relative; overflow: hidden; }
-    .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.55s ease; }
-    .ph:hover img { transform: scale(1.05); }
-
-    /* Produkte section */
-    .section-produkte {
-      padding: 7rem 3rem;
-      background: #F5EDE0;
-      max-width: 1600px;
-      margin: 0 auto;
-    }
-    .s-wave {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin-bottom: 1rem;
-    }
-    .s-wave-line { width: 40px; height: 1px; background: #D4B483; }
-    .s-heading {
-      font-family: 'Playfair Display', serif;
-      font-weight: 700;
-      font-size: clamp(2rem, 4vw, 3.2rem);
-      color: #7B4F2E;
-      letter-spacing: 0.04em;
-      margin-bottom: 0.5rem;
-    }
-    .s-sub {
-      font-family: 'Lato', sans-serif;
-      font-weight: 300;
-      font-size: 0.78rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: #D4B483;
-      margin-bottom: 3.5rem;
-    }
-    .produkte-grid {
+    .sortiment-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
+      gap: 1.5rem;
     }
+    @media (max-width: 900px) { .sortiment-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 600px) { .sortiment-grid { grid-template-columns: 1fr; } }
+
     .prod-card {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      background: #FBF6EE;
-      border-radius: 4px;
+      background: var(--bg);
+      border-radius: 3px;
       overflow: hidden;
-      box-shadow: 0 2px 12px rgba(123,79,46,0.07);
+      box-shadow: 0 2px 16px rgba(61,43,24,0.07);
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
     }
-    .prod-card-body {
-      padding: 1.25rem 1.25rem 1.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
+    .prod-card:hover {
+      box-shadow: 0 8px 32px rgba(61,43,24,0.14);
+      transform: translateY(-3px);
+    }
+    .prod-card-body { padding: 1.3rem 1.35rem 1.55rem; }
+    .prod-tag {
+      font-family: var(--ff-script);
+      font-size: 0.88rem;
+      color: var(--gold);
+      margin-bottom: 0.25rem;
     }
     .prod-card-title {
-      font-family: 'Playfair Display', serif;
+      font-family: var(--ff-display);
       font-weight: 700;
-      font-size: 1.05rem;
-      color: #3D2B18;
+      font-size: clamp(0.95rem, 1.4vw, 1.1rem);
+      color: var(--text);
+      margin-bottom: 0.5rem;
     }
     .prod-card-desc {
-      font-family: 'Lato', sans-serif;
       font-weight: 300;
-      font-size: 0.75rem;
-      line-height: 1.7;
-      color: rgba(61,43,24,0.6);
+      font-size: 0.77rem;
+      line-height: 1.78;
+      color: var(--text-muted);
+      margin-bottom: 0.8rem;
     }
     .prod-card-price {
-      font-family: 'Lato', sans-serif;
-      font-weight: 400;
-      font-size: 0.7rem;
-      letter-spacing: 0.1em;
-      color: #D4B483;
-      margin-top: 0.25rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      color: var(--gold);
     }
 
-    /* Öffnungszeiten & Kontakt section */
-    .section-kontakt {
-      padding: 7rem 3rem;
-      background: #3D2B18;
-      max-width: 1600px;
-      margin: 0 auto;
+    /* ======================== */
+    /* GESCHICHTE               */
+    /* ======================== */
+    .section-geschichte {
+      padding: clamp(4.5rem, 8vw, 7rem) clamp(1.5rem, 5vw, 4rem);
+      background: var(--bg);
+      position: relative;
+      z-index: 1;
     }
-    .kontakt-inner {
+    .geschichte-inner {
+      max-width: 1200px;
+      margin: 0 auto;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 6rem;
+      gap: clamp(3rem, 6vw, 6rem);
       align-items: center;
     }
-    .kontakt-heading {
-      font-family: 'Playfair Display', serif;
+    @media (max-width: 768px) {
+      .geschichte-inner { grid-template-columns: 1fr; }
+      .geschichte-photos { order: -1; }
+    }
+
+    .geschichte-body {
+      font-weight: 300;
+      font-size: clamp(0.84rem, 1.3vw, 0.93rem);
+      line-height: 1.95;
+      color: var(--text-muted);
+      margin-bottom: 1.4rem;
+      max-width: 48ch;
+    }
+    .geschichte-quote {
+      font-family: var(--ff-display);
       font-style: italic;
       font-weight: 400;
-      font-size: clamp(2rem, 4vw, 3rem);
+      font-size: clamp(1.05rem, 1.8vw, 1.3rem);
+      color: var(--brown);
+      line-height: 1.55;
+      border-left: 2px solid var(--gold);
+      padding-left: 1.3rem;
+      margin: 1.8rem 0;
+    }
+    .geschichte-quote footer {
+      margin-top: 0.7rem;
+      font-size: 0.7rem;
+      font-style: normal;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      font-family: var(--ff-body);
+    }
+    .geschichte-since {
+      font-family: var(--ff-script);
+      font-size: 1.25rem;
+      color: var(--gold);
+      margin-top: 0.5rem;
+    }
+
+    .geschichte-photos {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.7rem;
+    }
+    .geschichte-photo-main { grid-column: 1 / -1; }
+
+    /* ======================== */
+    /* CAFÉ                     */
+    /* ======================== */
+    .section-cafe {
+      padding: clamp(4.5rem, 8vw, 7rem) clamp(1.5rem, 5vw, 4rem);
+      background: var(--bg-alt);
+      position: relative;
+      z-index: 1;
+    }
+    .cafe-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(3rem, 6vw, 5.5rem);
+      align-items: center;
+    }
+    @media (max-width: 768px) {
+      .cafe-inner { grid-template-columns: 1fr; }
+      .cafe-photos { order: -1; }
+    }
+
+    .cafe-body {
+      font-weight: 300;
+      font-size: clamp(0.84rem, 1.3vw, 0.93rem);
+      line-height: 1.95;
+      color: var(--text-muted);
+      margin-bottom: 1.3rem;
+      max-width: 46ch;
+    }
+    .cafe-features { display: flex; flex-direction: column; gap: 0.6rem; margin-top: 1.5rem; }
+    .cafe-feat {
+      display: flex;
+      gap: 0.8rem;
+      align-items: flex-start;
+    }
+    .cafe-feat-dot {
+      font-family: var(--ff-script);
+      font-size: 1rem;
+      color: var(--gold);
+      line-height: 1.5;
+      flex-shrink: 0;
+    }
+    .cafe-feat-text {
+      font-size: 0.78rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+    .cafe-feat-text strong { font-weight: 400; color: var(--text); }
+
+    .cafe-photos {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.7rem;
+    }
+    .cafe-photo-main { grid-column: 1 / -1; }
+
+    /* ======================== */
+    /* KONTAKT                  */
+    /* ======================== */
+    .section-kontakt {
+      padding: clamp(4.5rem, 8vw, 7rem) clamp(1.5rem, 5vw, 4rem);
+      background: var(--dark-mid);
+      position: relative;
+      z-index: 1;
+    }
+    .kontakt-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(3rem, 6vw, 6rem);
+      align-items: start;
+    }
+    @media (max-width: 768px) { .kontakt-inner { grid-template-columns: 1fr; } }
+
+    .kontakt-script {
+      font-family: var(--ff-script);
+      font-size: clamp(1rem, 1.8vw, 1.35rem);
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+    .kontakt-heading {
+      font-family: var(--ff-display);
+      font-style: italic;
+      font-weight: 400;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
       color: #FBF6EE;
-      margin-bottom: 1.5rem;
       line-height: 1.2;
+      margin-bottom: 1.4rem;
     }
     .kontakt-body {
-      font-family: 'Lato', sans-serif;
       font-weight: 300;
-      font-size: 0.82rem;
-      line-height: 1.8;
-      color: rgba(251,246,238,0.55);
-      max-width: 38ch;
+      font-size: clamp(0.8rem, 1.2vw, 0.88rem);
+      line-height: 1.9;
+      color: rgba(251, 246, 238, 0.45);
+      max-width: 42ch;
       margin-bottom: 2rem;
     }
     .kontakt-cta {
       display: inline-block;
-      font-family: 'Lato', sans-serif;
-      font-size: 0.6rem;
+      font-size: 0.58rem;
       font-weight: 400;
-      letter-spacing: 0.22em;
+      letter-spacing: 0.26em;
       text-transform: uppercase;
-      color: #3D2B18;
-      background: #D4B483;
+      color: var(--dark-mid);
+      background: var(--gold);
       text-decoration: none;
-      padding: 0.8rem 2rem;
-      transition: background 0.3s;
+      padding: 0.88rem 2.3rem;
+      transition: background 0.3s ease, transform 0.2s ease;
     }
-    .kontakt-cta:hover { background: #FBF6EE; }
-    .hours-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
+    .kontakt-cta:hover { background: #FBF6EE; transform: translateY(-2px); }
+    .kontakt-address {
+      margin-top: 2rem;
+      font-size: 0.72rem;
+      font-weight: 300;
+      color: rgba(251, 246, 238, 0.28);
+      line-height: 2;
+      letter-spacing: 0.05em;
+    }
+    .kontakt-address a { color: rgba(251, 246, 238, 0.4); text-decoration: none; }
+    .kontakt-address a:hover { color: var(--gold); }
+
+    .hours-label {
+      font-size: 0.58rem;
+      font-weight: 300;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(251, 246, 238, 0.28);
+      margin-bottom: 1.4rem;
     }
     .hours-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0.85rem 0;
-      border-bottom: 1px solid rgba(251,246,238,0.08);
-      font-family: 'Lato', sans-serif;
+      padding: 0.9rem 0;
+      border-bottom: 1px solid rgba(251, 246, 238, 0.07);
       font-size: 0.8rem;
     }
-    .hours-day { font-weight: 300; color: rgba(251,246,238,0.45); }
-    .hours-time { font-weight: 400; color: rgba(251,246,238,0.8); }
-    .hours-closed { color: rgba(251,246,238,0.25); }
-    .kontakt-address {
-      margin-top: 2rem;
-      font-family: 'Lato', sans-serif;
-      font-size: 0.75rem;
-      font-weight: 300;
-      color: rgba(251,246,238,0.35);
-      line-height: 1.7;
-      letter-spacing: 0.06em;
+    .hours-day  { font-weight: 300; color: rgba(251, 246, 238, 0.38); }
+    .hours-time { font-weight: 400; color: rgba(251, 246, 238, 0.78); letter-spacing: 0.05em; }
+    .hours-closed { color: rgba(251, 246, 238, 0.2); font-style: italic; }
+
+    /* ======================== */
+    /* KEYFRAMES                */
+    /* ======================== */
+    @keyframes riseIn { to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { to { opacity: 1; } }
+    @keyframes scrollPulse {
+      0%   { top: -100%; opacity: 1; }
+      100% { top: 100%;  opacity: 0; }
     }
   </style>
 </head>
 <body>
+
+  <!-- ===== HERO ===== -->
   <section class="hero">
-
-    <!-- Decorative wave divider -->
-    <div class="hero__wave" aria-hidden="true">
-      <div class="hero__wave-line"></div>
-      <svg width="48" height="14" viewBox="0 0 48 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M0 7 C6 1, 10 13, 16 7 S26 1, 32 7 S42 13, 48 7" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-      </svg>
-      <div class="hero__wave-line"></div>
+    <div class="hero__bg">
+      <img
+        src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=2000&h=1200&q=85"
+        alt="Frisch gebackene Brotlaibe aus der Brotkrume Bäckerei"
+        loading="eager"
+        fetchpriority="high"
+      />
     </div>
-
-    <!-- Brand name -->
-    <h1 class="hero__brand">BROTKRUME</h1>
-    <p class="hero__sub-brand">Handwerksbäckerei &amp; Café</p>
-
-    <!-- Image with steam and frame -->
-    <div class="hero__image-wrap">
-      <div class="steam-container" aria-hidden="true">
-        <div class="steam"></div>
-        <div class="steam"></div>
-        <div class="steam"></div>
-      </div>
-      <div class="hero__image-frame">
-        <img
-          class="hero__image"
-          src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=1200&q=80&auto=format"
-          alt="Frisches Brot aus der Brotkrume Bäckerei"
-          loading="eager"
-          decoding="async"
-        />
-      </div>
+    <div class="hero__overlay"></div>
+    <div class="hero__content">
+      <p class="hero__eyebrow">Willkommen bei der</p>
+      <h1 class="hero__brand">BROTKRUME</h1>
+      <p class="hero__sub-brand">Handwerksbäckerei &amp; Café &nbsp;·&nbsp; Trier seit 1987</p>
+      <div class="hero__divider"></div>
+      <p class="hero__tagline">Gebacken mit Zeit. Geteilt mit Liebe.</p>
+      <p class="hero__meta">
+        Di–Fr&nbsp;7–18
+        <span class="sep">·</span>
+        Sa&nbsp;7–14
+        <span class="sep">·</span>
+        So&nbsp;8–13
+        <span class="sep">·</span>
+        Mo Ruhetag
+      </p>
     </div>
-
-    <!-- Tagline -->
-    <p class="hero__tagline">Gebacken mit Zeit.</p>
-
-    <!-- Opening hours -->
-    <p class="hero__hours">
-      Di–Fr&nbsp;7–18
-      <span class="dot">·</span>
-      Sa&nbsp;7–14
-      <span class="dot">·</span>
-      So&nbsp;8–13
-      <span class="dot">·</span>
-      Mo geschlossen
-    </p>
-
-    <!-- Scroll indicator -->
     <div class="hero__scroll" aria-hidden="true">
-      <span class="hero__scroll-label">Mehr</span>
+      <span class="hero__scroll-label">Entdecken</span>
       <div class="hero__scroll-line"></div>
     </div>
-
   </section>
 
-  <!-- SECTION 2: Produkte -->
-  <div style="background:#F5EDE0;">
-    <section class="section-produkte">
-      <div class="s-wave">
-        <div class="s-wave-line"></div>
-        <svg width="32" height="10" viewBox="0 0 32 10" fill="none"><path d="M0 5 C4 1, 7 9, 11 5 S18 1, 21 5 S28 9, 32 5" stroke="#D4B483" stroke-width="1.2" fill="none" stroke-linecap="round"/></svg>
-        <div class="s-wave-line"></div>
+  <!-- ===== SORTIMENT ===== -->
+  <section class="section-sortiment">
+    <div class="inner">
+      <div class="section-header">
+        <p class="s-script">Frisch aus der Backstube</p>
+        <h2 class="s-heading">Aus unserer<br>Backstube</h2>
+        <p class="s-sub">Täglich frisch &nbsp;·&nbsp; Handgemacht &nbsp;·&nbsp; Ohne Kompromisse</p>
       </div>
-      <h2 class="s-heading">Aus unserer Backstube</h2>
-      <p class="s-sub">Täglich frisch · Handgemacht · Ohne Kompromisse</p>
-      <div class="produkte-grid">
+      <div class="sortiment-grid">
+
         <div class="prod-card">
           <div class="ph" style="height:260px;">
-            <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&h=600&q=80" alt="Frische Backwaren" loading="lazy" />
-            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(61,43,24,0.35) 0%,transparent 60%);pointer-events:none;"></div>
+            <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=800&h=600&q=80" alt="Sauerteigbrot frisch aus dem Ofen" loading="lazy" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(46,31,14,0.45) 0%,transparent 55%);pointer-events:none;"></div>
           </div>
           <div class="prod-card-body">
+            <p class="prod-tag">Brot</p>
             <div class="prod-card-title">Sauerteigbrot</div>
-            <div class="prod-card-desc">48 Stunden Teigruhe, Dinkel & Roggen aus der Region. Knusprige Kruste, saftige Krume.</div>
+            <div class="prod-card-desc">48 Stunden Teigruhe, Dinkel & Roggen aus der Region. Knusprige Kruste, saftige Krume – wie Omas Sonntagsbrot.</div>
             <div class="prod-card-price">ab 4,80 €</div>
           </div>
         </div>
+
         <div class="prod-card">
           <div class="ph" style="height:260px;">
-            <img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&h=600&q=80" alt="Croissants und Gebäck" loading="lazy" />
-            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(61,43,24,0.35) 0%,transparent 60%);pointer-events:none;"></div>
+            <img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&h=600&q=80" alt="Croissants und Plundergebäck" loading="lazy" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(46,31,14,0.45) 0%,transparent 55%);pointer-events:none;"></div>
           </div>
           <div class="prod-card-body">
+            <p class="prod-tag">Feingebäck</p>
             <div class="prod-card-title">Croissants & Plunder</div>
-            <div class="prod-card-desc">Butterblätterteig nach französischer Art, täglich frisch. Natur, Mandel, Schokolade.</div>
+            <div class="prod-card-desc">Butterblätterteig nach französischer Tradition. Täglich frisch — Natur, Mandel, Schokolade, Himbeere.</div>
             <div class="prod-card-price">ab 2,20 €</div>
           </div>
         </div>
+
         <div class="prod-card">
           <div class="ph" style="height:260px;">
-            <img src="https://images.unsplash.com/photo-1601924994987-69e26d50dc26?auto=format&fit=crop&w=800&h=600&q=80" alt="Café Spezialitäten" loading="lazy" />
-            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(61,43,24,0.35) 0%,transparent 60%);pointer-events:none;"></div>
+            <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=800&h=600&q=80" alt="Hausgemachte Torten und saisonale Kuchen" loading="lazy" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(46,31,14,0.45) 0%,transparent 55%);pointer-events:none;"></div>
           </div>
           <div class="prod-card-body">
-            <div class="prod-card-title">Café & Kuchen</div>
-            <div class="prod-card-desc">Saisonale Tortenspezialitäten, hausgemachte Marmeladen und Spezialitätenkaffee aus der Moselregion.</div>
+            <p class="prod-tag">Konditorei</p>
+            <div class="prod-card-title">Torten & Kuchen</div>
+            <div class="prod-card-desc">Saisonale Törtchen, hausgemachte Marmeladen und Spezialitäten nach alten Familienrezepten.</div>
             <div class="prod-card-price">ab 3,50 €</div>
           </div>
         </div>
-      </div>
-    </section>
-  </div>
 
-  <!-- SECTION 3: Öffnungszeiten & Kontakt -->
-  <div style="background:#3D2B18;">
-    <section class="section-kontakt">
-      <div class="kontakt-inner">
-        <div>
-          <h2 class="kontakt-heading">Wir freuen uns<br>auf deinen Besuch.</h2>
-          <p class="kontakt-body">
-            Kein Lärm, keine Hektik. Nur frisches Brot, guter Kaffee
-            und ein Stuhl mit Aussicht auf die Trierer Altstadt.
-            Bring Zeit mit — oder nicht. Auch To-go ist herzlich willkommen.
-          </p>
-          <a href="#" class="kontakt-cta">Anfahrt & Karte →</a>
-          <div class="kontakt-address">
-            Simeonstraße 28 · 54290 Trier<br>
-            0651 / 284 19 63 · hallo@brotkrume-trier.de
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== GESCHICHTE ===== -->
+  <section class="section-geschichte">
+    <div class="geschichte-inner">
+
+      <div class="geschichte-text">
+        <div class="ornament">
+          <div class="ornament-line"></div>
+          <span class="ornament-script">Unsere Geschichte</span>
+          <div class="ornament-line"></div>
+        </div>
+        <h2 class="s-heading">Handwerk<br>mit Herz</h2>
+        <p class="geschichte-body">
+          Was 1987 als kleiner Familienbetrieb in der Trierer Altstadt begann,
+          ist heute ein Ort für Menschen, die wissen: gutes Brot braucht Zeit.
+          Drei Generationen, ein Handwerk — unverändert seit dem ersten Laib.
+        </p>
+        <blockquote class="geschichte-quote">
+          „Wir backen nicht für den schnellen Verkauf.<br>
+          Wir backen für Menschen, die sich etwas gönnen."
+          <footer>— Maria Becker, Inhaberin</footer>
+        </blockquote>
+        <p class="geschichte-body">
+          Alle Mehle kommen von Partnermühlen aus der Moselregion. Die Hefe
+          züchten wir seit Jahrzehnten selbst. Jeder Teig ruht so lange,
+          wie er muss — und keine Minute kürzer.
+        </p>
+        <p class="geschichte-since">Seit 1987 in Trier.</p>
+      </div>
+
+      <div class="geschichte-photos">
+        <div class="geschichte-photo-main ph" style="height:320px;">
+          <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=800&h=600&q=80" alt="Bäckermeister bei der Arbeit" loading="lazy" />
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(46,31,14,0.3) 0%,transparent 60%);pointer-events:none;"></div>
+        </div>
+        <div class="ph" style="height:200px;">
+          <img src="https://images.unsplash.com/photo-1549931319-a545dcf3bc7f?auto=format&fit=crop&w=600&h=400&q=80" alt="Brotauswahl im Regal" loading="lazy" />
+        </div>
+        <div class="ph" style="height:200px;">
+          <img src="https://images.unsplash.com/photo-1568254183919-78a4f43a2877?auto=format&fit=crop&w=600&h=400&q=80" alt="Frische Backwaren in der Auslage" loading="lazy" />
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== CAFÉ ===== -->
+  <section class="section-cafe">
+    <div class="cafe-inner">
+
+      <div class="cafe-photos">
+        <div class="cafe-photo-main ph" style="height:340px;">
+          <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&h=600&q=80" alt="Gemütliches Café-Interieur mit Holztischen" loading="lazy" />
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(46,31,14,0.2) 0%,transparent 65%);pointer-events:none;"></div>
+        </div>
+        <div class="ph" style="height:200px;">
+          <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=600&h=400&q=80" alt="Kaffee mit frischem Gebäck" loading="lazy" />
+        </div>
+        <div class="ph" style="height:200px;">
+          <img src="https://images.unsplash.com/photo-1600093463592-8e36ae95ef56?auto=format&fit=crop&w=600&h=400&q=80" alt="Flat White im Café" loading="lazy" />
+        </div>
+      </div>
+
+      <div class="cafe-text">
+        <div class="ornament">
+          <div class="ornament-line"></div>
+          <span class="ornament-script">Unser Café</span>
+        </div>
+        <h2 class="s-heading">Ein Ort<br>zum Bleiben</h2>
+        <p class="cafe-body">
+          Nach dem Backen, vor dem Tag. Unser kleines Café in der Backstube
+          lädt ein — zum Verweilen, zum Frühstück, zum einfachen Nichts-tun.
+          Setz dich. Der Kaffee ist fertig.
+        </p>
+        <p class="cafe-body">
+          Morgens nach dem Kirchenschlag öffnen wir unsere Türen. Es riecht
+          nach frischem Brot und Espresso. Ein guter Anfang für jeden Tag.
+        </p>
+        <div class="cafe-features">
+          <div class="cafe-feat">
+            <span class="cafe-feat-dot">✦</span>
+            <div class="cafe-feat-text"><strong>Spezialitätenkaffee</strong> aus regionaler Röstung, täglich frisch zubereitet</div>
+          </div>
+          <div class="cafe-feat">
+            <span class="cafe-feat-dot">✦</span>
+            <div class="cafe-feat-text"><strong>Frühstück</strong> mit ofenwarmem Brot, Butter und hausgemachten Marmeladen</div>
+          </div>
+          <div class="cafe-feat">
+            <span class="cafe-feat-dot">✦</span>
+            <div class="cafe-feat-text"><strong>Mittagspause</strong> — belegte Brote & saisonale Quiches, herzlich & schnell</div>
+          </div>
+          <div class="cafe-feat">
+            <span class="cafe-feat-dot">✦</span>
+            <div class="cafe-feat-text"><strong>Kuchentheke</strong> mit täglich wechselndem Angebot, bis zur letzten Scheibe</div>
           </div>
         </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== KONTAKT & ÖFFNUNGSZEITEN ===== -->
+  <section class="section-kontakt">
+    <div class="kontakt-inner">
+
+      <div>
+        <p class="kontakt-script">Wir freuen uns auf dich</p>
+        <h2 class="kontakt-heading">Kein Lärm.<br>Nur gutes Brot.</h2>
+        <p class="kontakt-body">
+          Mitten in der Trierer Altstadt, mit Blick auf die Porta Nigra.
+          Bring Zeit mit — oder nicht. To-go ist genauso herzlich willkommen
+          wie ein langer Vormittag am Fenstertisch.
+        </p>
+        <a href="#" class="kontakt-cta">Anfahrt & Karte →</a>
+        <div class="kontakt-address">
+          Simeonstraße 28 · 54290 Trier<br>
+          <a href="tel:+4965128419363">0651 / 284 19 63</a><br>
+          <a href="mailto:hallo@brotkrume-trier.de">hallo@brotkrume-trier.de</a>
+        </div>
+      </div>
+
+      <div>
+        <p class="hours-label">Öffnungszeiten</p>
         <div class="hours-list">
           <div class="hours-row">
             <span class="hours-day">Dienstag – Freitag</span>
@@ -554,9 +738,14 @@ export const prerender = true;
             <span class="hours-closed">Ruhetag</span>
           </div>
         </div>
+        <div class="ph" style="height:180px;margin-top:1.8rem;border-radius:2px;">
+          <img src="https://images.unsplash.com/photo-1533910534207-90f31029a78e?auto=format&fit=crop&w=700&h=360&q=80" alt="Brotkrume Bäckerei Außenansicht" loading="lazy" />
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(46,31,14,0.55) 0%,transparent 55%);pointer-events:none;"></div>
+        </div>
       </div>
-    </section>
-  </div>
+
+    </div>
+  </section>
 
 </body>
 </html>
