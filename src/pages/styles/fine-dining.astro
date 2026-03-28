@@ -126,7 +126,7 @@ export const prerender = true;
     /* Restaurant name — top */
     .restaurant-name {
       font-family: 'Raleway', sans-serif;
-      font-size: clamp(0.55rem, 0.9vw, 0.75rem);
+      font-size: clamp(0.65rem, 0.9vw, 0.78rem);
       font-weight: 300;
       letter-spacing: 0.55em;
       text-transform: uppercase;
@@ -223,7 +223,7 @@ export const prerender = true;
 
     .opening-label {
       font-family: 'Raleway', sans-serif;
-      font-size: clamp(0.5rem, 0.8vw, 0.65rem);
+      font-size: clamp(0.6rem, 0.8vw, 0.68rem);
       font-weight: 300;
       letter-spacing: 0.35em;
       text-transform: uppercase;
@@ -232,7 +232,7 @@ export const prerender = true;
 
     .opening-value {
       font-family: 'Cormorant', serif;
-      font-size: clamp(0.8rem, 1.2vw, 1rem);
+      font-size: clamp(0.9rem, 1.2vw, 1.05rem);
       font-weight: 300;
       letter-spacing: 0.08em;
       color: #EDE8DF;
@@ -259,7 +259,7 @@ export const prerender = true;
       padding: 14px 40px;
       border: 1px solid rgba(212, 175, 55, 0.5);
       font-family: 'Raleway', sans-serif;
-      font-size: clamp(0.5rem, 0.85vw, 0.7rem);
+      font-size: clamp(0.62rem, 0.85vw, 0.72rem);
       font-weight: 400;
       letter-spacing: 0.4em;
       text-transform: uppercase;
@@ -328,7 +328,7 @@ export const prerender = true;
 
     .scroll-text {
       font-family: 'Raleway', sans-serif;
-      font-size: clamp(0.5rem, 0.8vw, 0.65rem);
+      font-size: clamp(0.6rem, 0.8vw, 0.68rem);
       font-weight: 300;
       letter-spacing: 0.4em;
       text-transform: uppercase;
@@ -371,74 +371,152 @@ export const prerender = true;
       .corner-bl, .corner-br { bottom: calc(10vh + 12px); }
     }
 
-    /* ── SECTION 2: MENU ── */
+    /* ── SCROLL FADE UTILITY ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.85s ease, transform 0.85s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .fade-up.delay-1 { transition-delay: 0.12s; }
+    .fade-up.delay-2 { transition-delay: 0.24s; }
+    .fade-up.delay-3 { transition-delay: 0.36s; }
+
+    /* ════════════════════════════════════════
+       SECTION 2 — DIE KARTE
+    ════════════════════════════════════════ */
+
+    /* Atmospheric scene-setter banner */
+    .menu-banner {
+      position: relative;
+      height: clamp(260px, 38vh, 420px);
+      overflow: hidden;
+    }
+
+    .menu-banner img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 55%;
+      filter: brightness(0.55) saturate(0.8);
+      transition: transform 0.65s ease;
+    }
+
+    .menu-banner:hover img {
+      transform: scale(1.03);
+    }
+
+    .menu-banner-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to bottom, rgba(14,12,9,0.7) 0%, rgba(14,12,9,0.15) 35%, rgba(14,12,9,0.15) 65%, rgba(14,12,9,0.85) 100%);
+      pointer-events: none;
+    }
+
+    .menu-banner-content {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+    }
+
+    .menu-banner-eyebrow {
+      font-family: 'Raleway', sans-serif;
+      font-size: clamp(0.62rem, 0.85vw, 0.72rem);
+      font-weight: 300;
+      letter-spacing: 0.55em;
+      text-transform: uppercase;
+      color: #D4AF37;
+    }
+
+    .menu-banner-title {
+      font-family: 'Cormorant', serif;
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      font-weight: 300;
+      font-style: italic;
+      color: #EDE8DF;
+      line-height: 1;
+    }
+
+    .menu-banner-separator {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .mbs-line {
+      height: 1px;
+      width: 80px;
+      background: linear-gradient(to right, transparent, rgba(212,175,55,0.6));
+    }
+    .mbs-line.r {
+      background: linear-gradient(to left, transparent, rgba(212,175,55,0.6));
+    }
+    .mbs-diamond {
+      width: 5px;
+      height: 5px;
+      background: #D4AF37;
+      transform: rotate(45deg);
+      opacity: 0.7;
+      flex-shrink: 0;
+    }
+
+    /* Menu grid area */
     .menu-section {
       background: #0E0C09;
-      padding: 100px 40px;
+      padding: 72px 40px 100px;
       max-width: 1600px;
       margin: 0 auto;
     }
 
     .menu-section-inner {
-      max-width: 1200px;
+      max-width: 1160px;
       margin: 0 auto;
-    }
-
-    .menu-eyebrow {
-      font-family: 'Raleway', sans-serif;
-      font-size: clamp(0.5rem, 0.8vw, 0.65rem);
-      font-weight: 300;
-      letter-spacing: 0.5em;
-      text-transform: uppercase;
-      color: #D4AF37;
-      text-align: center;
-      margin-bottom: 12px;
-    }
-
-    .menu-title {
-      font-family: 'Cormorant', serif;
-      font-size: clamp(2rem, 4vw, 3.2rem);
-      font-weight: 300;
-      font-style: italic;
-      color: #EDE8DF;
-      text-align: center;
-      margin-bottom: 64px;
-      line-height: 1.1;
     }
 
     .menu-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 32px;
+      gap: 40px;
     }
 
-    @media (max-width: 800px) {
-      .menu-grid { grid-template-columns: 1fr; gap: 48px; }
+    @media (max-width: 860px) {
+      .menu-grid { grid-template-columns: 1fr; gap: 52px; }
+      .menu-section { padding: 60px 24px 80px; }
     }
 
     .menu-col-label {
       font-family: 'Raleway', sans-serif;
-      font-size: clamp(0.5rem, 0.75vw, 0.6rem);
+      font-size: clamp(0.62rem, 0.78vw, 0.68rem);
       font-weight: 300;
-      letter-spacing: 0.45em;
+      letter-spacing: 0.48em;
       text-transform: uppercase;
       color: #8B7355;
-      margin-bottom: 20px;
+      margin-bottom: 24px;
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
     }
 
     .menu-col-label::after {
       content: '';
       flex: 1;
       height: 1px;
-      background: linear-gradient(to right, rgba(212,175,55,0.2), transparent);
+      background: linear-gradient(to right, rgba(212,175,55,0.25), transparent);
     }
 
     .menu-dish {
-      margin-bottom: 28px;
-      padding-bottom: 28px;
+      margin-bottom: 32px;
+      padding-bottom: 32px;
       border-bottom: 1px solid rgba(212,175,55,0.08);
     }
 
@@ -448,14 +526,11 @@ export const prerender = true;
       padding-bottom: 0;
     }
 
-    .ph { cursor: default; }
-    .ph:hover img { transform: scale(1.05); }
-
     .menu-dish-photo {
       position: relative;
       overflow: hidden;
-      height: 180px;
-      margin-bottom: 16px;
+      height: 200px;
+      margin-bottom: 18px;
     }
 
     .menu-dish-photo img {
@@ -472,60 +547,58 @@ export const prerender = true;
     .menu-dish-photo-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to top, rgba(14,12,9,0.55) 0%, transparent 60%);
+      background: linear-gradient(to top, rgba(14,12,9,0.6) 0%, transparent 55%);
       pointer-events: none;
     }
 
     .menu-dish-name {
       font-family: 'Cormorant', serif;
-      font-size: clamp(1rem, 1.8vw, 1.3rem);
+      font-size: clamp(1.05rem, 1.8vw, 1.35rem);
       font-weight: 400;
       color: #EDE8DF;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
       line-height: 1.2;
     }
 
     .menu-dish-desc {
       font-family: 'Raleway', sans-serif;
-      font-size: clamp(0.65rem, 0.9vw, 0.78rem);
+      font-size: clamp(0.75rem, 0.92vw, 0.82rem);
       font-weight: 300;
-      color: rgba(237,232,223,0.45);
-      line-height: 1.7;
-      margin-bottom: 8px;
+      color: rgba(237,232,223,0.62);
+      line-height: 1.75;
+      margin-bottom: 10px;
     }
 
     .menu-dish-price {
       font-family: 'Cormorant', serif;
-      font-size: clamp(0.85rem, 1.2vw, 1rem);
+      font-size: clamp(0.9rem, 1.2vw, 1.05rem);
       font-weight: 300;
       color: #D4AF37;
       letter-spacing: 0.06em;
     }
 
-    /* ── SECTION 3: PHILOSOPHY ── */
+    /* ════════════════════════════════════════
+       SECTION 3 — PHILOSOPHIE
+    ════════════════════════════════════════ */
     .philosophy-section {
       background: #0A0805;
-      padding: 0;
-      max-width: 1600px;
-      margin: 0 auto;
     }
 
+    /* Full-bleed split */
     .philosophy-inner {
-      max-width: 1200px;
-      margin: 0 auto;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      min-height: 580px;
+      min-height: 640px;
     }
 
-    @media (max-width: 800px) {
+    @media (max-width: 860px) {
       .philosophy-inner { grid-template-columns: 1fr; }
     }
 
     .philosophy-photo {
       position: relative;
       overflow: hidden;
-      min-height: 480px;
+      min-height: 520px;
     }
 
     .philosophy-photo img {
@@ -534,34 +607,39 @@ export const prerender = true;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      filter: brightness(0.75) saturate(0.85);
-      transition: transform 0.55s ease;
+      object-position: center 30%;
+      filter: brightness(0.7) saturate(0.8);
+      transition: transform 0.65s ease;
     }
 
-    .philosophy-photo:hover img { transform: scale(1.05); }
+    .philosophy-photo:hover img { transform: scale(1.04); }
 
     .philosophy-photo-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to right, transparent 60%, rgba(10,8,5,0.85) 100%);
+      background:
+        linear-gradient(to right, transparent 55%, rgba(10,8,5,0.9) 100%),
+        linear-gradient(to bottom, transparent 70%, rgba(10,8,5,0.5) 100%);
       pointer-events: none;
     }
 
+    /* Right-side content */
     .philosophy-content {
-      padding: 80px 60px;
+      padding: 80px 64px 80px 72px;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      gap: 28px;
+      gap: 32px;
+      background: #0A0805;
     }
 
-    @media (max-width: 800px) {
+    @media (max-width: 860px) {
       .philosophy-content { padding: 60px 32px; }
     }
 
     .philosophy-eyebrow {
       font-family: 'Raleway', sans-serif;
-      font-size: clamp(0.5rem, 0.75vw, 0.62rem);
+      font-size: clamp(0.62rem, 0.78vw, 0.7rem);
       font-weight: 300;
       letter-spacing: 0.5em;
       text-transform: uppercase;
@@ -570,11 +648,13 @@ export const prerender = true;
 
     .philosophy-quote {
       font-family: 'Cormorant', serif;
-      font-size: clamp(1.4rem, 2.8vw, 2.1rem);
+      font-size: clamp(1.5rem, 2.8vw, 2.2rem);
       font-weight: 300;
       font-style: italic;
       color: #EDE8DF;
       line-height: 1.35;
+      border-left: 1px solid rgba(212,175,55,0.35);
+      padding-left: 28px;
     }
 
     .philosophy-quote em {
@@ -605,32 +685,170 @@ export const prerender = true;
 
     .philosophy-chef-name {
       font-family: 'Cormorant', serif;
-      font-size: clamp(1rem, 1.5vw, 1.2rem);
+      font-size: clamp(1.05rem, 1.5vw, 1.25rem);
       font-weight: 400;
       color: #EDE8DF;
-      margin-bottom: 2px;
+      margin-bottom: 4px;
     }
 
     .philosophy-chef-role {
       font-family: 'Raleway', sans-serif;
-      font-size: clamp(0.5rem, 0.75vw, 0.62rem);
+      font-size: clamp(0.62rem, 0.78vw, 0.7rem);
       font-weight: 300;
-      letter-spacing: 0.35em;
+      letter-spacing: 0.38em;
       text-transform: uppercase;
       color: #8B7355;
     }
 
     .philosophy-text {
       font-family: 'Raleway', sans-serif;
-      font-size: clamp(0.72rem, 1vw, 0.85rem);
+      font-size: clamp(0.84rem, 1vw, 0.95rem);
       font-weight: 300;
-      color: rgba(237,232,223,0.5);
-      line-height: 1.9;
-      max-width: 44ch;
+      color: rgba(237,232,223,0.7);
+      line-height: 1.95;
+      max-width: 46ch;
+    }
+
+    /* ── RESERVATION FOOTER ── */
+    .reservation-footer {
+      background: #0E0C09;
+      border-top: 1px solid rgba(212,175,55,0.1);
+      padding: 80px 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 28px;
+      text-align: center;
+    }
+
+    .res-footer-eyebrow {
+      font-family: 'Raleway', sans-serif;
+      font-size: clamp(0.62rem, 0.8vw, 0.7rem);
+      font-weight: 300;
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
+      color: #8B7355;
+    }
+
+    .res-footer-title {
+      font-family: 'Cormorant', serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 300;
+      font-style: italic;
+      color: #EDE8DF;
+      line-height: 1.15;
+    }
+
+    .res-footer-title em {
+      font-style: normal;
+      color: #D4AF37;
+    }
+
+    .res-footer-separator {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .rfs-line {
+      height: 1px;
+      width: 100px;
+      background: linear-gradient(to right, transparent, rgba(212,175,55,0.45));
+    }
+    .rfs-line.r {
+      background: linear-gradient(to left, transparent, rgba(212,175,55,0.45));
+    }
+    .rfs-diamond {
+      width: 5px;
+      height: 5px;
+      background: #D4AF37;
+      transform: rotate(45deg);
+      opacity: 0.6;
+      flex-shrink: 0;
+    }
+
+    .res-footer-info {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .res-footer-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .res-footer-label {
+      font-family: 'Raleway', sans-serif;
+      font-size: clamp(0.6rem, 0.75vw, 0.66rem);
+      font-weight: 300;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: #8B7355;
+    }
+
+    .res-footer-value {
+      font-family: 'Cormorant', serif;
+      font-size: clamp(0.95rem, 1.3vw, 1.1rem);
+      font-weight: 300;
+      color: #EDE8DF;
+      letter-spacing: 0.06em;
+    }
+
+    .res-footer-divider {
+      width: 1px;
+      height: 30px;
+      background: rgba(212,175,55,0.18);
+    }
+
+    .res-footer-cta {
+      margin-top: 8px;
+    }
+
+    .res-footer-btn {
+      display: inline-block;
+      padding: 15px 48px;
+      border: 1px solid rgba(212, 175, 55, 0.45);
+      font-family: 'Raleway', sans-serif;
+      font-size: clamp(0.62rem, 0.85vw, 0.72rem);
+      font-weight: 400;
+      letter-spacing: 0.42em;
+      text-transform: uppercase;
+      color: #D4AF37;
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.4s ease;
+    }
+
+    .res-footer-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(212, 175, 55, 0.07);
+      transform: translateX(-101%);
+      transition: transform 0.4s ease;
+    }
+
+    .res-footer-btn:hover::before { transform: translateX(0); }
+    .res-footer-btn:hover { border-color: #D4AF37; }
+
+    .res-footer-address {
+      font-family: 'Raleway', sans-serif;
+      font-size: clamp(0.68rem, 0.85vw, 0.75rem);
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      color: rgba(237,232,223,0.3);
+      margin-top: 12px;
     }
   </style>
 </head>
 <body>
+  <!-- ════ SECTION 1: HERO ════ -->
   <main class="hero">
     <!-- Background image -->
     <div class="image-container">
@@ -695,110 +913,141 @@ export const prerender = true;
     </div>
   </main>
 
-  <!-- ── SECTION 2: MENU ── -->
-  <div class="menu-section">
-    <div class="menu-section-inner">
-      <p class="menu-eyebrow">Saisonale Küche</p>
-      <h2 class="menu-title">Die Karte</h2>
-      <div class="menu-grid">
-
-        <!-- Vorspeise -->
-        <div>
-          <div class="menu-col-label">Vorspeise</div>
-          <div class="menu-dish">
-            <div class="menu-dish-photo">
-              <img src="https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&w=800&h=500&q=80" alt="Tatar vom Mosel-Rind" loading="lazy" />
-              <div class="menu-dish-photo-overlay"></div>
-            </div>
-            <div class="menu-dish-name">Tatar vom Mosel-Rind</div>
-            <div class="menu-dish-desc">Kapern, Eigelb-Crème, geräuchertes Brot</div>
-            <div class="menu-dish-price">18 €</div>
-          </div>
-          <div class="menu-dish">
-            <div class="menu-dish-name">Burrata &amp; Trüffel</div>
-            <div class="menu-dish-desc">Rote-Bete-Vinaigrette, Haselnuss, Kerbel</div>
-            <div class="menu-dish-price">16 €</div>
-          </div>
-          <div class="menu-dish">
-            <div class="menu-dish-name">Kürbissuppe</div>
-            <div class="menu-dish-desc">Ingwer-Kokos, geröstete Kürbiskerne, Crème fraîche</div>
-            <div class="menu-dish-price">12 €</div>
-          </div>
+  <!-- ════ SECTION 2: DIE KARTE ════ -->
+  <section>
+    <!-- Atmospheric scene-setter banner -->
+    <div class="menu-banner">
+      <img
+        src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1600&h=700&q=80"
+        alt="Grotte Restaurantraum"
+        loading="lazy"
+      />
+      <div class="menu-banner-overlay"></div>
+      <div class="menu-banner-content">
+        <p class="menu-banner-eyebrow fade-up">Saisonale Küche</p>
+        <h2 class="menu-banner-title fade-up delay-1">Die Karte</h2>
+        <div class="menu-banner-separator fade-up delay-2">
+          <div class="mbs-line"></div>
+          <div class="mbs-diamond"></div>
+          <div class="mbs-line r"></div>
         </div>
-
-        <!-- Hauptgang -->
-        <div>
-          <div class="menu-col-label">Hauptgang</div>
-          <div class="menu-dish">
-            <div class="menu-dish-photo">
-              <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&h=500&q=80" alt="Dry-Aged Entrecôte" loading="lazy" />
-              <div class="menu-dish-photo-overlay"></div>
-            </div>
-            <div class="menu-dish-name">Dry-Aged Entrecôte</div>
-            <div class="menu-dish-desc">28 Tage gereift, Sauce Béarnaise, Pommes soufflées</div>
-            <div class="menu-dish-price">46 €</div>
-          </div>
-          <div class="menu-dish">
-            <div class="menu-dish-name">Steinbutt aus der Bretagne</div>
-            <div class="menu-dish-desc">Beurre blanc, Seetang-Gnocchi, Muscheljus</div>
-            <div class="menu-dish-price">42 €</div>
-          </div>
-          <div class="menu-dish">
-            <div class="menu-dish-name">Lammrücken aus der Eifel</div>
-            <div class="menu-dish-desc">Kräuterkruste, Ratatouille, schwarze Knoblauchjus</div>
-            <div class="menu-dish-price">38 €</div>
-          </div>
-        </div>
-
-        <!-- Dessert -->
-        <div>
-          <div class="menu-col-label">Dessert</div>
-          <div class="menu-dish">
-            <div class="menu-dish-photo">
-              <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&h=500&q=80" alt="Tarte Tatin" loading="lazy" />
-              <div class="menu-dish-photo-overlay"></div>
-            </div>
-            <div class="menu-dish-name">Tarte Tatin vom Apfel</div>
-            <div class="menu-dish-desc">Calvados-Karamell, Vanille-Eis, gesalzene Butter</div>
-            <div class="menu-dish-price">14 €</div>
-          </div>
-          <div class="menu-dish">
-            <div class="menu-dish-name">Schokoladen-Soufflé</div>
-            <div class="menu-dish-desc">Valrhona 72 %, flüssiger Kern, Fleur de Sel</div>
-            <div class="menu-dish-price">16 €</div>
-          </div>
-          <div class="menu-dish">
-            <div class="menu-dish-name">Käsewagen</div>
-            <div class="menu-dish-desc">Auswahl gereifter Käse, Feigensenf, Nussbrot</div>
-            <div class="menu-dish-price">22 €</div>
-          </div>
-        </div>
-
       </div>
     </div>
-  </div>
 
-  <!-- ── SECTION 3: PHILOSOPHY ── -->
-  <div class="philosophy-section">
+    <!-- Menu grid -->
+    <div class="menu-section">
+      <div class="menu-section-inner">
+        <div class="menu-grid">
+
+          <!-- Vorspeise -->
+          <div class="fade-up">
+            <div class="menu-col-label">Vorspeise</div>
+            <div class="menu-dish">
+              <div class="menu-dish-photo">
+                <img src="https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?auto=format&fit=crop&w=800&h=500&q=80" alt="Tatar vom Mosel-Rind" loading="lazy" />
+                <div class="menu-dish-photo-overlay"></div>
+              </div>
+              <div class="menu-dish-name">Tatar vom Mosel-Rind</div>
+              <div class="menu-dish-desc">Kapern, Eigelb-Crème, geräuchertes Brot</div>
+              <div class="menu-dish-price">18 €</div>
+            </div>
+            <div class="menu-dish">
+              <div class="menu-dish-name">Burrata &amp; Trüffel</div>
+              <div class="menu-dish-desc">Rote-Bete-Vinaigrette, Haselnuss, Kerbel</div>
+              <div class="menu-dish-price">16 €</div>
+            </div>
+            <div class="menu-dish">
+              <div class="menu-dish-name">Kürbissuppe</div>
+              <div class="menu-dish-desc">Ingwer-Kokos, geröstete Kürbiskerne, Crème fraîche</div>
+              <div class="menu-dish-price">12 €</div>
+            </div>
+          </div>
+
+          <!-- Hauptgang -->
+          <div class="fade-up delay-1">
+            <div class="menu-col-label">Hauptgang</div>
+            <div class="menu-dish">
+              <div class="menu-dish-photo">
+                <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=800&h=500&q=80" alt="Dry-Aged Entrecôte" loading="lazy" />
+                <div class="menu-dish-photo-overlay"></div>
+              </div>
+              <div class="menu-dish-name">Dry-Aged Entrecôte</div>
+              <div class="menu-dish-desc">28 Tage gereift, Sauce Béarnaise, Pommes soufflées</div>
+              <div class="menu-dish-price">46 €</div>
+            </div>
+            <div class="menu-dish">
+              <div class="menu-dish-name">Steinbutt aus der Bretagne</div>
+              <div class="menu-dish-desc">Beurre blanc, Seetang-Gnocchi, Muscheljus</div>
+              <div class="menu-dish-price">42 €</div>
+            </div>
+            <div class="menu-dish">
+              <div class="menu-dish-name">Lammrücken aus der Eifel</div>
+              <div class="menu-dish-desc">Kräuterkruste, Ratatouille, schwarze Knoblauchjus</div>
+              <div class="menu-dish-price">38 €</div>
+            </div>
+          </div>
+
+          <!-- Dessert -->
+          <div class="fade-up delay-2">
+            <div class="menu-col-label">Dessert</div>
+            <div class="menu-dish">
+              <div class="menu-dish-photo">
+                <img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=800&h=500&q=80" alt="Schokoladen-Soufflé" loading="lazy" />
+                <div class="menu-dish-photo-overlay"></div>
+              </div>
+              <div class="menu-dish-name">Tarte Tatin vom Apfel</div>
+              <div class="menu-dish-desc">Calvados-Karamell, Vanille-Eis, gesalzene Butter</div>
+              <div class="menu-dish-price">14 €</div>
+            </div>
+            <div class="menu-dish">
+              <div class="menu-dish-name">Schokoladen-Soufflé</div>
+              <div class="menu-dish-desc">Valrhona 72 %, flüssiger Kern, Fleur de Sel</div>
+              <div class="menu-dish-price">16 €</div>
+            </div>
+            <div class="menu-dish">
+              <div class="menu-dish-name">Käsewagen</div>
+              <div class="menu-dish-desc">Auswahl gereifter Käse, Feigensenf, Nussbrot</div>
+              <div class="menu-dish-price">22 €</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ SECTION 3: PHILOSOPHIE ════ -->
+  <section class="philosophy-section">
     <div class="philosophy-inner">
+      <!-- Left: chef photo -->
       <div class="philosophy-photo">
-        <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=900&h=700&q=80" alt="Küchenchef Marcus Stein bei der Arbeit" loading="lazy" />
+        <img
+          src="https://images.unsplash.com/photo-1583394293214-0e9a41e32d19?auto=format&fit=crop&w=900&h=800&q=80"
+          alt="Küchenchef Marcus Stein"
+          loading="lazy"
+        />
         <div class="philosophy-photo-overlay"></div>
       </div>
+
+      <!-- Right: content -->
       <div class="philosophy-content">
-        <p class="philosophy-eyebrow">Küche &amp; Philosophie</p>
-        <blockquote class="philosophy-quote">
+        <p class="philosophy-eyebrow fade-up">Küche &amp; Philosophie</p>
+
+        <blockquote class="philosophy-quote fade-up delay-1">
           „Ein Gericht ist fertig, wenn nichts mehr <em>weggelassen</em> werden kann."
         </blockquote>
-        <div class="philosophy-separator">
+
+        <div class="philosophy-separator fade-up delay-2">
           <div class="phil-line"></div>
           <div class="phil-diamond"></div>
         </div>
-        <div>
+
+        <div class="fade-up delay-2">
           <div class="philosophy-chef-name">Marcus Stein</div>
           <div class="philosophy-chef-role">Küchenchef &amp; Gastgeber</div>
         </div>
-        <p class="philosophy-text">
+
+        <p class="philosophy-text fade-up delay-3">
           Seit 2018 koche ich in der Grotte für Gäste, die essen wollen — nicht konsumieren.
           Jedes Produkt hat eine Herkunft, die ich kenne. Jedes Gericht hat eine Absicht,
           die ich erklären kann. Die Weinbegleitung wähle ich selbst aus — ausschließlich
@@ -806,13 +1055,44 @@ export const prerender = true;
         </p>
       </div>
     </div>
-  </div>
+
+    <!-- Closing reservation strip -->
+    <div class="reservation-footer">
+      <p class="res-footer-eyebrow fade-up">Ihr Abend beginnt mit einem Anruf</p>
+      <h3 class="res-footer-title fade-up delay-1">Tisch <em>reservieren</em></h3>
+      <div class="res-footer-separator fade-up delay-1">
+        <div class="rfs-line"></div>
+        <div class="rfs-diamond"></div>
+        <div class="rfs-line r"></div>
+      </div>
+      <div class="res-footer-info fade-up delay-2">
+        <div class="res-footer-item">
+          <span class="res-footer-label">Telefon</span>
+          <span class="res-footer-value">+49 651 · · · · · ·</span>
+        </div>
+        <div class="res-footer-divider"></div>
+        <div class="res-footer-item">
+          <span class="res-footer-label">E-Mail</span>
+          <span class="res-footer-value">grotte@trier.de</span>
+        </div>
+        <div class="res-footer-divider"></div>
+        <div class="res-footer-item">
+          <span class="res-footer-label">Öffnungszeiten</span>
+          <span class="res-footer-value">Di – Sa, ab 18 Uhr</span>
+        </div>
+      </div>
+      <div class="res-footer-cta fade-up delay-3">
+        <a href="#" class="res-footer-btn">Reservierung anfragen</a>
+      </div>
+      <p class="res-footer-address fade-up delay-3">Simeonstraße 14 · 54290 Trier · Deutschland</p>
+    </div>
+  </section>
 
   <script>
-    // Entrance animations
-    const elements = document.querySelectorAll('.animate-el');
+    // Hero entrance animations
+    const heroElements = document.querySelectorAll('.animate-el');
     requestAnimationFrame(() => {
-      elements.forEach((el, i) => {
+      heroElements.forEach((el, i) => {
         setTimeout(() => {
           el.classList.add('visible');
         }, i * 120);
@@ -844,6 +1124,19 @@ export const prerender = true;
 
       container.appendChild(particle);
     }
+
+    // Scroll-triggered fade-up for sections 2 & 3
+    const fadeEls = document.querySelectorAll('.fade-up');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    fadeEls.forEach(el => observer.observe(el));
   </script>
 </body>
 </html>
