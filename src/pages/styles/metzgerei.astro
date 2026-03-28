@@ -7,562 +7,1043 @@ export const prerender = true;
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex,nofollow" />
-  <title>Metzgerei Kessler — Seit 1952, Konz</title>
+  <title>Metzgerei Kessler – Handwerk & Herkunft, Konz bei Trier</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Barlow+Condensed:wght@400;600;700&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
 
     :root {
-      --black:   #1A0A08;
-      --dark:    #2A1008;
-      --mid:     #3D1510;
-      --red:     #C0392B;
-      --red-l:   #D44333;
-      --cream:   #FAF5F0;
-      --warm:    #F3EBE4;
-      --muted:   #8A6A5A;
-      --border:  #E0CEC6;
-      --ff-disp: 'Oswald', sans-serif;
-      --ff-body: 'Source Sans 3', sans-serif;
+      --smoke:     #140A08;
+      --dark:      #1E0E0B;
+      --mid:       #2E1410;
+      --crimson:   #A8221D;
+      --ember:     #C04020;
+      --parchment: #F5EDD8;
+      --warm:      #EDE0CC;
+      --ivory:     #FAFAF4;
+      --gold:      #A07830;
+      --stone:     #76665A;
+      --border:    #D5C4AE;
+      --ff-d: 'Cormorant Garamond', Georgia, serif;
+      --ff-l: 'Barlow Condensed', sans-serif;
+      --ff-b: 'Lora', Georgia, serif;
     }
 
-    html, body {
-      background: var(--cream);
-      color: var(--black);
-      font-family: var(--ff-body);
+    body {
+      background: var(--parchment);
+      color: var(--smoke);
+      font-family: var(--ff-b);
       font-size: 16px;
-      line-height: 1.6;
+      line-height: 1.75;
+      overflow-x: hidden;
     }
+
+    /* ── GRAIN ── */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: 0.032;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+      animation: grainAnim 0.4s steps(1) infinite;
+    }
+    @keyframes grainAnim {
+      0%   { transform: translate(0,0); }
+      25%  { transform: translate(-3%,-2%); }
+      50%  { transform: translate(2%,3%); }
+      75%  { transform: translate(-1%,2%); }
+      100% { transform: translate(3%,-1%); }
+    }
+
+    /* ── REVEAL ── */
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.75s cubic-bezier(0.22,0.61,0.36,1),
+                  transform 0.75s cubic-bezier(0.22,0.61,0.36,1);
+    }
+    [data-reveal].visible { opacity: 1; transform: none; }
+    [data-reveal][data-delay="1"] { transition-delay: 0.1s; }
+    [data-reveal][data-delay="2"] { transition-delay: 0.2s; }
+    [data-reveal][data-delay="3"] { transition-delay: 0.3s; }
+    [data-reveal][data-delay="4"] { transition-delay: 0.45s; }
+
+    /* ── EYEBROW ── */
+    .eyebrow {
+      font-family: var(--ff-l);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--crimson);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    .eyebrow::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: currentColor;
+      flex-shrink: 0;
+    }
+
+    img { display: block; }
 
     /* ── NAV ── */
     nav {
-      background: var(--black);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 3rem;
-      height: 60px;
       position: sticky;
       top: 0;
       z-index: 100;
+      height: 64px;
+      background: var(--smoke);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(1.5rem, 4vw, 3.5rem);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
     }
-
-    .nav-logo {
-      font-family: var(--ff-disp);
-      font-size: 1.4rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      color: #fff;
+    .nav-brand {
+      display: flex;
+      align-items: baseline;
+      gap: 0.75rem;
       text-decoration: none;
     }
-
-    .nav-logo span {
-      color: var(--red);
+    .nav-brand-name {
+      font-family: var(--ff-d);
+      font-size: 1.5rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      color: #fff;
     }
-
-    .nav-year {
-      font-size: 0.65rem;
-      font-weight: 300;
-      letter-spacing: 0.1em;
+    .nav-brand-sub {
+      font-family: var(--ff-l);
+      font-size: 0.6rem;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
       color: rgba(255,255,255,0.3);
-      margin-left: 0.5rem;
     }
-
     .nav-links {
+      list-style: none;
       display: flex;
       align-items: center;
       gap: 2.5rem;
-      list-style: none;
     }
-
     .nav-links a {
-      font-size: 0.72rem;
+      font-family: var(--ff-l);
+      font-size: 0.7rem;
       font-weight: 600;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.45);
+      color: rgba(255,255,255,0.4);
       text-decoration: none;
       transition: color 0.2s;
     }
-    .nav-links a:hover { color: var(--red); }
-
+    .nav-links a:hover { color: var(--ember); }
     .nav-tel {
-      color: rgba(255,255,255,0.75) !important;
-      font-size: 0.8rem !important;
-      font-family: var(--ff-disp);
-      letter-spacing: 0.06em;
+      color: rgba(255,255,255,0.7) !important;
+      font-family: var(--ff-d) !important;
+      font-size: 0.9rem !important;
+      font-weight: 400 !important;
+      letter-spacing: 0.06em !important;
     }
 
     /* ── HERO ── */
     .hero {
-      background: var(--black);
-      min-height: 500px;
+      min-height: calc(100vh - 64px);
+      background: var(--smoke);
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 55fr 45fr;
       position: relative;
       overflow: hidden;
     }
-
-    /* Red rule at top */
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 4px;
-      background: var(--red);
-      animation: ruleExpand 0.8s ease-out both;
-    }
-
-    @keyframes ruleExpand {
-      from { transform: scaleX(0); transform-origin: left; }
-      to   { transform: scaleX(1); transform-origin: left; }
-    }
-
     .hero-left {
-      padding: 5rem 3.5rem 5rem 3rem;
+      padding: clamp(3rem, 7vw, 6rem) clamp(2rem, 5vw, 4.5rem) clamp(3rem, 7vw, 5rem);
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      border-right: 1px solid rgba(255,255,255,0.06);
+      justify-content: flex-end;
+      position: relative;
+      z-index: 2;
     }
-
-    .hero-since {
+    .hero-left::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 15%; bottom: 15%;
+      width: 3px;
+      background: var(--crimson);
+      animation: ruleGrow 0.9s 0.3s ease-out both;
+    }
+    @keyframes ruleGrow {
+      from { transform: scaleY(0); transform-origin: bottom; }
+      to   { transform: scaleY(1); transform-origin: bottom; }
+    }
+    .hero-year-bg {
+      position: absolute;
+      top: 0; right: -2%;
+      font-family: var(--ff-d);
+      font-size: clamp(8rem, 18vw, 18rem);
+      font-weight: 300;
+      color: rgba(255,255,255,0.022);
+      line-height: 1;
+      letter-spacing: -0.02em;
+      pointer-events: none;
+      user-select: none;
+    }
+    .hero-eyebrow {
+      font-family: var(--ff-l);
       font-size: 0.65rem;
       font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--crimson);
+      margin-bottom: 2rem;
+      animation: fadeUp 0.7s 0.4s ease-out both;
+    }
+    .hero-headline {
+      font-family: var(--ff-d);
+      font-size: clamp(4.5rem, 10vw, 11rem);
+      font-weight: 300;
+      font-style: italic;
+      letter-spacing: 0.03em;
+      line-height: 0.88;
+      color: #fff;
+      margin-bottom: 2.5rem;
+      animation: fadeUp 0.7s 0.55s ease-out both;
+    }
+    .hero-headline em {
+      display: block;
+      font-style: normal;
+      font-weight: 700;
+      color: var(--crimson);
+      font-size: 0.42em;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--red);
-      margin-bottom: 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
+      margin-top: 0.5em;
     }
-    .hero-since::before {
-      content: '';
-      width: 20px;
-      height: 1px;
-      background: var(--red);
-    }
-
-    .hero-headline {
-      font-family: var(--ff-disp);
-      font-size: clamp(2.8rem, 5.5vw, 5rem);
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      line-height: 0.95;
-      color: #fff;
-      margin-bottom: 1.75rem;
-    }
-
-    .hero-headline .line-red { color: var(--red); }
-    .hero-headline .line-light { font-weight: 300; color: rgba(255,255,255,0.6); }
-
     .hero-desc {
-      font-size: 0.9rem;
-      font-weight: 300;
-      color: rgba(255,255,255,0.45);
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.42);
       max-width: 380px;
-      line-height: 1.8;
+      line-height: 1.85;
       margin-bottom: 2.5rem;
+      animation: fadeUp 0.7s 0.7s ease-out both;
     }
-
     .hero-ctas {
       display: flex;
       align-items: center;
-      gap: 1.25rem;
+      gap: 1.5rem;
+      animation: fadeUp 0.7s 0.85s ease-out both;
     }
-
-    .btn-red {
-      background: var(--red);
-      color: #fff;
-      font-family: var(--ff-disp);
-      font-size: 0.85rem;
-      font-weight: 500;
-      letter-spacing: 0.1em;
+    .btn-primary {
+      font-family: var(--ff-l);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      padding: 0.75rem 2rem;
-      border-radius: 2px;
+      color: #fff;
+      background: var(--crimson);
+      padding: 0.9rem 2.25rem;
       text-decoration: none;
       transition: background 0.2s, transform 0.15s;
+      display: inline-block;
     }
-    .btn-red:hover { background: var(--red-l); transform: translateY(-1px); }
-
-    .btn-ghost {
-      font-size: 0.75rem;
+    .btn-primary:hover { background: var(--ember); transform: translateY(-1px); }
+    .btn-ghost-light {
+      font-family: var(--ff-l);
+      font-size: 0.68rem;
       font-weight: 600;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.35);
+      color: rgba(255,255,255,0.32);
       text-decoration: none;
       transition: color 0.2s;
     }
-    .btn-ghost:hover { color: rgba(255,255,255,0.7); }
-
-    /* Right — trust facts */
+    .btn-ghost-light:hover { color: rgba(255,255,255,0.65); }
     .hero-right {
-      padding: 3.5rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-right img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 8s ease-out;
+    }
+    .hero:hover .hero-right img { transform: scale(1.04); }
+    .hero-right::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, var(--smoke) 0%, transparent 45%),
+                  linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: none; }
     }
 
-    .trust-item {
-      display: flex;
-      gap: 1.5rem;
-      align-items: flex-start;
-      padding: 1.5rem 0;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      transition: border-color 0.2s;
+    /* ── STATS BAR ── */
+    .stats-bar {
+      background: var(--mid);
+      border-top: 1px solid rgba(255,255,255,0.05);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
     }
-    .trust-item:last-child { border-bottom: none; }
-    .trust-item:hover { border-color: rgba(192,57,43,0.3); }
-
-    .trust-num {
-      font-family: var(--ff-disp);
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: var(--red);
+    .stat-item {
+      padding: 2.5rem clamp(1.5rem, 4vw, 3.5rem);
+      border-right: 1px solid rgba(255,255,255,0.06);
+      text-align: center;
+      transition: background 0.25s;
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-item:hover { background: rgba(255,255,255,0.03); }
+    .stat-num {
+      font-family: var(--ff-d);
+      font-size: clamp(3.5rem, 7vw, 6.5rem);
+      font-weight: 300;
+      color: var(--crimson);
       line-height: 1;
-      flex-shrink: 0;
-      width: 5rem;
-      letter-spacing: 0.04em;
+      margin-bottom: 0.35rem;
+    }
+    .stat-label {
+      font-family: var(--ff-l);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      display: block;
+    }
+    .stat-sub {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.22);
+      margin-top: 0.2rem;
     }
 
-    .trust-text { }
+    /* ── SORTIMENT ── */
+    .sortiment-section {
+      padding: clamp(4rem, 8vw, 7rem) clamp(1.5rem, 4vw, 3.5rem);
+      background: var(--parchment);
+    }
+    .sortiment-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 2.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 2px solid var(--smoke);
+    }
+    .sortiment-title {
+      font-family: var(--ff-d);
+      font-size: clamp(2rem, 4vw, 4rem);
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      color: var(--smoke);
+      line-height: 1;
+    }
+    .sortiment-note {
+      font-family: var(--ff-l);
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
 
-    .trust-title {
-      font-family: var(--ff-disp);
-      font-size: 0.95rem;
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      color: #fff;
+    /* Editorial photo layout */
+    .sortiment-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3px;
+      background: var(--border);
+    }
+    .sort-feature {
+      position: relative;
+      overflow: hidden;
+      background: var(--smoke);
+      min-height: 520px;
+    }
+    .sort-feature img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.65s ease;
+    }
+    .sort-feature:hover img { transform: scale(1.06); }
+    .sort-feature::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.15) 55%, transparent 80%);
+    }
+    .sort-feature-info {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 2rem;
+      z-index: 2;
+    }
+    .sort-feature-cat {
+      font-family: var(--ff-l);
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--crimson);
       margin-bottom: 0.3rem;
     }
-
-    .trust-desc {
-      font-size: 0.78rem;
-      color: rgba(255,255,255,0.4);
-      line-height: 1.6;
-    }
-
-    /* ── PRODUKTE ── */
-    .produkte-section {
-      padding: 5rem 3rem;
-      background: var(--cream);
-    }
-
-    .section-header {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      margin-bottom: 3rem;
-      border-bottom: 3px solid var(--black);
-      padding-bottom: 1.25rem;
-    }
-
-    .section-eyebrow {
-      font-size: 0.65rem;
+    .sort-feature-name {
+      font-family: var(--ff-d);
+      font-size: clamp(1.6rem, 3vw, 3rem);
       font-weight: 600;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--red);
+      color: #fff;
+      letter-spacing: 0.04em;
+      line-height: 1;
       margin-bottom: 0.5rem;
     }
+    .sort-feature-origin {
+      font-family: var(--ff-l);
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+    }
 
-    .section-title {
-      font-family: var(--ff-disp);
-      font-size: clamp(1.6rem, 3vw, 2.8rem);
+    .sort-small-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 3px;
+    }
+    .sort-small-item {
+      position: relative;
+      overflow: hidden;
+      background: var(--smoke);
+      min-height: 255px;
+    }
+    .sort-small-item img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.55s ease;
+    }
+    .sort-small-item:hover img { transform: scale(1.08); }
+    .sort-small-item::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 55%);
+    }
+    .sort-small-info {
+      position: absolute;
+      bottom: 0;
+      padding: 1.25rem;
+      z-index: 2;
+    }
+    .sort-small-cat {
+      font-family: var(--ff-l);
+      font-size: 0.55rem;
       font-weight: 700;
-      letter-spacing: 0.04em;
-      color: var(--black);
-      line-height: 1;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--crimson);
+      margin-bottom: 0.2rem;
+    }
+    .sort-small-name {
+      font-family: var(--ff-d);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: 0.03em;
+      line-height: 1.1;
+    }
+    .sort-small-origin {
+      font-size: 0.62rem;
+      color: rgba(255,255,255,0.42);
+      margin-top: 0.2rem;
     }
 
-    .section-note {
-      font-size: 0.75rem;
-      color: var(--muted);
-    }
-
-    .img-wrap:hover img { transform: scale(1.05); }
-
-    .produkte-grid {
+    /* Bottom text cards */
+    .sortiment-cards {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 1.5px;
+      gap: 3px;
       background: var(--border);
-      border: 1px solid var(--border);
+      margin-top: 3px;
     }
-
-    .produkt-item {
-      background: #fff;
+    .sort-card {
+      background: var(--ivory);
       padding: 1.75rem;
-      transition: background 0.2s;
-      display: flex;
-      flex-direction: column;
+      transition: background 0.2s, transform 0.2s;
     }
-    .produkt-item:hover {
-      background: var(--warm);
+    .sort-card:hover { background: var(--warm); transform: translateY(-2px); }
+    .sort-card:hover .sort-card-name { color: var(--crimson); }
+    .sort-card-num {
+      font-family: var(--ff-d);
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: var(--border);
+      margin-bottom: 0.3rem;
     }
-    .produkt-item:hover .produkt-name { color: var(--red); }
-
-    .produkt-icon {
-      font-size: 1.8rem;
-      margin-bottom: 1rem;
-    }
-
-    .produkt-cat {
-      font-size: 0.58rem;
-      font-weight: 600;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 0.4rem;
-    }
-
-    .produkt-name {
-      font-family: var(--ff-disp);
+    .sort-card-name {
+      font-family: var(--ff-l);
       font-size: 1rem;
-      font-weight: 600;
+      font-weight: 700;
       letter-spacing: 0.04em;
-      color: var(--black);
+      color: var(--smoke);
       margin-bottom: 0.5rem;
-      line-height: 1.2;
       transition: color 0.2s;
     }
-
-    .produkt-desc {
+    .sort-card-desc {
       font-size: 0.78rem;
-      color: var(--muted);
-      line-height: 1.6;
-      flex: 1;
+      color: var(--stone);
+      line-height: 1.65;
       margin-bottom: 1rem;
     }
-
-    .produkt-origin {
-      font-size: 0.65rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
+    .sort-card-tag {
+      font-family: var(--ff-l);
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--red);
+      color: var(--crimson);
     }
 
-    /* ── REGIONAL ── */
-    .regional-section {
-      background: var(--black);
-      padding: 5rem 3rem;
+    /* ── GESCHICHTE ── */
+    .geschichte-section {
+      background: var(--dark);
+      padding: clamp(5rem, 9vw, 8rem) clamp(1.5rem, 4vw, 3.5rem);
+      position: relative;
+      overflow: hidden;
+    }
+    .geschichte-bg-year {
+      position: absolute;
+      bottom: -8%;
+      left: -2%;
+      font-family: var(--ff-d);
+      font-size: clamp(12rem, 28vw, 30rem);
+      font-weight: 300;
+      color: rgba(255,255,255,0.022);
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+      letter-spacing: -0.03em;
+    }
+    .geschichte-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+      position: relative;
+      z-index: 2;
+    }
+    .geschichte-title {
+      font-family: var(--ff-d);
+      font-size: clamp(2.2rem, 4.5vw, 4.5rem);
+      font-weight: 600;
+      color: #fff;
+      line-height: 1.05;
+      letter-spacing: 0.04em;
+      margin-bottom: 1.5rem;
+    }
+    .geschichte-title span { color: var(--crimson); font-style: italic; }
+    .geschichte-body {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.9;
+      margin-bottom: 3rem;
+      max-width: 440px;
+    }
+    .timeline { display: flex; flex-direction: column; }
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 5rem 1fr;
+      gap: 1.5rem;
+      padding: 1.25rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      align-items: start;
+      transition: border-color 0.2s, padding-left 0.2s;
+    }
+    .timeline-item:last-child { border-bottom: none; }
+    .timeline-item:hover { border-color: rgba(168,34,29,0.3); padding-left: 0.5rem; }
+    .tl-year {
+      font-family: var(--ff-d);
+      font-size: 1.5rem;
+      font-weight: 300;
+      color: var(--crimson);
+      line-height: 1;
+      padding-top: 0.1em;
+    }
+    .tl-title {
+      font-family: var(--ff-l);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 0.25rem;
+    }
+    .tl-desc {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.32);
+      line-height: 1.65;
+    }
+    .pullquote {
+      margin-top: 2.5rem;
+      border-left: 2px solid var(--crimson);
+      padding: 1.25rem 1.5rem;
+      background: rgba(255,255,255,0.03);
+    }
+    .pullquote-text {
+      font-family: var(--ff-d);
+      font-size: clamp(1.1rem, 2.2vw, 1.55rem);
+      font-style: italic;
+      font-weight: 300;
+      color: rgba(255,255,255,0.72);
+      line-height: 1.5;
+    }
+    .pullquote-attr {
+      margin-top: 0.75rem;
+      font-family: var(--ff-l);
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--crimson);
+    }
+    .geschichte-photos {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3px;
+    }
+    .geschichte-photo {
+      position: relative;
+      overflow: hidden;
+      background: var(--mid);
+    }
+    .geschichte-photo:first-child { height: 480px; }
+    .geschichte-photo:last-child { height: 480px; margin-top: 3rem; }
+    .geschichte-photo img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+      filter: sepia(0.15) brightness(0.85);
+    }
+    .geschichte-photo:hover img { transform: scale(1.05); filter: sepia(0) brightness(1); }
+    .geschichte-photo::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.25);
+      transition: opacity 0.3s;
+    }
+    .geschichte-photo:hover::after { opacity: 0; }
+
+    /* ── WOCHENKARTE ── */
+    .wochenkarte-section {
+      background: var(--parchment);
+      padding: clamp(4rem, 8vw, 7rem) clamp(1.5rem, 4vw, 3.5rem);
+      position: relative;
+      overflow: hidden;
+    }
+    .wochenkarte-section::before {
+      content: 'KW';
+      position: absolute;
+      right: 2%;
+      top: 8%;
+      font-family: var(--ff-d);
+      font-size: clamp(10rem, 22vw, 24rem);
+      font-weight: 300;
+      color: rgba(0,0,0,0.04);
+      pointer-events: none;
+      user-select: none;
+      line-height: 1;
+    }
+    .wochenkarte-header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: end;
+      padding-bottom: 1.5rem;
+      border-bottom: 3px solid var(--smoke);
+      margin-bottom: 0;
+    }
+    .wk-main-title {
+      font-family: var(--ff-d);
+      font-size: clamp(2.5rem, 5.5vw, 5.5rem);
+      font-weight: 300;
+      letter-spacing: 0.06em;
+      color: var(--smoke);
+      line-height: 1;
+    }
+    .wk-main-title strong { font-weight: 700; }
+    .wk-period {
+      text-align: right;
+      font-family: var(--ff-l);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--stone);
+      padding-bottom: 0.4rem;
+    }
+    .wk-period strong {
+      display: block;
+      font-family: var(--ff-d);
+      font-size: 2rem;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      color: var(--smoke);
+    }
+    .wochenkarte-list { list-style: none; }
+    .wk-item {
+      display: grid;
+      grid-template-columns: 3rem 1fr auto auto;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 1.4rem 0;
+      border-bottom: 1px solid var(--border);
+      transition: padding-left 0.25s;
+      cursor: default;
+    }
+    .wk-item:hover { padding-left: 0.75rem; }
+    .wk-item:hover .wk-pname { color: var(--crimson); }
+    .wk-idx {
+      font-family: var(--ff-d);
+      font-size: 1.8rem;
+      font-weight: 300;
+      color: var(--border);
+      line-height: 1;
+      text-align: center;
+    }
+    .wk-pname {
+      font-family: var(--ff-d);
+      font-size: clamp(1.25rem, 2.5vw, 1.9rem);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--smoke);
+      transition: color 0.2s;
+      line-height: 1.1;
+    }
+    .wk-cut {
+      display: block;
+      font-family: var(--ff-l);
+      font-size: 0.63rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--stone);
+      margin-top: 0.15rem;
+    }
+    .wk-origin {
+      font-family: var(--ff-l);
+      font-size: 0.63rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--crimson);
+      text-align: right;
+      line-height: 1.6;
+    }
+    .wk-price {
+      font-family: var(--ff-d);
+      font-size: clamp(1.4rem, 3vw, 2.2rem);
+      font-weight: 300;
+      color: var(--smoke);
+      letter-spacing: 0.04em;
+      text-align: right;
+      white-space: nowrap;
+    }
+    .wk-footer {
+      margin-top: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .wk-foot-note {
+      font-family: var(--ff-l);
+      font-size: 0.63rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--stone);
+    }
+    .wk-foot-cta {
+      font-family: var(--ff-l);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--crimson);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .wk-foot-cta:hover { color: var(--ember); }
+
+    /* ── CATERING ── */
+    .catering-section {
+      position: relative;
+      min-height: 72vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      background: var(--smoke);
+    }
+    .catering-bg {
+      position: absolute;
+      inset: 0;
+    }
+    .catering-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 8s ease-out;
+    }
+    .catering-section:hover .catering-bg img { transform: scale(1.04); }
+    .catering-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(105deg, rgba(20,10,8,0.92) 40%, rgba(20,10,8,0.55) 100%);
+    }
+    .catering-content {
+      position: relative;
+      z-index: 2;
+      padding: clamp(4rem, 8vw, 7rem) clamp(1.5rem, 4vw, 3.5rem);
+      width: 100%;
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 5rem;
       align-items: center;
     }
-
-    .regional-text { }
-
-    .regional-eyebrow {
-      font-size: 0.65rem;
-      font-weight: 600;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--red);
-      margin-bottom: 0.75rem;
-    }
-
-    .regional-title {
-      font-family: var(--ff-disp);
-      font-size: clamp(1.8rem, 3.5vw, 3rem);
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      color: #fff;
-      line-height: 1;
-      margin-bottom: 1.5rem;
-    }
-
-    .regional-title .accent { color: var(--red); }
-
-    .regional-body {
-      font-size: 0.875rem;
+    .catering-title {
+      font-family: var(--ff-d);
+      font-size: clamp(2.8rem, 5.5vw, 6rem);
       font-weight: 300;
-      color: rgba(255,255,255,0.5);
-      line-height: 1.85;
+      font-style: italic;
+      color: #fff;
+      line-height: 0.92;
+      letter-spacing: 0.03em;
+      margin-bottom: 1.75rem;
+    }
+    .catering-title strong {
+      font-style: normal;
+      font-weight: 700;
+      display: block;
+      color: var(--crimson);
+    }
+    .catering-desc {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.46);
+      line-height: 1.88;
+      margin-bottom: 2rem;
+      max-width: 380px;
+    }
+    .catering-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
       margin-bottom: 2.5rem;
     }
-
-    .supplier-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
+    .catering-tag {
+      font-family: var(--ff-l);
+      font-size: 0.63rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 0.42rem 0.9rem;
     }
-
-    .supplier-row {
+    .catering-facts {
       display: grid;
-      grid-template-columns: 1fr auto;
-      align-items: center;
-      padding: 1rem 0;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
+      grid-template-columns: 1fr 1fr;
       gap: 1.5rem;
-      transition: padding-left 0.2s, border-color 0.2s;
     }
-    .supplier-row:last-child { border-bottom: none; }
-    .supplier-row:hover { padding-left: 0.5rem; border-color: rgba(192,57,43,0.3); }
-    .supplier-row:hover .supplier-name { color: var(--red); }
-
-    .supplier-name {
-      font-family: var(--ff-disp);
-      font-size: 0.95rem;
-      font-weight: 500;
-      letter-spacing: 0.06em;
+    .catering-fact {
+      border-left: 2px solid var(--crimson);
+      padding: 0.75rem 1.25rem;
+    }
+    .catering-fact-num {
+      font-family: var(--ff-d);
+      font-size: 2.8rem;
+      font-weight: 300;
       color: #fff;
-      transition: color 0.2s;
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+    .catering-fact-label {
+      font-family: var(--ff-l);
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.38);
+      line-height: 1.5;
     }
 
-    .supplier-type {
-      font-size: 0.65rem;
-      color: rgba(255,255,255,0.35);
+    /* ── KONTAKT ── */
+    .kontakt-section {
+      background: var(--dark);
+      padding: clamp(4rem, 8vw, 7rem) clamp(1.5rem, 4vw, 3.5rem);
+      border-top: 2px solid var(--crimson);
+    }
+    .kontakt-inner {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr 1fr;
+      gap: 3rem;
+    }
+    .kontakt-brand-name {
+      font-family: var(--ff-d);
+      font-size: clamp(1.5rem, 3vw, 2.5rem);
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: 0.08em;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .kontakt-brand-sub {
+      font-family: var(--ff-l);
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--crimson);
+      margin-bottom: 1.25rem;
+    }
+    .kontakt-tagline {
+      font-family: var(--ff-d);
+      font-style: italic;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.32);
+      line-height: 1.75;
+    }
+    .kontakt-col-label {
+      font-family: var(--ff-l);
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--crimson);
+      margin-bottom: 1.25rem;
+    }
+    .k-line {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.45);
+      line-height: 2;
       display: block;
     }
-
-    .supplier-dist {
-      font-family: var(--ff-disp);
+    .k-line strong { color: rgba(255,255,255,0.75); font-weight: 500; }
+    .oeff-table { width: 100%; }
+    .oeff-row {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 0.75rem;
+      padding: 0.42rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      align-items: center;
+    }
+    .oeff-row:last-child { border-bottom: none; }
+    .oeff-tag {
+      font-family: var(--ff-l);
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.32);
+    }
+    .oeff-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--crimson);
+    }
+    .oeff-time {
       font-size: 0.8rem;
-      color: rgba(255,255,255,0.3);
-      letter-spacing: 0.06em;
+      color: rgba(255,255,255,0.55);
+      text-align: right;
     }
-
-    /* Wochenkarte */
-    .wochenkarte {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 4px;
-      padding: 2.5rem;
+    .kontakt-phone {
+      font-family: var(--ff-d);
+      font-size: clamp(1.6rem, 3.5vw, 2.8rem);
+      font-weight: 300;
+      color: #fff;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      transition: color 0.2s;
+      display: block;
+      margin-bottom: 0.75rem;
     }
+    .kontakt-phone:hover { color: var(--crimson); }
+    .kontakt-email {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.38);
+      text-decoration: none;
+      transition: color 0.2s;
+      display: block;
+      margin-bottom: 1.75rem;
+    }
+    .kontakt-email:hover { color: rgba(255,255,255,0.65); }
 
-    .wochenkarte-title {
-      font-family: var(--ff-disp);
-      font-size: 1rem;
+    /* ── FOOTER BAR ── */
+    .footer-bar {
+      background: var(--smoke);
+      padding: 1.25rem clamp(1.5rem, 4vw, 3.5rem);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255,255,255,0.04);
+    }
+    .footer-copy, .footer-cert {
+      font-family: var(--ff-l);
+      font-size: 0.6rem;
       font-weight: 600;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.5);
-      margin-bottom: 0.25rem;
+      color: rgba(255,255,255,0.18);
     }
 
-    .wochenkarte-sub {
-      font-size: 0.7rem;
-      color: var(--red);
-      margin-bottom: 2rem;
-    }
-
-    .wochenkarte-item {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 1rem;
-      padding: 0.75rem 0;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-    }
-    .wochenkarte-item:last-child { border-bottom: none; }
-
-    .wk-name {
-      font-family: var(--ff-disp);
-      font-size: 0.95rem;
-      font-weight: 500;
-      letter-spacing: 0.04em;
-      color: #fff;
-    }
-
-    .wk-cut {
-      font-size: 0.72rem;
-      color: rgba(255,255,255,0.35);
-    }
-
-    .wk-price {
-      font-family: var(--ff-disp);
-      font-size: 0.95rem;
-      color: var(--red);
-      flex-shrink: 0;
-    }
-
-    /* ── ANIMATIONS ── */
-    /* Red rule animates in on load */
-    @keyframes ruleSlide {
-      from { transform: scaleX(0); transform-origin: left; }
-      to   { transform: scaleX(1); transform-origin: left; }
-    }
-
-    /* Product items lift on hover */
-    .produkt-item { transition: background 0.2s, transform 0.2s; }
-    .produkt-item:hover { transform: translateY(-3px); }
-
-    /* Trust items: number glows red on hover */
-    @keyframes numGlow {
-      0%, 100% { text-shadow: none; }
-      50%       { text-shadow: 0 0 16px rgba(192,57,43,0.6); }
-    }
-    .trust-item:hover .trust-num { animation: numGlow 1.2s ease-in-out infinite; }
-
-    /* Wochenkarte items slide right on hover */
-    .wochenkarte-item { transition: padding-left 0.2s; cursor: default; }
-    .wochenkarte-item:hover { padding-left: 0.5rem; }
-    .wochenkarte-item:hover .wk-name { color: var(--red); }
-    .wk-name { transition: color 0.2s; }
-
-    /* Supplier rows already have transition — add red glow on hover */
-    .supplier-row:hover .supplier-name { text-shadow: 0 0 12px rgba(192,57,43,0.4); }
-
-    /* Hero top rule continuous slow pulse after animation */
-    .hero::before {
-      animation: ruleExpand 0.8s ease-out both, redRulePulse 4s ease-in-out 0.8s infinite;
-    }
-    @keyframes redRulePulse {
-      0%, 100% { opacity: 1; }
-      50%       { opacity: 0.6; }
-    }
-
-    /* ── FOOTER ── */
-    footer {
-      background: var(--dark);
-      border-top: 3px solid var(--red);
-      padding: 2rem 3rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .footer-logo {
-      font-family: var(--ff-disp);
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: #fff;
-      letter-spacing: 0.06em;
-    }
-
-    .footer-info {
-      font-size: 0.72rem;
-      color: rgba(255,255,255,0.35);
-    }
-
-    .footer-tag {
-      font-size: 0.7rem;
-      color: rgba(255,255,255,0.25);
-      font-style: italic;
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
     }
   </style>
 </head>
 <body>
 
+  <!-- NAV -->
   <nav>
-    <a class="nav-logo" href="#">
-      <span>KESSLER</span> METZGEREI
-      <span class="nav-year">seit 1952</span>
+    <a class="nav-brand" href="#">
+      <span class="nav-brand-name">KESSLER</span>
+      <span class="nav-brand-sub">Metzgerei · Konz · Seit 1952</span>
     </a>
     <ul class="nav-links">
       <li><a href="#">Sortiment</a></li>
+      <li><a href="#">Geschichte</a></li>
       <li><a href="#">Wochenkarte</a></li>
-      <li><a href="#">Über uns</a></li>
-      <li><a href="#">Lieferanten</a></li>
+      <li><a href="#">Catering</a></li>
       <li><a class="nav-tel" href="#">06501 / 234 56</a></li>
     </ul>
   </nav>
@@ -570,248 +1051,407 @@ export const prerender = true;
   <!-- HERO -->
   <section class="hero">
     <div class="hero-left">
-      <p class="hero-since">Konz · Seit 1952 · Familie Kessler</p>
+      <div class="hero-year-bg" aria-hidden="true">1952</div>
+      <p class="hero-eyebrow">Konz bei Trier · Drei Generationen · Seit 1952</p>
       <h1 class="hero-headline">
-        AUS DER<br>
-        <span class="line-red">REGION.</span><br>
-        <span class="line-light">FÜR DIE</span><br>
-        <span class="line-red">REGION.</span>
+        Kessler
+        <em>Metzgerhandwerk</em>
       </h1>
-      <p class="hero-desc">Drei Generationen Metzgerhandwerk. Wir kennen unsere Lieferanten persönlich — ihre Höfe, ihre Tiere, ihre Arbeit. Das schmeckt man.</p>
+      <p class="hero-desc">
+        Was wir verkaufen, kennen wir von Anfang an — den Hof, das Tier, den Weg.
+        Handwerk ohne Kompromisse, Fleisch mit Geschichte.
+      </p>
       <div class="hero-ctas">
-        <a class="btn-red" href="#">Zur Wochenkarte</a>
-        <a class="btn-ghost" href="#">Unsere Lieferanten</a>
+        <a class="btn-primary" href="#">Zur Wochenkarte</a>
+        <a class="btn-ghost-light" href="#">Unsere Lieferanten ↗</a>
       </div>
     </div>
-
     <div class="hero-right">
-      <div class="trust-item">
-        <span class="trust-num">72</span>
-        <div class="trust-text">
-          <div class="trust-title">JAHRE HANDWERK</div>
-          <p class="trust-desc">Seit 1952 in Konz. Drei Generationen, eine Philosophie: Qualität aus der Region.</p>
-        </div>
-      </div>
-      <div class="trust-item">
-        <span class="trust-num">8</span>
-        <div class="trust-text">
-          <div class="trust-title">FESTE LIEFERANTEN</div>
-          <p class="trust-desc">Alle Tiere aus einem Umkreis von 80 km. Kein Anonymus. Wir kennen die Höfe.</p>
-        </div>
-      </div>
-      <div class="trust-item">
-        <span class="trust-num">40+</span>
-        <div class="trust-text">
-          <div class="trust-title">EIGENE WÜRSTE</div>
-          <p class="trust-desc">Hausrezepte, die seit den 1950ern geführt werden. Kein industrielles Füllmittel.</p>
-        </div>
-      </div>
+      <img
+        src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=900&h=1000&q=85"
+        alt="Handwerklich gereiftes Rindersteak – Metzgerei Kessler"
+        loading="eager"
+      />
     </div>
   </section>
 
-  <!-- PRODUKTE -->
-  <section class="produkte-section" style="max-width:1600px;margin-left:auto;margin-right:auto;">
-    <div class="section-header">
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stat-item" data-reveal>
+      <div class="stat-num">72</div>
+      <span class="stat-label">Jahre Handwerk</span>
+      <p class="stat-sub">Seit 1952 in Konz · Drei Generationen</p>
+    </div>
+    <div class="stat-item" data-reveal data-delay="2">
+      <div class="stat-num">8</div>
+      <span class="stat-label">Feste Lieferanten</span>
+      <p class="stat-sub">Alle Höfe im 80-km-Radius</p>
+    </div>
+    <div class="stat-item" data-reveal data-delay="4">
+      <div class="stat-num">40+</div>
+      <span class="stat-label">Eigene Würste</span>
+      <p class="stat-sub">Hausrezepte seit den 1950ern</p>
+    </div>
+  </div>
+
+  <!-- SORTIMENT -->
+  <section class="sortiment-section">
+    <div class="sortiment-header" data-reveal>
       <div>
-        <p class="section-eyebrow">Unser Sortiment</p>
-        <h2 class="section-title">WAS WIR FÜHREN</h2>
+        <div class="eyebrow">Unser Sortiment</div>
+        <h2 class="sortiment-title">Was wir führen.</h2>
       </div>
-      <span class="section-note">Täglich frisch · Nur solange Vorrat reicht</span>
+      <span class="sortiment-note">Täglich frisch · Nur solange Vorrat reicht</span>
     </div>
 
-    <div class="produkte-grid">
-      <div class="produkt-item">
-        <div class="img-wrap" style="position:relative;overflow:hidden;height:160px;border-radius:0;margin-bottom:1rem;">
-          <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=400&h=300&q=80"
-               alt="Ribeye Steak trocken gereift" loading="lazy"
-               style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.55s ease;" />
-          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.4) 0%,transparent 55%);pointer-events:none;"></div>
+    <div class="sortiment-layout" data-reveal data-delay="1">
+      <!-- Feature photo left -->
+      <div class="sort-feature">
+        <img
+          src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=700&h=700&q=80"
+          alt="Dry Aged Ribeye – Moselbauernhof Greif"
+          loading="lazy"
+        />
+        <div class="sort-feature-info">
+          <div class="sort-feature-cat">Rind · Highlight</div>
+          <div class="sort-feature-name">Dry Aged<br>Ribeye</div>
+          <div class="sort-feature-origin">Moselbauernhof Greif · 28 Tage gereift</div>
         </div>
-        <div class="produkt-cat">Rind</div>
-        <div class="produkt-name">Ribeye & Rumpsteak</div>
-        <p class="produkt-desc">Trocken gereift, mind. 28 Tage. Intensives Aroma, butterweiches Fett.</p>
-        <span class="produkt-origin">Moselbauernhof Greif</span>
       </div>
 
-      <div class="produkt-item">
-        <div class="img-wrap" style="position:relative;overflow:hidden;height:160px;border-radius:0;margin-bottom:1rem;">
-          <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=400&h=300&q=80"
-               alt="Hausgemachter Schinken geräuchert" loading="lazy"
-               style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.55s ease;" />
-          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.4) 0%,transparent 55%);pointer-events:none;"></div>
+      <!-- 2×2 right grid -->
+      <div class="sort-small-grid">
+        <div class="sort-small-item">
+          <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=400&h=320&q=80" alt="Hausgemachter Schinken" loading="lazy" />
+          <div class="sort-small-info">
+            <div class="sort-small-cat">Schwein</div>
+            <div class="sort-small-name">Hausschinken</div>
+            <div class="sort-small-origin">Hof Stemmler, Eifel</div>
+          </div>
         </div>
-        <div class="produkt-cat">Schwein</div>
-        <div class="produkt-name">Hausgemachter Schinken</div>
-        <p class="produkt-desc">Geräuchert und gereift nach Familienrezept. Kein Nitritpökelsalz.</p>
-        <span class="produkt-origin">Hof Stemmler, Eifel</span>
+        <div class="sort-small-item">
+          <img src="https://images.unsplash.com/photo-1559581458-67c84d000717?auto=format&fit=crop&w=400&h=320&q=80" alt="Hausmacher Bratwurst" loading="lazy" />
+          <div class="sort-small-info">
+            <div class="sort-small-cat">Wurst</div>
+            <div class="sort-small-name">Bratwurst</div>
+            <div class="sort-small-origin">Eigene Herstellung</div>
+          </div>
+        </div>
+        <div class="sort-small-item">
+          <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=400&h=320&q=80" alt="Lammkeule Weidehaltung" loading="lazy" />
+          <div class="sort-small-info">
+            <div class="sort-small-cat">Lamm</div>
+            <div class="sort-small-name">Lammkeule</div>
+            <div class="sort-small-origin">Schäferei Nilles</div>
+          </div>
+        </div>
+        <div class="sort-small-item">
+          <img src="https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=400&h=320&q=80" alt="Freilandhähnchen" loading="lazy" />
+          <div class="sort-small-info">
+            <div class="sort-small-cat">Geflügel</div>
+            <div class="sort-small-name">Hähnchen</div>
+            <div class="sort-small-origin">Geflügelhof Weinbach</div>
+          </div>
+        </div>
       </div>
+    </div>
 
-      <div class="produkt-item">
-        <div class="img-wrap" style="position:relative;overflow:hidden;height:160px;border-radius:0;margin-bottom:1rem;">
-          <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=400&h=300&q=80"
-               alt="Lammkeule vom Weidelamm" loading="lazy"
-               style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.55s ease;" />
-          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.4) 0%,transparent 55%);pointer-events:none;"></div>
-        </div>
-        <div class="produkt-cat">Lamm</div>
-        <div class="produkt-name">Lammkeule & Koteletts</div>
-        <p class="produkt-desc">Weidehaltung. Frühjahrslämmer, saisonal verfügbar ab März.</p>
-        <span class="produkt-origin">Schäferei Nilles, Hunsrück</span>
+    <!-- Text cards row -->
+    <div class="sortiment-cards" data-reveal data-delay="2">
+      <div class="sort-card">
+        <div class="sort-card-num">01</div>
+        <div class="sort-card-name">GRILLFLEISCH</div>
+        <p class="sort-card-desc">Fertig mariniert oder pur. Hausmarinaden wechseln saisonal.</p>
+        <div class="sort-card-tag">Eigene Rezepturen</div>
       </div>
-
-      <div class="produkt-item">
-        <div class="img-wrap" style="position:relative;overflow:hidden;height:160px;border-radius:0;margin-bottom:1rem;">
-          <img src="https://images.unsplash.com/photo-1559581458-67c84d000717?auto=format&fit=crop&w=400&h=300&q=80"
-               alt="Hausgemachte Bratwurst und Leberwurst" loading="lazy"
-               style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.55s ease;" />
-          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.4) 0%,transparent 55%);pointer-events:none;"></div>
-        </div>
-        <div class="produkt-cat">Wurst</div>
-        <div class="produkt-name">Bratwurst & Leberwurst</div>
-        <p class="produkt-desc">Über 40 Sorten. Hausrezepte seit den 1950ern. Täglich frisch.</p>
-        <span class="produkt-origin">Eigene Produktion</span>
+      <div class="sort-card">
+        <div class="sort-card-num">02</div>
+        <div class="sort-card-name">LEBERWURST</div>
+        <p class="sort-card-desc">Über 40 Sorten. Feine und grobe Hausrezepte seit den 1950ern.</p>
+        <div class="sort-card-tag">Täglich frisch</div>
       </div>
-
-      <div class="produkt-item">
-        <div class="img-wrap" style="position:relative;overflow:hidden;height:160px;border-radius:0;margin-bottom:1rem;">
-          <img src="https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=400&h=300&q=80"
-               alt="Freilandhähnchen vom Bauernhof" loading="lazy"
-               style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.55s ease;" />
-          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.4) 0%,transparent 55%);pointer-events:none;"></div>
-        </div>
-        <div class="produkt-cat">Geflügel</div>
-        <div class="produkt-name">Hähnchen & Pute</div>
-        <p class="produkt-desc">Freilandhaltung, kein Schnabelkürzung. Whole bird oder zerteilt auf Wunsch.</p>
-        <span class="produkt-origin">Geflügelhof Weinbach</span>
+      <div class="sort-card">
+        <div class="sort-card-num">03</div>
+        <div class="sort-card-name">PRÄSENTKÖRBE</div>
+        <p class="sort-card-desc">Zusammenstellbar: Wurst, Schinken, regionale Begleiter auf Bestellung.</p>
+        <div class="sort-card-tag">Auf Bestellung</div>
       </div>
-
-      <div class="produkt-item">
-        <div class="img-wrap" style="position:relative;overflow:hidden;height:160px;border-radius:0;margin-bottom:1rem;">
-          <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=400&h=300&q=80"
-               alt="Mariniertes Grillfleisch" loading="lazy"
-               style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.55s ease;" />
-          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.4) 0%,transparent 55%);pointer-events:none;"></div>
-        </div>
-        <div class="produkt-cat">Spezialitäten</div>
-        <div class="produkt-name">Grillfleisch & Marinaden</div>
-        <p class="produkt-desc">Fertig mariniert oder pur — nach Kundenwunsch. Hausmarinaden wechseln saisonal.</p>
-        <span class="produkt-origin">Eigene Rezepturen</span>
-      </div>
-
-      <div class="produkt-item">
-        <div class="img-wrap" style="position:relative;overflow:hidden;height:160px;border-radius:0;margin-bottom:1rem;">
-          <img src="https://images.unsplash.com/photo-1606216794074-735e91aa2c92?auto=format&fit=crop&w=400&h=300&q=80"
-               alt="Regionale Käse und Beilagen" loading="lazy"
-               style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.55s ease;" />
-          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.4) 0%,transparent 55%);pointer-events:none;"></div>
-        </div>
-        <div class="produkt-cat">Begleitung</div>
-        <div class="produkt-name">Käse & Beilagen</div>
-        <p class="produkt-desc">Regionale Käserei Saartal. Mostrich, Sauerkraut, Kartoffelsalat nach Hausrezept.</p>
-        <span class="produkt-origin">Käserei Saartal</span>
-      </div>
-
-      <div class="produkt-item">
-        <div class="img-wrap" style="position:relative;overflow:hidden;height:160px;border-radius:0;margin-bottom:1rem;">
-          <img src="https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?auto=format&fit=crop&w=400&h=300&q=80"
-               alt="Präsentkorb mit regionalen Spezialitäten" loading="lazy"
-               style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.55s ease;" />
-          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.4) 0%,transparent 55%);pointer-events:none;"></div>
-        </div>
-        <div class="produkt-cat">Geschenke</div>
-        <div class="produkt-name">Präsentkörbe</div>
-        <p class="produkt-desc">Zusammenstellbar nach Wunsch — Wurst, Schinken, Käse und regionale Begleiter.</p>
-        <span class="produkt-origin">Auf Bestellung</span>
+      <div class="sort-card">
+        <div class="sort-card-num">04</div>
+        <div class="sort-card-name">BEILAGEN</div>
+        <p class="sort-card-desc">Regionale Käse, Mostrich, Sauerkraut und Kartoffelsalat nach Hausrezept.</p>
+        <div class="sort-card-tag">Käserei Saartal</div>
       </div>
     </div>
   </section>
 
-  <!-- REGIONAL -->
-  <section class="regional-section">
-    <div class="regional-text">
-      <p class="regional-eyebrow">Herkunft & Handwerk</p>
-      <h2 class="regional-title">WIR KENNEN<br><span class="accent">JEDEN HOF.</span></h2>
-      <p class="regional-body">Bei Kessler kommt nichts anonym aus dem Kühlwagen. Jedes Tier hat eine Herkunft, die wir kennen und benennen können. Das ist keine Marketing-Geschichte — das ist Handwerk.</p>
+  <!-- GESCHICHTE -->
+  <section class="geschichte-section">
+    <div class="geschichte-bg-year" aria-hidden="true">1952</div>
+    <div class="geschichte-inner">
+      <div data-reveal>
+        <div class="eyebrow" style="color: rgba(168,34,29,0.9);">Geschichte & Handwerk</div>
+        <h2 class="geschichte-title">
+          Drei<br>Generationen.<br>
+          <span>Eine Philosophie.</span>
+        </h2>
+        <p class="geschichte-body">
+          1952 eröffnete Gottfried Kessler seine erste Metzgerei in der Römerstraße.
+          Heute führt die Familie den Betrieb in dritter Generation — mit denselben
+          Lieferanten, denselben Rezepten und demselben Anspruch: Nur was wir kennen,
+          verkaufen wir.
+        </p>
 
-      <div class="supplier-list">
-        <div class="supplier-row">
-          <div>
-            <span class="supplier-name">Moselbauernhof Greif</span>
-            <span class="supplier-type">Rind · Extensive Weidehaltung</span>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="tl-year">1952</div>
+            <div>
+              <div class="tl-title">Gründung</div>
+              <div class="tl-desc">Gottfried Kessler eröffnet die Metzgerei in der Römerstraße. Drei Mitarbeiter, ein Ziel.</div>
+            </div>
           </div>
-          <span class="supplier-dist">34 km</span>
+          <div class="timeline-item">
+            <div class="tl-year">1978</div>
+            <div>
+              <div class="tl-title">Erweiterung</div>
+              <div class="tl-desc">Sohn Werner übernimmt. Eigene Räucherkammer und erste feste Höfe im Umkreis.</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="tl-year">2003</div>
+            <div>
+              <div class="tl-title">Dritte Generation</div>
+              <div class="tl-desc">Thomas Kessler führt fort. Dry-Aging-Schrank und direkter Hofkontakt werden Standard.</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="tl-year">2024</div>
+            <div>
+              <div class="tl-title">Heute</div>
+              <div class="tl-desc">8 feste Lieferanten, 40+ Eigenwurstsorten. Kein Kompromiss bei Herkunft und Qualität.</div>
+            </div>
+          </div>
         </div>
-        <div class="supplier-row">
-          <div>
-            <span class="supplier-name">Hof Stemmler</span>
-            <span class="supplier-type">Schwein · Freilandhaltung, Eifel</span>
+
+        <blockquote class="pullquote">
+          <p class="pullquote-text">„Wir kennen den Hof, das Tier, den Weg. Das ist keine Marketing-Geschichte — das ist Handwerk."</p>
+          <footer class="pullquote-attr">Thomas Kessler · Inhaber, 3. Generation</footer>
+        </blockquote>
+      </div>
+
+      <div data-reveal data-delay="2">
+        <div class="geschichte-photos">
+          <div class="geschichte-photo">
+            <img
+              src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=500&h=600&q=80"
+              alt="Handwerk in der Küche"
+              loading="lazy"
+            />
           </div>
-          <span class="supplier-dist">48 km</span>
+          <div class="geschichte-photo">
+            <img
+              src="https://images.unsplash.com/photo-1606216794074-735e91aa2c92?auto=format&fit=crop&w=500&h=600&q=80"
+              alt="Rustikale Metzgereiatmosphäre"
+              loading="lazy"
+            />
+          </div>
         </div>
-        <div class="supplier-row">
-          <div>
-            <span class="supplier-name">Schäferei Nilles</span>
-            <span class="supplier-type">Lamm · Wanderschäferei, Hunsrück</span>
-          </div>
-          <span class="supplier-dist">61 km</span>
-        </div>
-        <div class="supplier-row">
-          <div>
-            <span class="supplier-name">Geflügelhof Weinbach</span>
-            <span class="supplier-type">Hähnchen & Pute · Freiland</span>
-          </div>
-          <span class="supplier-dist">28 km</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- WOCHENKARTE -->
+  <section class="wochenkarte-section">
+    <div data-reveal>
+      <div class="eyebrow">Angebote der Woche</div>
+      <div class="wochenkarte-header">
+        <h2 class="wk-main-title">Wochen<strong>karte</strong></h2>
+        <div class="wk-period">
+          Kalenderwoche
+          <strong>12</strong>
+          17. — 22. März 2025
         </div>
       </div>
     </div>
 
-    <div class="wochenkarte">
-      <div class="wochenkarte-title">Wochenkarte</div>
-      <div class="wochenkarte-sub">KW 12 · 17.–22. März 2025</div>
-
-      <div class="wochenkarte-item">
+    <ul class="wochenkarte-list" data-reveal data-delay="1">
+      <li class="wk-item">
+        <span class="wk-idx">01</span>
         <div>
-          <span class="wk-name">T-Bone Steak</span>
-          <span class="wk-cut" style="display:block">Rind · 600–700g · 28 Tage dry aged</span>
+          <div class="wk-pname">T-Bone Steak</div>
+          <span class="wk-cut">Rind · 600–700 g · 28 Tage dry aged</span>
         </div>
-        <span class="wk-price">39,90/kg</span>
-      </div>
-      <div class="wochenkarte-item">
+        <span class="wk-origin">Moselbauernhof<br>Greif</span>
+        <span class="wk-price">39,90 /kg</span>
+      </li>
+      <li class="wk-item">
+        <span class="wk-idx">02</span>
         <div>
-          <span class="wk-name">Schweinshaxe</span>
-          <span class="wk-cut" style="display:block">Schwein · ca. 1,2 kg · Hof Stemmler</span>
+          <div class="wk-pname">Schweinshaxe</div>
+          <span class="wk-cut">Schwein · ca. 1,2 kg · Hof Stemmler</span>
         </div>
-        <span class="wk-price">8,90/kg</span>
-      </div>
-      <div class="wochenkarte-item">
+        <span class="wk-origin">Hof Stemmler<br>Eifel</span>
+        <span class="wk-price">8,90 /kg</span>
+      </li>
+      <li class="wk-item">
+        <span class="wk-idx">03</span>
         <div>
-          <span class="wk-name">Lammrücken</span>
-          <span class="wk-cut" style="display:block">Lamm · Saisonal · Schäferei Nilles</span>
+          <div class="wk-pname">Lammrücken</div>
+          <span class="wk-cut">Lamm · Saisonal · Schäferei Nilles</span>
         </div>
-        <span class="wk-price">28,50/kg</span>
-      </div>
-      <div class="wochenkarte-item">
+        <span class="wk-origin">Schäferei Nilles<br>Hunsrück</span>
+        <span class="wk-price">28,50 /kg</span>
+      </li>
+      <li class="wk-item">
+        <span class="wk-idx">04</span>
         <div>
-          <span class="wk-name">Grillfleischpaket</span>
-          <span class="wk-cut" style="display:block">Gemischt · 1 kg · vormariniert</span>
+          <div class="wk-pname">Grillfleischpaket</div>
+          <span class="wk-cut">Gemischt · 1 kg · vormariniert</span>
         </div>
+        <span class="wk-origin">Eigene<br>Rezeptur</span>
         <span class="wk-price">16,90 fix</span>
-      </div>
-      <div class="wochenkarte-item">
+      </li>
+      <li class="wk-item">
+        <span class="wk-idx">05</span>
         <div>
-          <span class="wk-name">Bratwurst 6er</span>
-          <span class="wk-cut" style="display:block">Eigene Herstellung · Hausrezept</span>
+          <div class="wk-pname">Bratwurst 6er-Pack</div>
+          <span class="wk-cut">Eigene Herstellung · Hausrezept seit 1952</span>
         </div>
+        <span class="wk-origin">Kessler<br>Eigenrezept</span>
         <span class="wk-price">6,50 fix</span>
+      </li>
+    </ul>
+
+    <div class="wk-footer" data-reveal data-delay="2">
+      <span class="wk-foot-note">* Alle Preise inkl. MwSt. · Nur solange Vorrat reicht</span>
+      <a class="wk-foot-cta" href="#">Komplettes Sortiment ansehen →</a>
+    </div>
+  </section>
+
+  <!-- CATERING -->
+  <section class="catering-section">
+    <div class="catering-bg">
+      <img
+        src="https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?auto=format&fit=crop&w=1600&h=900&q=80"
+        alt="Catering und Events mit Metzgerei Kessler"
+        loading="lazy"
+      />
+    </div>
+    <div class="catering-content">
+      <div data-reveal>
+        <div class="eyebrow" style="color: var(--crimson);">Catering & Events</div>
+        <h2 class="catering-title">
+          Für Ihren<br>
+          <strong>besonderen Anlass.</strong>
+        </h2>
+        <p class="catering-desc">
+          Ob Betriebsfeier, Hochzeit oder Familienfest — wir liefern frische Fleisch-
+          und Wurstplatten, mariniertes Grillgut und alles, was eine gute Tafel braucht.
+          Individuelle Zusammenstellung. Persönliche Absprache.
+        </p>
+        <div class="catering-tags">
+          <span class="catering-tag">Betriebsfeiern</span>
+          <span class="catering-tag">Hochzeiten</span>
+          <span class="catering-tag">Familienfeste</span>
+          <span class="catering-tag">Grillevents</span>
+          <span class="catering-tag">Präsentplatten</span>
+        </div>
+        <a class="btn-primary" href="#">Jetzt anfragen</a>
+      </div>
+      <div class="catering-facts" data-reveal data-delay="2">
+        <div class="catering-fact">
+          <div class="catering-fact-num">50+</div>
+          <div class="catering-fact-label">Veranstaltungen<br>pro Jahr</div>
+        </div>
+        <div class="catering-fact">
+          <div class="catering-fact-num">500</div>
+          <div class="catering-fact-label">Personen<br>Kapazität</div>
+        </div>
+        <div class="catering-fact">
+          <div class="catering-fact-num">72h</div>
+          <div class="catering-fact-label">Vorlauf<br>genügt</div>
+        </div>
+        <div class="catering-fact">
+          <div class="catering-fact-num">100%</div>
+          <div class="catering-fact-label">Regionale<br>Herkunft</div>
+        </div>
       </div>
     </div>
   </section>
 
-  <footer>
-    <span class="footer-logo">METZGEREI KESSLER</span>
-    <span class="footer-info">Römerstraße 5 · 54329 Konz · 06501 / 234 56 · Mo–Fr 7–18 Uhr · Sa 7–13 Uhr</span>
-    <span class="footer-tag">Aus der Region. Für die Region.</span>
-  </footer>
+  <!-- KONTAKT -->
+  <section class="kontakt-section">
+    <div class="kontakt-inner">
+      <div data-reveal>
+        <div class="kontakt-brand-name">METZGEREI<br>KESSLER</div>
+        <div class="kontakt-brand-sub">Konz bei Trier · Seit 1952</div>
+        <p class="kontakt-tagline">
+          „Handwerk braucht keine<br>
+          Erklärung — nur Qualität."
+        </p>
+      </div>
+
+      <div data-reveal data-delay="1">
+        <div class="kontakt-col-label">Adresse</div>
+        <span class="k-line"><strong>Römerstraße 5</strong></span>
+        <span class="k-line">54329 Konz</span>
+        <span class="k-line">bei Trier, Rheinland-Pfalz</span>
+        <span class="k-line" style="margin-top:0.5rem;"><strong>06501 / 234 56</strong></span>
+        <span class="k-line">info@metzgerei-kessler.de</span>
+      </div>
+
+      <div data-reveal data-delay="2">
+        <div class="kontakt-col-label">Öffnungszeiten</div>
+        <div class="oeff-table">
+          <div class="oeff-row">
+            <span class="oeff-tag">Mo – Fr</span>
+            <span class="oeff-dot"></span>
+            <span class="oeff-time">07:00 – 18:00</span>
+          </div>
+          <div class="oeff-row">
+            <span class="oeff-tag">Samstag</span>
+            <span class="oeff-dot"></span>
+            <span class="oeff-time">07:00 – 13:00</span>
+          </div>
+          <div class="oeff-row">
+            <span class="oeff-tag">Sonntag</span>
+            <span class="oeff-dot" style="background: rgba(168,34,29,0.3);"></span>
+            <span class="oeff-time" style="color:rgba(255,255,255,0.28);">Geschlossen</span>
+          </div>
+          <div class="oeff-row">
+            <span class="oeff-tag" style="color:rgba(168,34,29,0.6);">Feiertage</span>
+            <span class="oeff-dot" style="background: rgba(168,34,29,0.4);"></span>
+            <span class="oeff-time" style="color:rgba(255,255,255,0.28);">Nach Ankündigung</span>
+          </div>
+        </div>
+      </div>
+
+      <div data-reveal data-delay="3">
+        <div class="kontakt-col-label">Direktkontakt</div>
+        <a class="kontakt-phone" href="tel:+496501234567">06501 / 234 56</a>
+        <a class="kontakt-email" href="mailto:info@metzgerei-kessler.de">info@metzgerei-kessler.de</a>
+        <a class="btn-primary" href="#">Catering anfragen</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer-bar">
+    <span class="footer-copy">© 2025 Metzgerei Kessler · Römerstraße 5 · 54329 Konz</span>
+    <span class="footer-cert">Zertifizierter Metzgermeisterbetrieb · IHK Trier</span>
+  </div>
+
+  <script>
+    // Reveal on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('[data-reveal]').forEach(el => observer.observe(el));
+  </script>
 
 </body>
 </html>
