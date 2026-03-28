@@ -7,71 +7,84 @@ export const prerender = true;
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
-  <title>Thalassa — Griechisches Restaurant & Meeresfrüchte | Trier</title>
+  <title>Casa Azul — Boutique Hotel & Restaurant | Trier</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { overflow-x: hidden; }
+    html { overflow-x: hidden; scroll-behavior: smooth; }
 
     :root {
-      --blue:   #1B4F9E;
-      --navy:   #0D2240;
-      --gold:   #E8A830;
-      --white:  #FFFFFF;
-      --bg:     #F5F8FF;
-      --muted:  rgba(13,34,64,0.45);
-      --rule:   rgba(27,79,158,0.1);
+      --azure:      #1A6FAB;
+      --azure-deep: #0D3F6E;
+      --terra:      #C4714A;
+      --terra-lt:   #E8A07E;
+      --sand:       #F5EFE6;
+      --limestone:  #FAF7F2;
+      --white:      #FFFFFF;
+      --ink:        #1A1510;
+      --ink-50:     rgba(26,21,16,0.5);
+      --ink-25:     rgba(26,21,16,0.25);
+      --ink-10:     rgba(26,21,16,0.1);
+      --sea-tint:   rgba(26,111,171,0.08);
     }
 
     body {
-      background: var(--bg);
-      color: var(--navy);
-      font-family: 'Source Sans 3', sans-serif;
-      min-height: 100vh;
+      background: var(--limestone);
+      color: var(--ink);
+      font-family: 'Jost', sans-serif;
       overflow-x: hidden;
     }
 
-    /* Subtle wave at top */
-    body::before {
+    /* ─── Grain texture overlay ─── */
+    body::after {
       content: '';
       position: fixed;
-      top: 0; left: 0; right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, var(--navy), var(--blue), var(--gold), var(--blue), var(--navy));
-      z-index: 200;
+      inset: 0;
       pointer-events: none;
+      z-index: 999;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-size: 160px 160px;
     }
 
+    /* ─── NAV ─── */
     nav {
       position: fixed;
-      top: 4px; left: 0; right: 0;
+      top: 0; left: 0; right: 0;
       z-index: 100;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 1.25rem 3.5rem;
-      background: rgba(245,248,255,0.97);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid var(--rule);
+      padding: 1.5rem 3.5rem;
+      mix-blend-mode: normal;
+    }
+    nav.scrolled {
+      background: rgba(250,247,242,0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--ink-10);
+      padding: 1rem 3.5rem;
     }
     .nav-logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 600;
-      font-size: 1.2rem;
-      letter-spacing: 0.1em;
-      color: var(--blue);
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.25rem;
+      letter-spacing: 0.03em;
+      color: var(--white);
+      text-decoration: none;
+      transition: color 0.3s;
     }
-    .nav-logo small {
+    nav.scrolled .nav-logo { color: var(--azure-deep); }
+    .nav-logo span {
       display: block;
-      font-family: 'Source Sans 3', sans-serif;
-      font-size: 0.48rem;
-      font-weight: 400;
-      letter-spacing: 0.25em;
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      font-size: 0.5rem;
+      letter-spacing: 0.3em;
       text-transform: uppercase;
-      color: var(--muted);
-      margin-top: -0.1rem;
+      opacity: 0.65;
+      margin-top: -2px;
     }
     .nav-links {
       display: flex;
@@ -81,694 +94,1149 @@ export const prerender = true;
     .nav-links a {
       font-size: 0.6rem;
       font-weight: 400;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: rgba(255,255,255,0.75);
       text-decoration: none;
       transition: color 0.2s;
     }
-    .nav-links a:hover { color: var(--blue); }
-    .nav-reserve {
-      font-size: 0.6rem;
+    nav.scrolled .nav-links a { color: var(--ink-50); }
+    .nav-links a:hover { color: var(--white); }
+    nav.scrolled .nav-links a:hover { color: var(--azure); }
+    .nav-book {
+      font-size: 0.57rem;
       font-weight: 500;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--white);
-      background: var(--blue);
-      padding: 0.65rem 1.5rem;
+      border: 1px solid rgba(255,255,255,0.5);
+      padding: 0.6rem 1.4rem;
       text-decoration: none;
-      border-radius: 3px;
-      transition: background 0.2s;
+      transition: all 0.25s;
     }
-    .nav-reserve:hover { background: var(--navy); }
+    .nav-book:hover {
+      background: var(--white);
+      color: var(--azure-deep);
+      border-color: var(--white);
+    }
+    nav.scrolled .nav-book {
+      color: var(--azure);
+      border-color: var(--azure);
+    }
+    nav.scrolled .nav-book:hover {
+      background: var(--azure);
+      color: var(--white);
+    }
 
+    /* ─── HERO ─── */
     .hero {
-      min-height: 100vh;
-      padding-top: 68px;
+      position: relative;
+      height: 100vh;
+      min-height: 700px;
+      display: flex;
+      align-items: flex-end;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+    .hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 40%;
+      transform: scale(1.04);
+      transition: transform 8s ease-out;
+    }
+    .hero-bg img.loaded { transform: scale(1); }
+    /* Gradient: bottom heavy for text legibility */
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to top, rgba(10,28,55,0.78) 0%, rgba(10,28,55,0.35) 45%, transparent 70%),
+        linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, transparent 30%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      padding: 0 3.5rem 5rem;
       display: grid;
       grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: flex-end;
     }
 
-    /* LEFT */
-    .hero-left {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 5rem 4rem 5rem 4.5rem;
-      gap: 2.5rem;
-      border-right: 1px solid var(--rule);
-    }
-
-    .eyebrow {
+    .hero-left {}
+    .hero-eyebrow {
       display: flex;
       align-items: center;
-      gap: 0.6rem;
-      font-size: 0.58rem;
+      gap: 0.75rem;
+      font-size: 0.55rem;
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--terra-lt);
+      margin-bottom: 1.25rem;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      width: 2rem;
+      height: 1px;
+      background: var(--terra-lt);
+    }
+    .hero-headline {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: clamp(3.5rem, 6vw, 6rem);
+      line-height: 1.0;
+      color: var(--white);
+      letter-spacing: -0.01em;
+    }
+    .hero-headline em {
+      display: block;
+      font-style: italic;
+      font-weight: 400;
+      color: rgba(255,255,255,0.7);
+      font-size: 0.75em;
+      line-height: 1.3;
+      margin-top: 0.1em;
+    }
+    .hero-rule {
+      width: 3.5rem;
+      height: 2px;
+      background: linear-gradient(90deg, var(--terra), var(--terra-lt));
+      margin: 2rem 0;
+    }
+    .hero-tagline {
+      font-size: 0.82rem;
+      font-weight: 300;
+      line-height: 1.85;
+      color: rgba(255,255,255,0.6);
+      max-width: 36ch;
+    }
+
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 2rem;
+      padding-bottom: 0.5rem;
+    }
+    .hero-badges {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.5rem;
+    }
+    .hb-item {
+      font-size: 0.55rem;
       font-weight: 400;
       letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--gold);
+      color: rgba(255,255,255,0.4);
+      border-right: 2px solid rgba(255,255,255,0.15);
+      padding-right: 1rem;
     }
-    .eyebrow::before {
-      content: '~';
-      font-size: 1rem;
-      line-height: 0;
+    .hb-item strong {
+      display: block;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 0;
+      color: var(--white);
+      line-height: 1;
+      margin-bottom: 0.1rem;
     }
-
-    .hero-headline {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 600;
-      font-size: clamp(2.8rem, 5vw, 4.5rem);
-      line-height: 1.15;
-      color: var(--navy);
-    }
-    .hero-headline em {
-      font-style: italic;
-      font-weight: 400;
-      color: var(--blue);
-    }
-
-    .blue-rule {
-      width: 3rem;
-      height: 2px;
-      background: linear-gradient(90deg, var(--blue), var(--gold));
-    }
-
-    .hero-body {
-      font-size: 0.9rem;
-      font-weight: 300;
-      line-height: 1.95;
-      color: var(--muted);
-      max-width: 44ch;
-    }
-
-    /* Menu highlights */
-    .menu-list {
+    .hero-cta-group {
       display: flex;
-      flex-direction: column;
-      border-top: 1px solid var(--rule);
-    }
-    .menu-row {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      align-items: start;
       gap: 1rem;
-      padding: 0.9rem 0;
-      border-bottom: 1px solid var(--rule);
-    }
-    .mr-info {}
-    .mr-name {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--navy);
-    }
-    .mr-desc {
-      font-size: 0.65rem;
-      font-weight: 300;
-      color: var(--muted);
-      margin-top: 0.1rem;
-      font-style: italic;
-    }
-    .mr-price {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1rem;
-      font-weight: 400;
-      color: var(--gold);
-      white-space: nowrap;
-      padding-top: 0.15rem;
-    }
-
-    .cta-row {
-      display: flex;
       align-items: center;
-      gap: 1.5rem;
     }
-    .cta-btn {
+    .btn-primary {
       font-size: 0.6rem;
       font-weight: 500;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--white);
-      background: var(--blue);
-      padding: 0.9rem 2rem;
-      border-radius: 3px;
-      text-decoration: none;
-      transition: background 0.2s;
-    }
-    .cta-btn:hover { background: var(--navy); }
-    .cta-link {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1rem;
-      font-style: italic;
-      color: var(--muted);
-      text-decoration: none;
-      border-bottom: 1px solid rgba(13,34,64,0.15);
-      padding-bottom: 1px;
-    }
-
-    /* RIGHT */
-    .hero-right {
-      background: var(--blue);
-      display: flex;
-      flex-direction: column;
-      padding: 4.5rem 3.5rem;
-      gap: 2.5rem;
-    }
-
-    .right-label {
-      font-size: 0.55rem;
-      font-weight: 400;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.45);
-    }
-
-    /* Origin story */
-    .origin-block {
-      background: rgba(255,255,255,0.1);
-      border-radius: 8px;
-      padding: 1.75rem;
-      border: 1px solid rgba(255,255,255,0.15);
-    }
-    .ob-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: var(--white);
-      margin-bottom: 0.6rem;
-    }
-    .ob-text {
-      font-size: 0.82rem;
-      font-weight: 300;
-      color: rgba(255,255,255,0.65);
-      line-height: 1.8;
-    }
-
-    /* Specialties grid */
-    .spec-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.6rem;
-    }
-    .spec-item {
-      background: rgba(255,255,255,0.08);
-      border-radius: 6px;
-      padding: 1rem;
-      display: flex;
-      align-items: flex-start;
-      gap: 0.6rem;
-    }
-    .si-icon { font-size: 1.2rem; flex-shrink: 0; }
-    .si-name {
-      font-size: 0.82rem;
-      font-weight: 400;
-      color: rgba(255,255,255,0.8);
-    }
-    .si-origin {
-      font-size: 0.6rem;
-      font-weight: 300;
-      color: rgba(255,255,255,0.4);
-      margin-top: 0.1rem;
-    }
-
-    /* Hours & info */
-    .info-strip {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      margin-top: auto;
-    }
-    .is-item {}
-    .is-label {
-      font-size: 0.5rem;
-      font-weight: 400;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.3);
-      margin-bottom: 0.3rem;
-    }
-    .is-value {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.95rem;
-      font-weight: 400;
       color: var(--white);
-      line-height: 1.4;
-    }
-    .is-value span {
-      display: block;
-      font-family: 'Source Sans 3', sans-serif;
-      font-size: 0.65rem;
-      font-weight: 300;
-      color: rgba(255,255,255,0.45);
-      margin-top: 0.1rem;
-    }
-    /* === Animations & Micro-interactions === */
-    @keyframes barShimmer {
-      0%   { background-position: 0% 50%; }
-      50%  { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    body::before {
-      background-size: 300% auto;
-      animation: barShimmer 6s ease-in-out infinite;
-    }
-
-    .menu-row {
-      transition: background 0.2s, transform 0.25s;
-      cursor: default;
-    }
-    .menu-row:hover {
-      background: rgba(27,79,158,0.04);
-      transform: translateX(4px);
-    }
-    .mr-name { transition: color 0.2s; }
-    .menu-row:hover .mr-name { color: var(--blue); }
-
-    .spec-item {
-      transition: background 0.2s, transform 0.2s;
-      cursor: default;
-    }
-    .spec-item:hover {
-      background: rgba(255,255,255,0.16);
-      transform: translateY(-2px);
-    }
-
-    .origin-block {
-      transition: border-color 0.3s, background 0.3s;
-    }
-    .origin-block:hover {
-      background: rgba(255,255,255,0.14);
-      border-color: rgba(255,255,255,0.25);
-    }
-
-    .cta-btn {
+      background: var(--terra);
+      padding: 0.85rem 2rem;
+      text-decoration: none;
+      transition: background 0.25s;
       position: relative;
       overflow: hidden;
     }
-    .cta-btn::after {
+    .btn-primary::after {
       content: '';
       position: absolute;
       top: 0; left: -60%;
       width: 40%;
       height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
       transition: left 0.5s;
     }
-    .cta-btn:hover::after { left: 150%; }
-
-    .blue-rule {
-      transition: width 0.4s ease-out;
+    .btn-primary:hover { background: #b05e3a; }
+    .btn-primary:hover::after { left: 150%; }
+    .btn-ghost {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.88rem;
+      font-style: italic;
+      color: rgba(255,255,255,0.55);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
     }
-    .hero-left:hover .blue-rule { width: 5rem; }
+    .btn-ghost:hover { color: rgba(255,255,255,0.9); border-color: rgba(255,255,255,0.5); }
 
-    /* Photo container */
-    .ph { position:relative; overflow:hidden; }
-    .ph img { position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.55s ease; }
-    .ph:hover img { transform: scale(1.05); }
+    /* Scroll indicator */
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .scroll-line {
+      width: 1px;
+      height: 3rem;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.5), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.1); }
+    }
+    .scroll-label {
+      font-size: 0.48rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      writing-mode: vertical-rl;
+      margin-top: 0.25rem;
+    }
 
-    /* Gallery section */
-    .gallery-section {
-      background: var(--bg);
-      padding: 6rem 0;
+    /* ─── INTRO / PHILOSOPHY ─── */
+    .intro-section {
+      background: var(--limestone);
+      padding: 7rem 3.5rem;
     }
-    .gallery-inner {
-      max-width: 1600px;
-      margin-left: auto;
-      margin-right: auto;
-      padding: 0 4rem;
+    .intro-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 6rem;
+      align-items: start;
     }
-    .gallery-header {
+    .intro-label {
+      font-size: 0.55rem;
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--terra);
+      padding-top: 0.5rem;
+    }
+    .intro-label::before {
+      content: '';
+      display: block;
+      width: 2rem;
+      height: 1px;
+      background: var(--terra);
+      margin-bottom: 0.75rem;
+    }
+    .intro-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+    .intro-headline {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 3.5vw, 3.5rem);
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+    }
+    .intro-headline em {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--azure);
+    }
+    .intro-body-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem 3rem;
+    }
+    .intro-body {
+      font-size: 0.9rem;
+      font-weight: 300;
+      line-height: 1.95;
+      color: var(--ink-50);
+    }
+    .intro-numbers {
+      display: flex;
+      gap: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--ink-10);
+    }
+    .in-item {}
+    .in-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--azure);
+      line-height: 1;
+    }
+    .in-label {
+      font-size: 0.58rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-50);
+      margin-top: 0.3rem;
+    }
+
+    /* Photo helper */
+    .ph {
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .ph img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.65s ease;
+    }
+    .ph:hover img { transform: scale(1.06); }
+    .ph-overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    /* ─── SUITES SECTION ─── */
+    .suites-section {
+      background: var(--sand);
+      padding: 7rem 3.5rem;
+    }
+    .suites-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .section-header {
       display: flex;
       align-items: flex-end;
       justify-content: space-between;
-      margin-bottom: 3rem;
+      margin-bottom: 3.5rem;
     }
-    .gallery-eyebrow {
+    .sh-left {}
+    .sh-eyebrow {
       font-size: 0.55rem;
       font-weight: 400;
-      letter-spacing: 0.28em;
+      letter-spacing: 0.3em;
       text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 0.6rem;
+      color: var(--terra);
+      margin-bottom: 0.65rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
     }
-    .gallery-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.8rem, 3vw, 2.8rem);
-      font-weight: 600;
-      color: var(--navy);
-      line-height: 1.2;
+    .sh-eyebrow::before {
+      content: '';
+      width: 1.5rem;
+      height: 1px;
+      background: var(--terra);
     }
-    .gallery-title em {
+    .sh-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3vw, 3rem);
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+    }
+    .sh-title em {
       font-style: italic;
       font-weight: 400;
-      color: var(--blue);
+      color: var(--azure);
     }
-    .gallery-link {
-      font-size: 0.6rem;
+    .sh-link {
+      font-size: 0.58rem;
       font-weight: 400;
-      letter-spacing: 0.16em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: var(--ink-50);
       text-decoration: none;
-      border-bottom: 1px solid rgba(13,34,64,0.15);
-      padding-bottom: 1px;
-      white-space: nowrap;
+      border-bottom: 1px solid var(--ink-25);
+      padding-bottom: 2px;
+      transition: color 0.2s;
       margin-bottom: 0.4rem;
     }
-    .photo-grid {
+    .sh-link:hover { color: var(--azure); border-color: var(--azure); }
+
+    .suites-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-columns: 1.4fr 1fr 1fr;
       gap: 1.25rem;
     }
-    .photo-caption {
-      margin-top: 0.75rem;
+    .suite-card {}
+    .suite-photo {
+      border-radius: 2px;
     }
-    .pc-name {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--navy);
+    .suite-info {
+      padding: 1.25rem 0 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
     }
-    .pc-sub {
-      font-size: 0.65rem;
+    .si-left {}
+    .si-cat {
+      font-size: 0.5rem;
+      font-weight: 400;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--terra);
+      margin-bottom: 0.3rem;
+    }
+    .si-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .si-desc {
+      font-size: 0.75rem;
       font-weight: 300;
-      color: var(--muted);
-      font-style: italic;
+      color: var(--ink-50);
+      margin-top: 0.25rem;
+      line-height: 1.6;
+    }
+    .si-price {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 400;
+      color: var(--azure);
+      white-space: nowrap;
+    }
+    .si-price small {
+      display: block;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.48rem;
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      color: var(--ink-50);
+      text-align: right;
       margin-top: 0.1rem;
     }
 
-    /* Atmosphere section */
-    .atmo-section {
-      background: var(--navy);
-      padding: 6rem 0;
+    /* ─── RESTAURANT ─── */
+    .restaurant-section {
+      background: var(--azure-deep);
+      padding: 7rem 0;
+      overflow: hidden;
     }
-    .atmo-inner {
-      max-width: 1600px;
-      margin-left: auto;
-      margin-right: auto;
-      padding: 0 4rem;
+    .restaurant-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 3.5rem;
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 5rem;
       align-items: center;
     }
-    .atmo-text {
+    .rest-text {
       display: flex;
       flex-direction: column;
-      gap: 2rem;
+      gap: 2.5rem;
     }
-    .atmo-eyebrow {
+    .rest-eyebrow {
       font-size: 0.55rem;
       font-weight: 400;
-      letter-spacing: 0.28em;
+      letter-spacing: 0.3em;
       text-transform: uppercase;
-      color: var(--gold);
-    }
-    .atmo-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2rem, 3.5vw, 3rem);
-      font-weight: 600;
-      color: var(--white);
-      line-height: 1.2;
-    }
-    .atmo-title em {
-      font-style: italic;
-      font-weight: 400;
-      color: rgba(232,168,48,0.9);
-    }
-    .atmo-body {
-      font-size: 0.9rem;
-      font-weight: 300;
-      line-height: 1.95;
-      color: rgba(255,255,255,0.55);
-      max-width: 44ch;
-    }
-    .atmo-detail-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-    .atmo-row {
+      color: var(--terra-lt);
       display: flex;
       align-items: center;
-      gap: 1rem;
-      padding: 0.75rem 1rem;
-      background: rgba(255,255,255,0.06);
-      border-radius: 6px;
-      border-left: 2px solid var(--gold);
+      gap: 0.6rem;
     }
-    .atmo-row-icon { font-size: 1rem; }
-    .atmo-row-text {
-      font-size: 0.82rem;
+    .rest-eyebrow::before {
+      content: '';
+      width: 1.5rem;
+      height: 1px;
+      background: var(--terra-lt);
+    }
+    .rest-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 3.5vw, 3.5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      color: var(--white);
+      letter-spacing: -0.01em;
+    }
+    .rest-title em {
+      font-style: italic;
+      font-weight: 400;
+      color: rgba(255,255,255,0.55);
+    }
+    .rest-body {
+      font-size: 0.88rem;
       font-weight: 300;
-      color: rgba(255,255,255,0.7);
+      line-height: 1.95;
+      color: rgba(255,255,255,0.5);
+      max-width: 44ch;
     }
-    .atmo-cta {
+
+    /* Menu items */
+    .menu-list {
+      display: flex;
+      flex-direction: column;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .menu-item {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.1rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      transition: padding-left 0.25s;
+      cursor: default;
+    }
+    .menu-item:hover { padding-left: 0.75rem; }
+    .mi-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--white);
+      transition: color 0.2s;
+    }
+    .menu-item:hover .mi-name { color: var(--terra-lt); }
+    .mi-desc {
+      font-size: 0.65rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.35);
+      font-style: italic;
+      margin-top: 0.1rem;
+    }
+    .mi-price {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--terra-lt);
+    }
+
+    .rest-cta {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
       font-size: 0.6rem;
       font-weight: 500;
-      letter-spacing: 0.16em;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--white);
-      background: var(--gold);
-      padding: 0.9rem 2rem;
-      border-radius: 3px;
+      color: var(--azure-deep);
+      background: var(--white);
+      padding: 0.85rem 2rem;
       text-decoration: none;
-      transition: background 0.2s;
+      transition: background 0.25s, color 0.25s;
       width: fit-content;
     }
-    .atmo-cta:hover { background: #c8901a; }
-    .atmo-photo-col {
+    .rest-cta:hover { background: var(--terra-lt); color: var(--white); }
+
+    .rest-photos {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    /* ─── EXPERIENCE SECTION ─── */
+    .exp-section {
+      background: var(--limestone);
+      padding: 7rem 3.5rem;
+    }
+    .exp-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .exp-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    .exp-photo-mosaic {
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+      grid-template-rows: auto auto;
+      gap: 1rem;
+    }
+    .mosaic-main {
+      grid-row: 1 / 3;
+    }
+    .exp-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+    .exp-eyebrow {
+      font-size: 0.55rem;
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--terra);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .exp-eyebrow::before {
+      content: '';
+      width: 1.5rem;
+      height: 1px;
+      background: var(--terra);
+    }
+    .exp-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 3.5vw, 3.2rem);
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+    }
+    .exp-title em {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--azure);
+    }
+    .exp-body {
+      font-size: 0.88rem;
+      font-weight: 300;
+      line-height: 1.95;
+      color: var(--ink-50);
+    }
+    .features-list {
       display: flex;
       flex-direction: column;
       gap: 1rem;
     }
-
-    /* Large screen fix for hero */
-    @media (min-width: 1600px) {
-      .hero {
-        max-width: 1600px;
-        margin-left: auto;
-        margin-right: auto;
-      }
+    .feat-item {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      padding: 1rem 1.25rem;
+      background: var(--sea-tint);
+      border-left: 2px solid var(--azure);
+      transition: background 0.2s;
+      cursor: default;
+    }
+    .feat-item:hover { background: rgba(26,111,171,0.14); }
+    .feat-icon {
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      line-height: 1.6;
+    }
+    .feat-content {}
+    .feat-title {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--ink);
+    }
+    .feat-desc {
+      font-size: 0.72rem;
+      font-weight: 300;
+      color: var(--ink-50);
+      margin-top: 0.15rem;
+      line-height: 1.5;
+    }
+    .exp-info-strip {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--ink-10);
+    }
+    .eis-item {}
+    .eis-label {
+      font-size: 0.48rem;
+      font-weight: 400;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--ink-25);
+      margin-bottom: 0.4rem;
+    }
+    .eis-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1.4;
+    }
+    .eis-value span {
+      display: block;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 300;
+      color: var(--ink-50);
+      margin-top: 0.1rem;
     }
 
+    /* ─── FOOTER STRIP ─── */
+    .footer-strip {
+      background: var(--ink);
+      padding: 2.5rem 3.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .fs-brand {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--white);
+      letter-spacing: 0.02em;
+    }
+    .fs-brand span {
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(255,255,255,0.45);
+    }
+    .fs-meta {
+      font-size: 0.6rem;
+      font-weight: 300;
+      letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.3);
+    }
+    .fs-cta {
+      font-size: 0.58rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--terra-lt);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(196,113,74,0.35);
+      padding-bottom: 1px;
+      transition: color 0.2s;
+    }
+    .fs-cta:hover { color: var(--white); }
+
+    /* ─── Animations ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-eyebrow { animation: fadeUp 0.7s 0.2s both ease-out; }
+    .hero-headline { animation: fadeUp 0.8s 0.4s both ease-out; }
+    .hero-rule { animation: fadeUp 0.6s 0.65s both ease-out; }
+    .hero-tagline { animation: fadeUp 0.7s 0.8s both ease-out; }
+    .hero-cta-group { animation: fadeUp 0.7s 1s both ease-out; }
+    .hero-badges { animation: fadeUp 0.7s 0.6s both ease-out; }
+
+    .suite-card {
+      transition: transform 0.35s ease;
+    }
+    .suite-card:hover { transform: translateY(-4px); }
+
+    .nav {
+      transition: background 0.3s, padding 0.3s, border-color 0.3s;
+    }
   </style>
 </head>
 <body>
-  <nav>
-    <div class="nav-logo">
-      Thalassa
-      <small>Griechische Küche · Trier</small>
-    </div>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <a href="#" class="nav-logo">
+      Casa Azul
+      <span>Boutique Hotel · Trier</span>
+    </a>
     <ul class="nav-links">
-      <li><a href="#">Speisekarte</a></li>
-      <li><a href="#">Fisch des Tages</a></li>
-      <li><a href="#">Geschichte</a></li>
-      <li><a href="#">Reservierung</a></li>
+      <li><a href="#">Suiten</a></li>
+      <li><a href="#">Restaurant</a></li>
+      <li><a href="#">Erlebnisse</a></li>
+      <li><a href="#">Über uns</a></li>
     </ul>
-    <a href="#" class="nav-reserve">Tisch reservieren</a>
+    <a href="#" class="nav-book">Jetzt buchen</a>
   </nav>
 
+  <!-- HERO -->
   <section class="hero">
-    <div class="hero-left">
-      <div class="eyebrow">Griechisches Restaurant · Trier</div>
-
-      <h1 class="hero-headline">
-        Das Meer<br>
-        auf <em>dem</em><br>
-        Teller.
-      </h1>
-
-      <div class="blue-rule"></div>
-
-      <p class="hero-body">
-        Täglich frische Lieferungen aus dem Mittelmeer.
-        Familienrezepte aus Thessaloniki. Und ein Tisch,
-        an dem man nicht fragt, wann man aufhört.
-      </p>
-
-      <div class="menu-list">
-        <div class="menu-row">
-          <div class="mr-info">
-            <div class="mr-name">Fisch des Tages</div>
-            <div class="mr-desc">Täglich frisch, gegrillte Zubereitung</div>
-          </div>
-          <div class="mr-price">ab 28 €</div>
-        </div>
-        <div class="menu-row">
-          <div class="mr-info">
-            <div class="mr-name">Oktopus vom Grill</div>
-            <div class="mr-desc">Kalamata-Oliven, Zitrone, Oregano</div>
-          </div>
-          <div class="mr-price">22 €</div>
-        </div>
-        <div class="menu-row">
-          <div class="mr-info">
-            <div class="mr-name">Moussaka (Hausart)</div>
-            <div class="mr-desc">Oma Elenis Originalrezept seit 1978</div>
-          </div>
-          <div class="mr-price">18 €</div>
-        </div>
-      </div>
-
-      <div class="cta-row">
-        <a href="#" class="cta-btn">Tisch reservieren →</a>
-        <a href="#" class="cta-link">Vollständige Karte</a>
-      </div>
+    <div class="hero-bg">
+      <img
+        id="hero-img"
+        src="https://images.unsplash.com/photo-1570168007204-dfb528c6958f?auto=format&fit=crop&w=1800&h=1200&q=85"
+        alt="Santorini — weiße Häuser über dem Mittelmeer"
+      />
     </div>
 
-    <div class="hero-right">
-      <div class="right-label">Unsere Geschichte</div>
-
-      <div class="origin-block">
-        <div class="ob-title">Seit 1988 in Trier</div>
-        <div class="ob-text">
-          Stavros Papadakis kam 1988 aus Thessaloniki nach Trier —
-          und brachte die Küche seiner Mutter mit. Heute kocht
-          seine Tochter Dimitra weiter, was die Familie ausmacht:
-          ehrliche Zutaten, viel Liebe, kein Kompromiss.
-        </div>
-      </div>
-
-      <div class="spec-grid">
-        <div class="spec-item">
-          <span class="si-icon">🐟</span>
-          <div>
-            <div class="si-name">Frischer Fisch</div>
-            <div class="si-origin">Tägl. aus Thessaloniki</div>
-          </div>
-        </div>
-        <div class="spec-item">
-          <span class="si-icon">🫒</span>
-          <div>
-            <div class="si-name">Olivenöl</div>
-            <div class="si-origin">Kreta, kaltgepresst</div>
-          </div>
-        </div>
-        <div class="spec-item">
-          <span class="si-icon">🍷</span>
-          <div>
-            <div class="si-name">Griechischer Wein</div>
-            <div class="si-origin">Retsina, Assyrtiko</div>
-          </div>
-        </div>
-        <div class="spec-item">
-          <span class="si-icon">🧀</span>
-          <div>
-            <div class="si-name">Echter Feta</div>
-            <div class="si-origin">g.U. Griechenland</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="info-strip">
-        <div class="is-item">
-          <div class="is-label">Öffnungszeiten</div>
-          <div class="is-value">
-            Di – So
-            <span>12:00 – 14:30 · 17:30 – 22:30</span>
-          </div>
-        </div>
-        <div class="is-item">
-          <div class="is-label">Adresse</div>
-          <div class="is-value">
-            Fleischstraße 38
-            <span>54290 Trier · Fußgängerzone</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- GALLERY SECTION -->
-  <section class="gallery-section">
-    <div class="gallery-inner">
-      <div class="gallery-header">
-        <div>
-          <div class="gallery-eyebrow">Aus unserer Küche</div>
-          <h2 class="gallery-title">Fisch, Feuer &<br><em>Mittelmeer-Luft.</em></h2>
-        </div>
-        <a href="#" class="gallery-link">Vollständige Speisekarte →</a>
-      </div>
-      <div class="photo-grid">
-        <div>
-          <div class="ph" style="height:320px;border-radius:6px;">
-            <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=1200&h=800&q=80" alt="Gegrillter Fisch mit Meeresfrüchten" loading="lazy" />
-            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.45) 0%,transparent 60%);pointer-events:none;"></div>
-          </div>
-          <div class="photo-caption">
-            <div class="pc-name">Fisch des Tages</div>
-            <div class="pc-sub">Täglich frisch aus dem Mittelmeer</div>
-          </div>
-        </div>
-        <div>
-          <div class="ph" style="height:320px;border-radius:6px;">
-            <img src="https://images.unsplash.com/photo-1504893524553-b855bce32c67?auto=format&fit=crop&w=1200&h=800&q=80" alt="Griechische Meeresküste" loading="lazy" />
-            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.45) 0%,transparent 60%);pointer-events:none;"></div>
-          </div>
-          <div class="photo-caption">
-            <div class="pc-name">Oktopus vom Grill</div>
-            <div class="pc-sub">Kalamata-Oliven, Zitrone, Oregano</div>
-          </div>
-        </div>
-        <div>
-          <div class="ph" style="height:320px;border-radius:6px;">
-            <img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=1200&h=800&q=80" alt="Mediterrane Speisen und Wein" loading="lazy" />
-            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.45) 0%,transparent 60%);pointer-events:none;"></div>
-          </div>
-          <div class="photo-caption">
-            <div class="pc-name">Moussaka & Mezze</div>
-            <div class="pc-sub">Hausrezepte seit 1988</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ATMOSPHERE SECTION -->
-  <section class="atmo-section">
-    <div class="atmo-inner">
-      <div class="atmo-text">
-        <div class="atmo-eyebrow">~ Reservierung & Atmosphäre</div>
-        <h2 class="atmo-title">Ein Abend,<br>den man<br><em>nicht vergisst.</em></h2>
-        <p class="atmo-body">
-          Thalassa steht für mehr als Essen — es ist der Moment,
-          wenn Wein eingeschenkt wird, das Brot noch warm ist
-          und die Zeit keine Rolle mehr spielt.
+    <div class="hero-content">
+      <div class="hero-left">
+        <div class="hero-eyebrow">Boutique Hotel & Restaurant · Trier</div>
+        <h1 class="hero-headline">
+          Das Mittelmeer<br>
+          <em>direkt vor Ihrer Tür.</em>
+        </h1>
+        <div class="hero-rule"></div>
+        <p class="hero-tagline">
+          Mediterranes Lebensgefühl im Herzen Triers —
+          Azurblau, Weißkalk und der Duft nach Thymian
+          und warmem Stein.
         </p>
-        <div class="atmo-detail-list">
-          <div class="atmo-row">
-            <span class="atmo-row-icon">🪑</span>
-            <span class="atmo-row-text">45 Sitzplätze innen · 20 auf der Terrasse</span>
-          </div>
-          <div class="atmo-row">
-            <span class="atmo-row-icon">🎶</span>
-            <span class="atmo-row-text">Live-Musik freitags ab 20 Uhr</span>
-          </div>
-          <div class="atmo-row">
-            <span class="atmo-row-icon">🚗</span>
-            <span class="atmo-row-text">Parkhaus Porta Nigra · 3 Min. zu Fuß</span>
-          </div>
+        <div class="hero-cta-group">
+          <a href="#" class="btn-primary">Suite reservieren →</a>
+          <a href="#" class="btn-ghost">Restaurant entdecken</a>
         </div>
-        <a href="#" class="atmo-cta">Tisch reservieren →</a>
       </div>
-      <div class="atmo-photo-col">
-        <div class="ph" style="height:260px;border-radius:6px;">
-          <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&h=800&q=80" alt="Restaurantatmosphäre mediterran" loading="lazy" />
-          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.35) 0%,transparent 60%);pointer-events:none;"></div>
+
+      <div class="hero-right">
+        <div class="hero-badges">
+          <div class="hb-item">
+            <strong>18</strong>
+            Exklusive Suiten
+          </div>
+          <div class="hb-item">
+            <strong>3★</strong>
+            Sterne Küche
+          </div>
+          <div class="hb-item">
+            <strong>1994</strong>
+            Gegründet
+          </div>
         </div>
-        <div class="ph" style="height:180px;border-radius:6px;">
-          <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1200&h=600&q=80" alt="Griechischer Wein und Abendstimmung" loading="lazy" />
-          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.35) 0%,transparent 60%);pointer-events:none;"></div>
+      </div>
+    </div>
+
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      <div class="scroll-label">Entdecken</div>
+    </div>
+  </section>
+
+  <!-- INTRO / PHILOSOPHY -->
+  <section class="intro-section">
+    <div class="intro-inner">
+      <div class="intro-label">Das Konzept</div>
+      <div class="intro-text">
+        <h2 class="intro-headline">
+          Weit weg sein, ohne<br>
+          <em>Trier zu verlassen.</em>
+        </h2>
+        <div class="intro-body-grid">
+          <p class="intro-body">
+            Die Familie Serrano kam 1994 aus Palma de Mallorca nach Trier —
+            und vermisste das Licht. Also bauten sie es nach: in einem
+            historischen Stadtpalais an der Simeonstraße, wo heute
+            weiß getünchte Wände und Terrakottaböden auf alte Gewölbe treffen.
+          </p>
+          <p class="intro-body">
+            Casa Azul ist kein Hotel wie andere. Es ist ein Versprechen:
+            Azurblau, Wärme und die Stille eines Mittelmeermorgens —
+            mitten in einer der ältesten Städte Deutschlands.
+          </p>
+        </div>
+        <div class="intro-numbers">
+          <div class="in-item">
+            <div class="in-value">30</div>
+            <div class="in-label">Jahre Geschichte</div>
+          </div>
+          <div class="in-item">
+            <div class="in-value">18</div>
+            <div class="in-label">Suiten & Zimmer</div>
+          </div>
+          <div class="in-item">
+            <div class="in-value">2</div>
+            <div class="in-label">Terrassen am Hof</div>
+          </div>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- SUITES -->
+  <section class="suites-section">
+    <div class="suites-inner">
+      <div class="section-header">
+        <div class="sh-left">
+          <div class="sh-eyebrow">Unterkunft</div>
+          <h2 class="sh-title">Unsere Suiten &<br><em>Zimmer.</em></h2>
+        </div>
+        <a href="#" class="sh-link">Alle Zimmer ansehen →</a>
+      </div>
+
+      <div class="suites-grid">
+        <!-- Card 1 — large -->
+        <div class="suite-card">
+          <div class="ph suite-photo" style="height: 420px; border-radius: 2px;">
+            <img
+              src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1200&h=900&q=80"
+              alt="Meerblick-Suite mit mediteraner Einrichtung"
+              loading="lazy"
+            />
+            <div class="ph-overlay" style="background: linear-gradient(to top, rgba(0,0,0,0.4) 0%, transparent 55%);"></div>
+          </div>
+          <div class="suite-info">
+            <div class="si-left">
+              <div class="si-cat">Signature Suite</div>
+              <div class="si-name">Suite Tramontana</div>
+              <div class="si-desc">80 m² · Himmelbett · Freistehende Badewanne</div>
+            </div>
+            <div class="si-price">
+              ab 390 €
+              <small>pro Nacht</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="suite-card">
+          <div class="ph suite-photo" style="height: 200px; border-radius: 2px;">
+            <img
+              src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=800&h=600&q=80"
+              alt="Junior Suite mediterran weiß"
+              loading="lazy"
+            />
+            <div class="ph-overlay" style="background: linear-gradient(to top, rgba(0,0,0,0.4) 0%, transparent 55%);"></div>
+          </div>
+          <div class="suite-info">
+            <div class="si-left">
+              <div class="si-cat">Junior Suite</div>
+              <div class="si-name">Suite Levante</div>
+              <div class="si-desc">45 m² · Innenhof-Terrasse</div>
+            </div>
+            <div class="si-price">
+              ab 220 €
+              <small>pro Nacht</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="suite-card">
+          <div class="ph suite-photo" style="height: 200px; border-radius: 2px;">
+            <img
+              src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&h=600&q=80"
+              alt="Deluxe-Zimmer mit Terrakottaboden"
+              loading="lazy"
+            />
+            <div class="ph-overlay" style="background: linear-gradient(to top, rgba(0,0,0,0.4) 0%, transparent 55%);"></div>
+          </div>
+          <div class="suite-info">
+            <div class="si-left">
+              <div class="si-cat">Deluxe Zimmer</div>
+              <div class="si-name">Zimmer Poniente</div>
+              <div class="si-desc">28 m² · Stadtblick · Balkon</div>
+            </div>
+            <div class="si-price">
+              ab 145 €
+              <small>pro Nacht</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESTAURANT -->
+  <section class="restaurant-section">
+    <div class="restaurant-inner">
+      <div class="rest-text">
+        <div class="rest-eyebrow">Restaurant Casa Azul</div>
+        <h2 class="rest-title">
+          Mittelmeer-Küche.<br>
+          <em>Trierer Seele.</em>
+        </h2>
+        <p class="rest-body">
+          Küchenchef Pablo Serrano kocht, was er als Kind
+          in seiner Großmutters Küche auf Mallorca gerochen hat:
+          Fisch im Salzteig, Olivenöl das nach Kräutern duftet,
+          und Tomaten, die wie Tomaten schmecken.
+        </p>
+
+        <div class="menu-list">
+          <div class="menu-item">
+            <div>
+              <div class="mi-name">Lubina a la sal</div>
+              <div class="mi-desc">Wolfsbarsch im Salzteig, Salsa verde, Fenchel</div>
+            </div>
+            <div class="mi-price">38 €</div>
+          </div>
+          <div class="menu-item">
+            <div>
+              <div class="mi-name">Pulpo a la brasa</div>
+              <div class="mi-desc">Gegrillter Oktopus, Paprika-Öl, Kartoffelstampf</div>
+            </div>
+            <div class="mi-price">29 €</div>
+          </div>
+          <div class="menu-item">
+            <div>
+              <div class="mi-name">Arròs negre</div>
+              <div class="mi-desc">Schwarzes Tintenfischrisotto, Aioli, Meeresfrüchte</div>
+            </div>
+            <div class="mi-price">26 €</div>
+          </div>
+          <div class="menu-item">
+            <div>
+              <div class="mi-name">Tarta de almendras</div>
+              <div class="mi-desc">Mallorquinische Mandeltarte, Crema Catalana</div>
+            </div>
+            <div class="mi-price">12 €</div>
+          </div>
+        </div>
+
+        <a href="#" class="rest-cta">Zur Speisekarte →</a>
+      </div>
+
+      <div class="rest-photos">
+        <div class="ph" style="height: 300px; border-radius: 2px;">
+          <img
+            src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1000&h=700&q=80"
+            alt="Mediterrane Restaurantküche — feine Speisen"
+            loading="lazy"
+          />
+          <div class="ph-overlay" style="background: linear-gradient(to top, rgba(13,63,110,0.4) 0%, transparent 55%);"></div>
+        </div>
+        <div class="ph" style="height: 200px; border-radius: 2px;">
+          <img
+            src="https://images.unsplash.com/photo-1559925393-8be0ec4767c8?auto=format&fit=crop&w=1000&h=600&q=80"
+            alt="Terrakottaboden und weißer Tisch — mediterranes Ambiente"
+            loading="lazy"
+          />
+          <div class="ph-overlay" style="background: linear-gradient(to top, rgba(13,63,110,0.35) 0%, transparent 55%);"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE / LAGE -->
+  <section class="exp-section">
+    <div class="exp-inner">
+      <div class="exp-grid">
+        <!-- Photo Mosaic -->
+        <div class="exp-photo-mosaic">
+          <div class="ph mosaic-main" style="height: 520px; border-radius: 2px;">
+            <img
+              src="https://images.unsplash.com/photo-1501854140801-50d01698950b?auto=format&fit=crop&w=800&h=1100&q=80"
+              alt="Santorini Küste — azurblaues Meer und weiße Häuser"
+              loading="lazy"
+            />
+            <div class="ph-overlay" style="background: linear-gradient(to top, rgba(0,0,0,0.35) 0%, transparent 55%);"></div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 1rem;">
+            <div class="ph" style="height: 252px; border-radius: 2px;">
+              <img
+                src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&h=600&q=80"
+                alt="Azurblaues Mittelmeerwasser"
+                loading="lazy"
+              />
+              <div class="ph-overlay" style="background: linear-gradient(to top, rgba(0,0,0,0.3) 0%, transparent 55%);"></div>
+            </div>
+            <div class="ph" style="height: 252px; border-radius: 2px;">
+              <img
+                src="https://images.unsplash.com/photo-1555881400-74d7acaacd8b?auto=format&fit=crop&w=600&h=600&q=80"
+                alt="Weiße Hausfassade mit blauen Details Santorini"
+                loading="lazy"
+              />
+              <div class="ph-overlay" style="background: linear-gradient(to top, rgba(0,0,0,0.3) 0%, transparent 55%);"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Text -->
+        <div class="exp-text">
+          <div class="exp-eyebrow">Lage & Erlebnisse</div>
+          <h2 class="exp-title">
+            Im Herzen von<br>
+            Trier —<em>mit Seele<br>des Südens.</em>
+          </h2>
+          <p class="exp-body">
+            Casa Azul liegt im historischen Kern Triers, zwei Gehminuten
+            von der Porta Nigra entfernt. Die Stadt ist eine der ältesten
+            Deutschlands — und beides, ihr mediterranes Klima und ihre
+            römische Geschichte, machen sie zum perfekten Heimat
+            für ein Hotel wie dieses.
+          </p>
+
+          <div class="features-list">
+            <div class="feat-item">
+              <span class="feat-icon">🏺</span>
+              <div class="feat-content">
+                <div class="feat-title">Innenhof mit Brunnen</div>
+                <div class="feat-desc">Maurisch inspirierter Patio mit Orangenbäumen und Ziegelbrunnen</div>
+              </div>
+            </div>
+            <div class="feat-item">
+              <span class="feat-icon">🌿</span>
+              <div class="feat-content">
+                <div class="feat-title">Dachterrasse & Bar</div>
+                <div class="feat-desc">Abendausklang mit Blick über die Trierer Altstadt und Weinberge</div>
+              </div>
+            </div>
+            <div class="feat-item">
+              <span class="feat-icon">🍋</span>
+              <div class="feat-content">
+                <div class="feat-title">Frühstück al fresco</div>
+                <div class="feat-desc">Täglich von 07:30 bis 11:00 im Innenhof — oder aufs Zimmer</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="exp-info-strip">
+            <div class="eis-item">
+              <div class="eis-label">Check-in / Check-out</div>
+              <div class="eis-value">
+                15:00 / 11:00
+                <span>Früheres/spätes Check-out anfragen</span>
+              </div>
+            </div>
+            <div class="eis-item">
+              <div class="eis-label">Adresse</div>
+              <div class="eis-value">
+                Simeonstraße 12
+                <span>54290 Trier · Altstadt</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER STRIP -->
+  <footer class="footer-strip">
+    <div class="fs-brand">
+      Casa Azul <span>— Boutique Hotel & Restaurant, Trier</span>
+    </div>
+    <div class="fs-meta">© 2025 · Simeonstraße 12 · 54290 Trier · +49 651 97 44 200</div>
+    <a href="#" class="fs-cta">Jetzt buchen →</a>
+  </footer>
+
+  <script>
+    // Nav scroll effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    }, { passive: true });
+
+    // Hero image Ken Burns
+    const heroImg = document.getElementById('hero-img');
+    heroImg.addEventListener('load', () => {
+      heroImg.classList.add('loaded');
+    });
+    if (heroImg.complete) heroImg.classList.add('loaded');
+  </script>
 
 </body>
 </html>
