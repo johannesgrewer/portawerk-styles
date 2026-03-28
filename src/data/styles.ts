@@ -2401,6 +2401,31 @@ export const styles: StyleEntry[] = [
     ready: true,
   },
   {
+    slug: "typo-agency",
+    name: "Typo Agency",
+    category: "Agentur / Portfolio",
+    description: "Swiss Grid, Space Grotesk, Rot-Schwarz-Weiss. Typografie als Hauptgestaltungselement — Internationale Typografieschule fuer die digitale Aera.",
+    targetAudience: "Designagenturen, Kreativstudios, Freelancer mit Systemanspruch",
+    business: {
+      name: "Raster & Co.",
+      type: "Design Studio",
+      location: "Trier",
+      tagline: "Form folgt Funktion.",
+    },
+    colors: {
+      primary: "#0A0A0A",
+      secondary: "#FAFAF8",
+      accent: "#D01F1F",
+      background: "#FAFAF8",
+      text: "#0A0A0A",
+    },
+    fonts: {
+      display: "Space Grotesk",
+      body: "Outfit",
+    },
+    ready: true,
+  },
+  {
     slug: "fotostudio",
     name: "Fotostudio / Portrait",
     category: "Fotografie-zentriert",
