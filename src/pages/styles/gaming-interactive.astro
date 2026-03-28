@@ -15,17 +15,12 @@ export const prerender = true;
 
   <style>
     html { overflow-x: hidden; }
-    /* ===== RESET & BASE ===== */
     *, *::before, *::after {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
+    html { scroll-behavior: smooth; }
     body {
       font-family: 'VT323', monospace;
       color: #E0E0E0;
@@ -34,18 +29,8 @@ export const prerender = true;
       overflow-x: hidden;
       font-size: 20px;
     }
-
-    img {
-      max-width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
+    img { max-width: 100%; height: auto; display: block; }
+    a { text-decoration: none; color: inherit; }
     h1, h2, h3, h4 {
       font-family: 'Press Start 2P', cursive;
       line-height: 1.4;
@@ -55,16 +40,12 @@ export const prerender = true;
     body::before {
       content: '';
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       background: repeating-linear-gradient(
         0deg,
-        transparent,
-        transparent 2px,
-        rgba(0, 0, 0, 0.15) 2px,
-        rgba(0, 0, 0, 0.15) 4px
+        transparent, transparent 2px,
+        rgba(0, 0, 0, 0.15) 2px, rgba(0, 0, 0, 0.15) 4px
       );
       pointer-events: none;
       z-index: 9999;
@@ -74,60 +55,35 @@ export const prerender = true;
     body::after {
       content: '';
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(
-        ellipse at center,
-        transparent 60%,
-        rgba(0, 0, 0, 0.6) 100%
-      );
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.6) 100%);
       pointer-events: none;
       z-index: 9998;
     }
 
     /* ===== NEON GLOW UTILITIES ===== */
     .glow-green {
-      text-shadow:
-        0 0 7px #39FF14,
-        0 0 10px #39FF14,
-        0 0 21px #39FF14,
-        0 0 42px #39FF14;
+      text-shadow: 0 0 7px #39FF14, 0 0 10px #39FF14, 0 0 21px #39FF14, 0 0 42px #39FF14;
     }
-
     .glow-pink {
-      text-shadow:
-        0 0 7px #FF1493,
-        0 0 10px #FF1493,
-        0 0 21px #FF1493,
-        0 0 42px #FF1493;
+      text-shadow: 0 0 7px #FF1493, 0 0 10px #FF1493, 0 0 21px #FF1493, 0 0 42px #FF1493;
     }
-
     .glow-green-subtle {
-      text-shadow:
-        0 0 4px #39FF14,
-        0 0 8px #39FF14;
+      text-shadow: 0 0 4px #39FF14, 0 0 8px #39FF14;
     }
 
     /* ===== PIXEL BORDER ===== */
     .pixel-border {
       border: 4px solid #39FF14;
-      box-shadow:
-        4px 4px 0 #39FF14,
-        -4px -4px 0 #0D0D0D,
-        inset 0 0 20px rgba(57, 255, 20, 0.05);
+      box-shadow: 4px 4px 0 #39FF14, -4px -4px 0 #0D0D0D, inset 0 0 20px rgba(57,255,20,0.05);
       position: relative;
     }
-
     .pixel-border::before {
       content: '';
       position: absolute;
-      top: -8px;
-      left: -8px;
-      right: -8px;
-      bottom: -8px;
-      border: 2px solid rgba(57, 255, 20, 0.3);
+      top: -8px; left: -8px; right: -8px; bottom: -8px;
+      border: 2px solid rgba(57,255,20,0.3);
       pointer-events: none;
     }
 
@@ -136,123 +92,349 @@ export const prerender = true;
       0%, 49% { opacity: 1; }
       50%, 100% { opacity: 0; }
     }
-
     @keyframes typeLine1 {
       0% { width: 0; }
       100% { width: 100%; }
     }
-
     @keyframes typeLine2 {
       0%, 33% { width: 0; opacity: 0; }
       34% { opacity: 1; }
       100% { width: 100%; opacity: 1; }
     }
-
     @keyframes typeLine3 {
       0%, 60% { width: 0; opacity: 0; }
       61% { opacity: 1; }
       100% { width: 100%; opacity: 1; }
     }
-
     @keyframes fadeInUp {
       0% { opacity: 0; transform: translateY(20px); }
       100% { opacity: 1; transform: translateY(0); }
     }
-
     @keyframes glitch {
       0%, 100% {
-        text-shadow:
-          0 0 7px #39FF14,
-          0 0 10px #39FF14,
-          0 0 21px #39FF14,
-          0 0 42px #39FF14;
+        text-shadow: 0 0 7px #39FF14, 0 0 10px #39FF14, 0 0 21px #39FF14, 0 0 42px #39FF14;
         transform: translate(0);
       }
-      20% {
-        text-shadow:
-          -3px 0 #FF1493,
-          3px 0 #39FF14;
-        transform: translate(-2px, 1px);
-      }
-      40% {
-        text-shadow:
-          3px 0 #FF1493,
-          -3px 0 #39FF14;
-        transform: translate(2px, -1px);
-      }
-      60% {
-        text-shadow:
-          -1px 0 #FF1493,
-          1px 0 #39FF14,
-          0 0 21px #39FF14;
-        transform: translate(1px, 1px);
-      }
-      80% {
-        text-shadow:
-          2px 0 #FF1493,
-          -2px 0 #39FF14;
-        transform: translate(-1px, -1px);
-      }
+      20% { text-shadow: -3px 0 #FF1493, 3px 0 #39FF14; transform: translate(-2px, 1px); }
+      40% { text-shadow: 3px 0 #FF1493, -3px 0 #39FF14; transform: translate(2px, -1px); }
+      60% { text-shadow: -1px 0 #FF1493, 1px 0 #39FF14, 0 0 21px #39FF14; transform: translate(1px, 1px); }
+      80% { text-shadow: 2px 0 #FF1493, -2px 0 #39FF14; transform: translate(-1px, -1px); }
     }
-
     @keyframes flicker {
-      0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% {
-        opacity: 1;
-      }
-      20%, 21.999%, 63%, 63.999%, 65%, 69.999% {
-        opacity: 0.4;
-      }
+      0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% { opacity: 1; }
+      20%, 21.999%, 63%, 63.999%, 65%, 69.999% { opacity: 0.4; }
     }
-
-    @keyframes cursorPulse {
-      0%, 49% { border-left-color: #39FF14; }
-      50%, 100% { border-left-color: transparent; }
-    }
-
-    @keyframes slideInLeft {
-      0% { opacity: 0; transform: translateX(-40px); }
-      100% { opacity: 1; transform: translateX(0); }
-    }
-
     @keyframes neonPulse {
       0%, 100% {
-        box-shadow:
-          0 0 5px #39FF14,
-          0 0 10px #39FF14,
-          0 0 20px #39FF14,
-          inset 0 0 5px rgba(57, 255, 20, 0.1);
+        box-shadow: 0 0 5px #39FF14, 0 0 10px #39FF14, 0 0 20px #39FF14, inset 0 0 5px rgba(57,255,20,0.1);
       }
       50% {
-        box-shadow:
-          0 0 10px #39FF14,
-          0 0 20px #39FF14,
-          0 0 40px #39FF14,
-          0 0 60px #39FF14,
-          inset 0 0 10px rgba(57, 255, 20, 0.2);
+        box-shadow: 0 0 10px #39FF14, 0 0 20px #39FF14, 0 0 40px #39FF14, 0 0 60px #39FF14, inset 0 0 10px rgba(57,255,20,0.2);
       }
+    }
+
+    /* ===== NEW ANIMATIONS ===== */
+    @keyframes floatPixel {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    @keyframes floatPixelSlow {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      33% { transform: translateY(-8px) rotate(2deg); }
+      66% { transform: translateY(-4px) rotate(-2deg); }
+    }
+    @keyframes ghostBob {
+      0%, 100% { transform: translateY(0px) scaleX(1); }
+      50% { transform: translateY(-8px) scaleX(-1); }
+    }
+    @keyframes invaderWalk {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+    @keyframes rgbGlitch {
+      0%, 88%, 100% { filter: none; clip-path: none; }
+      89% {
+        filter: drop-shadow(3px 0 0 #FF1493) drop-shadow(-3px 0 0 #00FFFF);
+        transform: skewX(2deg);
+      }
+      90% { filter: none; transform: skewX(0); }
+      92% {
+        filter: drop-shadow(-4px 0 0 #FF1493) drop-shadow(4px 0 0 #00FFFF);
+        transform: skewX(-1deg) translateX(2px);
+      }
+      94% { filter: none; transform: skewX(0) translateX(0); }
+      96% {
+        filter: drop-shadow(2px 2px 0 #FF1493) drop-shadow(-2px -2px 0 #39FF14);
+      }
+      98% { filter: none; }
+    }
+    @keyframes walkAcross {
+      0% { left: -80px; transform: scaleX(1); }
+      49.9% { transform: scaleX(1); }
+      50% { left: calc(100% + 80px); transform: scaleX(-1); }
+      99.9% { transform: scaleX(-1); }
+      100% { left: -80px; transform: scaleX(1); }
+    }
+    @keyframes hpDrain {
+      0% { width: 100%; background: #39FF14; }
+      60% { background: #FFD700; }
+      100% { width: 34%; background: #FF1493; }
+    }
+    @keyframes hpDrainLoop {
+      0% { width: 100%; }
+      100% { width: 34%; }
+    }
+    @keyframes rainbowColor {
+      0% { color: #FF1493; }
+      17% { color: #FF6600; }
+      33% { color: #FFD700; }
+      50% { color: #39FF14; }
+      67% { color: #00FFFF; }
+      83% { color: #AA00FF; }
+      100% { color: #FF1493; }
+    }
+    @keyframes scanSweep {
+      0% { left: -110%; }
+      100% { left: 110%; }
+    }
+    @keyframes monsterPop {
+      0% { transform: scale(0) translateY(12px); opacity: 0; }
+      60% { transform: scale(1.3) translateY(-3px); opacity: 1; }
+      100% { transform: scale(1) translateY(0); opacity: 1; }
+    }
+    @keyframes coinBlink {
+      0%, 45% { opacity: 1; color: #FFD700; }
+      46%, 54% { opacity: 0; }
+      55%, 100% { opacity: 1; color: #FF1493; }
+    }
+
+    /* ===== PIXEL ART SPRITES via box-shadow ===== */
+    /*
+      Each .px-* sprite uses a 6×6px element (background=pixel at 0,0 if filled, else transparent).
+      box-shadow draws the remaining pixels: (col*6)px (row*6)px 0 0 currentColor
+      Color is inherited via `color` property on parent or the element itself.
+    */
+
+    /* Invader — 7 cols × 5 rows (42×30px)
+       .X...X.
+       ..XXX..
+       .XXXXX.
+       XX.X.XX
+       X.....X  */
+    .px-invader {
+      width: 6px; height: 6px;
+      background: transparent;
+      box-shadow:
+        6px 0 0 0 currentColor, 30px 0 0 0 currentColor,
+        12px 6px 0 0 currentColor, 18px 6px 0 0 currentColor, 24px 6px 0 0 currentColor,
+        6px 12px 0 0 currentColor, 12px 12px 0 0 currentColor, 18px 12px 0 0 currentColor, 24px 12px 0 0 currentColor, 30px 12px 0 0 currentColor,
+        0 18px 0 0 currentColor, 6px 18px 0 0 currentColor, 18px 18px 0 0 currentColor, 30px 18px 0 0 currentColor, 36px 18px 0 0 currentColor,
+        0 24px 0 0 currentColor, 36px 24px 0 0 currentColor;
+    }
+
+    /* Ghost — 5 cols × 7 rows (30×42px)
+       .XXX.
+       XXXXX
+       XXXXX
+       XXXXX
+       XXXXX
+       X.X.X
+       .X.X.  */
+    .px-ghost {
+      width: 6px; height: 6px;
+      background: transparent;
+      box-shadow:
+        6px 0 0 0 currentColor, 12px 0 0 0 currentColor, 18px 0 0 0 currentColor,
+        0 6px 0 0 currentColor, 6px 6px 0 0 currentColor, 12px 6px 0 0 currentColor, 18px 6px 0 0 currentColor, 24px 6px 0 0 currentColor,
+        0 12px 0 0 currentColor, 6px 12px 0 0 currentColor, 12px 12px 0 0 currentColor, 18px 12px 0 0 currentColor, 24px 12px 0 0 currentColor,
+        0 18px 0 0 currentColor, 6px 18px 0 0 currentColor, 12px 18px 0 0 currentColor, 18px 18px 0 0 currentColor, 24px 18px 0 0 currentColor,
+        0 24px 0 0 currentColor, 6px 24px 0 0 currentColor, 12px 24px 0 0 currentColor, 18px 24px 0 0 currentColor, 24px 24px 0 0 currentColor,
+        0 30px 0 0 currentColor, 12px 30px 0 0 currentColor, 24px 30px 0 0 currentColor,
+        6px 36px 0 0 currentColor, 18px 36px 0 0 currentColor;
+    }
+
+    /* Alien — 5 cols × 5 rows (30×30px)
+       X.X.X
+       XXXXX
+       .XXX.
+       X.X.X
+       .X.X.  */
+    .px-alien {
+      width: 6px; height: 6px;
+      background: currentColor;
+      box-shadow:
+        12px 0 0 0 currentColor, 24px 0 0 0 currentColor,
+        0 6px 0 0 currentColor, 6px 6px 0 0 currentColor, 12px 6px 0 0 currentColor, 18px 6px 0 0 currentColor, 24px 6px 0 0 currentColor,
+        6px 12px 0 0 currentColor, 12px 12px 0 0 currentColor, 18px 12px 0 0 currentColor,
+        0 18px 0 0 currentColor, 12px 18px 0 0 currentColor, 24px 18px 0 0 currentColor,
+        6px 24px 0 0 currentColor, 18px 24px 0 0 currentColor;
+    }
+
+    /* Skull — 7 cols × 7 rows (42×42px)
+       .XXXXX.
+       XXXXXXX
+       X.X.X.X
+       XXXXXXX
+       .XXXXX.
+       .X...X.
+       .XX.XX.  */
+    .px-skull {
+      width: 6px; height: 6px;
+      background: transparent;
+      box-shadow:
+        6px 0 0 0 currentColor, 12px 0 0 0 currentColor, 18px 0 0 0 currentColor, 24px 0 0 0 currentColor, 30px 0 0 0 currentColor,
+        0 6px 0 0 currentColor, 6px 6px 0 0 currentColor, 12px 6px 0 0 currentColor, 18px 6px 0 0 currentColor, 24px 6px 0 0 currentColor, 30px 6px 0 0 currentColor, 36px 6px 0 0 currentColor,
+        0 12px 0 0 currentColor, 12px 12px 0 0 currentColor, 24px 12px 0 0 currentColor, 36px 12px 0 0 currentColor,
+        0 18px 0 0 currentColor, 6px 18px 0 0 currentColor, 12px 18px 0 0 currentColor, 18px 18px 0 0 currentColor, 24px 18px 0 0 currentColor, 30px 18px 0 0 currentColor, 36px 18px 0 0 currentColor,
+        6px 24px 0 0 currentColor, 12px 24px 0 0 currentColor, 18px 24px 0 0 currentColor, 24px 24px 0 0 currentColor, 30px 24px 0 0 currentColor,
+        6px 30px 0 0 currentColor, 30px 30px 0 0 currentColor,
+        6px 36px 0 0 currentColor, 12px 36px 0 0 currentColor, 24px 36px 0 0 currentColor, 30px 36px 0 0 currentColor;
+    }
+
+    /* Color classes */
+    .c-green { color: #39FF14; }
+    .c-pink   { color: #FF1493; }
+    .c-cyan   { color: #00FFFF; }
+    .c-gold   { color: #FFD700; }
+    .c-purple { color: #AA00FF; }
+
+    /* Sprite wrapper — handles the overflow from box-shadow */
+    .px-sprite-wrap {
+      display: inline-block;
+      overflow: visible;
+      line-height: 0;
+    }
+
+    /* ===== MONSTER DECORATIONS ===== */
+    .hero-monsters {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    /* Override the hero > *:not(.hero-bg-photo) { z-index:1 } */
+    .hero .hero-monsters {
+      z-index: 0 !important;
+    }
+
+    .hero-monster {
+      position: absolute;
+    }
+    .hero-monster--tl {
+      top: 80px; left: 40px;
+      animation: floatPixel 3.2s ease-in-out infinite;
+    }
+    .hero-monster--tr {
+      top: 90px; right: 70px;
+      animation: floatPixelSlow 4s ease-in-out infinite 0.8s;
+    }
+    .hero-monster--bl {
+      bottom: 140px; left: 50px;
+      animation: ghostBob 3.5s ease-in-out infinite 1.2s;
+    }
+    .hero-monster--br {
+      bottom: 140px; right: 50px;
+      animation: floatPixel 2.8s ease-in-out infinite 0.4s;
+    }
+    .hero-monster--mid-l {
+      top: 50%; left: 20px;
+      transform: translateY(-50%);
+      animation: invaderWalk 1.5s steps(2) infinite;
+    }
+    .hero-monster--mid-r {
+      top: 50%; right: 20px;
+      transform: translateY(-50%);
+      animation: invaderWalk 1.5s steps(2) infinite 0.75s;
+    }
+
+    /* Walking invader across the hero bottom */
+    .walking-invader {
+      position: absolute;
+      bottom: 48px;
+      animation: walkAcross 14s linear infinite;
+    }
+
+    /* INSERT COIN blinking in corner */
+    .insert-coin {
+      position: absolute;
+      bottom: 100px;
+      right: 24px;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 9px;
+      letter-spacing: 1px;
+      animation: coinBlink 1.4s steps(1) infinite;
+      opacity: 0;
+      animation-delay: 4s;
+      animation-fill-mode: both;
+      pointer-events: none;
+    }
+
+    /* ===== HP BAR ===== */
+    .hp-bar-wrap {
+      margin-top: 36px;
+      text-align: center;
+      opacity: 0;
+      animation: fadeInUp 0.6s 4s both;
+    }
+    .hp-bar-label {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 9px;
+      color: rgba(57,255,20,0.55);
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+    .hp-bar-track {
+      display: inline-block;
+      width: 180px;
+      height: 10px;
+      border: 2px solid rgba(57,255,20,0.4);
+      background: rgba(0,0,0,0.4);
+      position: relative;
+      overflow: hidden;
+    }
+    .hp-bar-fill {
+      position: absolute;
+      left: 0; top: 0;
+      height: 100%;
+      width: 100%;
+      background: #39FF14;
+      animation: hpDrain 6s 4.5s both;
     }
 
     /* ===== NAV ===== */
     .nav {
       position: fixed;
-      top: 0;
-      left: 0;
+      top: 0; left: 0;
       width: 100%;
       z-index: 1000;
       padding: 16px 24px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: rgba(13, 13, 13, 0.92);
-      border-bottom: 2px solid rgba(57, 255, 20, 0.3);
+      background: rgba(13,13,13,0.92);
+      border-bottom: 2px solid rgba(57,255,20,0.3);
       backdrop-filter: blur(8px);
     }
-
     .nav-logo {
       font-family: 'Press Start 2P', cursive;
       font-size: 14px;
       color: #39FF14;
       letter-spacing: 2px;
+      position: relative;
+    }
+    /* Easter egg: hover nav logo shows tiny invader */
+    .nav-logo-monster {
+      position: absolute;
+      top: -28px;
+      left: 50%;
+      transform: translateX(-50%) scale(0);
+      transform-origin: bottom center;
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      pointer-events: none;
+    }
+    .nav-logo:hover .nav-logo-monster {
+      transform: translateX(-50%) scale(1);
     }
 
     .nav-links {
@@ -260,7 +442,6 @@ export const prerender = true;
       gap: 32px;
       list-style: none;
     }
-
     .nav-links a {
       font-family: 'VT323', monospace;
       font-size: 22px;
@@ -268,13 +449,10 @@ export const prerender = true;
       transition: color 0.2s, text-shadow 0.2s;
       letter-spacing: 1px;
     }
-
     .nav-links a:hover {
       color: #39FF14;
       text-shadow: 0 0 8px #39FF14;
     }
-
-    /* Mobile Nav */
     .nav-toggle {
       display: none;
       background: none;
@@ -299,27 +477,21 @@ export const prerender = true;
       overflow: hidden;
       background: #0D0D0D;
     }
-
     .hero-bg-photo {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
+      position: absolute; inset: 0; z-index: 0;
     }
     .hero-bg-photo img {
-      width: 100%;
-      height: 100%;
+      width: 100%; height: 100%;
       object-fit: cover;
       opacity: 0.25;
       display: block;
     }
     .hero-bg-photo::after {
       content: '';
-      position: absolute;
-      inset: 0;
+      position: absolute; inset: 0;
       background: radial-gradient(ellipse at 50% 0%, rgba(57,255,20,0.08) 0%, transparent 60%);
     }
-
-    .hero > *:not(.hero-bg-photo) {
+    .hero > *:not(.hero-bg-photo):not(.hero-monsters) {
       position: relative;
       z-index: 1;
     }
@@ -330,7 +502,6 @@ export const prerender = true;
       text-align: left;
       margin-bottom: 48px;
     }
-
     .boot-line {
       font-family: 'VT323', monospace;
       font-size: 24px;
@@ -340,33 +511,22 @@ export const prerender = true;
       display: block;
       margin-bottom: 8px;
     }
-
-    .boot-line-1 {
-      animation: typeLine1 1.2s steps(28) 0.5s both;
-    }
-
-    .boot-line-2 {
-      animation: typeLine2 1.8s steps(20) 0.5s both;
-    }
-
-    .boot-line-3 {
-      animation: typeLine3 2.5s steps(16) 0.5s both;
-    }
+    .boot-line-1 { animation: typeLine1 1.2s steps(28) 0.5s both; }
+    .boot-line-2 { animation: typeLine2 1.8s steps(20) 0.5s both; }
+    .boot-line-3 { animation: typeLine3 2.5s steps(16) 0.5s both; }
 
     .hero-title {
       font-size: clamp(28px, 6vw, 64px);
       color: #39FF14;
       letter-spacing: 4px;
       margin-bottom: 24px;
-      animation: glitch 3s infinite, fadeInUp 0.8s 2.8s both;
       opacity: 0;
-      animation-delay: 2.8s, 2.8s;
+      animation: glitch 3s infinite, fadeInUp 0.8s 2.8s both, rgbGlitch 7s infinite 5s;
+      animation-delay: 2.8s, 2.8s, 5s;
     }
-
     .hero-title-wrapper {
       animation: flicker 8s infinite;
     }
-
     .hero-subtitle {
       font-family: 'VT323', monospace;
       font-size: clamp(20px, 3vw, 28px);
@@ -376,12 +536,8 @@ export const prerender = true;
       opacity: 0;
       animation: fadeInUp 0.8s 3.2s both;
     }
+    .hero-subtitle span { color: #FF1493; }
 
-    .hero-subtitle span {
-      color: #FF1493;
-    }
-
-    /* Pixel decoration */
     .pixel-decoration {
       display: flex;
       justify-content: center;
@@ -390,23 +546,13 @@ export const prerender = true;
       opacity: 0;
       animation: fadeInUp 0.6s 3s both;
     }
-
     .pixel-dot {
-      width: 8px;
-      height: 8px;
+      width: 8px; height: 8px;
       background: #39FF14;
     }
+    .pixel-dot:nth-child(even) { background: #FF1493; }
+    .pixel-dot:nth-child(3n) { background: transparent; border: 2px solid #39FF14; }
 
-    .pixel-dot:nth-child(even) {
-      background: #FF1493;
-    }
-
-    .pixel-dot:nth-child(3n) {
-      background: transparent;
-      border: 2px solid #39FF14;
-    }
-
-    /* CTA Button */
     .cta-button {
       display: inline-block;
       font-family: 'Press Start 2P', cursive;
@@ -423,29 +569,20 @@ export const prerender = true;
       animation: fadeInUp 0.8s 3.5s both, neonPulse 2s infinite 4s;
       text-transform: uppercase;
     }
-
     .cta-button::before {
       content: '';
       position: absolute;
-      top: 4px;
-      left: 4px;
-      right: -4px;
-      bottom: -4px;
+      top: 4px; left: 4px; right: -4px; bottom: -4px;
       background: #FF1493;
       z-index: -1;
       transition: all 0.2s;
     }
-
     .cta-button:hover {
       transform: translate(2px, 2px);
       background: #FF1493;
       color: #0D0D0D;
-      box-shadow:
-        0 0 10px #FF1493,
-        0 0 20px #FF1493,
-        0 0 40px #FF1493;
+      box-shadow: 0 0 10px #FF1493, 0 0 20px #FF1493, 0 0 40px #FF1493;
     }
-
     .cta-button:hover::before {
       transform: translate(-4px, -4px);
       background: #39FF14;
@@ -458,12 +595,10 @@ export const prerender = true;
       margin: 0 auto;
       position: relative;
     }
-
     .section-header {
       text-align: center;
       margin-bottom: 64px;
     }
-
     .section-tag {
       font-family: 'VT323', monospace;
       font-size: 22px;
@@ -472,11 +607,41 @@ export const prerender = true;
       margin-bottom: 16px;
       display: block;
     }
-
     .section-title {
       font-size: clamp(20px, 4vw, 36px);
       color: #39FF14;
       letter-spacing: 3px;
+    }
+
+    /* Pixel row separator decoration */
+    .pixel-row-deco {
+      display: flex;
+      justify-content: center;
+      gap: 3px;
+      margin-top: 20px;
+      opacity: 0.45;
+    }
+    .prd { width: 6px; height: 6px; background: #39FF14; }
+    .prd:nth-child(even) { background: #FF1493; }
+    .prd:nth-child(4n) { background: transparent; border: 1px solid rgba(57,255,20,0.5); }
+
+    /* Section corner monster decorations */
+    .section-corner-monster {
+      position: absolute;
+      opacity: 0.2;
+      transition: opacity 0.5s, transform 0.5s;
+      pointer-events: none;
+    }
+    .section-corner-monster--tr {
+      top: 24px; right: -8px;
+      animation: floatPixel 4s ease-in-out infinite;
+    }
+    .section-corner-monster--bl {
+      bottom: 40px; left: -8px;
+      animation: ghostBob 5s ease-in-out infinite 1s;
+    }
+    .select-mode:hover .section-corner-monster {
+      opacity: 0.5;
     }
 
     .menu-list {
@@ -484,21 +649,32 @@ export const prerender = true;
       flex-direction: column;
       gap: 24px;
     }
-
     .menu-item {
-      border: 2px solid rgba(57, 255, 20, 0.3);
+      border: 2px solid rgba(57,255,20,0.3);
       padding: 32px;
       position: relative;
       cursor: pointer;
       transition: all 0.3s;
-      background: rgba(57, 255, 20, 0.02);
+      background: rgba(57,255,20,0.02);
+      overflow: hidden;
     }
-
+    /* Scan-sweep effect on hover */
+    .menu-item::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -110%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(57,255,20,0.05), transparent);
+      transition: none;
+    }
+    .menu-item:hover::after {
+      left: 110%;
+      transition: left 0.45s ease;
+    }
     .menu-item::before {
       content: '>';
       position: absolute;
-      left: -24px;
-      top: 50%;
+      left: -24px; top: 50%;
       transform: translateY(-50%);
       font-family: 'Press Start 2P', cursive;
       font-size: 16px;
@@ -507,20 +683,13 @@ export const prerender = true;
       animation: blink 0.8s steps(1) infinite;
       transition: opacity 0.3s;
     }
-
-    .menu-item:hover::before {
-      opacity: 1;
-    }
-
+    .menu-item:hover::before { opacity: 1; }
     .menu-item:hover {
       border-color: #39FF14;
-      background: rgba(57, 255, 20, 0.06);
-      box-shadow:
-        0 0 10px rgba(57, 255, 20, 0.2),
-        inset 0 0 20px rgba(57, 255, 20, 0.03);
+      background: rgba(57,255,20,0.06);
+      box-shadow: 0 0 10px rgba(57,255,20,0.2), inset 0 0 20px rgba(57,255,20,0.03);
       transform: translateX(8px);
     }
-
     .menu-item-number {
       font-family: 'Press Start 2P', cursive;
       font-size: 11px;
@@ -528,7 +697,6 @@ export const prerender = true;
       margin-bottom: 12px;
       letter-spacing: 2px;
     }
-
     .menu-item-title {
       font-family: 'Press Start 2P', cursive;
       font-size: clamp(14px, 2.5vw, 18px);
@@ -536,7 +704,6 @@ export const prerender = true;
       margin-bottom: 12px;
       letter-spacing: 1px;
     }
-
     .menu-item-desc {
       font-family: 'VT323', monospace;
       font-size: 22px;
@@ -544,22 +711,31 @@ export const prerender = true;
       margin-bottom: 12px;
       line-height: 1.5;
     }
-
     .menu-item-price {
       font-family: 'Press Start 2P', cursive;
       font-size: 12px;
       color: #FF1493;
       letter-spacing: 1px;
     }
-
     .menu-item-icons {
       position: absolute;
-      top: 24px;
-      right: 24px;
+      top: 24px; right: 24px;
       font-family: 'VT323', monospace;
       font-size: 28px;
-      color: rgba(57, 255, 20, 0.4);
+      color: rgba(57,255,20,0.4);
       letter-spacing: 4px;
+    }
+    /* Mini monster tag on menu item */
+    .menu-item-monster {
+      position: absolute;
+      bottom: 16px; right: 16px;
+      opacity: 0;
+      transform: scale(0);
+      transition: opacity 0.3s, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .menu-item:hover .menu-item-monster {
+      opacity: 0.7;
+      transform: scale(1);
     }
 
     /* ===== SECTION 3 — HIGH SCORES / EVENTS ===== */
@@ -567,57 +743,79 @@ export const prerender = true;
       padding: 100px 24px;
       max-width: 900px;
       margin: 0 auto;
+      position: relative;
     }
+    .score-display {
+      text-align: right;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 10px;
+      color: rgba(57,255,20,0.45);
+      letter-spacing: 1px;
+      margin-bottom: 40px;
+    }
+    .score-display span { color: #FF1493; }
 
     .leaderboard {
       border: 3px solid #39FF14;
       overflow: hidden;
       margin-bottom: 64px;
-      box-shadow: 0 0 20px rgba(57, 255, 20, 0.15);
+      box-shadow: 0 0 20px rgba(57,255,20,0.15);
     }
-
     .leaderboard-header {
-      background: rgba(57, 255, 20, 0.1);
+      background: rgba(57,255,20,0.1);
       padding: 20px 32px;
       display: grid;
       grid-template-columns: 60px 1fr 1fr;
       gap: 16px;
       border-bottom: 2px solid #39FF14;
     }
-
     .leaderboard-header span {
       font-family: 'Press Start 2P', cursive;
       font-size: 10px;
       color: #39FF14;
       letter-spacing: 2px;
     }
-
     .leaderboard-row {
       display: grid;
       grid-template-columns: 60px 1fr 1fr;
       gap: 16px;
       padding: 20px 32px;
-      border-bottom: 1px solid rgba(57, 255, 20, 0.15);
-      transition: all 0.3s;
+      border-bottom: 1px solid rgba(57,255,20,0.15);
+      transition: all 0.25s;
       cursor: default;
+      position: relative;
+      overflow: hidden;
     }
-
-    .leaderboard-row:last-child {
-      border-bottom: none;
+    .leaderboard-row:last-child { border-bottom: none; }
+    .leaderboard-row::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -110%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(57,255,20,0.04), transparent);
     }
-
+    .leaderboard-row:hover::after {
+      left: 110%;
+      transition: left 0.4s ease;
+    }
     .leaderboard-row:hover {
-      background: rgba(57, 255, 20, 0.06);
+      background: rgba(57,255,20,0.06);
     }
-
+    .leaderboard-row:hover .leaderboard-rank {
+      color: #FFD700;
+      text-shadow: 0 0 8px #FFD700, 0 0 16px #FFD700;
+    }
+    .leaderboard-row:hover .leaderboard-event {
+      color: #39FF14;
+    }
     .leaderboard-rank {
       font-family: 'Press Start 2P', cursive;
       font-size: 14px;
       color: #FF1493;
       display: flex;
       align-items: center;
+      transition: all 0.25s;
     }
-
     .leaderboard-day {
       font-family: 'Press Start 2P', cursive;
       font-size: clamp(10px, 1.8vw, 13px);
@@ -626,80 +824,91 @@ export const prerender = true;
       align-items: center;
       letter-spacing: 1px;
     }
-
     .leaderboard-event {
       font-family: 'VT323', monospace;
       font-size: clamp(20px, 2.5vw, 26px);
       color: #E0E0E0;
       display: flex;
       align-items: center;
+      transition: color 0.25s;
     }
 
-    /* Info Footer */
+    /* ===== INFO BAR ===== */
     .info-bar {
       text-align: center;
       padding: 48px 24px;
-      border-top: 2px solid rgba(57, 255, 20, 0.2);
+      border-top: 2px solid rgba(57,255,20,0.2);
     }
-
     .info-address {
       font-family: 'VT323', monospace;
       font-size: 24px;
       color: #E0E0E0;
       margin-bottom: 16px;
     }
-
     .info-social {
       font-family: 'Press Start 2P', cursive;
       font-size: 11px;
       color: #FF1493;
       letter-spacing: 1px;
     }
-
-    .info-social a {
-      color: #FF1493;
-      transition: text-shadow 0.2s;
-    }
-
-    .info-social a:hover {
-      text-shadow: 0 0 8px #FF1493, 0 0 16px #FF1493;
-    }
+    .info-social a { color: #FF1493; transition: text-shadow 0.2s; }
+    .info-social a:hover { text-shadow: 0 0 8px #FF1493, 0 0 16px #FF1493; }
 
     /* ===== FOOTER ===== */
     .footer {
       padding: 40px 24px;
       text-align: center;
-      border-top: 2px solid rgba(57, 255, 20, 0.15);
-      background: rgba(0, 0, 0, 0.3);
+      border-top: 2px solid rgba(57,255,20,0.15);
+      background: rgba(0,0,0,0.3);
+      cursor: default;
     }
+    /* Easter egg monsters in footer — revealed on hover */
+    .footer-monsters {
+      display: flex;
+      justify-content: center;
+      gap: 56px;
+      margin-bottom: 28px;
+      height: 50px;
+      align-items: flex-end;
+    }
+    .footer-monster {
+      opacity: 0;
+      transform: translateY(16px) scale(0);
+      transition: opacity 0.35s, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .footer:hover .footer-monster:nth-child(1) { opacity: 1; transform: translateY(0) scale(1); transition-delay: 0s; }
+    .footer:hover .footer-monster:nth-child(2) { opacity: 0.8; transform: translateY(0) scale(1); transition-delay: 0.08s; }
+    .footer:hover .footer-monster:nth-child(3) { opacity: 1; transform: translateY(0) scale(1); transition-delay: 0.16s; }
+    .footer:hover .footer-monster:nth-child(4) { opacity: 0.8; transform: translateY(0) scale(1); transition-delay: 0.24s; }
+    .footer:hover .footer-monster:nth-child(5) { opacity: 1; transform: translateY(0) scale(1); transition-delay: 0.32s; }
 
     .footer-text {
       font-family: 'VT323', monospace;
       font-size: 20px;
-      color: rgba(224, 224, 224, 0.4);
+      color: rgba(224,224,224,0.4);
     }
-
     .footer-credit {
       font-family: 'VT323', monospace;
       font-size: 18px;
-      color: rgba(57, 255, 20, 0.3);
+      color: rgba(57,255,20,0.3);
       margin-top: 8px;
     }
-
-    .footer-credit a {
-      color: rgba(57, 255, 20, 0.5);
-      transition: color 0.2s;
+    .footer-credit a { color: rgba(57,255,20,0.5); transition: color 0.2s; }
+    .footer-credit a:hover { color: #39FF14; }
+    .footer-hint {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 8px;
+      color: rgba(255,20,147,0.2);
+      margin-top: 16px;
+      letter-spacing: 1px;
+      transition: color 0.3s;
     }
-
-    .footer-credit a:hover {
-      color: #39FF14;
-    }
+    .footer:hover .footer-hint { color: rgba(255,20,147,0.5); }
 
     /* ===== CURSOR BLINK ===== */
     .cursor {
       display: inline-block;
-      width: 12px;
-      height: 24px;
+      width: 12px; height: 24px;
       background: #39FF14;
       margin-left: 4px;
       animation: blink 0.8s steps(1) infinite;
@@ -712,15 +921,19 @@ export const prerender = true;
       max-width: 900px;
       margin: 0 auto;
       height: 2px;
-      background: linear-gradient(
-        90deg,
-        transparent,
-        #39FF14 20%,
-        #FF1493 50%,
-        #39FF14 80%,
-        transparent
-      );
+      background: linear-gradient(90deg, transparent, #39FF14 20%, #FF1493 50%, #39FF14 80%, transparent);
       opacity: 0.4;
+    }
+
+    /* ===== KONAMI rainbow mode ===== */
+    body.konami .px-invader,
+    body.konami .px-ghost,
+    body.konami .px-alien,
+    body.konami .px-skull {
+      animation: rainbowColor 0.5s linear infinite !important;
+    }
+    body.konami .hero-title {
+      animation: glitch 0.2s infinite, rgbGlitch 0.3s infinite !important;
     }
 
     /* ===== RESPONSIVE ===== */
@@ -728,105 +941,51 @@ export const prerender = true;
       .nav-links {
         display: none;
         position: absolute;
-        top: 100%;
-        left: 0;
+        top: 100%; left: 0;
         width: 100%;
-        background: rgba(13, 13, 13, 0.97);
+        background: rgba(13,13,13,0.97);
         flex-direction: column;
         padding: 24px;
         gap: 20px;
-        border-bottom: 2px solid rgba(57, 255, 20, 0.3);
+        border-bottom: 2px solid rgba(57,255,20,0.3);
       }
-
-      .nav-links.open {
-        display: flex;
-      }
-
-      .nav-toggle {
-        display: block;
-      }
-
-      .hero {
-        padding: 100px 20px 60px;
-      }
-
-      .boot-line {
-        font-size: 18px;
-      }
-
-      .select-mode {
-        padding: 80px 20px;
-      }
-
-      .menu-item {
-        padding: 24px;
-        margin-left: 0;
-      }
-
-      .menu-item::before {
-        display: none;
-      }
-
-      .menu-item:hover {
-        transform: none;
-      }
-
-      .menu-item-icons {
-        display: none;
-      }
-
-      .high-scores {
-        padding: 80px 20px;
-      }
-
+      .nav-links.open { display: flex; }
+      .nav-toggle { display: block; }
+      .hero { padding: 100px 20px 60px; }
+      .boot-line { font-size: 18px; }
+      .hero-monster--mid-l,
+      .hero-monster--mid-r { display: none; }
+      .insert-coin { display: none; }
+      .select-mode { padding: 80px 20px; }
+      .section-corner-monster { display: none; }
+      .menu-item { padding: 24px; margin-left: 0; }
+      .menu-item::before { display: none; }
+      .menu-item:hover { transform: none; }
+      .menu-item-icons { display: none; }
+      .high-scores { padding: 80px 20px; }
       .leaderboard-header,
       .leaderboard-row {
         grid-template-columns: 40px 1fr;
         padding: 16px 20px;
       }
-
       .leaderboard-header span:last-child,
-      .leaderboard-event {
-        grid-column: 1 / -1;
-      }
-
-      .leaderboard-day {
-        font-size: 10px;
-      }
-
-      .pixel-decoration {
-        gap: 4px;
-      }
-
-      .pixel-dot {
-        width: 6px;
-        height: 6px;
-      }
+      .leaderboard-event { grid-column: 1 / -1; }
+      .leaderboard-day { font-size: 10px; }
+      .pixel-decoration { gap: 4px; }
+      .pixel-dot { width: 6px; height: 6px; }
+      .footer-monsters { gap: 32px; }
     }
-
     @media (max-width: 480px) {
-      .hero-title {
-        letter-spacing: 2px;
-      }
-
-      .cta-button {
-        padding: 16px 32px;
-        font-size: 12px;
-      }
-
-      .boot-line {
-        font-size: 15px;
-      }
-
-      .nav-logo {
-        font-size: 11px;
-      }
-
+      .hero-title { letter-spacing: 2px; }
+      .cta-button { padding: 16px 32px; font-size: 12px; }
+      .boot-line { font-size: 15px; }
+      .nav-logo { font-size: 11px; }
       .leaderboard-header,
-      .leaderboard-row {
-        padding: 12px 16px;
-        gap: 8px;
-      }
+      .leaderboard-row { padding: 12px 16px; gap: 8px; }
+      .hero-monster--tl,
+      .hero-monster--tr,
+      .hero-monster--bl,
+      .hero-monster--br { display: none; }
     }
   </style>
 </head>
@@ -834,7 +993,13 @@ export const prerender = true;
 <body>
   <!-- NAV -->
   <nav class="nav">
-    <div class="nav-logo glow-green-subtle">RESPAWN</div>
+    <div class="nav-logo glow-green-subtle" style="cursor:default;">
+      RESPAWN
+      <!-- Easter egg: tiny invader pops up above logo on hover -->
+      <span class="nav-logo-monster">
+        <span class="px-sprite-wrap"><span class="px-invader c-green" style="display:inline-block;width:6px;height:6px;"></span></span>
+      </span>
+    </div>
     <button class="nav-toggle" id="navToggle" aria-label="Menu">MENU</button>
     <ul class="nav-links" id="navLinks">
       <li><a href="#select-mode">SELECT MODE</a></li>
@@ -848,6 +1013,36 @@ export const prerender = true;
       <img src="https://images.unsplash.com/photo-1542736667-069246bdbc6d?auto=format&fit=crop&w=1600&h=900&q=80"
            alt="Gaming Setup — Respawn Trier" loading="eager" />
     </div>
+
+    <!-- Pixel monster decorations (behind content via z-index) -->
+    <div class="hero-monsters" aria-hidden="true">
+      <div class="hero-monster hero-monster--tl" style="opacity:0.45;">
+        <span class="px-sprite-wrap"><span class="px-invader c-green" style="display:block;width:6px;height:6px;"></span></span>
+      </div>
+      <div class="hero-monster hero-monster--tr" style="opacity:0.4;">
+        <span class="px-sprite-wrap"><span class="px-invader c-pink" style="display:block;width:6px;height:6px;"></span></span>
+      </div>
+      <div class="hero-monster hero-monster--bl" style="opacity:0.35;">
+        <span class="px-sprite-wrap"><span class="px-ghost c-cyan" style="display:block;width:6px;height:6px;"></span></span>
+      </div>
+      <div class="hero-monster hero-monster--br" style="opacity:0.35;">
+        <span class="px-sprite-wrap"><span class="px-alien c-green" style="display:block;width:6px;height:6px;"></span></span>
+      </div>
+      <div class="hero-monster hero-monster--mid-l" style="opacity:0.25;">
+        <span class="px-sprite-wrap"><span class="px-skull c-purple" style="display:block;width:6px;height:6px;"></span></span>
+      </div>
+      <div class="hero-monster hero-monster--mid-r" style="opacity:0.25;">
+        <span class="px-sprite-wrap"><span class="px-alien c-pink" style="display:block;width:6px;height:6px;"></span></span>
+      </div>
+      <!-- Walking invader across bottom -->
+      <div class="walking-invader" style="opacity:0.5;">
+        <span class="px-sprite-wrap"><span class="px-invader c-pink" style="display:block;width:6px;height:6px;"></span></span>
+      </div>
+    </div>
+
+    <!-- INSERT COIN -->
+    <div class="insert-coin" aria-hidden="true">INSERT COIN</div>
+
     <div class="boot-terminal">
       <span class="boot-line boot-line-1">&gt; LOADING RESPAWN.EXE...</span>
       <span class="boot-line boot-line-2">&gt; LOCATION: TRIER</span>
@@ -855,39 +1050,50 @@ export const prerender = true;
     </div>
 
     <div class="pixel-decoration">
-      <div class="pixel-dot"></div>
-      <div class="pixel-dot"></div>
-      <div class="pixel-dot"></div>
-      <div class="pixel-dot"></div>
-      <div class="pixel-dot"></div>
-      <div class="pixel-dot"></div>
-      <div class="pixel-dot"></div>
-      <div class="pixel-dot"></div>
-      <div class="pixel-dot"></div>
-      <div class="pixel-dot"></div>
-      <div class="pixel-dot"></div>
-      <div class="pixel-dot"></div>
-      <div class="pixel-dot"></div>
-      <div class="pixel-dot"></div>
-      <div class="pixel-dot"></div>
+      <div class="pixel-dot"></div><div class="pixel-dot"></div><div class="pixel-dot"></div>
+      <div class="pixel-dot"></div><div class="pixel-dot"></div><div class="pixel-dot"></div>
+      <div class="pixel-dot"></div><div class="pixel-dot"></div><div class="pixel-dot"></div>
+      <div class="pixel-dot"></div><div class="pixel-dot"></div><div class="pixel-dot"></div>
+      <div class="pixel-dot"></div><div class="pixel-dot"></div><div class="pixel-dot"></div>
     </div>
 
     <div class="hero-title-wrapper">
       <h1 class="hero-title glow-green">PRESS START</h1>
     </div>
 
-    <p class="hero-subtitle">Gaming Cafe & Bar <span>|</span> Di&ndash;So 14&ndash;01 Uhr</p>
+    <p class="hero-subtitle">Gaming Cafe &amp; Bar <span>|</span> Di&ndash;So 14&ndash;01 Uhr</p>
 
     <a href="#select-mode" class="cta-button">[START GAME]</a>
+
+    <!-- HP Bar -->
+    <div class="hp-bar-wrap" aria-hidden="true">
+      <p class="hp-bar-label">RESPAWN HP</p>
+      <div class="hp-bar-track">
+        <div class="hp-bar-fill"></div>
+      </div>
+    </div>
   </section>
 
   <div class="section-divider"></div>
 
   <!-- SECTION 2 — SELECT MODE -->
   <section class="select-mode" id="select-mode">
+    <!-- Corner monster decorations (visible on section hover) -->
+    <div class="section-corner-monster section-corner-monster--tr" aria-hidden="true">
+      <span class="px-sprite-wrap"><span class="px-ghost c-green" style="display:block;width:6px;height:6px;"></span></span>
+    </div>
+    <div class="section-corner-monster section-corner-monster--bl" aria-hidden="true">
+      <span class="px-sprite-wrap"><span class="px-ghost c-pink" style="display:block;width:6px;height:6px;"></span></span>
+    </div>
+
     <div class="section-header">
       <span class="section-tag">&gt; PLAYER_SELECT.EXE</span>
       <h2 class="section-title glow-green-subtle">SELECT MODE</h2>
+      <div class="pixel-row-deco" aria-hidden="true">
+        <div class="prd"></div><div class="prd"></div><div class="prd"></div><div class="prd"></div>
+        <div class="prd"></div><div class="prd"></div><div class="prd"></div><div class="prd"></div>
+        <div class="prd"></div><div class="prd"></div><div class="prd"></div><div class="prd"></div>
+      </div>
     </div>
 
     <div class="menu-list">
@@ -898,6 +1104,9 @@ export const prerender = true;
         <h3 class="menu-item-title">CONSOLE CORNER</h3>
         <p class="menu-item-desc">PS5, Nintendo Switch, Retro-Konsolen. Couch-Feeling mit Freunden oder allein abtauchen.</p>
         <span class="menu-item-price">AB 5 EUR / STUNDE</span>
+        <div class="menu-item-monster" aria-hidden="true">
+          <span class="px-sprite-wrap"><span class="px-alien c-green" style="display:block;width:6px;height:6px;"></span></span>
+        </div>
       </div>
 
       <!-- Option 2 -->
@@ -907,6 +1116,9 @@ export const prerender = true;
         <h3 class="menu-item-title">PC ARENA</h3>
         <p class="menu-item-desc">High-End Gaming PCs, 144Hz Monitore, mechanische Keyboards. Dein Setup wartet.</p>
         <span class="menu-item-price">AB 6 EUR / STUNDE</span>
+        <div class="menu-item-monster" aria-hidden="true">
+          <span class="px-sprite-wrap"><span class="px-invader c-cyan" style="display:block;width:6px;height:6px;"></span></span>
+        </div>
       </div>
 
       <!-- Option 3 -->
@@ -914,8 +1126,11 @@ export const prerender = true;
         <div class="menu-item-icons">/.3</div>
         <div class="menu-item-number">OPTION 03</div>
         <h3 class="menu-item-title">TABLETOP</h3>
-        <p class="menu-item-desc">Brettspiele, Magic: The Gathering, D&D. Wuerfel rollen, Karten ziehen, Abenteuer erleben.</p>
+        <p class="menu-item-desc">Brettspiele, Magic: The Gathering, D&amp;D. Wuerfel rollen, Karten ziehen, Abenteuer erleben.</p>
         <span class="menu-item-price">KOSTENLOS BEI GETRAENKEBESTELLUNG</span>
+        <div class="menu-item-monster" aria-hidden="true">
+          <span class="px-sprite-wrap"><span class="px-skull c-pink" style="display:block;width:6px;height:6px;"></span></span>
+        </div>
       </div>
     </div>
   </section>
@@ -924,9 +1139,16 @@ export const prerender = true;
 
   <!-- SECTION 3 — HIGH SCORES / EVENTS -->
   <section class="high-scores" id="high-scores">
+    <div class="score-display" aria-hidden="true">SCORE: <span id="scoreCount">00000000</span></div>
+
     <div class="section-header">
       <span class="section-tag">&gt; WEEKLY_EVENTS.LOG</span>
       <h2 class="section-title glow-green-subtle">HIGH SCORES</h2>
+      <div class="pixel-row-deco" aria-hidden="true">
+        <div class="prd"></div><div class="prd"></div><div class="prd"></div><div class="prd"></div>
+        <div class="prd"></div><div class="prd"></div><div class="prd"></div><div class="prd"></div>
+        <div class="prd"></div><div class="prd"></div><div class="prd"></div><div class="prd"></div>
+      </div>
     </div>
 
     <div class="leaderboard pixel-border">
@@ -935,56 +1157,136 @@ export const prerender = true;
         <span>TAG</span>
         <span>EVENT</span>
       </div>
-
       <div class="leaderboard-row">
         <div class="leaderboard-rank">01</div>
         <div class="leaderboard-day">MO</div>
-        <div class="leaderboard-event">Retro Monday -- SNES Turnier</div>
+        <div class="leaderboard-event">Retro Monday — SNES Turnier</div>
       </div>
-
       <div class="leaderboard-row">
         <div class="leaderboard-rank">02</div>
         <div class="leaderboard-day">MI</div>
         <div class="leaderboard-event">Magic: The Gathering</div>
       </div>
-
       <div class="leaderboard-row">
         <div class="leaderboard-rank">03</div>
         <div class="leaderboard-day">FR</div>
         <div class="leaderboard-event">Smash Bros Ultimate Turnier</div>
       </div>
-
       <div class="leaderboard-row">
         <div class="leaderboard-rank">04</div>
         <div class="leaderboard-day">SA</div>
-        <div class="leaderboard-event">D&D Abend</div>
+        <div class="leaderboard-event">D&amp;D Abend</div>
       </div>
     </div>
 
     <div class="info-bar">
-      <p class="info-address">Respawn Gaming Cafe & Bar // Trier</p>
+      <p class="info-address">Respawn Gaming Cafe &amp; Bar // Trier</p>
       <p class="info-social">Follow us: <a href="#">@respawn.trier</a></p>
     </div>
   </section>
 
-  <!-- FOOTER -->
+  <!-- FOOTER — Easter egg: hover to reveal pixel monsters -->
   <footer class="footer">
+    <div class="footer-monsters" aria-hidden="true">
+      <div class="footer-monster">
+        <span class="px-sprite-wrap"><span class="px-invader c-green" style="display:block;width:6px;height:6px;"></span></span>
+      </div>
+      <div class="footer-monster">
+        <span class="px-sprite-wrap"><span class="px-ghost c-pink" style="display:block;width:6px;height:6px;"></span></span>
+      </div>
+      <div class="footer-monster">
+        <span class="px-sprite-wrap"><span class="px-skull c-cyan" style="display:block;width:6px;height:6px;"></span></span>
+      </div>
+      <div class="footer-monster">
+        <span class="px-sprite-wrap"><span class="px-alien c-gold" style="display:block;width:6px;height:6px;"></span></span>
+      </div>
+      <div class="footer-monster">
+        <span class="px-sprite-wrap"><span class="px-invader c-purple" style="display:block;width:6px;height:6px;"></span></span>
+      </div>
+    </div>
     <p class="footer-text">GAME OVER? NEVER. RESPAWN.</p>
     <p class="footer-credit">Design by <a href="https://portawerk.de" target="_blank" rel="noopener">PortaWerk</a></p>
+    <p class="footer-hint">↑ ↑ ↓ ↓ ← → ← → B A</p>
   </footer>
 
-  <!-- Mobile Nav Toggle -->
   <script>
+    // ─── Mobile Nav ───
     document.getElementById('navToggle')?.addEventListener('click', () => {
       document.getElementById('navLinks')?.classList.toggle('open');
     });
-
-    // Close nav on link click (mobile)
     document.querySelectorAll('.nav-links a').forEach(link => {
       link.addEventListener('click', () => {
         document.getElementById('navLinks')?.classList.remove('open');
       });
     });
+
+    // ─── Score Counter (counts up on scroll into view) ───
+    const scoreEl = document.getElementById('scoreCount');
+    let scoreStarted = false;
+    const scoreObserver = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && !scoreStarted) {
+        scoreStarted = true;
+        let val = 0;
+        const target = 12400;
+        const step = Math.ceil(target / 60);
+        const interval = setInterval(() => {
+          val = Math.min(val + step, target);
+          scoreEl.textContent = String(val).padStart(8, '0');
+          if (val >= target) clearInterval(interval);
+        }, 16);
+      }
+    }, { threshold: 0.3 });
+    if (scoreEl) scoreObserver.observe(scoreEl);
+
+    // ─── Konami Code Easter Egg ───
+    const KONAMI = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+    let konamiIdx = 0;
+    document.addEventListener('keydown', e => {
+      if (e.key === KONAMI[konamiIdx]) {
+        konamiIdx++;
+        if (konamiIdx === KONAMI.length) {
+          document.body.classList.toggle('konami');
+          konamiIdx = 0;
+          if (document.body.classList.contains('konami')) {
+            // Flash message
+            const msg = document.createElement('div');
+            msg.textContent = '★ CHEAT ACTIVATED ★';
+            msg.style.cssText = 'position:fixed;top:80px;left:50%;transform:translateX(-50%);font-family:"Press Start 2P",cursive;font-size:12px;color:#FFD700;z-index:10000;text-shadow:0 0 10px #FFD700;animation:blink 0.5s steps(1) 4;pointer-events:none;';
+            document.body.appendChild(msg);
+            setTimeout(() => msg.remove(), 2000);
+          }
+        }
+      } else {
+        konamiIdx = e.key === KONAMI[0] ? 1 : 0;
+      }
+    });
+
+    // ─── Click-to-zap monsters ───
+    document.querySelectorAll('.px-invader, .px-ghost, .px-alien, .px-skull').forEach(sprite => {
+      sprite.style.cursor = 'pointer';
+      sprite.style.transition = 'transform 0.15s, opacity 0.15s';
+      sprite.addEventListener('click', function(e) {
+        e.stopPropagation();
+        this.style.transform = 'scale(0)';
+        this.style.opacity = '0';
+        setTimeout(() => {
+          this.style.transition = 'transform 0.4s cubic-bezier(0.34,1.56,0.64,1), opacity 0.4s';
+          this.style.transform = 'scale(1)';
+          this.style.opacity = '1';
+        }, 300);
+      });
+    });
+
+    // ─── Parallax on hero bg photo ───
+    const heroBg = document.querySelector('.hero-bg-photo img');
+    if (heroBg) {
+      window.addEventListener('scroll', () => {
+        const scrolled = window.scrollY;
+        if (scrolled < window.innerHeight) {
+          heroBg.style.transform = `translateY(${scrolled * 0.15}px)`;
+        }
+      }, { passive: true });
+    }
   </script>
 </body>
 </html>
