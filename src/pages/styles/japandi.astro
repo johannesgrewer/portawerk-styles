@@ -7,446 +7,806 @@ export const prerender = true;
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
-  <title>Ma — Interior Design & Wohnkonzepte | Trier</title>
+  <title>Ma — Raum & Form | Interior Design & Objekte, Trier</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,300;0,400;1,300;1,400&family=Noto+Sans:wght@300;400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;1,9..40,300&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { overflow-x: hidden; }
-    body {
-      overflow-x: hidden;
-      background: #FAF7F2;
-      color: #2A2824;
-      font-family: 'Noto Sans', sans-serif;
-      min-height: 100vh;
+    html { overflow-x: hidden; scroll-behavior: smooth; }
+
+    :root {
+      --bg:       #F4EEE4;
+      --surface:  #EAE3D6;
+      --dark:     #1A1916;
+      --mid:      rgba(26,25,22,0.55);
+      --muted:    rgba(26,25,22,0.36);
+      --sage:     #7A8B76;
+      --sage-lt:  rgba(122,139,118,0.1);
+      --line:     rgba(26,25,22,0.09);
+      --serif:    'Cormorant Garamond', Georgia, serif;
+      --sans:     'DM Sans', system-ui, sans-serif;
     }
 
+    body {
+      background: var(--bg);
+      color: var(--dark);
+      font-family: var(--sans);
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    /* Linen grain */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.022'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    ::selection { background: var(--sage); color: var(--bg); }
+    img { display: block; max-width: 100%; }
+
+    /* Photo utility */
+    .ph { position: relative; overflow: hidden; }
+    .ph img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.75s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .ph:hover img { transform: scale(1.04); }
+
+    /* ── NAV ── */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
-      z-index: 100;
+      z-index: 200;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 2rem 4rem;
+      padding: 2.5rem 5rem;
+      transition: padding 0.5s ease, background 0.5s ease, border-color 0.5s ease;
     }
+    nav.scrolled {
+      background: rgba(244,238,228,0.93);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 1.4rem 5rem;
+      border-bottom: 1px solid var(--line);
+    }
+
     .nav-logo {
-      font-family: 'Noto Serif', serif;
+      font-family: var(--serif);
+      font-size: 1.75rem;
       font-weight: 300;
-      font-size: 1.5rem;
-      letter-spacing: 0.3em;
-      color: #2A2824;
-    }
-    .nav-links {
-      display: flex;
-      gap: 2.5rem;
-      list-style: none;
-    }
-    .nav-links a {
-      font-size: 0.65rem;
-      font-weight: 300;
-      letter-spacing: 0.2em;
-      color: rgba(42,40,36,0.5);
+      letter-spacing: 0.22em;
+      color: rgba(255,255,255,0.92);
       text-decoration: none;
       transition: color 0.4s;
     }
-    .nav-links a:hover { color: #2A2824; }
+    nav.scrolled .nav-logo { color: var(--dark); }
 
-    .hero {
-      min-height: 100vh;
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      position: relative;
-    }
-
-    /* LEFT — vertical text + kanji */
-    .hero-left {
+    .nav-links {
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 8rem 2rem 4rem;
-      border-right: 1px solid rgba(42,40,36,0.12);
-      gap: 4rem;
+      gap: 2.75rem;
+      list-style: none;
     }
-
-    .kanji {
-      font-family: 'Noto Serif', serif;
-      font-size: 5rem;
+    .nav-links a {
+      font-size: 0.59rem;
       font-weight: 300;
-      color: #7A8B76;
-      writing-mode: vertical-rl;
-      letter-spacing: 0.2em;
-      line-height: 1;
-      opacity: 0.5;
-    }
-
-    .vertical-label {
-      writing-mode: vertical-rl;
-      font-size: 0.55rem;
-      font-weight: 300;
-      letter-spacing: 0.3em;
+      letter-spacing: 0.24em;
       text-transform: uppercase;
-      color: rgba(42,40,36,0.35);
+      color: rgba(255,255,255,0.52);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    nav.scrolled .nav-links a { color: var(--muted); }
+    .nav-links a:hover { color: rgba(255,255,255,0.9); }
+    nav.scrolled .nav-links a:hover { color: var(--sage); }
+
+    /* ── HERO ── */
+    .hero {
+      height: 100vh;
+      min-height: 720px;
+      display: grid;
+      grid-template-columns: 42% 58%;
     }
 
-    /* RIGHT */
-    .hero-right {
+    /* Left — text column */
+    .hero-left {
+      position: relative;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: 8rem 5rem 4rem 5rem;
-      gap: 3rem;
+      padding: 9rem 4rem 5rem 5rem;
+      z-index: 2;
+      overflow: hidden;
+    }
+
+    /* Giant background kanji */
+    .bg-kanji {
+      position: absolute;
+      font-family: var(--serif);
+      font-size: 26rem;
+      font-weight: 300;
+      color: rgba(26,25,22,0.035);
+      line-height: 1;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      user-select: none;
+      white-space: nowrap;
     }
 
     .hero-eyebrow {
-      font-size: 0.6rem;
+      font-size: 0.57rem;
       font-weight: 300;
       letter-spacing: 0.3em;
       text-transform: uppercase;
-      color: #7A8B76;
+      color: var(--sage);
+      margin-bottom: 2.25rem;
     }
 
     .hero-headline {
-      font-family: 'Noto Serif', serif;
-      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-family: var(--serif);
+      font-size: clamp(3.2rem, 4.8vw, 5.8rem);
       font-weight: 300;
       font-style: italic;
-      line-height: 1.25;
-      color: #2A2824;
-      letter-spacing: -0.01em;
+      line-height: 1.12;
+      color: var(--dark);
+      letter-spacing: -0.015em;
+      margin-bottom: 2.5rem;
     }
 
-    .divider {
-      width: 3rem;
+    .hero-divider {
+      width: 2.5rem;
       height: 1px;
-      background: #7A8B76;
+      background: var(--sage);
+      margin-bottom: 2rem;
     }
 
     .hero-body {
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 300;
-      line-height: 1.9;
-      color: rgba(42,40,36,0.65);
-      max-width: 42ch;
+      line-height: 1.95;
+      color: var(--mid);
+      max-width: 38ch;
+      margin-bottom: 3rem;
     }
 
-    /* Three principles row */
-    .principles {
+    .hero-principles {
       display: flex;
-      gap: 3rem;
-      padding-top: 1rem;
-      border-top: 1px solid rgba(42,40,36,0.1);
+      gap: 2.75rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--line);
+      margin-bottom: 3.25rem;
     }
     .principle {
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
+      gap: 0.45rem;
     }
     .principle-jp {
-      font-family: 'Noto Serif', serif;
-      font-size: 1.25rem;
+      font-family: var(--serif);
+      font-size: 1.55rem;
       font-weight: 300;
-      color: #7A8B76;
+      color: var(--sage);
+      letter-spacing: 0.05em;
     }
     .principle-de {
-      font-size: 0.6rem;
+      font-size: 0.54rem;
       font-weight: 300;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: rgba(42,40,36,0.45);
+      color: var(--muted);
     }
 
-    .cta-area {
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-      margin-top: 1rem;
-    }
-    .cta-btn {
+    .btn {
       display: inline-flex;
       align-items: center;
-      gap: 1rem;
+      gap: 0.9rem;
       text-decoration: none;
-      color: #2A2824;
-      font-size: 0.7rem;
-      font-weight: 300;
+      color: var(--dark);
+      font-size: 0.64rem;
+      font-weight: 400;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      border: 1px solid rgba(42,40,36,0.3);
-      padding: 0.9rem 2rem;
-      transition: border-color 0.3s, background 0.3s;
+      border: 1px solid rgba(26,25,22,0.22);
+      padding: 1rem 2.25rem;
+      transition: border-color 0.35s, background 0.35s;
     }
-    .cta-btn:hover {
-      border-color: #7A8B76;
-      background: rgba(122,139,118,0.06);
-    }
-
-    /* Bottom stamp */
-    .stamp {
-      position: fixed;
-      bottom: 3rem;
-      right: 4rem;
-      width: 80px;
-      height: 80px;
-      border: 1px solid rgba(42,40,36,0.2);
-      border-radius: 50%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0.1rem;
-    }
-    .stamp-jp {
-      font-family: 'Noto Serif', serif;
-      font-size: 1.2rem;
-      font-weight: 300;
-      color: #7A8B76;
-    }
-    .stamp-de {
-      font-size: 0.45rem;
-      font-weight: 300;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: rgba(42,40,36,0.35);
+    .btn:hover {
+      border-color: var(--sage);
+      background: var(--sage-lt);
     }
 
-    /* Ink brush accent */
-    .ink-accent {
+    /* Right — full bleed photo */
+    .hero-right {
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-right img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center;
+      animation: slowZoom 24s ease-in-out infinite alternate;
+      will-change: transform;
+    }
+    /* Soft left-edge fade connecting left column */
+    .hero-right::before {
+      content: '';
       position: absolute;
-      top: 50%;
-      left: calc(100% / 3 + 2rem);
-      transform: translateY(-50%);
-      width: 2px;
-      height: 40vh;
-      background: linear-gradient(to bottom, transparent, rgba(122,139,118,0.3), transparent);
+      inset: 0;
+      background: linear-gradient(to right, rgba(244,238,228,0.15) 0%, transparent 18%);
+      z-index: 1;
       pointer-events: none;
     }
 
-    /* ── PHOTO CONTAINERS ── */
-    .ph { position: relative; overflow: hidden; }
-    .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.55s ease; }
-    .ph:hover img { transform: scale(1.05); }
+    @keyframes slowZoom {
+      0%   { transform: scale(1)    translate(0, 0); }
+      100% { transform: scale(1.07) translate(-1.5%, -1%); }
+    }
+
+    /* Vertical scroll cue */
+    .scroll-cue {
+      position: absolute;
+      bottom: 3.5rem;
+      left: 5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+      z-index: 3;
+    }
+    .scroll-cue span {
+      writing-mode: vertical-rl;
+      font-size: 0.52rem;
+      font-weight: 300;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .scroll-cue::after {
+      content: '';
+      display: block;
+      width: 1px;
+      height: 2.5rem;
+      background: linear-gradient(to bottom, var(--muted), transparent);
+      animation: pulse 2.2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.3; }
+    }
 
     /* ── SECTION 2 — KOLLEKTION ── */
     .collection {
-      padding: 7rem 4rem;
-      border-top: 1px solid rgba(42,40,36,0.1);
+      padding: 8rem 5rem;
+      border-top: 1px solid var(--line);
     }
-    .collection-inner {
-      max-width: 1600px;
-      margin: 0 auto;
+    .collection-inner { max-width: 1560px; margin: 0 auto; }
+
+    .section-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 5rem;
     }
-    .collection-eyebrow {
-      font-size: 0.6rem;
+    .eyebrow {
+      font-size: 0.57rem;
       font-weight: 300;
       letter-spacing: 0.3em;
       text-transform: uppercase;
-      color: #7A8B76;
-      margin-bottom: 1rem;
+      color: var(--sage);
+      margin-bottom: 0.85rem;
     }
-    .collection-title {
-      font-family: 'Noto Serif', serif;
-      font-size: clamp(1.8rem, 3vw, 2.8rem);
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 3.2vw, 3.6rem);
       font-weight: 300;
       font-style: italic;
-      color: #2A2824;
-      margin-bottom: 4rem;
-      line-height: 1.3;
+      color: var(--dark);
+      line-height: 1.18;
     }
-    .collection-grid {
+    .section-link {
+      font-size: 0.58rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--sage);
+      text-decoration: none;
+      border-bottom: 1px solid currentColor;
+      padding-bottom: 0.1em;
+      transition: color 0.3s;
+      white-space: nowrap;
+      margin-bottom: 0.4rem;
+    }
+    .section-link:hover { color: var(--dark); }
+
+    .col-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
+      gap: 2.5rem;
     }
-    .collection-item {
+    .col-card {
       display: flex;
       flex-direction: column;
-      gap: 1.25rem;
+      gap: 1.3rem;
     }
-    .collection-item-meta {
+    .col-photo { height: 440px; }
+    /* Middle card taller for rhythm */
+    .col-card:nth-child(2) .col-photo { height: 520px; }
+
+    .col-meta {
       display: flex;
       flex-direction: column;
-      gap: 0.4rem;
+      gap: 0.45rem;
     }
-    .ci-name {
-      font-family: 'Noto Serif', serif;
-      font-size: 1rem;
+    .col-name {
+      font-family: var(--serif);
+      font-size: 1.15rem;
       font-weight: 300;
-      color: #2A2824;
-      letter-spacing: 0.04em;
+      color: var(--dark);
+      letter-spacing: 0.02em;
     }
-    .ci-desc {
-      font-size: 0.72rem;
+    .col-material {
+      font-size: 0.64rem;
       font-weight: 300;
-      color: rgba(42,40,36,0.5);
-      line-height: 1.6;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
     }
-    .ci-price {
-      font-size: 0.7rem;
+    .col-price {
+      font-size: 0.78rem;
       font-weight: 300;
-      letter-spacing: 0.15em;
-      color: #7A8B76;
+      color: var(--sage);
+      margin-top: 0.2rem;
     }
 
     /* ── SECTION 3 — PHILOSOPHIE ── */
     .philosophy {
-      padding: 7rem 4rem;
-      border-top: 1px solid rgba(42,40,36,0.1);
-      background: #F5F2EC;
+      background: var(--surface);
+      border-top: 1px solid var(--line);
+      overflow: hidden;
     }
-    .philosophy-inner {
-      max-width: 1600px;
+    .philosophy-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 700px;
+    }
+
+    .phil-image {
+      position: relative;
+      overflow: hidden;
+    }
+    .phil-image img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.9s ease;
+    }
+    .phil-image:hover img { transform: scale(1.04); }
+
+    .phil-content {
+      padding: 7rem 5.5rem 7rem 5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 2.25rem;
+    }
+
+    /* Decorative large quote mark */
+    .quote-mark {
+      font-family: var(--serif);
+      font-size: 8rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--sage);
+      line-height: 0.75;
+      opacity: 0.35;
+      margin-bottom: -1.5rem;
+    }
+
+    .phil-headline {
+      font-family: var(--serif);
+      font-size: clamp(1.85rem, 2.6vw, 3.1rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--dark);
+      line-height: 1.28;
+    }
+    .phil-divider {
+      width: 2.5rem;
+      height: 1px;
+      background: var(--sage);
+    }
+    .phil-text {
+      font-size: 0.83rem;
+      font-weight: 300;
+      line-height: 1.95;
+      color: var(--mid);
+      max-width: 44ch;
+    }
+    .phil-sig {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      padding-top: 0.5rem;
+    }
+    .sig-name {
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--dark);
+    }
+    .sig-role {
+      font-size: 0.56rem;
+      font-weight: 300;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ── SECTION 4 — ATELIER ── */
+    .atelier {
+      padding: 8rem 5rem;
+      border-top: 1px solid var(--line);
+    }
+    .atelier-inner {
+      max-width: 1560px;
       margin: 0 auto;
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 6rem;
       align-items: center;
     }
-    .philosophy-text {
+
+    /* Photo mosaic */
+    .atelier-mosaic {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+    .mosaic-wide {
+      grid-column: 1 / -1;
+      height: 290px;
+    }
+    .mosaic-sm { height: 200px; }
+
+    .atelier-text {
       display: flex;
       flex-direction: column;
       gap: 2rem;
     }
-    .philosophy-eyebrow {
-      font-size: 0.6rem;
-      font-weight: 300;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: #7A8B76;
-    }
-    .philosophy-title {
-      font-family: 'Noto Serif', serif;
-      font-size: clamp(1.6rem, 2.5vw, 2.5rem);
+    .atelier-headline {
+      font-family: var(--serif);
+      font-size: clamp(1.9rem, 2.6vw, 2.9rem);
       font-weight: 300;
       font-style: italic;
-      color: #2A2824;
-      line-height: 1.3;
+      color: var(--dark);
+      line-height: 1.28;
     }
-    .philosophy-body {
-      font-size: 0.85rem;
+    .atelier-body {
+      font-size: 0.83rem;
       font-weight: 300;
-      line-height: 1.9;
-      color: rgba(42,40,36,0.65);
-      max-width: 42ch;
-    }
-    .philosophy-divider {
-      width: 3rem;
-      height: 1px;
-      background: #7A8B76;
+      line-height: 1.95;
+      color: var(--mid);
     }
 
-    @media (max-width: 900px) {
-      .collection { padding: 4rem 2rem; }
-      .collection-grid { grid-template-columns: 1fr; gap: 3rem; }
-      .philosophy { padding: 4rem 2rem; }
-      .philosophy-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .process-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid var(--line);
+    }
+    .step {
+      display: grid;
+      grid-template-columns: 3.5rem 1fr;
+      gap: 1rem;
+      align-items: start;
+      padding-top: 1.25rem;
+    }
+    .step-n {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--sage);
+      opacity: 0.65;
+    }
+    .step-body {
+      font-size: 0.79rem;
+      font-weight: 300;
+      line-height: 1.75;
+      color: var(--mid);
+    }
+    .step-body strong {
+      display: block;
+      font-weight: 400;
+      color: var(--dark);
+      margin-bottom: 0.2rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 4.5rem 5rem;
+      border-top: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 3rem;
+      align-items: end;
+    }
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+    .footer-logo {
+      font-family: var(--serif);
+      font-size: 2.25rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      color: var(--dark);
+    }
+    .footer-tagline {
+      font-size: 0.58rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .footer-contact {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+    .footer-contact a {
+      font-size: 0.78rem;
+      font-weight: 300;
+      color: var(--mid);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .footer-contact a:hover { color: var(--sage); }
+    .footer-addr {
+      font-size: 0.75rem;
+      font-weight: 300;
+      color: var(--muted);
+    }
+    .footer-legal {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+      text-align: right;
+    }
+    .footer-copy {
+      font-size: 0.58rem;
+      font-weight: 300;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+    }
+    .footer-links {
+      display: flex;
+      gap: 1.25rem;
+      justify-content: flex-end;
+    }
+    .footer-links a {
+      font-size: 0.58rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .footer-links a:hover { color: var(--sage); }
+
+    /* ── REVEAL ANIMATIONS ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.85s ease-out, transform 0.85s ease-out;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+    .d1 { transition-delay: 0.1s; }
+    .d2 { transition-delay: 0.2s; }
+    .d3 { transition-delay: 0.3s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .hero-right img { animation: none; }
+      .scroll-cue::after { animation: none; }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1100px) {
+      nav { padding: 2rem 3rem; }
+      nav.scrolled { padding: 1.2rem 3rem; }
+
+      .hero { grid-template-columns: 1fr; }
+      .hero-left {
+        position: relative;
+        z-index: 2;
+        padding: 8rem 3rem 5rem;
+        /* Photo as overlay bg on mobile */
+      }
+      .hero {
+        background: url('https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1200&h=900&q=75') center/cover no-repeat;
+      }
+      .hero::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: rgba(244,238,228,0.88);
+        z-index: 1;
+      }
+      .hero-left { z-index: 2; position: relative; }
+      .hero-right { display: none; }
+      .scroll-cue { display: none; }
+
+      .collection { padding: 5rem 3rem; }
+      .col-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .col-card:nth-child(2) .col-photo { height: 440px; }
+      .section-head { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+
+      .philosophy-grid { grid-template-columns: 1fr; }
+      .phil-image { height: 420px; position: relative; }
+      .phil-image img { position: absolute; }
+      .phil-content { padding: 4rem 3rem; }
+
+      .atelier { padding: 5rem 3rem; }
+      .atelier-inner { grid-template-columns: 1fr; gap: 3rem; }
+
+      footer { grid-template-columns: 1fr; padding: 3.5rem 3rem; }
+      .footer-legal { text-align: left; }
+      .footer-links { justify-content: flex-start; }
+    }
+
+    @media (max-width: 640px) {
+      .hero-left { padding: 7rem 2rem 4rem; }
+      .hero-principles { gap: 1.75rem; }
+      nav { padding: 1.6rem 2rem; }
+      nav.scrolled { padding: 1rem 2rem; }
+      .collection, .atelier { padding: 4rem 2rem; }
+      .phil-content { padding: 3.5rem 2rem; }
+      footer { padding: 3rem 2rem; }
     }
   </style>
 </head>
 <body>
-  <nav>
-    <div class="nav-logo">間</div>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <a href="#" class="nav-logo">間</a>
     <ul class="nav-links">
       <li><a href="#">Konzepte</a></li>
-      <li><a href="#">Projekte</a></li>
+      <li><a href="#">Objekte</a></li>
       <li><a href="#">Atelier</a></li>
       <li><a href="#">Kontakt</a></li>
     </ul>
   </nav>
 
+  <!-- HERO -->
   <section class="hero">
     <div class="hero-left">
-      <div class="kanji">間</div>
-      <div class="vertical-label">Interior Design · Trier</div>
-    </div>
+      <div class="bg-kanji" aria-hidden="true">間</div>
 
-    <div class="hero-right">
-      <div class="hero-eyebrow">Ma — Der Raum zwischen den Dingen</div>
+      <p class="hero-eyebrow">Ma — Raum &amp; Form · Interior Design · Trier</p>
 
       <h1 class="hero-headline">
-        Stille ist keine<br>
-        Leere — sie ist<br>
-        <em>die Essenz.</em>
+        Schönheit<br>
+        im Weglassen<br>
+        <em>gefunden.</em>
       </h1>
 
-      <div class="divider"></div>
+      <div class="hero-divider"></div>
 
       <p class="hero-body">
-        Wir entwerfen Räume, die atmen. Japanische Reduktion, skandinavische Wärme —
-        zwei Philosophien, ein Zuhause. Jedes Detail hat seinen Grund.
-        Alles andere haben wir weggelassen.
+        Wir entwerfen Räume, die schweigen. Japanische Reduktion
+        trifft skandinavische Wärme — zwei Philosophien, ein Zuhause.
+        Handgefertigte Objekte aus unserem Trierer Atelier.
       </p>
 
-      <div class="principles">
+      <div class="hero-principles">
         <div class="principle">
-          <div class="principle-jp">侘</div>
-          <div class="principle-de">Wabi</div>
-        </div>
-        <div class="principle">
-          <div class="principle-jp">寂</div>
-          <div class="principle-de">Sabi</div>
+          <div class="principle-jp">侘寂</div>
+          <div class="principle-de">Wabi-Sabi</div>
         </div>
         <div class="principle">
           <div class="principle-jp">間</div>
           <div class="principle-de">Ma</div>
         </div>
+        <div class="principle">
+          <div class="principle-jp">無</div>
+          <div class="principle-de">Mu</div>
+        </div>
       </div>
 
-      <div class="cta-area">
-        <a href="#" class="cta-btn">Gespräch anfragen →</a>
+      <div>
+        <a href="#" class="btn">Beratung anfragen →</a>
       </div>
     </div>
 
-    <div class="ink-accent"></div>
-  </section>
+    <div class="hero-right">
+      <img
+        src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1600&h=1100&q=85"
+        alt="Japandi Interior — minimalistisches Wohnzimmer mit Holz und natürlichen Materialien"
+        loading="eager"
+        fetchpriority="high"
+      />
+    </div>
 
-  <div class="stamp">
-    <div class="stamp-jp">間</div>
-    <div class="stamp-de">Trier</div>
-  </div>
+    <div class="scroll-cue" aria-hidden="true">
+      <span>Erkunden</span>
+    </div>
+  </section>
 
   <!-- SECTION 2 — KOLLEKTION -->
   <section class="collection">
     <div class="collection-inner">
-      <div class="collection-eyebrow">Aktuelle Kollektion</div>
-      <h2 class="collection-title">Objekte, die atmen.</h2>
-      <div class="collection-grid">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow reveal">Aktuelle Kollektion</p>
+          <h2 class="section-title reveal d1">Objekte, die<br><em>standhalten.</em></h2>
+        </div>
+        <a href="#" class="section-link reveal d2">Alle Objekte ansehen</a>
+      </div>
 
-        <div class="collection-item">
-          <div class="ph" style="height:340px;">
-            <img src="https://images.unsplash.com/photo-1574484284002-952d92456975?auto=format&fit=crop&w=1200&h=800&q=80" alt="Japandi Regal Hinoki" loading="lazy"/>
-            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(42,40,36,0.2) 0%,transparent 60%);pointer-events:none;"></div>
+      <div class="col-grid">
+
+        <div class="col-card reveal">
+          <div class="ph col-photo">
+            <img
+              src="https://images.unsplash.com/photo-1574484284002-952d92456975?auto=format&fit=crop&w=800&h=1050&q=80"
+              alt="Regal Hinoki — japanische Zeder, handgefertigt"
+              loading="lazy"
+            />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,25,22,0.18) 0%,transparent 55%);pointer-events:none;"></div>
           </div>
-          <div class="collection-item-meta">
-            <div class="ci-name">Regal Hinoki</div>
-            <div class="ci-desc">Japanische Zeder, geölt. Offene Fachstruktur nach dem Prinzip der sichtbaren Konstruktion.</div>
-            <div class="ci-price">ab 1.480 €</div>
+          <div class="col-meta">
+            <div class="col-name">Regal Hinoki</div>
+            <div class="col-material">Japanische Zeder, geölt · Unikat</div>
+            <div class="col-price">ab 1.680 €</div>
           </div>
         </div>
 
-        <div class="collection-item">
-          <div class="ph" style="height:340px;">
-            <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1200&h=800&q=80" alt="Sessel Ma No Isu" loading="lazy"/>
-            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(42,40,36,0.2) 0%,transparent 60%);pointer-events:none;"></div>
+        <div class="col-card reveal d1">
+          <div class="ph col-photo">
+            <img
+              src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=800&h=1100&q=80"
+              alt="Sofa Shizen — Leinen naturfarben, Eiche gekalkt"
+              loading="lazy"
+            />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,25,22,0.18) 0%,transparent 55%);pointer-events:none;"></div>
           </div>
-          <div class="collection-item-meta">
-            <div class="ci-name">Sessel Ma No Isu</div>
-            <div class="ci-desc">Eiche gekalkt, Leinen naturfarben. Der Raum zwischen den Armlehnen ist Teil des Designs.</div>
-            <div class="ci-price">ab 2.200 €</div>
+          <div class="col-meta">
+            <div class="col-name">Sofa Shizen</div>
+            <div class="col-material">Leinen naturfarben · Eiche gekalkt</div>
+            <div class="col-price">ab 3.450 €</div>
           </div>
         </div>
 
-        <div class="collection-item">
-          <div class="ph" style="height:340px;">
-            <img src="https://images.unsplash.com/photo-1565814329452-e1efa11c5b89?auto=format&fit=crop&w=1200&h=800&q=80" alt="Beistelltisch Shizen" loading="lazy"/>
-            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(42,40,36,0.2) 0%,transparent 60%);pointer-events:none;"></div>
+        <div class="col-card reveal d2">
+          <div class="ph col-photo">
+            <img
+              src="https://images.unsplash.com/photo-1565814329452-e1efa11c5b89?auto=format&fit=crop&w=800&h=1050&q=80"
+              alt="Beistelltisch Sabi — Walnuss massiv, naturbelassen"
+              loading="lazy"
+            />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,25,22,0.18) 0%,transparent 55%);pointer-events:none;"></div>
           </div>
-          <div class="collection-item-meta">
-            <div class="ci-name">Beistelltisch Shizen</div>
-            <div class="ci-desc">Massiver Walnuss, unbehandelt. Jedes Stück ist ein Unikat — die Maserung bestimmt die Form.</div>
-            <div class="ci-price">ab 680 €</div>
+          <div class="col-meta">
+            <div class="col-name">Beistelltisch Sabi</div>
+            <div class="col-material">Walnuss massiv · Naturbelassen</div>
+            <div class="col-price">ab 780 €</div>
           </div>
         </div>
 
@@ -456,24 +816,152 @@ export const prerender = true;
 
   <!-- SECTION 3 — PHILOSOPHIE -->
   <section class="philosophy">
-    <div class="philosophy-inner">
-      <div class="ph" style="height:500px;">
-        <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=1200&h=800&q=80" alt="Ma Interior Atelier Trier" loading="lazy"/>
-        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(42,40,36,0.15) 0%,transparent 60%);pointer-events:none;"></div>
+    <div class="philosophy-grid">
+
+      <div class="phil-image">
+        <img
+          src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1200&h=900&q=80"
+          alt="Atmosphärisches Wohnraumdetail — Holz und stilles Licht"
+          loading="lazy"
+        />
       </div>
-      <div class="philosophy-text">
-        <div class="philosophy-eyebrow">Unsere Haltung</div>
-        <h2 class="philosophy-title">Weniger ist nicht<br>Verzicht — es ist<br>Klarheit.</h2>
-        <div class="philosophy-divider"></div>
-        <p class="philosophy-body">
-          Wir entwerfen keine Räume, wir befreien sie. Jedes Objekt, das wir wählen,
-          muss seinen Platz verdienen. Japandis Stärke liegt nicht im Sichtbaren,
-          sondern im Bewussten Weglassen — im Ma, dem bedeutsamen Zwischenraum.
+
+      <div class="phil-content">
+        <div class="quote-mark" aria-hidden="true">"</div>
+        <h2 class="phil-headline reveal">
+          Weniger ist kein<br>Verzicht — es ist<br>
+          <em>die reinste Form<br>von Fürsorge.</em>
+        </h2>
+        <div class="phil-divider reveal d1"></div>
+        <p class="phil-text reveal d1">
+          Wabi-Sabi lehrt uns, Schönheit nicht im Perfekten zu suchen,
+          sondern im Unvollkommenen, Vergänglichen und Unvollständigen.
+          Jeder Makel erzählt eine Geschichte. Jede Patina ist Zeit,
+          die sichtbar wurde. Wir bauen Objekte, die mit ihren
+          Besitzern altern — und dabei schöner werden.
         </p>
-        <a href="#" class="cta-btn">Beratungsgespräch anfragen →</a>
+        <div class="phil-sig reveal d2">
+          <div class="sig-name">Hana Eriksson</div>
+          <div class="sig-role">Gründerin · Ma Raum & Form, Trier</div>
+        </div>
+        <a href="#" class="btn reveal d3">Gespräch anfragen →</a>
       </div>
+
     </div>
   </section>
+
+  <!-- SECTION 4 — ATELIER -->
+  <section class="atelier">
+    <div class="atelier-inner">
+
+      <div class="atelier-mosaic">
+        <div class="ph mosaic-wide reveal">
+          <img
+            src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1200&h=700&q=80"
+            alt="Ma Atelier Trier — handwerkliche Detailarbeit"
+            loading="lazy"
+          />
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,25,22,0.12) 0%,transparent 60%);pointer-events:none;"></div>
+        </div>
+        <div class="ph mosaic-sm reveal d1">
+          <img
+            src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&w=600&h=500&q=80"
+            alt="Naturmaterialien — Holz und Keramik im Atelier"
+            loading="lazy"
+          />
+        </div>
+        <div class="ph mosaic-sm reveal d2">
+          <img
+            src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=600&h=500&q=80"
+            alt="Details aus dem Ma Atelier"
+            loading="lazy"
+          />
+        </div>
+      </div>
+
+      <div class="atelier-text">
+        <p class="eyebrow reveal">Unser Prozess</p>
+        <h2 class="atelier-headline reveal d1">
+          Jedes Stück beginnt<br>mit einem<br>
+          <em>Gespräch.</em>
+        </h2>
+        <p class="atelier-body reveal d2">
+          Wir entwerfen und fertigen in unserem Trierer Atelier.
+          Kein Massenartikel, keine Kompromisse. Jedes Objekt entsteht
+          nach dem Prinzip des minimalen Eingriffs — wir folgen dem
+          Material, nicht umgekehrt.
+        </p>
+        <div class="process-steps">
+          <div class="step reveal d1">
+            <div class="step-n">01</div>
+            <div class="step-body">
+              <strong>Beratung &amp; Raumanalyse</strong>
+              Wir verstehen Ihren Raum, bevor wir ihn verändern.
+              Ein Gespräch, keine Präsentation.
+            </div>
+          </div>
+          <div class="step reveal d2">
+            <div class="step-n">02</div>
+            <div class="step-body">
+              <strong>Materialauswahl &amp; Entwurf</strong>
+              Natürliche Materialien, gewählt nach Wabi-Sabi-Prinzipien.
+              Das Material entscheidet mit.
+            </div>
+          </div>
+          <div class="step reveal d3">
+            <div class="step-n">03</div>
+            <div class="step-body">
+              <strong>Handgefertigte Ausführung</strong>
+              Jedes Objekt entsteht von Hand, in Trier.
+              Lieferzeit 8–12 Wochen.
+            </div>
+          </div>
+        </div>
+        <a href="#" class="btn reveal">Gespräch vereinbaren →</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-brand">
+      <div class="footer-logo">間</div>
+      <div class="footer-tagline">Raum &amp; Form · Trier · Seit 2019</div>
+    </div>
+    <div class="footer-contact">
+      <a href="tel:+4965112345678">+49 651 12345678</a>
+      <a href="mailto:hallo@ma-raum.de">hallo@ma-raum.de</a>
+      <span class="footer-addr">Neustraße 14, 54290 Trier</span>
+    </div>
+    <div class="footer-legal">
+      <div class="footer-copy">© 2025 Ma — Raum &amp; Form</div>
+      <div class="footer-links">
+        <a href="#">Impressum</a>
+        <a href="#">Datenschutz</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll-aware nav
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    // Reveal on scroll
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => io.observe(el));
+  </script>
 
 </body>
 </html>
