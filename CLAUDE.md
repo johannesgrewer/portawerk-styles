@@ -39,25 +39,25 @@ Alle Stil-Seiten bekommen echte Unsplash-Fotos statt CSS-Art oder Emojis.
 **Seiten mit nur 1 Sektion (Hero):** 2 neue Sektionen hinzufügen — 3-col Fotogrid + atmosphärische Split-Sektion
 **Seiten mit 3 Sektionen + CSS-Art:** CSS-Art in-place durch Foto-Container ersetzen
 
-## Aktueller Fortschritt (Stand 2026-03-22)
-**Seiten MIT Unsplash-Fotos (46):**
+## Aktueller Fortschritt (Stand 2026-03-28)
+**Seiten MIT Unsplash-Fotos (48):**
 airy-editorial, anti-web, apothecary, athletic-bold, agentur-portfolio, alpine-rugged,
 architektur-raum, barbershop, berliner-roh, bistro-chalkboard, brauerei, buchhandlung,
 business-coaching, cafehaus, cinematic, cocktailbar, coffee-specialty, community-people,
-dark-luxury, diner-americana, ecommerce, editorial, experimentell, farm-to-table,
+cyberpunk, dark-luxury, diner-americana, ecommerce, editorial, experimentell, farm-to-table,
 fine-dining, florist-botanik, handwerk-authentisch, hochzeitsplanung, hostel-traveler,
 human-social, immobilien, letterpress, logistik-b2b, mediterranean-warm, mode-fashion,
-naturkosmetik, produkt-showcase, quiet-luxury, retro-vintage, scandinavian-soft,
+naturkosmetik, produkt-showcase, purple-haze, quiet-luxury, retro-vintage, scandinavian-soft,
 street-food, tattoo-studio, tierarzt, weinstube-moselromantik, wellness, bold-graphic,
 bakery-cafe, fotostudio
 
-**Noch ohne Fotos (~50 Seiten):**
-art-deco, brutalist, candy-pop, cyberpunk, duotone, escape-room, factory-chic,
+**Noch ohne Fotos (~48 Seiten):**
+art-deco, brutalist, candy-pop, duotone, escape-room, factory-chic,
 friseursalon, futuristisch, gaming-interactive, glassmorphism, gradient-farbe,
 japandi, kids-family, law-firm, loft-studio, luxury-hotel, marble-gold, maximalist,
 mediterranean-blue, metzgerei, monochrome, musik-entertainment, musikschule,
 neo-futurism, neon-chain, nordic-dark, noir-minimal, outdoor-gear, oversized-type,
-photographer-light, playful-kreativ, purple-haze, rave-underground, saas-tech,
+photographer-light, playful-kreativ, rave-underground, saas-tech,
 space-cosmic, spa-serene, split-screen, surf-coast, sustainable-brand, swiss-minimal,
 synthwave-retrowave, typografie-zentriert, vintage-print, web3-crypto, weinhandlung,
 arztpraxis
@@ -69,9 +69,9 @@ arztpraxis
 - `src/layouts/Layout.astro` — Basis-Layout
 - `src/pages/styles/*.astro` — Eine Datei pro Stil-Demo
 
-## Zuletzt bearbeitet (2026-03-22)
-- **street-food:** Hero `min-height` entfernt — Höhe wird jetzt durch Inhalt (Polaroid-Collage) definiert
-- **mediterranean-warm:** Falsches Hero-Foto (Kosmetik!) ersetzt durch Olivenöl+Brot (ID: `1760445529612-8d1d32ba2320`). SVG-Icons in allen 4 Produkt-Karten durch echte Unsplash-Fotos ersetzt (je 160px Foto-Container mit Hover-Zoom). Headline geändert auf "Kaltgepresst. / Vom Hain." mit per-Zeile fadeInUp-Animation (Delays 0.2s / 0.48s).
+## Zuletzt bearbeitet (2026-03-28)
+- **cyberpunk:** Hero-Hintergrundbild (Circuit-Board, gedimmt + grünlich gefiltert) + 2 neue Sektionen: 3-col City-Grid mit Workspace-Fotos + Split-Sektion mit Matrix-Foto und Feature-Liste
+- **purple-haze:** Foto im Hero-Right (Mixing-Board) + 2 neue Sektionen mit CSS vorbereitet aber fehlendem HTML: 3-col Studio-Grid mit Studio-Fotos + Booking-Sektion mit Konzert-Foto rechts
 
 ## Nächste Seiten (Reihenfolge aus Eval-Batch 4)
 Zuletzt bewertet (eval-batch-4.md): escape-room, experimentell, factory-chic, farm-to-table, fine-dining, florist-botanik, fotostudio, friseursalon, futuristisch, gaming-interactive

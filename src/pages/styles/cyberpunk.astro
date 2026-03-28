@@ -267,6 +267,155 @@ export const prerender = true;
     }
     .corner.br { bottom: 1.5rem; right: 2rem; }
     .corner.bl { bottom: 1.5rem; left: 2rem; }
+
+    /* Hero background photo */
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.18;
+      filter: saturate(0.4) hue-rotate(100deg);
+    }
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(10,0,15,0.85) 40%, rgba(10,0,15,0.4) 100%);
+    }
+
+    /* Photo container */
+    .ph { position: relative; overflow: hidden; }
+    .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.55s ease; }
+    .ph:hover img { transform: scale(1.05); }
+    .ph-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(10,0,15,0.85) 0%, transparent 55%);
+    }
+
+    /* City grid section */
+    .section-city {
+      padding: 6rem 4rem;
+      background: #0D0020;
+      position: relative;
+      z-index: 1;
+    }
+    .section-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.52rem;
+      letter-spacing: 0.2em;
+      color: var(--green);
+      text-shadow: 0 0 6px rgba(0,255,65,0.35);
+      margin-bottom: 0.5rem;
+    }
+    .section-label::before { content: '> '; color: var(--pink); }
+    .section-title {
+      font-family: 'Exo 2', sans-serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 200;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 3rem;
+    }
+    .section-title em {
+      font-style: normal;
+      color: var(--pink);
+      text-shadow: 0 0 15px rgba(255,0,128,0.4);
+    }
+    .city-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+    .city-card {
+      position: relative;
+    }
+    .city-card-body {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 1.25rem;
+      z-index: 2;
+    }
+    .city-card-name {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--green);
+      text-shadow: 0 0 8px rgba(0,255,65,0.5);
+      margin-bottom: 0.2rem;
+    }
+    .city-card-desc {
+      font-size: 0.58rem;
+      font-weight: 200;
+      color: rgba(224,255,232,0.45);
+      letter-spacing: 0.05em;
+    }
+    .city-card-tag {
+      display: inline-block;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.45rem;
+      letter-spacing: 0.14em;
+      color: var(--pink);
+      border: 1px solid rgba(255,0,128,0.25);
+      padding: 0.15rem 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    /* Split section */
+    .section-split {
+      padding: 6rem 4rem;
+      background: var(--bg);
+      position: relative;
+      z-index: 1;
+    }
+    .split-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .split-body {
+      font-size: 0.85rem;
+      font-weight: 200;
+      line-height: 1.9;
+      color: rgba(224,255,232,0.4);
+      max-width: 42ch;
+      border-left: 2px solid rgba(0,255,65,0.15);
+      padding-left: 1.25rem;
+      margin-bottom: 2rem;
+    }
+    .split-features {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .sf-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid rgba(0,255,65,0.06);
+    }
+    .sf-dot {
+      width: 6px; height: 6px;
+      background: var(--pink);
+      box-shadow: 0 0 6px rgba(255,0,128,0.5);
+      flex-shrink: 0;
+    }
+    .sf-text {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      color: rgba(224,255,232,0.35);
+    }
   </style>
 </head>
 <body>
@@ -285,6 +434,9 @@ export const prerender = true;
   </nav>
 
   <section class="hero">
+    <div class="hero-bg">
+      <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1600&h=900&q=80" alt="Cyberpunk tech circuit board" loading="eager" />
+    </div>
     <div class="terminal-line">
       NEUROAM_TRIER // CO-WORKING_SPACE // STATUS: ONLINE<span class="cursor"></span>
     </div>
@@ -330,6 +482,73 @@ export const prerender = true;
       <div class="sg-item">
         <div class="sg-num">ab 29€</div>
         <div class="sg-label">Pro Monat</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- City grid section -->
+  <section class="section-city">
+    <div class="section-label">WORKSPACE_NODES // TRIER</div>
+    <h2 class="section-title">Work in the <em>grid.</em></h2>
+    <div class="city-grid">
+      <div class="city-card">
+        <div class="ph" style="height:320px;">
+          <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&h=600&q=80" alt="Code on screen" />
+          <div class="ph-overlay"></div>
+        </div>
+        <div class="city-card-body">
+          <div class="city-card-name">// DEV_ZONE</div>
+          <div class="city-card-desc">40 Dual-Monitor Plätze, 10 Gbit/s</div>
+          <span class="city-card-tag">OPEN 24/7</span>
+        </div>
+      </div>
+      <div class="city-card">
+        <div class="ph" style="height:320px;">
+          <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=800&h=600&q=80" alt="Programming workspace" />
+          <div class="ph-overlay"></div>
+        </div>
+        <div class="city-card-body">
+          <div class="city-card-name">// FOCUS_POD</div>
+          <div class="city-card-desc">8 schallisolierte Einzelkabinen</div>
+          <span class="city-card-tag">BUCHBAR</span>
+        </div>
+      </div>
+      <div class="city-card">
+        <div class="ph" style="height:320px;">
+          <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800&h=600&q=80" alt="Neon gaming setup" />
+          <div class="ph-overlay"></div>
+        </div>
+        <div class="city-card-body">
+          <div class="city-card-name">// COLLAB_HUB</div>
+          <div class="city-card-desc">Meetingraum, Beamer, Whiteboard</div>
+          <span class="city-card-tag">4–12 PERSONEN</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Split section -->
+  <section class="section-split">
+    <div class="split-inner">
+      <div>
+        <div class="section-label">ABOUT_US // PROTOCOL</div>
+        <h2 class="section-title">Kein <em>Bullshit.</em><br>Nur Speed.</h2>
+        <p class="split-body">
+          NeuRoam ist kein Office-Park mit Snackbar und Tischtennisplatte.
+          Es ist eine Infrastruktur für Menschen, die Dinge bauen —
+          schnell, fokussiert, ohne Ablenkung.
+        </p>
+        <div class="split-features">
+          <div class="sf-row"><div class="sf-dot"></div><span class="sf-text">10 GBIT SYMETRISCH // KEIN TRAFFIC SHAPING</span></div>
+          <div class="sf-row"><div class="sf-dot"></div><span class="sf-text">NFC-ZUGANGSKARTE // 24/7 ENTRY</span></div>
+          <div class="sf-row"><div class="sf-dot"></div><span class="sf-text">STANDING DESKS + ERGOSTUHL INKLUSIVE</span></div>
+          <div class="sf-row"><div class="sf-dot"></div><span class="sf-text">KAFFEE & GETRÄNKE FLATRATE</span></div>
+          <div class="sf-row"><div class="sf-dot"></div><span class="sf-text">COMMUNITY // 200+ AKTIVE NOMADS</span></div>
+        </div>
+      </div>
+      <div class="ph" style="height:480px;">
+        <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&h=1000&q=80" alt="Matrix digital rain" />
+        <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(10,0,15,0.3) 0%,transparent 60%);"></div>
       </div>
     </div>
   </section>
