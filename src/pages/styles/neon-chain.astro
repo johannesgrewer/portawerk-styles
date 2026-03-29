@@ -7,7 +7,7 @@ export const prerender = true;
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
-  <title>Chain Ink — Tattoo & Custom Apparel | Trier</title>
+  <title>CHAIN — Underground Club & Events | Trier</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet" />
@@ -16,22 +16,22 @@ export const prerender = true;
     html { overflow-x: hidden; }
 
     :root {
-      --cyan:  #00F5FF;
-      --red:   #FF2E63;
-      --bg:    #0A0A0A;
-      --mid:   #111111;
-      --text:  #FFFFFF;
+      --cyan:    #00E5FF;
+      --magenta: #FF0066;
+      --bg:      #060608;
+      --mid:     #0D0D16;
+      --text:    #FFFFFF;
     }
 
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: 'Space Grotesk', monospace, sans-serif;
+      font-family: 'Space Grotesk', sans-serif;
       min-height: 100vh;
       overflow-x: hidden;
     }
 
-    /* Scanlines */
+    /* CRT scanlines */
     body::before {
       content: '';
       position: fixed;
@@ -40,25 +40,26 @@ export const prerender = true;
         0deg,
         transparent,
         transparent 2px,
-        rgba(0,245,255,0.012) 2px,
-        rgba(0,245,255,0.012) 3px
+        rgba(0,229,255,0.012) 2px,
+        rgba(0,229,255,0.012) 3px
       );
       pointer-events: none;
       z-index: 0;
     }
 
-    /* Neon glow ambient */
+    /* Ambient neon glow */
     body::after {
       content: '';
       position: fixed;
       inset: 0;
       background:
-        radial-gradient(ellipse 50% 40% at 15% 50%, rgba(0,245,255,0.07) 0%, transparent 60%),
-        radial-gradient(ellipse 40% 50% at 85% 50%, rgba(255,46,99,0.07) 0%, transparent 60%);
+        radial-gradient(ellipse 60% 50% at 15% 80%, rgba(255,0,102,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 85% 20%, rgba(0,229,255,0.07) 0%, transparent 60%);
       pointer-events: none;
       z-index: 0;
     }
 
+    /* ─── NAV ─── */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -67,684 +68,981 @@ export const prerender = true;
       align-items: center;
       justify-content: space-between;
       padding: 1.25rem 3rem;
-      border-bottom: 1px solid rgba(0,245,255,0.12);
-      background: rgba(10,10,10,0.95);
-      backdrop-filter: blur(8px);
+      background: rgba(6,6,8,0.92);
+      border-bottom: 1px solid rgba(0,229,255,0.1);
+      backdrop-filter: blur(12px);
     }
     .nav-logo {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.6rem;
-      letter-spacing: 0.1em;
+      font-size: 1.8rem;
+      letter-spacing: 0.25em;
       color: var(--text);
     }
     .nav-logo span {
       color: var(--cyan);
-      text-shadow: 0 0 12px rgba(0,245,255,0.6);
+      text-shadow: 0 0 20px rgba(0,229,255,0.6), 0 0 40px rgba(0,229,255,0.2);
     }
     .nav-links {
       display: flex;
-      gap: 2rem;
+      gap: 2.5rem;
       list-style: none;
     }
     .nav-links a {
-      font-size: 0.65rem;
-      font-weight: 300;
-      letter-spacing: 0.18em;
+      font-size: 0.58rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.4);
+      color: rgba(255,255,255,0.3);
       text-decoration: none;
       transition: color 0.2s, text-shadow 0.2s;
     }
     .nav-links a:hover {
       color: var(--cyan);
-      text-shadow: 0 0 8px rgba(0,245,255,0.5);
+      text-shadow: 0 0 8px rgba(0,229,255,0.5);
     }
-    .nav-book {
-      font-size: 0.6rem;
+    .nav-tickets {
+      font-size: 0.58rem;
       font-weight: 500;
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--bg);
-      background: var(--cyan);
-      padding: 0.55rem 1.25rem;
+      background: var(--magenta);
+      padding: 0.6rem 1.5rem;
       text-decoration: none;
+      box-shadow: 0 0 20px rgba(255,0,102,0.35);
       transition: box-shadow 0.2s;
     }
-    .nav-book:hover { box-shadow: 0 0 20px rgba(0,245,255,0.5); }
+    .nav-tickets:hover { box-shadow: 0 0 36px rgba(255,0,102,0.65); }
 
+    /* ─── HERO ─── */
     .hero {
       min-height: 100vh;
       position: relative;
       z-index: 1;
       display: grid;
-      grid-template-columns: 1fr 320px;
-      padding-top: 57px;
+      grid-template-columns: 1fr 420px;
+      padding-top: 68px;
+      overflow: hidden;
     }
 
-    /* LEFT */
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.1;
+      filter: saturate(0.4) hue-rotate(200deg);
+    }
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(6,6,8,0.97) 35%, rgba(6,6,8,0.65) 100%);
+    }
+
     .hero-left {
+      position: relative;
+      z-index: 1;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: 4rem 3rem 4rem 4rem;
-      gap: 2.5rem;
-      border-right: 1px solid rgba(0,245,255,0.1);
+      padding: 5rem 4rem 5rem 5rem;
+      gap: 2.25rem;
+      border-right: 1px solid rgba(0,229,255,0.08);
     }
 
-    .hero-tag {
-      font-size: 0.6rem;
-      font-weight: 400;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--cyan);
-      display: flex;
+    .hero-badge {
+      display: inline-flex;
       align-items: center;
       gap: 0.75rem;
+      font-size: 0.55rem;
+      font-weight: 400;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--magenta);
+      text-shadow: 0 0 10px rgba(255,0,102,0.5);
     }
-    .hero-tag::before {
+    .hero-badge::before {
       content: '';
       display: block;
-      width: 1.5rem;
-      height: 1px;
-      background: var(--cyan);
-      box-shadow: 0 0 6px rgba(0,245,255,0.8);
+      width: 8px;
+      height: 8px;
+      background: var(--magenta);
+      border-radius: 50%;
+      box-shadow: 0 0 10px rgba(255,0,102,0.8);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; box-shadow: 0 0 10px rgba(255,0,102,0.8); }
+      50% { opacity: 0.4; box-shadow: 0 0 4px rgba(255,0,102,0.3); }
     }
 
     .hero-headline {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(5rem, 12vw, 10rem);
+      font-size: clamp(5.5rem, 13vw, 11rem);
       line-height: 0.88;
       letter-spacing: 0.03em;
-      color: var(--text);
     }
-    .hero-headline .glow-cyan {
+    .hl-white  { color: var(--text); display: block; }
+    .hl-cyan   {
       color: var(--cyan);
+      display: block;
       text-shadow:
-        0 0 20px rgba(0,245,255,0.8),
-        0 0 40px rgba(0,245,255,0.4),
-        0 0 80px rgba(0,245,255,0.2);
+        0 0 30px rgba(0,229,255,0.75),
+        0 0 60px rgba(0,229,255,0.3),
+        0 0 100px rgba(0,229,255,0.12);
     }
-    .hero-headline .glow-red {
-      color: var(--red);
+    .hl-magenta {
+      color: var(--magenta);
+      display: block;
       text-shadow:
-        0 0 20px rgba(255,46,99,0.8),
-        0 0 40px rgba(255,46,99,0.4);
+        0 0 30px rgba(255,0,102,0.75),
+        0 0 60px rgba(255,0,102,0.3);
     }
 
     .hero-sub {
       font-size: 0.8rem;
       font-weight: 300;
-      line-height: 1.8;
-      color: rgba(255,255,255,0.4);
+      line-height: 1.85;
+      color: rgba(255,255,255,0.35);
       max-width: 40ch;
+      border-left: 2px solid rgba(0,229,255,0.2);
+      padding-left: 1rem;
     }
 
-    /* Style tags */
-    .style-tags {
+    .hero-tags {
       display: flex;
       gap: 0.5rem;
       flex-wrap: wrap;
     }
-    .tag {
-      font-size: 0.6rem;
+    .htag {
+      font-size: 0.54rem;
       font-weight: 400;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      padding: 0.3rem 0.8rem;
+      padding: 0.3rem 0.85rem;
       border: 1px solid;
     }
-    .tag-cyan { color: var(--cyan); border-color: rgba(0,245,255,0.3); }
-    .tag-red  { color: var(--red);  border-color: rgba(255,46,99,0.3);  }
-    .tag-white{ color: rgba(255,255,255,0.5); border-color: rgba(255,255,255,0.12); }
+    .htag-c { color: var(--cyan);    border-color: rgba(0,229,255,0.25); }
+    .htag-m { color: var(--magenta); border-color: rgba(255,0,102,0.25); }
+    .htag-d { color: rgba(255,255,255,0.4); border-color: rgba(255,255,255,0.1); }
 
-    .cta-row {
+    .hero-cta {
       display: flex;
       align-items: center;
       gap: 1.5rem;
     }
-    .cta-btn {
+    .cta-main {
       display: inline-flex;
       align-items: center;
-      gap: 0.6rem;
-      background: var(--red);
-      color: var(--text);
-      text-decoration: none;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.1rem;
-      letter-spacing: 0.12em;
-      padding: 0.75rem 2rem;
-      box-shadow: 0 0 24px rgba(255,46,99,0.35);
-      transition: box-shadow 0.2s;
-    }
-    .cta-btn:hover { box-shadow: 0 0 40px rgba(255,46,99,0.6); }
-    .cta-link {
-      font-size: 0.6rem;
-      font-weight: 300;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.3);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .cta-link:hover { color: var(--cyan); }
-
-    /* RIGHT */
-    .hero-right {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
-
-    .right-block {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 2rem;
-      border-bottom: 1px solid rgba(0,245,255,0.08);
-    }
-    .right-block:last-child { border-bottom: none; }
-    .rb-label {
-      font-size: 0.52rem;
-      font-weight: 400;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.25);
-      margin-bottom: 0.6rem;
-    }
-    .rb-value {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 2rem;
-      letter-spacing: 0.06em;
-      color: var(--text);
-      line-height: 1;
-    }
-    .rb-value .small {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 0.75rem;
-      font-weight: 300;
-      color: rgba(255,255,255,0.35);
-      display: block;
-      margin-top: 0.2rem;
-      letter-spacing: 0.04em;
-    }
-
-    .booking-block {
-      padding: 2rem;
-      border-top: 1px solid rgba(0,245,255,0.12);
-    }
-    .booking-label {
-      font-size: 0.52rem;
-      font-weight: 400;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--cyan);
-      margin-bottom: 1rem;
-      text-shadow: 0 0 8px rgba(0,245,255,0.4);
-    }
-    .booking-hours {
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-    }
-    .bh-row {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.68rem;
-      font-weight: 300;
-    }
-    .bh-day { color: rgba(255,255,255,0.35); }
-    .bh-time { color: rgba(255,255,255,0.7); }
-
-    /* Chain decoration */
-    .chain-deco {
-      position: fixed;
-      bottom: 2rem;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      align-items: center;
-      gap: 0;
-    }
-    .chain-link {
-      width: 18px;
-      height: 10px;
-      border: 1.5px solid rgba(0,245,255,0.2);
-      border-radius: 5px;
-      margin: 0 -2px;
-    }
-    .chain-link:nth-child(even) { transform: rotate(90deg); }
-
-    /* Photo container */
-    .ph { position:relative; overflow:hidden; }
-    .ph img { position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.55s ease; }
-    .ph:hover img { transform: scale(1.05); }
-
-    /* Styles gallery section */
-    .styles-section {
-      background: var(--mid);
-      padding: 6rem 0;
-      position: relative;
-      z-index: 1;
-    }
-    .styles-inner {
-      max-width: 1600px;
-      margin-left: auto;
-      margin-right: auto;
-      padding: 0 4rem;
-    }
-    .styles-header {
-      margin-bottom: 3rem;
-    }
-    .styles-eyebrow {
-      font-size: 0.55rem;
-      font-weight: 400;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--cyan);
-      text-shadow: 0 0 8px rgba(0,245,255,0.4);
-      margin-bottom: 0.75rem;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-    .styles-eyebrow::before {
-      content: '';
-      display: block;
-      width: 1.5rem;
-      height: 1px;
-      background: var(--cyan);
-      box-shadow: 0 0 6px rgba(0,245,255,0.8);
-    }
-    .styles-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(3rem, 6vw, 5rem);
-      letter-spacing: 0.05em;
-      color: var(--text);
-      line-height: 0.95;
-    }
-    .styles-title .red {
-      color: var(--red);
-      text-shadow: 0 0 20px rgba(255,46,99,0.6);
-    }
-    .styles-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 1px;
-      background: rgba(0,245,255,0.08);
-    }
-    .style-card {
-      background: var(--bg);
-      padding: 0;
-      position: relative;
-      cursor: pointer;
-    }
-    .style-card-body {
-      padding: 1.25rem 1.5rem 1.5rem;
-    }
-    .sc-num {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 0.7rem;
-      letter-spacing: 0.15em;
-      color: rgba(0,245,255,0.25);
-      margin-bottom: 0.4rem;
-    }
-    .sc-name {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.4rem;
-      letter-spacing: 0.06em;
-      color: var(--text);
-      line-height: 1;
-      margin-bottom: 0.4rem;
-    }
-    .sc-desc {
-      font-size: 0.72rem;
-      font-weight: 300;
-      color: rgba(255,255,255,0.3);
-      line-height: 1.6;
-    }
-    .sc-tags {
-      display: flex;
-      gap: 0.4rem;
-      flex-wrap: wrap;
-      margin-top: 0.75rem;
-    }
-    .sc-tag {
-      font-size: 0.52rem;
-      font-weight: 400;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 0.2rem 0.6rem;
-      border: 1px solid rgba(0,245,255,0.2);
-      color: rgba(0,245,255,0.5);
-    }
-
-    /* Artists section */
-    .artists-section {
-      background: var(--bg);
-      padding: 6rem 0;
-      position: relative;
-      z-index: 1;
-    }
-    .artists-inner {
-      max-width: 1600px;
-      margin-left: auto;
-      margin-right: auto;
-      padding: 0 4rem;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 5rem;
-      align-items: start;
-    }
-    .artists-text {
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-    }
-    .artists-eyebrow {
-      font-size: 0.55rem;
-      font-weight: 400;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--red);
-      text-shadow: 0 0 8px rgba(255,46,99,0.4);
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-    .artists-eyebrow::before {
-      content: '';
-      display: block;
-      width: 1.5rem;
-      height: 1px;
-      background: var(--red);
-    }
-    .artists-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(2.5rem, 5vw, 4.5rem);
-      letter-spacing: 0.03em;
-      color: var(--text);
-      line-height: 0.9;
-    }
-    .artists-title .cyan {
-      color: var(--cyan);
-      text-shadow: 0 0 20px rgba(0,245,255,0.6);
-    }
-    .artists-body {
-      font-size: 0.8rem;
-      font-weight: 300;
-      line-height: 1.85;
-      color: rgba(255,255,255,0.35);
-      max-width: 38ch;
-    }
-    .artist-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      border-top: 1px solid rgba(0,245,255,0.1);
-    }
-    .artist-row {
-      display: grid;
-      grid-template-columns: auto 1fr auto;
-      gap: 1.25rem;
-      align-items: center;
-      padding: 1rem 0;
-      border-bottom: 1px solid rgba(0,245,255,0.06);
-      cursor: default;
-      transition: background 0.15s;
-    }
-    .artist-row:hover { background: rgba(0,245,255,0.03); }
-    .ar-num {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 0.8rem;
-      letter-spacing: 0.1em;
-      color: rgba(0,245,255,0.2);
-      width: 1.5rem;
-    }
-    .ar-info {}
-    .ar-name {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.1rem;
-      letter-spacing: 0.06em;
-      color: var(--text);
-    }
-    .ar-spec {
-      font-size: 0.65rem;
-      font-weight: 300;
-      color: rgba(255,255,255,0.3);
-      margin-top: 0.1rem;
-    }
-    .ar-years {
-      font-size: 0.6rem;
-      font-weight: 400;
-      letter-spacing: 0.12em;
-      color: rgba(0,245,255,0.4);
-    }
-    .artists-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
+      gap: 0.5rem;
       background: var(--cyan);
       color: var(--bg);
       text-decoration: none;
       font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.15rem;
+      letter-spacing: 0.12em;
+      padding: 0.82rem 2.25rem;
+      box-shadow: 0 0 28px rgba(0,229,255,0.3);
+      transition: box-shadow 0.2s;
+    }
+    .cta-main:hover { box-shadow: 0 0 50px rgba(0,229,255,0.6); }
+    .cta-ghost {
+      font-size: 0.58rem;
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .cta-ghost:hover { color: var(--magenta); }
+
+    /* Hero right panel */
+    .hero-right {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .tonight-panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .tonight-photo {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      min-height: 320px;
+    }
+    .tonight-photo img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.55;
+      filter: saturate(0.5) hue-rotate(200deg);
+      transition: transform 0.55s ease;
+    }
+    .tonight-photo:hover img { transform: scale(1.04); }
+    .tonight-photo::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(6,6,8,0.97) 0%, rgba(6,6,8,0.3) 60%, transparent 100%);
+    }
+
+    .tonight-info {
+      padding: 2rem;
+      border-top: 1px solid rgba(0,229,255,0.1);
+      background: rgba(13,13,22,0.7);
+      backdrop-filter: blur(4px);
+    }
+    .ti-label {
+      font-size: 0.5rem;
+      font-weight: 400;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--magenta);
+      text-shadow: 0 0 8px rgba(255,0,102,0.4);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .ti-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, rgba(255,0,102,0.3), transparent);
+    }
+    .ti-event {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.85rem;
+      letter-spacing: 0.06em;
+      color: var(--text);
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+    .ti-artist {
+      font-size: 0.62rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 1rem;
+    }
+    .ti-meta {
+      display: flex;
+      gap: 1.5rem;
+    }
+    .tm-val {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.08em;
+      color: var(--cyan);
+      text-shadow: 0 0 8px rgba(0,229,255,0.4);
+      line-height: 1;
+    }
+    .tm-key {
+      font-size: 0.44rem;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.2);
+      margin-top: 0.2rem;
+    }
+
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid rgba(0,229,255,0.08);
+    }
+    .sb-item {
+      padding: 1.5rem;
+      border-right: 1px solid rgba(0,229,255,0.07);
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    .sb-item:last-child { border-right: none; }
+    .sb-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.9rem;
+      letter-spacing: 0.04em;
+      color: var(--text);
+      line-height: 1;
+    }
+    .sb-label {
+      font-size: 0.47rem;
+      font-weight: 300;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.2);
+    }
+
+    /* ─── PHOTO HELPER ─── */
+    .ph { position: relative; overflow: hidden; }
+    .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.55s ease; }
+    .ph:hover img { transform: scale(1.05); }
+
+    /* ─── SHARED SECTION STYLES ─── */
+    .s-inner {
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 0 5rem;
+    }
+    .s-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 3.5rem;
+    }
+    .s-eyebrow {
+      font-size: 0.52rem;
+      font-weight: 400;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      text-shadow: 0 0 8px rgba(0,229,255,0.4);
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .s-eyebrow::before {
+      content: '';
+      display: block;
+      width: 1.5rem;
+      height: 1px;
+      background: var(--cyan);
+      box-shadow: 0 0 6px rgba(0,229,255,0.8);
+    }
+    .s-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      letter-spacing: 0.04em;
+      line-height: 0.92;
+      color: var(--text);
+    }
+    .s-all {
+      font-size: 0.54rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+      text-decoration: none;
+      transition: color 0.2s, border-color 0.2s;
+      padding-bottom: 0.25rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      white-space: nowrap;
+    }
+    .s-all:hover { color: var(--cyan); border-color: rgba(0,229,255,0.4); }
+
+    /* ─── EVENTS SECTION ─── */
+    .section-events {
+      padding: 7rem 0;
+      background: var(--mid);
+      position: relative;
+      z-index: 1;
+    }
+
+    .events-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(0,229,255,0.07);
+    }
+    .event-card {
+      background: var(--bg);
+      position: relative;
+      cursor: pointer;
+    }
+    .ec-photo {
+      position: relative;
+      overflow: hidden;
+      height: 280px;
+    }
+    .ec-photo img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(0.65);
+      transition: transform 0.55s ease;
+    }
+    .event-card:hover .ec-photo img { transform: scale(1.05); }
+    .ec-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(6,6,8,0.92) 0%, transparent 55%);
+    }
+    .ec-genre {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      font-size: 0.47rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.7rem;
+      border: 1px solid;
+      z-index: 2;
+      background: rgba(6,6,8,0.75);
+    }
+    .genre-c { color: var(--cyan);    border-color: rgba(0,229,255,0.4); }
+    .genre-m { color: var(--magenta); border-color: rgba(255,0,102,0.4); }
+    .genre-d { color: rgba(255,255,255,0.6); border-color: rgba(255,255,255,0.2); }
+
+    .ec-sold {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-size: 0.44rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--magenta);
+      border: 1px solid rgba(255,0,102,0.4);
+      background: rgba(6,6,8,0.8);
+      padding: 0.22rem 0.6rem;
+      z-index: 2;
+    }
+
+    .ec-body { padding: 1.5rem; }
+    .ec-date {
+      font-size: 0.54rem;
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(0,229,255,0.5);
+      margin-bottom: 0.4rem;
+    }
+    .ec-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: 0.06em;
+      color: var(--text);
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+    .ec-acts {
+      font-size: 0.63rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+    .ec-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .ec-time {
+      font-size: 0.54rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.22);
+    }
+    .ec-price {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.08em;
+      color: var(--cyan);
+      text-shadow: 0 0 8px rgba(0,229,255,0.4);
+    }
+
+    /* ─── FLOOR SECTION ─── */
+    .section-floor {
+      padding: 7rem 0;
+      background: var(--bg);
+      position: relative;
+      z-index: 1;
+    }
+    .floor-inner {
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 0 5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+    .floor-body {
+      font-size: 0.82rem;
+      font-weight: 300;
+      line-height: 1.9;
+      color: rgba(255,255,255,0.35);
+      max-width: 40ch;
+      margin-bottom: 2.5rem;
+    }
+    .floor-features {
+      display: flex;
+      flex-direction: column;
+      border-top: 1px solid rgba(0,229,255,0.08);
+    }
+    .ff-row {
+      display: grid;
+      grid-template-columns: 1.5rem 1fr;
+      gap: 1rem;
+      align-items: center;
+      padding: 0.9rem 0;
+      border-bottom: 1px solid rgba(0,229,255,0.06);
+    }
+    .ff-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--cyan);
+      box-shadow: 0 0 8px rgba(0,229,255,0.7);
+      justify-self: center;
+    }
+    .ff-text {
+      font-size: 0.64rem;
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      color: rgba(255,255,255,0.38);
+      line-height: 1.5;
+    }
+    .ff-text strong { color: rgba(255,255,255,0.75); font-weight: 500; }
+    .floor-cta {
+      margin-top: 2.5rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--magenta);
+      color: var(--text);
+      text-decoration: none;
+      font-family: 'Bebas Neue', sans-serif;
       font-size: 1.1rem;
       letter-spacing: 0.12em;
-      padding: 0.75rem 2rem;
-      box-shadow: 0 0 24px rgba(0,245,255,0.25);
+      padding: 0.82rem 2.25rem;
+      box-shadow: 0 0 24px rgba(255,0,102,0.3);
       transition: box-shadow 0.2s;
-      width: fit-content;
     }
-    .artists-cta:hover { box-shadow: 0 0 40px rgba(0,245,255,0.5); }
-    .artists-photos {
+    .floor-cta:hover { box-shadow: 0 0 44px rgba(255,0,102,0.6); }
+
+    .floor-photos {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 1px;
     }
 
-    /* Large screen fix */
-    @media (min-width: 1600px) {
-      .hero {
-        max-width: 1600px;
-        margin-left: auto;
-        margin-right: auto;
-      }
+    /* ─── LINEUP SECTION ─── */
+    .section-lineup {
+      padding: 7rem 0;
+      background: var(--mid);
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+    }
+    .section-lineup::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(0,229,255,0.3) 30%, rgba(255,0,102,0.3) 70%, transparent);
+    }
+
+    .lineup-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: rgba(0,229,255,0.06);
+      margin-top: 3.5rem;
+    }
+    .artist-card {
+      background: var(--bg);
+      cursor: pointer;
+    }
+    .ac-photo {
+      position: relative;
+      overflow: hidden;
+      height: 300px;
+    }
+    .ac-photo img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(0.45) contrast(1.1);
+      transition: transform 0.55s ease, filter 0.3s;
+    }
+    .artist-card:hover .ac-photo img {
+      transform: scale(1.05);
+      filter: saturate(0.7) contrast(1.1);
+    }
+    .ac-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(6,6,8,0.95) 0%, transparent 60%);
+    }
+    .ac-glow {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .artist-card:hover .ac-glow { opacity: 1; }
+    .glow-c { background: radial-gradient(ellipse at center bottom, rgba(0,229,255,0.12) 0%, transparent 60%); }
+    .glow-m { background: radial-gradient(ellipse at center bottom, rgba(255,0,102,0.12) 0%, transparent 60%); }
+
+    .ac-body { padding: 1.25rem 1.5rem 1.5rem; }
+    .ac-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      color: rgba(0,229,255,0.2);
+      margin-bottom: 0.3rem;
+    }
+    .ac-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+    .ac-genre {
+      font-size: 0.6rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 0.6rem;
+    }
+    .ac-date {
+      font-size: 0.52rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(0,229,255,0.45);
+      border-top: 1px solid rgba(0,229,255,0.08);
+      padding-top: 0.6rem;
+    }
+
+    /* ─── BOTTOM NEON LINE ─── */
+    .neon-bar {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(
+        to right,
+        transparent,
+        rgba(0,229,255,0.4) 20%,
+        rgba(255,0,102,0.5) 50%,
+        rgba(0,229,255,0.4) 80%,
+        transparent
+      );
+      z-index: 50;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 1100px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { display: none; }
+      .hero-left { padding: 5rem 2.5rem; border-right: none; }
+      .floor-inner { grid-template-columns: 1fr; gap: 3rem; padding: 0 2.5rem; }
+      .floor-photos { height: 420px; grid-template-columns: 1fr 1fr; }
+      .lineup-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .s-inner { padding: 0 1.5rem; }
+      .s-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .events-grid { grid-template-columns: 1fr; }
+      .section-lineup .s-inner { padding: 0 1.5rem; }
+      .lineup-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
+  <div class="neon-bar"></div>
+
   <nav>
-    <div class="nav-logo">Chain <span>Ink</span></div>
+    <div class="nav-logo">CH<span>AI</span>N</div>
     <ul class="nav-links">
-      <li><a href="#">Tattoo</a></li>
-      <li><a href="#">Apparel</a></li>
-      <li><a href="#">Flash</a></li>
-      <li><a href="#">Artists</a></li>
+      <li><a href="#">Events</a></li>
+      <li><a href="#">Floor</a></li>
+      <li><a href="#">Lineup</a></li>
+      <li><a href="#">About</a></li>
     </ul>
-    <a href="#" class="nav-book">Buchung</a>
+    <a href="#" class="nav-tickets">Tickets</a>
   </nav>
 
+  <!-- ═══ HERO ═══ -->
   <section class="hero">
+    <div class="hero-bg">
+      <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1600&h=900&q=80" alt="Underground club crowd" loading="eager" />
+    </div>
+
     <div class="hero-left">
-      <div class="hero-tag">Tattoo Studio · Trier</div>
+      <div class="hero-badge">Tonight Live &nbsp;·&nbsp; 23:00 Uhr</div>
 
       <h1 class="hero-headline">
-        <span class="glow-cyan">Echtes</span><br>
-        <span>bleibt.</span><br>
-        <span class="glow-red">Immer.</span>
+        <span class="hl-white">UNDER</span>
+        <span class="hl-cyan">GROUND</span>
+        <span class="hl-magenta">TRIER.</span>
       </h1>
 
       <p class="hero-sub">
-        Tattoos, die erzählen. Custom Apparel, das hält.
-        Kein Template. Kein Bullshit. Nur Arbeit,
-        auf die wir stolz sind.
+        Kein Dresscode. Kein Mainstream.<br>
+        Chain ist Triers Underground-Club — wo Techno
+        auf rohen Beton trifft und die Nacht erst um vier endet.
       </p>
 
-      <div class="style-tags">
-        <span class="tag tag-cyan">Blackwork</span>
-        <span class="tag tag-red">Fine Line</span>
-        <span class="tag tag-white">Japanese</span>
-        <span class="tag tag-white">Geometric</span>
-        <span class="tag tag-cyan">Custom</span>
+      <div class="hero-tags">
+        <span class="htag htag-c">Techno</span>
+        <span class="htag htag-m">Industrial</span>
+        <span class="htag htag-d">House</span>
+        <span class="htag htag-d">Ambient</span>
+        <span class="htag htag-c">Live Acts</span>
       </div>
 
-      <div class="cta-row">
-        <a href="#" class="cta-btn">Session buchen →</a>
-        <a href="#" class="cta-link">Flash Designs →</a>
+      <div class="hero-cta">
+        <a href="#" class="cta-main">Events &amp; Tickets →</a>
+        <a href="#" class="cta-ghost">Mitglied werden →</a>
       </div>
     </div>
 
     <div class="hero-right">
-      <div class="right-block">
-        <div class="rb-label">Artists</div>
-        <div class="rb-value">4<span class="small">Tattoo Artists im Haus</span></div>
+      <div class="tonight-panel">
+        <div class="tonight-photo">
+          <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&w=800&h=600&q=80" alt="DJ at Chain Trier" loading="eager" />
+        </div>
+        <div class="tonight-info">
+          <div class="ti-label">Tonight</div>
+          <div class="ti-event">Nacht der Frequenz</div>
+          <div class="ti-artist">DSTRKT01 · Mara Vael · Sinus Rex</div>
+          <div class="ti-meta">
+            <div>
+              <div class="tm-val">23:00</div>
+              <div class="tm-key">Einlass</div>
+            </div>
+            <div>
+              <div class="tm-val">Keller</div>
+              <div class="tm-key">Floor</div>
+            </div>
+            <div>
+              <div class="tm-val">12€</div>
+              <div class="tm-key">Eintritt</div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="right-block">
-        <div class="rb-label">Experience</div>
-        <div class="rb-value">8+<span class="small">Jahre in Trier</span></div>
-      </div>
-      <div class="right-block">
-        <div class="rb-label">Tattoos</div>
-        <div class="rb-value">2k+<span class="small">Pieces gestochen</span></div>
-      </div>
-      <div class="booking-block">
-        <div class="booking-label">Studio-Zeiten</div>
-        <div class="booking-hours">
-          <div class="bh-row"><span class="bh-day">Mo – Fr</span><span class="bh-time">12 – 20 Uhr</span></div>
-          <div class="bh-row"><span class="bh-day">Samstag</span><span class="bh-time">11 – 18 Uhr</span></div>
-          <div class="bh-row"><span class="bh-day">Sonntag</span><span class="bh-time">nach Absprache</span></div>
+      <div class="stats-bar">
+        <div class="sb-item">
+          <div class="sb-num">600</div>
+          <div class="sb-label">Kapazität</div>
+        </div>
+        <div class="sb-item">
+          <div class="sb-num">3</div>
+          <div class="sb-label">Floors</div>
+        </div>
+        <div class="sb-item">
+          <div class="sb-num">8+</div>
+          <div class="sb-label">Jahre Trier</div>
         </div>
       </div>
     </div>
   </section>
 
-  <div class="chain-deco">
-    <div class="chain-link"></div><div class="chain-link"></div>
-    <div class="chain-link"></div><div class="chain-link"></div>
-    <div class="chain-link"></div><div class="chain-link"></div>
-    <div class="chain-link"></div><div class="chain-link"></div>
-    <div class="chain-link"></div>
-  </div>
-
-  <!-- STYLES GALLERY SECTION -->
-  <section class="styles-section">
-    <div class="styles-inner">
-      <div class="styles-header">
-        <div class="styles-eyebrow">Unsere Stile</div>
-        <h2 class="styles-title">Dein Style.<br><span class="red">Dein Skin.</span></h2>
+  <!-- ═══ EVENTS SECTION ═══ -->
+  <section class="section-events">
+    <div class="s-inner">
+      <div class="s-header">
+        <div>
+          <div class="s-eyebrow">Nächste Nächte</div>
+          <h2 class="s-title">Kommende<br><span style="color:var(--magenta);text-shadow:0 0 20px rgba(255,0,102,0.5);">Events.</span></h2>
+        </div>
+        <a href="#" class="s-all">Alle Events →</a>
       </div>
-      <div class="styles-grid">
-        <div class="style-card">
-          <div class="ph" style="height:240px;">
-            <img src="https://images.unsplash.com/photo-1542736667-069246bdbc6d?auto=format&fit=crop&w=1200&h=800&q=80" alt="Blackwork Tattoo" loading="lazy" />
-            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.7) 0%,transparent 60%);pointer-events:none;"></div>
+      <div class="events-grid">
+
+        <div class="event-card">
+          <div class="ec-photo">
+            <img src="https://images.unsplash.com/photo-1571266028244-1dde55cbe5b0?auto=format&fit=crop&w=800&h=600&q=80" alt="Void Protocol at Chain" loading="lazy" />
+            <div class="ec-overlay"></div>
+            <span class="ec-genre genre-c">Techno</span>
+            <span class="ec-sold">Sold Out</span>
           </div>
-          <div class="style-card-body">
-            <div class="sc-num">01</div>
-            <div class="sc-name">Blackwork</div>
-            <div class="sc-desc">Starke Kontraste, klare Formen. Kein Graubereich — nur Entscheidungen.</div>
-            <div class="sc-tags">
-              <span class="sc-tag">Bold</span>
-              <span class="sc-tag">Geometric</span>
+          <div class="ec-body">
+            <div class="ec-date">Fr 04. Apr 2026</div>
+            <div class="ec-title">Void Protocol</div>
+            <div class="ec-acts">DSTRKT01 · Phase III · Konstrukt</div>
+            <div class="ec-footer">
+              <span class="ec-time">23:00 – 8:00</span>
+              <span class="ec-price">18€</span>
             </div>
           </div>
         </div>
-        <div class="style-card">
-          <div class="ph" style="height:240px;">
-            <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=1200&h=800&q=80" alt="Fine Line Tattoo" loading="lazy" />
-            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.7) 0%,transparent 60%);pointer-events:none;"></div>
+
+        <div class="event-card">
+          <div class="ec-photo">
+            <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=800&h=600&q=80" alt="Raw Signal at Chain" loading="lazy" />
+            <div class="ec-overlay"></div>
+            <span class="ec-genre genre-m">Industrial</span>
           </div>
-          <div class="style-card-body">
-            <div class="sc-num">02</div>
-            <div class="sc-name">Fine Line</div>
-            <div class="sc-desc">Präzision auf der Haut. Jede Linie hat ihren Grund — kein Strich zu viel.</div>
-            <div class="sc-tags">
-              <span class="sc-tag">Delicate</span>
-              <span class="sc-tag">Minimal</span>
+          <div class="ec-body">
+            <div class="ec-date">Sa 05. Apr 2026</div>
+            <div class="ec-title">Raw Signal</div>
+            <div class="ec-acts">Sinus Rex · Mara Vael · Echkammer</div>
+            <div class="ec-footer">
+              <span class="ec-time">22:00 – 7:00</span>
+              <span class="ec-price">14€</span>
             </div>
           </div>
         </div>
-        <div class="style-card">
-          <div class="ph" style="height:240px;">
-            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1200&h=800&q=80" alt="Japanese Traditional Tattoo" loading="lazy" />
-            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.7) 0%,transparent 60%);pointer-events:none;"></div>
+
+        <div class="event-card">
+          <div class="ec-photo">
+            <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=800&h=600&q=80" alt="Nacht der Ketten at Chain" loading="lazy" />
+            <div class="ec-overlay"></div>
+            <span class="ec-genre genre-d">House</span>
           </div>
-          <div class="style-card-body">
-            <div class="sc-num">03</div>
-            <div class="sc-name">Japanese</div>
-            <div class="sc-desc">Tradition, neu interpretiert. Drachen, Wellen, Blüten — mit Respekt vor dem Original.</div>
-            <div class="sc-tags">
-              <span class="sc-tag">Traditional</span>
-              <span class="sc-tag">Color</span>
+          <div class="ec-body">
+            <div class="ec-date">Fr 11. Apr 2026</div>
+            <div class="ec-title">Nacht der Ketten</div>
+            <div class="ec-acts">Kellergeist · TRX Duo · Leila Mohn</div>
+            <div class="ec-footer">
+              <span class="ec-time">23:00 – 9:00</span>
+              <span class="ec-price">12€</span>
             </div>
           </div>
         </div>
+
       </div>
     </div>
   </section>
 
-  <!-- ARTISTS SECTION -->
-  <section class="artists-section">
-    <div class="artists-inner">
-      <div class="artists-text">
-        <div class="artists-eyebrow">Das Team</div>
-        <h2 class="artists-title">4 Artists.<br><span class="cyan">1 Anspruch.</span></h2>
-        <p class="artists-body">
-          Jeder bei Chain Ink hat seinen eigenen Stil —
-          aber alle teilen dieselbe Überzeugung: Tattoos
-          sind keine Dekoration. Sie sind Entscheidungen.
+  <!-- ═══ FLOOR SECTION ═══ -->
+  <section class="section-floor">
+    <div class="floor-inner">
+      <div>
+        <div class="s-eyebrow" style="margin-bottom:0.6rem;">Der Floor</div>
+        <h2 class="s-title" style="margin-bottom:2rem;">Roher Beton.<br><span style="color:var(--cyan);text-shadow:0 0 20px rgba(0,229,255,0.55);">Volle Frequenz.</span></h2>
+        <p class="floor-body">
+          Chain sitzt in einem ehemaligen Industrielager am Trierer Westbahnhof.
+          Drei Floors, fünf Bar-Stationen, ein Soundsystem das Wände bewegt.
+          Kein VIP. Kein Dresscode. Nur Musik.
         </p>
-        <div class="artist-list">
-          <div class="artist-row">
-            <span class="ar-num">01</span>
-            <div class="ar-info">
-              <div class="ar-name">Kai Brenner</div>
-              <div class="ar-spec">Blackwork · Geometric · Custom</div>
-            </div>
-            <span class="ar-years">8 Jahre</span>
+        <div class="floor-features">
+          <div class="ff-row">
+            <div class="ff-dot"></div>
+            <span class="ff-text"><strong>Floor 1 — Keller:</strong> 600 qm, Funktion One Soundsystem</span>
           </div>
-          <div class="artist-row">
-            <span class="ar-num">02</span>
-            <div class="ar-info">
-              <div class="ar-name">Mia Voss</div>
-              <div class="ar-spec">Fine Line · Botanical · Portrait</div>
-            </div>
-            <span class="ar-years">5 Jahre</span>
+          <div class="ff-row">
+            <div class="ff-dot"></div>
+            <span class="ff-text"><strong>Floor 2 — Halle:</strong> Live-Bühne, 400 qm, offenes Konzert-Format</span>
           </div>
-          <div class="artist-row">
-            <span class="ar-num">03</span>
-            <div class="ar-info">
-              <div class="ar-name">Tariq El-Amin</div>
-              <div class="ar-spec">Japanese · Neo-Trad · Color</div>
-            </div>
-            <span class="ar-years">11 Jahre</span>
+          <div class="ff-row">
+            <div class="ff-dot"></div>
+            <span class="ff-text"><strong>Floor 3 — Dach:</strong> Outdoor bis 4 Uhr, Sommersaison Mai–Sep</span>
           </div>
-          <div class="artist-row">
-            <span class="ar-num">04</span>
-            <div class="ar-info">
-              <div class="ar-name">Lena Struck</div>
-              <div class="ar-spec">Geometric · Ornamental · Dotwork</div>
-            </div>
-            <span class="ar-years">6 Jahre</span>
+          <div class="ff-row">
+            <div class="ff-dot"></div>
+            <span class="ff-text"><strong>5 Bars</strong> — Craft Beer, Natural Wine, keine Plastikbecher</span>
+          </div>
+          <div class="ff-row">
+            <div class="ff-dot"></div>
+            <span class="ff-text"><strong>Garderobe</strong> inklusive, sichere Locker, LGBTQ+ Safer Space</span>
           </div>
         </div>
-        <a href="#" class="artists-cta">Session buchen →</a>
+        <a href="#" class="floor-cta">Location entdecken →</a>
       </div>
-      <div class="artists-photos">
-        <div class="ph" style="height:500px;">
-          <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&h=1000&q=80" alt="Tattoo Artist bei der Arbeit" loading="lazy" />
-          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.5) 0%,transparent 50%);pointer-events:none;"></div>
+
+      <div class="floor-photos">
+        <div class="ph" style="height:580px;">
+          <img src="https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?auto=format&fit=crop&w=800&h=1200&q=80" alt="Chain Trier Venue Interior" loading="lazy" />
+          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(6,6,8,0.5) 0%,transparent 55%);"></div>
         </div>
-        <div style="display:flex;flex-direction:column;gap:1px;margin-top:2rem;">
-          <div class="ph" style="height:245px;">
-            <img src="https://images.unsplash.com/photo-1541518763669-27fef04b14ea?auto=format&fit=crop&w=800&h=600&q=80" alt="Tattoo Studio Atmosphäre" loading="lazy" />
-            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.5) 0%,transparent 50%);pointer-events:none;"></div>
+        <div style="display:flex;flex-direction:column;gap:1px;margin-top:2.5rem;">
+          <div class="ph" style="height:285px;">
+            <img src="https://images.unsplash.com/photo-1598387181032-a3103a2db5b3?auto=format&fit=crop&w=800&h=600&q=80" alt="DJ Booth at Chain" loading="lazy" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(6,6,8,0.4) 0%,transparent 55%);"></div>
           </div>
-          <div class="ph" style="height:245px;">
-            <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=800&h=600&q=80" alt="Custom Tattoo Design" loading="lazy" />
-            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.5) 0%,transparent 50%);pointer-events:none;"></div>
+          <div class="ph" style="height:285px;">
+            <img src="https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?auto=format&fit=crop&w=800&h=600&q=80" alt="Stage lights at Chain" loading="lazy" />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(6,6,8,0.4) 0%,transparent 55%);"></div>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ LINEUP SECTION ═══ -->
+  <section class="section-lineup">
+    <div class="s-inner">
+      <div class="s-header">
+        <div>
+          <div class="s-eyebrow" style="color:var(--magenta);text-shadow:0 0 8px rgba(255,0,102,0.4);">April Lineup</div>
+          <h2 class="s-title">Resident<br><span style="color:var(--magenta);text-shadow:0 0 20px rgba(255,0,102,0.5);">Artists.</span></h2>
+        </div>
+      </div>
+      <div class="lineup-grid">
+
+        <div class="artist-card">
+          <div class="ac-photo">
+            <img src="https://images.unsplash.com/photo-1571266028244-1dde55cbe5b0?auto=format&fit=crop&w=600&h=800&q=80" alt="DSTRKT01" loading="lazy" />
+            <div class="ac-overlay"></div>
+            <div class="ac-glow glow-c"></div>
+          </div>
+          <div class="ac-body">
+            <div class="ac-num">01</div>
+            <div class="ac-name">DSTRKT01</div>
+            <div class="ac-genre">Techno · Industrial · Ambient</div>
+            <div class="ac-date">Fr 04. Apr · Keller Floor</div>
+          </div>
+        </div>
+
+        <div class="artist-card">
+          <div class="ac-photo">
+            <img src="https://images.unsplash.com/photo-1598387181032-a3103a2db5b3?auto=format&fit=crop&w=600&h=800&q=80" alt="Mara Vael" loading="lazy" />
+            <div class="ac-overlay"></div>
+            <div class="ac-glow glow-m"></div>
+          </div>
+          <div class="ac-body">
+            <div class="ac-num">02</div>
+            <div class="ac-name">Mara Vael</div>
+            <div class="ac-genre">Dark Techno · EBM · Noise</div>
+            <div class="ac-date">Fr 04. Apr · Keller Floor</div>
+          </div>
+        </div>
+
+        <div class="artist-card">
+          <div class="ac-photo">
+            <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=600&h=800&q=80" alt="Sinus Rex" loading="lazy" />
+            <div class="ac-overlay"></div>
+            <div class="ac-glow glow-c"></div>
+          </div>
+          <div class="ac-body">
+            <div class="ac-num">03</div>
+            <div class="ac-name">Sinus Rex</div>
+            <div class="ac-genre">House · Deep Tech · Groove</div>
+            <div class="ac-date">Sa 05. Apr · Halle Floor</div>
+          </div>
+        </div>
+
+        <div class="artist-card">
+          <div class="ac-photo">
+            <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=600&h=800&q=80" alt="Kellergeist" loading="lazy" />
+            <div class="ac-overlay"></div>
+            <div class="ac-glow glow-m"></div>
+          </div>
+          <div class="ac-body">
+            <div class="ac-num">04</div>
+            <div class="ac-name">Kellergeist</div>
+            <div class="ac-genre">Minimal · Detroit Techno · Rave</div>
+            <div class="ac-date">Fr 11. Apr · Keller Floor</div>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
