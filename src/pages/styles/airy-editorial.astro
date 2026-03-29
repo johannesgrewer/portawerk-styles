@@ -7,1254 +7,1274 @@ export const prerender = true;
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
-  <title>TREVERIS — Magazin für Lebensart aus dem Moselland</title>
+  <title>PASSAGE — Magazin für Lebensart · Trier</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
   <style>
-    /* ── RESET ── */
+    /* ─── RESET ─── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { overflow-x: hidden; scroll-behavior: smooth; }
 
-    /* ── TOKENS ── */
+    /* ─── TOKENS ─── */
     :root {
-      --cream:      #F3EDE2;
-      --warm-white: #FAF8F4;
-      --ink:        #1C1612;
-      --ink-muted:  rgba(28,22,18,0.50);
-      --ink-faint:  rgba(28,22,18,0.11);
-      --rust:       #8A3320;
-      --sand:       #DDD4C4;
-      --font-serif: 'Playfair Display', Georgia, serif;
-      --font-sans:  'Jost', system-ui, sans-serif;
+      --white:      #FFFFFF;
+      --off-white:  #F8F7F4;
+      --ink:        #151210;
+      --ink-50:     rgba(21,18,16,0.50);
+      --ink-20:     rgba(21,18,16,0.20);
+      --ink-08:     rgba(21,18,16,0.08);
+      --sage:       #4E6B5A;
+      --sage-light: #EAF0EC;
+      --serif:      'EB Garamond', Georgia, serif;
+      --sans:       'DM Sans', system-ui, sans-serif;
     }
 
     body {
-      background: var(--cream);
+      background: var(--white);
       color: var(--ink);
-      font-family: var(--font-sans);
+      font-family: var(--sans);
       font-weight: 300;
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
     }
 
-    /* Grain texture — printed paper feel */
-    body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      z-index: 9998;
-      pointer-events: none;
-      opacity: 0.03;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
-    }
+    img { display: block; max-width: 100%; }
+    a   { text-decoration: none; }
 
-    /* ── ANIMATIONS ── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(16px); }
+    /* ─── KEYFRAMES ─── */
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(22px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-    @keyframes fadeIn {
+    @keyframes reveal {
       from { opacity: 0; }
       to   { opacity: 1; }
+    }
+    @keyframes scaleIn {
+      from { transform: scale(1.08); opacity: 0; }
+      to   { transform: scale(1);    opacity: 1; }
     }
     @keyframes ticker {
       from { transform: translateX(0); }
       to   { transform: translateX(-50%); }
     }
 
-    .au  { animation: fadeUp 0.65s ease both; }
-    .au1 { animation: fadeUp 0.65s 0.10s ease both; }
-    .au2 { animation: fadeUp 0.65s 0.20s ease both; }
-    .au3 { animation: fadeUp 0.65s 0.30s ease both; }
-    .au4 { animation: fadeUp 0.65s 0.42s ease both; }
-    .au5 { animation: fadeUp 0.65s 0.55s ease both; }
-    .af  { animation: fadeIn 1.1s 0.05s ease both; }
+    .u0  { animation: slideUp 0.7s      ease both; }
+    .u1  { animation: slideUp 0.7s .12s ease both; }
+    .u2  { animation: slideUp 0.7s .24s ease both; }
+    .u3  { animation: slideUp 0.7s .38s ease both; }
+    .u4  { animation: slideUp 0.7s .52s ease both; }
+    .r0  { animation: reveal  1.0s      ease both; }
+    .r1  { animation: reveal  1.0s .18s ease both; }
+    .sci { animation: scaleIn 1.1s      ease both; }
 
-    /* ── NAV ── */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      background: rgba(243,237,226,0.97);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--sand);
+    /* ─── UTILITY ─── */
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      font-family: var(--sans);
+      font-size: 0.5rem;
+      font-weight: 500;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--sage);
+    }
+    .eyebrow::before {
+      content: '';
+      display: block;
+      width: 1.8rem;
+      height: 1px;
+      background: var(--sage);
+      flex-shrink: 0;
     }
 
-    .nav-strip {
+    /* ─── NAVIGATION ─── */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(16px);
+    }
+    .nav-top {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0.5rem 3.5rem;
-      border-bottom: 1px solid var(--ink-faint);
+      padding: 0.6rem 4rem;
+      border-bottom: 1px solid var(--ink-08);
     }
-    .nav-strip-issue {
-      font-size: 0.53rem;
+    .nav-top-meta {
+      font-size: 0.48rem;
       font-weight: 400;
-      letter-spacing: 0.22em;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--ink-muted);
+      color: var(--ink-50);
     }
-    .nav-strip-sub {
-      font-size: 0.5rem;
+    .nav-top-sub {
+      font-size: 0.48rem;
       font-weight: 500;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--rust);
-      text-decoration: none;
-      border-bottom: 1px solid currentColor;
+      color: var(--sage);
+      border-bottom: 1px solid var(--sage);
       padding-bottom: 1px;
-      transition: opacity 0.25s;
+      transition: opacity 0.2s;
     }
-    .nav-strip-sub:hover { opacity: 0.65; }
+    .nav-top-sub:hover { opacity: 0.65; }
 
     .nav-main {
       display: grid;
       grid-template-columns: 1fr auto 1fr;
       align-items: center;
-      padding: 0.95rem 3.5rem;
+      padding: 1.1rem 4rem;
     }
     .nav-links {
-      display: flex;
-      gap: 2.25rem;
       list-style: none;
+      display: flex;
+      gap: 2.5rem;
     }
-    .nav-links-right { justify-content: flex-end; }
+    .nav-links-r { justify-content: flex-end; }
     .nav-links a {
-      font-size: 0.56rem;
+      font-size: 0.53rem;
       font-weight: 400;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: var(--ink-muted);
-      text-decoration: none;
-      transition: color 0.25s;
+      color: var(--ink-50);
+      transition: color 0.2s;
     }
     .nav-links a:hover { color: var(--ink); }
+
     .nav-wordmark {
-      font-family: var(--font-serif);
-      font-weight: 700;
-      font-size: 1.55rem;
-      letter-spacing: 0.26em;
-      color: var(--ink);
       text-align: center;
+    }
+    .nav-wordmark-main {
+      font-family: var(--serif);
+      font-size: 1.75rem;
+      font-weight: 500;
+      letter-spacing: 0.38em;
+      color: var(--ink);
       line-height: 1;
     }
-
-    /* ── HERO ── */
-    .hero {
-      margin-top: 94px;
-      display: grid;
-      grid-template-columns: 3fr 2fr;
-      min-height: calc(100vh - 94px);
-      border-bottom: 1px solid var(--sand);
+    .nav-wordmark-sub {
+      font-size: 0.42rem;
+      font-weight: 400;
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+      color: var(--ink-50);
+      margin-top: 0.22rem;
     }
 
-    /* Hero — left photo */
-    .hero-photo {
+    /* ─── HERO ─── */
+    /* Full-bleed image + offset text block */
+    .hero {
+      padding-top: 100px;
+      position: relative;
+      display: grid;
+      grid-template-columns: 60fr 40fr;
+      min-height: 92vh;
+    }
+
+    .hero-img-col {
       position: relative;
       overflow: hidden;
     }
-    .hero-photo img {
+    .hero-img-col img {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 1s ease;
+      object-position: center 30%;
+      animation: scaleIn 1.4s ease both;
     }
-    .hero-photo:hover img { transform: scale(1.04); }
-    .hero-photo-overlay {
+    /* thin right border on image */
+    .hero-img-col::after {
+      content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(
-        to top,
-        rgba(28,22,18,0.78) 0%,
-        rgba(28,22,18,0.2)  50%,
-        transparent 72%
-      );
+      border-right: 1px solid var(--ink-08);
+      pointer-events: none;
     }
-    .hero-photo-bottom {
-      position: absolute;
-      bottom: 2.5rem;
-      left: 2.75rem;
-      right: 2.75rem;
-    }
-    .hero-label {
-      display: inline-block;
-      font-size: 0.48rem;
-      font-weight: 500;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.75);
-      background: var(--rust);
-      padding: 0.28rem 0.7rem;
-      margin-bottom: 0.8rem;
-    }
-    .hero-photo-title {
-      font-family: var(--font-serif);
-      font-weight: 400;
-      font-size: clamp(1.8rem, 3vw, 2.9rem);
-      color: #fff;
-      line-height: 1.2;
-      max-width: 18ch;
-    }
-    .hero-photo-title em { font-style: italic; }
 
-    /* Hero — right text */
-    .hero-text {
-      background: var(--warm-white);
-      border-left: 1px solid var(--sand);
-      padding: 3.5rem 3.5rem 4rem;
+    .hero-text-col {
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
+      justify-content: flex-end;
+      padding: 4rem 4.5rem 4.5rem 4rem;
+      border-bottom: 1px solid var(--ink-08);
     }
 
-    /* Oversized watermark issue number */
-    .hero-text::before {
-      content: 'N°12';
+    /* oversized issue number in background */
+    .hero-issue-bg {
       position: absolute;
-      top: -2rem;
-      right: -2rem;
-      font-family: var(--font-serif);
-      font-size: 11rem;
-      font-weight: 700;
+      top: 96px;
+      right: 0;
+      font-family: var(--serif);
+      font-size: 22vw;
+      font-weight: 600;
       color: var(--ink);
-      opacity: 0.035;
+      opacity: 0.028;
       line-height: 1;
+      letter-spacing: -0.04em;
       pointer-events: none;
       user-select: none;
-      letter-spacing: -0.02em;
+      z-index: 0;
     }
 
-    .hero-kicker {
-      font-size: 0.49rem;
+    .hero-content { position: relative; z-index: 1; }
+
+    .hero-tag {
+      display: inline-block;
+      font-family: var(--sans);
+      font-size: 0.46rem;
       font-weight: 500;
-      letter-spacing: 0.3em;
+      letter-spacing: 0.28em;
       text-transform: uppercase;
-      color: var(--rust);
-      margin-bottom: 1.4rem;
-    }
-
-    .hero-headline {
-      font-family: var(--font-serif);
-      font-weight: 700;
-      font-size: clamp(1.85rem, 2.6vw, 2.5rem);
-      line-height: 1.2;
-      color: var(--ink);
+      color: var(--white);
+      background: var(--sage);
+      padding: 0.3rem 0.75rem;
       margin-bottom: 1.5rem;
     }
-    .hero-headline em {
-      font-style: italic;
+
+    .hero-h1 {
+      font-family: var(--serif);
+      font-size: clamp(2.2rem, 3.5vw, 3.6rem);
       font-weight: 400;
-      color: var(--ink-muted);
+      line-height: 1.18;
+      color: var(--ink);
+      margin-bottom: 1.6rem;
+    }
+    .hero-h1 em {
+      font-style: italic;
+      color: var(--ink-50);
     }
 
     .hero-deck {
-      font-size: 0.85rem;
+      font-size: 0.84rem;
       font-weight: 300;
       line-height: 1.85;
-      color: var(--ink-muted);
-      max-width: 40ch;
-      margin-bottom: 2rem;
+      color: var(--ink-50);
+      max-width: 38ch;
+      margin-bottom: 2.25rem;
     }
 
-    .hero-author {
+    .hero-byline {
       display: flex;
       align-items: center;
-      gap: 0.85rem;
-      margin-bottom: 2rem;
+      gap: 1.1rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--ink-08);
     }
-    .author-avatar {
-      width: 30px;
-      height: 30px;
+    .hero-byline-avatar {
+      width: 34px;
+      height: 34px;
       border-radius: 50%;
       overflow: hidden;
       flex-shrink: 0;
     }
-    .author-avatar img { width: 100%; height: 100%; object-fit: cover; }
-    .author-name {
-      font-size: 0.6rem;
+    .hero-byline-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .hero-byline-name {
+      font-size: 0.58rem;
       font-weight: 500;
-      letter-spacing: 0.06em;
       color: var(--ink);
     }
-    .author-meta {
-      font-size: 0.54rem;
-      font-weight: 300;
-      color: var(--ink-muted);
+    .hero-byline-meta {
+      font-size: 0.51rem;
+      color: var(--ink-50);
       margin-top: 0.1rem;
     }
-
     .hero-cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.55rem;
-      font-size: 0.54rem;
+      margin-left: auto;
+      font-size: 0.5rem;
       font-weight: 500;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--rust);
-      text-decoration: none;
-      border-bottom: 1px solid var(--rust);
-      padding-bottom: 3px;
-      align-self: flex-start;
-      transition: gap 0.3s;
-      margin-bottom: 2.5rem;
+      color: var(--sage);
+      border-bottom: 1px solid var(--sage);
+      padding-bottom: 2px;
+      white-space: nowrap;
+      transition: opacity 0.2s;
     }
-    .hero-cta:hover { gap: 1rem; }
+    .hero-cta:hover { opacity: 0.65; }
 
-    /* Secondary article list */
-    .hero-secondary {
-      border-top: 1px solid var(--ink-faint);
-      padding-top: 1.75rem;
-    }
-    .hero-sec-label {
-      font-size: 0.48rem;
-      font-weight: 500;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: var(--ink-muted);
-      margin-bottom: 1.1rem;
-    }
-    .sec-row {
+    /* ─── SECTION SUBTITLE STRIP ─── */
+    .strip {
       display: flex;
-      align-items: flex-start;
-      gap: 0.85rem;
-      padding: 0.85rem 0;
-      border-bottom: 1px solid var(--ink-faint);
-      cursor: default;
-    }
-    .sec-row:last-child { border-bottom: none; }
-    .sec-num {
-      font-family: var(--font-serif);
-      font-size: 0.68rem;
-      font-weight: 400;
-      color: var(--rust);
-      opacity: 0.55;
-      min-width: 1.4rem;
-      padding-top: 0.05rem;
-    }
-    .sec-cat {
-      font-size: 0.44rem;
-      font-weight: 500;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--rust);
-      margin-bottom: 0.22rem;
-    }
-    .sec-title {
-      font-family: var(--font-serif);
-      font-size: 0.86rem;
-      font-weight: 600;
-      color: var(--ink);
-      line-height: 1.3;
-    }
-    .sec-title em { font-style: italic; font-weight: 400; }
-
-    /* ── TICKER ── */
-    .ticker-band {
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 4rem;
+      border-bottom: 1px solid var(--ink-08);
       overflow: hidden;
-      border-top: 1px solid var(--sand);
-      border-bottom: 1px solid var(--sand);
-      padding: 0.85rem 0;
-      background: var(--warm-white);
     }
-    .ticker-track {
+    .strip-ticker {
+      overflow: hidden;
+      flex: 1;
+      mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+    }
+    .strip-track {
       display: flex;
       white-space: nowrap;
-      animation: ticker 28s linear infinite;
+      animation: ticker 32s linear infinite;
     }
-    .ticker-item {
-      font-size: 0.54rem;
+    .strip-item {
+      font-size: 0.48rem;
       font-weight: 400;
       letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--ink-muted);
-      padding-right: 3.5rem;
+      color: var(--ink-50);
+      padding-right: 3rem;
       flex-shrink: 0;
     }
-    .ticker-diamond {
-      color: var(--rust);
-      padding-right: 3.5rem;
-      font-size: 0.46rem;
+    .strip-diamond {
+      font-size: 0.36rem;
+      color: var(--sage);
+      opacity: 0.6;
+      padding-right: 3rem;
       flex-shrink: 0;
     }
-
-    /* ── SECTION 2 — ARTIKEL-GRID ── */
-    .redaktion {
-      padding: 5rem 3.5rem;
-      max-width: 1440px;
-      margin: 0 auto;
+    .strip-issue {
+      font-family: var(--serif);
+      font-size: 0.82rem;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--ink-50);
+      white-space: nowrap;
+      padding-left: 2rem;
     }
 
-    .sec-head {
+    /* ─── SECTION 2 — FEATURED GRID ─── */
+    .featured {
+      padding: 5.5rem 4rem;
+    }
+    .featured-head {
       display: flex;
       align-items: flex-end;
       justify-content: space-between;
-      margin-bottom: 3rem;
+      margin-bottom: 3.5rem;
     }
-    .sec-eyebrow {
+    .featured-h2 {
+      font-family: var(--serif);
+      font-size: clamp(1.8rem, 2.5vw, 2.6rem);
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--ink);
+      margin-top: 0.7rem;
+    }
+    .featured-h2 em { font-style: italic; }
+    .see-all {
+      font-size: 0.5rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-50);
+      border-bottom: 1px solid var(--ink-20);
+      padding-bottom: 2px;
+      white-space: nowrap;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .see-all:hover { color: var(--ink); border-color: var(--ink-50); }
+
+    /* 3-column + sidebar layout */
+    .feat-grid {
+      display: grid;
+      grid-template-columns: 5fr 3fr 4fr;
+      grid-template-rows: auto auto;
+      gap: 0;
+      border: 1px solid var(--ink-08);
+    }
+
+    .feat-main   { grid-column: 1; grid-row: 1 / 3; border-right: 1px solid var(--ink-08); }
+    .feat-mid-a  { grid-column: 2; grid-row: 1;     border-right: 1px solid var(--ink-08); border-bottom: 1px solid var(--ink-08); }
+    .feat-mid-b  { grid-column: 2; grid-row: 2;     border-right: 1px solid var(--ink-08); }
+    .feat-side   { grid-column: 3; grid-row: 1 / 3; }
+
+    .feat-card { overflow: hidden; }
+
+    .feat-img {
+      position: relative;
+      overflow: hidden;
+    }
+    .feat-main .feat-img   { height: 400px; }
+    .feat-mid-a .feat-img  { height: 200px; }
+    .feat-mid-b .feat-img  { height: 180px; }
+    .feat-side .feat-img   { height: 300px; }
+
+    .feat-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s ease;
+    }
+    .feat-card:hover .feat-img img { transform: scale(1.05); }
+
+    .feat-body { padding: 1.4rem 1.75rem 1.75rem; }
+    .feat-main .feat-body  { padding: 1.6rem 2rem 2rem; }
+    .feat-side .feat-body  { padding: 1.4rem 1.75rem; }
+
+    .feat-cat {
+      font-size: 0.44rem;
+      font-weight: 500;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: 0.5rem;
+    }
+    .feat-title {
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: 1rem;
+      line-height: 1.35;
+      color: var(--ink);
+    }
+    .feat-main .feat-title { font-size: 1.45rem; }
+    .feat-title em { font-style: italic; font-weight: 400; }
+    .feat-excerpt {
+      font-size: 0.78rem;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--ink-50);
+      margin-top: 0.65rem;
+      max-width: 48ch;
+    }
+    .feat-foot {
       display: flex;
       align-items: center;
-      gap: 1.1rem;
-      margin-bottom: 0.7rem;
+      gap: 0.85rem;
+      margin-top: 0.85rem;
     }
-    .eyebrow-bar {
-      width: 2.2rem;
-      height: 1px;
-      background: var(--rust);
+    .feat-author {
+      font-size: 0.5rem;
+      color: var(--ink-50);
     }
-    .eyebrow-label {
-      font-size: 0.48rem;
+    .feat-dot {
+      width: 3px; height: 3px;
+      border-radius: 50%;
+      background: var(--ink-20);
+    }
+    .feat-min {
+      font-size: 0.5rem;
+      color: var(--ink-50);
+    }
+
+    /* Column of smaller articles in sidebar */
+    .feat-side-list {
+      border-top: 1px solid var(--ink-08);
+    }
+    .feat-list-item {
+      display: flex;
+      gap: 0.85rem;
+      padding: 1.1rem 1.75rem;
+      border-bottom: 1px solid var(--ink-08);
+      transition: background 0.2s;
+    }
+    .feat-list-item:last-child { border-bottom: none; }
+    .feat-list-item:hover { background: var(--off-white); }
+    .feat-list-num {
+      font-family: var(--serif);
+      font-size: 0.78rem;
+      color: var(--sage);
+      opacity: 0.5;
+      flex-shrink: 0;
+      padding-top: 0.05rem;
+    }
+    .feat-list-cat {
+      font-size: 0.42rem;
       font-weight: 500;
-      letter-spacing: 0.3em;
+      letter-spacing: 0.24em;
       text-transform: uppercase;
-      color: var(--rust);
+      color: var(--sage);
+      margin-bottom: 0.28rem;
     }
-    .sec-h2 {
-      font-family: var(--font-serif);
-      font-size: clamp(1.75rem, 2.4vw, 2.3rem);
+    .feat-list-title {
+      font-family: var(--serif);
+      font-size: 0.88rem;
+      font-weight: 400;
+      line-height: 1.35;
+      color: var(--ink);
+    }
+    .feat-list-title em { font-style: italic; }
+
+    /* ─── SECTION 3 — PULL QUOTE (sage bg) ─── */
+    .pullquote-band {
+      background: var(--sage-light);
+      border-top: 1px solid rgba(78,107,90,0.15);
+      border-bottom: 1px solid rgba(78,107,90,0.15);
+      padding: 5rem 4rem;
+      display: grid;
+      grid-template-columns: 5fr 7fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    .pq-photo {
+      position: relative;
+      overflow: hidden;
+      height: 420px;
+    }
+    .pq-photo img {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.9s ease;
+    }
+    .pq-photo:hover img { transform: scale(1.04); }
+    .pq-badge {
+      position: absolute;
+      bottom: 1.5rem;
+      left: 1.5rem;
+      font-size: 0.44rem;
+      font-weight: 500;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--white);
+      background: var(--sage);
+      padding: 0.28rem 0.72rem;
+    }
+
+    .pq-content {}
+    .pq-opener {
+      font-family: var(--serif);
+      font-size: 5rem;
+      font-weight: 500;
+      color: var(--sage);
+      opacity: 0.25;
+      line-height: 0.8;
+      margin-bottom: 0.5rem;
+    }
+    .pq-quote {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: clamp(1.4rem, 2.2vw, 2rem);
+      font-weight: 400;
+      line-height: 1.52;
+      color: var(--ink);
+      margin-bottom: 1.25rem;
+    }
+    .pq-source {
+      font-size: 0.52rem;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: 1.75rem;
+    }
+    .pq-body {
+      font-size: 0.82rem;
+      font-weight: 300;
+      line-height: 1.88;
+      color: var(--ink-50);
+      max-width: 44ch;
+      margin-bottom: 2rem;
+    }
+    .pq-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-size: 0.5rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--sage);
+      border-bottom: 1px solid rgba(78,107,90,0.35);
+      padding-bottom: 3px;
+      transition: gap 0.3s;
+    }
+    .pq-link:hover { gap: 1rem; }
+
+    /* ─── SECTION 4 — RUBRIK NUMMER (large type) ─── */
+    .rubrik-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--ink-08);
+    }
+    .rubrik-cell {
+      padding: 3rem 2.5rem 2.5rem;
+      border-right: 1px solid var(--ink-08);
+      position: relative;
+      overflow: hidden;
+      transition: background 0.25s;
+    }
+    .rubrik-cell:last-child { border-right: none; }
+    .rubrik-cell:hover { background: var(--off-white); }
+    .rubrik-num {
+      position: absolute;
+      bottom: -1rem;
+      right: -0.5rem;
+      font-family: var(--serif);
+      font-size: 7rem;
+      font-weight: 500;
+      color: var(--ink);
+      opacity: 0.04;
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+    }
+    .rubrik-img {
+      position: relative;
+      overflow: hidden;
+      height: 175px;
+      margin-bottom: 1.25rem;
+    }
+    .rubrik-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+    .rubrik-cell:hover .rubrik-img img { transform: scale(1.06); }
+    .rubrik-cat {
+      font-size: 0.44rem;
+      font-weight: 500;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: 0.45rem;
+    }
+    .rubrik-title {
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      font-weight: 400;
+      line-height: 1.35;
+      color: var(--ink);
+      margin-bottom: 0.6rem;
+      position: relative;
+      z-index: 1;
+    }
+    .rubrik-title em { font-style: italic; }
+    .rubrik-meta {
+      font-size: 0.5rem;
+      font-weight: 300;
+      color: var(--ink-50);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ─── SECTION 5 — LANGER LESESTOFF ─── */
+    .longread {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-top: 1px solid var(--ink-08);
+      border-bottom: 1px solid var(--ink-08);
+    }
+    .lr-left {
+      padding: 6rem 4.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 2rem;
+      border-right: 1px solid var(--ink-08);
+    }
+    .lr-issue-no {
+      font-family: var(--serif);
+      font-size: 0.72rem;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--ink-50);
+    }
+    .lr-h2 {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 3vw, 3rem);
       font-weight: 400;
       line-height: 1.15;
       color: var(--ink);
     }
-    .sec-h2 em { font-style: italic; }
-    .sec-all-link {
-      font-size: 0.5rem;
-      font-weight: 400;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--ink-muted);
-      text-decoration: none;
-      border-bottom: 1px solid rgba(28,22,18,0.18);
-      padding-bottom: 2px;
-      white-space: nowrap;
-      transition: color 0.25s;
-    }
-    .sec-all-link:hover { color: var(--ink); }
-
-    /* 12-column article grid */
-    .art-grid {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 1.75rem;
-    }
-
-    /* Row 1 */
-    .art-feature   { grid-column: 1 / 8;  grid-row: 1; }
-    .art-sm-a      { grid-column: 8 / 10; grid-row: 1; }
-    .art-sm-b      { grid-column: 10 / 13; grid-row: 1; }
-    /* Row 2 */
-    .art-sm-c      { grid-column: 1 / 5;  grid-row: 2; }
-    .art-sm-d      { grid-column: 5 / 9;  grid-row: 2; }
-    .art-sm-e      { grid-column: 9 / 13; grid-row: 2; }
-
-    .art-card { overflow: hidden; }
-
-    .art-img {
-      position: relative;
-      overflow: hidden;
-      background: var(--sand);
-    }
-    .art-feature .art-img { height: 350px; }
-    .art-sm-a .art-img,
-    .art-sm-b .art-img  { height: 210px; }
-    .art-sm-c .art-img,
-    .art-sm-d .art-img,
-    .art-sm-e .art-img  { height: 195px; }
-
-    .art-img img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.65s ease;
-    }
-    .art-card:hover .art-img img { transform: scale(1.05); }
-
-    .art-body { padding: 1rem 0 0; }
-    .art-cat {
-      font-size: 0.44rem;
-      font-weight: 500;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--rust);
-      margin-bottom: 0.42rem;
-    }
-    .art-title {
-      font-family: var(--font-serif);
-      font-weight: 600;
-      font-size: 0.98rem;
-      line-height: 1.32;
-      color: var(--ink);
-      margin-bottom: 0.5rem;
-    }
-    .art-feature .art-title { font-size: 1.28rem; }
-    .art-title em { font-style: italic; font-weight: 400; }
-    .art-excerpt {
-      font-size: 0.78rem;
-      font-weight: 300;
-      line-height: 1.78;
-      color: var(--ink-muted);
-      max-width: 52ch;
-    }
-    /* Only show excerpt on large feature card */
-    .art-sm-a .art-excerpt,
-    .art-sm-b .art-excerpt { display: none; }
-    .art-byline {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin-top: 0.85rem;
-    }
-    .art-by-name {
-      font-size: 0.5rem;
-      font-weight: 400;
-      color: var(--ink-muted);
-      letter-spacing: 0.04em;
-    }
-    .art-dot {
-      width: 3px; height: 3px;
-      border-radius: 50%;
-      background: rgba(28,22,18,0.2);
-    }
-    .art-time {
-      font-size: 0.5rem;
-      font-weight: 300;
-      color: var(--ink-muted);
-    }
-
-    /* ── SECTION 3 — LANGER LESESTOFF ── */
-    .longread {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      min-height: 580px;
-      border-top: 1px solid var(--sand);
-      border-bottom: 1px solid var(--sand);
-    }
-
-    .lr-photo {
-      position: relative;
-      overflow: hidden;
-    }
-    .lr-photo img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.9s ease;
-    }
-    .lr-photo:hover img { transform: scale(1.04); }
-    .lr-photo-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(28,22,18,0.14) 0%, transparent 55%);
-    }
-    .lr-badge {
-      position: absolute;
-      top: 2rem;
-      left: 2.25rem;
-      font-size: 0.46rem;
-      font-weight: 500;
-      letter-spacing: 0.26em;
-      text-transform: uppercase;
-      color: #fff;
-      background: var(--rust);
-      padding: 0.3rem 0.82rem;
-    }
-
-    .lr-text {
-      background: var(--ink);
-      color: #fff;
-      padding: 5rem 4.5rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 1.75rem;
-    }
-    .lr-kicker {
-      font-size: 0.48rem;
-      font-weight: 400;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.38);
-    }
-    .lr-quote {
-      position: relative;
-      padding-left: 1.5rem;
-    }
-    .lr-quote::before {
-      content: '\201E';
-      position: absolute;
-      top: 1.2rem;
-      left: -0.4rem;
-      font-family: var(--font-serif);
-      font-size: 5.5rem;
-      font-weight: 700;
-      color: var(--rust);
-      opacity: 0.45;
-      line-height: 0;
-    }
-    .lr-quote-text {
-      font-family: var(--font-serif);
-      font-style: italic;
-      font-weight: 400;
-      font-size: clamp(1.25rem, 1.9vw, 1.7rem);
-      line-height: 1.5;
-      color: rgba(255,255,255,0.88);
-    }
-    .lr-quote-source {
-      font-size: 0.52rem;
-      font-weight: 400;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.32);
-      margin-top: 1rem;
-    }
+    .lr-h2 em { font-style: italic; }
     .lr-body {
       font-size: 0.84rem;
       font-weight: 300;
-      line-height: 1.88;
-      color: rgba(255,255,255,0.52);
+      line-height: 1.9;
+      color: var(--ink-50);
       max-width: 42ch;
     }
-    .lr-cta {
+
+    /* pull statistic */
+    .lr-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      border-left: 2px solid var(--sage);
+      padding-left: 1.25rem;
+    }
+    .lr-stat-num {
+      font-family: var(--serif);
+      font-size: 2.5rem;
+      font-weight: 500;
+      color: var(--sage);
+      line-height: 1;
+    }
+    .lr-stat-label {
+      font-size: 0.55rem;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      color: var(--ink-50);
+    }
+    .lr-read {
       display: inline-flex;
       align-items: center;
       gap: 0.6rem;
-      font-size: 0.52rem;
+      font-size: 0.5rem;
       font-weight: 500;
       letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--rust);
-      text-decoration: none;
-      border-bottom: 1px solid rgba(138,51,32,0.35);
+      color: var(--sage);
+      border-bottom: 1px solid rgba(78,107,90,0.3);
       padding-bottom: 3px;
       align-self: flex-start;
-      transition: gap 0.3s, border-color 0.3s;
+      transition: gap 0.3s;
     }
-    .lr-cta:hover { gap: 1rem; border-color: var(--rust); }
+    .lr-read:hover { gap: 1.1rem; }
 
-    /* ── SECTION 4 — SCHNELL GELESEN ── */
-    .quick {
-      padding: 5rem 3.5rem;
-      max-width: 1440px;
-      margin: 0 auto;
-    }
-    .quick-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      border: 1px solid var(--sand);
-    }
-    .quick-card {
-      padding: 1.75rem 1.75rem 2rem;
-      border-right: 1px solid var(--sand);
-      transition: background 0.25s;
-    }
-    .quick-card:last-child { border-right: none; }
-    .quick-card:hover { background: var(--warm-white); }
-    .quick-img {
+    .lr-right {
       position: relative;
       overflow: hidden;
-      height: 155px;
-      margin-bottom: 1.1rem;
+      min-height: 540px;
     }
-    .quick-img img {
+    .lr-right img {
+      position: absolute;
+      inset: 0;
       width: 100%; height: 100%;
       object-fit: cover;
-      transition: transform 0.55s ease;
+      transition: transform 0.9s ease;
     }
-    .quick-card:hover .quick-img img { transform: scale(1.06); }
-    .quick-cat {
-      font-size: 0.44rem;
-      font-weight: 500;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--rust);
-      margin-bottom: 0.45rem;
+    .lr-right:hover img { transform: scale(1.04); }
+    .lr-right-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 55%, rgba(21,18,16,0.6) 100%);
     }
-    .quick-title {
-      font-family: var(--font-serif);
-      font-weight: 600;
-      font-size: 0.92rem;
-      line-height: 1.35;
-      color: var(--ink);
-      margin-bottom: 0.7rem;
-    }
-    .quick-title em { font-style: italic; font-weight: 400; }
-    .quick-time {
-      font-size: 0.5rem;
+    .lr-right-caption {
+      position: absolute;
+      bottom: 2rem;
+      left: 2.25rem;
+      right: 2.25rem;
+      font-size: 0.52rem;
       font-weight: 300;
-      color: var(--ink-muted);
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 0.06em;
     }
 
-    /* ── FOOTER ── */
-    .footer-wrap {
+    /* ─── FOOTER ─── */
+    .footer-wrapper {
       border-top: 2px solid var(--ink);
     }
     footer {
-      padding: 4rem 3.5rem 2.25rem;
-      max-width: 1440px;
-      margin: 0 auto;
+      padding: 4.5rem 4rem 2rem;
     }
     .footer-top {
       display: grid;
-      grid-template-columns: 1fr auto 1fr;
+      grid-template-columns: 2fr 1fr 1fr 2fr;
       gap: 3rem;
-      align-items: start;
-      padding-bottom: 2.5rem;
-      border-bottom: 1px solid var(--sand);
-      margin-bottom: 1.75rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid var(--ink-08);
+      margin-bottom: 2rem;
     }
-    .footer-brand {}
-    .footer-logo {
-      font-family: var(--font-serif);
-      font-weight: 700;
-      font-size: 1.3rem;
-      letter-spacing: 0.24em;
+    .f-brand-name {
+      font-family: var(--serif);
+      font-size: 1.4rem;
+      font-weight: 500;
+      letter-spacing: 0.3em;
       color: var(--ink);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.65rem;
     }
-    .footer-tagline {
-      font-size: 0.6rem;
+    .f-brand-sub {
+      font-size: 0.58rem;
       font-weight: 300;
-      line-height: 1.7;
-      color: var(--ink-muted);
+      line-height: 1.75;
+      color: var(--ink-50);
+      max-width: 24ch;
     }
-    .footer-nav {}
-    .footer-nav-label {
+    .f-col-label {
       font-size: 0.44rem;
       font-weight: 500;
-      letter-spacing: 0.28em;
+      letter-spacing: 0.3em;
       text-transform: uppercase;
-      color: var(--rust);
-      margin-bottom: 0.75rem;
+      color: var(--sage);
+      margin-bottom: 1rem;
     }
-    .footer-nav ul {
+    .f-col-links {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
+      gap: 0.55rem;
     }
-    .footer-nav a {
-      font-size: 0.56rem;
+    .f-col-links a {
+      font-size: 0.55rem;
       font-weight: 300;
-      letter-spacing: 0.08em;
-      color: var(--ink-muted);
-      text-decoration: none;
-      transition: color 0.25s;
+      color: var(--ink-50);
+      transition: color 0.2s;
     }
-    .footer-nav a:hover { color: var(--ink); }
-    .footer-nl { text-align: right; }
-    .footer-nl-lead {
-      font-size: 0.7rem;
+    .f-col-links a:hover { color: var(--ink); }
+    .f-nl-text {
+      font-size: 0.68rem;
       font-weight: 300;
       line-height: 1.7;
-      color: var(--ink-muted);
-      max-width: 28ch;
-      margin-left: auto;
+      color: var(--ink-50);
+      max-width: 26ch;
       margin-bottom: 1rem;
     }
-    .footer-nl-form {
+    .f-nl-form {
       display: flex;
-      border: 1px solid var(--sand);
+      border: 1px solid var(--ink-20);
     }
-    .footer-nl-input {
+    .f-nl-input {
       flex: 1;
-      background: transparent;
       border: none;
-      padding: 0.7rem 1rem;
-      font-family: var(--font-sans);
-      font-size: 0.66rem;
-      font-weight: 300;
+      background: transparent;
+      padding: 0.72rem 1rem;
+      font-family: var(--sans);
+      font-size: 0.64rem;
       color: var(--ink);
       outline: none;
     }
-    .footer-nl-input::placeholder { color: var(--ink-muted); }
-    .footer-nl-btn {
+    .f-nl-input::placeholder { color: var(--ink-50); }
+    .f-nl-btn {
       background: var(--ink);
-      color: #fff;
+      color: var(--white);
       border: none;
-      padding: 0.7rem 1.2rem;
-      font-family: var(--font-sans);
-      font-size: 0.5rem;
+      padding: 0.72rem 1.25rem;
+      font-family: var(--sans);
+      font-size: 0.48rem;
       font-weight: 500;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       cursor: pointer;
       transition: background 0.25s;
     }
-    .footer-nl-btn:hover { background: var(--rust); }
+    .f-nl-btn:hover { background: var(--sage); }
     .footer-bottom {
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
-    .footer-copy {
-      font-size: 0.5rem;
+    .f-copy {
+      font-size: 0.48rem;
       font-weight: 300;
-      color: rgba(28,22,18,0.28);
-      letter-spacing: 0.06em;
+      color: var(--ink-20);
     }
-    .footer-legal {
+    .f-legal {
+      list-style: none;
       display: flex;
       gap: 1.75rem;
-      list-style: none;
     }
-    .footer-legal a {
-      font-size: 0.5rem;
-      font-weight: 300;
-      color: rgba(28,22,18,0.28);
-      text-decoration: none;
-      transition: color 0.25s;
+    .f-legal a {
+      font-size: 0.48rem;
+      color: var(--ink-20);
+      transition: color 0.2s;
     }
-    .footer-legal a:hover { color: var(--ink-muted); }
+    .f-legal a:hover { color: var(--ink-50); }
 
-    /* ── RESPONSIVE ── */
+    /* ─── RESPONSIVE ─── */
     @media (max-width: 1100px) {
-      .art-feature { grid-column: 1 / 7; }
-      .art-sm-a    { grid-column: 7 / 10; }
-      .art-sm-b    { grid-column: 10 / 13; }
-      .art-sm-c    { grid-column: 1 / 5; }
-      .art-sm-d    { grid-column: 5 / 9; }
-      .art-sm-e    { grid-column: 9 / 13; }
+      .feat-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto auto;
+      }
+      .feat-main  { grid-column: 1 / 3; grid-row: 1; border-right: none; border-bottom: 1px solid var(--ink-08); }
+      .feat-mid-a { grid-column: 1;     grid-row: 2; }
+      .feat-mid-b { grid-column: 1;     grid-row: 3; border-right: none; border-top: 1px solid var(--ink-08); border-bottom: none; }
+      .feat-side  { grid-column: 2;     grid-row: 2 / 4; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
     }
     @media (max-width: 900px) {
-      .hero { grid-template-columns: 1fr; }
-      .hero-photo { height: 55vh; position: relative; }
-      .hero-photo img { position: absolute; }
-      .longread { grid-template-columns: 1fr; }
-      .lr-photo { height: 360px; position: relative; }
-      .lr-photo img { position: absolute; }
-      .quick-grid { grid-template-columns: 1fr 1fr; }
-      .quick-card:nth-child(2) { border-right: none; }
-      .quick-card:nth-child(3) { border-top: 1px solid var(--sand); }
-      .quick-card:nth-child(4) { border-top: 1px solid var(--sand); border-right: none; }
-    }
-    @media (max-width: 640px) {
       .nav-links { display: none; }
       .nav-main { grid-template-columns: 1fr; justify-items: center; }
-      .nav-strip { padding: 0.5rem 1.5rem; }
-      .nav-main { padding: 0.9rem 1.5rem; }
-      .redaktion { padding: 3rem 1.5rem; }
-      .art-grid { grid-template-columns: 1fr 1fr; }
-      .art-feature { grid-column: 1 / 3; grid-row: auto; }
-      .art-sm-a, .art-sm-b,
-      .art-sm-c, .art-sm-d,
-      .art-sm-e { grid-column: auto; grid-row: auto; }
-      .quick-grid { grid-template-columns: 1fr; }
-      .quick-card { border-right: none; border-bottom: 1px solid var(--sand); }
+      .hero { grid-template-columns: 1fr; }
+      .hero-img-col { height: 55vh; position: relative; }
+      .hero-img-col img { position: absolute; }
+      .pullquote-band { grid-template-columns: 1fr; gap: 2.5rem; }
+      .pq-photo { height: 300px; position: relative; }
+      .pq-photo img { position: absolute; }
+      .rubrik-strip { grid-template-columns: 1fr 1fr; }
+      .rubrik-cell:nth-child(2) { border-right: none; }
+      .rubrik-cell:nth-child(3) { grid-column: 1 / 3; border-top: 1px solid var(--ink-08); border-right: none; }
+      .longread { grid-template-columns: 1fr; }
+      .lr-right { min-height: 360px; position: relative; }
+      .lr-right img { position: absolute; }
+    }
+    @media (max-width: 640px) {
+      .featured, .pullquote-band, .longread .lr-left { padding: 3rem 1.5rem; }
+      .hero-text-col { padding: 2.5rem 1.5rem 3rem; }
+      .feat-grid { grid-template-columns: 1fr; }
+      .feat-main, .feat-mid-a, .feat-mid-b, .feat-side { grid-column: auto; grid-row: auto; border-right: none; }
+      .rubrik-strip { grid-template-columns: 1fr; }
+      .rubrik-cell { border-right: none; border-bottom: 1px solid var(--ink-08); }
+      .rubrik-cell:nth-child(3) { grid-column: auto; }
       .footer-top { grid-template-columns: 1fr; }
-      .footer-nl { text-align: left; }
-      .footer-nl-lead { margin-left: 0; }
       footer { padding: 3rem 1.5rem 1.5rem; }
+      .nav-main { padding: 0.85rem 1.5rem; }
+      .nav-top { padding: 0.5rem 1.5rem; }
+      .strip { padding: 0.85rem 1.5rem; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ── NAVIGATION ── -->
-  <nav>
-    <div class="nav-strip">
-      <span class="nav-strip-issue">Ausgabe No.&thinsp;12 &ensp;·&ensp; Frühling 2025 &ensp;·&ensp; Trier &amp; Moselregion</span>
-      <a href="#" class="nav-strip-sub">Abonnieren</a>
+  <!-- ─── NAVIGATION ─── -->
+  <nav class="nav">
+    <div class="nav-top">
+      <span class="nav-top-meta">Ausgabe No.&thinsp;13 &ensp;·&ensp; Sommer 2025 &ensp;·&ensp; Trier</span>
+      <a href="#" class="nav-top-sub">Abonnieren</a>
     </div>
     <div class="nav-main">
       <ul class="nav-links">
-        <li><a href="#">Wein &amp; Kulinarik</a></li>
+        <li><a href="#">Wein &amp; Tafel</a></li>
+        <li><a href="#">Natur &amp; Wege</a></li>
         <li><a href="#">Kultur</a></li>
-        <li><a href="#">Leben</a></li>
       </ul>
-      <div class="nav-wordmark">TREVERIS</div>
-      <ul class="nav-links nav-links-right">
-        <li><a href="#">Reisen</a></li>
+      <div class="nav-wordmark">
+        <div class="nav-wordmark-main">PASSAGE</div>
+        <div class="nav-wordmark-sub">Magazin für Lebensart</div>
+      </div>
+      <ul class="nav-links nav-links-r">
         <li><a href="#">Menschen</a></li>
+        <li><a href="#">Orte</a></li>
         <li><a href="#">Archiv</a></li>
       </ul>
     </div>
   </nav>
 
-  <!-- ── HERO ── -->
+  <!-- ─── HERO ─── -->
   <section class="hero">
-
-    <!-- Left: big editorial photo -->
-    <div class="hero-photo af">
+    <div class="hero-img-col">
       <img
-        src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=1200&h=900&q=82"
-        alt="Weingläser vor Mosel-Weinberg"
+        src="https://images.unsplash.com/photo-1543747579-795b9c2c3ada?auto=format&fit=crop&w=1200&h=900&q=84"
+        alt="Sonnenlicht über Trierer Weinbergterrassen am Morgen"
         loading="eager"
       />
-      <div class="hero-photo-overlay"></div>
-      <div class="hero-photo-bottom">
-        <span class="hero-label">Titelgeschichte</span>
-        <h2 class="hero-photo-title">
-          Die stille Revolution<br>
-          <em>im Weinglas</em>
-        </h2>
-      </div>
     </div>
 
-    <!-- Right: article text -->
-    <div class="hero-text">
-      <p class="hero-kicker au">Wein &amp; Landschaft &ensp;·&ensp; Ausgabe 12</p>
+    <div class="hero-issue-bg r0">13</div>
 
-      <h1 class="hero-headline au1">
-        Eine neue Generation<br>
-        von Winzern<br>
-        <em>erzählt die Mosel</em><br>
-        neu.
-      </h1>
+    <div class="hero-text-col">
+      <div class="hero-content">
+        <span class="hero-tag u0">Titelstory · Sommer</span>
 
-      <p class="hero-deck au2">
-        Sie haben die großen Weingüter ihrer Eltern nicht geerbt —
-        sie haben sich ihre eigenen geschaffen. Wie fünf junge Winzerinnen
-        und Winzer die älteste Weinregion Deutschlands radikal neu denken.
-      </p>
+        <h1 class="hero-h1 u1">
+          Langsam atmen,<br>
+          <em>tief ankommen:</em><br>
+          Das Moseltal<br>
+          im Sommer.
+        </h1>
 
-      <div class="hero-author au3">
-        <div class="author-avatar">
-          <img
-            src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=64&h=64&q=80"
-            alt="Katharina Weiß"
-          />
-        </div>
-        <div>
-          <div class="author-name">Katharina Weiß</div>
-          <div class="author-meta">Chefredakteurin &ensp;·&ensp; 8 min Lesezeit</div>
-        </div>
-      </div>
+        <p class="hero-deck u2">
+          Wer hier entlangfährt, versteht, warum die Römer blieben.
+          Ein Essay über das Versprechen der Langsamkeit —
+          und die Orte zwischen Trier und Cochem, die man
+          nicht sucht, sondern findet.
+        </p>
 
-      <a href="#" class="hero-cta au4">Zum Artikel &nbsp;→</a>
-
-      <div class="hero-secondary au5">
-        <p class="hero-sec-label">Weitere Beiträge dieser Ausgabe</p>
-        <div class="sec-row">
-          <span class="sec-num">02</span>
-          <div>
-            <div class="sec-cat">Kulinarik</div>
-            <div class="sec-title">Essen wie ein Römer: <em>Trierer Küche neu entdeckt</em></div>
+        <div class="hero-byline u3">
+          <div class="hero-byline-avatar">
+            <img
+              src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=64&h=64&q=80"
+              alt="Dr. Elisabeth Mohr"
+            />
           </div>
-        </div>
-        <div class="sec-row">
-          <span class="sec-num">03</span>
           <div>
-            <div class="sec-cat">Architektur</div>
-            <div class="sec-title">Alte Mauern, <em>neues Leben</em> in der Altstadt</div>
+            <div class="hero-byline-name">Dr. Elisabeth Mohr</div>
+            <div class="hero-byline-meta">Reisen &amp; Natur &ensp;·&ensp; 11 min Lesezeit</div>
           </div>
-        </div>
-        <div class="sec-row">
-          <span class="sec-num">04</span>
-          <div>
-            <div class="sec-cat">Menschen</div>
-            <div class="sec-title">Eine Saison lang: <em>Tagebuch einer Moselschifferin</em></div>
-          </div>
+          <a href="#" class="hero-cta">Lesen →</a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ── TICKER ── -->
-  <div class="ticker-band">
-    <div class="ticker-track">
-      <!-- doubled for seamless loop -->
-      <span class="ticker-item">Wein &amp; Kulinarik</span><span class="ticker-diamond">◆</span>
-      <span class="ticker-item">Leben an der Mosel</span><span class="ticker-diamond">◆</span>
-      <span class="ticker-item">Kultur &amp; Geschichte</span><span class="ticker-diamond">◆</span>
-      <span class="ticker-item">Reisen &amp; Entdecken</span><span class="ticker-diamond">◆</span>
-      <span class="ticker-item">Menschen &amp; Portraits</span><span class="ticker-diamond">◆</span>
-      <span class="ticker-item">Ausgabe No.&thinsp;12 · Frühling 2025</span><span class="ticker-diamond">◆</span>
-      <span class="ticker-item">Wein &amp; Kulinarik</span><span class="ticker-diamond">◆</span>
-      <span class="ticker-item">Leben an der Mosel</span><span class="ticker-diamond">◆</span>
-      <span class="ticker-item">Kultur &amp; Geschichte</span><span class="ticker-diamond">◆</span>
-      <span class="ticker-item">Reisen &amp; Entdecken</span><span class="ticker-diamond">◆</span>
-      <span class="ticker-item">Menschen &amp; Portraits</span><span class="ticker-diamond">◆</span>
-      <span class="ticker-item">Ausgabe No.&thinsp;12 · Frühling 2025</span><span class="ticker-diamond">◆</span>
+  <!-- ─── TICKER STRIP ─── -->
+  <div class="strip">
+    <div class="strip-ticker">
+      <div class="strip-track">
+        <span class="strip-item">Wein &amp; Tafel</span><span class="strip-diamond">◆</span>
+        <span class="strip-item">Natur &amp; Wege</span><span class="strip-diamond">◆</span>
+        <span class="strip-item">Trierer Kultur</span><span class="strip-diamond">◆</span>
+        <span class="strip-item">Menschen der Mosel</span><span class="strip-diamond">◆</span>
+        <span class="strip-item">Orte &amp; Entdeckungen</span><span class="strip-diamond">◆</span>
+        <span class="strip-item">Ausgabe No.&thinsp;13 · Sommer 2025</span><span class="strip-diamond">◆</span>
+        <span class="strip-item">Wein &amp; Tafel</span><span class="strip-diamond">◆</span>
+        <span class="strip-item">Natur &amp; Wege</span><span class="strip-diamond">◆</span>
+        <span class="strip-item">Trierer Kultur</span><span class="strip-diamond">◆</span>
+        <span class="strip-item">Menschen der Mosel</span><span class="strip-diamond">◆</span>
+        <span class="strip-item">Orte &amp; Entdeckungen</span><span class="strip-diamond">◆</span>
+        <span class="strip-item">Ausgabe No.&thinsp;13 · Sommer 2025</span><span class="strip-diamond">◆</span>
+      </div>
     </div>
+    <span class="strip-issue">Sommer 2025</span>
   </div>
 
-  <!-- ── SECTION 2 — ARTIKEL-GRID ── -->
-  <section class="redaktion">
-    <div class="sec-head">
+  <!-- ─── SECTION 2 — FEATURED GRID ─── -->
+  <section class="featured">
+    <div class="featured-head">
       <div>
-        <div class="sec-eyebrow">
-          <span class="eyebrow-bar"></span>
-          <span class="eyebrow-label">Aus der Redaktion</span>
-        </div>
-        <h2 class="sec-h2">Ausgewählte<br><em>Beiträge</em></h2>
+        <div class="eyebrow">Aus dieser Ausgabe</div>
+        <h2 class="featured-h2">Ausgewählte<br><em>Beiträge</em></h2>
       </div>
-      <a href="#" class="sec-all-link">Alle Ausgaben ansehen →</a>
+      <a href="#" class="see-all">Alle Beiträge →</a>
     </div>
 
-    <div class="art-grid">
-
-      <!-- FEATURE: large -->
-      <article class="art-card art-feature">
-        <div class="art-img">
+    <div class="feat-grid">
+      <!-- Main feature -->
+      <article class="feat-card feat-main">
+        <div class="feat-img">
           <img
-            src="https://images.unsplash.com/photo-1414235077428-338989a702be?auto=format&fit=crop&w=900&h=350&q=82"
-            alt="Gedeckter Tisch in Trierer Restaurant"
+            src="https://images.unsplash.com/photo-1414235077428-338989a702be?auto=format&fit=crop&w=800&h=400&q=82"
+            alt="Gedeckter Tisch beim Sommerabendessen unter freiem Himmel"
             loading="lazy"
           />
         </div>
-        <div class="art-body">
-          <div class="art-cat">Kulinarik</div>
-          <h3 class="art-title">Essen wie ein Römer: <em>Trierer Küche</em> zwischen Tradition und Gegenwart</h3>
-          <p class="art-excerpt">
-            In den Gassen der ältesten Stadt Deutschlands öffnen Restaurants,
-            die altes Handwerk mit zeitgemäßer Leichtigkeit verbinden.
-            Wir haben die neue Trierer Gastrolandschaft verkostet.
+        <div class="feat-body">
+          <div class="feat-cat">Wein &amp; Tafel</div>
+          <h3 class="feat-title">
+            Abendessen im Weinberg:<br>
+            <em>Trierer Köche kochen draußen</em>
+          </h3>
+          <p class="feat-excerpt">
+            Wenn die Hitze nachlässt und das Licht golden wird,
+            zieht es Triers beste Köche nach draußen. Zwischen Riesling-Reben
+            und altem Schiefergestein entsteht die ehrlichste Küche der Stadt.
           </p>
-          <div class="art-byline">
-            <span class="art-by-name">Sophie Mertz</span>
-            <span class="art-dot"></span>
-            <span class="art-time">6 min</span>
+          <div class="feat-foot">
+            <span class="feat-author">Sophie Mertz</span>
+            <span class="feat-dot"></span>
+            <span class="feat-min">8 min</span>
           </div>
         </div>
       </article>
 
-      <!-- SM A -->
-      <article class="art-card art-sm-a">
-        <div class="art-img">
+      <!-- Mid top -->
+      <article class="feat-card feat-mid-a">
+        <div class="feat-img">
           <img
-            src="https://images.unsplash.com/photo-1467912407355-245f30185020?auto=format&fit=crop&w=400&h=210&q=80"
-            alt="Historisches Steintor Trier"
+            src="https://images.unsplash.com/photo-1467912407355-245f30185020?auto=format&fit=crop&w=500&h=200&q=80"
+            alt="Blick auf die Porta Nigra im Morgenlicht"
             loading="lazy"
           />
         </div>
-        <div class="art-body">
-          <div class="art-cat">Kultur</div>
-          <h3 class="art-title">Die Porta Nigra und <em>ihr stilles Geheimnis</em></h3>
-          <div class="art-byline">
-            <span class="art-by-name">Jonas Becker</span>
-            <span class="art-dot"></span>
-            <span class="art-time">4 min</span>
+        <div class="feat-body">
+          <div class="feat-cat">Kultur</div>
+          <h3 class="feat-title">Zwei Jahrtausende <em>unter einem Dach</em></h3>
+          <div class="feat-foot">
+            <span class="feat-author">Jonas Becker</span>
+            <span class="feat-dot"></span>
+            <span class="feat-min">5 min</span>
           </div>
         </div>
       </article>
 
-      <!-- SM B -->
-      <article class="art-card art-sm-b">
-        <div class="art-img">
+      <!-- Mid bottom -->
+      <article class="feat-card feat-mid-b">
+        <div class="feat-img">
           <img
-            src="https://images.unsplash.com/photo-1551918120-9739cb430c6d?auto=format&fit=crop&w=400&h=210&q=80"
-            alt="Weinstraße Moseltal Kurven"
+            src="https://images.unsplash.com/photo-1551918120-9739cb430c6d?auto=format&fit=crop&w=500&h=180&q=80"
+            alt="Kurvenreiche Weinstraße durch grüne Hügel"
             loading="lazy"
           />
         </div>
-        <div class="art-body">
-          <div class="art-cat">Reisen</div>
-          <h3 class="art-title">Ein Wochenende in <em>Luxemburg</em></h3>
-          <div class="art-byline">
-            <span class="art-by-name">Marie Koch</span>
-            <span class="art-dot"></span>
-            <span class="art-time">5 min</span>
+        <div class="feat-body">
+          <div class="feat-cat">Orte</div>
+          <h3 class="feat-title">Die zehn <em>schönsten Kurven</em> der Moselweinstraße</h3>
+          <div class="feat-foot">
+            <span class="feat-author">Marie Koch</span>
+            <span class="feat-dot"></span>
+            <span class="feat-min">4 min</span>
           </div>
         </div>
       </article>
 
-      <!-- SM C -->
-      <article class="art-card art-sm-c">
-        <div class="art-img">
+      <!-- Side column -->
+      <article class="feat-card feat-side">
+        <div class="feat-img">
           <img
-            src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=400&h=195&q=80"
-            alt="Kaffee und Buch in gemütlichem Café"
+            src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=400&h=300&q=80"
+            alt="Kaffee und offenes Notizbuch in ruhigem Café"
             loading="lazy"
           />
         </div>
-        <div class="art-body">
-          <div class="art-cat">Leben</div>
-          <h3 class="art-title">Slow Mornings: <em>Die besten Cafés</em> in Trier</h3>
-          <div class="art-byline">
-            <span class="art-by-name">Laura Franzen</span>
-            <span class="art-dot"></span>
-            <span class="art-time">3 min</span>
+        <div class="feat-body">
+          <div class="feat-cat">Leben</div>
+          <h3 class="feat-title">Das <em>stille Café</em> an der Moselbrücke</h3>
+        </div>
+        <div class="feat-side-list">
+          <div class="feat-list-item">
+            <span class="feat-list-num">→</span>
+            <div>
+              <div class="feat-list-cat">Menschen</div>
+              <div class="feat-list-title"><em>Der letzte Schreiner</em> der Altstadt</div>
+            </div>
+          </div>
+          <div class="feat-list-item">
+            <span class="feat-list-num">→</span>
+            <div>
+              <div class="feat-list-cat">Wohnen</div>
+              <div class="feat-list-title">Römische Keller, <em>moderne Wohnungen</em></div>
+            </div>
+          </div>
+          <div class="feat-list-item">
+            <span class="feat-list-num">→</span>
+            <div>
+              <div class="feat-list-cat">Natur</div>
+              <div class="feat-list-title"><em>Frühmorgens</em> am Moselverlauf</div>
+            </div>
           </div>
         </div>
       </article>
-
-      <!-- SM D -->
-      <article class="art-card art-sm-d">
-        <div class="art-img">
-          <img
-            src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=400&h=195&q=80"
-            alt="Renoviertes Wohnzimmer in Trierer Altbau"
-            loading="lazy"
-          />
-        </div>
-        <div class="art-body">
-          <div class="art-cat">Wohnen</div>
-          <h3 class="art-title">Alte Mauern, <em>neues Leben</em>: Sanieren in der Trierer Altstadt</h3>
-          <div class="art-byline">
-            <span class="art-by-name">Tim Holger</span>
-            <span class="art-dot"></span>
-            <span class="art-time">7 min</span>
-          </div>
-        </div>
-      </article>
-
-      <!-- SM E -->
-      <article class="art-card art-sm-e">
-        <div class="art-img">
-          <img
-            src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=400&h=195&q=80"
-            alt="Bücherstapel mit Lesezeichen"
-            loading="lazy"
-          />
-        </div>
-        <div class="art-body">
-          <div class="art-cat">Kultur</div>
-          <h3 class="art-title">Was wir lesen: <em>Empfehlungen</em> aus der Redaktion</h3>
-          <div class="art-byline">
-            <span class="art-by-name">Redaktion</span>
-            <span class="art-dot"></span>
-            <span class="art-time">2 min</span>
-          </div>
-        </div>
-      </article>
-
     </div>
   </section>
 
-  <!-- ── SECTION 3 — LANGER LESESTOFF (dark) ── -->
-  <section class="longread">
-    <div class="lr-photo">
+  <!-- ─── SECTION 3 — PULL QUOTE (sage) ─── -->
+  <section class="pullquote-band">
+    <div class="pq-photo">
       <img
-        src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=900&h=700&q=82"
-        alt="Mosel bei Sonnenuntergang, Weinberge und Fluss"
+        src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=700&h=420&q=82"
+        alt="Sonnenuntergang über dem Moseltal mit Weinbergen im Vordergrund"
         loading="lazy"
       />
-      <div class="lr-photo-overlay"></div>
-      <span class="lr-badge">Langer Lesestoff</span>
+      <span class="pq-badge">Langer Lesestoff</span>
     </div>
-    <div class="lr-text">
-      <p class="lr-kicker">Menschen &ensp;·&ensp; Ausgabe 12</p>
-      <div class="lr-quote">
-        <p class="lr-quote-text">
-          „Die Mosel ist kein Fluss.
-          Sie ist eine Erinnerung,
-          die sich jeden Morgen
-          neu erfindet."
-        </p>
-        <p class="lr-quote-source">— Anna Steiner, Moselschifferin</p>
-      </div>
-      <p class="lr-body">
-        Eine Saison lang hat Anna Steiner ihr Leben auf einem alten Frachtschiff
-        verbracht — zwischen Trier und Koblenz, zwischen Morgennebel und Weinbergen.
-        Ihr Tagebuch ist eine Liebeserklärung an die Langsamkeit.
+    <div class="pq-content">
+      <div class="pq-opener">&ldquo;</div>
+      <p class="pq-quote">
+        Die Mosel lehrt keine Eile.
+        Sie gleitet — und nimmt mit,
+        wer bereit ist loszulassen.
       </p>
-      <a href="#" class="lr-cta">Gesamtes Tagebuch lesen &nbsp;→</a>
+      <p class="pq-source">— Anna Steiner, Moselschifferin</p>
+      <p class="pq-body">
+        Eine Saison auf einem alten Moselschiff, zwischen Trier und Koblenz.
+        Anna Steiner hat aufgeschrieben, was das Wasser ihr geflüstert hat —
+        ein Reisetagebuch, das eigentlich ein Brief an die Langsamkeit ist.
+      </p>
+      <a href="#" class="pq-link">Gesamten Essay lesen &nbsp;→</a>
     </div>
   </section>
 
-  <!-- ── SECTION 4 — SCHNELL GELESEN ── -->
-  <section class="quick">
-    <div class="sec-head">
-      <div>
-        <div class="sec-eyebrow">
-          <span class="eyebrow-bar"></span>
-          <span class="eyebrow-label">Schnell gelesen</span>
-        </div>
-        <h2 class="sec-h2">Kurze<br><em>Momente</em></h2>
+  <!-- ─── SECTION 4 — RUBRIK-NUMMERN ─── -->
+  <section class="rubrik-strip">
+    <div class="rubrik-cell">
+      <div class="rubrik-img">
+        <img
+          src="https://images.unsplash.com/photo-1490750967868-88df5691cc27?auto=format&fit=crop&w=500&h=175&q=80"
+          alt="Wildblumen auf einer sommerlichen Mosel-Wiese"
+          loading="lazy"
+        />
       </div>
+      <div class="rubrik-cat">Natur</div>
+      <h4 class="rubrik-title">Wildpflanzen der <em>Mosellandschaft</em></h4>
+      <span class="rubrik-meta">Laura Franzen &ensp;·&ensp; 3 min</span>
+      <span class="rubrik-num">01</span>
     </div>
-
-    <div class="quick-grid">
-      <div class="quick-card">
-        <div class="quick-img">
-          <img
-            src="https://images.unsplash.com/photo-1490750967868-88df5691cc27?auto=format&fit=crop&w=400&h=155&q=80"
-            alt="Frühlingsblüten an der Mosel"
-            loading="lazy"
-          />
-        </div>
-        <div class="quick-cat">Natur</div>
-        <h4 class="quick-title">Wenn die Weinberge blühen: <em>Frühlingsspaziergang</em> entlang der Mosel</h4>
-        <span class="quick-time">2 min Lesezeit</span>
+    <div class="rubrik-cell">
+      <div class="rubrik-img">
+        <img
+          src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=500&h=175&q=80"
+          alt="Bücherstapel auf einem Holztisch"
+          loading="lazy"
+        />
       </div>
-
-      <div class="quick-card">
-        <div class="quick-img">
-          <img
-            src="https://images.unsplash.com/photo-1560493676-04071c5f467b?auto=format&fit=crop&w=400&h=155&q=80"
-            alt="Weinverkostung mit Gläsern"
-            loading="lazy"
-          />
-        </div>
-        <div class="quick-cat">Wein</div>
-        <h4 class="quick-title">Fünf Rieslinge, die Sie dieses Jahr <em>kennen müssen</em></h4>
-        <span class="quick-time">3 min Lesezeit</span>
+      <div class="rubrik-cat">Literatur</div>
+      <h4 class="rubrik-title"><em>Sommerleseliste:</em> Was uns begleitet</h4>
+      <span class="rubrik-meta">Redaktion &ensp;·&ensp; 2 min</span>
+      <span class="rubrik-num">02</span>
+    </div>
+    <div class="rubrik-cell">
+      <div class="rubrik-img">
+        <img
+          src="https://images.unsplash.com/photo-1533900298318-6b8da08a523e?auto=format&fit=crop&w=500&h=175&q=80"
+          alt="Frisches Gemüse auf dem Trierer Wochenmarkt"
+          loading="lazy"
+        />
       </div>
-
-      <div class="quick-card">
-        <div class="quick-img">
-          <img
-            src="https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=400&h=155&q=80"
-            alt="Veranstaltung im Kulturzentrum"
-            loading="lazy"
-          />
-        </div>
-        <div class="quick-cat">Programm</div>
-        <h4 class="quick-title">Was läuft in Trier? <em>Kulturempfehlungen</em> im April</h4>
-        <span class="quick-time">4 min Lesezeit</span>
-      </div>
-
-      <div class="quick-card">
-        <div class="quick-img">
-          <img
-            src="https://images.unsplash.com/photo-1533900298318-6b8da08a523e?auto=format&fit=crop&w=400&h=155&q=80"
-            alt="Wochenmarkt mit frischem Gemüse"
-            loading="lazy"
-          />
-        </div>
-        <div class="quick-cat">Stadtleben</div>
-        <h4 class="quick-title">Der Trierer Wochenmarkt und seine <em>heimlichen Stars</em></h4>
-        <span class="quick-time">3 min Lesezeit</span>
-      </div>
+      <div class="rubrik-cat">Stadtleben</div>
+      <h4 class="rubrik-title">Wochenmarkt Trier: <em>Unsere zehn Lieblinge</em></h4>
+      <span class="rubrik-meta">Tim Holger &ensp;·&ensp; 4 min</span>
+      <span class="rubrik-num">03</span>
     </div>
   </section>
 
-  <!-- ── FOOTER ── -->
-  <div class="footer-wrap">
+  <!-- ─── SECTION 5 — LANGER LESESTOFF ─── -->
+  <section class="longread">
+    <div class="lr-left">
+      <div class="eyebrow">Menschen der Mosel</div>
+      <p class="lr-issue-no">Ausgabe No.&thinsp;13 &ensp;·&ensp; Portrait</p>
+      <h2 class="lr-h2">
+        <em>Der Winzer,</em><br>
+        der seinen besten<br>
+        Riesling nie verkauft.
+      </h2>
+      <p class="lr-body">
+        Seit dreißig Jahren pflegt Hans-Georg Kiefer seine Steillagen
+        oberhalb von Neumagen-Dhron. Seinen besten Jahrgang — den 2018er —
+        öffnet er nur für Freunde und die Erde selbst. Ein Besuch.
+      </p>
+      <div class="lr-stat">
+        <span class="lr-stat-num">47</span>
+        <span class="lr-stat-label">Jahre im Weinberg — seit seinem siebten Lebensjahr</span>
+      </div>
+      <a href="#" class="lr-read">Portrait lesen &nbsp;→</a>
+    </div>
+    <div class="lr-right">
+      <img
+        src="https://images.unsplash.com/photo-1560493676-04071c5f467b?auto=format&fit=crop&w=800&h=600&q=82"
+        alt="Alter Winzer prüft Rieslingtraube im Sonnenlicht"
+        loading="lazy"
+      />
+      <div class="lr-right-overlay"></div>
+      <span class="lr-right-caption">Hans-Georg Kiefer in seiner Steillage · Neumagen-Dhron, Sommer 2025</span>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ─── -->
+  <div class="footer-wrapper">
     <footer>
       <div class="footer-top">
-        <div class="footer-brand">
-          <div class="footer-logo">TREVERIS</div>
-          <p class="footer-tagline">
-            Magazin für Lebensart aus dem Moselland<br>
-            Erscheint zweimal jährlich &ensp;·&ensp; Trier seit 2019
+        <div>
+          <div class="f-brand-name">PASSAGE</div>
+          <p class="f-brand-sub">
+            Magazin für Lebensart aus dem Moselland.<br>
+            Erscheint zweimal jährlich seit 2018.<br>
+            Herausgegeben in Trier.
           </p>
         </div>
-        <div class="footer-nav">
-          <p class="footer-nav-label">Rubriken</p>
-          <ul>
-            <li><a href="#">Wein &amp; Kulinarik</a></li>
-            <li><a href="#">Kultur &amp; Geschichte</a></li>
-            <li><a href="#">Reisen &amp; Entdecken</a></li>
-            <li><a href="#">Menschen &amp; Portraits</a></li>
-            <li><a href="#">Leben &amp; Wohnen</a></li>
+        <div>
+          <p class="f-col-label">Rubriken</p>
+          <ul class="f-col-links">
+            <li><a href="#">Wein &amp; Tafel</a></li>
+            <li><a href="#">Natur &amp; Wege</a></li>
+            <li><a href="#">Trierer Kultur</a></li>
+            <li><a href="#">Menschen</a></li>
+            <li><a href="#">Orte</a></li>
           </ul>
         </div>
-        <div class="footer-nl">
-          <p class="footer-nl-lead">
-            Den nächsten Beitrag nicht verpassen.
-            Unser Newsletter, zweimal im Monat.
+        <div>
+          <p class="f-col-label">Magazin</p>
+          <ul class="f-col-links">
+            <li><a href="#">Aktuelle Ausgabe</a></li>
+            <li><a href="#">Archiv</a></li>
+            <li><a href="#">Redaktion</a></li>
+            <li><a href="#">Mediadaten</a></li>
+            <li><a href="#">Kontakt</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="f-nl-text">
+            Neue Beiträge direkt ins Postfach —
+            unser Newsletter, zweimal im Monat.
           </p>
-          <div class="footer-nl-form">
-            <input class="footer-nl-input" type="email" placeholder="Ihre E-Mail-Adresse" />
-            <button class="footer-nl-btn">Abonnieren</button>
+          <div class="f-nl-form">
+            <input
+              class="f-nl-input"
+              type="email"
+              placeholder="Ihre E-Mail-Adresse"
+            />
+            <button class="f-nl-btn">Anmelden</button>
           </div>
         </div>
       </div>
       <div class="footer-bottom">
-        <span class="footer-copy">© 2025 TREVERIS Verlag, Trier &ensp;·&ensp; Alle Rechte vorbehalten</span>
-        <ul class="footer-legal">
+        <span class="f-copy">© 2025 PASSAGE Verlag, Trier &ensp;·&ensp; Alle Rechte vorbehalten</span>
+        <ul class="f-legal">
           <li><a href="#">Impressum</a></li>
           <li><a href="#">Datenschutz</a></li>
-          <li><a href="#">Kontakt</a></li>
+          <li><a href="#">AGB</a></li>
         </ul>
       </div>
     </footer>
