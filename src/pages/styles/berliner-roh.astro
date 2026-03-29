@@ -1,1041 +1,1178 @@
 ---
 export const prerender = true;
 ---
-
+<!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
-  <title>Werkbank — Co-Working & Ateliers | Trier-Euren</title>
-  <meta name="description" content="Werkbank — Co-Working & Ateliers in Trier-Euren. 240m2, 18 Arbeitsplaetze, 24/7 Zugang." />
+  <title>ROHBAU — Coworking & Galerie | Trier-Euren</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
 
   <style>
-    html { overflow-x: hidden; }
-    /* ===== RESET & BASE ===== */
-    *, *::before, *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { overflow-x: hidden; scroll-behavior: smooth; }
 
     :root {
-      --mouse-x: 0;
-      --mouse-y: 0;
-      --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    html {
-      scroll-behavior: smooth;
+      --black:    #0C0B0A;
+      --black-2:  #161412;
+      --black-3:  #211E1B;
+      --border:   #333030;
+      --border-l: #4A4540;
+      --white:    #EDE7DC;
+      --muted:    #6A6258;
+      --muted-2:  #9A9088;
+      --rust:     #C4603A;
+      --rust-l:   #DE7B52;
+      --fd: 'Barlow Condensed', sans-serif;
+      --fm: 'IBM Plex Mono', monospace;
+      --fb: 'IBM Plex Sans', sans-serif;
     }
 
     body {
-      font-family: 'IBM Plex Sans', sans-serif;
-      color: #1A1A1A;
-      background-color: #F2F0ED;
-      line-height: 1.6;
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--fb);
+      -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
     }
 
-    /* ===== CONCRETE NOISE OVERLAY ===== */
+    /* Grain */
     body::after {
       content: '';
       position: fixed;
       inset: 0;
-      pointer-events: none;
       z-index: 9999;
-      opacity: 0.035;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-      background-repeat: repeat;
-      background-size: 256px 256px;
+      pointer-events: none;
+      opacity: 1;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.88' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.038'/%3E%3C/svg%3E");
+      background-size: 220px 220px;
     }
 
-    /* ===== STAGGERED REVEAL ANIMATIONS ===== */
+    a { text-decoration: none; color: inherit; }
+    img { display: block; width: 100%; }
+
+    /* ── REVEAL ── */
     .reveal {
       opacity: 0;
-      transform: translateY(32px);
-      transition: opacity 0.8s var(--ease-smooth), transform 0.8s var(--ease-smooth);
+      transform: translateY(36px);
+      transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
     }
+    .reveal.in { opacity: 1; transform: none; }
+    .d1 { transition-delay: 0.08s; }
+    .d2 { transition-delay: 0.2s; }
+    .d3 { transition-delay: 0.34s; }
+    .d4 { transition-delay: 0.48s; }
+    .d5 { transition-delay: 0.62s; }
 
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .reveal-d1 { transition-delay: 0.1s; }
-    .reveal-d2 { transition-delay: 0.2s; }
-    .reveal-d3 { transition-delay: 0.3s; }
-    .reveal-d4 { transition-delay: 0.4s; }
-    .reveal-d5 { transition-delay: 0.5s; }
-    .reveal-d6 { transition-delay: 0.6s; }
-
-    /* ===== STAGGER-IN (horizontal slide from left) ===== */
-    .stagger-in {
-      opacity: 0;
-      transform: translateX(-20px);
-      transition: opacity 0.6s var(--ease-smooth), transform 0.6s var(--ease-smooth);
-    }
-
-    .stagger-in.revealed {
-      opacity: 1;
-      transform: translateX(0);
-    }
-
-    img {
-      max-width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    h1, h2, h3, h4 {
-      font-family: 'IBM Plex Mono', monospace;
-      line-height: 1.2;
-      font-weight: 600;
-    }
-
-    /* ===== NAVBAR ===== */
-    .navbar {
+    /* ── NAV ── */
+    nav {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
+      top: 0; left: 0; right: 0;
       z-index: 100;
-      background: rgba(242, 240, 237, 0.95);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      border-bottom: 1px solid #333333;
-      padding: 0 2rem;
       height: 56px;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      padding: 0 clamp(1.5rem, 4vw, 3rem);
+      background: rgba(12, 11, 10, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
     }
 
-    .navbar-logo {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.875rem;
+    .nav-logo {
+      font-family: var(--fm);
+      font-size: 0.8rem;
       font-weight: 700;
-      color: #333333;
-      letter-spacing: 0.15em;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
+      color: var(--white);
     }
+    .nav-logo b { color: var(--rust); font-weight: 700; }
 
-    .navbar-links {
+    .nav-links {
       display: flex;
-      gap: 2rem;
+      gap: 2.5rem;
       list-style: none;
     }
-
-    .navbar-links a {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.75rem;
+    .nav-links a {
+      font-family: var(--fm);
+      font-size: 0.68rem;
       font-weight: 500;
-      color: #333333;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      transition: color 0.3s var(--ease-smooth);
+      color: var(--muted-2);
+      transition: color 0.2s;
     }
+    .nav-links a:hover { color: var(--white); }
 
-    .navbar-links a:hover {
-      color: #C75B39;
+    .nav-cta {
+      font-family: var(--fm);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--rust);
+      border: 1px solid var(--rust);
+      padding: 0.38rem 1.1rem;
+      transition: background 0.2s, color 0.2s;
     }
+    .nav-cta:hover { background: var(--rust); color: var(--black); }
 
-    /* ===== MOBILE NAV ===== */
-    .mobile-toggle {
+    .nav-burger {
       display: none;
+      flex-direction: column;
+      gap: 5px;
       background: none;
       border: none;
       cursor: pointer;
-      padding: 0.5rem;
+      padding: 4px;
     }
-
-    .mobile-toggle span {
+    .nav-burger span {
       display: block;
-      width: 20px;
+      width: 22px;
       height: 1.5px;
-      background: #333333;
-      margin: 5px 0;
-      transition: all 0.3s ease;
+      background: var(--white);
+      transition: all 0.3s;
     }
 
-    .mobile-menu {
-      display: none;
-      position: fixed;
-      top: 56px;
-      left: 0;
-      right: 0;
-      background: rgba(242, 240, 237, 0.98);
-      border-bottom: 1px solid #333333;
-      padding: 1.5rem 2rem;
-      z-index: 99;
-    }
-
-    .mobile-menu.active {
-      display: block;
-    }
-
-    .mobile-menu a {
-      display: block;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.8rem;
-      font-weight: 500;
-      color: #333333;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 0.75rem 0;
-      border-bottom: 1px solid rgba(51, 51, 51, 0.1);
-    }
-
-    .mobile-menu a:last-child {
-      border-bottom: none;
-    }
-
-    /* ===== HERO ===== */
+    /* ── HERO ── */
     .hero {
-      padding: 10rem 2rem 6rem;
-      position: relative;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      max-width: 1600px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .hero-grid-bg {
-      position: absolute;
-      inset: -20px;
-      background-image:
-        linear-gradient(rgba(51, 51, 51, 0.06) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(51, 51, 51, 0.06) 1px, transparent 1px);
-      background-size: 40px 40px;
-      pointer-events: none;
-      transform: translate(
-        calc(var(--mouse-x) * 8px),
-        calc(var(--mouse-y) * 8px)
-      );
-      transition: transform 0.6s var(--ease-smooth);
-    }
-
-    .hero-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      width: 100%;
-      position: relative;
-      z-index: 1;
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: center;
+      grid-template-columns: 55% 45%;
+      min-height: 100vh;
+      padding-top: 56px;
     }
 
-    .hero-content {
+    .hero-left {
       display: flex;
       flex-direction: column;
-      gap: 2rem;
+      justify-content: center;
+      padding: clamp(3rem, 5vw, 5rem) clamp(2rem, 5vw, 4.5rem);
+      position: relative;
+      border-right: 1px solid var(--border);
+    }
+
+    /* subtle vertical line accent */
+    .hero-left::before {
+      content: '';
+      position: absolute;
+      left: clamp(2rem, 5vw, 4.5rem);
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, transparent, var(--border) 20%, var(--border) 80%, transparent);
+      pointer-events: none;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-family: var(--fm);
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted-2);
+      margin-bottom: 2.2rem;
+      padding-left: 1.5rem;
+    }
+    .hero-tag::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--rust);
+      flex-shrink: 0;
+      animation: blink 2.4s ease-in-out infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
     }
 
     .hero-headline {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: clamp(5.5rem, 10vw, 10rem);
+      line-height: 0.88;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      padding-left: 1.5rem;
+      margin-bottom: 2.8rem;
+    }
+    .hero-headline .stroke {
+      -webkit-text-stroke: 2.5px var(--white);
+      color: transparent;
+      display: block;
+    }
+    .hero-headline .solid { display: block; }
+    .hero-headline .accent { display: block; color: var(--rust); }
+
+    .hero-body {
+      font-family: var(--fb);
+      font-size: clamp(0.85rem, 1.1vw, 0.95rem);
+      font-weight: 300;
+      line-height: 1.75;
+      color: var(--muted-2);
+      max-width: 400px;
+      padding-left: 1.5rem;
+      margin-bottom: 2.8rem;
+      border-left: 2px solid var(--border-l);
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: clamp(1.5rem, 3vw, 3rem);
+      padding: 2rem clamp(1.5rem, 5vw, 4.5rem);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      margin: 0 0 2.8rem;
+    }
+    .stat-n {
+      font-family: var(--fm);
+      font-size: clamp(1.2rem, 2vw, 1.7rem);
       font-weight: 700;
-      color: #333333;
-      letter-spacing: -0.02em;
-      line-height: 1.1;
+      color: var(--white);
+      display: block;
+      line-height: 1;
+      margin-bottom: 0.28rem;
+    }
+    .stat-l {
+      font-family: var(--fm);
+      font-size: 0.58rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
     }
 
-    /* Typewriter cursor on headline */
-    .typewriter-target {
-      display: inline;
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      padding-left: 1.5rem;
     }
-
-    .typewriter-cursor {
-      display: inline-block;
-      color: #C75B39;
-      font-weight: 400;
-      animation: cursorBlink 1s step-end infinite;
-      margin-left: 1px;
-    }
-
-    @keyframes cursorBlink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
-    }
-
-    .hero-accent-line {
-      width: 60px;
-      height: 2px;
-      background: #C75B39;
-    }
-
-    .hero-specs {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.8rem;
-      color: #666666;
-      letter-spacing: 0.05em;
-      line-height: 2;
-    }
-
-    .hero-specs span {
-      display: inline;
-    }
-
-    .hero-specs .spec-divider {
-      margin: 0 0.5rem;
-      color: #C75B39;
-    }
-
-    .hero-cta {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: #C75B39;
-      letter-spacing: 0.05em;
+    .btn-p {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      transition: gap 0.3s var(--ease-smooth);
+      gap: 0.6rem;
+      font-family: var(--fm);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--black);
+      background: var(--rust);
+      border: 2px solid var(--rust);
+      padding: 0.85rem 1.8rem;
+      transition: background 0.2s, color 0.2s;
+      cursor: pointer;
     }
+    .btn-p:hover { background: transparent; color: var(--rust); }
 
-    .hero-cta:hover {
-      gap: 0.75rem;
+    .btn-s {
+      font-family: var(--fm);
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color 0.2s;
     }
+    .btn-s:hover { color: var(--white); }
+    .btn-s::after { content: ' ↗'; }
 
-    .hero-image-wrapper {
+    /* ── HERO RIGHT ── */
+    .hero-right {
       position: relative;
       overflow: hidden;
+      background: var(--black-3);
     }
-
-    .hero-image {
+    .hero-right-img {
       width: 100%;
-      aspect-ratio: 4 / 3;
+      height: 100%;
       object-fit: cover;
-      border: 1px solid #333333;
-      animation: kenBurns 20s ease-in-out infinite alternate;
+      transition: transform 10s ease-out;
+      filter: brightness(0.85) saturate(0.7);
     }
-
-    @keyframes kenBurns {
-      0% { transform: scale(1) translate(0, 0); }
-      100% { transform: scale(1.06) translate(-1%, -0.5%); }
-    }
-
-    .hero-image-label {
+    .hero-right:hover .hero-right-img { transform: scale(1.04); }
+    .hero-right::after {
+      content: '';
       position: absolute;
-      bottom: -1.5rem;
-      right: 0;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.65rem;
-      color: #999999;
-      letter-spacing: 0.05em;
+      inset: 0;
+      background:
+        linear-gradient(to right, var(--black) 0%, transparent 25%),
+        linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 45%);
     }
 
-    /* ===== SECTION SHARED ===== */
-    .section {
-      padding: 6rem 2rem;
-      max-width: 1100px;
-      margin: 0 auto;
+    .hero-badge {
+      position: absolute;
+      bottom: 2.5rem;
+      right: 2rem;
+      z-index: 2;
+      background: rgba(12,11,10,0.88);
+      border: 1px solid var(--border-l);
+      backdrop-filter: blur(10px);
+      padding: 0.9rem 1.3rem;
     }
-
-    .section-outer {
-      max-width: 1600px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .section-label {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.65rem;
+    .badge-l {
+      font-family: var(--fm);
+      font-size: 0.58rem;
       font-weight: 600;
-      color: #999999;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      margin-bottom: 0.75rem;
+      color: var(--muted);
+      display: block;
+      margin-bottom: 0.25rem;
     }
-
-    .section-title {
-      font-size: 1.75rem;
+    .badge-v {
+      font-family: var(--fm);
+      font-size: 0.82rem;
       font-weight: 700;
-      color: #333333;
-      margin-bottom: 3rem;
-      letter-spacing: -0.01em;
+      color: var(--white);
     }
 
-    .section-divider {
-      width: 100%;
-      max-width: 1100px;
-      margin-left: auto;
-      margin-right: auto;
-      margin-bottom: 0;
+    /* ── TICKER ── */
+    .ticker {
+      height: 42px;
+      background: var(--rust);
+      overflow: hidden;
       display: flex;
       align-items: center;
-      gap: 0;
     }
-
-    .section-divider::before,
-    .section-divider::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: #333333;
-    }
-
-    .section-divider .divider-symbol {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.7rem;
-      color: #999999;
-      padding: 0 1rem;
-      letter-spacing: 0;
-      line-height: 1;
-    }
-
-    /* ===== MARQUEE ===== */
-    .marquee-wrap {
-      overflow: hidden;
-      border-top: 1px solid #333333;
-      border-bottom: 1px solid #333333;
-      background: #F2F0ED;
-      padding: 1rem 0;
-      margin: 0;
-    }
-
-    .marquee-track {
+    .ticker-track {
       display: flex;
-      width: max-content;
-      animation: marqueeScroll 22s linear infinite;
+      white-space: nowrap;
+      animation: roll 32s linear infinite;
     }
-
-    .marquee-track:hover {
-      animation-play-state: paused;
-    }
-
-    .marquee-item {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.75rem;
-      font-weight: 600;
+    .ticker-item {
+      font-family: var(--fm);
+      font-size: 0.68rem;
+      font-weight: 700;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: #333333;
+      color: var(--black);
       padding: 0 2rem;
-      white-space: nowrap;
     }
-
-    .marquee-item .marquee-dot {
-      color: #C75B39;
-      margin-left: 2rem;
+    .ticker-sep {
+      color: rgba(0,0,0,0.3);
+      padding: 0 0.5rem;
     }
-
-    @keyframes marqueeScroll {
+    @keyframes roll {
       0%   { transform: translateX(0); }
       100% { transform: translateX(-50%); }
     }
 
-    /* ===== RAEUME (WORKSPACE CARDS) ===== */
-    .raeume-grid {
+    /* ── SECTION HEADER ── */
+    .sec-head {
+      display: flex;
+      align-items: baseline;
+      gap: 1.2rem;
+      margin-bottom: 3rem;
+    }
+    .sec-num {
+      font-family: var(--fm);
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: var(--rust);
+      letter-spacing: 0.15em;
+      flex-shrink: 0;
+    }
+    .sec-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(2.8rem, 5vw, 5rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: 0.92;
+      color: var(--white);
+    }
+    .sec-title .stroke {
+      -webkit-text-stroke: 2px var(--white);
+      color: transparent;
+    }
+
+    /* ── SECTION 01: RÄUME ── */
+    .raume {
+      padding: clamp(4rem, 7vw, 7rem) clamp(1.5rem, 4vw, 3rem);
+      background: var(--black-2);
+      border-top: 1px solid var(--border);
+    }
+    .raume-inner { max-width: 1400px; margin: 0 auto; }
+
+    .raume-top {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 2rem;
+      padding-bottom: 2.5rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 2.5rem;
+    }
+    .raume-desc {
+      font-family: var(--fb);
+      font-size: 0.88rem;
+      font-weight: 300;
+      line-height: 1.75;
+      color: var(--muted-2);
+      max-width: 380px;
+    }
+
+    /* 3-col brutalist grid with 1.5px separator */
+    .raume-grid {
+      display: grid;
+      grid-template-columns: 1.7fr 1fr 1fr;
+      gap: 2px;
+      background: var(--border);
+    }
+
+    .rc {
+      position: relative;
+      overflow: hidden;
+      background: var(--black-3);
+      cursor: pointer;
+    }
+    .rc:first-child { grid-row: span 2; }
+
+    .rc-img-wrap {
+      position: relative;
+      width: 100%;
+      padding-bottom: 68%;
+      overflow: hidden;
+    }
+    .rc:first-child .rc-img-wrap {
+      padding-bottom: 0;
+      height: 100%;
+      min-height: 560px;
+    }
+
+    .rc-img {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.75s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      filter: brightness(0.88) saturate(0.65);
+    }
+    .rc:hover .rc-img {
+      transform: scale(1.06);
+      filter: brightness(0.7) saturate(0.55);
+    }
+
+    .rc-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(12,11,10,0.9) 0%, transparent 55%);
+      z-index: 1;
+    }
+
+    .rc-info {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 1.4rem 1.6rem;
+      z-index: 2;
+    }
+    .rc-tag {
+      display: inline-block;
+      font-family: var(--fm);
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--rust-l);
+      border: 1px solid rgba(196,96,58,0.5);
+      padding: 0.18rem 0.55rem;
+      margin-bottom: 0.55rem;
+    }
+    .rc-name {
+      display: block;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(1.5rem, 2.8vw, 2.4rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      color: var(--white);
+      line-height: 0.95;
+    }
+    .rc-meta {
+      font-family: var(--fm);
+      font-size: 0.6rem;
+      color: var(--muted-2);
+      margin-top: 0.35rem;
+      letter-spacing: 0.08em;
+    }
+
+    /* ── SECTION 02: MANIFEST ── */
+    .manifest {
+      position: relative;
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      border-top: 1px solid var(--border);
+    }
+    .manifest-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .manifest-bg img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: brightness(0.28) saturate(0.4);
+    }
+    .manifest-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(12,11,10,0.88) 35%, rgba(12,11,10,0.3) 100%);
+    }
+
+    .manifest-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+      padding: clamp(4rem, 7vw, 7rem) clamp(1.5rem, 4vw, 3rem);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(3rem, 6vw, 7rem);
+      align-items: center;
+    }
+
+    .manifest-quote {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: clamp(3rem, 5.5vw, 5.5rem);
+      text-transform: uppercase;
+      line-height: 0.92;
+      letter-spacing: -0.01em;
+      margin-bottom: 2.5rem;
+    }
+    .manifest-quote .stroke {
+      -webkit-text-stroke: 2.5px var(--white);
+      color: transparent;
+      display: block;
+    }
+    .manifest-quote .r { color: var(--rust); display: block; }
+
+    .manifest-body {
+      font-family: var(--fb);
+      font-size: 0.92rem;
+      font-weight: 300;
+      color: var(--muted-2);
+      line-height: 1.85;
+      max-width: 440px;
+    }
+
+    .manifest-facts {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      background: var(--border);
+    }
+    .mf-row {
+      background: rgba(12, 11, 10, 0.75);
+      backdrop-filter: blur(6px);
+      padding: 1.4rem 1.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      transition: background 0.2s;
+    }
+    .mf-row:hover { background: rgba(26, 23, 20, 0.92); }
+    .mf-label {
+      font-family: var(--fm);
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .mf-val {
+      font-family: var(--fm);
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--white);
+      text-align: right;
+    }
+
+    /* ── SECTION 03: MITGLIED ── */
+    .mitglied {
+      padding: clamp(4rem, 7vw, 7rem) clamp(1.5rem, 4vw, 3rem);
+      background: var(--black);
+      border-top: 1px solid var(--border);
+    }
+    .mitglied-inner { max-width: 1400px; margin: 0 auto; }
+
+    .mitglied-top {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: end;
+      gap: 2rem;
+      margin-bottom: 0;
+      padding-bottom: 2.5rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 2.5rem;
+    }
+    .mitglied-sub {
+      font-family: var(--fb);
+      font-size: 0.88rem;
+      font-weight: 300;
+      color: var(--muted-2);
+      line-height: 1.75;
+      max-width: 380px;
+    }
+    .mitglied-note {
+      font-family: var(--fm);
+      font-size: 0.62rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-align: right;
+    }
+
+    .pricing-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 2px;
+      background: var(--border);
     }
 
-    .raum-card {
-      background: #FFFFFF;
-      border: 1px solid rgba(51, 51, 51, 0.15);
-      padding: 2.5rem 2rem;
+    .pc {
+      background: var(--black-2);
+      padding: 2.5rem;
       display: flex;
       flex-direction: column;
-      gap: 1.5rem;
+      gap: 1.4rem;
       position: relative;
-      overflow: hidden;
-      transition: box-shadow 0.4s var(--ease-smooth);
+      transition: background 0.2s;
     }
-
-    .raum-card::before {
-      content: '';
+    .pc:hover { background: var(--black-3); }
+    .pc.hot {
+      background: var(--black-3);
+      border-top: 3px solid var(--rust);
+    }
+    .pc-badge {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background: #C75B39;
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.5s var(--ease-smooth);
-    }
-
-    .raum-card:hover::before {
-      transform: scaleX(1);
-    }
-
-    .raum-card:hover {
-      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
-    }
-
-    .raum-card-header {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-
-    .raum-name {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 1.1rem;
+      top: -1px; right: 2.5rem;
+      background: var(--rust);
+      color: var(--black);
+      font-family: var(--fm);
+      font-size: 0.58rem;
       font-weight: 700;
-      color: #333333;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding: 0.22rem 0.7rem;
     }
 
-    .raum-price {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.8rem;
+    .pc-tier {
+      font-family: var(--fm);
+      font-size: 0.6rem;
       font-weight: 600;
-      color: #C75B39;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .pc-price {
+      display: flex;
+      align-items: baseline;
+      gap: 0.25rem;
+    }
+    .pc-amt {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(3.5rem, 5vw, 5rem);
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1;
+    }
+    .pc-cur {
+      font-family: var(--fm);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--muted-2);
+      align-self: flex-start;
+      margin-top: 0.3rem;
+    }
+    .pc-per {
+      font-family: var(--fm);
+      font-size: 0.62rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
     }
 
-    .raum-desc {
-      font-size: 0.9rem;
-      color: #555555;
-      line-height: 1.7;
+    .pc-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1.9rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--white);
+      line-height: 1;
+      padding-bottom: 1.4rem;
+      border-bottom: 1px solid var(--border);
     }
 
-    .raum-specs {
+    .pc-features {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 0.4rem;
+      gap: 0.65rem;
+      flex: 1;
+    }
+    .pc-feature {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.7rem;
+      font-family: var(--fb);
+      font-size: 0.82rem;
+      color: var(--muted-2);
+      line-height: 1.4;
+    }
+    .pc-feature::before {
+      content: '—';
+      color: var(--rust);
+      font-family: var(--fm);
+      font-size: 0.72rem;
+      flex-shrink: 0;
+      margin-top: 0.04em;
+    }
+
+    .pc-cta {
+      display: block;
+      text-align: center;
+      font-family: var(--fm);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.85rem;
+      border: 1px solid var(--border-l);
+      color: var(--muted-2);
+      transition: border-color 0.2s, color 0.2s;
       margin-top: auto;
     }
-
-    .raum-specs li {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.7rem;
-      color: #777777;
-      letter-spacing: 0.03em;
-      padding-left: 1rem;
-      position: relative;
+    .pc-cta:hover { border-color: var(--white); color: var(--white); }
+    .pc.hot .pc-cta {
+      background: var(--rust);
+      border-color: var(--rust);
+      color: var(--black);
     }
+    .pc.hot .pc-cta:hover { background: var(--rust-l); border-color: var(--rust-l); }
 
-    .raum-specs li::before {
-      content: '--';
-      position: absolute;
-      left: 0;
-      color: #C75B39;
-    }
-
-    /* ===== PLAETZE COUNTER BAR ===== */
-    .counter-bar {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 2rem 4rem;
+    /* ── FOOTER ── */
+    footer {
+      padding: 2.5rem clamp(1.5rem, 4vw, 3rem);
+      border-top: 1px solid var(--border);
       display: flex;
-      gap: 4rem;
-      align-items: flex-start;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
     }
-
-    .counter-item {
-      display: flex;
-      flex-direction: column;
-      gap: 0.25rem;
-    }
-
-    .counter-number {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 2.5rem;
+    .ft-logo {
+      font-family: var(--fm);
+      font-size: 0.82rem;
       font-weight: 700;
-      color: #333333;
-      line-height: 1;
-    }
-
-    .counter-number .count-val {
-      display: inline-block;
-    }
-
-    .counter-label {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.65rem;
-      font-weight: 500;
-      color: #999999;
-      letter-spacing: 0.15em;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
     }
-
-    /* ===== MEMBERS ===== */
-    .members-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 3rem;
-    }
-
-    .member {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-
-    .member-name {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: #333333;
-    }
-
-    .member-role {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.7rem;
-      font-weight: 500;
-      color: #C75B39;
+    .ft-logo b { color: var(--rust); }
+    .ft-meta {
+      font-family: var(--fm);
+      font-size: 0.6rem;
+      color: var(--muted);
       letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-
-    .member-quote {
-      font-size: 0.9rem;
-      color: #555555;
-      line-height: 1.6;
-      font-style: italic;
-      position: relative;
-      padding-left: 2rem;
-    }
-
-    .member-quote .quote-mark {
-      position: absolute;
-      left: 0;
-      top: -0.15em;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 3rem;
-      font-weight: 700;
-      font-style: normal;
-      color: #C75B39;
-      line-height: 1;
-      opacity: 0;
-      transition: opacity 0.6s var(--ease-smooth);
-      transition-delay: 0.4s;
-    }
-
-    .member-quote.visible .quote-mark {
-      opacity: 1;
-    }
-
-    /* ===== FOOTER / CONTACT ===== */
-    .footer {
-      padding: 4rem 2rem;
-      max-width: 1100px;
-      margin: 0 auto;
-      border-top: 1px solid #333333;
-    }
-
-    .footer-text {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.75rem;
-      color: #777777;
-      letter-spacing: 0.05em;
       text-align: center;
-      line-height: 2;
     }
-
-    .footer-text .footer-sep {
-      margin: 0 0.75rem;
-      color: rgba(51, 51, 51, 0.3);
+    .ft-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
     }
-
-    /* ===== RESPONSIVE ===== */
-    @media (max-width: 900px) {
-      .navbar-links {
-        display: none;
-      }
-
-      .mobile-toggle {
-        display: block;
-      }
-
-      .hero-inner {
-        grid-template-columns: 1fr;
-        gap: 2.5rem;
-      }
-
-      .hero {
-        padding: 8rem 1.5rem 4rem;
-        min-height: auto;
-      }
-
-      .raeume-grid {
-        grid-template-columns: 1fr;
-        gap: 0;
-      }
-
-      .raum-card {
-        border-bottom: none;
-      }
-
-      .raum-card:last-child {
-        border-bottom: 1px solid rgba(51, 51, 51, 0.15);
-      }
-
-      .members-grid {
-        grid-template-columns: 1fr;
-        gap: 2.5rem;
-      }
-
-      .section {
-        padding: 4rem 1.5rem;
-      }
-
-      .section-divider {
-        margin-bottom: 0;
-        margin-left: 1.5rem;
-        margin-right: 1.5rem;
-      }
-
-      .counter-bar {
-        padding: 0 1.5rem 3rem;
-        gap: 2.5rem;
-        flex-wrap: wrap;
-      }
-
-      .footer-text {
-        font-size: 0.7rem;
-      }
-
-      .footer-text .footer-sep {
-        display: none;
-      }
-
-      .footer-text span {
-        display: block;
-        margin-bottom: 0.25rem;
-      }
+    .ft-links a {
+      font-family: var(--fm);
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color 0.2s;
     }
+    .ft-links a:hover { color: var(--white); }
 
-    @media (max-width: 480px) {
-      .hero-headline {
-        font-size: 1.75rem;
-      }
+    /* ── MOBILE ── */
+    @media (max-width: 960px) {
+      .nav-links, .nav-cta { display: none; }
+      .nav-burger { display: flex; }
 
-      .hero {
-        padding: 7rem 1rem 3rem;
-      }
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-left { padding: 3rem 1.5rem; border-right: none; border-bottom: 1px solid var(--border); }
+      .hero-left::before { display: none; }
+      .hero-right { height: 55vw; min-height: 240px; }
+      .hero-right::after { background: linear-gradient(to top, var(--black) 0%, transparent 50%); }
+      .hero-stats { padding: 1.5rem; }
 
-      .section {
-        padding: 3rem 1rem;
-      }
+      .raume-grid { grid-template-columns: 1fr; }
+      .rc:first-child { grid-row: auto; }
+      .rc:first-child .rc-img-wrap { height: auto; min-height: auto; padding-bottom: 65%; }
+      .raume-top { flex-direction: column; align-items: flex-start; }
 
-      .raum-card {
-        padding: 2rem 1.25rem;
-      }
+      .manifest-inner { grid-template-columns: 1fr; }
 
-      .counter-bar {
-        padding: 0 1rem 2.5rem;
-        gap: 2rem;
-      }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .mitglied-top { grid-template-columns: 1fr; }
+      .mitglied-note { text-align: left; }
+
+      footer { flex-direction: column; align-items: flex-start; gap: 1.2rem; }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- NAVBAR -->
-  <nav class="navbar">
-    <a href="/#hero" class="navbar-logo">WERKBANK</a>
-    <ul class="navbar-links">
-      <li><a href="/#raeume">Raeume</a></li>
-      <li><a href="/#community">Community</a></li>
-      <li><a href="/#kontakt">Kontakt</a></li>
+  <!-- ── NAV ── -->
+  <nav>
+    <div class="nav-logo">ROH<b>BAU</b></div>
+    <ul class="nav-links">
+      <li><a href="#raume">Räume</a></li>
+      <li><a href="#manifest">Über uns</a></li>
+      <li><a href="#mitglied">Mitglied</a></li>
     </ul>
-    <button class="mobile-toggle" aria-label="Menu" onclick="document.querySelector('.mobile-menu').classList.toggle('active')">
-      <span></span>
-      <span></span>
-      <span></span>
+    <a href="#mitglied" class="nav-cta">Anfragen</a>
+    <button class="nav-burger" aria-label="Menü öffnen">
+      <span></span><span></span><span></span>
     </button>
   </nav>
 
-  <div class="mobile-menu">
-    <a href="/#raeume" onclick="this.parentElement.classList.remove('active')">Raeume</a>
-    <a href="/#community" onclick="this.parentElement.classList.remove('active')">Community</a>
-    <a href="/#kontakt" onclick="this.parentElement.classList.remove('active')">Kontakt</a>
+  <!-- ── HERO ── -->
+  <section class="hero">
+
+    <div class="hero-left">
+      <span class="hero-tag reveal d1">Coworking &amp; Galerie · Trier-Euren</span>
+
+      <h1 class="hero-headline reveal d2">
+        <span class="stroke">ROH</span>
+        <span class="solid">BAU</span>
+        <span class="accent">WERK</span>
+      </h1>
+
+      <p class="hero-body reveal d3">
+        380 Quadratmeter ehemalige Schlosserei. Keine Verkleidung,
+        keine Deko-Pflanzen. Arbeit, die etwas bedeutet — in einem
+        Gebäude, das seine Geschichte nicht versteckt.
+      </p>
+
+      <div class="hero-stats reveal d4">
+        <div>
+          <span class="stat-n">380</span>
+          <span class="stat-l">m² Fläche</span>
+        </div>
+        <div>
+          <span class="stat-n">24</span>
+          <span class="stat-l">Plätze</span>
+        </div>
+        <div>
+          <span class="stat-n">24/7</span>
+          <span class="stat-l">Zugang</span>
+        </div>
+        <div>
+          <span class="stat-n">seit&nbsp;'19</span>
+          <span class="stat-l">Aktiv</span>
+        </div>
+      </div>
+
+      <div class="hero-actions reveal d5">
+        <a href="#mitglied" class="btn-p">Tour vereinbaren →</a>
+        <a href="#raume" class="btn-s">Räume ansehen</a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <img
+        class="hero-right-img"
+        src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1200&h=900&q=82"
+        alt="Rohe Industriehalle mit Sichtbeton"
+        loading="eager"
+      />
+      <div class="hero-badge">
+        <span class="badge-l">Status</span>
+        <span class="badge-v">[GEÖFFNET] — Mo–So 24h</span>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ── TICKER ── -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span class="ticker-item">Trier-Euren</span><span class="ticker-sep">◆</span>
+      <span class="ticker-item">380m² Industriehalle</span><span class="ticker-sep">◆</span>
+      <span class="ticker-item">Sichtbeton &amp; Stahl</span><span class="ticker-sep">◆</span>
+      <span class="ticker-item">Druckwerkstatt</span><span class="ticker-sep">◆</span>
+      <span class="ticker-item">Galerie &amp; Ausstellungen</span><span class="ticker-sep">◆</span>
+      <span class="ticker-item">24/7 Chipzugang</span><span class="ticker-sep">◆</span>
+      <span class="ticker-item">Glasfaser 1 Gbit/s</span><span class="ticker-sep">◆</span>
+      <span class="ticker-item">Rohbau e.G.</span><span class="ticker-sep">◆</span>
+      <!-- duplicate for seamless loop -->
+      <span class="ticker-item">Trier-Euren</span><span class="ticker-sep">◆</span>
+      <span class="ticker-item">380m² Industriehalle</span><span class="ticker-sep">◆</span>
+      <span class="ticker-item">Sichtbeton &amp; Stahl</span><span class="ticker-sep">◆</span>
+      <span class="ticker-item">Druckwerkstatt</span><span class="ticker-sep">◆</span>
+      <span class="ticker-item">Galerie &amp; Ausstellungen</span><span class="ticker-sep">◆</span>
+      <span class="ticker-item">24/7 Chipzugang</span><span class="ticker-sep">◆</span>
+      <span class="ticker-item">Glasfaser 1 Gbit/s</span><span class="ticker-sep">◆</span>
+      <span class="ticker-item">Rohbau e.G.</span><span class="ticker-sep">◆</span>
+    </div>
   </div>
 
-  <!-- HERO -->
-  <section class="hero" id="hero">
-    <div class="hero-grid-bg"></div>
-    <div class="hero-inner">
-      <div class="hero-content">
-        <h1 class="hero-headline reveal">
-          <span id="typewriter-headline" class="typewriter-target"></span><span class="typewriter-cursor">_</span><br/>GUTE ARBEIT.
-        </h1>
-        <div class="hero-accent-line reveal reveal-d1"></div>
-        <p class="hero-specs reveal reveal-d2">
-          <span>240m2</span>
-          <span class="spec-divider">/</span>
-          <span>18 Arbeitsplaetze</span>
-          <span class="spec-divider">/</span>
-          <span>24/7 Zugang</span>
-          <span class="spec-divider">/</span>
-          <span>Gigabit</span>
+  <!-- ── [01] RÄUME ── -->
+  <section class="raume" id="raume">
+    <div class="raume-inner">
+      <div class="raume-top">
+        <div class="sec-head reveal">
+          <span class="sec-num">[01]</span>
+          <h2 class="sec-title">Die <span class="stroke">Räume</span></h2>
+        </div>
+        <p class="raume-desc reveal d2">
+          Drei Bereiche — ein Gebäude. Jeder hat seinen eigenen Charakter.
+          Alle teilen dasselbe rohe Material: Beton, Stahl, offene Rohre.
         </p>
-        <a href="/#kontakt" class="hero-cta reveal reveal-d3">Besichtigung vereinbaren &rarr;</a>
       </div>
-      <div class="hero-image-wrapper reveal reveal-d2">
-        <img
-          src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=900&q=80&auto=format"
-          alt="Werkbank Co-Working Space in Trier-Euren"
-          class="hero-image"
-          loading="eager"
-        />
-        <span class="hero-image-label">Trier-Euren, 2024</span>
+
+      <div class="raume-grid">
+
+        <!-- Card 1 — groß, span 2 Zeilen -->
+        <div class="rc reveal">
+          <div class="rc-img-wrap">
+            <img
+              class="rc-img"
+              src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=900&h=1100&q=80"
+              alt="Offene Arbeitshalle"
+              loading="lazy"
+            />
+            <div class="rc-overlay"></div>
+          </div>
+          <div class="rc-info">
+            <span class="rc-tag">Haupthalle</span>
+            <span class="rc-name">Die Fabrik</span>
+            <div class="rc-meta">280m² · 18 Schreibtische · Sichtbeton</div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="rc reveal d2">
+          <div class="rc-img-wrap">
+            <img
+              class="rc-img"
+              src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=700&h=480&q=80"
+              alt="Kleines Atelier"
+              loading="lazy"
+            />
+            <div class="rc-overlay"></div>
+          </div>
+          <div class="rc-info">
+            <span class="rc-tag">Atelier</span>
+            <span class="rc-name">Der Tank</span>
+            <div class="rc-meta">60m² · 4 Atelierplätze · Nordlicht</div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="rc reveal d3">
+          <div class="rc-img-wrap">
+            <img
+              class="rc-img"
+              src="https://images.unsplash.com/photo-1464938050520-ef2270bb8ce8?auto=format&fit=crop&w=700&h=480&q=80"
+              alt="Tagungsraum roh"
+              loading="lazy"
+            />
+            <div class="rc-overlay"></div>
+          </div>
+          <div class="rc-info">
+            <span class="rc-tag">Meeting</span>
+            <span class="rc-name">Der Bunker</span>
+            <div class="rc-meta">40m² · bis 12 Personen · Projektor</div>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
 
-  <!-- MARQUEE DIVIDER -->
-  <div class="marquee-wrap section-outer">
-    <div class="marquee-track" aria-hidden="true">
-      <!-- Two identical sets so the loop is seamless -->
-      <span class="marquee-item">CO-WORKING<span class="marquee-dot">·</span></span>
-      <span class="marquee-item">ATELIER<span class="marquee-dot">·</span></span>
-      <span class="marquee-item">24/7 ZUGANG<span class="marquee-dot">·</span></span>
-      <span class="marquee-item">DRUCKER<span class="marquee-dot">·</span></span>
-      <span class="marquee-item">HIGHSPEED-WLAN<span class="marquee-dot">·</span></span>
-      <span class="marquee-item">KUECHE<span class="marquee-dot">·</span></span>
-      <span class="marquee-item">EVENTS<span class="marquee-dot">·</span></span>
-      <span class="marquee-item">MEETINGRAUM<span class="marquee-dot">·</span></span>
-      <span class="marquee-item">POSTADRESSE<span class="marquee-dot">·</span></span>
-      <span class="marquee-item">COMMUNITY<span class="marquee-dot">·</span></span>
-      <span class="marquee-item">CO-WORKING<span class="marquee-dot">·</span></span>
-      <span class="marquee-item">ATELIER<span class="marquee-dot">·</span></span>
-      <span class="marquee-item">24/7 ZUGANG<span class="marquee-dot">·</span></span>
-      <span class="marquee-item">DRUCKER<span class="marquee-dot">·</span></span>
-      <span class="marquee-item">HIGHSPEED-WLAN<span class="marquee-dot">·</span></span>
-      <span class="marquee-item">KUECHE<span class="marquee-dot">·</span></span>
-      <span class="marquee-item">EVENTS<span class="marquee-dot">·</span></span>
-      <span class="marquee-item">MEETINGRAUM<span class="marquee-dot">·</span></span>
-      <span class="marquee-item">POSTADRESSE<span class="marquee-dot">·</span></span>
-      <span class="marquee-item">COMMUNITY<span class="marquee-dot">·</span></span>
+  <!-- ── [02] MANIFEST ── -->
+  <section class="manifest" id="manifest">
+    <div class="manifest-bg">
+      <img
+        src="https://images.unsplash.com/photo-1574177998373-bd4d3fb58a5f?auto=format&fit=crop&w=1600&h=900&q=72"
+        alt="Industrieatmosphäre"
+        loading="lazy"
+      />
     </div>
-  </div>
 
-  <!-- DIE RAEUME -->
-  <section class="section" id="raeume">
-    <p class="section-label stagger-in" data-delay="0">01 / Angebot</p>
-    <h2 class="section-title stagger-in" data-delay="100">Die Raeume</h2>
-    <div class="raeume-grid">
-
-      <div class="raum-card stagger-in" data-delay="150">
-        <div class="raum-card-header">
-          <h3 class="raum-name">Flex Desk</h3>
-          <span class="raum-price">ab <span class="count-up" data-target="15">0</span> EUR / Tag</span>
+    <div class="manifest-inner">
+      <div>
+        <div class="sec-head reveal" style="margin-bottom: 2.2rem;">
+          <span class="sec-num">[02]</span>
+          <h2 class="sec-title"><span class="stroke">Was</span><br>wir sind</h2>
         </div>
-        <p class="raum-desc">Tageweise buchen, hinsetzen, loslegen. Kein Vertrag, keine Mindestlaufzeit.</p>
-        <ul class="raum-specs">
-          <li>Freie Platzwahl</li>
-          <li>Gigabit WLAN + LAN</li>
-          <li>Drucker / Scanner</li>
-          <li>Kueche + Kaffee inkl.</li>
-          <li>Meetingraum buchbar</li>
-        </ul>
+        <blockquote class="manifest-quote reveal d2">
+          <span class="stroke">Kein Lifestyle</span>
+          <span>kein Latte</span>
+          <span class="r">Rohes Schaffen.</span>
+        </blockquote>
+        <p class="manifest-body reveal d3">
+          ROHBAU ist kein Coworking-Space mit Kickertisch und Feel-Good-Zitaten
+          an der Wand. Hier arbeiten Handwerker, Programmierer, Grafikerinnen,
+          Bildende Künstler. Die Halle war Jahrzehnte eine Schlosserei. Das ist noch
+          zu riechen, zu hören, zu spüren. Wir haben nichts davon verkleidet.
+        </p>
       </div>
 
-      <div class="raum-card stagger-in" data-delay="250">
-        <div class="raum-card-header">
-          <h3 class="raum-name">Fixed Desk</h3>
-          <span class="raum-price"><span class="count-up" data-target="199">0</span> EUR / Monat</span>
+      <div class="manifest-facts reveal d2">
+        <div class="mf-row">
+          <span class="mf-label">Adresse</span>
+          <span class="mf-val">Eurener Str. 48, Trier</span>
         </div>
-        <p class="raum-desc">Dein fester Platz. Eigener Rollcontainer, 24/7 Zugang, Post-Adresse inklusive.</p>
-        <ul class="raum-specs">
-          <li>Fester Arbeitsplatz, 6m2</li>
-          <li>Rollcontainer abschliessbar</li>
-          <li>24/7 Zugang per Chip</li>
-          <li>Geschaeftsadresse + Post</li>
-          <li>1x Meetingraum / Woche</li>
-        </ul>
-      </div>
-
-      <div class="raum-card stagger-in" data-delay="350">
-        <div class="raum-card-header">
-          <h3 class="raum-name">Atelier</h3>
-          <span class="raum-price">ab <span class="count-up" data-target="350">0</span> EUR / Monat</span>
+        <div class="mf-row">
+          <span class="mf-label">Gebäude</span>
+          <span class="mf-val">Schlosserei 1971 / Umbau 2019</span>
         </div>
-        <p class="raum-desc">Abschliessbarer Raum fuer Kreative, die Platz und Ruhe brauchen. 15-30m2.</p>
-        <ul class="raum-specs">
-          <li>15-30m2, abschliessbar</li>
-          <li>Eigener Stromanschluss</li>
-          <li>Waende frei gestaltbar</li>
-          <li>Lastenaufzug im Gebaeude</li>
-          <li>Alle Desk-Leistungen inkl.</li>
-        </ul>
+        <div class="mf-row">
+          <span class="mf-label">Rechtsform</span>
+          <span class="mf-val">Eingetragene Genossenschaft</span>
+        </div>
+        <div class="mf-row">
+          <span class="mf-label">Ausstellungen</span>
+          <span class="mf-val">4× jährlich</span>
+        </div>
+        <div class="mf-row">
+          <span class="mf-label">Druckwerkstatt</span>
+          <span class="mf-val">Risograph + Siebdruck</span>
+        </div>
+        <div class="mf-row">
+          <span class="mf-label">Internet</span>
+          <span class="mf-val">Glasfaser 1 Gbit/s</span>
+        </div>
+        <div class="mf-row">
+          <span class="mf-label">Fahrrad</span>
+          <span class="mf-val">Abstellraum + Werkzeug</span>
+        </div>
       </div>
-
     </div>
   </section>
 
-  <!-- PLAETZE COUNTER BAR -->
-  <div class="counter-bar">
-    <div class="counter-item">
-      <div class="counter-number">
-        <span class="count-up count-large" data-target="18">0</span>
-      </div>
-      <span class="counter-label">Plaetze frei</span>
-    </div>
-    <div class="counter-item">
-      <div class="counter-number">
-        <span class="count-up count-large" data-target="240">0</span><span style="font-family:'IBM Plex Mono',monospace;font-size:1.2rem;font-weight:500;color:#999;">m²</span>
-      </div>
-      <span class="counter-label">Flaeche gesamt</span>
-    </div>
-    <div class="counter-item">
-      <div class="counter-number">
-        <span class="count-up count-large" data-target="24">0</span><span style="font-family:'IBM Plex Mono',monospace;font-size:1.2rem;font-weight:500;color:#999;">/7</span>
-      </div>
-      <span class="counter-label">Zugang</span>
-    </div>
-  </div>
-
-  <!-- DIVIDER -->
-  <div class="section-divider" style="margin-left: 2rem; margin-right: 2rem; margin-bottom: 6rem;"><span class="divider-symbol">+</span></div>
-
-  <!-- WER HIER ARBEITET -->
-  <section class="section" id="community">
-    <p class="section-label reveal">02 / Community</p>
-    <h2 class="section-title reveal reveal-d1">Wer hier arbeitet</h2>
-    <div class="members-grid">
-
-      <div class="member reveal reveal-d1">
-        <span class="member-role">Grafikdesign</span>
-        <h3 class="member-name">Lena Schuster</h3>
-        <p class="member-quote"><span class="quote-mark">"</span>Ich brauchte einen Ort, der nicht nach Home-Office riecht. Hier kann ich denken.</p>
+  <!-- ── [03] MITGLIED ── -->
+  <section class="mitglied" id="mitglied">
+    <div class="mitglied-inner">
+      <div class="mitglied-top">
+        <div>
+          <div class="sec-head reveal" style="margin-bottom: 1rem;">
+            <span class="sec-num">[03]</span>
+            <h2 class="sec-title">Mit<span class="stroke">glied</span></h2>
+          </div>
+          <p class="mitglied-sub reveal d2">
+            Keine Mindestlaufzeit für Gäste. Keine versteckten Gebühren.
+            Drei Formen der Zugehörigkeit — je nachdem, wieviel Halle du brauchst.
+          </p>
+        </div>
+        <div class="mitglied-note reveal d2">
+          Alle Preise<br>inkl. MwSt.
+        </div>
       </div>
 
-      <div class="member reveal reveal-d3">
-        <span class="member-role">Keramik</span>
-        <h3 class="member-name">Tom Weiler</h3>
-        <p class="member-quote"><span class="quote-mark">"</span>Das Atelier hat Betonboden und einen Lastenaufzug. Mehr brauche ich nicht.</p>
-      </div>
+      <div class="pricing-grid">
 
-      <div class="member reveal reveal-d5">
-        <span class="member-role">Software-Entwicklung</span>
-        <h3 class="member-name">Marie Hoffmann</h3>
-        <p class="member-quote"><span class="quote-mark">"</span>Gigabit, Ruhe, guter Kaffee. Um 23 Uhr bin ich manchmal die Einzige hier.</p>
-      </div>
+        <!-- Gast -->
+        <div class="pc reveal d1">
+          <div class="pc-tier">Flexibel</div>
+          <div class="pc-price">
+            <span class="pc-amt">15</span>
+            <div>
+              <span class="pc-cur">€</span>
+              <span class="pc-per">/Tag</span>
+            </div>
+          </div>
+          <div class="pc-name">Gast</div>
+          <ul class="pc-features">
+            <li class="pc-feature">Tagesplatz nach Verfügbarkeit</li>
+            <li class="pc-feature">Küche &amp; Gemeinschaftsflächen</li>
+            <li class="pc-feature">Locker für den Tag</li>
+            <li class="pc-feature">High-Speed WLAN</li>
+          </ul>
+          <a href="#" class="pc-cta">Tagsüber buchen</a>
+        </div>
 
+        <!-- Mitglied — featured -->
+        <div class="pc hot reveal d2">
+          <div class="pc-badge">Beliebt</div>
+          <div class="pc-tier">Monatlich</div>
+          <div class="pc-price">
+            <span class="pc-amt">180</span>
+            <div>
+              <span class="pc-cur">€</span>
+              <span class="pc-per">/Monat</span>
+            </div>
+          </div>
+          <div class="pc-name">Mitglied</div>
+          <ul class="pc-features">
+            <li class="pc-feature">Fester Arbeitsplatz 24/7</li>
+            <li class="pc-feature">Chipzugang rund um die Uhr</li>
+            <li class="pc-feature">Abschließbares Locker-Fach</li>
+            <li class="pc-feature">2 Std. Bunker pro Monat inklusive</li>
+            <li class="pc-feature">Galerie-Mitglied mit Antragsrecht</li>
+            <li class="pc-feature">Druckwerkstatt-Zugang</li>
+          </ul>
+          <a href="#" class="pc-cta">Jetzt anfragen</a>
+        </div>
+
+        <!-- Atelier -->
+        <div class="pc reveal d3">
+          <div class="pc-tier">Jahresvertrag</div>
+          <div class="pc-price">
+            <span class="pc-amt">420</span>
+            <div>
+              <span class="pc-cur">€</span>
+              <span class="pc-per">/Monat</span>
+            </div>
+          </div>
+          <div class="pc-name">Atelier</div>
+          <ul class="pc-features">
+            <li class="pc-feature">Eigener Atelierraum im Tank</li>
+            <li class="pc-feature">Eigene Wand- &amp; Regalsysteme</li>
+            <li class="pc-feature">Briefadresse &amp; Empfang</li>
+            <li class="pc-feature">Bunker unlimitiert</li>
+            <li class="pc-feature">Druckwerkstatt unlimitiert</li>
+            <li class="pc-feature">Ausstellungsrecht (1× jährl.)</li>
+          </ul>
+          <a href="#" class="pc-cta">Atelier anfragen</a>
+        </div>
+
+      </div>
     </div>
   </section>
 
-  <!-- FOOTER -->
-  <footer class="footer" id="kontakt">
-    <p class="footer-text">
-      <span>Trier-Euren</span>
-      <span class="footer-sep">/</span>
-      <span>Am Industriehafen 4</span>
-      <span class="footer-sep">/</span>
-      <span>0651 -- 780 33 20</span>
-    </p>
+  <!-- ── FOOTER ── -->
+  <footer>
+    <div class="ft-logo">ROH<b>BAU</b></div>
+    <div class="ft-meta">© 2024 Rohbau e.G. · Trier-Euren · Alles echt.</div>
+    <ul class="ft-links">
+      <li><a href="#">Impressum</a></li>
+      <li><a href="#">Datenschutz</a></li>
+      <li><a href="#">Kontakt</a></li>
+    </ul>
   </footer>
 
   <script>
-    // ===== MOUSE PARALLAX ON HERO GRID =====
-    const heroGridBg = document.querySelector('.hero-grid-bg');
-    document.addEventListener('mousemove', (e) => {
-      const x = (e.clientX / window.innerWidth - 0.5);
-      const y = (e.clientY / window.innerHeight - 0.5);
-      document.documentElement.style.setProperty('--mouse-x', x.toFixed(3));
-      document.documentElement.style.setProperty('--mouse-y', y.toFixed(3));
-    });
-
-    // ===== TYPEWRITER EFFECT ON HERO HEADLINE =====
-    const typewriterTarget = document.getElementById('typewriter-headline');
-    const typewriterCursor = document.querySelector('.typewriter-cursor');
-    const typewriterText = 'RAUM FUR';
-    let typewriterIndex = 0;
-
-    function typeNextChar() {
-      if (typewriterIndex <= typewriterText.length) {
-        typewriterTarget.textContent = typewriterText.slice(0, typewriterIndex);
-        typewriterIndex++;
-        // Slow start, speed up to feel mechanical
-        const delay = typewriterIndex === 1 ? 600 : 90 + Math.random() * 40;
-        setTimeout(typeNextChar, delay);
-      }
-      // Cursor keeps blinking via CSS after typing completes
-    }
-
-    // Start typewriter after a short page-load pause
-    setTimeout(typeNextChar, 400);
-
-    // ===== INTERSECTION OBSERVER: .reveal =====
-    const revealObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          // Also trigger quote-mark animation
-          const quote = entry.target.querySelector('.member-quote');
-          if (quote) quote.classList.add('visible');
-          revealObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.15 });
-
-    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
-    // Trigger member quotes individually too
-    document.querySelectorAll('.member-quote').forEach(el => revealObserver.observe(el));
-
-    // ===== INTERSECTION OBSERVER: .stagger-in =====
-    const staggerObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const delay = parseInt(entry.target.dataset.delay || '0', 10);
-          setTimeout(() => {
-            entry.target.classList.add('revealed');
-          }, delay);
-          staggerObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('.stagger-in').forEach(el => staggerObserver.observe(el));
-
-    // ===== COUNT-UP ANIMATION =====
-    function animateCountUp(el) {
-      const target = parseInt(el.dataset.target, 10);
-      const isLarge = el.classList.contains('count-large');
-      const duration = isLarge ? 1200 : 800;
-      const startTime = performance.now();
-
-      function tick(now) {
-        const elapsed = now - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        // Ease-out cubic
-        const eased = 1 - Math.pow(1 - progress, 3);
-        el.textContent = Math.round(eased * target);
-        if (progress < 1) requestAnimationFrame(tick);
-        else el.textContent = target;
-      }
-
-      requestAnimationFrame(tick);
-    }
-
-    const countObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          animateCountUp(entry.target);
-          countObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
-
-    // Fallback: if elements are already in view on load, trigger immediately
-    document.querySelectorAll('.count-up').forEach(el => {
-      const rect = el.getBoundingClientRect();
-      if (rect.top < window.innerHeight && rect.bottom > 0) {
-        animateCountUp(el);
-      } else {
-        countObserver.observe(el);
-      }
-    });
+    // Scroll reveal
+    const io = new IntersectionObserver(
+      entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); }),
+      { threshold: 0.08, rootMargin: '0px 0px -50px 0px' }
+    );
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
   </script>
 
 </body>
