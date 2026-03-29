@@ -13,399 +13,378 @@ export const prerender = true;
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { overflow-x: hidden; }
+    html { overflow-x: hidden; scroll-behavior: smooth; }
 
     :root {
-      --yellow: #F5C842;
-      --black:  #0A0A0A;
-      --white:  #FFFFFF;
-      --muted:  rgba(10,10,10,0.45);
+      --y: #F5C842;
+      --b: #0A0A0A;
+      --w: #FFFFFF;
+      --b40: rgba(10,10,10,0.40);
+      --b20: rgba(10,10,10,0.20);
+      --b10: rgba(10,10,10,0.10);
+      --b06: rgba(10,10,10,0.06);
     }
 
     body {
-      background: var(--white);
-      color: var(--black);
+      background: var(--w);
+      color: var(--b);
       font-family: 'Inter', sans-serif;
-      min-height: 100vh;
       overflow-x: hidden;
     }
 
-    /* Fixed split nav */
+    /* ─── NAV ─── */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
-      z-index: 100;
+      z-index: 200;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      height: 56px;
+      height: 58px;
     }
-    .nav-half-white {
+    .nav-l {
       display: flex;
       align-items: center;
-      padding: 0 3rem;
-      background: var(--white);
-      border-bottom: 2px solid var(--black);
+      padding: 0 3.5rem;
+      background: var(--w);
+      border-bottom: 2px solid var(--b);
     }
-    .nav-half-yellow {
+    .nav-r {
       display: flex;
       align-items: center;
       justify-content: flex-end;
       gap: 2.5rem;
-      padding: 0 3rem;
-      background: var(--yellow);
-      border-bottom: 2px solid var(--black);
-      border-left: 2px solid var(--black);
+      padding: 0 3.5rem;
+      background: var(--y);
+      border-bottom: 2px solid var(--b);
+      border-left: 2px solid var(--b);
     }
     .nav-logo {
       font-family: 'Syne', sans-serif;
       font-weight: 800;
-      font-size: 1.15rem;
-      letter-spacing: 0.08em;
+      font-size: 1.1rem;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--black);
+      color: var(--b);
     }
     .nav-links {
       display: flex;
-      gap: 2rem;
+      gap: 2.5rem;
       list-style: none;
     }
     .nav-links a {
-      font-size: 0.6rem;
+      font-size: 0.58rem;
       font-weight: 500;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: rgba(10,10,10,0.55);
+      color: var(--b40);
       text-decoration: none;
       transition: color 0.2s;
     }
-    .nav-links a:hover { color: var(--black); }
-    .nav-contact {
+    .nav-links a:hover { color: var(--b); }
+    .nav-cta {
       font-family: 'Syne', sans-serif;
-      font-size: 0.6rem;
+      font-size: 0.58rem;
       font-weight: 700;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--black);
+      color: var(--b);
       text-decoration: none;
-      border-bottom: 2px solid var(--black);
-      padding-bottom: 1px;
+      padding-bottom: 2px;
+      border-bottom: 2px solid var(--b);
       transition: border-color 0.2s;
     }
-    .nav-contact:hover { border-color: transparent; }
+    .nav-cta:hover { border-color: transparent; }
 
-    /* Full-height split hero */
+    /* ─── HERO ─── */
     .hero {
       min-height: 100vh;
-      padding-top: 56px;
+      padding-top: 58px;
       display: grid;
       grid-template-columns: 1fr 1fr;
     }
 
-    /* LEFT — white side */
-    .hero-left {
-      background: var(--white);
+    /* Left: white */
+    .hero-l {
+      background: var(--w);
+      border-right: 2px solid var(--b);
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      padding: 5rem 4rem 5rem 4.5rem;
-      gap: 3rem;
-      border-right: 2px solid var(--black);
+      justify-content: space-between;
+      padding: 5rem 4rem 4.5rem 5rem;
+      gap: 2.5rem;
     }
-
     .eyebrow {
-      font-size: 0.58rem;
+      font-size: 0.52rem;
       font-weight: 500;
-      letter-spacing: 0.28em;
+      letter-spacing: 0.3em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: var(--b40);
     }
-
-    .hero-headline {
+    .hero-h {
       font-family: 'Syne', sans-serif;
       font-weight: 800;
-      font-size: clamp(3rem, 6vw, 5.5rem);
-      line-height: 0.95;
-      letter-spacing: -0.02em;
-      color: var(--black);
+      font-size: clamp(3.2rem, 6.5vw, 6rem);
+      line-height: 0.92;
+      letter-spacing: -0.025em;
+      color: var(--b);
     }
-    .hero-headline .outline {
-      -webkit-text-stroke: 2px var(--black);
+    .hero-h .out {
+      -webkit-text-stroke: 2.5px var(--b);
       color: transparent;
     }
-
     .hero-body {
-      font-size: 0.88rem;
+      font-size: 0.85rem;
       font-weight: 300;
-      line-height: 1.9;
-      color: var(--muted);
-      max-width: 40ch;
+      line-height: 2;
+      color: var(--b40);
+      max-width: 38ch;
     }
-
-    /* Services list */
-    .service-list {
+    .svc-list {
       display: flex;
       flex-direction: column;
-      border-top: 1px solid rgba(10,10,10,0.1);
+      border-top: 1px solid var(--b10);
     }
-    .sl-row {
+    .svc-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0.85rem 0;
-      border-bottom: 1px solid rgba(10,10,10,0.07);
-      transition: padding-left 0.3s;
+      padding: 0.9rem 0;
+      border-bottom: 1px solid var(--b06);
       cursor: default;
+      transition: padding-left 0.3s ease;
     }
-    .sl-row:hover { padding-left: 0.4rem; }
-    .sl-name {
+    .svc-row:hover { padding-left: 0.5rem; }
+    .svc-name {
       font-family: 'Syne', sans-serif;
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       font-weight: 700;
-      color: var(--black);
+      color: var(--b);
     }
-    .sl-tag {
-      font-size: 0.55rem;
+    .svc-tag {
+      font-size: 0.5rem;
       font-weight: 500;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-      background: rgba(10,10,10,0.05);
-      padding: 0.2rem 0.6rem;
-    }
-
-    .cta-row {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-    }
-    .cta-btn {
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      font-size: 0.65rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--white);
-      background: var(--black);
-      padding: 0.9rem 2rem;
-      text-decoration: none;
-      transition: background 0.2s;
-    }
-    .cta-btn:hover { background: var(--yellow); color: var(--black); }
-    .cta-link {
-      font-size: 0.62rem;
-      font-weight: 400;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--muted);
-      text-decoration: none;
-      border-bottom: 1px solid rgba(10,10,10,0.15);
-      padding-bottom: 1px;
+      color: var(--b40);
+      background: var(--b06);
+      padding: 0.2rem 0.65rem;
     }
-
-    /* RIGHT — yellow side */
-    .hero-right {
-      background: var(--yellow);
+    .hero-cta {
       display: flex;
-      flex-direction: column;
-      padding: 5rem 4rem;
-      gap: 3rem;
+      align-items: center;
+      gap: 1.75rem;
     }
-
-    .right-label {
-      font-size: 0.55rem;
-      font-weight: 500;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: rgba(10,10,10,0.5);
-    }
-
-    /* Project grid — 2 col */
-    .project-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.5rem;
-    }
-    .proj-card {
-      background: var(--black);
-      padding: 1.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-      min-height: 140px;
-    }
-    .proj-card.light {
-      background: rgba(10,10,10,0.08);
-    }
-    .pc-num {
+    .btn-main {
       font-family: 'Syne', sans-serif;
-      font-size: 0.55rem;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      color: rgba(255,255,255,0.25);
-    }
-    .pc-num.dark { color: rgba(10,10,10,0.25); }
-    .pc-name {
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      font-size: 0.95rem;
-      color: var(--white);
-      margin-top: auto;
-    }
-    .pc-name.dark { color: var(--black); }
-    .pc-type {
       font-size: 0.62rem;
-      font-weight: 300;
-      color: rgba(255,255,255,0.45);
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--w);
+      background: var(--b);
+      padding: 1rem 2.2rem;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
     }
-    .pc-type.dark { color: rgba(10,10,10,0.45); }
+    .btn-main:hover { background: var(--y); color: var(--b); }
+    .btn-ghost {
+      font-size: 0.58rem;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--b40);
+      text-decoration: none;
+      padding-bottom: 1px;
+      border-bottom: 1px solid var(--b20);
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .btn-ghost:hover { color: var(--b); border-color: var(--b); }
 
-    /* About / duo block */
+    /* Right: yellow + photo */
+    .hero-r {
+      background: var(--y);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .hero-photo {
+      position: absolute;
+      inset: 0;
+    }
+    .hero-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      mix-blend-mode: multiply;
+      opacity: 0.55;
+      transition: transform 0.8s ease;
+    }
+    .hero-r:hover .hero-photo img { transform: scale(1.03); }
+    .hero-photo-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        transparent 30%,
+        rgba(245,200,66,0.6) 100%
+      );
+    }
+
+    /* Floating content over photo */
+    .hero-r-content {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 4rem;
+    }
+    .hero-r-label {
+      font-size: 0.5rem;
+      font-weight: 500;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: rgba(10,10,10,0.55);
+    }
+    .hero-r-bottom {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
     .duo-block {
       display: flex;
-      gap: 1.5rem;
-      align-items: flex-start;
+      gap: 0;
+      border: 2px solid var(--b);
     }
-    .duo-divider {
-      width: 2px;
-      background: var(--black);
-      align-self: stretch;
-      flex-shrink: 0;
+    .duo-person {
+      flex: 1;
+      padding: 1.25rem 1.5rem;
+      background: var(--w);
     }
-    .duo-person {}
+    .duo-person + .duo-person {
+      border-left: 2px solid var(--b);
+      background: var(--b);
+    }
     .dp-name {
       font-family: 'Syne', sans-serif;
       font-weight: 700;
-      font-size: 1rem;
-      color: var(--black);
+      font-size: 0.95rem;
+      color: var(--b);
       margin-bottom: 0.2rem;
     }
+    .duo-person + .duo-person .dp-name { color: var(--w); }
     .dp-role {
-      font-size: 0.65rem;
+      font-size: 0.52rem;
       font-weight: 400;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: rgba(10,10,10,0.5);
+      color: var(--b40);
     }
-
-    /* Stats row */
-    .stats-row {
+    .duo-person + .duo-person .dp-role { color: rgba(255,255,255,0.4); }
+    .stats-strip {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      border: 2px solid var(--black);
+      background: var(--b);
     }
     .stat-cell {
-      padding: 1rem;
-      border-right: 1px solid rgba(10,10,10,0.15);
+      padding: 1.1rem 1.25rem;
+      border-right: 1px solid rgba(255,255,255,0.08);
     }
     .stat-cell:last-child { border-right: none; }
-    .sc-num {
+    .sc-n {
       font-family: 'Syne', sans-serif;
       font-weight: 800;
-      font-size: 1.6rem;
-      color: var(--black);
+      font-size: 1.5rem;
       line-height: 1;
+      color: var(--y);
     }
-    .sc-label {
-      font-size: 0.58rem;
+    .sc-l {
+      font-size: 0.46rem;
       font-weight: 400;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: rgba(10,10,10,0.45);
+      color: rgba(255,255,255,0.3);
       margin-top: 0.2rem;
     }
 
-    /* ── PHOTO HOVER ── */
-    .ph:hover img { transform: scale(1.05); }
-
-    /* ── SECTION 2: ARBEITEN ── */
+    /* ─── SECTION 2: ARBEITEN ─── */
     .arbeiten {
-      border-top: 2px solid var(--black);
-      max-width: 1600px;
-      margin: 0 auto;
+      border-top: 2px solid var(--b);
     }
-
-    .arbeiten-header {
+    .arb-header {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      border-bottom: 2px solid var(--black);
+      min-height: 220px;
     }
-
-    .arbeiten-title-block {
-      padding: 3rem 4rem;
-      border-right: 2px solid var(--black);
+    .arb-h-l {
+      padding: 3.5rem 4rem 3.5rem 5rem;
+      background: var(--b);
+      border-right: 2px solid var(--b);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
-
-    .arbeiten-eyebrow {
-      font-size: 0.55rem;
+    .arb-eyebrow {
+      font-size: 0.5rem;
       font-weight: 500;
       letter-spacing: 0.28em;
       text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 0.75rem;
+      color: rgba(255,255,255,0.25);
     }
-
-    .arbeiten-h {
+    .arb-h {
       font-family: 'Syne', sans-serif;
       font-weight: 800;
-      font-size: clamp(2rem, 4vw, 3rem);
-      line-height: 0.95;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 0.92;
       letter-spacing: -0.02em;
+      color: var(--w);
     }
-
-    .arbeiten-h .outline {
-      -webkit-text-stroke: 2px var(--black);
+    .arb-h .out {
+      -webkit-text-stroke: 2px var(--w);
       color: transparent;
     }
-
-    .arbeiten-meta {
-      padding: 3rem 4rem;
+    .arb-h-r {
+      padding: 3.5rem 4rem;
+      background: var(--y);
       display: flex;
       flex-direction: column;
-      justify-content: flex-end;
-      gap: 0.5rem;
+      justify-content: space-between;
+      border-bottom: 2px solid var(--b);
     }
-
-    .arbeiten-count {
+    .arb-count {
       font-family: 'Syne', sans-serif;
       font-weight: 800;
-      font-size: clamp(3rem, 6vw, 5rem);
+      font-size: clamp(3.5rem, 7vw, 6rem);
       line-height: 1;
-      color: var(--yellow);
-      -webkit-text-stroke: 2px var(--black);
+      color: var(--b);
+      letter-spacing: -0.04em;
     }
-
-    .arbeiten-count-label {
-      font-size: 0.58rem;
+    .arb-count-l {
+      font-size: 0.5rem;
       font-weight: 500;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: var(--b40);
     }
-
-    .arbeiten-grid {
+    .arb-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
     }
-
-    .arbeit-card {
-      border-right: 2px solid var(--black);
-      border-bottom: 2px solid var(--black);
+    .arb-card {
+      border-right: 2px solid var(--b);
+      border-bottom: 2px solid var(--b);
     }
-
-    .arbeit-card:nth-child(3) { border-right: none; }
-    .arbeit-card:nth-child(4),
-    .arbeit-card:nth-child(5),
-    .arbeit-card:nth-child(6) { border-bottom: none; }
-    .arbeit-card:nth-child(6) { border-right: none; }
-
-    .arbeit-photo {
+    .arb-card:nth-child(3n) { border-right: none; }
+    .arb-card:nth-last-child(-n+3) { border-bottom: none; }
+    .arb-photo {
       position: relative;
       overflow: hidden;
-      height: 220px;
-      border-bottom: 2px solid var(--black);
+      height: 240px;
+      border-bottom: 2px solid var(--b);
     }
-
-    .arbeit-photo img {
+    .arb-photo img {
       position: absolute;
       inset: 0;
       width: 100%;
@@ -413,420 +392,642 @@ export const prerender = true;
       object-fit: cover;
       transition: transform 0.55s ease;
     }
-
-    .arbeit-photo:hover img { transform: scale(1.05); }
-
-    .arbeit-photo-overlay {
+    .arb-photo:hover img { transform: scale(1.05); }
+    .arb-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to top, rgba(10,10,10,0.4) 0%, transparent 55%);
+      background: linear-gradient(to top, rgba(10,10,10,0.45) 0%, transparent 55%);
       pointer-events: none;
     }
-
-    .arbeit-body {
+    .arb-body {
       padding: 1.5rem;
-      background: var(--white);
+      background: var(--w);
     }
-
-    .arbeit-card:nth-child(even) .arbeit-body {
-      background: var(--yellow);
-    }
-
-    .arbeit-num {
-      font-size: 0.55rem;
+    .arb-card:nth-child(even) .arb-body { background: var(--y); }
+    .arb-num {
+      font-size: 0.5rem;
       font-weight: 700;
-      letter-spacing: 0.15em;
-      color: var(--muted);
+      letter-spacing: 0.14em;
+      color: var(--b40);
       margin-bottom: 0.4rem;
     }
-
-    .arbeit-name {
+    .arb-name {
       font-family: 'Syne', sans-serif;
       font-weight: 700;
-      font-size: 1rem;
-      color: var(--black);
+      font-size: 0.95rem;
+      color: var(--b);
       margin-bottom: 0.2rem;
     }
-
-    .arbeit-type {
-      font-size: 0.6rem;
+    .arb-type {
+      font-size: 0.58rem;
       font-weight: 400;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: var(--b40);
     }
 
-    /* ── SECTION 3: STUDIO ── */
-    .studio {
-      border-top: 2px solid var(--black);
-      max-width: 1600px;
-      margin: 0 auto;
+    /* ─── SECTION 3: PROZESS ─── */
+    .prozess {
+      border-top: 2px solid var(--b);
       display: grid;
       grid-template-columns: 1fr 1fr;
     }
-
-    .studio-photo-col {
-      border-right: 2px solid var(--black);
+    .proz-l {
+      background: var(--b);
+      padding: 5rem 4rem 5rem 5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+      border-right: 2px solid var(--b);
+    }
+    .proz-eyebrow {
+      font-size: 0.5rem;
+      font-weight: 500;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.22);
+    }
+    .proz-h {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      color: var(--w);
+    }
+    .proz-h .out {
+      -webkit-text-stroke: 1.5px rgba(255,255,255,0.35);
+      color: transparent;
+    }
+    .proz-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .step-row {
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .step-num {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.6rem;
+      line-height: 1;
+      color: var(--y);
+      flex-shrink: 0;
+      width: 2rem;
+    }
+    .step-body {}
+    .step-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--w);
+      margin-bottom: 0.3rem;
+    }
+    .step-desc {
+      font-size: 0.72rem;
+      font-weight: 300;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.35);
+    }
+    .proz-r {
       position: relative;
       overflow: hidden;
-      min-height: 500px;
+      background: var(--y);
+      min-height: 560px;
     }
-
-    .studio-photo-col img {
+    .proz-r img {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.55s ease;
+      mix-blend-mode: multiply;
+      opacity: 0.6;
+      transition: transform 0.7s ease;
+    }
+    .proz-r:hover img { transform: scale(1.04); }
+    .proz-r-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(245,200,66,0.3) 0%,
+        transparent 60%
+      );
+      pointer-events: none;
+    }
+    .proz-tag {
+      position: absolute;
+      bottom: 2rem;
+      right: 2rem;
+      font-size: 0.44rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(10,10,10,0.45);
+      z-index: 2;
     }
 
-    .studio-photo-col:hover img { transform: scale(1.05); }
-
-    .studio-content {
-      padding: 4rem;
-      background: var(--yellow);
+    /* ─── SECTION 4: STUDIO ─── */
+    .studio {
+      border-top: 2px solid var(--b);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .studio-photo {
+      position: relative;
+      overflow: hidden;
+      min-height: 600px;
+      border-right: 2px solid var(--b);
+    }
+    .studio-photo img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s ease;
+    }
+    .studio-photo:hover img { transform: scale(1.04); }
+    .studio-photo-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(10,10,10,0.5) 0%,
+        transparent 50%
+      );
+      pointer-events: none;
+    }
+    .studio-photo-tag {
+      position: absolute;
+      bottom: 1.75rem;
+      left: 2rem;
+      font-size: 0.44rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      z-index: 2;
+    }
+    .studio-r {
+      background: var(--y);
+      padding: 5rem 4.5rem 5rem 4rem;
       display: flex;
       flex-direction: column;
-      gap: 2rem;
+      gap: 2.5rem;
       justify-content: center;
     }
-
     .studio-eyebrow {
-      font-size: 0.55rem;
+      font-size: 0.5rem;
       font-weight: 500;
       letter-spacing: 0.28em;
       text-transform: uppercase;
-      color: rgba(10,10,10,0.5);
+      color: var(--b40);
     }
-
     .studio-h {
       font-family: 'Syne', sans-serif;
       font-weight: 800;
-      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-      line-height: 1;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      line-height: 0.95;
       letter-spacing: -0.02em;
-      color: var(--black);
+      color: var(--b);
     }
-
-    .studio-h .outline {
-      -webkit-text-stroke: 2px var(--black);
+    .studio-h .out {
+      -webkit-text-stroke: 2px var(--b);
       color: transparent;
     }
-
     .studio-body {
-      font-size: 0.88rem;
+      font-size: 0.85rem;
       font-weight: 300;
-      line-height: 1.9;
-      color: rgba(10,10,10,0.65);
-      max-width: 42ch;
+      line-height: 1.95;
+      color: var(--b40);
+      max-width: 40ch;
     }
-
-    .studio-facts {
+    .facts {
       display: flex;
       flex-direction: column;
-      border: 2px solid var(--black);
+      border: 2px solid var(--b);
+      background: var(--w);
     }
-
-    .sf-row {
+    .fact-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0.75rem 1rem;
-      border-bottom: 1px solid rgba(10,10,10,0.12);
+      padding: 0.85rem 1.25rem;
+      border-bottom: 1px solid var(--b10);
     }
-
-    .sf-row:last-child { border-bottom: none; }
-
-    .sf-label {
-      font-size: 0.6rem;
+    .fact-row:last-child { border-bottom: none; }
+    .fact-l {
+      font-size: 0.55rem;
       font-weight: 500;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: var(--b40);
     }
-
-    .sf-value {
+    .fact-r {
       font-family: 'Syne', sans-serif;
       font-weight: 700;
       font-size: 0.85rem;
-      color: var(--black);
+      color: var(--b);
     }
-
     .studio-cta {
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      font-size: 0.65rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--white);
-      background: var(--black);
-      padding: 0.9rem 2rem;
-      text-decoration: none;
-      transition: background 0.2s;
-      align-self: flex-start;
+      display: flex;
+      gap: 1.25rem;
+      align-items: center;
     }
 
-    .studio-cta:hover { background: #333; }
+    /* ─── FOOTER ─── */
+    footer {
+      border-top: 2px solid var(--b);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      height: 56px;
+    }
+    .footer-l {
+      display: flex;
+      align-items: center;
+      padding: 0 4rem 0 5rem;
+      border-right: 2px solid var(--b);
+      background: var(--w);
+    }
+    .footer-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--b);
+    }
+    .footer-r {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 3.5rem;
+      background: var(--b);
+    }
+    .footer-meta {
+      font-size: 0.46rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.2);
+    }
 
-    @media (max-width: 900px) {
-      .arbeiten-header { grid-template-columns: 1fr; }
-      .arbeiten-title-block { border-right: none; border-bottom: 2px solid var(--black); }
-      .arbeiten-grid { grid-template-columns: 1fr 1fr; }
-      .arbeit-card:nth-child(3) { border-right: 2px solid var(--black); }
-      .arbeit-card:nth-child(2) { border-right: none; }
-      .arbeit-card:nth-child(4) { border-bottom: 2px solid var(--black); }
-      .arbeit-card:nth-child(5) { border-bottom: 2px solid var(--black); }
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 960px) {
+      nav { grid-template-columns: 1fr; }
+      .nav-r { display: none; }
+
+      .hero { grid-template-columns: 1fr; }
+      .hero-l { border-right: none; border-bottom: 2px solid var(--b); padding: 4rem 2.5rem; }
+      .hero-r { min-height: 380px; }
+
+      .arb-header { grid-template-columns: 1fr; }
+      .arb-h-l { border-right: none; border-bottom: 2px solid var(--b); padding: 3rem 2.5rem; }
+      .arb-h-r { padding: 2.5rem; }
+      .arb-grid { grid-template-columns: 1fr 1fr; }
+      .arb-card:nth-child(3n) { border-right: 2px solid var(--b); }
+      .arb-card:nth-child(2n) { border-right: none; }
+      .arb-card:nth-last-child(-n+3) { border-bottom: 2px solid var(--b); }
+      .arb-card:last-child { border-bottom: none; }
+
+      .prozess { grid-template-columns: 1fr; }
+      .proz-l { border-right: none; border-bottom: 2px solid var(--b); padding: 4rem 2.5rem; }
+      .proz-r { min-height: 320px; }
+
       .studio { grid-template-columns: 1fr; }
-      .studio-photo-col { min-height: 320px; border-right: none; border-bottom: 2px solid var(--black); }
+      .studio-photo { min-height: 340px; border-right: none; border-bottom: 2px solid var(--b); }
+      .studio-r { padding: 3.5rem 2.5rem; }
+
+      footer { grid-template-columns: 1fr; height: auto; }
+      .footer-l { border-right: none; border-bottom: 1px solid var(--b10); padding: 1.25rem 2.5rem; }
+      .footer-r { padding: 1.25rem 2.5rem; }
     }
   </style>
 </head>
 <body>
+
+  <!-- ─── NAV ─── -->
   <nav>
-    <div class="nav-half-white">
+    <div class="nav-l">
       <div class="nav-logo">Doppel</div>
     </div>
-    <div class="nav-half-yellow">
+    <div class="nav-r">
       <ul class="nav-links">
         <li><a href="#">Projekte</a></li>
         <li><a href="#">Leistungen</a></li>
         <li><a href="#">Studio</a></li>
       </ul>
-      <a href="#" class="nav-contact">Kontakt aufnehmen</a>
+      <a href="#" class="nav-cta">Kontakt aufnehmen</a>
     </div>
   </nav>
 
+  <!-- ─── HERO ─── -->
   <section class="hero">
-    <div class="hero-left">
-      <div class="eyebrow">Grafikdesign-Duo · Trier</div>
 
-      <h1 class="hero-headline">
+    <!-- Left: white — text content -->
+    <div class="hero-l">
+
+      <div>
+        <div class="eyebrow">Grafikdesign-Duo · Trier · seit 2021</div>
+      </div>
+
+      <h1 class="hero-h">
         Zwei<br>
         Köpfe.<br>
-        <span class="outline">Eine</span><br>
+        <span class="out">Eine</span><br>
         Idee.
       </h1>
 
       <p class="hero-body">
         Anna & Paul. Wir entwerfen visuelle Identitäten,
         die bleiben — für Marken, die etwas zu sagen haben.
-        Seit 2021 gemeinsam in Trier.
+        Kein Account-Manager. Keine Zwischenebene.
       </p>
 
-      <div class="service-list">
-        <div class="sl-row">
-          <span class="sl-name">Brand Identity</span>
-          <span class="sl-tag">Kernleistung</span>
+      <div class="svc-list">
+        <div class="svc-row">
+          <span class="svc-name">Brand Identity</span>
+          <span class="svc-tag">Kernleistung</span>
         </div>
-        <div class="sl-row">
-          <span class="sl-name">Editorial Design</span>
-          <span class="sl-tag">Print</span>
+        <div class="svc-row">
+          <span class="svc-name">Editorial Design</span>
+          <span class="svc-tag">Print</span>
         </div>
-        <div class="sl-row">
-          <span class="sl-name">Digital Branding</span>
-          <span class="sl-tag">Web & Social</span>
+        <div class="svc-row">
+          <span class="svc-name">Digital Branding</span>
+          <span class="svc-tag">Web & Social</span>
         </div>
-        <div class="sl-row">
-          <span class="sl-name">Verpackungsdesign</span>
-          <span class="sl-tag">Produkt</span>
+        <div class="svc-row">
+          <span class="svc-name">Verpackungsdesign</span>
+          <span class="svc-tag">Produkt</span>
         </div>
       </div>
 
-      <div class="cta-row">
-        <a href="#" class="cta-btn">Projekt starten →</a>
-        <a href="#" class="cta-link">Alle Arbeiten</a>
+      <div class="hero-cta">
+        <a href="#" class="btn-main">Projekt starten →</a>
+        <a href="#" class="btn-ghost">Alle Arbeiten ansehen</a>
+      </div>
+
+    </div>
+
+    <!-- Right: yellow + photo overlay -->
+    <div class="hero-r">
+      <div class="hero-photo">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1000&h=1200&q=85" alt="Grafikdesign Arbeit" />
+        <div class="hero-photo-overlay"></div>
+      </div>
+      <div class="hero-r-content">
+        <div class="hero-r-label">Das Studio · Trier</div>
+        <div class="hero-r-bottom">
+          <div class="duo-block">
+            <div class="duo-person">
+              <div class="dp-name">Anna Förster</div>
+              <div class="dp-role">Konzept & Art Direction</div>
+            </div>
+            <div class="duo-person">
+              <div class="dp-name">Paul Reinhardt</div>
+              <div class="dp-role">Design & Typografie</div>
+            </div>
+          </div>
+          <div class="stats-strip">
+            <div class="stat-cell">
+              <div class="sc-n">74</div>
+              <div class="sc-l">Projekte</div>
+            </div>
+            <div class="stat-cell">
+              <div class="sc-n">3</div>
+              <div class="sc-l">Awards</div>
+            </div>
+            <div class="stat-cell">
+              <div class="sc-n">4J.</div>
+              <div class="sc-l">Gemeinsam</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="hero-right">
-      <div class="right-label">Ausgewählte Projekte</div>
-
-      <div class="project-grid">
-        <div class="proj-card">
-          <span class="pc-num">01</span>
-          <div class="pc-name">Mosel Vinothek</div>
-          <div class="pc-type">Brand Identity · 2024</div>
-        </div>
-        <div class="proj-card light">
-          <span class="pc-num dark">02</span>
-          <div class="pc-name dark">Stadtwerk Magazin</div>
-          <div class="pc-type dark">Editorial · 2024</div>
-        </div>
-        <div class="proj-card light">
-          <span class="pc-num dark">03</span>
-          <div class="pc-name dark">Kern & Co.</div>
-          <div class="pc-type dark">Corporate CD · 2023</div>
-        </div>
-        <div class="proj-card">
-          <span class="pc-num">04</span>
-          <div class="pc-name">Lautstark Festival</div>
-          <div class="pc-type">Kampagne · 2023</div>
-        </div>
-      </div>
-
-      <div class="duo-block">
-        <div class="duo-person">
-          <div class="dp-name">Anna Förster</div>
-          <div class="dp-role">Konzept & Art Direction</div>
-        </div>
-        <div class="duo-divider"></div>
-        <div class="duo-person">
-          <div class="dp-name">Paul Reinhardt</div>
-          <div class="dp-role">Design & Typografie</div>
-        </div>
-      </div>
-
-      <div class="stats-row">
-        <div class="stat-cell">
-          <div class="sc-num">74</div>
-          <div class="sc-label">Projekte</div>
-        </div>
-        <div class="stat-cell">
-          <div class="sc-num">3</div>
-          <div class="sc-label">Awards</div>
-        </div>
-        <div class="stat-cell">
-          <div class="sc-num">4 J.</div>
-          <div class="sc-label">Gemeinsam</div>
-        </div>
-      </div>
-    </div>
   </section>
 
-  <!-- ── SECTION 2: ARBEITEN ── -->
-  <div class="arbeiten">
-    <div class="arbeiten-header">
-      <div class="arbeiten-title-block">
-        <div class="arbeiten-eyebrow">Ausgewählte Projekte · 2021–2025</div>
-        <h2 class="arbeiten-h">
+  <!-- ─── SECTION 2: ARBEITEN ─── -->
+  <section class="arbeiten">
+
+    <div class="arb-header">
+      <div class="arb-h-l">
+        <div class="arb-eyebrow">Ausgewählte Projekte · 2021–2025</div>
+        <h2 class="arb-h">
           Was wir<br>
           zuletzt<br>
-          <span class="outline">gebaut</span><br>
+          <span class="out">gebaut</span><br>
           haben.
         </h2>
       </div>
-      <div class="arbeiten-meta">
-        <div class="arbeiten-count">74</div>
-        <div class="arbeiten-count-label">Projekte abgeschlossen</div>
+      <div class="arb-h-r">
+        <div class="arb-count">74</div>
+        <div class="arb-count-l">Abgeschlossene Projekte</div>
       </div>
     </div>
 
-    <div class="arbeiten-grid">
+    <div class="arb-grid">
 
-      <div class="arbeit-card">
-        <div class="arbeit-photo ph">
-          <img src="https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?auto=format&fit=crop&w=800&h=500&q=80" alt="Mosel Vinothek Brand Identity" loading="lazy" />
-          <div class="arbeit-photo-overlay"></div>
+      <div class="arb-card">
+        <div class="arb-photo">
+          <img src="https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?auto=format&fit=crop&w=800&h=540&q=80" alt="Mosel Vinothek" loading="lazy" />
+          <div class="arb-overlay"></div>
         </div>
-        <div class="arbeit-body">
-          <div class="arbeit-num">01 · 2024</div>
-          <div class="arbeit-name">Mosel Vinothek</div>
-          <div class="arbeit-type">Brand Identity · Weinhandel Trier</div>
+        <div class="arb-body">
+          <div class="arb-num">01 · 2024</div>
+          <div class="arb-name">Mosel Vinothek</div>
+          <div class="arb-type">Brand Identity · Weinhandel</div>
         </div>
       </div>
 
-      <div class="arbeit-card">
-        <div class="arbeit-photo ph">
-          <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=800&h=500&q=80" alt="Stadtwerk Magazin Editorial" loading="lazy" />
-          <div class="arbeit-photo-overlay"></div>
+      <div class="arb-card">
+        <div class="arb-photo">
+          <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=800&h=540&q=80" alt="Stadtwerk Magazin" loading="lazy" />
+          <div class="arb-overlay"></div>
         </div>
-        <div class="arbeit-body">
-          <div class="arbeit-num">02 · 2024</div>
-          <div class="arbeit-name">Stadtwerk Magazin</div>
-          <div class="arbeit-type">Editorial Design · 120 Seiten</div>
-        </div>
-      </div>
-
-      <div class="arbeit-card">
-        <div class="arbeit-photo ph">
-          <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=800&h=500&q=80" alt="Kern & Co. Corporate Design" loading="lazy" />
-          <div class="arbeit-photo-overlay"></div>
-        </div>
-        <div class="arbeit-body">
-          <div class="arbeit-num">03 · 2023</div>
-          <div class="arbeit-name">Kern &amp; Co.</div>
-          <div class="arbeit-type">Corporate CD · Geschäftsausstattung</div>
+        <div class="arb-body">
+          <div class="arb-num">02 · 2024</div>
+          <div class="arb-name">Stadtwerk Magazin</div>
+          <div class="arb-type">Editorial Design · 120 Seiten</div>
         </div>
       </div>
 
-      <div class="arbeit-card">
-        <div class="arbeit-photo ph">
-          <img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=800&h=500&q=80" alt="Lautstark Festival Kampagne" loading="lazy" />
-          <div class="arbeit-photo-overlay"></div>
+      <div class="arb-card">
+        <div class="arb-photo">
+          <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=800&h=540&q=80" alt="Kern & Co." loading="lazy" />
+          <div class="arb-overlay"></div>
         </div>
-        <div class="arbeit-body">
-          <div class="arbeit-num">04 · 2023</div>
-          <div class="arbeit-name">Lautstark Festival</div>
-          <div class="arbeit-type">Kampagne · Poster + Digital</div>
-        </div>
-      </div>
-
-      <div class="arbeit-card">
-        <div class="arbeit-photo ph">
-          <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=800&h=500&q=80" alt="Buchhandlung Seite Verpackung" loading="lazy" />
-          <div class="arbeit-photo-overlay"></div>
-        </div>
-        <div class="arbeit-body">
-          <div class="arbeit-num">05 · 2023</div>
-          <div class="arbeit-name">Buchhandlung Seite</div>
-          <div class="arbeit-type">Verpackungsdesign · Geschenksets</div>
+        <div class="arb-body">
+          <div class="arb-num">03 · 2023</div>
+          <div class="arb-name">Kern &amp; Co.</div>
+          <div class="arb-type">Corporate CD · Trier</div>
         </div>
       </div>
 
-      <div class="arbeit-card">
-        <div class="arbeit-photo ph">
-          <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&h=500&q=80" alt="Trierer Weinfest Papeterie" loading="lazy" />
-          <div class="arbeit-photo-overlay"></div>
+      <div class="arb-card">
+        <div class="arb-photo">
+          <img src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=800&h=540&q=80" alt="Lautstark Festival" loading="lazy" />
+          <div class="arb-overlay"></div>
         </div>
-        <div class="arbeit-body">
-          <div class="arbeit-num">06 · 2022</div>
-          <div class="arbeit-name">Trierer Weinfest</div>
-          <div class="arbeit-type">Print · Programm + Plakate</div>
+        <div class="arb-body">
+          <div class="arb-num">04 · 2023</div>
+          <div class="arb-name">Lautstark Festival</div>
+          <div class="arb-type">Kampagne · Poster + Digital</div>
+        </div>
+      </div>
+
+      <div class="arb-card">
+        <div class="arb-photo">
+          <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=800&h=540&q=80" alt="Buchhandlung Seite" loading="lazy" />
+          <div class="arb-overlay"></div>
+        </div>
+        <div class="arb-body">
+          <div class="arb-num">05 · 2023</div>
+          <div class="arb-name">Buchhandlung Seite</div>
+          <div class="arb-type">Verpackungsdesign · Print</div>
+        </div>
+      </div>
+
+      <div class="arb-card">
+        <div class="arb-photo">
+          <img src="https://images.unsplash.com/photo-1586953208448-b95a79798f07?auto=format&fit=crop&w=800&h=540&q=80" alt="Trierer Weinfest" loading="lazy" />
+          <div class="arb-overlay"></div>
+        </div>
+        <div class="arb-body">
+          <div class="arb-num">06 · 2022</div>
+          <div class="arb-name">Trierer Weinfest</div>
+          <div class="arb-type">Print · Programm + Plakate</div>
         </div>
       </div>
 
     </div>
-  </div>
+  </section>
 
-  <!-- ── SECTION 3: STUDIO ── -->
-  <div class="studio">
-    <div class="studio-photo-col">
-      <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=900&h=800&q=80" alt="Doppel Studio — Anna und Paul bei der Arbeit" loading="lazy" />
-    </div>
-    <div class="studio-content">
-      <div class="studio-eyebrow">Das Studio · Trier, seit 2021</div>
-      <h2 class="studio-h">
+  <!-- ─── SECTION 3: PROZESS ─── -->
+  <section class="prozess">
+
+    <!-- Left: black — approach -->
+    <div class="proz-l">
+      <div class="proz-eyebrow">Wie wir arbeiten</div>
+      <h2 class="proz-h">
         Kein<br>
         Agentur-<br>
-        <span class="outline">Bullshit.</span>
+        <span class="out">Bullshit.</span>
       </h2>
-      <p class="studio-body">
-        Anna macht Konzept und Art Direction. Paul macht Design und Typografie.
-        Wir arbeiten zu zweit — bewusst. Kein Account-Manager, keine Zwischenebene.
-        Du sprichst direkt mit den Leuten, die dein Projekt umsetzen.
-      </p>
-      <div class="studio-facts">
-        <div class="sf-row">
-          <span class="sf-label">Projektlaufzeit</span>
-          <span class="sf-value">2–6 Wochen</span>
+      <div class="proz-steps">
+        <div class="step-row">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <div class="step-title">Brief & Verstehen</div>
+            <div class="step-desc">Wir hören zu, bevor wir anfangen. Ein kurzes Gespräch reicht meist.</div>
+          </div>
         </div>
-        <div class="sf-row">
-          <span class="sf-label">Mindestbudget</span>
-          <span class="sf-value">ab 1.200 €</span>
+        <div class="step-row">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <div class="step-title">Konzept & Richtung</div>
+            <div class="step-desc">Wir entwickeln eine klare Richtung — keine drei Optionen, eine starke.</div>
+          </div>
         </div>
-        <div class="sf-row">
-          <span class="sf-label">Freie Slots 2025</span>
-          <span class="sf-value">3 Projekte</span>
+        <div class="step-row">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <div class="step-title">Design & Ausarbeitung</div>
+            <div class="step-desc">Anna macht Konzept. Paul macht Design. Direkt. Ohne Zwischenstufen.</div>
+          </div>
         </div>
-        <div class="sf-row">
-          <span class="sf-label">Antwortzeit</span>
-          <span class="sf-value">innerhalb 24 h</span>
+        <div class="step-row">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <div class="step-title">Übergabe & Rollout</div>
+            <div class="step-desc">Fertige Daten, klare Freigaben, alles dokumentiert. In 2–6 Wochen.</div>
+          </div>
         </div>
       </div>
-      <a href="mailto:hallo@doppel-studio.de" class="studio-cta">Jetzt anfragen →</a>
     </div>
-  </div>
+
+    <!-- Right: yellow + photo -->
+    <div class="proz-r">
+      <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=900&h=1100&q=85" alt="Doppel Studio" loading="lazy" />
+      <div class="proz-r-overlay"></div>
+      <div class="proz-tag">Studio · Trier 2025</div>
+    </div>
+
+  </section>
+
+  <!-- ─── SECTION 4: STUDIO & KONTAKT ─── -->
+  <section class="studio">
+
+    <!-- Left: photo -->
+    <div class="studio-photo">
+      <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1000&h=1200&q=85" alt="Doppel — Anna und Paul bei der Arbeit" loading="lazy" />
+      <div class="studio-photo-overlay"></div>
+      <div class="studio-photo-tag">Anna Förster & Paul Reinhardt · Trier</div>
+    </div>
+
+    <!-- Right: yellow — contact info -->
+    <div class="studio-r">
+      <div class="studio-eyebrow">Das Studio · Trier, seit 2021</div>
+      <h2 class="studio-h">
+        Ein<br>
+        Projekt<br>
+        <span class="out">im Kopf?</span>
+      </h2>
+      <p class="studio-body">
+        Wir arbeiten zu zweit — bewusst. Du sprichst direkt mit den
+        Leuten, die dein Projekt umsetzen. Kein Agentur-Overhead,
+        kein Briefing durch drei Hände.
+      </p>
+      <div class="facts">
+        <div class="fact-row">
+          <span class="fact-l">Projektlaufzeit</span>
+          <span class="fact-r">2–6 Wochen</span>
+        </div>
+        <div class="fact-row">
+          <span class="fact-l">Mindestbudget</span>
+          <span class="fact-r">ab 1.200 €</span>
+        </div>
+        <div class="fact-row">
+          <span class="fact-l">Freie Slots 2025</span>
+          <span class="fact-r">3 Projekte</span>
+        </div>
+        <div class="fact-row">
+          <span class="fact-l">Antwortzeit</span>
+          <span class="fact-r">innerhalb 24 h</span>
+        </div>
+        <div class="fact-row">
+          <span class="fact-l">Standort</span>
+          <span class="fact-r">Trier, Rheinland-Pfalz</span>
+        </div>
+      </div>
+      <div class="studio-cta">
+        <a href="mailto:hallo@doppel-studio.de" class="btn-main">Jetzt anfragen →</a>
+        <a href="#" class="btn-ghost">hallo@doppel-studio.de</a>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ─── FOOTER ─── -->
+  <footer>
+    <div class="footer-l">
+      <span class="footer-logo">Doppel</span>
+    </div>
+    <div class="footer-r">
+      <span class="footer-meta">Grafikdesign-Duo · Trier · seit 2021</span>
+      <span class="footer-meta">© 2026 Doppel</span>
+    </div>
+  </footer>
 
 </body>
 </html>
