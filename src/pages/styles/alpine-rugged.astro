@@ -2,953 +2,1376 @@
 export const prerender = true;
 ---
 
+<!DOCTYPE html>
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
-  <title>Gipfelstuermer — Outdoor-Touren & Kurse</title>
+  <title>Waldhaus Eifel — Outdoor-Lodge & gefuehrte Touren</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
-    html { overflow-x: hidden; }
-    /* ── Reset & Base ── */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { overflow-x: hidden; scroll-behavior: smooth; }
 
     :root {
-      --primary: #2D4A3E;
-      --secondary: #F0EBE0;
-      --accent: #D4883A;
-      --bg: #F5F1EA;
-      --text: #1F2D25;
-      --font-display: 'Instrument Serif', Georgia, serif;
-      --font-body: 'Work Sans', -apple-system, sans-serif;
+      --forest:   #1C3229;
+      --forest-2: #2A4A3B;
+      --beige:    #EDE8DC;
+      --beige-2:  #F3EEE4;
+      --wood:     #8B5E3C;
+      --amber:    #C97D2E;
+      --text:     #1A2219;
+      --muted:    rgba(26,34,25,0.55);
+      --ff-serif: 'Instrument Serif', Georgia, serif;
+      --ff-sans:  'Work Sans', -apple-system, sans-serif;
     }
 
-    html { scroll-behavior: smooth; }
-
     body {
-      font-family: var(--font-body);
+      font-family: var(--ff-sans);
       color: var(--text);
-      background: var(--bg);
-      line-height: 1.6;
+      background: var(--beige-2);
       -webkit-font-smoothing: antialiased;
     }
 
     img { display: block; max-width: 100%; height: auto; }
 
-    /* ── Navigation ── */
+    /* ── NAV ── */
     .nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1rem 2rem;
-      background: rgba(245, 241, 234, 0.92);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(45, 74, 62, 0.08);
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.1rem 2.5rem;
+      transition: background 0.4s, backdrop-filter 0.4s;
+    }
+
+    .nav.scrolled {
+      background: rgba(243,238,228,0.94);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(28,50,41,0.07);
     }
 
     .nav-logo {
-      font-family: var(--font-display);
-      font-size: 1.5rem;
-      color: var(--primary);
+      font-family: var(--ff-serif);
+      font-size: 1.35rem;
+      color: var(--beige);
       text-decoration: none;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.01em;
+      transition: color 0.4s;
     }
 
+    .nav.scrolled .nav-logo { color: var(--forest); }
+
     .nav-links {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
+      display: flex; gap: 2rem; list-style: none;
     }
 
     .nav-links a {
-      font-family: var(--font-body);
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: var(--primary);
+      font-size: 0.78rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      color: rgba(237,232,220,0.8);
       text-decoration: none;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
       transition: color 0.3s;
     }
 
-    .nav-links a:hover { color: var(--accent); }
+    .nav.scrolled .nav-links a { color: var(--muted); }
+    .nav-links a:hover { color: var(--amber) !important; }
+
+    .nav-cta {
+      font-size: 0.78rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      color: var(--forest);
+      background: var(--beige);
+      padding: 0.6rem 1.4rem;
+      text-decoration: none;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .nav.scrolled .nav-cta {
+      background: var(--forest);
+      color: var(--beige);
+    }
+
+    .nav-cta:hover { background: var(--amber) !important; color: var(--beige) !important; }
 
     .nav-hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 4px;
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: 4px;
     }
 
     .nav-hamburger span {
-      display: block;
-      width: 24px;
-      height: 2px;
-      background: var(--primary);
-      transition: transform 0.3s, opacity 0.3s;
+      display: block; width: 24px; height: 2px;
+      background: var(--beige);
+      transition: background 0.4s, transform 0.3s, opacity 0.3s;
     }
 
-    /* ── Hero — Split Mountain ── */
+    .nav.scrolled .nav-hamburger span { background: var(--forest); }
+
+    /* ── HERO — FULLSCREEN ── */
     .hero {
-      display: flex;
-      min-height: 100vh;
-      padding-top: 60px;
-    }
-
-    .hero-image {
       position: relative;
-      width: 55%;
+      height: 100vh; min-height: 620px;
+      display: flex; align-items: flex-end;
       overflow: hidden;
     }
 
-    /* hero-image img styles moved to scroll-reveal section below */
-
-    .hero-image::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        repeating-linear-gradient(
-          0deg,
-          transparent,
-          transparent 18px,
-          rgba(45, 74, 62, 0.06) 18px,
-          rgba(45, 74, 62, 0.06) 19px
-        ),
-        repeating-linear-gradient(
-          60deg,
-          transparent,
-          transparent 24px,
-          rgba(45, 74, 62, 0.04) 24px,
-          rgba(45, 74, 62, 0.04) 25px
-        ),
-        repeating-linear-gradient(
-          -30deg,
-          transparent,
-          transparent 30px,
-          rgba(45, 74, 62, 0.03) 30px,
-          rgba(45, 74, 62, 0.03) 31px
-        );
-      pointer-events: none;
+    .hero-bg {
+      position: absolute; inset: 0;
     }
 
+    .hero-bg img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center 40%;
+      transform: scale(1.06);
+      transition: transform 8s ease-out;
+    }
+
+    .hero-bg img.loaded { transform: scale(1); }
+
+    /* Gradient overlay */
+    .hero-bg::after {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(to top, rgba(14,26,20,0.88) 0%, rgba(14,26,20,0.45) 45%, rgba(14,26,20,0.15) 100%);
+    }
+
+    /* Topo line overlay */
+    .topo-svg {
+      position: absolute; inset: 0; z-index: 1; pointer-events: none;
+    }
+
+    .topo-svg svg { width: 100%; height: 100%; }
+
+    .topo-path {
+      fill: none; stroke: rgba(237,232,220,0.06);
+      stroke-width: 1.5;
+      stroke-dasharray: 1200;
+      stroke-dashoffset: 1200;
+      animation: drawLine 5s cubic-bezier(0.4,0,0.2,1) 0.5s forwards;
+    }
+
+    .topo-path:nth-child(2) { animation-delay: 1s; stroke: rgba(237,232,220,0.045); }
+    .topo-path:nth-child(3) { animation-delay: 1.5s; stroke: rgba(237,232,220,0.03); }
+    .topo-path:nth-child(4) { animation-delay: 2s; stroke: rgba(237,232,220,0.025); }
+
+    @keyframes drawLine { to { stroke-dashoffset: 0; } }
+
     .hero-content {
-      width: 45%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 4rem 3.5rem;
-      background: var(--secondary);
+      position: relative; z-index: 2;
+      width: 100%;
+      padding: 0 2.5rem 5rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 2rem;
+      align-items: flex-end;
+    }
+
+    .hero-text {}
+
+    .hero-eyebrow {
+      font-family: var(--ff-sans);
+      font-size: 0.72rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.2em;
+      color: var(--amber);
+      margin-bottom: 1rem;
+      opacity: 0; transform: translateY(16px);
+      animation: fadeUp 0.7s ease 0.3s forwards;
     }
 
     .hero-headline {
-      font-family: var(--font-display);
+      font-family: var(--ff-serif);
       font-weight: 400;
-      line-height: 1.05;
-      color: var(--primary);
-      margin-bottom: 1.5rem;
+      line-height: 0.95;
+      color: var(--beige);
+      margin-bottom: 1.75rem;
     }
 
-    .hero-sub {
-      font-size: 1rem;
-      font-weight: 400;
-      color: var(--text);
-      opacity: 0.75;
-      letter-spacing: 0.02em;
-      margin-bottom: 0.5rem;
+    .hero-headline .line {
+      display: block;
+      font-size: clamp(3.5rem, 7vw, 7rem);
+      opacity: 0; transform: translateY(32px);
+      animation: fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) forwards;
     }
 
-    .hero-underline {
-      width: 60px;
-      height: 3px;
-      background: var(--accent);
-      border-radius: 2px;
-      margin: 1.5rem 0 2rem;
+    .hero-headline .line:nth-child(1) { animation-delay: 0.5s; }
+    .hero-headline .line:nth-child(2) { animation-delay: 0.72s; font-style: italic; color: rgba(237,232,220,0.75); }
+    .hero-headline .line:nth-child(3) { animation-delay: 0.94s; }
+
+    .hero-tagline {
+      font-size: 1rem; font-weight: 300;
+      color: rgba(237,232,220,0.65);
+      letter-spacing: 0.03em;
+      max-width: 380px;
+      opacity: 0; transform: translateY(16px);
+      animation: fadeUp 0.7s ease 1.15s forwards;
     }
 
-    .cta-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-family: var(--font-body);
-      font-size: 0.9rem;
-      font-weight: 600;
+    .hero-meta {
+      display: flex; flex-direction: column;
+      align-items: flex-end; gap: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 1.3s forwards;
+    }
+
+    .hero-scroll-hint {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 0.5rem;
+    }
+
+    .hero-scroll-hint span {
+      font-size: 0.65rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.15em;
+      color: rgba(237,232,220,0.45);
+      writing-mode: vertical-rl;
+    }
+
+    .scroll-line {
+      width: 1px; height: 60px;
+      background: linear-gradient(to bottom, var(--amber), transparent);
+      animation: scrollPulse 2s ease-in-out 1.8s infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.5; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.2); }
+    }
+
+    .hero-badges {
+      display: flex; flex-direction: column; gap: 0.5rem; align-items: flex-end;
+    }
+
+    .hero-badge {
+      font-size: 0.7rem; font-weight: 500;
       letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--secondary);
-      background: var(--primary);
-      padding: 1rem 2rem;
-      border: none;
-      cursor: pointer;
-      text-decoration: none;
-      transition: background 0.3s, transform 0.2s;
+      color: rgba(237,232,220,0.6);
+      border: 1px solid rgba(237,232,220,0.15);
+      padding: 0.35rem 0.8rem;
+      white-space: nowrap;
     }
 
-    .cta-primary:hover {
-      background: #1F3A2E;
-      transform: translateY(-1px);
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    /* ── Section Shared ── */
-    .section {
-      padding: 6rem 2rem;
+    /* ── INTRO STRIP ── */
+    .intro-strip {
+      background: var(--forest);
+      padding: 1.75rem 2.5rem;
+      display: flex; justify-content: center; gap: 4rem;
+      flex-wrap: wrap;
     }
 
-    .section-label {
-      font-family: var(--font-body);
-      font-size: 0.75rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      color: var(--accent);
-      margin-bottom: 0.75rem;
+    .strip-item {
+      display: flex; align-items: center; gap: 0.75rem;
     }
 
-    .section-title {
-      font-family: var(--font-display);
-      font-size: clamp(2rem, 3.5vw, 3rem);
-      font-weight: 400;
-      color: var(--primary);
-      line-height: 1.15;
+    .strip-dot {
+      width: 6px; height: 6px;
+      background: var(--amber); border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .strip-item span {
+      font-size: 0.78rem; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      color: rgba(237,232,220,0.65);
+    }
+
+    /* ── SECTION SHARED ── */
+    .section { padding: 7rem 2.5rem; }
+
+    .sec-label {
+      font-size: 0.7rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.2em;
+      color: var(--amber);
       margin-bottom: 1rem;
     }
 
-    .section-divider {
-      width: 40px;
-      height: 3px;
-      background: var(--accent);
-      border-radius: 2px;
+    .sec-title {
+      font-family: var(--ff-serif);
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 400; line-height: 1.1;
+      color: var(--forest);
+      margin-bottom: 0.75rem;
+    }
+
+    .sec-rule {
+      width: 40px; height: 3px;
+      background: var(--amber); border-radius: 2px;
       margin-bottom: 3rem;
     }
 
-    /* ── Touren Section ── */
-    .touren { background: var(--bg); }
+    /* ── SECTION 1: ERLEBNISSE — 3-COL PHOTO GRID ── */
+    .erlebnisse { background: var(--beige-2); }
 
-    .touren-inner {
-      max-width: 1100px;
-      margin: 0 auto;
+    .erlebnisse-inner {
+      max-width: 1180px; margin: 0 auto;
     }
 
-    .tour-grid {
+    .erlebnisse-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: flex-end;
+      margin-bottom: 4rem;
+    }
+
+    .erlebnisse-lead {
+      font-size: 1.05rem; line-height: 1.7;
+      color: var(--muted);
+      max-width: 420px;
+    }
+
+    .erlebnisse-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+
+    .erlebnisse-card {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .erlebnisse-card--tall {
+      grid-row: span 2;
+    }
+
+    .erlebnisse-card .photo-wrap {
+      position: relative;
+      overflow: hidden;
+      height: 100%;
+    }
+
+    .erlebnisse-card--short .photo-wrap { aspect-ratio: 4 / 3; }
+    .erlebnisse-card--tall .photo-wrap { aspect-ratio: unset; height: 100%; min-height: 580px; }
+
+    .erlebnisse-card img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s cubic-bezier(0.22,1,0.36,1);
+    }
+
+    .erlebnisse-card:hover img { transform: scale(1.06); }
+
+    .erlebnisse-card .photo-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(14,26,20,0.75) 0%, transparent 55%);
+      pointer-events: none;
+    }
+
+    .erlebnisse-card .card-label {
+      position: absolute; bottom: 1.5rem; left: 1.5rem; right: 1.5rem;
+      z-index: 2;
+    }
+
+    .card-label-title {
+      font-family: var(--ff-serif);
+      font-size: 1.4rem; font-weight: 400;
+      color: var(--beige);
+      line-height: 1.2;
+      margin-bottom: 0.25rem;
+    }
+
+    .card-label-sub {
+      font-size: 0.72rem; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      color: rgba(237,232,220,0.65);
+    }
+
+    /* ── SECTION 2: DIE HUETTE — SPLIT ── */
+    .huette {
+      background: var(--forest);
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .huette-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 680px;
+    }
+
+    .huette-photo {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .huette-photo img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: sepia(12%) saturate(0.95) brightness(0.9);
+      transition: transform 0.8s ease;
+    }
+
+    .huette-photo:hover img { transform: scale(1.04); }
+
+    .huette-photo::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to right, transparent 60%, var(--forest) 100%);
+      pointer-events: none;
+    }
+
+    .huette-text {
+      padding: 6rem 4rem 6rem 3rem;
+      display: flex; flex-direction: column;
+      justify-content: center;
+    }
+
+    .huette-text .sec-label { color: var(--amber); }
+    .huette-text .sec-title { color: var(--beige); }
+    .huette-text .sec-rule { background: var(--amber); }
+
+    .huette-body {
+      font-size: 1.05rem; line-height: 1.8;
+      color: rgba(237,232,220,0.75);
+      margin-bottom: 2.5rem;
+    }
+
+    .huette-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .stat-num {
+      font-family: var(--ff-serif);
+      font-size: 2.5rem; font-weight: 400;
+      color: var(--beige);
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+
+    .stat-label {
+      font-size: 0.75rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      color: rgba(237,232,220,0.45);
+    }
+
+    .cta-primary {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      font-size: 0.82rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      color: var(--forest);
+      background: var(--beige);
+      padding: 1rem 2rem;
+      text-decoration: none;
+      transition: background 0.3s, transform 0.2s;
+      align-self: flex-start;
+    }
+
+    .cta-primary:hover {
+      background: var(--amber); color: var(--beige);
+      transform: translateY(-2px);
+    }
+
+    .cta-primary svg { transition: transform 0.3s; }
+    .cta-primary:hover svg { transform: translateX(4px); }
+
+    /* ── SECTION 3: TOUREN ── */
+    .touren { background: var(--beige); }
+
+    .touren-inner {
+      max-width: 1180px; margin: 0 auto;
+    }
+
+    .touren-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 3.5rem;
+    }
+
+    .touren-link {
+      font-size: 0.8rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      color: var(--forest);
+      text-decoration: none;
+      border-bottom: 1px solid var(--forest);
+      padding-bottom: 2px;
+      transition: color 0.3s, border-color 0.3s;
+    }
+
+    .touren-link:hover { color: var(--amber); border-color: var(--amber); }
+
+    .touren-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 1.5rem;
     }
 
-    .tour-name {
-      font-family: var(--font-display);
-      font-size: 1.5rem;
-      color: var(--primary);
-      margin-bottom: 0.25rem;
+    .tour-card {
+      background: var(--beige-2);
+      border: 1px solid rgba(28,50,41,0.08);
+      overflow: hidden;
+      transition: transform 0.4s cubic-bezier(0.22,1,0.36,1),
+                  box-shadow 0.4s cubic-bezier(0.22,1,0.36,1);
     }
 
-    .tour-type {
-      font-size: 0.8rem;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--accent);
+    .tour-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 48px rgba(28,50,41,0.12);
+    }
+
+    .tour-photo {
+      position: relative; overflow: hidden;
+      aspect-ratio: 16 / 9;
+    }
+
+    .tour-photo img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.22,1,0.36,1);
+    }
+
+    .tour-card:hover .tour-photo img { transform: scale(1.06); }
+
+    .tour-photo-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(14,26,20,0.5) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .tour-badge {
+      position: absolute; top: 1rem; right: 1rem;
+      background: var(--amber);
+      color: var(--forest);
+      font-size: 0.65rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      padding: 0.3rem 0.7rem;
+    }
+
+    .tour-body {
+      padding: 1.5rem 1.75rem 1.75rem;
+    }
+
+    .tour-name {
+      font-family: var(--ff-serif);
+      font-size: 1.35rem; font-weight: 400;
+      color: var(--forest);
+      margin-bottom: 0.6rem;
+    }
+
+    .tour-info {
+      display: flex; flex-wrap: wrap; gap: 1rem;
       margin-bottom: 1.25rem;
     }
 
-    .tour-meta {
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-      margin-bottom: 1.5rem;
+    .tour-info-item {
+      font-size: 0.78rem; color: var(--muted);
+      display: flex; align-items: center; gap: 0.4rem;
     }
 
-    .tour-meta-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 0.85rem;
-      color: var(--text);
-      opacity: 0.8;
+    .tour-info-item svg { opacity: 0.5; flex-shrink: 0; }
+
+    .tour-divider {
+      height: 1px;
+      background: rgba(28,50,41,0.08);
+      margin-bottom: 1.25rem;
     }
 
-    .tour-meta-label {
-      font-weight: 500;
+    .tour-bottom {
+      display: flex; justify-content: space-between; align-items: center;
     }
-
-    .difficulty {
-      display: flex;
-      align-items: center;
-      gap: 0.35rem;
-    }
-
-    .difficulty-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      border: 1.5px solid var(--primary);
-    }
-
-    .difficulty-dot.filled { background: var(--primary); }
 
     .tour-price {
-      font-family: var(--font-display);
-      font-size: 1.75rem;
-      color: var(--primary);
-      padding-top: 1rem;
-      border-top: 1px solid rgba(45, 74, 62, 0.1);
+      font-family: var(--ff-serif);
+      font-size: 1.6rem; font-weight: 400;
+      color: var(--forest);
     }
 
     .tour-price-unit {
-      font-family: var(--font-body);
-      font-size: 0.8rem;
-      font-weight: 400;
-      color: var(--text);
-      opacity: 0.6;
+      font-family: var(--ff-sans);
+      font-size: 0.75rem; font-weight: 400;
+      color: var(--muted);
     }
 
-    /* ── Guide Section ── */
-    .guide {
-      background: var(--primary);
-      color: var(--secondary);
+    .tour-cta {
+      font-size: 0.72rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      color: var(--forest);
+      border: 1.5px solid var(--forest);
+      padding: 0.55rem 1.1rem;
+      text-decoration: none;
+      transition: background 0.3s, color 0.3s;
     }
 
-    .guide-inner {
-      max-width: 1100px;
-      margin: 0 auto;
+    .tour-cta:hover {
+      background: var(--forest);
+      color: var(--beige);
+    }
+
+    /* ── SECTION 4: PHOTO STRIP (Atmosphaere) ── */
+    .atmosphere {
+      background: var(--beige-2);
+      padding: 7rem 2.5rem;
+      overflow: hidden;
+    }
+
+    .atmosphere-inner {
+      max-width: 1180px; margin: 0 auto;
+    }
+
+    .atmosphere-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .atmosphere-header .sec-label { justify-content: center; display: flex; }
+    .atmosphere-header .sec-title { text-align: center; }
+    .atmosphere-header .sec-rule { margin: 0.75rem auto 0; }
+
+    .photo-strip {
       display: grid;
-      grid-template-columns: 1fr 1.4fr;
-      gap: 4rem;
-      align-items: center;
-    }
-
-    .guide .section-label { color: var(--accent); }
-    .guide .section-title { color: var(--secondary); }
-    .guide .section-divider { background: var(--accent); }
-
-    .guide-photo-wrapper {
-      position: relative;
-    }
-
-    .guide-photo {
-      width: 100%;
-      aspect-ratio: 3 / 4;
-      object-fit: cover;
-      filter: grayscale(15%) contrast(1.05);
-    }
-
-    .guide-photo-wrapper::after {
-      content: '';
-      position: absolute;
-      bottom: -12px;
-      right: -12px;
-      width: 100%;
-      height: 100%;
-      border: 2px solid var(--accent);
-      z-index: -1;
-    }
-
-    .guide-text p {
-      font-size: 1.05rem;
-      line-height: 1.75;
-      color: var(--secondary);
-      opacity: 0.85;
-      margin-bottom: 2rem;
-    }
-
-    .guide-quote {
-      font-family: var(--font-display);
-      font-style: italic;
-      font-size: 1.3rem;
-      line-height: 1.5;
-      color: var(--secondary);
-      border-left: 3px solid var(--accent);
-      padding-left: 1.25rem;
-      margin-bottom: 2.5rem;
-    }
-
-    .credentials {
-      display: flex;
+      grid-template-columns: 1.4fr 1fr 1fr 1.4fr;
       gap: 1rem;
-      flex-wrap: wrap;
-      margin-bottom: 2.5rem;
+      align-items: stretch;
     }
 
-    /* .credential styles moved to flip-reveal section below */
-
-    .credential-icon {
-      width: 6px;
-      height: 6px;
-      background: var(--accent);
-      border-radius: 50%;
-      flex-shrink: 0;
+    .strip-item-photo {
+      position: relative;
+      overflow: hidden;
     }
 
-    .guide-contact {
+    .strip-item-photo img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s cubic-bezier(0.22,1,0.36,1);
+    }
+
+    .strip-item-photo:hover img { transform: scale(1.05); }
+
+    .strip-item-photo::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent 50%, rgba(14,26,20,0.35) 100%);
+      pointer-events: none;
+    }
+
+    .strip-tall { aspect-ratio: 3 / 4; }
+    .strip-short { aspect-ratio: 4 / 3; }
+
+    .strip-quote {
       display: flex;
       flex-direction: column;
-      gap: 0.6rem;
-    }
-
-    .guide-contact a {
-      color: var(--accent);
-      text-decoration: none;
-      font-size: 0.9rem;
-      font-weight: 500;
-      transition: opacity 0.3s;
-    }
-
-    .guide-contact a:hover { opacity: 0.8; }
-
-    .guide-contact-phone {
-      font-family: var(--font-body);
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: var(--secondary) !important;
-      letter-spacing: 0.03em;
-    }
-
-    /* ── Footer ── */
-    .footer {
-      text-align: center;
+      justify-content: center;
+      align-items: center;
+      background: var(--forest);
       padding: 3rem 2rem;
-      background: var(--bg);
-      border-top: 1px solid rgba(45, 74, 62, 0.08);
+      text-align: center;
+    }
+
+    .strip-quote-mark {
+      font-family: var(--ff-serif);
+      font-size: 5rem; line-height: 0.6;
+      color: var(--amber); opacity: 0.5;
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+
+    .strip-quote-text {
+      font-family: var(--ff-serif);
+      font-size: 1.25rem; font-style: italic; line-height: 1.55;
+      color: var(--beige);
+      margin-bottom: 1.5rem;
+    }
+
+    .strip-quote-author {
+      font-size: 0.7rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.15em;
+      color: var(--amber);
+    }
+
+    /* ── MOUNTAIN DIVIDER ── */
+    .mountain-div {
+      width: 100%; overflow: hidden;
+      line-height: 0; margin: 0;
+    }
+
+    .mountain-div svg {
+      display: block; width: 100%;
+      height: 56px;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      background: var(--forest);
+      padding: 3.5rem 2.5rem;
+    }
+
+    .footer-inner {
+      max-width: 1180px; margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 2rem;
     }
 
     .footer-logo {
-      font-family: var(--font-display);
+      font-family: var(--ff-serif);
       font-size: 1.25rem;
-      color: var(--primary);
-      margin-bottom: 0.5rem;
+      color: var(--beige);
+    }
+
+    .footer-logo span {
+      display: block;
+      font-family: var(--ff-sans);
+      font-size: 0.7rem; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.15em;
+      color: rgba(237,232,220,0.45);
+      margin-top: 0.2rem;
+    }
+
+    .footer-center {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 0.75rem;
+    }
+
+    .footer-divider {
+      width: 1px; height: 40px;
+      background: linear-gradient(to bottom, transparent, var(--amber), transparent);
     }
 
     .footer-note {
-      font-size: 0.78rem;
-      color: var(--text);
-      opacity: 0.5;
+      font-size: 0.7rem; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.15em;
+      color: rgba(237,232,220,0.3);
     }
 
-    /* ── Responsive ── */
-    @media (max-width: 900px) {
-      .hero {
-        flex-direction: column;
-        min-height: auto;
-      }
-
-      .hero-image {
-        width: 100%;
-        height: 50vh;
-      }
-
-      .hero-content {
-        width: 100%;
-        padding: 3rem 2rem;
-      }
-
-      .tour-grid {
-        grid-template-columns: 1fr;
-        max-width: 480px;
-      }
-
-      .guide-inner {
-        grid-template-columns: 1fr;
-        gap: 2.5rem;
-      }
-
-      .guide-photo-wrapper {
-        max-width: 340px;
-      }
-
-      .guide-photo-wrapper::after { display: none; }
+    .footer-contact {
+      display: flex; flex-direction: column;
+      align-items: flex-end; gap: 0.4rem;
     }
 
-    @media (max-width: 600px) {
-      .nav { padding: 0.75rem 1.25rem; }
-      .nav-links { display: none; }
-      .nav-hamburger { display: flex; }
-      .nav-links.open {
-        display: flex;
-        flex-direction: column;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background: rgba(245, 241, 234, 0.97);
-        backdrop-filter: blur(12px);
-        padding: 1.5rem 2rem;
-        gap: 1rem;
-        border-bottom: 1px solid rgba(45, 74, 62, 0.1);
-      }
-
-      .hero-image { height: 40vh; }
-      .hero-content { padding: 2.5rem 1.5rem; }
-      .hero-headline span { font-size: 2.4rem; }
-      .section { padding: 4rem 1.5rem; }
-      .credentials { flex-direction: column; }
-      .mountain-divider svg { height: 40px; }
+    .footer-contact a {
+      font-size: 0.88rem; color: rgba(237,232,220,0.6);
+      text-decoration: none;
+      transition: color 0.3s;
     }
 
-    /* ── Scroll Reveal System ── */
+    .footer-contact a:hover { color: var(--amber); }
+
+    /* ── REVEAL ── */
     .reveal {
-      opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-                  transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+      opacity: 0; transform: translateY(28px);
+      transition: opacity 0.8s cubic-bezier(0.22,1,0.36,1),
+                  transform 0.8s cubic-bezier(0.22,1,0.36,1);
     }
 
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
 
     .reveal-delay-1 { transition-delay: 0.1s; }
     .reveal-delay-2 { transition-delay: 0.2s; }
     .reveal-delay-3 { transition-delay: 0.3s; }
     .reveal-delay-4 { transition-delay: 0.4s; }
     .reveal-delay-5 { transition-delay: 0.5s; }
+    .reveal-delay-6 { transition-delay: 0.6s; }
 
-    /* ── Hero Headline Sequential Fade ── */
-    .hero-headline span {
-      display: block;
-      font-size: clamp(2.8rem, 5vw, 4.5rem);
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-                  transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .erlebnisse-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .erlebnisse-card--tall {
+        grid-row: auto;
+      }
+      .erlebnisse-card--tall .photo-wrap { min-height: auto; aspect-ratio: 4/3; }
+
+      .photo-strip {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto;
+      }
     }
 
-    .hero-headline.animated span:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 0.15s; }
-    .hero-headline.animated span:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 0.4s; }
-    .hero-headline.animated span:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 0.65s; }
+    @media (max-width: 860px) {
+      .nav-links, .nav-cta { display: none; }
+      .nav-hamburger { display: flex; }
 
-    /* ── Topographic SVG Overlay Drawing Animation ── */
-    .topo-overlay {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      z-index: 2;
-      overflow: hidden;
-    }
+      .nav-links.open {
+        display: flex; flex-direction: column;
+        position: absolute; top: 100%; left: 0; right: 0;
+        background: rgba(243,238,228,0.97);
+        backdrop-filter: blur(16px);
+        padding: 1.5rem 2rem;
+        gap: 1rem;
+        border-bottom: 1px solid rgba(28,50,41,0.1);
+      }
 
-    .topo-overlay svg {
-      width: 100%;
-      height: 100%;
-    }
+      .nav.scrolled .nav-links.open { }
+      .nav-links.open a { color: var(--muted) !important; font-size: 0.9rem; }
 
-    .topo-line {
-      fill: none;
-      stroke: rgba(240, 235, 224, 0.12);
-      stroke-width: 1.2;
-      stroke-dasharray: 800;
-      stroke-dashoffset: 800;
-      animation: drawTopo 4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-    }
+      .hero-content {
+        grid-template-columns: 1fr;
+        padding: 0 1.5rem 4rem;
+      }
 
-    .topo-line:nth-child(2) { animation-delay: 0.6s; stroke: rgba(240, 235, 224, 0.09); }
-    .topo-line:nth-child(3) { animation-delay: 1.2s; stroke: rgba(240, 235, 224, 0.07); }
-    .topo-line:nth-child(4) { animation-delay: 1.8s; stroke: rgba(240, 235, 224, 0.05); }
-    .topo-line:nth-child(5) { animation-delay: 2.4s; stroke: rgba(240, 235, 224, 0.06); }
+      .hero-meta { align-items: flex-start; flex-direction: row; }
+      .hero-scroll-hint { display: none; }
 
-    @keyframes drawTopo {
-      to { stroke-dashoffset: 0; }
-    }
+      .erlebnisse-header {
+        grid-template-columns: 1fr;
+      }
 
-    /* ── Hero Image Parallax ── */
-    .hero-image img {
-      width: 100%;
-      height: 120%;
-      object-fit: cover;
-      object-position: center 30%;
-      will-change: transform;
-      transition: transform 0.1s linear;
-    }
+      .huette-inner {
+        grid-template-columns: 1fr;
+      }
 
-    .img-wrap:hover img { transform: scale(1.05); }
+      .huette-photo {
+        height: 50vw; min-height: 280px;
+      }
 
-    /* ── Tour Card Hover Refinements ── */
-    .tour-card {
-      background: var(--secondary);
-      border: 1px solid rgba(45, 74, 62, 0.1);
-      border-left: 3px solid var(--accent);
-      padding: 2rem 1.75rem;
-      position: relative;
-      transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
-                  box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1),
-                  border-left-width 0.3s ease;
-    }
+      .huette-photo::after { display: none; }
 
-    .tour-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 16px 40px rgba(31, 45, 37, 0.12);
-      border-left-width: 6px;
-    }
+      .huette-text {
+        padding: 4rem 2rem;
+      }
 
-    /* ── Difficulty Dot Pulse ── */
-    @keyframes dotPulse {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.5); opacity: 0.7; }
-    }
+      .touren-grid {
+        grid-template-columns: 1fr;
+        max-width: 480px;
+      }
 
-    .difficulty-dot.pulse-animate {
-      animation: dotPulse 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
-    }
+      .touren-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
 
-    .difficulty-dot.pulse-animate:nth-child(2) { animation-delay: 0.12s; }
-    .difficulty-dot.pulse-animate:nth-child(3) { animation-delay: 0.24s; }
+      .photo-strip {
+        grid-template-columns: 1fr 1fr;
+      }
 
-    /* ── Guide Photo Warm Glow ── */
-    .guide-photo-wrapper::before {
-      content: '';
-      position: absolute;
-      inset: -20px;
-      background: radial-gradient(ellipse at center, rgba(212, 136, 58, 0.2) 0%, transparent 70%);
-      z-index: -1;
-      filter: blur(20px);
-      pointer-events: none;
-    }
+      .footer-inner {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
 
-    /* ── Mountain Silhouette Divider ── */
-    .mountain-divider {
-      position: relative;
-      width: 100%;
-      overflow: hidden;
-      line-height: 0;
-      margin: 0;
-    }
-
-    .mountain-divider svg {
-      display: block;
-      width: 100%;
-      height: 60px;
-    }
-
-    .mountain-divider--flip svg {
-      transform: scaleY(-1);
-    }
-
-    /* ── Credential Flip Reveal ── */
-    .credential {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: rgba(240, 235, 224, 0.08);
-      border: 1px solid rgba(240, 235, 224, 0.15);
-      padding: 0.6rem 1rem;
-      font-size: 0.8rem;
-      font-weight: 500;
-      letter-spacing: 0.03em;
-      color: var(--secondary);
-      transform: perspective(600px) rotateX(90deg);
-      transform-origin: bottom center;
-      opacity: 0;
-      transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-                  opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-
-    .credential.flipped {
-      transform: perspective(600px) rotateX(0deg);
-      opacity: 1;
-    }
-
-    .credential:nth-child(2) { transition-delay: 0.15s; }
-    .credential:nth-child(3) { transition-delay: 0.3s; }
-
-    /* ── Paper Texture for Light Sections ── */
-    .texture-paper {
-      position: relative;
-    }
-
-    .texture-paper::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image:
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 0;
-      opacity: 0.6;
-    }
-
-    .texture-paper > * {
-      position: relative;
-      z-index: 1;
-    }
-
-    /* ── Compass Rose Decoration ── */
-    .compass-rose {
-      position: absolute;
-      opacity: 0.06;
-      pointer-events: none;
-    }
-
-    .compass-rose svg {
-      width: 120px;
-      height: 120px;
-    }
-
-    .hero-content .compass-rose {
-      bottom: 2rem;
-      right: 2rem;
+      .footer-contact { align-items: center; }
     }
 
     @media (max-width: 600px) {
-      .compass-rose { display: none; }
+      .nav { padding: 0.9rem 1.25rem; }
+      .section { padding: 5rem 1.25rem; }
+      .atmosphere { padding: 5rem 1.25rem; }
+
+      .erlebnisse-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .photo-strip {
+        grid-template-columns: 1fr;
+      }
+
+      .strip-quote { padding: 2rem 1.5rem; }
+      .intro-strip { gap: 1.5rem; padding: 1.25rem; }
     }
   </style>
 </head>
 <body>
 
   <!-- Navigation -->
-  <nav class="nav">
-    <a href="#" class="nav-logo">Gipfelstuermer</a>
+  <nav class="nav" id="mainNav">
+    <a href="#" class="nav-logo">Waldhaus Eifel</a>
     <ul class="nav-links" id="navLinks">
+      <li><a href="#erlebnisse">Erlebnisse</a></li>
+      <li><a href="#huette">Die Huette</a></li>
       <li><a href="#touren">Touren</a></li>
-      <li><a href="#guide">Der Guide</a></li>
-      <li><a href="#guide">Kontakt</a></li>
     </ul>
+    <a href="#touren" class="nav-cta">Jetzt buchen</a>
     <button class="nav-hamburger" id="navToggle" aria-label="Menu">
-      <span></span>
-      <span></span>
-      <span></span>
+      <span></span><span></span><span></span>
     </button>
   </nav>
 
-  <!-- Hero — Split Mountain -->
+  <!-- ── HERO ── -->
   <section class="hero">
-    <div class="hero-image" id="heroImage">
+    <div class="hero-bg">
       <img
-        src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1000&q=80&auto=format"
-        alt="Dramatische Berglandschaft mit schroffen Gipfeln"
-        loading="eager"
         id="heroImg"
+        src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1800&q=80"
+        alt="Dramatische Berglandschaft in der Eifel bei Sonnenuntergang"
+        loading="eager"
       />
-      <!-- Topographic line overlay with drawing animation -->
-      <div class="topo-overlay">
-        <svg viewBox="0 0 600 800" preserveAspectRatio="none">
-          <path class="topo-line" d="M0,200 Q100,180 200,220 T400,190 T600,230" />
-          <path class="topo-line" d="M0,320 Q150,290 250,340 T450,300 T600,350" />
-          <path class="topo-line" d="M0,450 Q120,420 220,460 T420,430 T600,470" />
-          <path class="topo-line" d="M0,560 Q140,530 280,570 T480,540 T600,580" />
-          <path class="topo-line" d="M0,670 Q180,640 300,680 T500,650 T600,690" />
-        </svg>
-      </div>
     </div>
+
+    <!-- Topographic line overlay -->
+    <div class="topo-svg" aria-hidden="true">
+      <svg viewBox="0 0 1200 800" preserveAspectRatio="none">
+        <path class="topo-path" d="M-50,160 Q120,140 240,180 T480,155 T720,190 T960,160 T1250,180" />
+        <path class="topo-path" d="M-50,290 Q140,265 260,305 T500,275 T740,315 T980,280 T1250,300" />
+        <path class="topo-path" d="M-50,420 Q160,395 300,435 T560,400 T800,440 T1040,410 T1250,430" />
+        <path class="topo-path" d="M-50,550 Q180,525 340,565 T620,530 T860,570 T1100,540 T1250,560" />
+      </svg>
+    </div>
+
     <div class="hero-content">
-      <div class="hero-headline" id="heroHeadline">
-        <span>Raus.</span>
-        <span>Rauf.</span>
-        <span>Ankommen.</span>
+      <div class="hero-text">
+        <p class="hero-eyebrow">Outdoor-Lodge &amp; gefuehrte Touren &middot; Eifel &amp; Mosel</p>
+        <h1 class="hero-headline">
+          <span class="line">Natur.</span>
+          <span class="line">in ihrer</span>
+          <span class="line">Reinform.</span>
+        </h1>
+        <p class="hero-tagline">Entschleunigung mitten in der Eifel. Gefuehrte Wanderungen, Holzhuetten und Stille — ohne Kompromisse.</p>
       </div>
-      <p class="hero-sub reveal reveal-delay-3">Gefuehrte Touren in Eifel & Mosel &middot; Seit 2020</p>
-      <div class="hero-underline reveal reveal-delay-4"></div>
-      <a href="#touren" class="cta-primary reveal reveal-delay-5">Naechste Tour &rarr;</a>
-      <!-- Compass Rose micro-detail -->
-      <div class="compass-rose" aria-hidden="true">
-        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="0.5"/>
-          <circle cx="50" cy="50" r="30" stroke="currentColor" stroke-width="0.3"/>
-          <line x1="50" y1="2" x2="50" y2="98" stroke="currentColor" stroke-width="0.5"/>
-          <line x1="2" y1="50" x2="98" y2="50" stroke="currentColor" stroke-width="0.5"/>
-          <line x1="15" y1="15" x2="85" y2="85" stroke="currentColor" stroke-width="0.3"/>
-          <line x1="85" y1="15" x2="15" y2="85" stroke="currentColor" stroke-width="0.3"/>
-          <polygon points="50,5 47,20 53,20" fill="currentColor"/>
-          <polygon points="50,95 47,80 53,80" fill="currentColor"/>
-          <polygon points="5,50 20,47 20,53" fill="currentColor"/>
-          <polygon points="95,50 80,47 80,53" fill="currentColor"/>
-          <text x="50" y="16" text-anchor="middle" font-size="6" font-family="var(--font-body)" fill="currentColor" font-weight="600">N</text>
-          <text x="50" y="92" text-anchor="middle" font-size="5" font-family="var(--font-body)" fill="currentColor">S</text>
-          <text x="90" y="52" text-anchor="middle" font-size="5" font-family="var(--font-body)" fill="currentColor">O</text>
-          <text x="10" y="52" text-anchor="middle" font-size="5" font-family="var(--font-body)" fill="currentColor">W</text>
-        </svg>
+
+      <div class="hero-meta">
+        <div class="hero-badges">
+          <div class="hero-badge">Eifel / Mosel</div>
+          <div class="hero-badge">DAV zertifiziert</div>
+          <div class="hero-badge">Seit 2017</div>
+        </div>
+        <div class="hero-scroll-hint">
+          <div class="scroll-line"></div>
+          <span>Scroll</span>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Mountain Divider: Hero → Touren -->
-  <div class="mountain-divider" aria-hidden="true">
-    <svg viewBox="0 0 1200 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0,60 L0,35 L80,28 L150,42 L220,18 L300,38 L380,12 L440,30 L520,8 L580,25 L660,15 L720,32 L800,6 L860,22 L940,10 L1000,28 L1060,16 L1120,35 L1200,20 L1200,60 Z" fill="var(--bg)"/>
+  <!-- Intro Strip -->
+  <div class="intro-strip">
+    <div class="strip-item">
+      <div class="strip-dot"></div>
+      <span>Ganzjaehrig geoffnet</span>
+    </div>
+    <div class="strip-item">
+      <div class="strip-dot"></div>
+      <span>Kleine Gruppen</span>
+    </div>
+    <div class="strip-item">
+      <div class="strip-dot"></div>
+      <span>Ausruestung inklusive</span>
+    </div>
+    <div class="strip-item">
+      <div class="strip-dot"></div>
+      <span>Kostenlose Stornierung</span>
+    </div>
+  </div>
+
+  <!-- Mountain Divider -->
+  <div class="mountain-div" aria-hidden="true">
+    <svg viewBox="0 0 1200 56" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,56 L0,32 L60,22 L130,40 L200,14 L270,36 L340,8 L420,28 L500,4 L570,22 L640,12 L720,30 L800,2 L870,18 L940,8 L1010,26 L1080,14 L1140,34 L1200,18 L1200,56 Z" fill="var(--beige-2)"/>
     </svg>
   </div>
 
-  <!-- Touren -->
-  <section class="section touren texture-paper" id="touren">
-    <div class="touren-inner">
-      <p class="section-label reveal">Touren</p>
-      <h2 class="section-title reveal reveal-delay-1">Unterwegs in Eifel & Mosel</h2>
-      <div class="section-divider reveal reveal-delay-2"></div>
+  <!-- ── SECTION 1: ERLEBNISSE ── -->
+  <section class="section erlebnisse" id="erlebnisse">
+    <div class="erlebnisse-inner">
+      <div class="erlebnisse-header">
+        <div class="reveal">
+          <p class="sec-label">Erlebnisse</p>
+          <h2 class="sec-title">Die Eifel von<br>einer anderen Seite</h2>
+          <div class="sec-rule"></div>
+        </div>
+        <p class="erlebnisse-lead reveal reveal-delay-2">
+          Zwischen uralten Vulkankratern, stillen Maaren und schroffen Schieferpfaden — wir zeigen euch die Eifel, die ihr noch nicht kennt.
+        </p>
+      </div>
 
-      <div class="tour-grid">
-        <!-- Eifelsteig Etappe -->
-        <div class="tour-card reveal reveal-delay-1">
-          <div class="img-wrap" style="position:relative;overflow:hidden;height:200px;border-radius:4px;margin-bottom:1.25rem;">
-            <img src="https://images.unsplash.com/photo-1504893524553-b855bce32c67?auto=format&fit=crop&w=800&h=600&q=80"
-                 alt="Eifelsteig Wanderweg durch Waldlandschaft" loading="lazy"
-                 style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.55s ease;" />
-            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.4) 0%,transparent 55%);pointer-events:none;"></div>
-          </div>
-          <h3 class="tour-name">Eifelsteig Etappe</h3>
-          <p class="tour-type">Tageswanderung</p>
-          <div class="tour-meta">
-            <div class="tour-meta-row">
-              <span class="tour-meta-label">Distanz</span>
-              <span>18 km</span>
-            </div>
-            <div class="tour-meta-row">
-              <span class="tour-meta-label">Dauer</span>
-              <span>Ganzer Tag</span>
-            </div>
-            <div class="tour-meta-row">
-              <span class="tour-meta-label">Schwierigkeit</span>
-              <div class="difficulty">
-                <span class="difficulty-dot filled"></span>
-                <span class="difficulty-dot filled"></span>
-                <span class="difficulty-dot"></span>
-              </div>
+      <div class="erlebnisse-grid">
+
+        <!-- Grosse Karte links -->
+        <div class="erlebnisse-card erlebnisse-card--tall reveal reveal-delay-1">
+          <div class="photo-wrap">
+            <img
+              src="https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&w=900&h=1200&q=80"
+              alt="Wanderer auf Bergkamm mit Aussicht" loading="lazy"
+            />
+            <div class="photo-overlay"></div>
+            <div class="card-label">
+              <div class="card-label-title">Eifelpfade</div>
+              <div class="card-label-sub">Gefuehrte Wandertouren</div>
             </div>
           </div>
-          <div class="tour-price">35 &euro;</div>
         </div>
 
-        <!-- Mosel-Klettersteig -->
-        <div class="tour-card reveal reveal-delay-2">
-          <div class="img-wrap" style="position:relative;overflow:hidden;height:200px;border-radius:4px;margin-bottom:1.25rem;">
-            <img src="https://images.unsplash.com/photo-1483412033650-1015ddeb83d1?auto=format&fit=crop&w=800&h=600&q=80"
-                 alt="Klettersteig an steiler Felswand" loading="lazy"
-                 style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.55s ease;" />
-            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.4) 0%,transparent 55%);pointer-events:none;"></div>
-          </div>
-          <h3 class="tour-name">Mosel-Klettersteig</h3>
-          <p class="tour-type">Halbtag</p>
-          <div class="tour-meta">
-            <div class="tour-meta-row">
-              <span class="tour-meta-label">Dauer</span>
-              <span>ca. 4 Stunden</span>
-            </div>
-            <div class="tour-meta-row">
-              <span class="tour-meta-label">Anforderung</span>
-              <span>Trittsicherheit</span>
-            </div>
-            <div class="tour-meta-row">
-              <span class="tour-meta-label">Schwierigkeit</span>
-              <div class="difficulty">
-                <span class="difficulty-dot filled"></span>
-                <span class="difficulty-dot filled"></span>
-                <span class="difficulty-dot filled"></span>
-              </div>
+        <!-- Zwei kleine Karten rechts -->
+        <div class="erlebnisse-card erlebnisse-card--short reveal reveal-delay-2">
+          <div class="photo-wrap">
+            <img
+              src="https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=800&h=600&q=80"
+              alt="Herbstlicher Buchenwald in der Eifel" loading="lazy"
+            />
+            <div class="photo-overlay"></div>
+            <div class="card-label">
+              <div class="card-label-title">Herbstwandertag</div>
+              <div class="card-label-sub">Naturerlebnis</div>
             </div>
           </div>
-          <div class="tour-price">55 &euro;</div>
         </div>
 
-        <!-- Familien-Waldtag -->
-        <div class="tour-card">
-          <div class="img-wrap" style="position:relative;overflow:hidden;height:200px;border-radius:4px;margin-bottom:1.25rem;">
-            <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=800&h=600&q=80"
-                 alt="Familie beim Wandern im Wald" loading="lazy"
-                 style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.55s ease;" />
-            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.4) 0%,transparent 55%);pointer-events:none;"></div>
-          </div>
-          <h3 class="tour-name">Familien-Waldtag</h3>
-          <p class="tour-type">Erlebniswanderung</p>
-          <div class="tour-meta">
-            <div class="tour-meta-row">
-              <span class="tour-meta-label">Dauer</span>
-              <span>5 Stunden</span>
-            </div>
-            <div class="tour-meta-row">
-              <span class="tour-meta-label">Fuer</span>
-              <span>Familien mit Kindern</span>
-            </div>
-            <div class="tour-meta-row">
-              <span class="tour-meta-label">Schwierigkeit</span>
-              <div class="difficulty">
-                <span class="difficulty-dot filled"></span>
-                <span class="difficulty-dot"></span>
-                <span class="difficulty-dot"></span>
-              </div>
+        <div class="erlebnisse-card erlebnisse-card--short reveal reveal-delay-3">
+          <div class="photo-wrap">
+            <img
+              src="https://images.unsplash.com/photo-1504893524553-b855bce32c67?auto=format&fit=crop&w=800&h=600&q=80"
+              alt="Fluss in steinigem Waldtal" loading="lazy"
+            />
+            <div class="photo-overlay"></div>
+            <div class="card-label">
+              <div class="card-label-title">Tal & Wasser</div>
+              <div class="card-label-sub">Bachbett-Touren</div>
             </div>
           </div>
-          <div class="tour-price">25 &euro; <span class="tour-price-unit">/ Person</span></div>
         </div>
+
+        <!-- Kleine Karte unten links -->
+        <div class="erlebnisse-card erlebnisse-card--short reveal reveal-delay-2">
+          <div class="photo-wrap">
+            <img
+              src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800&h=600&q=80"
+              alt="Sonnenstrahlen brechen durch dichten Wald" loading="lazy"
+            />
+            <div class="photo-overlay"></div>
+            <div class="card-label">
+              <div class="card-label-title">Lichtpfade</div>
+              <div class="card-label-sub">Morgenwanderung</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Grosse Karte rechts -->
+        <div class="erlebnisse-card erlebnisse-card--tall reveal reveal-delay-4">
+          <div class="photo-wrap">
+            <img
+              src="https://images.unsplash.com/photo-1483412033650-1015ddeb83d1?auto=format&fit=crop&w=900&h=1200&q=80"
+              alt="Spiegelung der Berge im stillen Bergsee" loading="lazy"
+            />
+            <div class="photo-overlay"></div>
+            <div class="card-label">
+              <div class="card-label-title">Maar-Touren</div>
+              <div class="card-label-sub">Vulkanseen & Tiefblicke</div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
 
-  <!-- Der Guide -->
-  <section class="section guide" id="guide">
-    <div class="guide-inner">
-      <div class="guide-photo-wrapper">
+  <!-- Mountain Divider (beige-2 → forest) -->
+  <div class="mountain-div" aria-hidden="true">
+    <svg viewBox="0 0 1200 56" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,0 L0,32 L60,18 L130,40 L200,14 L270,38 L340,10 L420,30 L500,6 L570,24 L640,14 L720,32 L800,4 L870,20 L940,10 L1010,28 L1080,16 L1140,36 L1200,20 L1200,0 Z" fill="var(--forest)"/>
+    </svg>
+  </div>
+
+  <!-- ── SECTION 2: DIE HUETTE ── -->
+  <section class="huette" id="huette">
+    <div class="huette-inner">
+      <div class="huette-photo">
         <img
-          class="guide-photo"
-          src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=600&q=80&auto=format"
-          alt="Niklas, zertifizierter Wanderfuehrer"
-          loading="lazy"
+          src="https://images.unsplash.com/photo-1542281286-9e0a16bb7366?auto=format&fit=crop&w=900&q=80"
+          alt="Rustikales Holzhuetteninterieur mit Kaminfeuer" loading="lazy"
         />
       </div>
-      <div class="guide-text">
-        <p class="section-label">Der Guide</p>
-        <h2 class="section-title">Niklas</h2>
-        <div class="section-divider"></div>
-
-        <p class="guide-quote">Aufgewachsen zwischen Weinbergen und Vulkankratern. Zertifizierter Wanderfuehrer seit 2018.</p>
-
-        <p>
-          Ich kenne jeden Pfad in der Eifel und an der Mosel — die offiziellen und die,
-          die auf keiner Karte stehen. Meine Touren sind keine Spaziergaenge mit Vortrag.
-          Wir gehen raus, atmen durch und kommen an Orte, die man allein nicht findet.
+      <div class="huette-text">
+        <p class="sec-label reveal">Die Huette</p>
+        <h2 class="sec-title reveal reveal-delay-1">Gebaut aus<br>dem, was bleibt.</h2>
+        <div class="sec-rule reveal reveal-delay-2"></div>
+        <p class="huette-body reveal reveal-delay-2">
+          Das Waldhaus Eifel ist kein Hotel. Es ist ein Ort — gebaut aus heimischem Holz, beheizt mit dem, was der Wald hergibt. Kein WLAN in den Zimmern. Kein Roadnoise. Nur das Knistern des Feuers und der Atem der Eifel durch die Fensterluecken.
         </p>
 
-        <div class="credentials">
-          <div class="credential">
-            <span class="credential-icon"></span>
-            DAV Wanderfuehrer
+        <div class="huette-stats reveal reveal-delay-3">
+          <div>
+            <div class="stat-num">8</div>
+            <div class="stat-label">Zimmer</div>
           </div>
-          <div class="credential">
-            <span class="credential-icon"></span>
-            Erste Hilfe Outdoor
+          <div>
+            <div class="stat-num">2017</div>
+            <div class="stat-label">Eroeffnet</div>
           </div>
-          <div class="credential">
-            <span class="credential-icon"></span>
-            120+ gefuehrte Touren
+          <div>
+            <div class="stat-num">600m</div>
+            <div class="stat-label">Seehoehe</div>
+          </div>
+          <div>
+            <div class="stat-num">4 ⭑</div>
+            <div class="stat-label">Bewertung</div>
           </div>
         </div>
 
-        <div class="guide-contact">
-          <a href="tel:+491701234567" class="guide-contact-phone">+49 170 123 4567</a>
-          <a href="mailto:niklas@gipfelstuermer.de">Schreib mir eine Nachricht</a>
-        </div>
+        <a href="#touren" class="cta-primary reveal reveal-delay-4">
+          Zimmer ansehen
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
       </div>
     </div>
   </section>
 
-  <!-- Footer -->
+  <!-- Mountain Divider (forest → beige) -->
+  <div class="mountain-div" aria-hidden="true">
+    <svg viewBox="0 0 1200 56" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,56 L0,32 L60,22 L130,40 L200,14 L270,36 L340,8 L420,28 L500,4 L570,22 L640,12 L720,30 L800,2 L870,18 L940,8 L1010,26 L1080,14 L1140,34 L1200,18 L1200,56 Z" fill="var(--beige)"/>
+    </svg>
+  </div>
+
+  <!-- ── SECTION 3: TOUREN ── -->
+  <section class="section touren" id="touren">
+    <div class="touren-inner">
+      <div class="touren-header">
+        <div class="reveal">
+          <p class="sec-label">Touren</p>
+          <h2 class="sec-title">Raus. Auf. Ankommen.</h2>
+          <div class="sec-rule"></div>
+        </div>
+        <a href="#" class="touren-link reveal reveal-delay-2">Alle 12 Touren &rarr;</a>
+      </div>
+
+      <div class="touren-grid">
+
+        <!-- Tour 1 -->
+        <div class="tour-card reveal reveal-delay-1">
+          <div class="tour-photo">
+            <img
+              src="https://images.unsplash.com/photo-1500534314209-a157d0321ef6?auto=format&fit=crop&w=800&h=450&q=80"
+              alt="Wanderpfad durch Nadelwald" loading="lazy"
+            />
+            <div class="tour-photo-overlay"></div>
+            <div class="tour-badge">Beliebt</div>
+          </div>
+          <div class="tour-body">
+            <h3 class="tour-name">Eifelsteig Etappe</h3>
+            <div class="tour-info">
+              <span class="tour-info-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke="currentColor" stroke-width="1.5"/></svg>
+                Pruem → Gerolstein
+              </span>
+              <span class="tour-info-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/><path d="M12 6v6l4 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                Ganzer Tag
+              </span>
+              <span class="tour-info-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M3 17l4-8 4 4 3-5 4 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                18 km &middot; 420 Hm
+              </span>
+            </div>
+            <div class="tour-divider"></div>
+            <div class="tour-bottom">
+              <div>
+                <div class="tour-price">35 &euro;</div>
+                <div class="tour-price-unit">pro Person</div>
+              </div>
+              <a href="#" class="tour-cta">Buchen</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tour 2 -->
+        <div class="tour-card reveal reveal-delay-2">
+          <div class="tour-photo">
+            <img
+              src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&h=450&q=80"
+              alt="Wanderer beim Aufstieg mit Rucksack" loading="lazy"
+            />
+            <div class="tour-photo-overlay"></div>
+            <div class="tour-badge">Anspruchsvoll</div>
+          </div>
+          <div class="tour-body">
+            <h3 class="tour-name">Klettersteig Mosel</h3>
+            <div class="tour-info">
+              <span class="tour-info-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke="currentColor" stroke-width="1.5"/></svg>
+                Cochem, Mosel
+              </span>
+              <span class="tour-info-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/><path d="M12 6v6l4 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                ca. 4 Stunden
+              </span>
+              <span class="tour-info-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M3 17l4-8 4 4 3-5 4 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Trittsicherheit
+              </span>
+            </div>
+            <div class="tour-divider"></div>
+            <div class="tour-bottom">
+              <div>
+                <div class="tour-price">55 &euro;</div>
+                <div class="tour-price-unit">pro Person</div>
+              </div>
+              <a href="#" class="tour-cta">Buchen</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tour 3 -->
+        <div class="tour-card reveal reveal-delay-3">
+          <div class="tour-photo">
+            <img
+              src="https://images.unsplash.com/photo-1501854140801-50d01698950b?auto=format&fit=crop&w=800&h=450&q=80"
+              alt="Herbstlicher Maarsee in der Eifel bei Morgenlicht" loading="lazy"
+            />
+            <div class="tour-photo-overlay"></div>
+            <div class="tour-badge">Familien</div>
+          </div>
+          <div class="tour-body">
+            <h3 class="tour-name">Maar-Entdecker</h3>
+            <div class="tour-info">
+              <span class="tour-info-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke="currentColor" stroke-width="1.5"/></svg>
+                Daun, Eifel
+              </span>
+              <span class="tour-info-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/><path d="M12 6v6l4 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                5 Stunden
+              </span>
+              <span class="tour-info-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M3 17l4-8 4 4 3-5 4 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Leicht &middot; ab 8 Jahre
+              </span>
+            </div>
+            <div class="tour-divider"></div>
+            <div class="tour-bottom">
+              <div>
+                <div class="tour-price">25 &euro;</div>
+                <div class="tour-price-unit">pro Person</div>
+              </div>
+              <a href="#" class="tour-cta">Buchen</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Mountain Divider (beige → beige-2) -->
+  <div class="mountain-div" aria-hidden="true">
+    <svg viewBox="0 0 1200 56" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,0 L0,28 L80,18 L160,38 L240,10 L320,34 L400,6 L480,26 L560,2 L640,22 L720,14 L800,32 L880,4 L960,20 L1040,10 L1120,30 L1200,16 L1200,0 Z" fill="var(--beige-2)"/>
+    </svg>
+  </div>
+
+  <!-- ── SECTION 4: ATMOSPHAERE ── -->
+  <section class="atmosphere" id="atmosphaere">
+    <div class="atmosphere-inner">
+      <div class="atmosphere-header">
+        <p class="sec-label reveal">Atmosphaere</p>
+        <h2 class="sec-title reveal reveal-delay-1">Die Eifel riecht nach<br>Moos und Regen.</h2>
+        <div class="sec-rule reveal reveal-delay-2"></div>
+      </div>
+
+      <div class="photo-strip">
+
+        <div class="strip-item-photo strip-tall reveal reveal-delay-1">
+          <img
+            src="https://images.unsplash.com/photo-1418985991508-e47386d96a71?auto=format&fit=crop&w=600&h=800&q=80"
+            alt="Nebel im Nadelwald fruehmorgens" loading="lazy"
+          />
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:1rem;">
+          <div class="strip-item-photo strip-short reveal reveal-delay-2" style="flex:1;">
+            <img
+              src="https://images.unsplash.com/photo-1518602164578-cd0074062767?auto=format&fit=crop&w=600&h=400&q=80"
+              alt="Lagerfeuer am Abend im Freien" loading="lazy"
+            />
+          </div>
+          <div class="strip-item-photo strip-short reveal reveal-delay-3" style="flex:1;">
+            <img
+              src="https://images.unsplash.com/photo-1476098992-b86034b63e57?auto=format&fit=crop&w=600&h=400&q=80"
+              alt="Rustikale Holz-Huette mit warmer Beleuchtung" loading="lazy"
+            />
+          </div>
+        </div>
+
+        <div class="strip-quote reveal reveal-delay-3">
+          <div class="strip-quote-mark">&ldquo;</div>
+          <p class="strip-quote-text">Hier draussen vergisst man schnell, wie laut es zuhause war.</p>
+          <p class="strip-quote-author">Sabine K. &mdash; Gaestin 2024</p>
+        </div>
+
+        <div class="strip-item-photo strip-tall reveal reveal-delay-4">
+          <img
+            src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=600&h=800&q=80"
+            alt="Bergspiegelung in tiefblauem See" loading="lazy"
+          />
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
   <footer class="footer">
-    <p class="footer-logo">Gipfelstuermer</p>
-    <p class="footer-note">Outdoor-Touren & Kurse in Eifel & Mosel</p>
+    <div class="footer-inner">
+      <div class="footer-logo">
+        Waldhaus Eifel
+        <span>Outdoor-Lodge &amp; Touren</span>
+      </div>
+      <div class="footer-center">
+        <div class="footer-divider"></div>
+        <p class="footer-note">Eifel &mdash; Mosel &mdash; Hunsrueck</p>
+        <div class="footer-divider"></div>
+      </div>
+      <div class="footer-contact">
+        <a href="tel:+496551123456">+49 6551 123 456</a>
+        <a href="mailto:hallo@waldhaus-eifel.de">hallo@waldhaus-eifel.de</a>
+        <a href="#">Datenschutz &middot; Impressum</a>
+      </div>
+    </div>
   </footer>
 
   <script>
-    const navToggle = document.getElementById('navToggle');
-    const navLinks = document.getElementById('navLinks');
-    if (navToggle && navLinks) {
-      navToggle.addEventListener('click', () => {
-        navLinks.classList.toggle('open');
-      });
-      navLinks.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-          navLinks.classList.remove('open');
-        });
-      });
+    // Nav scroll state
+    const nav = document.getElementById('mainNav');
+    const onScroll = () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    // Hamburger toggle
+    const toggle = document.getElementById('navToggle');
+    const links = document.getElementById('navLinks');
+    toggle?.addEventListener('click', () => {
+      links.classList.toggle('open');
+    });
+    links?.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => links.classList.remove('open'));
+    });
+
+    // Hero image Ken Burns
+    const heroImg = document.getElementById('heroImg');
+    if (heroImg) {
+      heroImg.complete
+        ? heroImg.classList.add('loaded')
+        : heroImg.addEventListener('load', () => heroImg.classList.add('loaded'));
     }
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    reveals.forEach(el => observer.observe(el));
+
+    // Tour card hover zoom images
+    document.querySelectorAll('.tour-card').forEach(card => {
+      const img = card.querySelector('.tour-photo img');
+      card.addEventListener('mouseenter', () => { if (img) img.style.transform = 'scale(1.06)'; });
+      card.addEventListener('mouseleave', () => { if (img) img.style.transform = ''; });
+    });
   </script>
 
 </body>
