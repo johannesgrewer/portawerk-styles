@@ -10,28 +10,37 @@ export const prerender = true;
   <title>Brenner & Partner — Rechtsanwälte & Notare | Trier</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Mulish:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { overflow-x: hidden; }
+    html { overflow-x: hidden; scroll-behavior: smooth; }
 
     :root {
-      --navy:  #1B2A4A;
-      --gold:  #B8960C;
-      --bg:    #FFFFFF;
-      --warm:  #F8F5F0;
-      --muted: rgba(27,42,74,0.45);
-      --rule:  rgba(27,42,74,0.1);
+      --navy:     #0D1B34;
+      --navy-mid: #162444;
+      --gold:     #B8983A;
+      --gold-lt:  #D4B86A;
+      --cream:    #FAF8F4;
+      --warm:     #F2EEE7;
+      --muted:    rgba(13,27,52,0.42);
+      --border:   rgba(13,27,52,0.1);
+      --serif:    'Playfair Display', Georgia, serif;
+      --sans:     'Inter', system-ui, sans-serif;
     }
 
     body {
-      background: var(--bg);
+      background: var(--cream);
       color: var(--navy);
-      font-family: 'Mulish', sans-serif;
-      min-height: 100vh;
-      overflow-x: hidden;
+      font-family: var(--sans);
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
     }
 
+    ::selection { background: var(--gold); color: #fff; }
+
+    /* ─────────────────────────────────
+       NAV
+    ───────────────────────────────── */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -39,124 +48,133 @@ export const prerender = true;
       display: flex;
       align-items: stretch;
       background: var(--navy);
+      height: 64px;
     }
+
     .nav-brand {
       display: flex;
       align-items: center;
-      padding: 1.1rem 3rem;
-      border-right: 1px solid rgba(255,255,255,0.08);
-      gap: 0.75rem;
+      padding: 0 2.5rem;
+      gap: 0.85rem;
+      border-right: 1px solid rgba(255,255,255,0.07);
+      text-decoration: none;
+      flex-shrink: 0;
     }
-    .nav-emblem {
-      width: 28px;
-      height: 28px;
-      border: 2px solid var(--gold);
+    .nav-seal {
+      width: 32px; height: 32px;
+      border: 1.5px solid var(--gold);
       border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Libre Baskerville', serif;
-      font-size: 0.7rem;
+      display: grid;
+      place-items: center;
+      font-family: var(--serif);
+      font-size: 0.75rem;
       color: var(--gold);
       flex-shrink: 0;
     }
-    .nav-logo {
-      font-family: 'Libre Baskerville', serif;
-      font-size: 0.85rem;
+    .nav-wordmark {
+      font-family: var(--serif);
+      font-size: 0.9rem;
       color: #fff;
       line-height: 1.3;
     }
-    .nav-logo small {
+    .nav-wordmark span {
       display: block;
-      font-size: 0.5rem;
-      font-family: 'Mulish', sans-serif;
+      font-family: var(--sans);
+      font-size: 0.48rem;
       font-weight: 500;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.35);
+      color: rgba(255,255,255,0.3);
+      margin-top: 0.1rem;
     }
+
     .nav-links {
       display: flex;
-      gap: 0;
       list-style: none;
       flex: 1;
-      padding: 0 1.5rem;
+      padding: 0 1rem;
     }
     .nav-links a {
       display: flex;
       align-items: center;
-      padding: 0 1.25rem;
-      font-size: 0.58rem;
-      font-weight: 600;
-      letter-spacing: 0.14em;
+      padding: 0 1.1rem;
+      font-size: 0.57rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.4);
+      color: rgba(255,255,255,0.38);
       text-decoration: none;
       transition: color 0.2s;
     }
-    .nav-links a:hover { color: rgba(255,255,255,0.85); }
-    .nav-contact {
+    .nav-links a:hover { color: rgba(255,255,255,0.82); }
+
+    .nav-cta {
       display: flex;
       align-items: center;
-      padding: 0 2.5rem;
-      font-size: 0.58rem;
+      padding: 0 2.25rem;
+      font-size: 0.57rem;
       font-weight: 600;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: var(--navy);
       background: var(--gold);
+      color: #fff;
       text-decoration: none;
       transition: background 0.2s;
+      flex-shrink: 0;
     }
-    .nav-contact:hover { background: #9a7d0a; }
+    .nav-cta:hover { background: var(--gold-lt); }
 
+    /* ─────────────────────────────────
+       HERO
+    ───────────────────────────────── */
     .hero {
       min-height: 100vh;
-      padding-top: 62px;
+      padding-top: 64px;
       display: grid;
-      grid-template-columns: 1fr 380px;
+      grid-template-columns: 1fr 420px;
     }
 
     /* LEFT */
-    .hero-left {
+    .hero-content {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: 5rem 4rem 5rem 5rem;
-      gap: 2.5rem;
-      border-right: 1px solid var(--rule);
+      padding: clamp(3rem, 6vw, 6rem) clamp(2.5rem, 5vw, 5rem);
+      gap: 2.25rem;
+      border-right: 1px solid var(--border);
+      background: var(--cream);
     }
 
     .eyebrow {
       display: flex;
       align-items: center;
       gap: 0.75rem;
-      font-size: 0.58rem;
-      font-weight: 600;
-      letter-spacing: 0.2em;
+      font-size: 0.57rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--gold);
     }
     .eyebrow::before {
       content: '';
       display: block;
-      width: 24px;
-      height: 1px;
+      width: 22px; height: 1px;
       background: var(--gold);
+      flex-shrink: 0;
     }
 
     .hero-headline {
-      font-family: 'Libre Baskerville', serif;
+      font-family: var(--serif);
+      font-size: clamp(2.6rem, 4.5vw, 4.2rem);
       font-weight: 700;
-      font-size: clamp(2.5rem, 4.5vw, 4rem);
-      line-height: 1.2;
-      letter-spacing: 0.01em;
+      line-height: 1.15;
       color: var(--navy);
+      letter-spacing: -0.01em;
     }
     .hero-headline em {
       font-style: italic;
-      color: var(--gold);
       font-weight: 400;
+      color: var(--gold);
     }
 
     .hero-divider {
@@ -164,439 +182,593 @@ export const prerender = true;
       align-items: center;
       gap: 1rem;
     }
-    .hd-line { flex: 1; height: 1px; background: var(--rule); }
-    .hd-ornament {
-      font-size: 0.65rem;
-      color: var(--gold);
-      letter-spacing: 0.1em;
-    }
+    .hd-line { flex: 1; height: 1px; background: var(--border); }
+    .hd-ornament { font-size: 0.55rem; color: var(--gold); letter-spacing: 0.3em; }
 
-    .hero-body {
-      font-size: 0.88rem;
+    .hero-lead {
+      font-size: 0.9rem;
       font-weight: 300;
-      line-height: 2;
+      line-height: 1.9;
       color: var(--muted);
-      max-width: 44ch;
+      max-width: 42ch;
     }
 
-    /* Practice areas */
     .practice-list {
-      display: flex;
-      flex-direction: column;
-      border: 1px solid var(--rule);
+      border: 1px solid var(--border);
+      overflow: hidden;
     }
-    .pl-header {
+    .pl-head {
       background: var(--navy);
-      padding: 0.5rem 1.25rem;
-      font-size: 0.52rem;
+      padding: 0.55rem 1.25rem;
+      font-size: 0.5rem;
       font-weight: 600;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.4);
+      color: rgba(255,255,255,0.35);
     }
-    .pl-row {
+    .pl-item {
       display: flex;
       align-items: center;
-      padding: 0.85rem 1.25rem;
-      border-bottom: 1px solid var(--rule);
-      gap: 0.75rem;
-      transition: background 0.2s, padding-left 0.2s;
+      gap: 0.8rem;
+      padding: 0.9rem 1.25rem;
+      border-bottom: 1px solid var(--border);
       cursor: default;
+      transition: background 0.18s, padding-left 0.18s;
     }
-    .pl-row:last-child { border-bottom: none; }
-    .pl-row:hover { background: var(--warm); padding-left: 1.75rem; }
-    .pl-bullet {
-      width: 4px; height: 4px;
+    .pl-item:last-child { border-bottom: none; }
+    .pl-item:hover { background: var(--warm); padding-left: 1.75rem; }
+    .pl-dot {
+      width: 5px; height: 5px;
       border-radius: 50%;
       background: var(--gold);
       flex-shrink: 0;
     }
     .pl-name {
-      font-family: 'Libre Baskerville', serif;
-      font-size: 0.9rem;
+      font-family: var(--serif);
+      font-size: 0.92rem;
       color: var(--navy);
     }
-    .pl-arrow {
-      margin-left: auto;
-      font-size: 0.65rem;
-      color: rgba(27,42,74,0.2);
-    }
+    .pl-arrow { margin-left: auto; font-size: 0.6rem; color: rgba(13,27,52,0.2); }
 
     .cta-row {
       display: flex;
       align-items: center;
-      gap: 1.75rem;
+      gap: 2rem;
+      flex-wrap: wrap;
     }
-    .cta-btn {
-      font-size: 0.6rem;
+    .btn-primary {
+      font-size: 0.58rem;
       font-weight: 600;
       letter-spacing: 0.16em;
       text-transform: uppercase;
       color: #fff;
       background: var(--navy);
-      padding: 0.95rem 2.2rem;
+      padding: 1rem 2.25rem;
       text-decoration: none;
       transition: background 0.2s;
     }
-    .cta-btn:hover { background: var(--gold); }
-    .cta-tel {
-      font-family: 'Libre Baskerville', serif;
-      font-size: 0.9rem;
-      color: var(--navy);
+    .btn-primary:hover { background: var(--gold); }
+
+    .tel-link {
       text-decoration: none;
     }
-    .cta-tel small {
+    .tel-link small {
       display: block;
-      font-family: 'Mulish', sans-serif;
-      font-size: 0.52rem;
+      font-size: 0.5rem;
       font-weight: 500;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--muted);
+      margin-bottom: 0.15rem;
     }
-
-    /* RIGHT */
-    .hero-right {
-      background: var(--warm);
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
-
-    .right-block {
-      padding: 2rem 2.5rem;
-      border-bottom: 1px solid var(--rule);
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-    }
-    .right-block:last-child { border-bottom: none; }
-    .rb-label {
-      font-size: 0.52rem;
-      font-weight: 600;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--gold);
-    }
-    .rb-value {
-      font-family: 'Libre Baskerville', serif;
-      font-size: 1.05rem;
-      color: var(--navy);
-      line-height: 1.5;
-    }
-    .rb-sub {
-      font-size: 0.72rem;
-      font-weight: 300;
-      color: var(--muted);
-      line-height: 1.6;
-    }
-
-    /* Team block */
-    .team-block {
-      padding: 2rem 2.5rem;
-      border-bottom: 1px solid var(--rule);
-    }
-    .tb-label {
-      font-size: 0.52rem;
-      font-weight: 600;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 1rem;
-    }
-    .tb-persons {
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-    .tb-person {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-    .tp-avatar {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: var(--navy);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Libre Baskerville', serif;
-      font-size: 0.75rem;
-      color: var(--gold);
-      flex-shrink: 0;
-    }
-    .tp-name {
-      font-family: 'Libre Baskerville', serif;
-      font-size: 0.88rem;
+    .tel-link strong {
+      font-family: var(--serif);
+      font-size: 0.95rem;
+      font-weight: 400;
       color: var(--navy);
     }
-    .tp-role {
-      font-size: 0.62rem;
-      font-weight: 300;
-      color: var(--muted);
-      margin-top: 0.05rem;
-    }
 
-    /* Award bar */
-    .award-block {
-      padding: 1.5rem 2.5rem;
+    /* RIGHT — photo column */
+    .hero-photo {
+      position: relative;
+      overflow: hidden;
       background: var(--navy);
     }
-    .ab-label {
-      font-size: 0.52rem;
-      font-weight: 600;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.3);
-      margin-bottom: 0.6rem;
+    .hero-photo img {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0.65;
+      transition: transform 0.8s ease;
     }
-    .ab-stats {
+    .hero-photo:hover img { transform: scale(1.03); }
+    .hero-photo-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        160deg,
+        rgba(13,27,52,0.5) 0%,
+        rgba(13,27,52,0.15) 50%,
+        rgba(13,27,52,0.75) 100%
+      );
+    }
+    .hero-photo-stats {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 2.5rem;
+      background: linear-gradient(to top, rgba(13,27,52,0.95) 0%, transparent 100%);
       display: flex;
-      gap: 2rem;
+      gap: 2.5rem;
     }
-    .ab-stat {}
-    .abs-num {
-      font-family: 'Libre Baskerville', serif;
+    .stat {}
+    .stat-num {
+      font-family: var(--serif);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.58rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.06em;
+      margin-top: 0.2rem;
+    }
+
+    .hero-photo-badge {
+      position: absolute;
+      top: 2.5rem; right: 2.5rem;
+      border: 1px solid rgba(184,152,58,0.4);
+      padding: 0.75rem 1.25rem;
+      text-align: center;
+      background: rgba(13,27,52,0.5);
+      backdrop-filter: blur(8px);
+    }
+    .badge-year {
+      font-family: var(--serif);
       font-size: 1.6rem;
       font-weight: 700;
       color: var(--gold);
       line-height: 1;
     }
-    .abs-label {
-      font-size: 0.58rem;
-      font-weight: 300;
-      color: rgba(255,255,255,0.35);
-      margin-top: 0.15rem;
+    .badge-label {
+      font-size: 0.48rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin-top: 0.25rem;
     }
 
-    /* ── PHOTO CONTAINERS ── */
+    /* ─────────────────────────────────
+       PHOTO UTIL
+    ───────────────────────────────── */
     .ph { position: relative; overflow: hidden; }
-    .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.55s ease; }
+    .ph img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
     .ph:hover img { transform: scale(1.05); }
 
-    /* ── SECTION 2 — LEISTUNGSFELDER ── */
-    .leistungen {
-      padding: 5rem 3rem;
-      background: var(--warm);
-      border-top: 1px solid var(--rule);
+    /* ─────────────────────────────────
+       SECTION 2 — FACHGEBIETE
+    ───────────────────────────────── */
+    .fachgebiete {
+      background: var(--navy-mid);
+      padding: clamp(4rem, 7vw, 6.5rem) clamp(2rem, 5vw, 5rem);
     }
-    .leistungen-inner {
-      max-width: 1600px;
-      margin: 0 auto;
-    }
-    .leistungen-eyebrow {
+    .fg-inner { max-width: 1500px; margin: 0 auto; }
+
+    .section-eyebrow {
       display: flex;
       align-items: center;
       gap: 0.75rem;
-      font-size: 0.58rem;
-      font-weight: 600;
-      letter-spacing: 0.2em;
+      font-size: 0.57rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--gold);
-      margin-bottom: 1rem;
+      margin-bottom: 0.9rem;
     }
-    .leistungen-eyebrow::before {
+    .section-eyebrow::before {
       content: '';
       display: block;
-      width: 24px;
-      height: 1px;
+      width: 22px; height: 1px;
       background: var(--gold);
+      flex-shrink: 0;
     }
-    .leistungen-title {
-      font-family: 'Libre Baskerville', serif;
-      font-size: clamp(1.6rem, 3vw, 2.5rem);
+
+    .fg-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 2rem;
+      margin-bottom: 3.5rem;
+      flex-wrap: wrap;
+    }
+    .fg-title {
+      font-family: var(--serif);
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
       font-weight: 700;
-      color: var(--navy);
-      margin-bottom: 3rem;
+      color: #fff;
       line-height: 1.2;
     }
-    .leistungen-grid {
+    .fg-lead {
+      font-size: 0.85rem;
+      font-weight: 300;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.38);
+      max-width: 36ch;
+    }
+
+    .fg-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 1.5rem;
+      gap: 1px;
+      background: rgba(255,255,255,0.07);
     }
-    .leistung-card {
-      background: var(--bg);
-      border: 1px solid var(--rule);
-      padding: 2rem 1.75rem;
+    .fg-card {
+      background: var(--navy-mid);
+      padding: 2.5rem 2rem;
       display: flex;
       flex-direction: column;
-      gap: 0.75rem;
-      transition: border-color 0.2s, box-shadow 0.2s;
+      gap: 1rem;
+      transition: background 0.2s;
+      cursor: default;
     }
-    .leistung-card:hover {
-      border-color: var(--gold);
-      box-shadow: 0 4px 20px rgba(27,42,74,0.06);
-    }
-    .leistung-number {
-      font-family: 'Libre Baskerville', serif;
-      font-size: 1.4rem;
+    .fg-card:hover { background: #1a2d50; }
+    .fg-num {
+      font-family: var(--serif);
+      font-size: 2.5rem;
       font-weight: 700;
-      color: var(--gold);
+      color: rgba(184,152,58,0.25);
       line-height: 1;
     }
-    .leistung-name {
-      font-family: 'Libre Baskerville', serif;
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--navy);
-      line-height: 1.3;
+    .fg-rule {
+      width: 28px; height: 1px;
+      background: var(--gold);
+      opacity: 0.6;
     }
-    .leistung-desc {
+    .fg-name {
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: #fff;
+      line-height: 1.35;
+    }
+    .fg-desc {
       font-size: 0.8rem;
       font-weight: 300;
-      line-height: 1.7;
-      color: var(--muted);
+      line-height: 1.75;
+      color: rgba(255,255,255,0.38);
+      flex: 1;
     }
-    .leistung-link {
-      font-size: 0.6rem;
+    .fg-more {
+      font-size: 0.57rem;
       font-weight: 600;
       letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--gold);
       text-decoration: none;
-      margin-top: auto;
-      padding-top: 0.75rem;
-      border-top: 1px solid var(--rule);
+      margin-top: 0.5rem;
       transition: color 0.2s;
     }
-    .leistung-link:hover { color: var(--navy); }
+    .fg-more:hover { color: var(--gold-lt); }
 
-    /* ── SECTION 3 — TEAM & KONTAKT ── */
+    /* ─────────────────────────────────
+       SECTION 3 — TEAM
+    ───────────────────────────────── */
+    .team {
+      padding: clamp(4rem, 7vw, 6.5rem) clamp(2rem, 5vw, 5rem);
+      background: var(--cream);
+      border-top: 1px solid var(--border);
+    }
+    .team-inner { max-width: 1500px; margin: 0 auto; }
+
+    .team-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: end;
+      margin-bottom: 3.5rem;
+    }
+    .team-title {
+      font-family: var(--serif);
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.2;
+    }
+    .team-lead {
+      font-size: 0.88rem;
+      font-weight: 300;
+      line-height: 1.85;
+      color: var(--muted);
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .team-card {
+      background: var(--warm);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .team-card-photo {
+      height: 320px;
+      background: var(--navy);
+    }
+    .team-card-photo img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      transition: transform 0.6s ease;
+      filter: grayscale(25%);
+    }
+    .team-card-photo:hover img { transform: scale(1.04); }
+    .team-card-photo-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(13,27,52,0.45) 0%, transparent 55%);
+    }
+    .team-card-body {
+      padding: 1.5rem 1.75rem;
+      border-top: 2px solid var(--gold);
+    }
+    .tc-name {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--navy);
+    }
+    .tc-role {
+      font-size: 0.72rem;
+      font-weight: 400;
+      color: var(--muted);
+      margin-top: 0.25rem;
+      letter-spacing: 0.04em;
+    }
+    .tc-areas {
+      margin-top: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+    .tc-area {
+      font-size: 0.55rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid rgba(184,152,58,0.35);
+      padding: 0.25rem 0.65rem;
+    }
+
+    /* ─────────────────────────────────
+       SECTION 4 — KONTAKT
+    ───────────────────────────────── */
     .kontakt {
-      padding: 5rem 3rem;
-      background: var(--bg);
-      border-top: 1px solid var(--rule);
+      background: var(--navy);
+      padding: clamp(4rem, 7vw, 6.5rem) clamp(2rem, 5vw, 5rem);
     }
     .kontakt-inner {
-      max-width: 1600px;
+      max-width: 1500px;
       margin: 0 auto;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: start;
+      gap: 5rem;
+      align-items: center;
     }
-    .kontakt-photo-wrap {
-      border: 3px solid var(--gold);
-      position: relative;
-    }
-    .kontakt-photo-label {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 1rem 1.5rem;
-      background: linear-gradient(to top, rgba(27,42,74,0.85), transparent);
-      z-index: 2;
-    }
-    .kpl-name {
-      font-family: 'Libre Baskerville', serif;
-      font-size: 1rem;
-      color: #fff;
-    }
-    .kpl-role {
-      font-size: 0.62rem;
-      font-weight: 300;
-      color: rgba(255,255,255,0.6);
-      letter-spacing: 0.08em;
-    }
+
     .kontakt-content {
       display: flex;
       flex-direction: column;
-      gap: 2rem;
+      gap: 2.25rem;
     }
     .kontakt-eyebrow {
       display: flex;
       align-items: center;
       gap: 0.75rem;
-      font-size: 0.58rem;
-      font-weight: 600;
-      letter-spacing: 0.2em;
+      font-size: 0.57rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--gold);
     }
     .kontakt-eyebrow::before {
       content: '';
       display: block;
-      width: 24px;
-      height: 1px;
+      width: 22px; height: 1px;
       background: var(--gold);
+      flex-shrink: 0;
     }
     .kontakt-title {
-      font-family: 'Libre Baskerville', serif;
-      font-size: clamp(1.4rem, 2.5vw, 2.2rem);
+      font-family: var(--serif);
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
       font-weight: 700;
-      color: var(--navy);
+      color: #fff;
       line-height: 1.2;
     }
-    .kontakt-body {
+    .kontakt-lead {
       font-size: 0.88rem;
       font-weight: 300;
-      line-height: 2;
-      color: var(--muted);
-      max-width: 42ch;
+      line-height: 1.9;
+      color: rgba(255,255,255,0.4);
+      max-width: 40ch;
     }
     .kontakt-details {
       display: flex;
       flex-direction: column;
-      gap: 0.75rem;
-      padding: 1.5rem;
-      border: 1px solid var(--rule);
-      background: var(--warm);
+      gap: 0;
+      border: 1px solid rgba(255,255,255,0.08);
     }
     .kd-row {
       display: flex;
-      gap: 1rem;
+      gap: 1.5rem;
       align-items: baseline;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
     }
+    .kd-row:last-child { border-bottom: none; }
     .kd-label {
-      font-size: 0.52rem;
+      font-size: 0.5rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      min-width: 72px;
+      flex-shrink: 0;
+    }
+    .kd-value {
+      font-family: var(--serif);
+      font-size: 0.88rem;
+      font-weight: 400;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.5;
+    }
+
+    .kontakt-cta {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .btn-gold {
+      font-size: 0.58rem;
       font-weight: 600;
       letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: var(--gold);
-      min-width: 70px;
-    }
-    .kd-value {
-      font-family: 'Libre Baskerville', serif;
-      font-size: 0.88rem;
       color: var(--navy);
+      background: var(--gold);
+      padding: 1rem 2.25rem;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .btn-gold:hover { background: var(--gold-lt); }
+
+    .kontakt-tel {
+      text-decoration: none;
+    }
+    .kontakt-tel small {
+      display: block;
+      font-size: 0.5rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 0.15rem;
+    }
+    .kontakt-tel strong {
+      font-family: var(--serif);
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: rgba(255,255,255,0.7);
     }
 
-    @media (max-width: 1000px) {
-      .leistungen-grid { grid-template-columns: repeat(2, 1fr); }
-      .kontakt-inner { grid-template-columns: 1fr; }
+    /* Kontakt photo */
+    .kontakt-photo-wrap {
+      position: relative;
     }
-    @media (max-width: 600px) {
-      .leistungen-grid { grid-template-columns: 1fr; }
-      .leistungen { padding: 3rem 1.5rem; }
-      .kontakt { padding: 3rem 1.5rem; }
+    .kontakt-photo-frame {
+      position: relative;
+      overflow: hidden;
+      height: 520px;
+    }
+    .kontakt-photo-frame img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s ease;
+      filter: brightness(0.7) saturate(0.8);
+    }
+    .kontakt-photo-frame:hover img { transform: scale(1.03); }
+    .kontakt-photo-frame::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(13,27,52,0.4) 0%, transparent 70%);
+    }
+    .kontakt-photo-accent {
+      position: absolute;
+      top: -1.5rem; left: -1.5rem;
+      width: 80px; height: 80px;
+      border: 2px solid var(--gold);
+      z-index: 2;
+    }
+    .kontakt-photo-caption {
+      position: absolute;
+      bottom: -1.5rem; right: -1.5rem;
+      background: var(--gold);
+      padding: 1.25rem 1.75rem;
+      z-index: 2;
+    }
+    .kpc-name {
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+    }
+    .kpc-role {
+      font-size: 0.55rem;
+      font-weight: 400;
+      color: rgba(255,255,255,0.7);
+      letter-spacing: 0.08em;
+      margin-top: 0.2rem;
+    }
+
+    /* ─────────────────────────────────
+       RESPONSIVE
+    ───────────────────────────────── */
+    @media (max-width: 1100px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-photo { min-height: 320px; }
+      .fg-grid { grid-template-columns: repeat(2, 1fr); }
+      .team-grid { grid-template-columns: repeat(2, 1fr); }
+      .kontakt-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .kontakt-photo-accent,
+      .kontakt-photo-caption { display: none; }
+    }
+    @media (max-width: 700px) {
+      .fg-grid { grid-template-columns: 1fr; }
+      .team-grid { grid-template-columns: 1fr; }
+      .team-header { grid-template-columns: 1fr; }
+      .fg-header { flex-direction: column; align-items: flex-start; }
+      .nav-links { display: none; }
     }
   </style>
 </head>
 <body>
+
+  <!-- NAV -->
   <nav>
-    <div class="nav-brand">
-      <div class="nav-emblem">B</div>
-      <div class="nav-logo">
-        Brenner & Partner
-        <small>Rechtsanwälte · Notare</small>
+    <a href="#" class="nav-brand">
+      <div class="nav-seal">B</div>
+      <div class="nav-wordmark">
+        Brenner &amp; Partner
+        <span>Rechtsanwälte · Notare · Trier</span>
       </div>
-    </div>
+    </a>
     <ul class="nav-links">
       <li><a href="#">Leistungen</a></li>
       <li><a href="#">Kanzlei</a></li>
       <li><a href="#">Team</a></li>
       <li><a href="#">Aktuelles</a></li>
     </ul>
-    <a href="#" class="nav-contact">Beratungsgespräch</a>
+    <a href="#" class="nav-cta">Beratungsgespräch</a>
   </nav>
 
+  <!-- HERO -->
   <section class="hero">
-    <div class="hero-left">
-      <div class="eyebrow">Rechtsanwälte & Notare · Trier</div>
+
+    <!-- Left: Content -->
+    <div class="hero-content">
+      <div class="eyebrow">Rechtsanwälte &amp; Notare · Gegründet 1998</div>
 
       <h1 class="hero-headline">
         Ihr Recht.<br>
@@ -606,169 +778,233 @@ export const prerender = true;
 
       <div class="hero-divider">
         <div class="hd-line"></div>
-        <div class="hd-ornament">✦ ✦ ✦</div>
+        <div class="hd-ornament">✦ &nbsp; ✦ &nbsp; ✦</div>
         <div class="hd-line"></div>
       </div>
 
-      <p class="hero-body">
-        Seit 1998 vertreten wir unsere Mandanten mit Präzision,
-        Diskretion und echtem Engagement. Rechtssicherheit ist
-        kein Zufall — sie ist handwerkliche Arbeit.
+      <p class="hero-lead">
+        Seit 1998 vertreten wir unsere Mandanten mit Präzision, Diskretion
+        und echtem Engagement. Rechtssicherheit ist kein Zufall — sie ist
+        handwerkliche Arbeit auf höchstem Niveau.
       </p>
 
       <div class="practice-list">
-        <div class="pl-header">Schwerpunkte</div>
-        <div class="pl-row">
-          <span class="pl-bullet"></span>
-          <span class="pl-name">Gesellschafts- & Unternehmensrecht</span>
+        <div class="pl-head">Schwerpunkte</div>
+        <div class="pl-item">
+          <span class="pl-dot"></span>
+          <span class="pl-name">Gesellschafts- &amp; Unternehmensrecht</span>
           <span class="pl-arrow">→</span>
         </div>
-        <div class="pl-row">
-          <span class="pl-bullet"></span>
+        <div class="pl-item">
+          <span class="pl-dot"></span>
           <span class="pl-name">Arbeitsrecht</span>
           <span class="pl-arrow">→</span>
         </div>
-        <div class="pl-row">
-          <span class="pl-bullet"></span>
-          <span class="pl-name">Immobilien & Erbrecht</span>
+        <div class="pl-item">
+          <span class="pl-dot"></span>
+          <span class="pl-name">Immobilien &amp; Erbrecht</span>
           <span class="pl-arrow">→</span>
         </div>
-        <div class="pl-row">
-          <span class="pl-bullet"></span>
-          <span class="pl-name">Notariat & Beurkundungen</span>
+        <div class="pl-item">
+          <span class="pl-dot"></span>
+          <span class="pl-name">Notariat &amp; Beurkundungen</span>
           <span class="pl-arrow">→</span>
         </div>
       </div>
 
       <div class="cta-row">
-        <a href="#" class="cta-btn">Termin vereinbaren</a>
-        <a href="#" class="cta-tel">
+        <a href="#" class="btn-primary">Termin vereinbaren</a>
+        <a href="tel:+4965197430" class="tel-link">
           <small>Direktwahl</small>
-          0651 / 97 43 0
+          <strong>0651 / 97 43 0</strong>
         </a>
       </div>
     </div>
 
-    <div class="hero-right">
-      <div class="right-block">
-        <div class="rb-label">Standort</div>
-        <div class="rb-value">Paulinstraße 18, Trier</div>
-        <div class="rb-sub">Mo – Fr: 8:30 – 18:00 Uhr<br>Termine nach Vereinbarung</div>
+    <!-- Right: Photo -->
+    <div class="hero-photo">
+      <img
+        src="https://images.unsplash.com/photo-1521587765099-8835e7201186?auto=format&fit=crop&w=900&h=1200&q=85"
+        alt="Kanzleibibliothek — Brenner & Partner Trier"
+        loading="eager"
+      />
+      <div class="hero-photo-overlay"></div>
+
+      <div class="hero-photo-badge">
+        <div class="badge-year">1998</div>
+        <div class="badge-label">Gegründet in Trier</div>
       </div>
 
-      <div class="team-block">
-        <div class="tb-label">Das Team</div>
-        <div class="tb-persons">
-          <div class="tb-person">
-            <div class="tp-avatar">HB</div>
-            <div>
-              <div class="tp-name">Dr. Hans Brenner</div>
-              <div class="tp-role">Fachanwalt für Gesellschaftsrecht</div>
-            </div>
-          </div>
-          <div class="tb-person">
-            <div class="tp-avatar">SP</div>
-            <div>
-              <div class="tp-name">Sandra Pohl</div>
-              <div class="tp-role">Fachanwältin für Arbeitsrecht</div>
-            </div>
-          </div>
-          <div class="tb-person">
-            <div class="tp-avatar">MK</div>
-            <div>
-              <div class="tp-name">Markus Kern</div>
-              <div class="tp-role">Notar</div>
-            </div>
-          </div>
+      <div class="hero-photo-stats">
+        <div class="stat">
+          <div class="stat-num">26</div>
+          <div class="stat-label">Jahre Erfahrung</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">1.400+</div>
+          <div class="stat-label">Mandate / Jahr</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">8</div>
+          <div class="stat-label">Anwälte</div>
         </div>
       </div>
+    </div>
 
-      <div class="award-block">
-        <div class="ab-label">Kanzlei in Zahlen</div>
-        <div class="ab-stats">
-          <div class="ab-stat">
-            <div class="abs-num">26</div>
-            <div class="abs-label">Jahre Erfahrung</div>
-          </div>
-          <div class="ab-stat">
-            <div class="abs-num">1.400+</div>
-            <div class="abs-label">Mandate / Jahr</div>
-          </div>
-          <div class="ab-stat">
-            <div class="abs-num">8</div>
-            <div class="abs-label">Anwälte</div>
-          </div>
+  </section>
+
+  <!-- SECTION 2 — FACHGEBIETE -->
+  <section class="fachgebiete">
+    <div class="fg-inner">
+      <div class="section-eyebrow">Rechtsbereiche</div>
+      <div class="fg-header">
+        <h2 class="fg-title">
+          Unsere<br>
+          Schwerpunkte
+        </h2>
+        <p class="fg-lead">
+          Wir bündeln tiefes Fachwissen in den Bereichen, die für unsere
+          Mandanten wirklich zählen — präzise, verlässlich, diskret.
+        </p>
+      </div>
+
+      <div class="fg-grid">
+        <div class="fg-card">
+          <div class="fg-num">01</div>
+          <div class="fg-rule"></div>
+          <div class="fg-name">Gesellschafts- &amp;<br>Unternehmensrecht</div>
+          <p class="fg-desc">Gründung, Umstrukturierung, Gesellschafterstreitigkeiten und M&amp;A-Transaktionen. Wir begleiten Unternehmen durch jede Phase — vertragsrechtlich präzise und strategisch durchdacht.</p>
+          <a href="#" class="fg-more">Mehr erfahren →</a>
+        </div>
+        <div class="fg-card">
+          <div class="fg-num">02</div>
+          <div class="fg-rule"></div>
+          <div class="fg-name">Arbeitsrecht</div>
+          <p class="fg-desc">Kündigungsschutz, Aufhebungsverträge, Betriebsvereinbarungen und Arbeitsgerichtsverfahren — für Arbeitnehmer und Arbeitgeber gleichermaßen kompetent vertreten.</p>
+          <a href="#" class="fg-more">Mehr erfahren →</a>
+        </div>
+        <div class="fg-card">
+          <div class="fg-num">03</div>
+          <div class="fg-rule"></div>
+          <div class="fg-name">Immobilien &amp;<br>Erbrecht</div>
+          <p class="fg-desc">Kaufverträge, Erbschaftsstreitigkeiten, Testamentgestaltung, Vorsorgevollmachten und notarielle Beurkundungen aus einer Hand — mit rechtssicherer Dokumentation.</p>
+          <a href="#" class="fg-more">Mehr erfahren →</a>
+        </div>
+        <div class="fg-card">
+          <div class="fg-num">04</div>
+          <div class="fg-rule"></div>
+          <div class="fg-name">Notariat &amp;<br>Beurkundungen</div>
+          <p class="fg-desc">Beglaubigte Unterschriften, Grundstücksübertragungen, Gesellschaftsgründungen und Erbvertragsbeurkundungen — neutral, unparteiisch, rechtlich wasserdicht.</p>
+          <a href="#" class="fg-more">Mehr erfahren →</a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- SECTION 2 — LEISTUNGSFELDER -->
-  <section class="leistungen">
-    <div class="leistungen-inner">
-      <div class="leistungen-eyebrow">Rechtsbereiche</div>
-      <h2 class="leistungen-title">Unsere Schwerpunkte</h2>
-      <div class="leistungen-grid">
+  <!-- SECTION 3 — TEAM -->
+  <section class="team">
+    <div class="team-inner">
 
-        <div class="leistung-card">
-          <div class="leistung-number">01</div>
-          <div class="leistung-name">Gesellschafts- &amp; Unternehmensrecht</div>
-          <p class="leistung-desc">Gründung, Umstrukturierung, Gesellschafterstreitigkeiten und M&amp;A-Transaktionen. Wir begleiten Unternehmen in jeder Phase.</p>
-          <a href="#" class="leistung-link">Mehr erfahren →</a>
+      <div class="team-header">
+        <div>
+          <div class="section-eyebrow">Das Team</div>
+          <h2 class="team-title">
+            Erfahrung trifft<br>
+            <em style="font-family:var(--serif);font-style:italic;color:var(--gold);font-weight:400;">Persönlichkeit</em>
+          </h2>
+        </div>
+        <p class="team-lead">
+          Hinter Brenner &amp; Partner stehen Menschen, denen Ihr Anliegen
+          wirklich am Herzen liegt. Keine anonymen Aktenberge — sondern
+          Anwälte, die Sie persönlich kennen und mit Haltung vertreten.
+        </p>
+      </div>
+
+      <div class="team-grid">
+
+        <div class="team-card">
+          <div class="team-card-photo ph">
+            <img
+              src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=700&h=700&q=80"
+              alt="Dr. Hans Brenner — Fachanwalt für Gesellschaftsrecht"
+              loading="lazy"
+            />
+            <div class="team-card-photo-overlay"></div>
+          </div>
+          <div class="team-card-body">
+            <div class="tc-name">Dr. Hans Brenner</div>
+            <div class="tc-role">Fachanwalt für Handels- und Gesellschaftsrecht · Gründungspartner</div>
+            <div class="tc-areas">
+              <span class="tc-area">Gesellschaftsrecht</span>
+              <span class="tc-area">M&amp;A</span>
+              <span class="tc-area">Unternehmensrecht</span>
+            </div>
+          </div>
         </div>
 
-        <div class="leistung-card">
-          <div class="leistung-number">02</div>
-          <div class="leistung-name">Arbeitsrecht</div>
-          <p class="leistung-desc">Kündigungsschutz, Aufhebungsverträge, Betriebsrat und Arbeitsgerichtsverfahren — für Arbeitnehmer und Arbeitgeber.</p>
-          <a href="#" class="leistung-link">Mehr erfahren →</a>
+        <div class="team-card">
+          <div class="team-card-photo ph">
+            <img
+              src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=700&h=700&q=80"
+              alt="Sandra Pohl — Fachanwältin für Arbeitsrecht"
+              loading="lazy"
+            />
+            <div class="team-card-photo-overlay"></div>
+          </div>
+          <div class="team-card-body">
+            <div class="tc-name">Sandra Pohl</div>
+            <div class="tc-role">Fachanwältin für Arbeitsrecht · Partnerin</div>
+            <div class="tc-areas">
+              <span class="tc-area">Arbeitsrecht</span>
+              <span class="tc-area">Betriebsrat</span>
+              <span class="tc-area">Tarifrecht</span>
+            </div>
+          </div>
         </div>
 
-        <div class="leistung-card">
-          <div class="leistung-number">03</div>
-          <div class="leistung-name">Immobilien &amp; Erbrecht</div>
-          <p class="leistung-desc">Kaufverträge, Erbschaftsstreitigkeiten, Testamentgestaltung und notarielle Beurkundungen aus einer Hand.</p>
-          <a href="#" class="leistung-link">Mehr erfahren →</a>
-        </div>
-
-        <div class="leistung-card">
-          <div class="leistung-number">04</div>
-          <div class="leistung-name">Notariat &amp; Beurkundungen</div>
-          <p class="leistung-desc">Beglaubigte Unterschriften, Grundstücksübertragungen, Vorsorgevollmachten und gesellschaftsrechtliche Beurkundungen.</p>
-          <a href="#" class="leistung-link">Mehr erfahren →</a>
+        <div class="team-card">
+          <div class="team-card-photo ph">
+            <img
+              src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=700&h=700&q=80"
+              alt="Markus Kern — Notar"
+              loading="lazy"
+            />
+            <div class="team-card-photo-overlay"></div>
+          </div>
+          <div class="team-card-body">
+            <div class="tc-name">Markus Kern</div>
+            <div class="tc-role">Notar · Fachanwalt für Erbrecht</div>
+            <div class="tc-areas">
+              <span class="tc-area">Notariat</span>
+              <span class="tc-area">Erbrecht</span>
+              <span class="tc-area">Immobilien</span>
+            </div>
+          </div>
         </div>
 
       </div>
     </div>
   </section>
 
-  <!-- SECTION 3 — TEAM & KONTAKT -->
+  <!-- SECTION 4 — KONTAKT -->
   <section class="kontakt">
     <div class="kontakt-inner">
 
-      <div class="kontakt-photo-wrap">
-        <div class="ph" style="height:460px;">
-          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=1200&h=800&q=80" alt="Dr. Hans Brenner — Brenner & Partner" loading="lazy"/>
-          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(27,42,74,0.6) 0%,transparent 55%);pointer-events:none;"></div>
-        </div>
-        <div class="kontakt-photo-label">
-          <div class="kpl-name">Dr. Hans Brenner</div>
-          <div class="kpl-role">Fachanwalt für Gesellschaftsrecht · Gründungspartner</div>
-        </div>
-      </div>
-
       <div class="kontakt-content">
         <div class="kontakt-eyebrow">Persönliche Beratung</div>
-        <h2 class="kontakt-title">Ihr direkter Draht<br>zur Kanzlei.</h2>
-        <p class="kontakt-body">
-          Rechtsfragen brauchen klare Antworten — und einen Anwalt, dem Sie vertrauen.
-          Wir nehmen uns Zeit für Ihr Anliegen. Das erste Gespräch führen wir kostenfrei,
+        <h2 class="kontakt-title">
+          Ihr direkter Draht<br>
+          zur Kanzlei.
+        </h2>
+        <p class="kontakt-lead">
+          Rechtsfragen brauchen klare Antworten — und einen Anwalt, dem
+          Sie vertrauen können. Das erste Gespräch führen wir kostenfrei,
           damit Sie wissen, wo Sie stehen.
         </p>
         <div class="kontakt-details">
           <div class="kd-row">
             <div class="kd-label">Adresse</div>
-            <div class="kd-value">Paulinstraße 18, 54292 Trier</div>
+            <div class="kd-value">Paulinstraße 18<br>54292 Trier</div>
           </div>
           <div class="kd-row">
             <div class="kd-label">Telefon</div>
@@ -780,15 +1016,30 @@ export const prerender = true;
           </div>
           <div class="kd-row">
             <div class="kd-label">Zeiten</div>
-            <div class="kd-value">Mo – Fr, 8:30 – 18:00 Uhr</div>
+            <div class="kd-value">Mo – Fr, 8:30 – 18:00 Uhr<br>Termine nach Vereinbarung</div>
           </div>
         </div>
-        <div class="cta-row">
-          <a href="#" class="cta-btn">Termin vereinbaren</a>
-          <a href="tel:+496519743" class="cta-tel">
+        <div class="kontakt-cta">
+          <a href="#" class="btn-gold">Termin vereinbaren</a>
+          <a href="tel:+4965197430" class="kontakt-tel">
             <small>Direktwahl</small>
-            0651 / 97 43 0
+            <strong>0651 / 97 43 0</strong>
           </a>
+        </div>
+      </div>
+
+      <div class="kontakt-photo-wrap">
+        <div class="kontakt-photo-accent"></div>
+        <div class="kontakt-photo-frame">
+          <img
+            src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=900&h=1100&q=85"
+            alt="Kanzlei Brenner & Partner — Paulinstraße, Trier"
+            loading="lazy"
+          />
+        </div>
+        <div class="kontakt-photo-caption">
+          <div class="kpc-name">Brenner &amp; Partner</div>
+          <div class="kpc-role">Paulinstraße 18 · 54292 Trier</div>
         </div>
       </div>
 
