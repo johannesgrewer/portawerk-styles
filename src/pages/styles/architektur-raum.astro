@@ -7,951 +7,1131 @@ export const prerender = true;
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
-  <title>Volumen — Architekturbuero Trier</title>
-  <meta name="description" content="Volumen — Architekturbuero in Trier. Form folgt Haltung. Seit 2014." />
+  <title>Volumen Architekten — Trier</title>
+  <meta name="description" content="Volumen Architekten. Architekturbuero in Trier. Form folgt Haltung. Seit 2014." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
 
   <style>
-    html { overflow-x: hidden; }
-    /* ===== RESET & BASE ===== */
-    *, *::before, *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    :root {
+      --bg:        #F8F7F4;
+      --bg-alt:    #F2F1EE;
+      --bg-dark:   #0C0C0A;
+      --ink:       #0C0C0A;
+      --ink-mid:   #5E5E58;
+      --ink-light: #ADADAA;
+      --rule:      rgba(12,12,10,0.09);
+      --rule-faint:rgba(12,12,10,0.05);
+      --accent:    #1B3FFF;
+      --font-d:    'Syne', sans-serif;
+      --font-b:    'DM Sans', sans-serif;
     }
 
-    html {
-      scroll-behavior: smooth;
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; overflow-x:hidden; }
+    body { font-family:var(--font-b); background:var(--bg); color:var(--ink); line-height:1.6; overflow-x:hidden; }
+    a { text-decoration:none; color:inherit; }
+    img { display:block; max-width:100%; }
+
+    /* ===== NAV ===== */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 52px;
+      height: 58px;
+      background: rgba(248,247,244,0.9);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--rule);
     }
 
-    body {
-      font-family: 'Archivo', sans-serif;
-      color: #1A1A1A;
-      background-color: #FFFFFF;
-      line-height: 1.6;
-      overflow-x: hidden;
+    .nav-logo {
+      font-family: var(--font-d);
+      font-weight: 800;
+      font-size: 14px;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--ink);
     }
 
-    img {
-      max-width: 100%;
-      height: auto;
-      display: block;
+    .nav-links {
+      display: flex;
+      gap: 44px;
+      list-style: none;
     }
 
-    a {
-      text-decoration: none;
-      color: inherit;
+    .nav-links li a {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+      transition: color 0.22s;
     }
 
-    h1, h2, h3, h4 {
-      font-family: 'Archivo', sans-serif;
-      line-height: 1.15;
-      font-weight: 700;
-    }
+    .nav-links li a:hover { color: var(--ink); }
 
-    /* ===== GRID BACKGROUND ===== */
-    .grid-bg {
-      background-image:
-        linear-gradient(rgba(26, 26, 26, 0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(26, 26, 26, 0.04) 1px, transparent 1px);
-      background-size: 40px 40px;
-    }
-
-    /* ===== GRID REVEAL ANIMATION ===== */
-    .grid-reveal {
-      opacity: 1;
-      transform: scale(1);
-      transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
-                  transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .grid-reveal.revealed {
-      opacity: 1;
-      transform: scale(1);
+    .nav-coord {
+      font-size: 11px;
+      font-weight: 300;
+      color: var(--ink-light);
+      letter-spacing: 0.06em;
     }
 
     /* ===== HERO ===== */
     .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       min-height: 100vh;
-      display: flex;
-      align-items: center;
-      padding: 80px 60px;
+      padding-top: 58px;
       position: relative;
       overflow: hidden;
     }
 
-    /* ===== HERO GRID OVERLAY — draws in on load ===== */
-    .hero-grid-overlay {
+    /* Blueprint grid — fades in */
+    .hero::before {
+      content: '';
       position: absolute;
       inset: 0;
+      background-image:
+        linear-gradient(var(--rule-faint) 1px, transparent 1px),
+        linear-gradient(90deg, var(--rule-faint) 1px, transparent 1px);
+      background-size: 52px 52px;
       pointer-events: none;
-      z-index: 0;
-      overflow: hidden;
+      opacity: 0;
+      animation: gridFadeIn 1.6s ease 0.3s forwards;
     }
 
-    /* Horizontal lines */
-    .hero-grid-overlay::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image: linear-gradient(
-        rgba(26, 26, 26, 0.055) 1px,
-        transparent 1px
-      );
-      background-size: 100% 60px;
-      /* Draw in from top — clip-path height animates 0→100% */
-      clip-path: inset(0 0 100% 0);
-      animation: gridDrawH 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.2s forwards;
-    }
+    @keyframes gridFadeIn { to { opacity: 1; } }
 
-    /* Vertical lines */
-    .hero-grid-overlay::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image: linear-gradient(
-        90deg,
-        rgba(26, 26, 26, 0.055) 1px,
-        transparent 1px
-      );
-      background-size: 60px 100%;
-      /* Draw in from left */
-      clip-path: inset(0 100% 0 0);
-      animation: gridDrawV 1.2s cubic-bezier(0.4, 0, 0.2, 1) 0.5s forwards;
-    }
-
-    @keyframes gridDrawH {
-      to { clip-path: inset(0 0 0% 0); }
-    }
-
-    @keyframes gridDrawV {
-      to { clip-path: inset(0 0% 0 0); }
-    }
-
-    .hero-inner {
+    /* Left — text */
+    .hero-left {
       display: flex;
-      align-items: center;
-      gap: 80px;
-      max-width: 1600px;
-      margin: 0 auto;
-      width: 100%;
+      flex-direction: column;
+      justify-content: center;
+      padding: 88px 68px 88px 68px;
       position: relative;
       z-index: 1;
     }
 
-    .hero-text {
-      flex: 0 0 40%;
-      max-width: 40%;
-    }
-
-    .hero-firm-name {
-      font-size: 13px;
-      font-weight: 800;
-      letter-spacing: 0.35em;
-      text-transform: uppercase;
-      color: #1A1A1A;
-      margin-bottom: 24px;
-      opacity: 0;
-      transform: translateY(12px);
-      animation: heroFadeUp 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.8s forwards;
-    }
-
-    .hero-headline {
-      font-size: clamp(36px, 4vw, 56px);
+    .hero-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 11px;
       font-weight: 500;
-      color: #1A1A1A;
-      margin-bottom: 16px;
-      letter-spacing: -0.01em;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      margin-bottom: 44px;
       opacity: 0;
-      transform: translateY(12px);
-      animation: heroFadeUp 0.7s cubic-bezier(0.4, 0, 0.2, 1) 1.0s forwards;
+      animation: fadeUp 0.65s ease 0.5s forwards;
     }
 
-    .hero-meta {
-      font-size: 13px;
-      font-weight: 400;
-      color: #888888;
-      letter-spacing: 0.08em;
-      margin-bottom: 32px;
-      opacity: 0;
-      transform: translateY(12px);
-      animation: heroFadeUp 0.7s cubic-bezier(0.4, 0, 0.2, 1) 1.15s forwards;
-    }
-
-    .hero-accent-line {
-      width: 48px;
-      height: 2px;
-      background-color: #E07A2F;
-      margin-bottom: 32px;
-      transform-origin: left;
-      transform: scaleX(0);
-      animation: accentLineGrow 0.6s cubic-bezier(0.4, 0, 0.2, 1) 1.3s forwards;
-    }
-
-    @keyframes accentLineGrow {
-      to { transform: scaleX(1); }
-    }
-
-    .hero-cta {
-      font-size: 14px;
-      font-weight: 600;
-      color: #E07A2F;
-      letter-spacing: 0.05em;
-      transition: letter-spacing 0.3s ease;
-      display: inline-block;
-      opacity: 0;
-      animation: heroFadeUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) 1.45s forwards;
-    }
-
-    .hero-cta:hover {
-      letter-spacing: 0.12em;
-    }
-
-    @keyframes heroFadeUp {
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ===== HERO IMAGE WITH MEASUREMENT LINES ===== */
-    .hero-image-wrap {
-      flex: 0 0 55%;
-      max-width: 55%;
-      position: relative;
-      padding: 28px;
-      opacity: 0;
-      animation: heroFadeUp 0.9s cubic-bezier(0.4, 0, 0.2, 1) 0.9s forwards;
-    }
-
-    .hero-image-wrap img {
-      width: 100%;
-      height: 520px;
-      object-fit: cover;
-      filter: saturate(0.5) contrast(1.05);
+    .hero-eyebrow::before {
+      content: '';
       display: block;
-    }
-
-    /* Measurement lines — top */
-    .measure-top {
-      position: absolute;
-      top: 0;
-      left: 28px;
-      right: 28px;
-      height: 28px;
-    }
-
-    .measure-top::before {
-      content: '';
-      position: absolute;
-      bottom: 8px;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background-color: #1A1A1A;
-      opacity: 0.25;
-    }
-
-    .measure-top::after {
-      content: '';
-      position: absolute;
-      bottom: 8px;
-      left: 0;
-      width: 1px;
-      height: 10px;
-      background-color: #1A1A1A;
-      opacity: 0.25;
-      box-shadow: calc(100%) 0 0 0 rgba(26, 26, 26, 0.25);
-    }
-
-    /* Measurement lines — right */
-    .measure-right {
-      position: absolute;
-      top: 28px;
-      right: 0;
-      bottom: 28px;
       width: 28px;
-    }
-
-    .measure-right::before {
-      content: '';
-      position: absolute;
-      left: 8px;
-      top: 0;
-      bottom: 0;
-      width: 1px;
-      background-color: #1A1A1A;
-      opacity: 0.25;
-    }
-
-    .measure-right::after {
-      content: '';
-      position: absolute;
-      left: 8px;
-      top: 0;
       height: 1px;
-      width: 10px;
-      background-color: #1A1A1A;
-      opacity: 0.25;
-      box-shadow: 0 calc(100%) 0 0 rgba(26, 26, 26, 0.25);
+      background: currentColor;
+      flex-shrink: 0;
     }
 
-    /* Measurement lines — bottom */
-    .measure-bottom {
-      position: absolute;
-      bottom: 0;
-      left: 28px;
-      right: 28px;
-      height: 28px;
+    .hero-h1 {
+      font-family: var(--font-d);
+      font-size: clamp(46px, 5.8vw, 86px);
+      font-weight: 700;
+      line-height: 1.06;
+      letter-spacing: -0.028em;
+      color: var(--ink);
+      margin-bottom: 36px;
+      opacity: 0;
+      animation: fadeUp 0.75s ease 0.7s forwards;
     }
 
-    .measure-bottom::before {
-      content: '';
-      position: absolute;
-      top: 8px;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background-color: #1A1A1A;
-      opacity: 0.25;
+    .hero-h1 em {
+      font-style: normal;
+      color: var(--ink-light);
     }
 
-    .measure-bottom::after {
-      content: '';
-      position: absolute;
-      top: 8px;
-      left: 0;
-      width: 1px;
-      height: 10px;
-      background-color: #1A1A1A;
-      opacity: 0.25;
-      box-shadow: calc(100%) 0 0 0 rgba(26, 26, 26, 0.25);
+    .hero-desc {
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--ink-mid);
+      line-height: 1.68;
+      max-width: 340px;
+      margin-bottom: 52px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.9s forwards;
     }
 
-    /* Measurement lines — left */
-    .measure-left {
-      position: absolute;
-      top: 28px;
-      left: 0;
-      bottom: 28px;
-      width: 28px;
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      opacity: 0;
+      animation: fadeUp 0.65s ease 1.05s forwards;
     }
 
-    .measure-left::before {
-      content: '';
-      position: absolute;
-      right: 8px;
-      top: 0;
-      bottom: 0;
-      width: 1px;
-      background-color: #1A1A1A;
-      opacity: 0.25;
+    .btn-filled {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-d);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--ink);
+      padding: 15px 30px;
+      transition: background 0.24s, transform 0.24s;
     }
 
-    .measure-left::after {
-      content: '';
-      position: absolute;
-      right: 8px;
-      top: 0;
-      height: 1px;
-      width: 10px;
-      background-color: #1A1A1A;
-      opacity: 0.25;
-      box-shadow: 0 calc(100%) 0 0 rgba(26, 26, 26, 0.25);
+    .btn-filled:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
     }
 
-    /* Dimension labels */
-    .dim-label {
+    .btn-ghost {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.22s, gap 0.22s;
+    }
+
+    .btn-ghost:hover { color: var(--ink); gap: 14px; }
+
+    /* Mini stats at bottom of left panel */
+    .hero-stats {
       position: absolute;
+      bottom: 48px;
+      left: 68px;
+      display: flex;
+      gap: 40px;
+      opacity: 0;
+      animation: fadeUp 0.65s ease 1.2s forwards;
+    }
+
+    .h-stat { display: flex; flex-direction: column; gap: 3px; }
+
+    .h-stat-n {
+      font-family: var(--font-d);
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+
+    .h-stat-l {
       font-size: 10px;
       font-weight: 500;
-      color: rgba(26, 26, 26, 0.35);
-      letter-spacing: 0.05em;
-    }
-
-    .dim-label-top {
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-
-    .dim-label-right {
-      right: 2px;
-      top: 50%;
-      transform: translateY(-50%) rotate(90deg);
-    }
-
-    /* ===== SECTION SHARED ===== */
-    .section {
-      padding: 120px 60px;
-      max-width: 1600px;
-      margin: 0 auto;
-    }
-
-    .section-label {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.3em;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: #E07A2F;
-      margin-bottom: 48px;
+      color: var(--ink-light);
     }
 
-    /* ===== STATS BAR ===== */
-    .stats-bar {
-      display: flex;
-      gap: 64px;
-      margin-bottom: 80px;
-      padding-bottom: 48px;
-      border-bottom: 1px solid rgba(26, 26, 26, 0.08);
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(18px); }
+      to   { opacity:1; transform:translateY(0); }
     }
 
-    .stat-item {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .stat-number {
-      font-size: 2.8rem;
-      font-weight: 800;
-      color: #1A1A1A;
-      line-height: 1;
-      letter-spacing: -0.02em;
-    }
-
-    .stat-label {
-      font-size: 11px;
-      font-weight: 500;
-      color: #888888;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-    }
-
-    /* ===== PROJEKTE SECTION ===== */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0;
-      position: relative;
-    }
-
-    .project-card {
-      position: relative;
-      padding: 0 32px;
-      cursor: default;
-      /* Hover lift */
-      transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .project-card:hover {
-      transform: translateY(-6px);
-    }
-
-    /* Orange construction lines between columns */
-    .project-card:not(:last-child)::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      width: 1px;
-      background-color: rgba(224, 122, 47, 0.25);
-      /* Don't shift with the card hover */
-      transition: none;
-    }
-
-    .project-card:first-child {
-      padding-left: 0;
-    }
-
-    .project-card:last-child {
-      padding-right: 0;
-    }
-
-    .project-image-wrap {
+    /* Right — photo */
+    .hero-right {
       position: relative;
       overflow: hidden;
-      margin-bottom: 24px;
     }
 
-    .project-image {
-      width: 100%;
-      height: 320px;
-      object-fit: cover;
-      filter: saturate(0.6) contrast(1.05);
-      transition: filter 0.4s ease, transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-      display: block;
-    }
-
-    .project-card:hover .project-image {
-      filter: saturate(0.85) contrast(1.05);
-      transform: scale(1.03);
-    }
-
-    /* Shadow reveal on hover */
-    .project-image-wrap::after {
-      content: '';
+    .hero-photo {
       position: absolute;
       inset: 0;
-      box-shadow: inset 0 -60px 40px -20px rgba(26, 26, 26, 0.18);
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(0.4) contrast(1.1);
+      transform: scale(1.06);
+      clip-path: inset(0 100% 0 0);
+      animation: photoReveal 1.3s cubic-bezier(0.77,0,0.18,1) 0.25s forwards;
+    }
+
+    @keyframes photoReveal {
+      to { clip-path: inset(0 0% 0 0); transform: scale(1.0); }
+    }
+
+    /* Blueprint corner markers */
+    .photo-frame {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .ph-corner {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+    }
+
+    .ph-corner--tl { top:22px; left:22px; border-top:1.5px solid rgba(255,255,255,0.42); border-left:1.5px solid rgba(255,255,255,0.42); }
+    .ph-corner--tr { top:22px; right:22px; border-top:1.5px solid rgba(255,255,255,0.42); border-right:1.5px solid rgba(255,255,255,0.42); }
+    .ph-corner--bl { bottom:22px; left:22px; border-bottom:1.5px solid rgba(255,255,255,0.42); border-left:1.5px solid rgba(255,255,255,0.42); }
+    .ph-corner--br { bottom:22px; right:22px; border-bottom:1.5px solid rgba(255,255,255,0.42); border-right:1.5px solid rgba(255,255,255,0.42); }
+
+    .ph-ref {
+      position: absolute;
+      top: 30px;
+      left: 30px;
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.38);
+    }
+
+    .ph-loc {
+      position: absolute;
+      bottom: 30px;
+      right: 30px;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+    }
+
+    /* Vertical measuring line on photo */
+    .ph-vline {
+      position: absolute;
+      top: 56px;
+      bottom: 56px;
+      right: 72px;
+      width: 1px;
+      background: rgba(255,255,255,0.12);
+    }
+
+    .ph-vline::before,
+    .ph-vline::after {
+      content: '';
+      position: absolute;
+      left: -4px;
+      width: 9px;
+      height: 1px;
+      background: rgba(255,255,255,0.25);
+    }
+    .ph-vline::before { top: 0; }
+    .ph-vline::after { bottom: 0; }
+
+    /* Scroll hint */
+    .scroll-hint {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
       opacity: 0;
-      transition: opacity 0.4s ease;
+      animation: fadeUp 0.6s ease 1.5s forwards;
+      z-index: 3;
       pointer-events: none;
     }
 
-    .project-card:hover .project-image-wrap::after {
-      opacity: 1;
-    }
-
-    .project-title {
-      font-size: 15px;
-      font-weight: 700;
-      letter-spacing: 0.15em;
+    .scroll-hint span {
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0.28em;
       text-transform: uppercase;
-      margin-bottom: 8px;
-      position: relative;
-      display: inline-block;
-      padding-bottom: 6px;
+      color: rgba(255,255,255,0.4);
     }
 
-    .project-title::after {
-      content: '';
+    .scroll-arrow {
+      width: 1px;
+      height: 32px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+      animation: scrollPulse 1.8s ease-in-out 2s infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.15); }
+    }
+
+    /* ===== METRICS STRIP ===== */
+    .metrics-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .metric {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 28px 44px;
+      border-right: 1px solid var(--rule);
+    }
+
+    .metric:last-child { border-right: none; }
+
+    .metric-n {
+      font-family: var(--font-d);
+      font-size: clamp(26px, 2.8vw, 38px);
+      font-weight: 800;
+      color: var(--ink);
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+
+    .metric-l {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      line-height: 1.5;
+    }
+
+    /* ===== SHARED SECTION HEADER ===== */
+    .sec-header {
+      display: flex;
+      align-items: baseline;
+      gap: 18px;
+      padding-bottom: 22px;
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: 56px;
+    }
+
+    .sec-num {
+      font-family: var(--font-d);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: 0.2em;
+    }
+
+    .sec-title {
+      font-family: var(--font-d);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+    }
+
+    .sec-aside {
+      margin-left: auto;
+      font-size: 11px;
+      font-weight: 300;
+      color: var(--ink-light);
+      letter-spacing: 0.05em;
+    }
+
+    .sec-wrap {
+      padding: 100px 64px;
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+
+    /* ===== PROJECTS GRID ===== */
+    .proj-grid {
+      display: grid;
+      grid-template-columns: 1.45fr 1fr;
+      grid-template-rows: 330px 330px;
+      gap: 3px;
+      background: var(--rule);
+    }
+
+    .proj-card {
+      position: relative;
+      overflow: hidden;
+      background: var(--bg-alt);
+    }
+
+    .proj-card--featured { grid-row: 1 / 3; }
+
+    .proj-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(0.5) contrast(1.06);
+      transition: filter 0.5s ease, transform 0.6s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .proj-card:hover .proj-img {
+      filter: saturate(0.78) contrast(1.05);
+      transform: scale(1.04);
+    }
+
+    .proj-scrim {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(12,12,10,0.72) 0%, rgba(12,12,10,0.1) 45%, transparent 65%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .proj-card:hover .proj-scrim { opacity: 1; }
+
+    .proj-meta-box {
       position: absolute;
       bottom: 0;
       left: 0;
-      width: 0;
-      height: 2px;
-      background-color: #E07A2F;
-      transition: width 0.4s ease;
+      right: 0;
+      padding: 26px 30px;
+      transform: translateY(10px);
+      opacity: 0;
+      transition: all 0.38s cubic-bezier(0.4,0,0.2,1);
     }
 
-    .project-card:hover .project-title::after {
-      width: 100%;
+    .proj-card:hover .proj-meta-box {
+      transform: translateY(0);
+      opacity: 1;
     }
 
-    .project-detail {
-      font-size: 12px;
-      color: #888888;
-      letter-spacing: 0.05em;
-      line-height: 1.8;
+    .proj-card-name {
+      font-family: var(--font-d);
+      font-size: 15px;
+      font-weight: 700;
+      color: #F8F7F4;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      margin-bottom: 5px;
     }
 
-    .project-detail span {
-      display: block;
+    .proj-card-detail {
+      font-size: 11px;
+      color: rgba(248,247,244,0.6);
+      letter-spacing: 0.1em;
     }
 
-    /* ===== HALTUNG SECTION ===== */
-    .haltung-bg {
-      background-color: #F7F7F5;
+    /* Always-visible tag */
+    .proj-tag {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(248,247,244,0.55);
+      background: rgba(12,12,10,0.28);
+      backdrop-filter: blur(6px);
+      padding: 5px 10px;
     }
 
-    .haltung-inner {
+    /* ===== PHILOSOPHIE — DARK ===== */
+    .phil-section {
+      background: var(--bg-dark);
+      color: #F8F7F4;
+    }
+
+    .phil-wrap {
+      padding: 100px 64px;
       max-width: 1600px;
       margin: 0 auto;
-      padding: 120px 60px;
     }
 
-    .haltung-grid {
+    .phil-section .sec-header {
+      border-bottom-color: rgba(248,247,244,0.10);
+    }
+
+    .phil-section .sec-num { color: var(--accent); }
+    .phil-section .sec-title { color: rgba(248,247,244,0.42); }
+    .phil-section .sec-aside { color: rgba(248,247,244,0.22); }
+
+    .phil-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      margin-bottom: 80px;
+      gap: 88px;
+      align-items: start;
     }
 
-    .haltung-statement {
-      font-size: clamp(24px, 2.5vw, 34px);
+    .phil-statement {
+      font-family: var(--font-d);
+      font-size: clamp(28px, 3vw, 44px);
       font-weight: 600;
-      line-height: 1.35;
-      color: #1A1A1A;
-      letter-spacing: -0.01em;
+      line-height: 1.28;
+      letter-spacing: -0.022em;
+      color: #F8F7F4;
     }
 
-    .principle-list {
-      list-style: none;
-      padding: 0;
+    .phil-statement em {
+      font-style: normal;
+      color: rgba(248,247,244,0.35);
     }
 
-    .principle-list li {
-      display: flex;
-      gap: 16px;
-      padding: 16px 0;
-      border-bottom: 1px solid rgba(26, 26, 26, 0.08);
+    .phil-sub {
+      margin-top: 32px;
       font-size: 15px;
-      line-height: 1.5;
-      color: #1A1A1A;
+      font-weight: 300;
+      color: rgba(248,247,244,0.52);
+      line-height: 1.7;
+      max-width: 380px;
     }
 
-    .principle-list li:first-child {
-      border-top: 1px solid rgba(26, 26, 26, 0.08);
+    .principles {
+      list-style: none;
+      margin-top: 4px;
     }
 
-    .principle-number {
-      font-size: 12px;
+    .principle {
+      display: grid;
+      grid-template-columns: 30px 1fr;
+      gap: 18px;
+      padding: 22px 0;
+      border-bottom: 1px solid rgba(248,247,244,0.07);
+    }
+
+    .principle:first-child { border-top: 1px solid rgba(248,247,244,0.07); }
+
+    .pr-num {
+      font-family: var(--font-d);
+      font-size: 10px;
       font-weight: 700;
-      color: #E07A2F;
-      letter-spacing: 0.05em;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      padding-top: 3px;
+    }
+
+    .pr-body { color: rgba(248,247,244,0.72); font-size: 14px; line-height: 1.62; }
+    .pr-body strong { display: block; color: #F8F7F4; font-weight: 500; font-size: 15px; margin-bottom: 3px; }
+
+    /* ===== TEAM ===== */
+    .team-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3px;
+      background: var(--rule);
+    }
+
+    .team-card {
+      background: var(--bg);
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 0;
+      overflow: hidden;
+    }
+
+    .team-photo-col {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .team-photo {
+      width: 100%;
+      height: 100%;
+      min-height: 360px;
+      object-fit: cover;
+      object-position: top center;
+      filter: saturate(0.35) contrast(1.12);
+      transition: filter 0.45s ease;
+    }
+
+    .team-card:hover .team-photo { filter: saturate(0.6) contrast(1.06); }
+
+    .team-photo-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, transparent 75%, var(--bg) 100%);
+    }
+
+    .team-text {
+      padding: 44px 44px 44px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .team-role-tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+
+    .team-name {
+      font-family: var(--font-d);
+      font-size: clamp(20px, 1.9vw, 27px);
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.015em;
+      line-height: 1.15;
+      margin-bottom: 18px;
+    }
+
+    .team-bio {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--ink-mid);
+      line-height: 1.72;
+      margin-bottom: 28px;
+    }
+
+    .team-skills {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    .t-skill {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--ink-mid);
+      letter-spacing: 0.04em;
+    }
+
+    .t-skill::before {
+      content: '';
+      display: block;
+      width: 18px;
+      height: 1px;
+      background: var(--accent);
       flex-shrink: 0;
-      padding-top: 2px;
     }
 
-    .principle-text {
-      font-weight: 500;
+    /* ===== FOOTER ===== */
+    .footer {
+      border-top: 1px solid var(--rule);
     }
 
-    /* ===== FOOTER AREA ===== */
-    .haltung-footer {
+    .footer-inner {
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 56px 64px;
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
-      padding-top: 48px;
-      border-top: 1px solid rgba(26, 26, 26, 0.08);
     }
 
-    .founders {
-      font-size: 14px;
-      font-weight: 600;
-      color: #1A1A1A;
-      margin-bottom: 4px;
+    .footer-brand {
+      font-family: var(--font-d);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: 10px;
     }
 
-    .founders-role {
-      font-size: 12px;
-      color: #888888;
-      letter-spacing: 0.05em;
-    }
-
-    .contact-info {
-      text-align: right;
+    .footer-addr {
       font-size: 13px;
-      color: #888888;
-      line-height: 1.8;
+      font-weight: 300;
+      color: var(--ink-mid);
+      line-height: 1.75;
     }
 
-    .contact-info a {
-      color: #888888;
-      transition: color 0.3s ease;
+    .footer-links {
+      text-align: right;
     }
 
-    .contact-info a:hover {
-      color: #E07A2F;
+    .footer-links a {
+      display: block;
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--ink-mid);
+      line-height: 1.75;
+      transition: color 0.22s;
     }
+
+    .footer-links a:hover { color: var(--accent); }
+
+    .footer-copy {
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--ink-light);
+      letter-spacing: 0.06em;
+      text-align: right;
+    }
+
+    /* ===== REVEAL ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.72s cubic-bezier(0.4,0,0.2,1), transform 0.72s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .reveal.vis { opacity:1; transform:translateY(0); }
 
     /* ===== RESPONSIVE ===== */
-    @media (max-width: 1024px) {
-      .hero {
-        padding: 60px 40px;
-      }
-
-      .hero-inner {
-        flex-direction: column;
-        gap: 48px;
-      }
-
-      .hero-text {
-        flex: none;
-        max-width: 100%;
-      }
-
-      .hero-image-wrap {
-        flex: none;
-        max-width: 100%;
-        width: 100%;
-      }
-
-      .hero-image-wrap img {
-        height: 400px;
-      }
-
-      .section {
-        padding: 80px 40px;
-      }
-
-      .haltung-inner {
-        padding: 80px 40px;
-      }
-
-      .projects-grid {
-        grid-template-columns: 1fr;
-        gap: 48px;
-      }
-
-      .project-card {
-        padding: 0;
-      }
-
-      .project-card:not(:last-child)::after {
-        display: none;
-      }
-
-      .haltung-grid {
-        grid-template-columns: 1fr;
-        gap: 48px;
-      }
-
-      .haltung-footer {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 24px;
-      }
-
-      .contact-info {
-        text-align: left;
-      }
-
-      .stats-bar {
-        gap: 40px;
-        flex-wrap: wrap;
-      }
+    @media (max-width: 1100px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { height: 52vh; min-height: 380px; }
+      .hero-photo { clip-path: none; animation: none; transform: scale(1); }
+      .scroll-hint { display: none; }
+      .nav-links, .nav-coord { display: none; }
+      .nav { padding: 0 24px; }
+      .metrics-strip { grid-template-columns: 1fr 1fr; }
+      .metric { border-bottom: 1px solid var(--rule); }
+      .metric:nth-child(2n) { border-right: none; }
+      .sec-wrap, .phil-wrap { padding: 80px 32px; }
+      .proj-grid { grid-template-columns: 1fr; grid-template-rows: auto; }
+      .proj-card--featured { grid-row: auto; }
+      .proj-card { height: 320px; }
+      .proj-img { position: absolute; }
+      .phil-grid { grid-template-columns: 1fr; gap: 52px; }
+      .team-grid { grid-template-columns: 1fr; }
+      .team-card { grid-template-columns: 200px 1fr; }
+      .footer-inner { flex-direction: column; align-items: flex-start; gap: 28px; }
+      .footer-links, .footer-copy { text-align: left; }
     }
 
     @media (max-width: 640px) {
-      .hero {
-        padding: 48px 24px;
-        min-height: auto;
-        padding-top: 100px;
-      }
-
-      .hero-image-wrap {
-        padding: 20px;
-      }
-
-      .hero-image-wrap img {
-        height: 280px;
-      }
-
-      .section {
-        padding: 64px 24px;
-      }
-
-      .haltung-inner {
-        padding: 64px 24px;
-      }
-
-      .project-image {
-        height: 240px;
-      }
-
-      .hero-headline {
-        font-size: 28px;
-      }
-
-      .haltung-statement {
-        font-size: 22px;
-      }
-
-      .stats-bar {
-        gap: 28px;
-      }
-
-      .stat-number {
-        font-size: 2rem;
-      }
+      .hero-left { padding: 48px 24px; }
+      .hero-stats { left: 24px; bottom: 28px; gap: 28px; }
+      .sec-wrap, .phil-wrap { padding: 64px 24px; }
+      .metrics-strip { grid-template-columns: 1fr 1fr; }
+      .metric { padding: 22px 24px; }
+      .team-card { grid-template-columns: 1fr; }
+      .team-photo { min-height: 260px; height: 260px; }
+      .team-photo-overlay { background: linear-gradient(to bottom, transparent 70%, var(--bg) 100%); }
+      .sec-aside { display: none; }
+      .footer-inner { padding: 48px 24px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ===== HERO ===== -->
-  <section class="hero grid-bg">
-    <!-- Animated grid overlay — draws itself in on load -->
-    <div class="hero-grid-overlay" aria-hidden="true"></div>
+  <!-- ===== NAV ===== -->
+  <nav class="nav">
+    <span class="nav-logo">Volumen</span>
+    <ul class="nav-links">
+      <li><a href="#projekte">Projekte</a></li>
+      <li><a href="#philosophie">Philosophie</a></li>
+      <li><a href="#team">Das Buero</a></li>
+      <li><a href="#kontakt">Kontakt</a></li>
+    </ul>
+    <span class="nav-coord">49.7499&deg;&thinsp;N &mdash; 6.6371&deg;&thinsp;E</span>
+  </nav>
 
-    <div class="hero-inner">
-      <div class="hero-text">
-        <p class="hero-firm-name">Volumen</p>
-        <h1 class="hero-headline">Form folgt Haltung.</h1>
-        <p class="hero-meta">Architekturbuero &middot; Trier &middot; Seit 2014</p>
-        <div class="hero-accent-line"></div>
-        <a href="#projekte" class="hero-cta">Projekte &rarr;</a>
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <!-- Left: Text -->
+    <div class="hero-left">
+      <div class="hero-eyebrow">Architekturbuero &middot; Trier</div>
+
+      <h1 class="hero-h1">
+        Form<br />folgt<br /><em>Haltung.</em>
+      </h1>
+
+      <p class="hero-desc">
+        Wir planen Gebaeude, die Zusammenhaenge sichtbar machen.
+        Seit 2014 in Trier und der Region Mosel&ndash;Saar&ndash;Ruwer.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#projekte" class="btn-filled">Projekte ansehen &rarr;</a>
+        <a href="#kontakt" class="btn-ghost">Kontakt &rarr;</a>
       </div>
 
-      <div class="hero-image-wrap">
-        <div class="measure-top">
-          <span class="dim-label dim-label-top">1280</span>
+      <!-- Mini stats -->
+      <div class="hero-stats">
+        <div class="h-stat">
+          <span class="h-stat-n">12</span>
+          <span class="h-stat-l">Projekte</span>
         </div>
-        <div class="measure-right">
-          <span class="dim-label dim-label-right">720</span>
+        <div class="h-stat">
+          <span class="h-stat-n">8+</span>
+          <span class="h-stat-l">Jahre</span>
         </div>
-        <div class="measure-bottom"></div>
-        <div class="measure-left"></div>
-        <img
-          src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=1000&q=80&auto=format"
-          alt="Architektur — moderne Fassade mit geometrischen Linien"
-          loading="eager"
-        />
+        <div class="h-stat">
+          <span class="h-stat-n">1.246</span>
+          <span class="h-stat-l">m&sup2; geplant</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Photo -->
+    <div class="hero-right">
+      <img
+        class="hero-photo"
+        src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1400&q=85&auto=format&fit=crop"
+        alt="Moderne Architektur &mdash; Volumen Architekten Trier"
+        loading="eager"
+      />
+
+      <!-- Blueprint frame annotations -->
+      <div class="photo-frame" aria-hidden="true">
+        <div class="ph-corner ph-corner--tl"></div>
+        <div class="ph-corner ph-corner--tr"></div>
+        <div class="ph-corner ph-corner--bl"></div>
+        <div class="ph-corner ph-corner--br"></div>
+        <span class="ph-ref">Ref. 2023 &middot; Ansicht Sued</span>
+        <span class="ph-loc">Trier-Nord</span>
+        <div class="ph-vline"></div>
+      </div>
+
+      <!-- Scroll indicator -->
+      <div class="scroll-hint" aria-hidden="true">
+        <span>Scroll</span>
+        <div class="scroll-arrow"></div>
       </div>
     </div>
   </section>
+
+  <!-- ===== METRICS STRIP ===== -->
+  <div class="metrics-strip">
+    <div class="metric reveal">
+      <span class="metric-n">12</span>
+      <span class="metric-l">Realisierte<br />Projekte</span>
+    </div>
+    <div class="metric reveal">
+      <span class="metric-n">1.246</span>
+      <span class="metric-l">m&sup2; geplant<br />seit 2014</span>
+    </div>
+    <div class="metric reveal">
+      <span class="metric-n">5</span>
+      <span class="metric-l">Laufende<br />Projekte</span>
+    </div>
+    <div class="metric reveal">
+      <span class="metric-n">3&times;</span>
+      <span class="metric-l">BDA-Trier<br />Auszeichnung</span>
+    </div>
+  </div>
 
   <!-- ===== PROJEKTE ===== -->
-  <section class="section" id="projekte">
-    <p class="section-label grid-reveal">Projekte</p>
-
-    <!-- Stats row -->
-    <div class="stats-bar grid-reveal">
-      <div class="stat-item">
-        <span class="stat-number"><span class="count-up" data-target="12">0</span></span>
-        <span class="stat-label">Realisierte Projekte</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-number"><span class="count-up" data-target="8">0</span></span>
-        <span class="stat-label">Jahre Erfahrung</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-number"><span class="count-up" data-target="1246">0</span></span>
-        <span class="stat-label">m² geplant</span>
+  <section id="projekte">
+    <div class="sec-wrap">
+      <div class="sec-header reveal">
+        <span class="sec-num">01</span>
+        <span class="sec-title">Ausgewaehlte Projekte</span>
+        <span class="sec-aside">Neubau &middot; Umbau &middot; Sanierung</span>
       </div>
     </div>
 
-    <div class="projects-grid">
-      <div class="project-card grid-reveal">
-        <div class="project-image-wrap">
-          <img
-            class="project-image"
-            src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80&auto=format"
-            alt="Wohnhaus M. — moderne Architektur"
-            loading="lazy"
-          />
-        </div>
-        <p class="project-title">Wohnhaus M.</p>
-        <div class="project-detail">
-          <span>Trier-Olewig</span>
-          <span>2022 &middot; 186 m&sup2;</span>
+    <!-- Asymmetric 2-col grid: large left + 2 stacked right -->
+    <div class="proj-grid">
+
+      <div class="proj-card proj-card--featured">
+        <img
+          class="proj-img"
+          src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1000&q=80&auto=format&fit=crop"
+          alt="Wohnhaus M. &mdash; Trier-Olewig"
+          loading="lazy"
+        />
+        <div class="proj-scrim"></div>
+        <span class="proj-tag">Neubau &middot; 2022</span>
+        <div class="proj-meta-box">
+          <p class="proj-card-name">Wohnhaus M.</p>
+          <p class="proj-card-detail">Trier-Olewig &middot; 186 m&sup2;</p>
         </div>
       </div>
 
-      <div class="project-card grid-reveal">
-        <div class="project-image-wrap">
-          <img
-            class="project-image"
-            src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80&auto=format"
-            alt="Umbau Alte Muehle — Bestandssanierung"
-            loading="lazy"
-          />
-        </div>
-        <p class="project-title">Umbau Alte Muehle</p>
-        <div class="project-detail">
-          <span>Longuich, Mosel</span>
-          <span>2021 &middot; 340 m&sup2;</span>
+      <div class="proj-card">
+        <img
+          class="proj-img"
+          src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=900&q=80&auto=format&fit=crop"
+          alt="Buerogebaeude K. &mdash; Trier-Nord"
+          loading="lazy"
+        />
+        <div class="proj-scrim"></div>
+        <span class="proj-tag">Gewerbe &middot; 2023</span>
+        <div class="proj-meta-box">
+          <p class="proj-card-name">Buerogebaeude K.</p>
+          <p class="proj-card-detail">Trier-Nord &middot; 720 m&sup2;</p>
         </div>
       </div>
 
-      <div class="project-card grid-reveal">
-        <div class="project-image-wrap">
-          <img
-            class="project-image"
-            src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80&auto=format"
-            alt="Buerogebaeude K. — Gewerbe-Neubau"
-            loading="lazy"
-          />
-        </div>
-        <p class="project-title">Buerogebaeude K.</p>
-        <div class="project-detail">
-          <span>Trier-Nord</span>
-          <span>2023 &middot; 720 m&sup2;</span>
+      <div class="proj-card">
+        <img
+          class="proj-img"
+          src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=900&q=80&auto=format&fit=crop"
+          alt="Alte Muehle Longuich &mdash; Sanierung"
+          loading="lazy"
+        />
+        <div class="proj-scrim"></div>
+        <span class="proj-tag">Sanierung &middot; 2021</span>
+        <div class="proj-meta-box">
+          <p class="proj-card-name">Alte Muehle Longuich</p>
+          <p class="proj-card-detail">Longuich, Mosel &middot; 340 m&sup2;</p>
         </div>
       </div>
+
     </div>
   </section>
 
-  <!-- ===== HALTUNG ===== -->
-  <section class="haltung-bg">
-    <div class="haltung-inner">
-      <p class="section-label grid-reveal">Haltung</p>
+  <!-- ===== PHILOSOPHIE ===== -->
+  <section id="philosophie" class="phil-section">
+    <div class="phil-wrap">
+      <div class="sec-header reveal">
+        <span class="sec-num">02</span>
+        <span class="sec-title">Philosophie</span>
+        <span class="sec-aside">Haltung &middot; Prinzipien &middot; Methode</span>
+      </div>
 
-      <div class="haltung-grid">
-        <div class="grid-reveal">
-          <p class="haltung-statement">
-            Wir entwerfen keine Gebaeude.<br />
-            Wir entwerfen Zusammenhaenge.
+      <div class="phil-grid">
+        <div class="reveal">
+          <p class="phil-statement">
+            Wir entwerfen<br /><em>keine Gebaeude.</em><br />
+            Wir entwerfen<br />Zusammenhaenge.
+          </p>
+          <p class="phil-sub">
+            Architektur entsteht dort, wo Funktion und Kontext
+            eine gemeinsame Sprache finden. Diese Sprache
+            lernen wir in jedem Projekt neu.
           </p>
         </div>
 
-        <div class="grid-reveal">
-          <ul class="principle-list">
-            <li>
-              <span class="principle-number">01</span>
-              <span class="principle-text">Bestand vor Neubau</span>
-            </li>
-            <li>
-              <span class="principle-number">02</span>
-              <span class="principle-text">Material ehrlich zeigen</span>
-            </li>
-            <li>
-              <span class="principle-number">03</span>
-              <span class="principle-text">Licht als Werkstoff</span>
-            </li>
-            <li>
-              <span class="principle-number">04</span>
-              <span class="principle-text">Jeder Quadratmeter zaehlt</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="haltung-footer grid-reveal">
-        <div>
-          <p class="founders">Sarah Hartmann & Jonas Beck</p>
-          <p class="founders-role">Gruender</p>
-        </div>
-        <div class="contact-info">
-          <span>Volumen Architekten GbR</span><br />
-          <span>Neustrasse 12, 54290 Trier</span><br />
-          <a href="tel:+4965194820">+49 651 948 20</a>
-        </div>
+        <ul class="principles reveal">
+          <li class="principle">
+            <span class="pr-num">01</span>
+            <div class="pr-body">
+              <strong>Bestand vor Neubau</strong>
+              Was gebaut ist, hat Wert. Wir bearbeiten den Bestand
+              mit Respekt &mdash; und schaffen Neues, wo es wirklich noetig ist.
+            </div>
+          </li>
+          <li class="principle">
+            <span class="pr-num">02</span>
+            <div class="pr-body">
+              <strong>Material ehrlich zeigen</strong>
+              Beton bleibt Beton. Holz bleibt Holz. Keine Verkleidung,
+              die etwas vorgibt, was sie nicht ist.
+            </div>
+          </li>
+          <li class="principle">
+            <span class="pr-num">03</span>
+            <div class="pr-body">
+              <strong>Licht als Werkstoff</strong>
+              Tageslicht ist das beste Baumaterial &mdash; unsichtbar,
+              kostenlos, und es veraendert jeden Raum.
+            </div>
+          </li>
+          <li class="principle">
+            <span class="pr-num">04</span>
+            <div class="pr-body">
+              <strong>Jeder Quadratmeter zaehlt</strong>
+              Grosszuegigkeit entsteht nicht durch Flaeche, sondern
+              durch Proportion und das bewusste Weglassen.
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
   </section>
 
+  <!-- ===== TEAM ===== -->
+  <section id="team">
+    <div class="sec-wrap">
+      <div class="sec-header reveal">
+        <span class="sec-num">03</span>
+        <span class="sec-title">Das Buero</span>
+        <span class="sec-aside">Zwei Gruender &middot; Ein Ansatz</span>
+      </div>
+    </div>
+
+    <div class="team-grid">
+
+      <div class="team-card reveal">
+        <div class="team-photo-col">
+          <img
+            class="team-photo"
+            src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=600&q=80&auto=format&fit=crop"
+            alt="Sarah Hartmann &mdash; Architektin"
+            loading="lazy"
+          />
+          <div class="team-photo-overlay"></div>
+        </div>
+        <div class="team-text">
+          <p class="team-role-tag">Gruenderin &middot; Architektin</p>
+          <h3 class="team-name">Sarah<br />Hartmann</h3>
+          <p class="team-bio">
+            Studium an der TU Kaiserslautern. Masterarbeit ueber Konversion
+            von Industriebrachen. Fuenf Jahre in Koeln, bevor sie 2014
+            mit Jonas Beck Volumen gruendete.
+          </p>
+          <div class="team-skills">
+            <span class="t-skill">Wohnungsbau &amp; Einfamilienhaus</span>
+            <span class="t-skill">Denkmalgerechte Sanierung</span>
+            <span class="t-skill">Baukoordination LPH 1&ndash;9</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="team-card reveal">
+        <div class="team-photo-col">
+          <img
+            class="team-photo"
+            src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=600&q=80&auto=format&fit=crop"
+            alt="Jonas Beck &mdash; Architekt"
+            loading="lazy"
+          />
+          <div class="team-photo-overlay"></div>
+        </div>
+        <div class="team-text">
+          <p class="team-role-tag">Gruender &middot; Architekt</p>
+          <h3 class="team-name">Jonas<br />Beck</h3>
+          <p class="team-bio">
+            Studium in Aachen, Auslandsstation an der ETH Zuerich.
+            Vor der Gruendung von Volumen drei Jahre in einem
+            Frankfurter Grossbuero im Gewerbebau.
+          </p>
+          <div class="team-skills">
+            <span class="t-skill">Gewerbebau &amp; Buerogebaeude</span>
+            <span class="t-skill">Stadtplanung &amp; Bebauungsplaene</span>
+            <span class="t-skill">Technische Ausfuehrung</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== FOOTER / KONTAKT ===== -->
+  <footer id="kontakt" class="footer">
+    <div class="footer-inner">
+      <div>
+        <p class="footer-brand">Volumen Architekten GbR</p>
+        <p class="footer-addr">
+          Neustrasse 12<br />
+          54290 Trier<br />
+          Deutschland
+        </p>
+      </div>
+      <div>
+        <div class="footer-links">
+          <a href="tel:+4965194820">+49 651 948 20</a>
+          <a href="mailto:mail@volumen-architekten.de">mail@volumen-architekten.de</a>
+          <a href="#">www.volumen-architekten.de</a>
+        </div>
+        <p class="footer-copy">&copy; 2024 Volumen Architekten GbR</p>
+      </div>
+    </div>
+  </footer>
+
   <script>
-    // ===== INTERSECTION OBSERVER: .grid-reveal =====
-    const gridRevealObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry, i) => {
-        if (entry.isIntersecting) {
-          // Stagger siblings by their index among all .grid-reveal elements
-          const allRevealEls = Array.from(document.querySelectorAll('.grid-reveal'));
-          const elIndex = allRevealEls.indexOf(entry.target);
-          // Small stagger within view groups — cap at 3 to avoid long waits
-          const staggerDelay = (elIndex % 4) * 80;
-          setTimeout(() => {
-            entry.target.classList.add('revealed');
-          }, staggerDelay);
-          gridRevealObserver.unobserve(entry.target);
-        }
+    // Scroll reveal
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const siblings = Array.from(
+          (entry.target.parentElement || document).querySelectorAll('.reveal')
+        );
+        const delay = siblings.indexOf(entry.target) * 90;
+        setTimeout(() => entry.target.classList.add('vis'), delay);
+        io.unobserve(entry.target);
       });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.08 });
 
-    document.querySelectorAll('.grid-reveal').forEach(el => gridRevealObserver.observe(el));
-
-    // ===== COUNT-UP ANIMATION =====
-    function animateCountUp(el) {
-      const target = parseInt(el.dataset.target, 10);
-      const duration = target > 100 ? 1400 : 900;
-      const startTime = performance.now();
-
-      function tick(now) {
-        const elapsed = now - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        // Ease-out quart for a precise, architectural feel
-        const eased = 1 - Math.pow(1 - progress, 4);
-        el.textContent = Math.round(eased * target);
-        if (progress < 1) requestAnimationFrame(tick);
-        else el.textContent = target;
-      }
-
-      requestAnimationFrame(tick);
-    }
-
-    const countObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          animateCountUp(entry.target);
-          countObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.5 });
-
-    document.querySelectorAll('.count-up').forEach(el => countObserver.observe(el));
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
   </script>
 
 </body>
