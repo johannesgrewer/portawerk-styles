@@ -10,721 +10,1150 @@ export const prerender = true;
   <title>Klinge & Kamm — Barbershop & Herrenpflege | Trier</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Pinyon+Script&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { overflow-x: hidden; }
+    html { overflow-x: hidden; scroll-behavior: smooth; }
 
     :root {
-      --navy:  #1C2B4A;
-      --red:   #CC2936;
-      --cream: #F5F2EC;
-      --bg:    #F5F2EC;
-      --dark:  #111820;
-      --muted: rgba(28,43,74,0.45);
-      --rule:  rgba(28,43,74,0.1);
+      --ink:      #1A1410;
+      --leather:  #6B3A2A;
+      --leather2: #8C4E37;
+      --gold:     #C8973A;
+      --gold2:    #E5B865;
+      --cream:    #F5EFE4;
+      --cream2:   #EDE3D2;
+      --warm-mid: #3D2B1F;
+      --rule:     rgba(200,151,58,0.2);
+      --muted:    rgba(26,20,16,0.45);
     }
 
     body {
-      background: var(--bg);
-      color: var(--navy);
-      font-family: 'Work Sans', sans-serif;
-      min-height: 100vh;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: 'Barlow', sans-serif;
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* Barber pole stripe at top */
-    .barber-stripe {
+    /* ── BARBER STRIPE ── */
+    .stripe-top {
       position: fixed;
       top: 0; left: 0; right: 0;
-      height: 5px;
+      height: 4px;
       background: repeating-linear-gradient(
         90deg,
-        var(--red) 0px, var(--red) 10px,
-        var(--cream) 10px, var(--cream) 20px,
-        var(--navy) 20px, var(--navy) 30px,
-        var(--cream) 30px, var(--cream) 40px
+        var(--leather) 0px, var(--leather) 12px,
+        var(--cream) 12px, var(--cream) 20px,
+        var(--ink) 20px, var(--ink) 32px,
+        var(--cream) 32px, var(--cream) 40px
       );
-      z-index: 200;
+      background-size: 40px 4px;
+      animation: stripemove 0.8s linear infinite;
+      z-index: 300;
+    }
+    @keyframes stripemove {
+      from { background-position: 0 0; }
+      to   { background-position: -40px 0; }
     }
 
+    /* ── NAV ── */
     nav {
       position: fixed;
-      top: 5px; left: 0; right: 0;
-      z-index: 100;
-      background: var(--navy);
+      top: 4px; left: 0; right: 0;
+      z-index: 200;
+      background: var(--ink);
+      border-bottom: 1px solid rgba(200,151,58,0.15);
     }
     .nav-inner {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 1.1rem 3.5rem;
-      max-width: 1600px;
+      max-width: 1400px;
       margin: 0 auto;
+      padding: 0 3rem;
+      height: 64px;
     }
     .nav-logo {
-      font-family: 'Oswald', sans-serif;
-      font-weight: 700;
-      font-size: 1.1rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--cream);
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
     }
-    .nav-logo span { color: var(--red); }
+    .nav-logo-script {
+      font-family: 'Pinyon Script', cursive;
+      font-size: 1.5rem;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .nav-logo-sub {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.48rem;
+      font-weight: 600;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(245,239,228,0.3);
+      margin-top: 1px;
+    }
     .nav-links {
       display: flex;
       gap: 2.5rem;
       list-style: none;
     }
     .nav-links a {
-      font-size: 0.58rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.6rem;
       font-weight: 500;
-      letter-spacing: 0.16em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: rgba(245,242,236,0.35);
+      color: rgba(245,239,228,0.4);
       text-decoration: none;
       transition: color 0.2s;
     }
-    .nav-links a:hover { color: var(--cream); }
+    .nav-links a:hover { color: var(--gold); }
     .nav-book {
-      font-family: 'Oswald', sans-serif;
-      font-size: 0.65rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.62rem;
       font-weight: 600;
-      letter-spacing: 0.16em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--navy);
-      background: var(--cream);
-      padding: 0.6rem 1.5rem;
+      color: var(--ink);
+      background: var(--gold);
+      padding: 0.65rem 1.6rem;
       text-decoration: none;
-      transition: background 0.2s;
+      transition: background 0.2s, color 0.2s;
     }
-    .nav-book:hover { background: var(--red); color: #fff; }
+    .nav-book:hover { background: var(--gold2); }
 
-    .hero-wrap {
-      background: var(--bg);
-    }
-
+    /* ── HERO ── */
     .hero {
       min-height: 100vh;
-      padding-top: 62px;
+      padding-top: 68px;
       display: grid;
-      grid-template-columns: 1fr 420px;
-      max-width: 1600px;
+      grid-template-columns: 1fr 480px;
+      max-width: 1400px;
       margin: 0 auto;
-      width: 100%;
     }
 
-    /* LEFT */
     .hero-left {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: 4rem 3.5rem 4rem 4.5rem;
-      gap: 2.5rem;
-      border-right: 3px solid var(--navy);
+      padding: 5rem 4rem 5rem 3rem;
+      gap: 2rem;
     }
 
     .eyebrow {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
-      font-size: 0.58rem;
-      font-weight: 500;
-      letter-spacing: 0.2em;
+      gap: 0.9rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.55rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
       text-transform: uppercase;
-      color: var(--red);
+      color: var(--leather);
     }
-    .eyebrow-bar {
-      width: 20px;
-      height: 2px;
-      background: var(--red);
+    .eyebrow::before {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 1px;
+      background: var(--leather);
       flex-shrink: 0;
     }
 
-    .hero-headline {
-      font-family: 'Oswald', sans-serif;
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
       font-weight: 700;
-      font-size: clamp(3rem, 6.5vw, 5.5rem);
-      line-height: 0.95;
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
-      color: var(--navy);
+      font-size: clamp(3.5rem, 7vw, 6.5rem);
+      line-height: 0.93;
+      color: var(--ink);
+      letter-spacing: -0.01em;
     }
-    .hero-headline .red { color: var(--red); }
-
-    .hero-body {
-      font-size: 0.88rem;
-      font-weight: 300;
-      line-height: 1.9;
-      color: var(--muted);
-      max-width: 44ch;
-    }
-
-    /* Services list */
-    .service-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.5rem;
-    }
-    .service-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.9rem 1.1rem;
-      background: #fff;
-      border: 1px solid var(--rule);
-      border-top: 3px solid var(--navy);
-    }
-    .service-item:hover { border-top-color: var(--red); }
-    .si-name {
-      font-family: 'Oswald', sans-serif;
-      font-size: 0.88rem;
-      font-weight: 500;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--navy);
-    }
-    .si-price {
-      font-family: 'Oswald', sans-serif;
-      font-size: 0.88rem;
-      font-weight: 600;
-      color: var(--red);
-    }
-
-    .cta-row {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-    }
-    .cta-btn {
-      font-family: 'Oswald', sans-serif;
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--cream);
-      background: var(--navy);
-      padding: 0.9rem 2rem;
-      text-decoration: none;
-      transition: background 0.2s;
-    }
-    .cta-btn:hover { background: var(--red); }
-    .cta-link {
-      font-size: 0.62rem;
+    .hero-title .script-accent {
+      font-family: 'Pinyon Script', cursive;
+      font-size: 1.2em;
       font-weight: 400;
-      color: var(--muted);
-      text-decoration: none;
-      border-bottom: 1px solid var(--rule);
-      padding-bottom: 1px;
+      color: var(--leather);
+      display: block;
+      line-height: 1;
+      margin-top: -0.1em;
     }
 
-    /* RIGHT — dark panel */
-    .hero-right {
-      background: var(--dark);
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* Masthead quote */
-    .right-masthead {
-      padding: 3rem 2.5rem 2rem;
-      border-bottom: 1px solid rgba(245,242,236,0.06);
-    }
-    .rm-label {
-      font-size: 0.5rem;
-      font-weight: 500;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: rgba(245,242,236,0.2);
-      margin-bottom: 0.75rem;
-    }
-    .rm-quote {
-      font-family: 'Oswald', sans-serif;
-      font-size: 1.4rem;
-      font-weight: 400;
-      letter-spacing: 0.04em;
-      color: var(--cream);
-      line-height: 1.3;
-    }
-    .rm-quote .red { color: var(--red); }
-
-    /* Barber cards */
-    .barber-list {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-    .barber-card {
-      flex: 1;
+    .hero-divider {
       display: flex;
       align-items: center;
       gap: 1rem;
-      padding: 1.25rem 2.5rem;
-      border-bottom: 1px solid rgba(245,242,236,0.05);
     }
-    .bc-avatar {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: rgba(245,242,236,0.08);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Oswald', sans-serif;
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: var(--red);
-      flex-shrink: 0;
-    }
-    .bc-info { flex: 1; }
-    .bc-name {
-      font-family: 'Oswald', sans-serif;
-      font-size: 0.95rem;
-      font-weight: 500;
-      letter-spacing: 0.06em;
-      color: var(--cream);
-    }
-    .bc-spec {
-      font-size: 0.62rem;
-      font-weight: 300;
-      color: rgba(245,242,236,0.35);
-      margin-top: 0.15rem;
-    }
-    .bc-free {
-      font-size: 0.52rem;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 0.2rem 0.55rem;
-      border-radius: 100px;
-    }
-    .free-yes { background: rgba(100,180,100,0.15); color: #6dc46d; }
-    .free-no { background: rgba(204,41,54,0.15); color: #e07a7a; }
-
-    /* Hours block */
-    .hours-block {
-      padding: 1.5rem 2.5rem;
-      background: rgba(204,41,54,0.08);
-      border-top: 1px solid rgba(204,41,54,0.2);
-    }
-    .hb-label {
-      font-size: 0.5rem;
-      font-weight: 500;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: rgba(245,242,236,0.2);
-      margin-bottom: 0.5rem;
-    }
-    .hb-hours {
-      font-family: 'Oswald', sans-serif;
-      font-size: 1rem;
-      font-weight: 500;
-      letter-spacing: 0.06em;
-      color: var(--cream);
-      line-height: 1.6;
-    }
-    .hb-sub {
-      font-size: 0.65rem;
-      font-weight: 300;
-      color: rgba(245,242,236,0.35);
-      margin-top: 0.25rem;
-    }
-    /* === Animations & Micro-interactions === */
-    @keyframes barberpole {
-      from { background-position: 0 0; }
-      to   { background-position: -40px 0; }
-    }
-    @keyframes freePulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(100,180,100,0.3); }
-      50%       { box-shadow: 0 0 0 4px rgba(100,180,100,0); }
-    }
-
-    .barber-stripe {
-      background-size: 40px 5px;
-      animation: barberpole 0.7s linear infinite;
-    }
-
-    .free-yes { animation: freePulse 2.5s ease-in-out infinite; }
-
-    .barber-card {
-      transition: background 0.2s, transform 0.2s;
-      cursor: default;
-    }
-    .barber-card:hover {
-      background: rgba(245,242,236,0.035);
-      transform: translateX(4px);
-    }
-    .bc-name { transition: color 0.2s; }
-    .barber-card:hover .bc-name { color: var(--cream); }
-
-    .service-item {
-      transition: border-top-color 0.2s, transform 0.15s, box-shadow 0.15s;
-      cursor: default;
-    }
-    .service-item:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 16px rgba(28,43,74,0.1);
-    }
-
-    .nav-book {
-      position: relative;
-      overflow: hidden;
-    }
-    .nav-book::after {
+    .hero-divider::before,
+    .hero-divider::after {
       content: '';
-      position: absolute;
-      top: 0; left: -60%;
-      width: 40%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-      transition: left 0.5s;
+      flex: 1;
+      height: 1px;
+      background: var(--rule);
     }
-    .nav-book:hover::after { left: 150%; }
-
-
-    /* ===== SECTION 2 — CUTS ===== */
-    .cuts {
-      padding: 6rem 5rem;
-      background: var(--dark);
-      max-width: 1600px;
-      margin: 0 auto;
+    .hero-divider-ornament {
+      font-family: 'Pinyon Script', cursive;
+      font-size: 1.2rem;
+      color: var(--gold);
+      line-height: 1;
     }
-    .cuts-head {
+
+    .hero-body {
+      font-size: 0.9rem;
+      font-weight: 300;
+      line-height: 1.9;
+      color: var(--muted);
+      max-width: 42ch;
+    }
+
+    /* Service tiles */
+    .service-tiles {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+    }
+    .tile {
+      background: var(--cream);
+      padding: 1rem 1.1rem 0.9rem;
       display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      margin-bottom: 3rem;
-      border-bottom: 2px solid var(--red);
-      padding-bottom: 1.5rem;
+      flex-direction: column;
+      gap: 0.3rem;
+      transition: background 0.2s;
+      cursor: default;
     }
-    .cuts-eyebrow {
-      font-size: 0.55rem;
-      font-weight: 600;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: var(--red);
-      margin-bottom: 0.6rem;
-    }
-    .cuts-title {
-      font-family: 'Oswald', sans-serif;
-      font-size: clamp(2rem, 3.5vw, 3rem);
-      font-weight: 700;
-      color: var(--cream);
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
-    .cuts-link {
-      font-size: 0.6rem;
+    .tile:hover { background: var(--cream2); }
+    .tile-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.62rem;
       font-weight: 600;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: rgba(245,242,236,0.35);
-      text-decoration: none;
-      border-bottom: 1px solid rgba(245,242,236,0.2);
-      padding-bottom: 2px;
-      white-space: nowrap;
-      transition: color 0.2s;
+      color: var(--muted);
     }
-    .cuts-link:hover { color: var(--red); }
-
-    .cut-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 3px;
-    }
-    .cut-card {
-      position: relative;
-      overflow: hidden;
-    }
-    .cut-card img {
-      width: 100%;
-      height: 420px;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.55s ease;
-      filter: grayscale(30%);
-    }
-    .cut-card:hover img { transform: scale(1.05); filter: grayscale(0%); }
-    .cut-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(17,24,32,0.9) 0%, transparent 55%);
-    }
-    .cut-info {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      padding: 1.75rem 2rem;
-    }
-    .cut-name {
-      font-family: 'Oswald', sans-serif;
-      font-size: 1.1rem;
+    .tile-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
       font-weight: 600;
-      color: var(--cream);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-    .cut-price {
-      font-size: 0.88rem;
-      font-weight: 700;
-      color: var(--red);
-      margin-top: 0.3rem;
+      color: var(--leather);
+      line-height: 1;
     }
 
-    /* ===== SECTION 3 — SHOP ===== */
-    .shop-vibe {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      min-height: 540px;
-      max-width: 1600px;
-      margin: 0 auto;
+    .hero-cta-row {
+      display: flex;
+      align-items: center;
+      gap: 1.75rem;
     }
-    .shop-photo {
+    .btn-primary {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--cream);
+      background: var(--ink);
+      padding: 0.95rem 2.2rem;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .btn-primary:hover { background: var(--warm-mid); }
+    .btn-ghost {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .btn-ghost:hover { color: var(--leather); border-color: var(--leather); }
+
+    /* Hero Right */
+    .hero-right {
       position: relative;
       overflow: hidden;
     }
-    .shop-photo img {
+    .hero-right img {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      display: block;
-      filter: grayscale(20%);
+      filter: sepia(20%);
+      transition: transform 0.8s ease;
     }
-    .shop-text {
-      background: var(--navy);
-      padding: 5rem 4rem;
+    .hero-right:hover img { transform: scale(1.03); }
+    .hero-right-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(245,239,228,0.3) 0%, transparent 40%),
+                  linear-gradient(to top, rgba(26,20,16,0.8) 0%, transparent 50%);
+    }
+    .hero-right-badge {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 2rem;
+      right: 2rem;
+    }
+    .badge-script {
+      font-family: 'Pinyon Script', cursive;
+      font-size: 2rem;
+      color: var(--gold);
+      line-height: 1.2;
+      display: block;
+    }
+    .badge-sub {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.52rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(245,239,228,0.5);
+      margin-top: 0.3rem;
+    }
+
+    /* ── SECTION: ATMOSPHERE ── */
+    .atmosphere {
+      background: var(--ink);
+      overflow: hidden;
+    }
+    .atm-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 520px 1fr;
+      min-height: 580px;
+    }
+    .atm-text {
+      padding: 5.5rem 4rem;
       display: flex;
       flex-direction: column;
       justify-content: center;
       gap: 1.75rem;
     }
-    .shop-eyebrow {
+    .section-eyebrow {
+      font-family: 'Barlow Condensed', sans-serif;
       font-size: 0.55rem;
       font-weight: 600;
       letter-spacing: 0.28em;
       text-transform: uppercase;
-      color: var(--red);
+      color: var(--gold);
     }
-    .shop-title {
-      font-family: 'Oswald', sans-serif;
-      font-size: clamp(1.8rem, 3vw, 2.8rem);
-      font-weight: 700;
-      color: var(--cream);
-      text-transform: uppercase;
+    .atm-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: clamp(2.2rem, 3.5vw, 3.2rem);
       line-height: 1.1;
+      color: var(--cream);
     }
-    .shop-body {
+    .atm-title em {
+      font-style: italic;
+      color: var(--gold2);
+    }
+    .atm-body {
       font-size: 0.88rem;
       font-weight: 300;
-      line-height: 1.9;
-      color: rgba(245,242,236,0.55);
-      max-width: 44ch;
+      line-height: 1.95;
+      color: rgba(245,239,228,0.5);
+      max-width: 40ch;
     }
-    .shop-cta {
-      display: inline-flex;
-      align-items: center;
+    .atm-facts {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 0.5rem;
-      font-size: 0.62rem;
+      margin-top: 0.5rem;
+    }
+    .atm-fact {
+      border-left: 2px solid var(--leather);
+      padding: 0.6rem 1rem;
+    }
+    .atm-fact-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
       font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .atm-fact-label {
+      font-size: 0.58rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(245,239,228,0.3);
+      margin-top: 0.2rem;
+    }
+    .atm-photos {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 3px;
+    }
+    .atm-photo {
+      position: relative;
+      overflow: hidden;
+    }
+    .atm-photo img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: sepia(15%) brightness(0.85);
+      transition: transform 0.55s ease, filter 0.4s;
+    }
+    .atm-photo:hover img {
+      transform: scale(1.06);
+      filter: sepia(5%) brightness(1);
+    }
+    .atm-photo-label {
+      position: absolute;
+      bottom: 0.8rem;
+      left: 0.9rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.5rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(245,239,228,0.6);
+    }
+
+    /* ── SECTION: TEAM ── */
+    .team-section {
+      padding: 7rem 3rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .team-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 3.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--rule);
+    }
+    .team-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: clamp(2.2rem, 4vw, 3.5rem);
+      color: var(--ink);
+      line-height: 1;
+    }
+    .team-title .script {
+      font-family: 'Pinyon Script', cursive;
+      font-weight: 400;
+      color: var(--leather);
+      font-size: 1.05em;
+    }
+    .team-tagline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--muted);
+      max-width: 28ch;
+      text-align: right;
+      line-height: 1.5;
+    }
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+    .barber-card {
+      background: var(--cream2);
+      overflow: hidden;
+      position: relative;
+      transition: transform 0.3s;
+    }
+    .barber-card:hover { transform: translateY(-4px); }
+    .barber-photo {
+      position: relative;
+      overflow: hidden;
+      height: 420px;
+    }
+    .barber-photo img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      filter: sepia(15%) grayscale(20%);
+      transition: transform 0.6s ease, filter 0.4s;
+    }
+    .barber-card:hover .barber-photo img {
+      transform: scale(1.05);
+      filter: sepia(5%) grayscale(0%);
+    }
+    .barber-photo-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(26,20,16,0.75) 0%, transparent 55%);
+    }
+    .barber-rank {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.48rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink);
+      background: var(--gold);
+      padding: 0.3rem 0.7rem;
+    }
+    .barber-name-overlay {
+      position: absolute;
+      bottom: 1.25rem;
+      left: 1.5rem;
+    }
+    .bon-script {
+      font-family: 'Pinyon Script', cursive;
+      font-size: 1.6rem;
+      color: var(--gold);
+      line-height: 1;
+      display: block;
+    }
+    .barber-info {
+      padding: 1.5rem 1.75rem 2rem;
+      border-top: 2px solid var(--leather);
+    }
+    .barber-spec {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.58rem;
+      font-weight: 600;
       letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: var(--dark);
-      background: var(--cream);
-      padding: 0.9rem 2rem;
-      text-decoration: none;
-      align-self: flex-start;
-      transition: background 0.2s;
+      color: var(--leather);
+      margin-bottom: 0.5rem;
     }
-    .shop-cta:hover { background: var(--red); color: var(--cream); }
+    .barber-desc {
+      font-size: 0.84rem;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--muted);
+    }
+    .barber-avail {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 1rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.52rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .avail-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .avail-yes .avail-dot { background: #6DC46D; box-shadow: 0 0 6px rgba(109,196,109,0.5); }
+    .avail-yes { color: #6DC46D; }
+    .avail-no .avail-dot { background: #E07A7A; }
+    .avail-no { color: #E07A7A; }
 
-    @media (max-width: 1024px) {
-      .cut-grid { grid-template-columns: 1fr 1fr; }
-      .cut-card:last-child { grid-column: 1 / -1; }
-      .cut-card:last-child img { height: 280px; }
-      .shop-vibe { grid-template-columns: 1fr; }
-      .shop-photo { height: 380px; position: relative; }
-      .shop-photo img { position: absolute; }
+    /* ── SECTION: SERVICES ── */
+    .services-section {
+      background: var(--ink);
+    }
+    .services-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 560px;
+      min-height: 600px;
+    }
+    .services-content {
+      padding: 6rem 4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 2.5rem;
+    }
+    .services-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      color: var(--cream);
+      line-height: 1.1;
+    }
+    .services-title .script {
+      font-family: 'Pinyon Script', cursive;
+      font-weight: 400;
+      color: var(--gold);
+      font-size: 1.1em;
+    }
+    .price-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .price-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.1rem 0;
+      border-bottom: 1px solid rgba(200,151,58,0.1);
+      cursor: default;
+      transition: padding-left 0.2s;
+    }
+    .price-row:hover { padding-left: 0.5rem; }
+    .pr-left { display: flex; align-items: center; gap: 1rem; }
+    .pr-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: rgba(200,151,58,0.3);
+      width: 1.5ch;
+    }
+    .pr-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cream);
+    }
+    .pr-dots {
+      flex: 1;
+      border-bottom: 1px dotted rgba(200,151,58,0.2);
+      margin: 0 1rem;
+      position: relative;
+      top: 1px;
+    }
+    .pr-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--gold);
+    }
+    .services-photo {
+      position: relative;
+      overflow: hidden;
+    }
+    .services-photo img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: sepia(25%) brightness(0.75);
+      transition: transform 0.7s ease;
+    }
+    .services-section:hover .services-photo img { transform: scale(1.04); }
+    .services-photo-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(26,20,16,0.6) 0%, transparent 60%);
+    }
+
+    /* ── SECTION: BUCHUNG ── */
+    .booking-section {
+      padding: 7rem 3rem;
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    .booking-left {}
+    .booking-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: clamp(2.5rem, 4vw, 3.8rem);
+      line-height: 1.0;
+      color: var(--ink);
+      margin-bottom: 1.5rem;
+    }
+    .booking-title .script {
+      font-family: 'Pinyon Script', cursive;
+      font-weight: 400;
+      color: var(--leather);
+      font-size: 1.1em;
+    }
+    .booking-body {
+      font-size: 0.9rem;
+      font-weight: 300;
+      line-height: 1.9;
+      color: var(--muted);
+      max-width: 44ch;
+      margin-bottom: 2.5rem;
+    }
+    .booking-cta-group {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .booking-info-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      background: var(--cream2);
+      border: 1px solid var(--rule);
+      border-top: 3px solid var(--leather);
+    }
+    .info-row {
+      display: flex;
+      padding: 1.25rem 1.75rem;
+      gap: 2rem;
+      border-bottom: 1px solid var(--rule);
+      align-items: flex-start;
+    }
+    .info-row:last-child { border-bottom: none; }
+    .info-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.52rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--leather);
+      flex-shrink: 0;
+      width: 80px;
+      padding-top: 0.15rem;
+    }
+    .info-val {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      font-weight: 400;
+      color: var(--ink);
+      line-height: 1.5;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--warm-mid);
+      padding: 3rem;
+    }
+    .footer-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer-logo {
+      font-family: 'Pinyon Script', cursive;
+      font-size: 2rem;
+      color: var(--gold);
+    }
+    .footer-copy {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.52rem;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(245,239,228,0.3);
+    }
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .footer-links a {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.55rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(245,239,228,0.35);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--gold); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1100px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { height: 440px; }
+      .hero-right img { position: absolute; }
+      .atm-inner { grid-template-columns: 1fr; }
+      .atm-photos { height: 400px; grid-template-rows: 1fr; grid-template-columns: repeat(4, 1fr); }
+      .services-inner { grid-template-columns: 1fr; }
+      .services-photo { height: 380px; position: relative; }
+      .services-photo img { position: absolute; }
+      .booking-section { grid-template-columns: 1fr; gap: 3rem; }
     }
     @media (max-width: 768px) {
-      .cuts { padding: 4rem 2rem; }
-      .cut-grid { grid-template-columns: 1fr; }
-      .cut-card:last-child { grid-column: auto; }
-      .cut-card img, .cut-card:last-child img { height: 300px; }
-      .shop-text { padding: 3.5rem 2rem; }
+      .nav-links { display: none; }
+      .nav-inner { padding: 0 1.5rem; }
+      .hero-left { padding: 3.5rem 1.5rem; }
+      .service-tiles { grid-template-columns: 1fr 1fr; }
+      .team-grid { grid-template-columns: 1fr; max-width: 380px; margin: 0 auto; }
+      .team-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .team-tagline { text-align: left; }
+      .atm-photos { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; height: 500px; }
+      .services-content { padding: 4rem 2rem; }
+      .booking-section { padding: 5rem 1.5rem; }
+      .footer-inner { flex-direction: column; gap: 1.5rem; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+    @media (max-width: 480px) {
+      .service-tiles { grid-template-columns: 1fr 1fr; }
+      .team-section { padding: 5rem 1.5rem; }
     }
   </style>
 </head>
 <body>
-  <div class="barber-stripe"></div>
+
+  <div class="stripe-top"></div>
 
   <nav>
     <div class="nav-inner">
-      <div class="nav-logo">Klinge <span>&</span> Kamm</div>
+      <div class="nav-logo">
+        <span class="nav-logo-script">Klinge & Kamm</span>
+        <span class="nav-logo-sub">Barbershop · Trier · est. 2017</span>
+      </div>
       <ul class="nav-links">
-        <li><a href="#">Leistungen</a></li>
-        <li><a href="#">Team</a></li>
-        <li><a href="#">Produkte</a></li>
-        <li><a href="#">Kontakt</a></li>
+        <li><a href="#atmosphere">Der Laden</a></li>
+        <li><a href="#team">Das Team</a></li>
+        <li><a href="#services">Preise</a></li>
+        <li><a href="#booking">Termin</a></li>
       </ul>
-      <a href="#" class="nav-book">Termin buchen</a>
+      <a href="#booking" class="nav-book">Termin buchen</a>
     </div>
   </nav>
 
-  <div class="hero-wrap">
+  <!-- ═══ HERO ═══ -->
   <section class="hero">
     <div class="hero-left">
-      <div class="eyebrow">
-        <span class="eyebrow-bar"></span>
-        Barbershop · Trier
-      </div>
+      <div class="eyebrow">Barbershop · Trier · Palaststraße 12</div>
 
-      <h1 class="hero-headline">
+      <h1 class="hero-title">
         Scharf.<br>
         Gepflegt.<br>
-        <span class="red">Männlich.</span>
+        <span class="script-accent">Legendär.</span>
       </h1>
 
+      <div class="hero-divider">
+        <span class="hero-divider-ornament">✦</span>
+      </div>
+
       <p class="hero-body">
-        Kein Schnick-Schnack. Nur ein guter Schnitt,
-        eine saubere Rasur und ein Barbier, der weiß
-        was er tut. Seit 2017 in der Trierer Innenstadt.
+        Kein Schnickschnack — nur ein guter Schnitt, eine saubere Rasur
+        und ein Barbier, der weiß was er tut. Seit 2017 das Handwerk
+        am Mann in der Trierer Innenstadt.
       </p>
 
-      <div class="service-grid">
-        <div class="service-item">
-          <span class="si-name">Haarschnitt</span>
-          <span class="si-price">28 €</span>
+      <div class="service-tiles">
+        <div class="tile">
+          <span class="tile-name">Haarschnitt</span>
+          <span class="tile-price">28 €</span>
         </div>
-        <div class="service-item">
-          <span class="si-name">Rasur</span>
-          <span class="si-price">32 €</span>
+        <div class="tile">
+          <span class="tile-name">Rasur</span>
+          <span class="tile-price">32 €</span>
         </div>
-        <div class="service-item">
-          <span class="si-name">Bart Trim</span>
-          <span class="si-price">18 €</span>
+        <div class="tile">
+          <span class="tile-name">Bart Trim</span>
+          <span class="tile-price">18 €</span>
         </div>
-        <div class="service-item">
-          <span class="si-name">Kombi</span>
-          <span class="si-price">50 €</span>
+        <div class="tile">
+          <span class="tile-name">Kombi</span>
+          <span class="tile-price">50 €</span>
         </div>
       </div>
 
-      <div class="cta-row">
-        <a href="#" class="cta-btn">Termin buchen →</a>
-        <a href="#" class="cta-link">Alle Leistungen</a>
+      <div class="hero-cta-row">
+        <a href="#booking" class="btn-primary">Termin buchen →</a>
+        <a href="#services" class="btn-ghost">Alle Leistungen</a>
       </div>
     </div>
 
     <div class="hero-right">
-      <div class="right-masthead">
-        <div class="rm-label">Das Motto</div>
-        <div class="rm-quote">
-          „Komm rein als<br>
-          Mann, geh raus als<br>
-          <span class="red">Gentleman."</span>
-        </div>
-      </div>
-
-      <div class="barber-list">
-        <div class="barber-card">
-          <div class="bc-avatar">MK</div>
-          <div class="bc-info">
-            <div class="bc-name">Marco Kessler</div>
-            <div class="bc-spec">Inhaber · Rasur & klassische Schnitte</div>
-          </div>
-          <span class="bc-free free-yes">Frei</span>
-        </div>
-        <div class="barber-card">
-          <div class="bc-avatar">AL</div>
-          <div class="bc-info">
-            <div class="bc-name">Artur Levi</div>
-            <div class="bc-spec">Fade & Textured Cuts</div>
-          </div>
-          <span class="bc-free free-no">Belegt</span>
-        </div>
-        <div class="barber-card">
-          <div class="bc-avatar">FS</div>
-          <div class="bc-info">
-            <div class="bc-name">Florian Schulz</div>
-            <div class="bc-spec">Bartpflege & Skin Fades</div>
-          </div>
-          <span class="bc-free free-yes">Frei</span>
-        </div>
-      </div>
-
-      <div class="hours-block">
-        <div class="hb-label">Öffnungszeiten</div>
-        <div class="hb-hours">Di – Fr: 9:00 – 19:00<br>Sa: 9:00 – 16:00</div>
-        <div class="hb-sub">Termine bevorzugt · Walk-ins willkommen</div>
+      <img
+        src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=960&h=1080&q=85"
+        alt="Barbier schneidet Haare"
+        loading="eager"
+      />
+      <div class="hero-right-overlay"></div>
+      <div class="hero-right-badge">
+        <span class="badge-script">seit 2017</span>
+        <div class="badge-sub">Handwerk · Trier</div>
       </div>
     </div>
   </section>
-  </div>
 
-  <!-- ===== SECTION 2: CUTS ===== -->
-  <section class="cuts">
-    <div class="cuts-head">
-      <div>
-        <div class="cuts-eyebrow">Unser Handwerk</div>
-        <h2 class="cuts-title">KLASSIKER & FADES</h2>
-      </div>
-      <a href="#" class="cuts-link">Alle Leistungen →</a>
-    </div>
-    <div class="cut-grid">
-      <div class="cut-card">
-        <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=800&h=700&q=80"
-             alt="Klassischer Herrenhaarschnitt" loading="lazy" />
-        <div class="cut-overlay"></div>
-        <div class="cut-info">
-          <div class="cut-name">Classic Cut</div>
-          <div class="cut-price">ab 22 €</div>
+  <!-- ═══ ATMOSPHÄRE ═══ -->
+  <section class="atmosphere" id="atmosphere">
+    <div class="atm-inner">
+      <div class="atm-text">
+        <div class="section-eyebrow">Der Laden</div>
+        <h2 class="atm-title">
+          Kein Salon.<br>
+          Ein <em>Ort</em>.
+        </h2>
+        <p class="atm-body">
+          Klinge & Kamm ist kein Friseursalon mit Wartemusik und
+          Klatschmagazinen. Hier riecht es nach Rasiercreme und Holz,
+          hier läuft Blues, und hier sagt man dir ehrlich, was zum
+          Gesicht passt.
+        </p>
+        <p class="atm-body">
+          Drei Stühle. Drei Barbiere. Kein Kompromiss beim Handwerk.
+        </p>
+        <div class="atm-facts">
+          <div class="atm-fact">
+            <div class="atm-fact-num">3</div>
+            <div class="atm-fact-label">Barbiere</div>
+          </div>
+          <div class="atm-fact">
+            <div class="atm-fact-num">8 J.</div>
+            <div class="atm-fact-label">Erfahrung</div>
+          </div>
+          <div class="atm-fact">
+            <div class="atm-fact-num">Di–Sa</div>
+            <div class="atm-fact-label">Geöffnet</div>
+          </div>
+          <div class="atm-fact">
+            <div class="atm-fact-num">4.9★</div>
+            <div class="atm-fact-label">Google</div>
+          </div>
         </div>
       </div>
-      <div class="cut-card">
-        <img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?auto=format&fit=crop&w=800&h=700&q=80"
-             alt="Skin Fade Haarschnitt" loading="lazy" />
-        <div class="cut-overlay"></div>
-        <div class="cut-info">
-          <div class="cut-name">Skin Fade</div>
-          <div class="cut-price">ab 28 €</div>
+      <div class="atm-photos">
+        <div class="atm-photo">
+          <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=600&h=580&q=80"
+               alt="Barbershop Stuhl" loading="lazy" />
+          <span class="atm-photo-label">Der Stuhl</span>
         </div>
-      </div>
-      <div class="cut-card">
-        <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=800&h=700&q=80"
-             alt="Rasur und Bartpflege" loading="lazy" />
-        <div class="cut-overlay"></div>
-        <div class="cut-info">
-          <div class="cut-name">Rasur & Bart</div>
-          <div class="cut-price">ab 18 €</div>
+        <div class="atm-photo">
+          <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=600&h=580&q=80"
+               alt="Rasur Werkzeug" loading="lazy" />
+          <span class="atm-photo-label">Das Werkzeug</span>
+        </div>
+        <div class="atm-photo">
+          <img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?auto=format&fit=crop&w=600&h=580&q=80"
+               alt="Haarschnitt Detail" loading="lazy" />
+          <span class="atm-photo-label">Das Handwerk</span>
+        </div>
+        <div class="atm-photo">
+          <img src="https://images.unsplash.com/photo-1605497788044-5a32c7078486?auto=format&fit=crop&w=600&h=580&q=80"
+               alt="Barbershop Interieur" loading="lazy" />
+          <span class="atm-photo-label">Der Ort</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===== SECTION 3: SHOP VIBES ===== -->
-  <section class="shop-vibe">
-    <div class="shop-photo">
-      <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=900&h=700&q=80"
-           alt="Barbershop Interieur mit Stuhl und Spiegel" loading="lazy" />
-    </div>
-    <div class="shop-text">
-      <div class="shop-eyebrow">Der Laden</div>
-      <h2 class="shop-title">KEIN SALON.<br>EIN SHOP.</h2>
-      <p class="shop-body">
-        Klinge & Kamm ist kein Friseursalon mit
-        Zeitschriften und Wartemusik. Hier riecht es nach
-        Rasiercreme, hier läuft Blues, und hier sagt
-        man dir ehrlich, was zum Gesicht passt.
-      </p>
-      <p class="shop-body">
-        Termine online oder einfach reinkommen —
-        Walk-ins sind immer willkommen,
-        solange der Stuhl frei ist.
-      </p>
-      <a href="#" class="shop-cta">Termin buchen →</a>
+  <!-- ═══ TEAM ═══ -->
+  <section id="team">
+    <div class="team-section">
+      <div class="team-header">
+        <div>
+          <h2 class="team-title">
+            <span class="script">Die Männer</span><br>
+            hinter dem Stuhl
+          </h2>
+        </div>
+        <p class="team-tagline">
+          Jeder ein Handwerker.<br>Jeder mit eigenem Stil.
+        </p>
+      </div>
+      <div class="team-grid">
+
+        <div class="barber-card">
+          <div class="barber-photo">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=700&h=500&q=80"
+                 alt="Barbier Marco Kessler" loading="lazy" />
+            <div class="barber-photo-overlay"></div>
+            <span class="barber-rank">Inhaber</span>
+            <div class="barber-name-overlay">
+              <span class="bon-script">Marco</span>
+            </div>
+          </div>
+          <div class="barber-info">
+            <div class="barber-spec">Klassische Rasur · Pompadour · Vintage Cuts</div>
+            <p class="barber-desc">
+              Hat das Handwerk in Mailand erlernt. Sein Spezialgebiet:
+              die heiße Rasur und alles was mit Retro-Schnitten zu tun hat.
+            </p>
+            <div class="barber-avail avail-yes">
+              <span class="avail-dot"></span>
+              Heute verfügbar
+            </div>
+          </div>
+        </div>
+
+        <div class="barber-card">
+          <div class="barber-photo">
+            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=700&h=500&q=80"
+                 alt="Barbier Artur Levi" loading="lazy" />
+            <div class="barber-photo-overlay"></div>
+            <span class="barber-rank">Senior Barber</span>
+            <div class="barber-name-overlay">
+              <span class="bon-script">Artur</span>
+            </div>
+          </div>
+          <div class="barber-info">
+            <div class="barber-spec">Skin Fade · Textured Crops · Designs</div>
+            <p class="barber-desc">
+              Sein Fade ist sauber wie ein Lineal. Artur macht aus
+              jedem Kopf eine Ausstellung — präzise bis auf die letzte Linie.
+            </p>
+            <div class="barber-avail avail-no">
+              <span class="avail-dot"></span>
+              Heute ausgebucht
+            </div>
+          </div>
+        </div>
+
+        <div class="barber-card">
+          <div class="barber-photo">
+            <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=700&h=500&q=80"
+                 alt="Barbier Florian Schulz" loading="lazy" />
+            <div class="barber-photo-overlay"></div>
+            <span class="barber-rank">Barber</span>
+            <div class="barber-name-overlay">
+              <span class="bon-script">Florian</span>
+            </div>
+          </div>
+          <div class="barber-info">
+            <div class="barber-spec">Bartpflege · Curly Hair · Undercut</div>
+            <p class="barber-desc">
+              Florian ist der Bartexperte im Team. Von der Konturrasur
+              bis zum gepflegten Vollbart — sein Auge für Form ist unschlagbar.
+            </p>
+            <div class="barber-avail avail-yes">
+              <span class="avail-dot"></span>
+              Heute verfügbar
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
   </section>
+
+  <!-- ═══ SERVICES ═══ -->
+  <section class="services-section" id="services">
+    <div class="services-inner">
+      <div class="services-content">
+        <div class="section-eyebrow">Leistungen & Preise</div>
+        <h2 class="services-title">
+          Das kostet<br>
+          <span class="script">echtes Handwerk</span>
+        </h2>
+        <div class="price-list">
+          <div class="price-row">
+            <div class="pr-left">
+              <span class="pr-num">01</span>
+              <span class="pr-name">Haarschnitt</span>
+            </div>
+            <span class="pr-dots"></span>
+            <span class="pr-price">28 €</span>
+          </div>
+          <div class="price-row">
+            <div class="pr-left">
+              <span class="pr-num">02</span>
+              <span class="pr-name">Skin Fade</span>
+            </div>
+            <span class="pr-dots"></span>
+            <span class="pr-price">32 €</span>
+          </div>
+          <div class="price-row">
+            <div class="pr-left">
+              <span class="pr-num">03</span>
+              <span class="pr-name">Heiße Rasur</span>
+            </div>
+            <span class="pr-dots"></span>
+            <span class="pr-price">38 €</span>
+          </div>
+          <div class="price-row">
+            <div class="pr-left">
+              <span class="pr-num">04</span>
+              <span class="pr-name">Bart Trim</span>
+            </div>
+            <span class="pr-dots"></span>
+            <span class="pr-price">18 €</span>
+          </div>
+          <div class="price-row">
+            <div class="pr-left">
+              <span class="pr-num">05</span>
+              <span class="pr-name">Kombi: Schnitt + Bart</span>
+            </div>
+            <span class="pr-dots"></span>
+            <span class="pr-price">42 €</span>
+          </div>
+          <div class="price-row">
+            <div class="pr-left">
+              <span class="pr-num">06</span>
+              <span class="pr-name">Full Service</span>
+            </div>
+            <span class="pr-dots"></span>
+            <span class="pr-price">65 €</span>
+          </div>
+        </div>
+        <a href="#booking" class="btn-primary" style="align-self:flex-start; margin-top:1rem;">Jetzt buchen →</a>
+      </div>
+      <div class="services-photo">
+        <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=900&h=700&q=80"
+             alt="Barbier bei der Arbeit" loading="lazy" />
+        <div class="services-photo-overlay"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ BUCHUNG ═══ -->
+  <section id="booking">
+    <div class="booking-section">
+      <div class="booking-left">
+        <h2 class="booking-title">
+          <span class="script">Buche deinen</span><br>
+          Termin
+        </h2>
+        <p class="booking-body">
+          Termine online in unter einer Minute — oder einfach reinkommen.
+          Walk-ins sind immer willkommen, solange der Stuhl frei ist.
+          Wir sind Di bis Sa für dich da.
+        </p>
+        <div class="booking-cta-group">
+          <a href="#" class="btn-primary">Online buchen →</a>
+          <a href="#" class="btn-ghost">Walk-in Info</a>
+        </div>
+      </div>
+      <div class="booking-info-grid">
+        <div class="info-row">
+          <span class="info-label">Adresse</span>
+          <span class="info-val">Palaststraße 12<br>54290 Trier</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Öffnungs­zeiten</span>
+          <span class="info-val">Di – Fr: 9:00 – 19:00<br>Sa: 9:00 – 16:00</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Telefon</span>
+          <span class="info-val">0651 / 97 63 42</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Walk-ins</span>
+          <span class="info-val">Immer willkommen<br>— Warten kann vorkommen</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">Klinge & Kamm</div>
+      <span class="footer-copy">© 2024 Klinge & Kamm · Trier · Alle Rechte vorbehalten</span>
+      <ul class="footer-links">
+        <li><a href="#">Impressum</a></li>
+        <li><a href="#">Datenschutz</a></li>
+        <li><a href="#">Instagram</a></li>
+      </ul>
+    </div>
+  </footer>
 
 </body>
 </html>
