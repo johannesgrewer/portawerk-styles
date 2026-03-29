@@ -10,80 +10,92 @@ export const prerender = true;
   <title>Kammer 13 — Escape Room & Mystery Experience | Trier</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inconsolata:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Inconsolata:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
+    /* ── RESET ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { overflow-x: hidden; }
+    html { overflow-x: hidden; scroll-behavior: smooth; }
 
     :root {
-      --gold:   #E8C547;
-      --red:    #CC1F1F;
-      --bg:     #0D0B08;
-      --panel:  #141209;
-      --text:   #F0E8D0;
-      --muted:  rgba(240,232,208,0.35);
-      --rule:   rgba(240,232,208,0.06);
+      --bg:        #0D0B08;
+      --bg2:       #120F0A;
+      --bg3:       #181410;
+      --gold:      #E8C547;
+      --gold-dim:  rgba(232,197,71,0.18);
+      --gold-glow: rgba(232,197,71,0.06);
+      --red:       #CC1F1F;
+      --red-dim:   rgba(204,31,31,0.15);
+      --text:      #F0E8D0;
+      --muted:     rgba(240,232,208,0.4);
+      --faint:     rgba(240,232,208,0.1);
+      --rule:      rgba(240,232,208,0.06);
     }
 
     body {
       background: var(--bg);
       color: var(--text);
       font-family: 'Inconsolata', monospace;
-      min-height: 100vh;
+      font-weight: 400;
+      line-height: 1.6;
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* Film grain effect */
+    /* Film grain via SVG noise */
     body::before {
       content: '';
       position: fixed;
       inset: 0;
-      background-image:
-        repeating-linear-gradient(
-          0deg,
-          transparent,
-          transparent 2px,
-          rgba(255,255,255,0.008) 2px,
-          rgba(255,255,255,0.008) 3px
-        );
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
       pointer-events: none;
-      z-index: 0;
+      z-index: 9999;
+      opacity: 0.55;
     }
 
-    /* Vignette */
+    /* Vignette with breathing animation */
     body::after {
       content: '';
       position: fixed;
       inset: 0;
-      background: radial-gradient(
-        ellipse at center,
-        transparent 40%,
-        rgba(0,0,0,0.6) 100%
-      );
+      background: radial-gradient(ellipse at center, transparent 42%, rgba(0,0,0,0.6) 100%);
       pointer-events: none;
-      z-index: 0;
+      z-index: 9998;
+      animation: vigBreath 10s ease-in-out infinite;
     }
 
-    nav {
+    @keyframes vigBreath {
+      0%, 100% { opacity: 0.75; }
+      50%       { opacity: 1; }
+    }
+
+    img { display: block; max-width: 100%; }
+    ::selection { background: var(--gold); color: var(--bg); }
+
+    /* ── NAV ── */
+    .nav {
       position: fixed;
       top: 0; left: 0; right: 0;
-      z-index: 100;
+      z-index: 1000;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 1.1rem 3.5rem;
-      background: rgba(13,11,8,0.95);
+      padding: 1.1rem clamp(1.5rem, 5vw, 3.5rem);
+      background: rgba(13,11,8,0.92);
+      backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--rule);
     }
+
     .nav-logo {
       font-family: 'Oswald', sans-serif;
       font-weight: 700;
-      font-size: 1.2rem;
-      letter-spacing: 0.16em;
+      font-size: 1.1rem;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--text);
+      text-decoration: none;
     }
-    .nav-logo span { color: var(--gold); }
+    .nav-logo em { font-style: normal; color: var(--gold); }
+
     .nav-links {
       display: flex;
       gap: 0;
@@ -91,30 +103,61 @@ export const prerender = true;
     }
     .nav-links a {
       display: block;
-      padding: 0.5rem 1.25rem;
+      padding: 0.4rem 1.2rem;
       font-size: 0.52rem;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--muted);
       text-decoration: none;
       border-right: 1px solid var(--rule);
       transition: color 0.2s;
     }
+    .nav-links li:first-child a { border-left: 1px solid var(--rule); }
     .nav-links a:hover { color: var(--text); }
-    .nav-tickets {
+
+    .nav-cta {
       font-family: 'Oswald', sans-serif;
-      font-size: 0.65rem;
+      font-size: 0.62rem;
       font-weight: 600;
-      letter-spacing: 0.16em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--bg);
       background: var(--gold);
-      padding: 0.6rem 1.5rem;
+      padding: 0.55rem 1.4rem;
       text-decoration: none;
+      white-space: nowrap;
+      position: relative;
+      overflow: hidden;
       transition: background 0.2s;
     }
-    .nav-tickets:hover { background: #fff; }
+    .nav-cta::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -60%;
+      width: 40%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+      transition: left 0.5s;
+    }
+    .nav-cta:hover { background: #fff; }
+    .nav-cta:hover::after { left: 150%; }
 
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: var(--text);
+    }
+
+    /* ── HERO ── */
     .hero {
       min-height: 100vh;
       padding-top: 56px;
@@ -122,585 +165,1328 @@ export const prerender = true;
       z-index: 1;
       display: grid;
       grid-template-columns: 1fr 380px;
+      max-width: 1600px;
+      margin: 0 auto;
     }
 
-    /* LEFT — full dark atmosphere */
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.15;
+      filter: saturate(0.35) sepia(0.3);
+    }
+    .hero-bg-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        100deg,
+        rgba(13,11,8,0.25) 0%,
+        transparent 45%,
+        rgba(13,11,8,0.55) 100%
+      );
+    }
+
+    /* Keyhole decorative motif — large, ghosted */
+    .hero-keyhole {
+      position: absolute;
+      bottom: -60px;
+      left: 38%;
+      transform: translateX(-50%);
+      width: 200px;
+      opacity: 0.035;
+      z-index: 0;
+      pointer-events: none;
+    }
+
     .hero-left {
+      position: relative;
+      z-index: 1;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: 5rem 3.5rem 5rem 4.5rem;
-      gap: 2.5rem;
+      padding: clamp(3rem, 6vw, 5rem) clamp(2rem, 4vw, 3.5rem) clamp(3rem, 6vw, 5rem) clamp(2.5rem, 5vw, 5rem);
+      gap: 2.4rem;
       border-right: 1px solid var(--rule);
     }
 
-    .timer-badge {
+    .hero-badge {
       display: inline-flex;
       align-items: center;
-      gap: 0.6rem;
-      font-size: 0.55rem;
-      letter-spacing: 0.22em;
+      gap: 0.65rem;
+      font-size: 0.52rem;
+      letter-spacing: 0.26em;
       text-transform: uppercase;
       color: var(--red);
       width: fit-content;
     }
-    .tb-pulse {
-      width: 6px;
-      height: 6px;
+    .pulse-dot {
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
       background: var(--red);
-      animation: pulse 1.5s ease-in-out infinite;
+      flex-shrink: 0;
+      animation: pulseRed 1.4s ease-in-out infinite;
     }
-    @keyframes pulse {
+    @keyframes pulseRed {
       0%, 100% { opacity: 1; }
-      50% { opacity: 0.3; }
+      50%       { opacity: 0.25; }
     }
 
     .hero-headline {
       font-family: 'Oswald', sans-serif;
       font-weight: 700;
-      font-size: clamp(3.5rem, 7vw, 6rem);
-      line-height: 0.92;
-      letter-spacing: 0.04em;
+      font-size: clamp(3rem, 7.5vw, 6rem);
+      line-height: 0.88;
+      letter-spacing: 0.03em;
       text-transform: uppercase;
-      color: var(--text);
     }
-    .hero-headline .gold { color: var(--gold); }
-    .hero-headline .dim  { color: rgba(240,232,208,0.15); }
+    .hl-gold   { color: var(--gold); }
+    .hl-dim    { opacity: 0.1; }
+    .hl-stroke {
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(240,232,208,0.28);
+    }
 
-    .hero-body {
-      font-size: 0.85rem;
+    .hero-sub {
+      font-size: 0.82rem;
       font-weight: 300;
-      line-height: 1.9;
+      line-height: 1.95;
       color: var(--muted);
       max-width: 44ch;
-      font-family: 'Inconsolata', monospace;
     }
 
-    /* Room list */
-    .room-list {
-      display: flex;
-      flex-direction: column;
+    /* Room-list widget */
+    .room-widget {
       border: 1px solid var(--rule);
+      background: rgba(255,255,255,0.012);
     }
-    .rl-header {
-      padding: 0.4rem 1rem;
-      font-size: 0.48rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--muted);
+    .rw-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.45rem 0.9rem;
       border-bottom: 1px solid var(--rule);
       background: rgba(255,255,255,0.02);
     }
-    .room-row {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      padding: 0.85rem 1rem;
-      border-bottom: 1px solid var(--rule);
-      transition: background 0.2s;
-      cursor: default;
+    .rw-title {
+      font-size: 0.44rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--muted);
     }
-    .room-row:last-child { border-bottom: none; }
-    .room-row:hover { background: rgba(232,197,71,0.03); }
-    .rr-num {
+    .rw-sub {
+      font-size: 0.42rem;
+      letter-spacing: 0.14em;
+      color: var(--gold);
+      opacity: 0.65;
+    }
+
+    .rw-row {
+      display: grid;
+      grid-template-columns: 2.2rem 1fr auto;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.78rem 0.9rem;
+      border-bottom: 1px solid var(--rule);
+      cursor: default;
+      transition: background 0.2s, padding-left 0.22s;
+    }
+    .rw-row:last-child { border-bottom: none; }
+    .rw-row:hover { background: var(--gold-glow); padding-left: 1.15rem; }
+
+    .rw-num {
       font-family: 'Oswald', sans-serif;
-      font-size: 1.2rem;
+      font-size: 1.15rem;
       font-weight: 700;
       color: var(--gold);
-      opacity: 0.4;
-      width: 2rem;
-      flex-shrink: 0;
+      opacity: 0.3;
+      text-align: right;
+      transition: opacity 0.2s;
     }
-    .rr-info { flex: 1; }
-    .rr-name {
+    .rw-row:hover .rw-num { opacity: 0.9; }
+
+    .rw-name {
       font-family: 'Oswald', sans-serif;
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       font-weight: 600;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
-      color: var(--text);
+      transition: color 0.2s;
     }
-    .rr-desc {
-      font-size: 0.58rem;
+    .rw-row:hover .rw-name { color: var(--gold); }
+    .rw-meta {
+      font-size: 0.54rem;
       font-weight: 300;
       color: var(--muted);
-      margin-top: 0.05rem;
+      margin-top: 1px;
     }
-    .rr-diff {
+
+    .rw-dots {
       display: flex;
       gap: 3px;
     }
-    .diff-dot {
+    .rd {
       width: 5px;
       height: 5px;
       border-radius: 50%;
-      background: var(--rule);
+      background: rgba(240,232,208,0.1);
+      transition: background 0.2s;
     }
-    .diff-dot.on { background: var(--red); }
+    .rd.on { background: var(--red); }
+    .rw-row:hover .rd.on { background: var(--gold); }
 
-    .cta-row {
+    .hero-cta-row {
       display: flex;
       align-items: center;
       gap: 1.5rem;
+      flex-wrap: wrap;
     }
-    .cta-btn {
+    .btn-primary {
       font-family: 'Oswald', sans-serif;
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       font-weight: 700;
-      letter-spacing: 0.16em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--bg);
       background: var(--gold);
-      padding: 0.9rem 2rem;
+      padding: 0.88rem 2rem;
       text-decoration: none;
+      display: inline-block;
       transition: background 0.2s;
     }
-    .cta-btn:hover { background: #fff; }
-    .cta-link {
-      font-size: 0.58rem;
+    .btn-primary:hover { background: #fff; }
+
+    .btn-ghost {
+      font-size: 0.56rem;
+      letter-spacing: 0.12em;
       color: var(--muted);
       text-decoration: none;
-      letter-spacing: 0.1em;
       border-bottom: 1px solid var(--rule);
-      padding-bottom: 1px;
+      padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
     }
+    .btn-ghost:hover { color: var(--text); border-color: var(--muted); }
 
-    /* RIGHT panel */
+    /* ── HERO RIGHT PANEL ── */
     .hero-right {
-      background: var(--panel);
+      position: relative;
+      z-index: 1;
+      background: var(--bg2);
       border-left: 1px solid var(--rule);
       display: flex;
       flex-direction: column;
     }
 
-    /* Big timer display */
-    .timer-display {
+    .timer-block {
       padding: 2.5rem 2rem;
       border-bottom: 1px solid var(--rule);
       text-align: center;
+      position: relative;
+      overflow: hidden;
     }
-    .td-label {
-      font-size: 0.48rem;
-      letter-spacing: 0.22em;
+    .timer-block::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(232,197,71,0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .tb-label {
+      font-size: 0.46rem;
+      letter-spacing: 0.26em;
       text-transform: uppercase;
       color: var(--muted);
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.8rem;
     }
-    .td-time {
+    .tb-time {
       font-family: 'Oswald', sans-serif;
-      font-size: 3.5rem;
+      font-size: 3.8rem;
       font-weight: 700;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
       color: var(--gold);
       line-height: 1;
+      animation: timerGlow 3s ease-in-out infinite;
     }
-    .td-sub {
-      font-size: 0.55rem;
-      color: rgba(240,232,208,0.25);
-      margin-top: 0.4rem;
-      letter-spacing: 0.16em;
+    .tb-colon { animation: colonBlink 1s step-end infinite; }
+    .tb-sub {
+      font-size: 0.5rem;
+      color: rgba(240,232,208,0.2);
+      margin-top: 0.5rem;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
     }
 
-    /* Stats */
-    .side-stats {
+    @keyframes timerGlow {
+      0%, 100% { text-shadow: 0 0 12px rgba(232,197,71,0.12); }
+      50%       { text-shadow: 0 0 40px rgba(232,197,71,0.55), 0 0 80px rgba(232,197,71,0.12); }
+    }
+    @keyframes colonBlink {
+      0%, 49%  { opacity: 1; }
+      50%, 100%{ opacity: 0; }
+    }
+
+    .stats-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       border-bottom: 1px solid var(--rule);
     }
-    .ss-cell {
-      padding: 1.25rem 1.5rem;
-      border-right: 1px solid var(--rule);
+    .stat-cell {
+      padding: 1.1rem 1.4rem;
       text-align: center;
+      border-right: 1px solid var(--rule);
     }
-    .ss-cell:last-child,
-    .ss-cell:nth-child(2) { border-right: none; }
-    .ss-num {
+    .stat-cell:nth-child(2) { border-right: none; }
+    .stat-num {
       font-family: 'Oswald', sans-serif;
-      font-size: 1.8rem;
+      font-size: 1.75rem;
       font-weight: 700;
       color: var(--text);
       line-height: 1;
     }
-    .ss-label {
-      font-size: 0.52rem;
+    .stat-label {
+      font-size: 0.48rem;
       color: var(--muted);
-      margin-top: 0.2rem;
       letter-spacing: 0.1em;
+      margin-top: 0.2rem;
     }
 
-    /* Recent results */
-    .results-list {
+    .leaderboard {
       flex: 1;
       display: flex;
       flex-direction: column;
-      padding: 1.25rem 0;
+      padding-top: 1.1rem;
     }
-    .results-label {
-      font-size: 0.48rem;
-      letter-spacing: 0.22em;
+    .lb-label {
+      font-size: 0.44rem;
+      letter-spacing: 0.24em;
       text-transform: uppercase;
       color: var(--muted);
-      padding: 0 1.5rem;
-      margin-bottom: 0.75rem;
+      padding: 0 1.4rem;
+      margin-bottom: 0.6rem;
     }
-    .result-row {
-      display: flex;
+    .lb-row {
+      display: grid;
+      grid-template-columns: 1.4rem 1fr auto;
       align-items: center;
-      justify-content: space-between;
-      padding: 0.6rem 1.5rem;
+      gap: 0.6rem;
+      padding: 0.5rem 1.4rem;
       border-bottom: 1px solid var(--rule);
+      cursor: default;
+      transition: background 0.2s;
     }
-    .result-row:last-child { border-bottom: none; }
-    .rr-team {
-      font-size: 0.72rem;
-      font-weight: 400;
-      color: var(--text);
+    .lb-row:last-child { border-bottom: none; }
+    .lb-row:hover { background: var(--gold-glow); }
+    .lb-pos {
+      font-size: 0.56rem;
+      color: var(--muted);
     }
-    .rr-time {
+    .lb-pos.gold { color: var(--gold); }
+    .lb-team {
+      font-size: 0.68rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      transition: color 0.2s;
+    }
+    .lb-row:hover .lb-team { color: var(--gold); }
+    .lb-time {
       font-family: 'Oswald', sans-serif;
-      font-size: 0.88rem;
+      font-size: 0.85rem;
       font-weight: 600;
       color: var(--gold);
-      letter-spacing: 0.06em;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
     }
 
-    /* Book block */
-    .book-block {
-      padding: 1.25rem 1.5rem;
-      border-top: 1px solid rgba(232,197,71,0.15);
-      background: rgba(232,197,71,0.03);
+    .lb-cta-block {
+      padding: 1.1rem 1.4rem;
+      border-top: 1px solid rgba(232,197,71,0.1);
+      background: rgba(232,197,71,0.02);
     }
-    .bb-text {
-      font-size: 0.62rem;
+    .lb-cta-text {
+      font-size: 0.58rem;
       color: var(--muted);
-      line-height: 1.6;
-      margin-bottom: 0.75rem;
+      line-height: 1.65;
+      margin-bottom: 0.65rem;
     }
-    .bb-cta {
+    .lb-cta-btn {
       font-family: 'Oswald', sans-serif;
-      font-size: 0.6rem;
+      font-size: 0.58rem;
       font-weight: 600;
       letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--bg);
       background: var(--gold);
-      padding: 0.6rem 1.25rem;
+      padding: 0.5rem 1.1rem;
       text-decoration: none;
       display: inline-block;
       transition: background 0.2s;
     }
-    .bb-cta:hover { background: #fff; }
+    .lb-cta-btn:hover { background: #fff; }
 
-    /* ── PHOTO ── */
-    .img-wrap img { display: block; }
-    .img-wrap:hover img { transform: scale(1.05); }
+    /* ── SECTION COMMON ── */
+    .eyebrow {
+      font-size: 0.46rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.45rem;
+    }
+    .section-title {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(1.5rem, 2.8vw, 2.2rem);
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      line-height: 1.1;
+    }
+    .section-title em { font-style: normal; color: var(--gold); }
+    .section-rule {
+      width: 2rem;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.45;
+      margin-top: 1rem;
+    }
 
-    /* ── ROOMS PREVIEW SECTION ── */
-    .rooms-preview {
-      padding: 5rem 4.5rem;
-      background: var(--panel);
+    /* ── ROOMS SECTION ── */
+    .rooms {
+      padding: clamp(4rem, 8vw, 7rem) clamp(1.5rem, 5vw, 5rem);
+      background: var(--bg2);
       border-top: 1px solid var(--rule);
       position: relative;
       z-index: 1;
     }
-    .rooms-preview-inner {
-      max-width: 1600px;
-      margin: 0 auto;
+    .rooms-inner { max-width: 1400px; margin: 0 auto; }
+    .section-header { margin-bottom: 3rem; }
+
+    .rooms-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
     }
-    .rp-eyebrow {
-      font-size: 0.48rem;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 0.5rem;
+
+    .room-card {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
     }
-    .rp-title {
+    .rc-photo {
+      position: relative;
+      height: clamp(260px, 32vw, 380px);
+      overflow: hidden;
+    }
+    .rc-photo img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.75s ease;
+      filter: saturate(0.65) brightness(0.8);
+    }
+    .room-card:hover .rc-photo img { transform: scale(1.07); }
+
+    .rc-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(13,11,8,0.95) 0%,
+        rgba(13,11,8,0.45) 40%,
+        transparent 70%
+      );
+    }
+
+    .rc-hover-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(13,11,8,0.7);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .room-card:hover .rc-hover-overlay { opacity: 1; }
+
+    .rc-hover-inner {
+      text-align: center;
+      padding: 2rem;
+    }
+    .rc-hover-desc {
+      font-size: 0.8rem;
+      line-height: 1.85;
+      color: rgba(240,232,208,0.82);
+      max-width: 28ch;
+    }
+    .rc-hover-cta {
+      display: inline-block;
+      margin-top: 1.25rem;
       font-family: 'Oswald', sans-serif;
-      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--gold);
+      padding: 0.5rem 1.2rem;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .rc-hover-cta:hover { background: #fff; }
+
+    .rc-info {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 1.2rem 1.4rem;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      z-index: 2;
+    }
+    .rc-name {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.15rem;
       font-weight: 700;
       letter-spacing: 0.06em;
       text-transform: uppercase;
-      color: var(--text);
-      margin-bottom: 2.5rem;
+      line-height: 1;
     }
-    .rp-title span { color: var(--gold); }
-    .rooms-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.25rem;
+    .rc-meta {
+      font-size: 0.52rem;
+      color: var(--muted);
+      margin-top: 0.3rem;
+      letter-spacing: 0.08em;
     }
-    .room-photo-card {
-      position: relative;
-    }
-    .room-photo-label {
-      position: absolute;
-      bottom: 1rem;
-      left: 1rem;
-      font-family: 'Oswald', sans-serif;
-      font-size: 0.85rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
+    .rc-badge {
+      flex-shrink: 0;
+      font-size: 0.46rem;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--text);
-      z-index: 2;
+      padding: 0.25rem 0.65rem;
+      border: 1px solid rgba(232,197,71,0.3);
+      color: var(--gold);
     }
-    .room-photo-diff {
+    .rc-badge.hard    { border-color: rgba(204,31,31,0.4); color: var(--red); }
+    .rc-badge.extreme { border-color: rgba(204,31,31,0.6); color: var(--red); }
+
+    /* ── PROCESS SECTION ── */
+    .process {
+      position: relative;
+      padding: clamp(5rem, 10vw, 8rem) clamp(1.5rem, 5vw, 5rem);
+      background: var(--bg3);
+      border-top: 1px solid var(--rule);
+      overflow: hidden;
+      z-index: 1;
+    }
+    .process-bg {
       position: absolute;
-      bottom: 1rem;
-      right: 1rem;
-      font-size: 0.48rem;
-      letter-spacing: 0.18em;
+      inset: 0;
+      z-index: 0;
+    }
+    .process-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.07;
+      filter: saturate(0.15);
+    }
+    .process-bg-grad {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        var(--bg3) 0%,
+        rgba(24,20,16,0.6) 50%,
+        var(--bg3) 100%
+      );
+    }
+    .process-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      margin-top: 3rem;
+      border: 1px solid var(--rule);
+    }
+
+    .step {
+      padding: 2.5rem 1.8rem;
+      border-right: 1px solid var(--rule);
+      position: relative;
+      transition: background 0.3s;
+    }
+    .step:last-child { border-right: none; }
+    .step:hover { background: rgba(232,197,71,0.022); }
+
+    .step-num {
+      font-family: 'Oswald', sans-serif;
+      font-size: 3.8rem;
+      font-weight: 700;
+      color: var(--gold);
+      opacity: 0.1;
+      line-height: 1;
+      margin-bottom: 1.25rem;
+      transition: opacity 0.3s;
+    }
+    .step:hover .step-num { opacity: 0.22; }
+
+    /* Keyhole icon in step */
+    .step-keyhole {
+      width: 18px;
+      height: 25px;
+      margin-bottom: 0.85rem;
+      opacity: 0.45;
+      transition: opacity 0.3s;
+    }
+    .step:hover .step-keyhole { opacity: 1; }
+
+    .step-label {
+      font-size: 0.44rem;
+      letter-spacing: 0.26em;
       text-transform: uppercase;
       color: var(--gold);
+      opacity: 0.65;
+      margin-bottom: 0.45rem;
+    }
+    .step-name {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      line-height: 1.2;
+      margin-bottom: 0.65rem;
+    }
+    .step-desc {
+      font-size: 0.72rem;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.85;
+    }
+
+    .step-connector {
+      position: absolute;
+      right: -12px;
+      top: 50%;
+      transform: translateY(-50%);
       z-index: 2;
+      color: var(--gold);
+      opacity: 0.18;
+      font-size: 1rem;
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+    }
+    .step:last-child .step-connector { display: none; }
+
+    /* ── BOOKING SECTION ── */
+    .booking {
+      position: relative;
+      border-top: 1px solid var(--rule);
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 600px;
     }
 
-    /* === Animations & Micro-interactions === */
-    @keyframes colonBlink {
-      0%, 49% { opacity: 1; }
-      50%, 100% { opacity: 0; }
-    }
-    @keyframes vignetteBreath {
-      0%, 100% { opacity: 0.85; }
-      50%       { opacity: 1; }
-    }
-    @keyframes timerGlow {
-      0%, 100% { text-shadow: 0 0 10px rgba(232,197,71,0.2); }
-      50%       { text-shadow: 0 0 30px rgba(232,197,71,0.5), 0 0 60px rgba(232,197,71,0.15); }
-    }
-
-    .colon { animation: colonBlink 1s step-end infinite; }
-
-    .td-time { animation: timerGlow 3s ease-in-out infinite; }
-
-    body::after { animation: vignetteBreath 8s ease-in-out infinite; }
-
-    .room-row {
-      transition: background 0.2s, padding-left 0.25s;
-    }
-    .room-row:hover {
-      background: rgba(232,197,71,0.05);
-      padding-left: 1.3rem;
-    }
-    .rr-name { transition: color 0.2s; }
-    .room-row:hover .rr-name { color: var(--gold); }
-    .rr-num { transition: opacity 0.2s; }
-    .room-row:hover .rr-num { opacity: 0.9; }
-
-    .result-row {
-      transition: background 0.2s;
-      cursor: default;
-    }
-    .result-row:hover { background: rgba(232,197,71,0.05); }
-    .rr-team { transition: color 0.2s; }
-    .result-row:hover .rr-team { color: var(--gold); }
-
-    .diff-dot { transition: background 0.2s; }
-    .room-row:hover .diff-dot.on { background: var(--gold); }
-
-    .nav-tickets {
+    .booking-photo {
       position: relative;
       overflow: hidden;
+      min-height: 420px;
     }
-    .nav-tickets::after {
-      content: '';
+    .booking-photo img {
       position: absolute;
-      top: 0; left: -60%;
-      width: 40%;
+      inset: 0;
+      width: 100%;
       height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(0,0,0,0.15), transparent);
-      transition: left 0.5s;
+      object-fit: cover;
+      filter: saturate(0.45) brightness(0.65);
+      transition: transform 0.9s ease;
     }
-    .nav-tickets:hover::after { left: 150%; }
+    .booking:hover .booking-photo img { transform: scale(1.03); }
+    .booking-photo-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to right,
+        transparent 40%,
+        var(--bg) 100%
+      );
+    }
 
+    .booking-content {
+      background: var(--bg);
+      padding: clamp(3rem, 6vw, 5rem);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 2.4rem;
+    }
+
+    .pricing-table {
+      border: 1px solid var(--rule);
+    }
+    .pr-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--rule);
+      transition: background 0.2s;
+    }
+    .pr-row:last-child { border-bottom: none; }
+    .pr-row:hover { background: var(--gold-glow); }
+    .pr-name {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .pr-detail {
+      font-size: 0.54rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+    .pr-price {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--gold);
+      white-space: nowrap;
+    }
+    .pr-price small {
+      font-size: 0.52rem;
+      font-weight: 400;
+      color: var(--muted);
+    }
+
+    .hours-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border: 1px solid var(--rule);
+    }
+    .hours-cell {
+      padding: 0.85rem 1.25rem;
+      border-right: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+    }
+    .hours-cell:nth-child(even)         { border-right: none; }
+    .hours-cell:nth-last-child(-n+2)    { border-bottom: none; }
+    .hours-day {
+      font-size: 0.46rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.2rem;
+    }
+    .hours-time {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .booking-cta-wrap {
+      display: flex;
+      align-items: center;
+      gap: 1.6rem;
+      flex-wrap: wrap;
+    }
+    .btn-book {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--gold);
+      padding: 1rem 2.5rem;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.2s;
+    }
+    .btn-book:hover { background: #fff; }
+    .booking-note {
+      font-size: 0.58rem;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--rule);
+      padding: 2rem clamp(1.5rem, 5vw, 3.5rem);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 1;
+    }
+    .footer-logo {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+    .footer-logo em { font-style: normal; color: var(--gold); }
+    .footer-info {
+      font-size: 0.54rem;
+      color: var(--muted);
+      line-height: 1.75;
+      text-align: center;
+    }
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+    .footer-links a {
+      font-size: 0.52rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--text); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1100px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-right {
+        border-left: none;
+        border-top: 1px solid var(--rule);
+        flex-direction: row;
+        overflow-x: auto;
+      }
+      .timer-block {
+        flex: 0 0 200px;
+        border-bottom: none;
+        border-right: 1px solid var(--rule);
+      }
+      .stats-grid {
+        flex: 0 0 160px;
+        grid-template-columns: 1fr;
+        border-bottom: none;
+        border-right: 1px solid var(--rule);
+      }
+      .stat-cell { border-right: none; border-bottom: 1px solid var(--rule); }
+      .stat-cell:last-child { border-bottom: none; }
+      .leaderboard { flex: 1 1 220px; min-width: 220px; }
+      .lb-cta-block { display: none; }
+      .hero-keyhole { display: none; }
+
+      .process-steps { grid-template-columns: repeat(2, 1fr); }
+      .step:nth-child(2) { border-right: none; }
+      .step:nth-child(3) {
+        border-top: 1px solid var(--rule);
+        border-right: 1px solid var(--rule);
+      }
+      .step:nth-child(4) { border-top: 1px solid var(--rule); }
+      .step:nth-child(2) .step-connector,
+      .step:nth-child(4) .step-connector { display: none; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links, .nav-cta { display: none; }
+      .nav-hamburger { display: flex; }
+
+      .hero { padding-top: 50px; }
+      .hero-left { padding: 2.5rem 1.5rem; }
+
+      .hero-right {
+        flex-direction: column;
+        overflow-x: visible;
+      }
+      .timer-block { flex: none; border-right: none; border-bottom: 1px solid var(--rule); }
+      .stats-grid {
+        flex: none;
+        width: 100%;
+        grid-template-columns: 1fr 1fr;
+        border-right: none;
+        border-bottom: 1px solid var(--rule);
+      }
+      .stat-cell { border-bottom: none; }
+      .leaderboard { min-width: 0; }
+
+      .rooms-grid { grid-template-columns: 1fr; gap: 1rem; }
+      .rc-photo { height: 260px; }
+
+      .process-steps { grid-template-columns: 1fr; }
+      .step { border-right: none; border-bottom: 1px solid var(--rule); }
+      .step:last-child { border-bottom: none; }
+      .step .step-connector { display: none; }
+
+      .booking {
+        grid-template-columns: 1fr;
+      }
+      .booking-photo {
+        min-height: 280px;
+      }
+      .booking-photo-overlay {
+        background: linear-gradient(to bottom, transparent 40%, var(--bg) 100%);
+      }
+
+      footer { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
   </style>
 </head>
 <body>
-  <nav>
-    <div class="nav-logo">Kammer <span>13</span></div>
+
+  <!-- ── NAV ── -->
+  <nav class="nav">
+    <a href="#" class="nav-logo">Kammer <em>13</em></a>
     <ul class="nav-links">
-      <li><a href="#">Räume</a></li>
-      <li><a href="#">Bestenliste</a></li>
-      <li><a href="#">Events</a></li>
-      <li><a href="#">FAQ</a></li>
+      <li><a href="#raeume">Räume</a></li>
+      <li><a href="#ablauf">Ablauf</a></li>
+      <li><a href="#buchung">Preise</a></li>
+      <li><a href="#buchung">FAQ</a></li>
     </ul>
-    <a href="#" class="nav-tickets">Jetzt buchen</a>
+    <a href="#buchung" class="nav-cta">Jetzt buchen</a>
+    <button class="nav-hamburger" aria-label="Menü öffnen">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
 
-  <section class="hero" style="max-width:1600px;margin-left:auto;margin-right:auto;position:relative;">
-    <!-- Hero background photo with dark overlay -->
-    <div style="position:absolute;inset:0;overflow:hidden;z-index:0;">
-      <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1600&h=900&q=80"
-           alt="Escape Room Atmosphäre" loading="eager"
-           style="width:100%;height:100%;object-fit:cover;opacity:0.18;" />
+  <!-- ── HERO ── -->
+  <section class="hero" id="top">
+
+    <!-- Background photo -->
+    <div class="hero-bg">
+      <img
+        src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1800&h=1200&q=80"
+        alt="" loading="eager" />
+      <div class="hero-bg-overlay"></div>
     </div>
-    <div class="hero-left" style="position:relative;z-index:1;">
-      <div class="timer-badge">
-        <span class="tb-pulse"></span>
-        Du hast 60 Minuten
+
+    <!-- Large ghosted keyhole motif -->
+    <svg class="hero-keyhole" viewBox="0 0 100 150" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <circle cx="50" cy="42" r="38" fill="#E8C547"/>
+      <circle cx="50" cy="42" r="18" fill="#0D0B08"/>
+      <path d="M35 80 L40 140 L60 140 L65 80 Q50 70 35 80Z" fill="#E8C547"/>
+    </svg>
+
+    <!-- LEFT: Content -->
+    <div class="hero-left">
+
+      <div class="hero-badge">
+        <span class="pulse-dot"></span>
+        Live — 4 Räume verfügbar
       </div>
 
       <h1 class="hero-headline">
-        FIND<br>
-        <span class="gold">DEN</span><br>
-        AUS<span class="dim">-</span><br>
-        GANG.
+        FINDE<br>
+        <span class="hl-gold">DEN</span><br>
+        AUS<span class="hl-stroke">GANG</span><br>
+        <span class="hl-dim">— oder nicht.</span>
       </h1>
 
-      <p class="hero-body">
-        Vier Räume. Vier Geschichten.
-        Jede mit einem Geheimnis, das nur
-        gelöst wird, wenn du zusammenarbeitest —
-        oder alleine brillierst.
+      <p class="hero-sub">
+        Vier verschlossene Kammern. Vier Geschichten.
+        Löse die Rätsel, bevor der Countdown endet —
+        allein oder als Team.
       </p>
 
-      <div class="room-list">
-        <div class="rl-header">Verfügbare Räume</div>
-        <div class="room-row">
-          <div class="rr-num">01</div>
-          <div class="rr-info">
-            <div class="rr-name">Das Archiv</div>
-            <div class="rr-desc">Detektiv-Noir · 2–5 Personen</div>
+      <div class="room-widget">
+        <div class="rw-header">
+          <span class="rw-title">Verfügbare Räume</span>
+          <span class="rw-sub">Fleischstr. 13, Trier</span>
+        </div>
+        <div class="rw-row">
+          <div class="rw-num">01</div>
+          <div>
+            <div class="rw-name">Das Archiv</div>
+            <div class="rw-meta">Detektiv-Noir · 2–5 Personen</div>
           </div>
-          <div class="rr-diff">
-            <span class="diff-dot on"></span>
-            <span class="diff-dot on"></span>
-            <span class="diff-dot"></span>
+          <div class="rw-dots">
+            <span class="rd on"></span><span class="rd on"></span><span class="rd"></span>
           </div>
         </div>
-        <div class="room-row">
-          <div class="rr-num">02</div>
-          <div class="rr-info">
-            <div class="rr-name">Das Labor</div>
-            <div class="rr-desc">Sci-Fi Thriller · 3–6 Personen</div>
+        <div class="rw-row">
+          <div class="rw-num">02</div>
+          <div>
+            <div class="rw-name">Das Labor</div>
+            <div class="rw-meta">Sci-Fi Thriller · 3–6 Personen</div>
           </div>
-          <div class="rr-diff">
-            <span class="diff-dot on"></span>
-            <span class="diff-dot on"></span>
-            <span class="diff-dot on"></span>
+          <div class="rw-dots">
+            <span class="rd on"></span><span class="rd on"></span><span class="rd on"></span>
           </div>
         </div>
-        <div class="room-row">
-          <div class="rr-num">03</div>
-          <div class="rr-info">
-            <div class="rr-name">Die Gruft</div>
-            <div class="rr-desc">Horror · 2–4 Personen · ab 18</div>
+        <div class="rw-row">
+          <div class="rw-num">03</div>
+          <div>
+            <div class="rw-name">Die Gruft</div>
+            <div class="rw-meta">Horror · 2–4 Personen · ab 18</div>
           </div>
-          <div class="rr-diff">
-            <span class="diff-dot on"></span>
-            <span class="diff-dot on"></span>
-            <span class="diff-dot on"></span>
+          <div class="rw-dots">
+            <span class="rd on"></span><span class="rd on"></span><span class="rd on"></span>
           </div>
         </div>
-        <div class="room-row">
-          <div class="rr-num">04</div>
-          <div class="rr-info">
-            <div class="rr-name">Die Kammer</div>
-            <div class="rr-desc">Mystery Classic · 2–8 Personen</div>
+        <div class="rw-row">
+          <div class="rw-num">04</div>
+          <div>
+            <div class="rw-name">Die Kammer</div>
+            <div class="rw-meta">Mystery Classic · 2–8 Personen</div>
           </div>
-          <div class="rr-diff">
-            <span class="diff-dot on"></span>
-            <span class="diff-dot"></span>
-            <span class="diff-dot"></span>
+          <div class="rw-dots">
+            <span class="rd on"></span><span class="rd"></span><span class="rd"></span>
           </div>
         </div>
       </div>
 
-      <div class="cta-row">
-        <a href="#" class="cta-btn">Raum buchen →</a>
-        <a href="#" class="cta-link">Gruppenangebote</a>
-      </div>
-    </div><!-- end hero-left -->
-
-    <div class="hero-right" style="position:relative;z-index:1;">
-      <div class="timer-display">
-        <div class="td-label">Dein Countdown</div>
-        <div class="td-time">60<span class="colon">:</span>00</div>
-        <div class="td-sub">Minuten bis zur Entscheidung</div>
+      <div class="hero-cta-row">
+        <a href="#buchung" class="btn-primary">Raum buchen →</a>
+        <a href="#raeume" class="btn-ghost">Alle Räume erkunden</a>
       </div>
 
-      <div class="side-stats">
-        <div class="ss-cell">
-          <div class="ss-num">38%</div>
-          <div class="ss-label">Erfolgsrate</div>
-        </div>
-        <div class="ss-cell">
-          <div class="ss-num">4.800+</div>
-          <div class="ss-label">Spielgruppen</div>
-        </div>
+    </div><!-- /hero-left -->
+
+    <!-- RIGHT: Stats panel -->
+    <div class="hero-right">
+
+      <div class="timer-block">
+        <div class="tb-label">Dein Countdown</div>
+        <div class="tb-time">60<span class="tb-colon">:</span>00</div>
+        <div class="tb-sub">Minuten bis zur Entscheidung</div>
       </div>
 
-      <div class="results-list">
-        <div class="results-label">Aktuelle Bestzeiten</div>
-        <div class="result-row">
-          <span class="rr-team">Team Rätselkönige</span>
-          <span class="rr-time">38:12</span>
+      <div class="stats-grid">
+        <div class="stat-cell">
+          <div class="stat-num">38%</div>
+          <div class="stat-label">Erfolgsrate</div>
         </div>
-        <div class="result-row">
-          <span class="rr-team">Familie Schröder</span>
-          <span class="rr-time">41:55</span>
-        </div>
-        <div class="result-row">
-          <span class="rr-team">Gruppe Nerds United</span>
-          <span class="rr-time">43:08</span>
-        </div>
-        <div class="result-row">
-          <span class="rr-team">Das geheime Team</span>
-          <span class="rr-time">45:30</span>
+        <div class="stat-cell">
+          <div class="stat-num">4.800+</div>
+          <div class="stat-label">Spielgruppen</div>
         </div>
       </div>
 
-      <div class="book-block">
-        <div class="bb-text">
+      <div class="leaderboard">
+        <div class="lb-label">Aktuelle Bestzeiten</div>
+        <div class="lb-row">
+          <span class="lb-pos gold">#1</span>
+          <span class="lb-team">Team Rätselkönige</span>
+          <span class="lb-time">38:12</span>
+        </div>
+        <div class="lb-row">
+          <span class="lb-pos">#2</span>
+          <span class="lb-team">Familie Schröder</span>
+          <span class="lb-time">41:55</span>
+        </div>
+        <div class="lb-row">
+          <span class="lb-pos">#3</span>
+          <span class="lb-team">Nerds United</span>
+          <span class="lb-time">43:08</span>
+        </div>
+        <div class="lb-row">
+          <span class="lb-pos">#4</span>
+          <span class="lb-team">Team Geheimakte</span>
+          <span class="lb-time">45:30</span>
+        </div>
+        <div class="lb-row">
+          <span class="lb-pos">#5</span>
+          <span class="lb-team">Die Entschlüssler</span>
+          <span class="lb-time">47:02</span>
+        </div>
+      </div>
+
+      <div class="lb-cta-block">
+        <div class="lb-cta-text">
           Di – So ab 16:00 Uhr.<br>
-          Buche deinen Slot — Gruppen bis 8 Personen.
+          Gruppen bis 8 Personen. Slot jetzt wählen.
         </div>
-        <a href="#" class="bb-cta">Termin wählen →</a>
+        <a href="#buchung" class="lb-cta-btn">Termin wählen →</a>
+      </div>
+
+    </div><!-- /hero-right -->
+
+  </section>
+
+  <!-- ── RÄUME ── -->
+  <section class="rooms" id="raeume">
+    <div class="rooms-inner">
+      <div class="section-header">
+        <div class="eyebrow">— Die Räume</div>
+        <h2 class="section-title">Vier Welten. <em>Ein Ziel.</em></h2>
+        <div class="section-rule"></div>
+      </div>
+
+      <div class="rooms-grid">
+
+        <!-- Das Archiv -->
+        <div class="room-card">
+          <div class="rc-photo">
+            <img
+              src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=1200&h=800&q=80"
+              alt="Das Archiv — Detektiv Noir Escape Room" loading="lazy" />
+            <div class="rc-overlay"></div>
+            <div class="rc-hover-overlay">
+              <div class="rc-hover-inner">
+                <p class="rc-hover-desc">Ein versiegeltes Aktenbüro voller verschlüsselter Botschaften. Der Detektiv ist verschwunden — du bist die letzte Hoffnung.</p>
+                <a href="#buchung" class="rc-hover-cta">Raum buchen →</a>
+              </div>
+            </div>
+          </div>
+          <div class="rc-info">
+            <div>
+              <div class="rc-name">Das Archiv</div>
+              <div class="rc-meta">Detektiv-Noir · 2–5 Personen · 60 Min</div>
+            </div>
+            <span class="rc-badge">Mittel</span>
+          </div>
+        </div>
+
+        <!-- Das Labor -->
+        <div class="room-card">
+          <div class="rc-photo">
+            <img
+              src="https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=1200&h=800&q=80"
+              alt="Das Labor — Sci-Fi Thriller Escape Room" loading="lazy" />
+            <div class="rc-overlay"></div>
+            <div class="rc-hover-overlay">
+              <div class="rc-hover-inner">
+                <p class="rc-hover-desc">Ein Forschungslabor in der Notabschaltung. Das Experiment läuft unkontrolliert — ihr habt 60 Minuten, bevor es zu spät ist.</p>
+                <a href="#buchung" class="rc-hover-cta">Raum buchen →</a>
+              </div>
+            </div>
+          </div>
+          <div class="rc-info">
+            <div>
+              <div class="rc-name">Das Labor</div>
+              <div class="rc-meta">Sci-Fi Thriller · 3–6 Personen · 60 Min</div>
+            </div>
+            <span class="rc-badge hard">Schwer</span>
+          </div>
+        </div>
+
+        <!-- Die Gruft -->
+        <div class="room-card">
+          <div class="rc-photo">
+            <img
+              src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=1200&h=800&q=80"
+              alt="Die Gruft — Horror Escape Room" loading="lazy" />
+            <div class="rc-overlay"></div>
+            <div class="rc-hover-overlay">
+              <div class="rc-hover-inner">
+                <p class="rc-hover-desc">Tief unter dem Trierer Dom. Hier schweigt die Zeit — nur das Ticken der Uhr und das Echo deiner Schritte begleiten dich.</p>
+                <a href="#buchung" class="rc-hover-cta">Raum buchen →</a>
+              </div>
+            </div>
+          </div>
+          <div class="rc-info">
+            <div>
+              <div class="rc-name">Die Gruft</div>
+              <div class="rc-meta">Horror · 2–4 Personen · 60 Min · ab 18</div>
+            </div>
+            <span class="rc-badge extreme">Extrem</span>
+          </div>
+        </div>
+
+        <!-- Die Kammer -->
+        <div class="room-card">
+          <div class="rc-photo">
+            <img
+              src="https://images.unsplash.com/photo-1541518763669-27fef04b14ea?auto=format&fit=crop&w=1200&h=800&q=80"
+              alt="Die Kammer — Mystery Classic Escape Room" loading="lazy" />
+            <div class="rc-overlay"></div>
+            <div class="rc-hover-overlay">
+              <div class="rc-hover-inner">
+                <p class="rc-hover-desc">Der Klassiker der Kammer 13. Logik trifft auf Geheimnis — der ideale Einstieg für Gruppen und Erstbesucher.</p>
+                <a href="#buchung" class="rc-hover-cta">Raum buchen →</a>
+              </div>
+            </div>
+          </div>
+          <div class="rc-info">
+            <div>
+              <div class="rc-name">Die Kammer</div>
+              <div class="rc-meta">Mystery Classic · 2–8 Personen · 60 Min</div>
+            </div>
+            <span class="rc-badge">Leicht</span>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
 
-  <!-- RÄUME PREVIEW -->
-  <section class="rooms-preview">
-    <div class="rooms-preview-inner">
-      <div class="rp-eyebrow">Unsere Räume</div>
-      <h2 class="rp-title">Vier Welten. <span>Ein Ziel.</span></h2>
-      <div class="rooms-grid">
-        <div class="room-photo-card">
-          <div class="img-wrap" style="position:relative;overflow:hidden;height:280px;border-radius:4px;">
-            <img src="https://images.unsplash.com/photo-1541518763669-27fef04b14ea?auto=format&fit=crop&w=1200&h=800&q=80"
-                 alt="Das Archiv — Detektiv Noir Escape Room" loading="lazy"
-                 style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.55s ease;" />
-            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.75) 0%,transparent 60%);pointer-events:none;"></div>
-          </div>
-          <div class="room-photo-label">Das Archiv</div>
-          <div class="room-photo-diff">Mittel</div>
+  <!-- ── SO FUNKTIONIERT'S ── -->
+  <section class="process" id="ablauf">
+    <div class="process-bg">
+      <img
+        src="https://images.unsplash.com/photo-1557682250-33bd709cbe85?auto=format&fit=crop&w=1800&h=900&q=80"
+        alt="" loading="lazy" />
+      <div class="process-bg-grad"></div>
+    </div>
+
+    <div class="process-inner">
+      <div class="section-header">
+        <div class="eyebrow">— Ablauf</div>
+        <h2 class="section-title">In <em>vier Schritten</em> in die Kammer.</h2>
+        <div class="section-rule"></div>
+      </div>
+
+      <div class="process-steps">
+
+        <div class="step">
+          <div class="step-num">01</div>
+          <svg class="step-keyhole" viewBox="0 0 24 34" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="12" cy="10" r="9" stroke="#E8C547" stroke-width="1.5"/>
+            <circle cx="12" cy="10" r="4" fill="#E8C547" opacity="0.35"/>
+            <path d="M9 19 L10 32 L14 32 L15 19 Q12 17 9 19Z" stroke="#E8C547" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
+          <div class="step-label">Schritt 01</div>
+          <div class="step-name">Raum<br>Wählen</div>
+          <p class="step-desc">Stöbere durch unsere vier Räume und wähle das Szenario, das zu deiner Gruppe passt — von Einsteiger bis Extrem.</p>
+          <span class="step-connector">→</span>
         </div>
-        <div class="room-photo-card">
-          <div class="img-wrap" style="position:relative;overflow:hidden;height:280px;border-radius:4px;">
-            <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=1200&h=800&q=80"
-                 alt="Das Labor — Sci-Fi Thriller Escape Room" loading="lazy"
-                 style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.55s ease;" />
-            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.75) 0%,transparent 60%);pointer-events:none;"></div>
-          </div>
-          <div class="room-photo-label">Das Labor</div>
-          <div class="room-photo-diff">Schwer</div>
+
+        <div class="step">
+          <div class="step-num">02</div>
+          <svg class="step-keyhole" viewBox="0 0 24 34" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="12" cy="10" r="9" stroke="#E8C547" stroke-width="1.5"/>
+            <circle cx="12" cy="10" r="4" fill="#E8C547" opacity="0.35"/>
+            <path d="M9 19 L10 32 L14 32 L15 19 Q12 17 9 19Z" stroke="#E8C547" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
+          <div class="step-label">Schritt 02</div>
+          <div class="step-name">Online<br>Buchen</div>
+          <p class="step-desc">Wähle Datum, Zeit und Personenanzahl. Sicher online bezahlen — Reservierung in unter 2 Minuten abgeschlossen.</p>
+          <span class="step-connector">→</span>
         </div>
-        <div class="room-photo-card">
-          <div class="img-wrap" style="position:relative;overflow:hidden;height:280px;border-radius:4px;">
-            <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1200&h=800&q=80"
-                 alt="Die Gruft — Horror Escape Room" loading="lazy"
-                 style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 0.55s ease;" />
-            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.75) 0%,transparent 60%);pointer-events:none;"></div>
-          </div>
-          <div class="room-photo-label">Die Gruft</div>
-          <div class="room-photo-diff">Extrem · ab 18</div>
+
+        <div class="step">
+          <div class="step-num">03</div>
+          <svg class="step-keyhole" viewBox="0 0 24 34" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="12" cy="10" r="9" stroke="#E8C547" stroke-width="1.5"/>
+            <circle cx="12" cy="10" r="4" fill="#E8C547" opacity="0.35"/>
+            <path d="M9 19 L10 32 L14 32 L15 19 Q12 17 9 19Z" stroke="#E8C547" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
+          <div class="step-label">Schritt 03</div>
+          <div class="step-name">Erscheinen<br>& Briefing</div>
+          <p class="step-desc">15 Minuten vor Start ankommen. Dein Game Master erklärt die Regeln und stimmt euch ein — dann beginnt die Uhr.</p>
+          <span class="step-connector">→</span>
         </div>
+
+        <div class="step">
+          <div class="step-num">04</div>
+          <svg class="step-keyhole" viewBox="0 0 24 34" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="12" cy="10" r="9" stroke="#E8C547" stroke-width="1.5"/>
+            <circle cx="12" cy="10" r="4" fill="#E8C547" opacity="0.35"/>
+            <path d="M9 19 L10 32 L14 32 L15 19 Q12 17 9 19Z" stroke="#E8C547" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
+          <div class="step-label">Schritt 04</div>
+          <div class="step-name">60 Minuten<br>Spielen</div>
+          <p class="step-desc">Rätsel lösen, Schlösser knacken, entkommen — oder scheitern. Nur 38% schaffen es. Bist du der Nächste?</p>
+        </div>
+
       </div>
     </div>
   </section>
+
+  <!-- ── BUCHUNG & PREISE ── -->
+  <section class="booking" id="buchung">
+
+    <div class="booking-photo">
+      <img
+        src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=1200&h=900&q=80"
+        alt="Gruppe beim Escape Room Trier" loading="lazy" />
+      <div class="booking-photo-overlay"></div>
+    </div>
+
+    <div class="booking-content">
+
+      <div>
+        <div class="eyebrow">— Buchung & Preise</div>
+        <h2 class="section-title">Dein Slot<br><em>wartet auf dich.</em></h2>
+        <div class="section-rule"></div>
+      </div>
+
+      <div class="pricing-table">
+        <div class="pr-row">
+          <div>
+            <div class="pr-name">Standard</div>
+            <div class="pr-detail">Das Archiv, Das Labor, Die Kammer · 2–8 Personen</div>
+          </div>
+          <div class="pr-price">ab 15€<small> /Person</small></div>
+        </div>
+        <div class="pr-row">
+          <div>
+            <div class="pr-name">Die Gruft</div>
+            <div class="pr-detail">Exklusives Horror-Erlebnis · 2–4 Personen · ab 18 Jahren</div>
+          </div>
+          <div class="pr-price">ab 22€<small> /Person</small></div>
+        </div>
+        <div class="pr-row">
+          <div>
+            <div class="pr-name">Firmenevent</div>
+            <div class="pr-detail">Alle 4 Räume gleichzeitig · Teams von 8–24 Personen</div>
+          </div>
+          <div class="pr-price">auf Anfrage</div>
+        </div>
+      </div>
+
+      <div class="hours-grid">
+        <div class="hours-cell">
+          <div class="hours-day">Di – Fr</div>
+          <div class="hours-time">16:00 – 23:00</div>
+        </div>
+        <div class="hours-cell">
+          <div class="hours-day">Sa – So</div>
+          <div class="hours-time">12:00 – 23:00</div>
+        </div>
+        <div class="hours-cell">
+          <div class="hours-day">Adresse</div>
+          <div class="hours-time">Fleischstr. 13, Trier</div>
+        </div>
+        <div class="hours-cell">
+          <div class="hours-day">Online-Buchung</div>
+          <div class="hours-time">24 / 7</div>
+        </div>
+      </div>
+
+      <div class="booking-cta-wrap">
+        <a href="#" class="btn-book">Jetzt buchen →</a>
+        <p class="booking-note">
+          Kostenlose Stornierung<br>
+          bis 24 Stunden vor dem Termin.
+        </p>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <div class="footer-logo">Kammer <em>13</em></div>
+    <div class="footer-info">
+      Fleischstraße 13 · 54290 Trier · Di–So ab 16:00 Uhr<br>
+      kontakt@kammer13-trier.de · +49 651 123 456 78
+    </div>
+    <ul class="footer-links">
+      <li><a href="#">Impressum</a></li>
+      <li><a href="#">Datenschutz</a></li>
+      <li><a href="#">FAQ</a></li>
+    </ul>
+  </footer>
 
 </body>
 </html>
