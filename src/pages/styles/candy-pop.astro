@@ -7,661 +7,1117 @@ export const prerender = true;
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
-  <title>Zuckerwatte — Konditorei & Bubble Tea | Trier</title>
+  <title>ZUCKERWATTE — Bubble Tea & Süßigkeiten · Trier</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Nunito:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { overflow-x: hidden; }
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet" />
 
+  <style>
+    /* ─── RESET ─────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { overflow-x: hidden; scroll-behavior: smooth; }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ─── TOKENS ─────────────────────────────────────────── */
     :root {
-      --pink: #FF6B9D;
-      --mint: #7EC8E3;
-      --yellow: #FFE566;
-      --lavender: #C5A8D4;
-      --bg: #FFF5FC;
-      --dark: #3D1A2E;
+      --hot:      #FF2D78;
+      --mint:     #00CEB8;
+      --lemon:    #FFE234;
+      --lavender: #C77DFF;
+      --sky:      #7EC8E3;
+      --bg:       #FFF0F8;
+      --bg-alt:   #FFFFFF;
+      --dark:     #1A0A12;
+      --dark-dim: rgba(26,10,18,0.55);
+      --ff-disp:  'Fredoka', system-ui, sans-serif;
+      --ff-body:  'Nunito', system-ui, sans-serif;
     }
 
     body {
-      overflow-x: hidden;
       background: var(--bg);
       color: var(--dark);
-      font-family: 'Nunito', sans-serif;
-      min-height: 100vh;
+      font-family: var(--ff-body);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* Polka dot background */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: radial-gradient(circle, rgba(255,107,157,0.12) 2px, transparent 2px);
-      background-size: 32px 32px;
-      pointer-events: none;
-      z-index: 0;
+    /* ─── PHOTO HELPER ───────────────────────────────────── */
+    .ph { position: relative; overflow: hidden; }
+    .ph img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
     }
+    .ph:hover img { transform: scale(1.05); }
 
-    /* Floating blobs */
-    .blob {
-      position: fixed;
-      border-radius: 50%;
-      filter: blur(60px);
-      pointer-events: none;
-      z-index: 0;
-    }
-    .blob-1 {
-      width: 400px; height: 400px;
-      background: rgba(255,107,157,0.15);
-      top: -100px; right: -100px;
-    }
-    .blob-2 {
-      width: 300px; height: 300px;
-      background: rgba(126,200,227,0.18);
-      bottom: -80px; left: -80px;
-    }
-    .blob-3 {
-      width: 250px; height: 250px;
-      background: rgba(255,229,102,0.2);
-      top: 40%; left: 30%;
-    }
-
-    nav {
+    /* ─── NAV ────────────────────────────────────────────── */
+    .nav {
       position: fixed;
       top: 0; left: 0; right: 0;
-      z-index: 100;
+      z-index: 200;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 1.25rem 3rem;
-      background: rgba(255,245,252,0.85);
-      backdrop-filter: blur(12px);
-      border-bottom: 2px solid rgba(255,107,157,0.15);
+      padding: 1.1rem clamp(1.5rem, 5vw, 3.5rem);
+      background: rgba(255,240,248,0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1.5px solid rgba(255,45,120,0.12);
     }
+
     .nav-logo {
-      font-family: 'Fredoka', sans-serif;
-      font-weight: 600;
-      font-size: 1.4rem;
-      color: var(--pink);
-      letter-spacing: 0.02em;
+      font-family: var(--ff-disp);
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--dark);
+      letter-spacing: -0.01em;
     }
-    .nav-logo span { color: var(--lavender); }
+    .nav-logo em {
+      font-style: normal;
+      color: var(--hot);
+    }
+
     .nav-links {
       display: flex;
-      gap: 0.4rem;
+      gap: 0.25rem;
       list-style: none;
     }
     .nav-links a {
-      font-family: 'Nunito', sans-serif;
-      font-size: 0.75rem;
+      font-family: var(--ff-body);
+      font-size: 0.72rem;
       font-weight: 600;
-      color: var(--dark);
-      text-decoration: none;
-      padding: 0.4rem 1rem;
+      color: var(--dark-dim);
+      padding: 0.45rem 1rem;
       border-radius: 50px;
       transition: background 0.2s, color 0.2s;
-      opacity: 0.6;
     }
     .nav-links a:hover {
-      background: rgba(255,107,157,0.12);
-      color: var(--pink);
-      opacity: 1;
+      background: rgba(255,45,120,0.1);
+      color: var(--hot);
     }
 
+    .nav-cta {
+      font-family: var(--ff-disp);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #fff;
+      background: var(--hot);
+      padding: 0.55rem 1.4rem;
+      border-radius: 50px;
+      box-shadow: 0 4px 16px rgba(255,45,120,0.3);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .nav-cta:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(255,45,120,0.4);
+    }
+
+    /* ─── HERO ───────────────────────────────────────────── */
     .hero {
       min-height: 100vh;
-      position: relative;
-      z-index: 1;
-      display: flex;
-      align-items: center;
-      padding: 6rem 4rem 4rem;
-      gap: 4rem;
+      display: grid;
+      grid-template-columns: 55fr 45fr;
     }
 
-    /* LEFT */
+    /* LEFT: big text */
     .hero-left {
-      flex: 1;
+      position: relative;
       display: flex;
       flex-direction: column;
-      gap: 2rem;
+      justify-content: flex-end;
+      padding: 8rem clamp(2rem,5vw,4.5rem) 5.5rem;
+      background: var(--bg);
+      z-index: 1;
     }
 
-    .badge {
+    /* Polka dots on hero-left */
+    .hero-left::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(255,45,120,0.1) 1.5px, transparent 1.5px);
+      background-size: 28px 28px;
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      background: rgba(255,107,157,0.12);
-      border: 1.5px solid rgba(255,107,157,0.25);
-      border-radius: 50px;
-      padding: 0.4rem 1rem;
-      font-family: 'Nunito', sans-serif;
-      font-size: 0.7rem;
-      font-weight: 600;
-      color: var(--pink);
-      width: fit-content;
-    }
-    .badge::before { content: '✨'; font-size: 0.8rem; }
-
-    .hero-headline {
-      font-family: 'Fredoka', sans-serif;
+      background: var(--lemon);
+      color: var(--dark);
+      font-family: var(--ff-body);
+      font-size: 0.65rem;
       font-weight: 700;
-      font-size: clamp(3rem, 6.5vw, 5.5rem);
-      line-height: 1.05;
-      color: var(--dark);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 0.4rem 1rem;
+      border-radius: 50px;
+      width: fit-content;
+      margin-bottom: 1.75rem;
+      animation: slideUp 0.8s cubic-bezier(0.16,1,0.3,1) 0.1s both;
     }
-    .hero-headline .pink { color: var(--pink); }
-    .hero-headline .mint { color: var(--mint); }
-    .hero-headline .yellow-text {
+    .hero-eyebrow::before { content: '✦'; font-size: 0.7rem; }
+
+    .hero-h1 {
+      font-family: var(--ff-disp);
+      font-weight: 700;
+      font-size: clamp(3.8rem, 8vw, 7.5rem);
+      line-height: 0.95;
+      letter-spacing: -0.03em;
       color: var(--dark);
-      background: var(--yellow);
-      padding: 0 0.2em;
-      border-radius: 6px;
+      margin-bottom: 2rem;
+      animation: slideUp 0.9s cubic-bezier(0.16,1,0.3,1) 0.2s both;
+    }
+    .hero-h1 .line-hot    { color: var(--hot); display: block; }
+    .hero-h1 .line-mint   { color: var(--mint); display: block; }
+    .hero-h1 .line-lav    {
+      display: block;
+      background: linear-gradient(90deg, var(--lavender), var(--hot));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .hero-sub {
       font-size: 0.95rem;
-      font-weight: 300;
-      line-height: 1.8;
-      color: rgba(61,26,46,0.6);
-      max-width: 38ch;
+      font-weight: 400;
+      line-height: 1.75;
+      color: var(--dark-dim);
+      max-width: 36ch;
+      margin-bottom: 2.25rem;
+      animation: slideUp 1s cubic-bezier(0.16,1,0.3,1) 0.3s both;
     }
 
-    /* Flavor pills */
     .flavor-row {
       display: flex;
-      gap: 0.6rem;
       flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 2.5rem;
+      animation: slideUp 1s cubic-bezier(0.16,1,0.3,1) 0.4s both;
     }
-    .flavor-pill {
-      font-family: 'Nunito', sans-serif;
-      font-size: 0.75rem;
-      font-weight: 600;
-      padding: 0.45rem 1.1rem;
+    .fpill {
+      font-family: var(--ff-body);
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.4rem 1rem;
       border-radius: 50px;
       border: 2px solid;
+      transition: transform 0.2s;
     }
-    .fp-pink  { color: var(--pink);    border-color: rgba(255,107,157,0.35); background: rgba(255,107,157,0.08); }
-    .fp-mint  { color: #3AABBF;        border-color: rgba(126,200,227,0.4);  background: rgba(126,200,227,0.1);  }
-    .fp-lav   { color: #9B6BB5;        border-color: rgba(197,168,212,0.4);  background: rgba(197,168,212,0.1);  }
-    .fp-yel   { color: #B8900A;        border-color: rgba(255,229,102,0.5);  background: rgba(255,229,102,0.15); }
+    .fpill:hover { transform: scale(1.04); }
+    .fp-a { color: var(--hot);     border-color: rgba(255,45,120,0.3);   background: rgba(255,45,120,0.07); }
+    .fp-b { color: #009E8C;        border-color: rgba(0,206,184,0.35);   background: rgba(0,206,184,0.08);  }
+    .fp-c { color: #7B40CC;        border-color: rgba(199,125,255,0.35); background: rgba(199,125,255,0.08); }
+    .fp-d { color: #A0760A;        border-color: rgba(255,226,52,0.5);   background: rgba(255,226,52,0.12); }
+    .fp-e { color: #1A7A9A;        border-color: rgba(126,200,227,0.4);  background: rgba(126,200,227,0.1); }
 
-    .cta-row {
+    .hero-cta-row {
       display: flex;
       align-items: center;
-      gap: 1.25rem;
+      gap: 1rem;
       flex-wrap: wrap;
+      animation: slideUp 1.1s cubic-bezier(0.16,1,0.3,1) 0.5s both;
     }
-    .cta-btn {
+    .btn-main {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      background: var(--pink);
+      background: var(--hot);
       color: #fff;
-      text-decoration: none;
-      font-family: 'Fredoka', sans-serif;
+      font-family: var(--ff-disp);
       font-size: 1rem;
-      font-weight: 500;
-      padding: 0.9rem 2rem;
+      font-weight: 600;
+      padding: 0.95rem 2.25rem;
       border-radius: 50px;
-      box-shadow: 0 8px 24px rgba(255,107,157,0.3);
+      box-shadow: 0 8px 28px rgba(255,45,120,0.35);
       transition: transform 0.2s, box-shadow 0.2s;
     }
-    .cta-btn:hover {
+    .btn-main:hover {
       transform: translateY(-2px);
-      box-shadow: 0 12px 32px rgba(255,107,157,0.4);
+      box-shadow: 0 14px 36px rgba(255,45,120,0.45);
     }
-    .cta-secondary {
+    .btn-ghost {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      background: white;
-      color: var(--dark);
-      text-decoration: none;
-      font-family: 'Fredoka', sans-serif;
-      font-size: 1rem;
-      font-weight: 500;
-      padding: 0.9rem 2rem;
-      border-radius: 50px;
-      border: 2px solid rgba(61,26,46,0.12);
-      transition: border-color 0.2s;
-    }
-    .cta-secondary:hover { border-color: var(--pink); }
-
-    /* RIGHT — menu card */
-    .hero-right {
-      width: 340px;
-      flex-shrink: 0;
-    }
-
-    .menu-card {
-      background: white;
-      border-radius: 24px;
-      padding: 2rem;
-      box-shadow:
-        0 4px 24px rgba(255,107,157,0.1),
-        0 1px 4px rgba(0,0,0,0.04);
-      border: 1.5px solid rgba(255,107,157,0.1);
-    }
-    .menu-card-title {
-      font-family: 'Fredoka', sans-serif;
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: var(--dark);
-      margin-bottom: 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .menu-section {
-      margin-bottom: 1.25rem;
-    }
-    .menu-section-label {
-      font-size: 0.6rem;
-      font-weight: 600;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--pink);
-      margin-bottom: 0.6rem;
-    }
-    .menu-item-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.45rem 0;
-      border-bottom: 1px solid rgba(61,26,46,0.05);
-    }
-    .menu-item-row:last-child { border-bottom: none; }
-    .menu-item-name {
-      font-size: 0.8rem;
-      font-weight: 400;
-      color: rgba(61,26,46,0.75);
-    }
-    .menu-item-price {
-      font-family: 'Fredoka', sans-serif;
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: var(--pink);
-    }
-
-    .rating-row {
-      display: flex;
-      align-items: center;
       gap: 0.4rem;
-      padding-top: 1.25rem;
-      border-top: 1px solid rgba(61,26,46,0.06);
-      margin-top: 0.5rem;
-    }
-    .stars { color: var(--yellow); font-size: 0.85rem; }
-    .rating-text {
-      font-size: 0.7rem;
-      font-weight: 600;
       color: var(--dark);
+      font-family: var(--ff-body);
+      font-size: 0.85rem;
+      font-weight: 600;
+      opacity: 0.6;
+      transition: opacity 0.2s;
     }
-    .rating-sub {
-      font-size: 0.65rem;
-      color: rgba(61,26,46,0.4);
-    }
+    .btn-ghost:hover { opacity: 1; }
 
-    /* Floating decorations */
-    .deco {
-      position: fixed;
-      font-size: 2.5rem;
+    /* RIGHT: photo column */
+    .hero-right {
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-right img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.03);
+      animation: heroZoom 16s ease-out forwards;
+    }
+    @keyframes heroZoom {
+      from { transform: scale(1.06); }
+      to   { transform: scale(1.0); }
+    }
+    .hero-right::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, var(--bg) 0%, transparent 18%);
       pointer-events: none;
-      z-index: 0;
-      opacity: 0.25;
-      animation: floatDeco 6s ease-in-out infinite;
-    }
-    .deco-1 { top: 15%; left: 8%;  animation-delay: 0s; }
-    .deco-2 { top: 70%; right: 5%; animation-delay: 2s; }
-    .deco-3 { top: 40%; left: 50%; animation-delay: 4s; font-size: 1.5rem; opacity: 0.15; }
-    @keyframes floatDeco {
-      0%, 100% { transform: translateY(0) rotate(0deg); }
-      50%       { transform: translateY(-12px) rotate(5deg); }
     }
 
-    /* Photo container */
-    .ph { position: relative; overflow: hidden; }
-    .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.55s ease; }
-    .ph:hover img { transform: scale(1.05); }
+    /* Sticker badge on hero-right */
+    .sticker {
+      position: absolute;
+      z-index: 10;
+      background: var(--lemon);
+      color: var(--dark);
+      font-family: var(--ff-disp);
+      font-size: 0.75rem;
+      font-weight: 700;
+      line-height: 1.1;
+      text-align: center;
+      padding: 1rem;
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: stickSpin 12s linear infinite;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+    }
+    .sticker-1 { bottom: 3rem; left: -1.5rem; }
+    .sticker-2 {
+      top: 7rem;
+      right: 2rem;
+      background: var(--lavender);
+      color: #fff;
+      animation-direction: reverse;
+      animation-duration: 16s;
+      font-size: 0.7rem;
+      width: 78px;
+      height: 78px;
+    }
+    @keyframes stickSpin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
 
-    /* Section 2 — Produkte */
-    .products-section {
+    /* Rating badge on hero */
+    .hero-rating {
+      position: absolute;
+      bottom: 2.5rem;
+      right: 2rem;
+      z-index: 10;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(8px);
+      border-radius: 16px;
+      padding: 0.9rem 1.2rem;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+      border: 1px solid rgba(255,45,120,0.1);
+    }
+    .hero-rating-stars { color: var(--lemon); font-size: 0.85rem; margin-bottom: 0.2rem; }
+    .hero-rating-num {
+      font-family: var(--ff-disp);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--dark);
+      line-height: 1;
+    }
+    .hero-rating-sub {
+      font-size: 0.6rem;
+      color: var(--dark-dim);
+    }
+
+    /* ─── ANIMATIONS ─────────────────────────────────────── */
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes floatY {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-10px); }
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ─── TICKER ─────────────────────────────────────────── */
+    .ticker-strip {
+      background: var(--hot);
+      padding: 0.9rem 0;
+      overflow: hidden;
       position: relative;
       z-index: 1;
-      padding: 5rem 4rem;
-      background: white;
+    }
+    .ticker-track {
+      display: flex;
+      gap: 0;
+      white-space: nowrap;
+      animation: marquee 28s linear infinite;
+    }
+    .ticker-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 1.25rem;
+      font-family: var(--ff-disp);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.92);
+      padding: 0 2rem;
+      flex-shrink: 0;
+    }
+    .ticker-dot {
+      display: inline-block;
+      width: 5px;
+      height: 5px;
+      background: rgba(255,255,255,0.5);
+      border-radius: 50%;
+    }
+
+    /* ─── PRODUCTS SECTION ───────────────────────────────── */
+    .products {
+      position: relative;
+      z-index: 1;
+      padding: 6rem clamp(1.5rem,5vw,4.5rem);
+      background: var(--bg-alt);
     }
     .products-inner {
-      max-width: 1600px;
-      margin-left: auto;
-      margin-right: auto;
+      max-width: 1400px;
+      margin: 0 auto;
     }
-    .section-label {
-      font-size: 0.65rem;
-      font-weight: 600;
-      letter-spacing: 0.18em;
+
+    .sec-eyebrow {
+      font-family: var(--ff-body);
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--pink);
+      color: var(--hot);
       display: flex;
       align-items: center;
       gap: 0.6rem;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.6rem;
     }
-    .section-label::before {
+    .sec-eyebrow::before {
       content: '';
       display: block;
       width: 1.5rem;
       height: 2px;
-      background: var(--pink);
+      background: var(--hot);
+      border-radius: 2px;
     }
-    .section-headline {
-      font-family: 'Fredoka', sans-serif;
+
+    .sec-h2 {
+      font-family: var(--ff-disp);
+      font-size: clamp(2.2rem, 4.5vw, 3.5rem);
       font-weight: 700;
-      font-size: clamp(2rem, 4vw, 3rem);
       color: var(--dark);
-      margin-bottom: 2.5rem;
+      letter-spacing: -0.025em;
+      margin-bottom: 3rem;
     }
+    .sec-h2 em {
+      font-style: normal;
+      color: var(--hot);
+    }
+
+    /* Asymmetric product layout */
     .product-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: auto auto;
       gap: 1.25rem;
     }
-    .product-card {
+
+    .pcard {
       background: var(--bg);
       border-radius: 20px;
       overflow: hidden;
-      border: 1.5px solid rgba(255,107,157,0.1);
-      transition: transform 0.25s, box-shadow 0.25s;
+      border: 1.5px solid rgba(255,45,120,0.08);
+      transition: transform 0.28s ease, box-shadow 0.28s ease;
     }
-    .product-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 16px 40px rgba(255,107,157,0.15);
+    .pcard:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 48px rgba(255,45,120,0.12);
     }
-    .product-info {
-      padding: 1.1rem 1.25rem 1.25rem;
+
+    /* Large hero card spans 2 rows */
+    .pcard-large {
+      grid-column: 1;
+      grid-row: 1 / 3;
     }
-    .product-tag {
+    .pcard-large .ph { height: 100%; min-height: 480px; }
+
+    .pcard-sm .ph { height: 200px; }
+
+    .pcard-info {
+      padding: 1.1rem 1.25rem 1.4rem;
+    }
+
+    .pcard-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
       font-size: 0.58rem;
-      font-weight: 600;
+      font-weight: 700;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: rgba(61,26,46,0.35);
+      margin-bottom: 0.45rem;
+    }
+    .tag-hot   { color: var(--hot); }
+    .tag-mint  { color: #009E8C; }
+    .tag-lav   { color: #7B40CC; }
+    .tag-lemon { color: #A0760A; }
+
+    .pcard-name {
+      font-family: var(--ff-disp);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--dark);
       margin-bottom: 0.3rem;
     }
-    .product-name {
-      font-family: 'Fredoka', sans-serif;
-      font-weight: 600;
-      font-size: 1rem;
-      color: var(--dark);
-      margin-bottom: 0.5rem;
+    .pcard-desc {
+      font-size: 0.75rem;
+      line-height: 1.6;
+      color: var(--dark-dim);
+      margin-bottom: 1rem;
     }
-    .product-footer {
+    .pcard-foot {
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
-    .product-price {
-      font-family: 'Fredoka', sans-serif;
-      font-weight: 600;
-      font-size: 1.1rem;
-      color: var(--pink);
-    }
-    .product-btn {
-      font-size: 0.65rem;
+    .pcard-price {
+      font-family: var(--ff-disp);
+      font-size: 1.25rem;
       font-weight: 700;
-      color: white;
-      background: var(--pink);
+      color: var(--hot);
+    }
+    .pcard-btn {
+      font-family: var(--ff-body);
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: #fff;
+      background: var(--hot);
       border: none;
-      padding: 0.4rem 0.9rem;
+      padding: 0.45rem 1.1rem;
       border-radius: 50px;
       cursor: pointer;
-      transition: background 0.2s;
+      transition: background 0.2s, transform 0.15s;
     }
-    .product-btn:hover { background: var(--lavender); }
+    .pcard-btn:hover {
+      background: var(--lavender);
+      transform: scale(1.03);
+    }
 
-    /* Section 3 — About / Öffnungszeiten */
-    .about-section {
-      position: relative;
-      z-index: 1;
-      padding: 5rem 4rem;
-      background: var(--bg);
+    /* Badge overlay on product photos */
+    .badge-overlay {
+      position: absolute;
+      top: 0.9rem;
+      left: 0.9rem;
+      z-index: 5;
+      background: var(--lemon);
+      color: var(--dark);
+      font-family: var(--ff-body);
+      font-size: 0.58rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.75rem;
+      border-radius: 50px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
     }
-    .about-inner {
-      max-width: 1600px;
-      margin-left: auto;
-      margin-right: auto;
+    .badge-hot  { background: var(--hot); color: #fff; }
+    .badge-mint { background: var(--mint); color: #fff; }
+    .badge-lav  { background: var(--lavender); color: #fff; }
+
+    /* ─── ATMOSPHERE STRIP ───────────────────────────────── */
+    .atmo {
+      position: relative;
+      height: 560px;
+      overflow: hidden;
+    }
+    .atmo-bg {
+      position: absolute;
+      inset: 0;
+    }
+    .atmo-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(1.1) brightness(0.55);
+    }
+    .atmo-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to right, rgba(26,10,18,0.75) 0%, rgba(26,10,18,0.2) 65%, transparent 100%),
+        linear-gradient(to top, rgba(26,10,18,0.6) 0%, transparent 50%);
+    }
+
+    .atmo-content {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 clamp(2rem,6vw,5rem) 4.5rem;
+      max-width: 640px;
+    }
+
+    .atmo-label {
+      font-family: var(--ff-body);
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--lemon);
+      margin-bottom: 1.2rem;
+    }
+
+    .atmo-h2 {
+      font-family: var(--ff-disp);
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.025em;
+      line-height: 1.05;
+      margin-bottom: 1.5rem;
+    }
+
+    .atmo-stats {
+      display: flex;
+      gap: 2.5rem;
+    }
+    .atmo-stat-num {
+      font-family: var(--ff-disp);
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--lemon);
+      line-height: 1;
+      margin-bottom: 0.2rem;
+    }
+    .atmo-stat-label {
+      font-size: 0.68rem;
+      color: rgba(255,255,255,0.6);
+      font-weight: 400;
+    }
+
+    /* Floating candies over atmosphere */
+    .candy-float {
+      position: absolute;
+      right: clamp(4rem, 10vw, 9rem);
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 5;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: center;
+      gap: 1rem;
     }
-    .about-photo-wrap {
+    .candy-chip {
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 16px;
+      padding: 1.25rem 1.4rem;
+      text-align: center;
+      animation: floatY 5s ease-in-out infinite;
+    }
+    .candy-chip:nth-child(2) { animation-delay: 1.2s; }
+    .candy-chip:nth-child(3) { animation-delay: 2.4s; }
+    .candy-chip:nth-child(4) { animation-delay: 0.6s; }
+    .chip-icon { font-size: 1.75rem; margin-bottom: 0.4rem; }
+    .chip-label {
+      font-family: var(--ff-disp);
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    /* ─── STORY + HOURS ──────────────────────────────────── */
+    .story {
+      position: relative;
+      z-index: 1;
+      padding: 6.5rem clamp(1.5rem,5vw,4.5rem);
+      background: var(--bg);
+    }
+    .story::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(255,45,120,0.07) 1.5px, transparent 1.5px);
+      background-size: 28px 28px;
+      pointer-events: none;
+    }
+
+    .story-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 5rem;
+      align-items: center;
       position: relative;
     }
-    .about-badge-float {
+
+    /* Photo stack */
+    .story-photos {
+      position: relative;
+    }
+    .story-photo-main {
+      border-radius: 24px;
+      overflow: hidden;
+    }
+    .story-photo-main .ph { height: 460px; border-radius: 24px; }
+
+    .story-photo-sm {
       position: absolute;
-      bottom: 1.5rem;
-      left: 1.5rem;
-      background: white;
+      bottom: -2rem;
+      right: -2rem;
+      width: 44%;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 16px 48px rgba(26,10,18,0.18);
+      border: 4px solid var(--bg-alt);
+    }
+    .story-photo-sm .ph { height: 180px; border-radius: 14px; }
+
+    /* Floating tag on story */
+    .story-tag {
+      position: absolute;
+      top: -1.5rem;
+      left: -1.5rem;
+      background: var(--hot);
+      color: #fff;
+      font-family: var(--ff-disp);
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 0.8rem 1.2rem;
       border-radius: 16px;
-      padding: 1rem 1.25rem;
-      box-shadow: 0 8px 24px rgba(255,107,157,0.18);
-      border: 1.5px solid rgba(255,107,157,0.12);
+      box-shadow: 0 8px 24px rgba(255,45,120,0.3);
       z-index: 2;
+      line-height: 1.3;
     }
-    .abf-title {
-      font-family: 'Fredoka', sans-serif;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--dark);
-      margin-bottom: 0.15rem;
-    }
-    .abf-sub {
-      font-size: 0.65rem;
-      color: rgba(61,26,46,0.45);
-    }
-    .about-content {
+
+    /* Right: text */
+    .story-content {
       display: flex;
       flex-direction: column;
       gap: 2rem;
     }
-    .about-text {
+
+    .story-text {
       font-size: 0.95rem;
-      font-weight: 300;
       line-height: 1.85;
-      color: rgba(61,26,46,0.65);
+      color: var(--dark-dim);
     }
-    .hours-block {
-      background: white;
-      border-radius: 16px;
-      padding: 1.5rem;
-      border: 1.5px solid rgba(255,107,157,0.1);
+
+    /* Feature chips */
+    .features-row {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
     }
-    .hours-title {
-      font-family: 'Fredoka', sans-serif;
-      font-weight: 600;
-      font-size: 0.9rem;
-      color: var(--dark);
-      margin-bottom: 1rem;
+    .feature-chip {
       display: flex;
       align-items: center;
-      gap: 0.4rem;
+      gap: 0.5rem;
+      background: var(--bg-alt);
+      border: 1.5px solid rgba(255,45,120,0.12);
+      border-radius: 12px;
+      padding: 0.6rem 1rem;
+    }
+    .feature-chip-icon { font-size: 1rem; }
+    .feature-chip-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--dark);
+    }
+
+    /* Hours card */
+    .hours-card {
+      background: var(--bg-alt);
+      border: 1.5px solid rgba(255,45,120,0.1);
+      border-radius: 20px;
+      padding: 1.75rem;
+    }
+    .hours-title {
+      font-family: var(--ff-disp);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--dark);
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
     }
     .hours-row {
       display: flex;
       justify-content: space-between;
-      padding: 0.4rem 0;
-      border-bottom: 1px solid rgba(61,26,46,0.05);
-      font-size: 0.78rem;
+      align-items: center;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(26,10,18,0.05);
+      font-size: 0.8rem;
     }
     .hours-row:last-child { border-bottom: none; }
-    .hr-day { color: rgba(61,26,46,0.55); font-weight: 400; }
-    .hr-time { color: var(--dark); font-weight: 600; }
-    .address-row {
+    .hr-day { color: var(--dark-dim); }
+    .hr-time { font-weight: 700; color: var(--dark); }
+    .hr-badge {
+      font-size: 0.55rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: rgba(0,206,184,0.12);
+      color: #009E8C;
+      padding: 0.2rem 0.55rem;
+      border-radius: 50px;
+    }
+
+    /* Address */
+    .address-line {
       display: flex;
       align-items: center;
       gap: 0.5rem;
       font-size: 0.82rem;
-      color: rgba(61,26,46,0.55);
+      color: var(--dark-dim);
     }
-    .address-row strong { color: var(--dark); }
+    .address-line strong { color: var(--dark); }
+
+    /* ─── PHOTO GRID STRIP ───────────────────────────────── */
+    .photo-grid-strip {
+      position: relative;
+      z-index: 1;
+      background: var(--bg-alt);
+      padding: 0 clamp(1.5rem,5vw,4.5rem) 6rem;
+    }
+    .photo-grid-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .pgrid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+    .pgrid-item {
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .pgrid-item .ph { height: 280px; border-radius: 16px; }
+
+    /* ─── FOOTER ─────────────────────────────────────────── */
+    .footer {
+      background: var(--dark);
+      padding: 4rem clamp(2rem,5vw,5rem) 3rem;
+    }
+    .footer-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+    .footer-logo {
+      font-family: var(--ff-disp);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .footer-logo em { font-style: normal; color: var(--hot); }
+    .footer-tagline {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.35);
+      margin-top: 0.3rem;
+    }
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .footer-links a {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.45);
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--hot); }
+    .footer-copy {
+      font-size: 0.65rem;
+      color: rgba(255,255,255,0.2);
+      margin-top: 2.5rem;
+      text-align: center;
+      max-width: 1400px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    /* ─── RESPONSIVE ─────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-right { height: 55vw; min-height: 280px; }
+      .hero-right::after { background: linear-gradient(to top, var(--bg) 0%, transparent 20%); }
+      .hero-left { padding: 7rem 2rem 3.5rem; }
+      .sticker-1 { bottom: 2rem; left: 1rem; }
+
+      .product-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .pcard-large { grid-column: 1 / -1; grid-row: auto; }
+      .pcard-large .ph { min-height: 300px; }
+
+      .atmo { height: 420px; }
+      .candy-float { display: none; }
+
+      .story-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .story-photo-sm { right: -1rem; }
+
+      .pgrid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      .hero-h1 { font-size: clamp(2.8rem, 12vw, 4rem); }
+      .hero-sub { font-size: 0.9rem; }
+      .products { padding: 4rem 1.5rem; }
+      .product-grid { grid-template-columns: 1fr; }
+      .pcard-large { grid-column: auto; grid-row: auto; }
+      .atmo { height: 380px; }
+      .atmo-content { padding: 0 1.5rem 3rem; }
+      .story { padding: 4.5rem 1.5rem; }
+      .story-photo-sm { display: none; }
+      .pgrid { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+      .pgrid-item .ph { height: 180px; }
+      .footer-inner { flex-direction: column; gap: 1.5rem; }
+      .footer-links { flex-wrap: wrap; gap: 1rem; }
+      .candy-float { display: none; }
+    }
   </style>
 </head>
 <body>
-  <div class="blob blob-1"></div>
-  <div class="blob blob-2"></div>
-  <div class="blob blob-3"></div>
-  <div class="deco deco-1">🍬</div>
-  <div class="deco deco-2">🧋</div>
-  <div class="deco deco-3">✨</div>
 
-  <nav>
-    <div class="nav-logo">Zucker<span>watte</span></div>
+  <!-- ─── NAV ──────────────────────────────────────────── -->
+  <nav class="nav">
+    <a href="#" class="nav-logo">ZUCKER<em>WATTE</em></a>
     <ul class="nav-links">
-      <li><a href="#">Torten</a></li>
       <li><a href="#">Bubble Tea</a></li>
-      <li><a href="#">Cake Pops</a></li>
-      <li><a href="#">Bestellen</a></li>
+      <li><a href="#">Torten</a></li>
+      <li><a href="#">Macarons</a></li>
+      <li><a href="#">Über uns</a></li>
     </ul>
+    <a href="#" class="nav-cta">Bestellen →</a>
   </nav>
 
+  <!-- ─── HERO ──────────────────────────────────────────── -->
   <section class="hero">
-    <div class="hero-left">
-      <div class="badge">Neu in Trier · Fußgängerzone</div>
 
-      <h1 class="hero-headline">
-        <span class="pink">Süß.</span><br>
-        <span class="mint">Sauer.</span><br>
-        <span class="yellow-text">Unver&shy;gesslich.</span>
+    <!-- Left: text -->
+    <div class="hero-left">
+      <div class="hero-eyebrow">Neu in Trier · Fußgängerzone</div>
+
+      <h1 class="hero-h1">
+        <span class="line-hot">Süß.</span>
+        <span class="line-mint">Bunt.</span>
+        <span class="line-lav">Unvergess&shy;lich.</span>
       </h1>
 
       <p class="hero-sub">
-        Handgemachte Torten, Macarons & Bubble Tea direkt aus unserer Küche.
-        Alles mit Liebe gemacht — nichts von der Stange.
+        Handgemachte Torten, Macarons & frisch gemixter Bubble Tea —
+        täglich aus unserer Küche direkt in die Simeonstraße.
       </p>
 
       <div class="flavor-row">
-        <span class="flavor-pill fp-pink">Erdbeer Cheesecake</span>
-        <span class="flavor-pill fp-mint">Matcha Latte</span>
-        <span class="flavor-pill fp-lav">Lavendel Macaron</span>
-        <span class="flavor-pill fp-yel">Zitrone Tarte</span>
+        <span class="fpill fp-a">Brown Sugar Milk Tea</span>
+        <span class="fpill fp-b">Matcha Latte</span>
+        <span class="fpill fp-c">Lavendel Macaron</span>
+        <span class="fpill fp-d">Zitrone Tarte</span>
+        <span class="fpill fp-e">Taro Bubble</span>
       </div>
 
-      <div class="cta-row">
-        <a href="#" class="cta-btn">Jetzt bestellen 🎂</a>
-        <a href="#" class="cta-secondary">Zur Karte →</a>
+      <div class="hero-cta-row">
+        <a href="#" class="btn-main">Jetzt bestellen 🧁</a>
+        <a href="#" class="btn-ghost">Zur Karte ansehen →</a>
       </div>
     </div>
 
+    <!-- Right: photo -->
     <div class="hero-right">
-      <div class="menu-card">
-        <div class="menu-card-title">🧁 Unsere Highlights</div>
+      <img
+        src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=900&h=1100&q=85"
+        alt="Colorful Bubble Tea"
+        loading="eager"
+      />
 
-        <div class="menu-section">
-          <div class="menu-section-label">Torten & Törtchen</div>
-          <div class="menu-item-row">
-            <span class="menu-item-name">Erdbeer-Sahne Torte</span>
-            <span class="menu-item-price">4,80 €</span>
-          </div>
-          <div class="menu-item-row">
-            <span class="menu-item-name">Schokoladen-Traum</span>
-            <span class="menu-item-price">4,50 €</span>
-          </div>
-          <div class="menu-item-row">
-            <span class="menu-item-name">Macarons (3er Box)</span>
-            <span class="menu-item-price">5,20 €</span>
-          </div>
-        </div>
+      <!-- Sticker badges -->
+      <div class="sticker sticker-1">TÄGLICH FRISCH!</div>
+      <div class="sticker sticker-2">MADE IN TRIER ✦</div>
 
-        <div class="menu-section">
-          <div class="menu-section-label">Bubble Tea</div>
-          <div class="menu-item-row">
-            <span class="menu-item-name">Brown Sugar Milk Tea</span>
-            <span class="menu-item-price">5,90 €</span>
-          </div>
-          <div class="menu-item-row">
-            <span class="menu-item-name">Taro Milk Tea</span>
-            <span class="menu-item-price">5,90 €</span>
-          </div>
-          <div class="menu-item-row">
-            <span class="menu-item-name">Matcha Latte (kalt)</span>
-            <span class="menu-item-price">5,50 €</span>
-          </div>
-        </div>
-
-        <div class="rating-row">
-          <span class="stars">★★★★★</span>
-          <span class="rating-text">4,9</span>
-          <span class="rating-sub">· 284 Bewertungen</span>
-        </div>
+      <!-- Rating badge -->
+      <div class="hero-rating">
+        <div class="hero-rating-stars">★★★★★</div>
+        <div class="hero-rating-num">4,9</div>
+        <div class="hero-rating-sub">· 284 Bewertungen</div>
       </div>
     </div>
+
   </section>
 
-  <!-- Section 2: Produkte -->
-  <section class="products-section">
+  <!-- ─── TICKER ─────────────────────────────────────────── -->
+  <div class="ticker-strip" aria-hidden="true">
+    <div class="ticker-track">
+      <!-- Duplicated for seamless loop -->
+      <span class="ticker-item">Brown Sugar Milk Tea <span class="ticker-dot"></span></span>
+      <span class="ticker-item">Taro Bubble Tea <span class="ticker-dot"></span></span>
+      <span class="ticker-item">Erdbeer-Cheesecake <span class="ticker-dot"></span></span>
+      <span class="ticker-item">Matcha Soft Ice <span class="ticker-dot"></span></span>
+      <span class="ticker-item">Lavendel Macaron <span class="ticker-dot"></span></span>
+      <span class="ticker-item">Rainbow Layer Cake <span class="ticker-dot"></span></span>
+      <span class="ticker-item">Mango Slush <span class="ticker-dot"></span></span>
+      <span class="ticker-item">Schokoladen-Torte <span class="ticker-dot"></span></span>
+      <span class="ticker-item">Brown Sugar Milk Tea <span class="ticker-dot"></span></span>
+      <span class="ticker-item">Taro Bubble Tea <span class="ticker-dot"></span></span>
+      <span class="ticker-item">Erdbeer-Cheesecake <span class="ticker-dot"></span></span>
+      <span class="ticker-item">Matcha Soft Ice <span class="ticker-dot"></span></span>
+      <span class="ticker-item">Lavendel Macaron <span class="ticker-dot"></span></span>
+      <span class="ticker-item">Rainbow Layer Cake <span class="ticker-dot"></span></span>
+      <span class="ticker-item">Mango Slush <span class="ticker-dot"></span></span>
+      <span class="ticker-item">Schokoladen-Torte <span class="ticker-dot"></span></span>
+    </div>
+  </div>
+
+  <!-- ─── PRODUCTS ───────────────────────────────────────── -->
+  <section class="products">
     <div class="products-inner">
-      <div class="section-label">Unsere Highlights</div>
-      <h2 class="section-headline">Was dich erwartet</h2>
+      <div class="sec-eyebrow">Unsere Highlights</div>
+      <h2 class="sec-h2">Was dich <em>erwartet</em></h2>
+
       <div class="product-grid">
 
-        <div class="product-card">
-          <div class="ph" style="height:220px;">
-            <img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=1200&h=800&q=80" alt="Bunter Bubble Tea" loading="lazy" />
-            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.35) 0%,transparent 60%);pointer-events:none;"></div>
+        <!-- Large card (left, spans 2 rows) -->
+        <div class="pcard pcard-large">
+          <div class="ph" style="height:100%;min-height:480px;">
+            <img
+              src="https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&h=1000&q=80"
+              alt="Bubble Tea Sortiment"
+              loading="lazy"
+            />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,10,18,0.7) 0%,rgba(26,10,18,0.1) 55%,transparent 100%);pointer-events:none;"></div>
+            <div class="badge-overlay badge-hot">⭐ Bestseller</div>
           </div>
-          <div class="product-info">
-            <div class="product-tag">Klassiker</div>
-            <div class="product-name">Brown Sugar Milk Tea</div>
-            <div class="product-footer">
-              <span class="product-price">4,90 €</span>
-              <button class="product-btn">+ Wählen</button>
+          <div class="pcard-info" style="padding:1.5rem 1.75rem 1.75rem;">
+            <div class="pcard-tag tag-hot">✦ Signature</div>
+            <div class="pcard-name" style="font-size:1.4rem;">Bubble Tea Collection</div>
+            <p class="pcard-desc">Brown Sugar, Taro, Matcha, Strawberry — alle Klassiker und saisonale Specials. Frisch gemixt, sofort serviert.</p>
+            <div class="pcard-foot">
+              <span class="pcard-price">ab 5,50 €</span>
+              <button class="pcard-btn">Auswählen →</button>
             </div>
           </div>
         </div>
 
-        <div class="product-card">
-          <div class="ph" style="height:220px;">
-            <img src="https://images.unsplash.com/photo-1565814329452-e1efa11c5b89?auto=format&fit=crop&w=1200&h=800&q=80" alt="Candy Jar" loading="lazy" />
-            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.35) 0%,transparent 60%);pointer-events:none;"></div>
+        <!-- Small card top-right-1 -->
+        <div class="pcard pcard-sm">
+          <div class="ph" style="height:200px;">
+            <img
+              src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=800&h=500&q=80"
+              alt="Bunte Macarons"
+              loading="lazy"
+            />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,10,18,0.5) 0%,transparent 60%);pointer-events:none;"></div>
+            <div class="badge-overlay badge-lav">Neu ✨</div>
           </div>
-          <div class="product-info">
-            <div class="product-tag">Spezialität</div>
-            <div class="product-name">Candy Jar Mix</div>
-            <div class="product-footer">
-              <span class="product-price">5,90 €</span>
-              <button class="product-btn">+ Wählen</button>
+          <div class="pcard-info">
+            <div class="pcard-tag tag-lav">Macarons</div>
+            <div class="pcard-name">Lavendel & Rose Box</div>
+            <div class="pcard-foot">
+              <span class="pcard-price">5,20 €</span>
+              <button class="pcard-btn">+ Wählen</button>
             </div>
           </div>
         </div>
 
-        <div class="product-card">
-          <div class="ph" style="height:220px;">
-            <img src="https://images.unsplash.com/photo-1574484284002-952d92456975?auto=format&fit=crop&w=1200&h=800&q=80" alt="Rainbow Cake" loading="lazy" />
-            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.35) 0%,transparent 60%);pointer-events:none;"></div>
+        <!-- Small card top-right-2 (col 3) -->
+        <div class="pcard pcard-sm">
+          <div class="ph" style="height:200px;">
+            <img
+              src="https://images.unsplash.com/photo-1574484284002-952d92456975?auto=format&fit=crop&w=800&h=500&q=80"
+              alt="Rainbow Layer Cake"
+              loading="lazy"
+            />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,10,18,0.5) 0%,transparent 60%);pointer-events:none;"></div>
+            <div class="badge-overlay">Saisonal</div>
           </div>
-          <div class="product-info">
-            <div class="product-tag">Torte</div>
-            <div class="product-name">Rainbow Layer Cake</div>
-            <div class="product-footer">
-              <span class="product-price">6,50 €</span>
-              <button class="product-btn">+ Wählen</button>
+          <div class="pcard-info">
+            <div class="pcard-tag tag-mint">Torte</div>
+            <div class="pcard-name">Rainbow Layer Cake</div>
+            <div class="pcard-foot">
+              <span class="pcard-price">6,50 €</span>
+              <button class="pcard-btn">+ Wählen</button>
             </div>
           </div>
         </div>
 
-        <div class="product-card">
-          <div class="ph" style="height:220px;">
-            <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1200&h=800&q=80" alt="Soft Ice Cream" loading="lazy" />
-            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.35) 0%,transparent 60%);pointer-events:none;"></div>
+        <!-- Small card bottom-right-1 -->
+        <div class="pcard pcard-sm">
+          <div class="ph" style="height:200px;">
+            <img
+              src="https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?auto=format&fit=crop&w=800&h=500&q=80"
+              alt="Matcha Soft Ice"
+              loading="lazy"
+            />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,10,18,0.5) 0%,transparent 60%);pointer-events:none;"></div>
+            <div class="badge-overlay badge-mint">Liebling</div>
           </div>
-          <div class="product-info">
-            <div class="product-tag">Saisonal</div>
-            <div class="product-name">Matcha Soft Ice</div>
-            <div class="product-footer">
-              <span class="product-price">3,90 €</span>
-              <button class="product-btn">+ Wählen</button>
+          <div class="pcard-info">
+            <div class="pcard-tag tag-mint">Soft Ice</div>
+            <div class="pcard-name">Matcha Soft Ice</div>
+            <div class="pcard-foot">
+              <span class="pcard-price">3,90 €</span>
+              <button class="pcard-btn">+ Wählen</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Small card bottom-right-2 -->
+        <div class="pcard pcard-sm">
+          <div class="ph" style="height:200px;">
+            <img
+              src="https://images.unsplash.com/photo-1565814329452-e1efa11c5b89?auto=format&fit=crop&w=800&h=500&q=80"
+              alt="Candy Jar"
+              loading="lazy"
+            />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,10,18,0.5) 0%,transparent 60%);pointer-events:none;"></div>
+            <div class="badge-overlay">Mix</div>
+          </div>
+          <div class="pcard-info">
+            <div class="pcard-tag tag-hot">Candy</div>
+            <div class="pcard-name">Candy Jar Surprise</div>
+            <div class="pcard-foot">
+              <span class="pcard-price">4,90 €</span>
+              <button class="pcard-btn">+ Wählen</button>
             </div>
           </div>
         </div>
@@ -670,42 +1126,208 @@ export const prerender = true;
     </div>
   </section>
 
-  <!-- Section 3: About / Öffnungszeiten -->
-  <section class="about-section">
-    <div class="about-inner">
-      <div class="about-photo-wrap">
-        <div class="ph" style="height:480px;border-radius:24px;">
-          <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=1200&h=800&q=80" alt="Zuckerwatte Atmosphäre" loading="lazy" />
-          <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(255,107,157,0.25) 0%,transparent 60%);pointer-events:none;border-radius:24px;"></div>
+  <!-- ─── ATMOSPHERE STRIP ───────────────────────────────── -->
+  <section class="atmo">
+    <div class="atmo-bg">
+      <img
+        src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1800&h=800&q=80"
+        alt="Zuckerwatte Store Atmosphäre"
+        loading="lazy"
+      />
+    </div>
+
+    <div class="atmo-content">
+      <div class="atmo-label">Unsere Welt</div>
+      <h2 class="atmo-h2">
+        Täglich frisch.<br>
+        Täglich anders.
+      </h2>
+      <div class="atmo-stats">
+        <div>
+          <div class="atmo-stat-num">40+</div>
+          <div class="atmo-stat-label">Sorten Bubble Tea</div>
         </div>
-        <div class="about-badge-float">
-          <div class="abf-title">Simeonstraße 12, Trier</div>
-          <div class="abf-sub">Direkt in der Fußgängerzone</div>
+        <div>
+          <div class="atmo-stat-num">seit 2021</div>
+          <div class="atmo-stat-label">In der Simeonstraße</div>
+        </div>
+        <div>
+          <div class="atmo-stat-num">100%</div>
+          <div class="atmo-stat-label">Handgemacht</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Floating candy icons -->
+    <div class="candy-float">
+      <div class="candy-chip">
+        <div class="chip-icon">🧋</div>
+        <div class="chip-label">Bubble Tea</div>
+      </div>
+      <div class="candy-chip">
+        <div class="chip-icon">🍬</div>
+        <div class="chip-label">Candy</div>
+      </div>
+      <div class="candy-chip">
+        <div class="chip-icon">🎂</div>
+        <div class="chip-label">Torten</div>
+      </div>
+      <div class="candy-chip">
+        <div class="chip-icon">🍡</div>
+        <div class="chip-label">Macarons</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── PHOTO GRID ─────────────────────────────────────── -->
+  <section class="photo-grid-strip">
+    <div class="photo-grid-inner">
+      <div class="pgrid">
+        <div class="pgrid-item">
+          <div class="ph" style="height:280px;border-radius:16px;">
+            <img
+              src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=600&h=560&q=80"
+              alt="Süßigkeiten Detail"
+              loading="lazy"
+            />
+          </div>
+        </div>
+        <div class="pgrid-item">
+          <div class="ph" style="height:280px;border-radius:16px;">
+            <img
+              src="https://images.unsplash.com/photo-1563227812-0ea4c22e6cc8?auto=format&fit=crop&w=600&h=560&q=80"
+              alt="Bubble Tea Close Up"
+              loading="lazy"
+            />
+          </div>
+        </div>
+        <div class="pgrid-item">
+          <div class="ph" style="height:280px;border-radius:16px;">
+            <img
+              src="https://images.unsplash.com/photo-1551024709-8f23befc548e?auto=format&fit=crop&w=600&h=560&q=80"
+              alt="Bunte Donuts"
+              loading="lazy"
+            />
+          </div>
+        </div>
+        <div class="pgrid-item">
+          <div class="ph" style="height:280px;border-radius:16px;">
+            <img
+              src="https://images.unsplash.com/photo-1557142046-c704a3adf364?auto=format&fit=crop&w=600&h=560&q=80"
+              alt="Dessert Vorbereitung"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── STORY + HOURS ──────────────────────────────────── -->
+  <section class="story">
+    <div class="story-inner">
+
+      <!-- Photos -->
+      <div class="story-photos">
+        <div class="story-tag">Gemacht mit<br>❤ in Trier</div>
+        <div class="story-photo-main">
+          <div class="ph" style="height:460px;border-radius:24px;">
+            <img
+              src="https://images.unsplash.com/photo-1612203985729-70726954388c?auto=format&fit=crop&w=800&h=920&q=80"
+              alt="Zuckerwatte Team bei der Arbeit"
+              loading="lazy"
+            />
+            <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(255,45,120,0.2) 0%,transparent 60%);pointer-events:none;border-radius:24px;"></div>
+          </div>
+        </div>
+        <div class="story-photo-sm">
+          <div class="ph" style="height:180px;border-radius:14px;">
+            <img
+              src="https://images.unsplash.com/photo-1583338917450-3ea882dd5c70?auto=format&fit=crop&w=500&h=360&q=80"
+              alt="Bubble Tea Zubereitung"
+              loading="lazy"
+            />
+          </div>
         </div>
       </div>
 
-      <div class="about-content">
+      <!-- Content -->
+      <div class="story-content">
         <div>
-          <div class="section-label">Über uns</div>
-          <h2 class="section-headline">Gemacht mit Liebe.<br>Gebacken in Trier.</h2>
+          <div class="sec-eyebrow">Über uns</div>
+          <h2 class="sec-h2">Gemacht mit Liebe.<br><em>Gebacken in Trier.</em></h2>
         </div>
-        <p class="about-text">
-          Zuckerwatte ist kein gewöhnlicher Süßwarenladen — wir backen täglich frisch, mixen Bubble Tea nach Bestellung und verwenden echte Zutaten ohne Fertigmischungen. Unser kleines Team steht seit 2021 für handgemachte Qualität, die man schmeckt.
+
+        <p class="story-text">
+          Zuckerwatte ist kein gewöhnlicher Süßwarenladen — wir backen täglich frisch,
+          mixen Bubble Tea nach Bestellung und verwenden echte Zutaten ohne Fertigmischungen.
+          Unser kleines Team steht seit 2021 für handgemachte Qualität, die man schmeckt und sieht.
         </p>
 
-        <div class="hours-block">
-          <div class="hours-title">Öffnungszeiten</div>
-          <div class="hours-row"><span class="hr-day">Mo – Fr</span><span class="hr-time">10:00 – 19:00 Uhr</span></div>
-          <div class="hours-row"><span class="hr-day">Samstag</span><span class="hr-time">10:00 – 20:00 Uhr</span></div>
-          <div class="hours-row"><span class="hr-day">Sonntag</span><span class="hr-time">12:00 – 18:00 Uhr</span></div>
+        <div class="features-row">
+          <div class="feature-chip">
+            <span class="feature-chip-icon">🌿</span>
+            <span class="feature-chip-label">Frische Zutaten</span>
+          </div>
+          <div class="feature-chip">
+            <span class="feature-chip-icon">🎨</span>
+            <span class="feature-chip-label">Handgemacht</span>
+          </div>
+          <div class="feature-chip">
+            <span class="feature-chip-icon">🔄</span>
+            <span class="feature-chip-label">Täglich wechselnde Specials</span>
+          </div>
+          <div class="feature-chip">
+            <span class="feature-chip-icon">🌱</span>
+            <span class="feature-chip-label">Vegane Optionen</span>
+          </div>
         </div>
 
-        <div class="address-row">
+        <div class="hours-card">
+          <div class="hours-title">🕐 Öffnungszeiten</div>
+          <div class="hours-row">
+            <span class="hr-day">Mo – Fr</span>
+            <span class="hr-time">10:00 – 19:00 Uhr</span>
+            <span class="hr-badge">Offen</span>
+          </div>
+          <div class="hours-row">
+            <span class="hr-day">Samstag</span>
+            <span class="hr-time">10:00 – 20:00 Uhr</span>
+          </div>
+          <div class="hours-row">
+            <span class="hr-day">Sonntag</span>
+            <span class="hr-time">12:00 – 18:00 Uhr</span>
+          </div>
+        </div>
+
+        <div class="address-line">
           <span>📍</span>
           <span><strong>Zuckerwatte</strong> · Simeonstraße 12 · 54290 Trier</span>
         </div>
       </div>
+
     </div>
   </section>
+
+  <!-- ─── FOOTER ─────────────────────────────────────────── -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-logo">ZUCKER<em>WATTE</em></div>
+        <div class="footer-tagline">Bubble Tea & Süßigkeiten · Trier seit 2021</div>
+      </div>
+      <ul class="footer-links">
+        <li><a href="#">Bubble Tea</a></li>
+        <li><a href="#">Torten & Törtchen</a></li>
+        <li><a href="#">Catering</a></li>
+        <li><a href="#">Kontakt</a></li>
+        <li><a href="#">Impressum</a></li>
+      </ul>
+    </div>
+    <div class="footer-copy">
+      © 2024 ZUCKERWATTE — Simeonstraße 12, 54290 Trier · Alle Rechte vorbehalten.
+    </div>
+  </footer>
+
 </body>
 </html>
