@@ -7,675 +7,935 @@ export const prerender = true;
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
-  <title>Hotel zur Porta — Boutiquehotel & Fine Dining | Trier</title>
+  <title>Grand Palais Mosella — 5-Sterne Grandhotel | Trier</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { overflow-x: hidden; }
+    html { overflow-x: hidden; scroll-behavior: smooth; }
 
     :root {
-      --forest: #2C4A3E;
-      --gold:   #C9A84C;
-      --bg:     #FAF6EE;
-      --dark:   #1A2C26;
-      --muted:  rgba(26,44,38,0.45);
-      --rule:   rgba(26,44,38,0.08);
+      --ivory:        #F5F0E6;
+      --ivory-deep:   #EDE6D8;
+      --gold:         #C4963A;
+      --gold-rule:    rgba(196,150,58,0.25);
+      --charcoal:     #1A1815;
+      --charcoal-dark:#110F0C;
+      --muted:        rgba(26,24,21,0.5);
+      --rule:         rgba(26,24,21,0.1);
     }
 
     body {
-      background: var(--bg);
-      color: var(--dark);
-      font-family: 'Raleway', sans-serif;
+      background: var(--ivory);
+      color: var(--charcoal);
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
       min-height: 100vh;
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
 
+    /* Subtle grain overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 256px;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.025;
+    }
+
+    /* ─── Photo container ──────────────────────────── */
+    .ph { position: relative; overflow: hidden; }
+    .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.65s ease; }
+    .ph:hover img { transform: scale(1.05); }
+    .ph-grad { position: absolute; inset: 0; pointer-events: none; }
+
+    /* ─── Nav ──────────────────────────────────────── */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 100;
+      height: 72px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 1.4rem 4rem;
-      background: rgba(250,246,238,0.97);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid var(--rule);
+      padding: 0 4rem;
+      background: rgba(245,240,230,0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--gold-rule);
     }
-    .nav-logo {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-    }
+    .nav-logo { display: flex; flex-direction: column; gap: 0.15rem; }
     .nl-name {
-      font-family: 'Cormorant', serif;
+      font-family: 'Cormorant Garamond', serif;
       font-weight: 400;
-      font-size: 1.1rem;
-      letter-spacing: 0.1em;
-      color: var(--forest);
+      font-size: 1.05rem;
+      letter-spacing: 0.18em;
+      color: var(--charcoal);
     }
     .nl-sub {
-      font-size: 0.48rem;
+      font-size: 0.42rem;
       font-weight: 500;
-      letter-spacing: 0.3em;
+      letter-spacing: 0.42em;
       text-transform: uppercase;
       color: var(--gold);
-      margin-top: 0.1rem;
     }
-    .nav-links {
-      display: flex;
-      gap: 3rem;
-      list-style: none;
-    }
+    .nav-links { display: flex; gap: 3rem; list-style: none; }
     .nav-links a {
-      font-size: 0.58rem;
+      font-size: 0.52rem;
       font-weight: 400;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--muted);
       text-decoration: none;
       transition: color 0.3s;
     }
-    .nav-links a:hover { color: var(--forest); }
+    .nav-links a:hover { color: var(--charcoal); }
     .nav-reserve {
-      font-size: 0.55rem;
+      font-size: 0.48rem;
       font-weight: 500;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.24em;
       text-transform: uppercase;
-      color: #fff;
-      background: var(--forest);
-      padding: 0.7rem 1.75rem;
+      color: var(--ivory);
+      background: var(--charcoal);
+      padding: 0.75rem 1.9rem;
       text-decoration: none;
-      transition: background 0.3s;
+      border: 1px solid var(--charcoal);
+      transition: background 0.3s, border-color 0.3s;
     }
-    .nav-reserve:hover { background: var(--gold); }
+    .nav-reserve:hover { background: var(--gold); border-color: var(--gold); }
 
+    /* ─── Hero ─────────────────────────────────────── */
     .hero {
       min-height: 100vh;
-      padding-top: 70px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-    }
-
-    /* LEFT */
-    .hero-left {
+      position: relative;
       display: flex;
-      flex-direction: column;
+      align-items: center;
       justify-content: center;
-      padding: 5rem 4rem 5rem 5rem;
-      gap: 3rem;
-      border-right: 1px solid var(--rule);
+      overflow: hidden;
     }
-
-    .eyebrow {
-      font-size: 0.52rem;
-      font-weight: 400;
-      letter-spacing: 0.38em;
-      text-transform: uppercase;
-      color: var(--gold);
+    .hero-bg { position: absolute; inset: 0; }
+    .hero-bg img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      animation: kenBurns 20s ease-in-out infinite alternate;
     }
-
-    .hero-headline {
-      font-family: 'Cormorant', serif;
-      font-weight: 300;
-      font-size: clamp(3rem, 5.5vw, 5rem);
-      line-height: 1.15;
-      color: var(--dark);
-      letter-spacing: 0.02em;
+    .hero-bg-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(17,15,12,0.38) 0%,
+        rgba(17,15,12,0.55) 50%,
+        rgba(17,15,12,0.72) 100%
+      );
     }
-    .hero-headline em {
-      font-style: italic;
-      color: var(--forest);
+    @keyframes kenBurns {
+      0%   { transform: scale(1); }
+      100% { transform: scale(1.08); }
     }
-
-    .gold-rule {
-      width: 40px;
-      height: 2px;
-      background: var(--gold);
-    }
-
-    .hero-body {
-      font-size: 0.88rem;
-      font-weight: 300;
-      line-height: 2.1;
-      color: var(--muted);
-      max-width: 42ch;
-    }
-
-    /* Room types */
-    .room-list {
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
       display: flex;
       flex-direction: column;
-      border-top: 1px solid var(--rule);
-    }
-    .room-row {
-      display: grid;
-      grid-template-columns: 1fr auto auto;
       align-items: center;
-      gap: 1rem;
-      padding: 1rem 0;
-      border-bottom: 1px solid var(--rule);
-      transition: padding-left 0.3s;
-      cursor: default;
+      gap: 1.5rem;
+      padding: 2rem;
+      max-width: 920px;
     }
-    .room-row:hover { padding-left: 0.3rem; }
-    .rr-name {
-      font-family: 'Cormorant', serif;
-      font-size: 1rem;
+    .hero-eyebrow {
+      font-size: 0.48rem;
       font-weight: 400;
-      color: var(--dark);
-    }
-    .rr-size {
-      font-size: 0.65rem;
-      font-weight: 300;
-      color: var(--muted);
-      white-space: nowrap;
-    }
-    .rr-price {
-      font-family: 'Cormorant', serif;
-      font-size: 1rem;
-      font-weight: 600;
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
       color: var(--gold);
-      white-space: nowrap;
     }
-
-    .cta-row {
+    .hero-ornament {
       display: flex;
       align-items: center;
-      gap: 2rem;
+      gap: 0.75rem;
     }
-    .cta-btn {
-      font-size: 0.58rem;
-      font-weight: 500;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
+    .hero-ornament::before,
+    .hero-ornament::after {
+      content: '';
+      display: block;
+      width: 64px;
+      height: 1px;
+      background: rgba(196,150,58,0.55);
+    }
+    .hero-ornament-diamond {
+      width: 6px;
+      height: 6px;
+      border: 1px solid rgba(196,150,58,0.8);
+      transform: rotate(45deg);
+    }
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(3.5rem, 7vw, 6.5rem);
+      line-height: 1.05;
       color: #fff;
-      background: var(--forest);
-      padding: 0.95rem 2.2rem;
+      letter-spacing: 0.07em;
+    }
+    .hero-subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(1rem, 2vw, 1.45rem);
+      color: rgba(255,255,255,0.62);
+      letter-spacing: 0.08em;
+    }
+    .hero-vline {
+      width: 1px;
+      height: 44px;
+      background: linear-gradient(to bottom, rgba(196,150,58,0.55), transparent);
+    }
+    .hero-ctas {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+      margin-top: 0.5rem;
+    }
+    .hero-btn {
+      font-size: 0.52rem;
+      font-weight: 500;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      background: var(--gold);
+      padding: 1rem 2.5rem;
       text-decoration: none;
       transition: background 0.3s;
     }
-    .cta-btn:hover { background: var(--gold); }
-    .cta-link {
-      font-family: 'Cormorant', serif;
-      font-size: 1rem;
-      font-weight: 300;
-      font-style: italic;
-      color: var(--muted);
-      text-decoration: none;
-      border-bottom: 1px solid rgba(26,44,38,0.15);
-      padding-bottom: 1px;
-    }
-
-    /* RIGHT */
-    .hero-right {
-      display: flex;
-      flex-direction: column;
-      padding: 5rem 4rem 5rem 4rem;
-      gap: 3rem;
-    }
-
-    /* Pull quote */
-    .pull-quote {
-      font-family: 'Cormorant', serif;
-      font-weight: 300;
-      font-style: italic;
-      font-size: 1.6rem;
-      line-height: 1.45;
-      color: var(--forest);
-      padding-left: 1.5rem;
-      border-left: 2px solid var(--gold);
-      max-width: 26ch;
-    }
-    .pq-source {
-      display: block;
-      font-family: 'Raleway', sans-serif;
-      font-style: normal;
-      font-size: 0.58rem;
-      font-weight: 500;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-top: 0.9rem;
-    }
-
-    /* Amenities grid */
-    .amenities {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.8rem;
-    }
-    .am-label {
-      grid-column: 1 / -1;
-      font-size: 0.52rem;
-      font-weight: 500;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: rgba(26,44,38,0.25);
-    }
-    .am-item {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      font-size: 0.78rem;
-      font-weight: 300;
-      color: var(--muted);
-    }
-    .am-item::before {
-      content: '—';
-      color: var(--gold);
-      font-size: 0.65rem;
-      flex-shrink: 0;
-    }
-
-    .divider {
-      width: 100%;
-      height: 1px;
-      background: var(--rule);
-    }
-
-    /* ─── Photo container ──────────────────────────────── */
-    .ph { position: relative; overflow: hidden; }
-    .ph img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.55s ease; }
-    .ph:hover img { transform: scale(1.05); }
-    .ph-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 60%); pointer-events: none; }
-
-    /* ─── Large screen constraint ───────────────────────── */
-    .hero { max-width: 1600px; margin-left: auto; margin-right: auto; }
-
-    /* ─── Section 2: Zimmer ─────────────────────────────── */
-    .zimmer {
-      padding: 8rem 5rem;
-      background: var(--bg);
-      border-top: 1px solid var(--rule);
-    }
-    .zimmer-inner { max-width: 1600px; margin: 0 auto; }
-    .sec-eyebrow {
+    .hero-btn:hover { background: #fff; }
+    .hero-link {
       font-size: 0.5rem;
       font-weight: 400;
-      letter-spacing: 0.38em;
+      letter-spacing: 0.26em;
       text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 0.75rem;
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.25);
+      padding-bottom: 2px;
+      transition: color 0.3s, border-color 0.3s;
     }
-    .sec-title {
-      font-family: 'Cormorant', serif;
+    .hero-link:hover { color: #fff; border-color: rgba(255,255,255,0.7); }
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .scroll-label {
+      font-size: 0.4rem;
+      font-weight: 400;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+    }
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, rgba(196,150,58,0.5), transparent);
+    }
+
+    /* ─── Stats strip ────────────────────────────────── */
+    .stats-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      background: var(--charcoal);
+      border-top: 1px solid rgba(196,150,58,0.18);
+    }
+    .stat-item {
+      padding: 3rem 2.5rem;
+      text-align: center;
+      border-right: 1px solid rgba(196,150,58,0.1);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
       font-weight: 300;
-      font-size: clamp(2rem, 4vw, 3.5rem);
-      line-height: 1.15;
-      color: var(--dark);
-      letter-spacing: 0.02em;
+      font-size: 2.8rem;
+      line-height: 1;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+    .stat-label {
+      font-size: 0.46rem;
+      font-weight: 400;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: rgba(245,240,230,0.38);
+    }
+
+    /* ─── Section I: Suiten ──────────────────────────── */
+    .suiten {
+      padding: 8rem 5rem;
+      background: var(--ivory);
+      border-top: 1px solid var(--gold-rule);
+    }
+    .suiten-inner { max-width: 1540px; margin: 0 auto; }
+    .suiten-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
       margin-bottom: 4rem;
     }
-    .sec-title em { font-style: italic; color: var(--forest); }
-    .zimmer-grid {
+    .sec-numeral {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      color: rgba(196,150,58,0.45);
+      margin-bottom: 0.35rem;
+    }
+    .sec-eyebrow {
+      font-size: 0.44rem;
+      font-weight: 500;
+      letter-spacing: 0.44em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.7rem;
+    }
+    .sec-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      line-height: 1.12;
+      color: var(--charcoal);
+      letter-spacing: 0.03em;
+    }
+    .sec-title em { font-style: italic; color: var(--gold); }
+    .suiten-see-all {
+      font-size: 0.48rem;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(26,24,21,0.15);
+      padding-bottom: 2px;
+      transition: color 0.3s;
+      white-space: nowrap;
+      margin-bottom: 0.5rem;
+    }
+    .suiten-see-all:hover { color: var(--charcoal); }
+    .suiten-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 2px;
-      background: var(--rule);
+      background: var(--gold-rule);
     }
-    .zim-card {
-      background: var(--bg);
+    .suite-card {
+      background: var(--ivory);
       overflow: hidden;
-      transition: box-shadow 0.3s;
+      transition: box-shadow 0.4s, transform 0.4s;
     }
-    .zim-card:hover { box-shadow: 0 16px 48px rgba(26,44,38,0.1); z-index: 1; }
-    .zim-photo { height: 280px; }
-    .zim-body { padding: 2rem; }
-    .zim-cat {
-      font-size: 0.48rem;
+    .suite-card:hover {
+      box-shadow: 0 24px 64px rgba(26,24,21,0.12);
+      transform: translateY(-2px);
+      z-index: 1;
+      position: relative;
+    }
+    .suite-photo { height: 320px; }
+    .suite-badge {
+      position: absolute;
+      top: 1.2rem;
+      left: 1.2rem;
+      font-size: 0.42rem;
       font-weight: 500;
-      letter-spacing: 0.32em;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      background: var(--gold);
+      padding: 0.35rem 0.8rem;
+    }
+    .suite-body { padding: 2rem 2rem 2.25rem; }
+    .suite-cat {
+      font-size: 0.44rem;
+      font-weight: 500;
+      letter-spacing: 0.38em;
       text-transform: uppercase;
       color: var(--gold);
-      margin-bottom: 0.6rem;
+      margin-bottom: 0.55rem;
     }
-    .zim-name {
-      font-family: 'Cormorant', serif;
+    .suite-name {
+      font-family: 'Cormorant Garamond', serif;
       font-weight: 400;
-      font-size: 1.4rem;
-      color: var(--dark);
-      margin-bottom: 0.75rem;
+      font-size: 1.5rem;
+      color: var(--charcoal);
+      margin-bottom: 0.7rem;
+      letter-spacing: 0.02em;
     }
-    .zim-desc {
+    .suite-desc {
       font-size: 0.82rem;
       font-weight: 300;
-      line-height: 1.85;
+      line-height: 1.9;
       color: var(--muted);
       margin-bottom: 1.5rem;
     }
-    .zim-amenities {
-      display: flex;
-      flex-direction: column;
-      gap: 0.3rem;
-      margin-bottom: 1.75rem;
-    }
-    .za-item {
-      font-size: 0.75rem;
+    .suite-amenities { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1.75rem; }
+    .sa-item {
+      font-size: 0.76rem;
       font-weight: 300;
       color: var(--muted);
       display: flex;
       align-items: center;
       gap: 0.6rem;
     }
-    .za-item::before { content: '—'; color: var(--gold); font-size: 0.6rem; }
-    .zim-footer {
+    .sa-item::before { content: '—'; color: var(--gold); font-size: 0.6rem; flex-shrink: 0; }
+    .suite-footer {
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding-top: 1.25rem;
       border-top: 1px solid var(--rule);
     }
-    .zim-price {
-      font-family: 'Cormorant', serif;
-      font-size: 1.3rem;
-      font-weight: 600;
-      color: var(--gold);
+    .suite-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 400;
+      color: var(--charcoal);
     }
-    .zim-price span {
-      font-family: 'Raleway', sans-serif;
+    .suite-price sub {
+      font-family: 'Jost', sans-serif;
       font-size: 0.6rem;
       font-weight: 300;
       color: var(--muted);
+      vertical-align: baseline;
     }
-    .zim-btn {
-      font-size: 0.5rem;
-      font-weight: 500;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--forest);
-      border: 1px solid rgba(44,74,62,0.3);
-      padding: 0.5rem 1.1rem;
-      text-decoration: none;
-      transition: background 0.3s, color 0.3s;
-    }
-    .zim-btn:hover { background: var(--forest); color: #fff; }
-
-    /* ─── Section 3: Restaurant & Erlebnis ──────────────── */
-    .erlebnis {
-      padding: 8rem 5rem;
-      background: var(--forest);
-    }
-    .erlebnis-inner {
-      max-width: 1600px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 6rem;
-      align-items: center;
-    }
-    .erl-photo { height: 560px; }
-    .erl-right {}
-    .erl-eyebrow {
-      font-size: 0.5rem;
-      font-weight: 400;
-      letter-spacing: 0.38em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 1.5rem;
-    }
-    .erl-title {
-      font-family: 'Cormorant', serif;
-      font-weight: 300;
-      font-size: clamp(2rem, 3.5vw, 3rem);
-      line-height: 1.2;
-      color: #fff;
-      letter-spacing: 0.02em;
-      margin-bottom: 1rem;
-    }
-    .erl-title em { font-style: italic; color: var(--gold); }
-    .erl-gold-rule { width: 40px; height: 1px; background: var(--gold); margin-bottom: 2rem; opacity: 0.6; }
-    .erl-body {
-      font-size: 0.88rem;
-      font-weight: 300;
-      line-height: 2.1;
-      color: rgba(255,255,255,0.55);
-      max-width: 44ch;
-      margin-bottom: 3rem;
-    }
-    .erl-features {
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-      margin-bottom: 3rem;
-    }
-    .ef-item {
-      display: flex;
-      gap: 1.25rem;
-      align-items: flex-start;
-    }
-    .ef-num {
-      font-family: 'Cormorant', serif;
-      font-size: 1.6rem;
-      font-weight: 300;
-      color: var(--gold);
-      line-height: 1;
-      flex-shrink: 0;
-      width: 2rem;
-    }
-    .ef-info {}
-    .ef-name {
-      font-size: 0.82rem;
-      font-weight: 400;
-      color: #fff;
-      margin-bottom: 0.2rem;
-    }
-    .ef-desc {
-      font-size: 0.75rem;
-      font-weight: 300;
-      color: rgba(255,255,255,0.4);
-      line-height: 1.6;
-    }
-    .erl-cta {
-      font-size: 0.55rem;
+    .suite-btn {
+      font-size: 0.46rem;
       font-weight: 500;
       letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--forest);
-      background: var(--gold);
-      padding: 0.95rem 2.2rem;
+      color: var(--charcoal);
+      border: 1px solid rgba(26,24,21,0.25);
+      padding: 0.55rem 1.2rem;
       text-decoration: none;
-      transition: background 0.3s;
-      display: inline-block;
+      transition: background 0.3s, color 0.3s, border-color 0.3s;
     }
-    .erl-cta:hover { background: #fff; }
+    .suite-btn:hover { background: var(--charcoal); color: var(--ivory); border-color: var(--charcoal); }
 
-    /* Award strip */
-    .award-strip {
-      display: flex;
-      gap: 2.5rem;
+    /* ─── Section II: Dining ─────────────────────────── */
+    .dining {
+      padding: 8rem 5rem;
+      background: var(--charcoal-dark);
+      border-top: 1px solid rgba(196,150,58,0.15);
     }
-    .aw-item {}
-    .aw-num {
-      font-family: 'Cormorant', serif;
-      font-size: 2.2rem;
+    .dining-inner {
+      max-width: 1540px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 7rem;
+      align-items: center;
+    }
+    .dining-photo-col { display: flex; flex-direction: column; gap: 2px; }
+    .dining-photo-main { height: 480px; }
+    .dining-photo-row { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+    .dining-photo-sm { height: 220px; }
+    .dining-numeral {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      color: rgba(196,150,58,0.38);
+      margin-bottom: 0.35rem;
+    }
+    .dining-eyebrow {
+      font-size: 0.44rem;
+      font-weight: 400;
+      letter-spacing: 0.44em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+    }
+    .dining-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      line-height: 1.12;
+      color: #fff;
+      letter-spacing: 0.03em;
+      margin-bottom: 0.6rem;
+    }
+    .dining-title em { font-style: italic; color: var(--gold); }
+    .dining-rule { width: 42px; height: 1px; background: var(--gold); opacity: 0.45; margin-bottom: 2rem; }
+    .dining-body {
+      font-size: 0.88rem;
+      font-weight: 300;
+      line-height: 2;
+      color: rgba(245,240,230,0.48);
+      max-width: 42ch;
+      margin-bottom: 2.75rem;
+    }
+    .dining-features {
+      display: flex;
+      flex-direction: column;
+      border-top: 1px solid rgba(196,150,58,0.15);
+      margin-bottom: 3rem;
+    }
+    .df-item {
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+      padding: 1.2rem 0;
+      border-bottom: 1px solid rgba(196,150,58,0.1);
+    }
+    .df-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--gold);
+      flex-shrink: 0;
+      width: 1.5rem;
+      line-height: 1;
+      padding-top: 0.1rem;
+    }
+    .df-name {
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: rgba(245,240,230,0.82);
+      margin-bottom: 0.2rem;
+    }
+    .df-desc {
+      font-size: 0.72rem;
+      font-weight: 300;
+      color: rgba(245,240,230,0.33);
+      line-height: 1.6;
+    }
+    .dining-cta {
+      font-size: 0.5rem;
+      font-weight: 500;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      background: var(--gold);
+      padding: 1rem 2.5rem;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.3s;
+    }
+    .dining-cta:hover { background: #fff; }
+
+    /* ─── Section III: Spa ───────────────────────────── */
+    .spa {
+      padding: 8rem 5rem;
+      background: var(--ivory-deep);
+      border-top: 1px solid var(--gold-rule);
+    }
+    .spa-inner {
+      max-width: 1540px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 7rem;
+      align-items: center;
+    }
+    .spa-numeral {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      color: rgba(196,150,58,0.38);
+      margin-bottom: 0.35rem;
+    }
+    .spa-eyebrow {
+      font-size: 0.44rem;
+      font-weight: 400;
+      letter-spacing: 0.44em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+    }
+    .spa-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      line-height: 1.12;
+      color: var(--charcoal);
+      letter-spacing: 0.03em;
+      margin-bottom: 0.6rem;
+    }
+    .spa-title em { font-style: italic; color: var(--gold); }
+    .spa-rule { width: 42px; height: 1px; background: var(--gold); opacity: 0.45; margin-bottom: 2rem; }
+    .spa-body {
+      font-size: 0.88rem;
+      font-weight: 300;
+      line-height: 2;
+      color: var(--muted);
+      max-width: 42ch;
+      margin-bottom: 2.5rem;
+    }
+    .spa-features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--gold-rule);
+      margin-bottom: 2.75rem;
+    }
+    .sf-item {
+      padding: 1.25rem;
+      background: var(--ivory-deep);
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    .sf-icon {
+      font-size: 0.44rem;
+      font-weight: 500;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .sf-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      font-weight: 400;
+      color: var(--charcoal);
+    }
+    .sf-desc {
+      font-size: 0.72rem;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .spa-cta {
+      font-size: 0.5rem;
+      font-weight: 500;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--ivory);
+      background: var(--charcoal);
+      padding: 1rem 2.5rem;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.3s;
+    }
+    .spa-cta:hover { background: var(--gold); }
+    .spa-photo-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+    }
+    .spa-photo-tall { height: 520px; grid-row: span 2; }
+    .spa-photo-sm { height: 259px; }
+
+    /* ─── Section IV: Lage ───────────────────────────── */
+    .lage {
+      padding: 7rem 5rem;
+      background: var(--charcoal);
+      border-top: 1px solid rgba(196,150,58,0.15);
+    }
+    .lage-inner {
+      max-width: 1540px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 7rem;
+      align-items: start;
+    }
+    .lage-numeral {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      color: rgba(196,150,58,0.38);
+      margin-bottom: 0.35rem;
+    }
+    .lage-eyebrow {
+      font-size: 0.44rem;
+      font-weight: 400;
+      letter-spacing: 0.44em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+    }
+    .lage-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      line-height: 1.15;
+      color: #fff;
+      letter-spacing: 0.03em;
+      margin-bottom: 0.6rem;
+    }
+    .lage-title em { font-style: italic; color: var(--gold); }
+    .lage-rule { width: 42px; height: 1px; background: var(--gold); opacity: 0.38; margin-bottom: 1.75rem; }
+    .lage-body {
+      font-size: 0.85rem;
+      font-weight: 300;
+      line-height: 2;
+      color: rgba(245,240,230,0.42);
+    }
+    .landmarks-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border: 1px solid rgba(196,150,58,0.15);
+    }
+    .lm-item {
+      padding: 2rem 1.75rem;
+      border-right: 1px solid rgba(196,150,58,0.1);
+      border-bottom: 1px solid rgba(196,150,58,0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    .lm-item:nth-child(3n)        { border-right: none; }
+    .lm-item:nth-last-child(-n+3) { border-bottom: none; }
+    .lm-dist {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.9rem;
       font-weight: 300;
       color: var(--gold);
       line-height: 1;
     }
-    .aw-label {
+    .lm-unit {
       font-size: 0.55rem;
+      font-weight: 300;
+      color: rgba(196,150,58,0.5);
+    }
+    .lm-name {
+      font-size: 0.78rem;
       font-weight: 400;
-      letter-spacing: 0.12em;
+      color: rgba(245,240,230,0.78);
+      margin-top: 0.25rem;
+    }
+    .lm-type {
+      font-size: 0.6rem;
+      font-weight: 300;
+      color: rgba(245,240,230,0.3);
+      letter-spacing: 0.04em;
+    }
+
+    /* ─── Footer ─────────────────────────────────────── */
+    footer {
+      background: var(--charcoal-dark);
+      border-top: 1px solid rgba(196,150,58,0.15);
+      padding: 3rem 5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 1rem;
+      letter-spacing: 0.22em;
+      color: rgba(245,240,230,0.45);
+    }
+    .footer-tag {
+      font-size: 0.44rem;
+      font-weight: 300;
+      letter-spacing: 0.32em;
       text-transform: uppercase;
-      color: var(--muted);
-      margin-top: 0.15rem;
+      color: rgba(196,150,58,0.38);
+    }
+    .footer-links { display: flex; gap: 2rem; list-style: none; }
+    .footer-links a {
+      font-size: 0.46rem;
+      font-weight: 300;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(245,240,230,0.28);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .footer-links a:hover { color: var(--gold); }
+
+    /* ─── Mobile ─────────────────────────────────────── */
+    @media (max-width: 900px) {
+      nav { padding: 0 1.5rem; }
+      .nav-links { display: none; }
+      .suiten  { padding: 5rem 1.5rem; }
+      .dining  { padding: 5rem 1.5rem; }
+      .spa     { padding: 5rem 1.5rem; }
+      .lage    { padding: 5rem 1.5rem; }
+      footer   { padding: 2rem 1.5rem; flex-direction: column; gap: 1.5rem; text-align: center; }
+      .stats-strip { grid-template-columns: repeat(2, 1fr); }
+      .stat-item { border-bottom: 1px solid rgba(196,150,58,0.1); }
+      .suiten-header { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+      .suiten-grid { grid-template-columns: 1fr; background: transparent; gap: 1.5rem; }
+      .dining-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .dining-photo-row { display: none; }
+      .spa-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .spa-photo-col { display: none; }
+      .lage-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .landmarks-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
     }
   </style>
 </head>
 <body>
+
+  <!-- ═══ NAV ═══════════════════════════════════════════ -->
   <nav>
     <div class="nav-logo">
-      <div class="nl-name">Hotel zur Porta</div>
-      <div class="nl-sub">Boutiquehotel · Fine Dining · Trier</div>
+      <div class="nl-name">Grand Palais Mosella</div>
+      <div class="nl-sub">Grandhotel · 5 Sterne Superior · Trier</div>
     </div>
     <ul class="nav-links">
-      <li><a href="#">Zimmer</a></li>
-      <li><a href="#">Restaurant</a></li>
+      <li><a href="#">Suiten</a></li>
+      <li><a href="#">Dining</a></li>
+      <li><a href="#">Spa & Wellness</a></li>
       <li><a href="#">Veranstaltungen</a></li>
-      <li><a href="#">Über uns</a></li>
     </ul>
     <a href="#" class="nav-reserve">Reservieren</a>
   </nav>
 
+  <!-- ═══ HERO ════════════════════════════════════════════ -->
   <section class="hero">
-    <div class="hero-left">
-      <div class="eyebrow">Boutiquehotel · Trier Altstadt</div>
+    <div class="hero-bg">
+      <img
+        src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1600&h=900&q=80"
+        alt="Grand Palais Mosella — Lobby"
+      />
+      <div class="hero-bg-overlay"></div>
+    </div>
 
-      <h1 class="hero-headline">
-        Willkommen.<br>
-        <em>Immer.</em>
-      </h1>
-
-      <div class="gold-rule"></div>
-
-      <p class="hero-body">
-        Zwölf Zimmer, jedes ein Unikat. Küche, die die Region
-        feiert. Ein Haus, das seit drei Generationen Gäste
-        willkommen heißt — mit Handschlag und Herzlichkeit.
-      </p>
-
-      <div class="room-list">
-        <div class="room-row">
-          <span class="rr-name">Zimmer Classic</span>
-          <span class="rr-size">22 m²</span>
-          <span class="rr-price">ab 148 €</span>
-        </div>
-        <div class="room-row">
-          <span class="rr-name">Zimmer Deluxe</span>
-          <span class="rr-size">32 m²</span>
-          <span class="rr-price">ab 198 €</span>
-        </div>
-        <div class="room-row">
-          <span class="rr-name">Suite Porta Nigra</span>
-          <span class="rr-size">55 m²</span>
-          <span class="rr-price">ab 320 €</span>
-        </div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Seit 1889 · Trier an der Mosel</div>
+      <div class="hero-ornament">
+        <div class="hero-ornament-diamond"></div>
       </div>
-
-      <div class="cta-row">
-        <a href="#" class="cta-btn">Verfügbarkeit prüfen</a>
-        <a href="#" class="cta-link">Restaurant reservieren</a>
+      <h1 class="hero-title">Grand Palais<br>Mosella</h1>
+      <p class="hero-subtitle">Grandhotel & Palace Suites — Trier</p>
+      <div class="hero-vline"></div>
+      <div class="hero-ctas">
+        <a href="#" class="hero-btn">Zimmer & Suiten</a>
+        <a href="#" class="hero-link">Entdecken</a>
       </div>
     </div>
 
-    <div class="hero-right" style="position:relative;overflow:hidden;">
-      <div style="position:absolute;inset:0;z-index:0;">
-        <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1200&h=1600&q=80" alt="Hotel zur Porta Zimmer" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" />
-        <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(250,246,238,0.95) 0%,rgba(250,246,238,0.75) 40%,rgba(250,246,238,0.92) 100%);pointer-events:none;"></div>
-      </div>
-      <div style="position:relative;z-index:1;display:flex;flex-direction:column;gap:3rem;height:100%;">
-      <div class="pull-quote">
-        „Selten so gut geschlafen und noch besser gegessen."
-        <cite class="pq-source">— Gast · März 2025</cite>
-      </div>
-
-      <div class="divider"></div>
-
-      <div class="amenities">
-        <div class="am-label">Ausstattung & Services</div>
-        <div class="am-item">Frühstück inklusive</div>
-        <div class="am-item">Fine Dining Restaurant</div>
-        <div class="am-item">Kostenlose Parkplätze</div>
-        <div class="am-item">Concierge Service</div>
-        <div class="am-item">Kostenfreies WLAN</div>
-        <div class="am-item">Weinkellerführungen</div>
-        <div class="am-item">Haustiere willkommen</div>
-        <div class="am-item">Stadtführungen</div>
-      </div>
-
-      <div class="divider"></div>
-
-      <div class="award-strip">
-        <div class="aw-item">
-          <div class="aw-num">12</div>
-          <div class="aw-label">Zimmer</div>
-        </div>
-        <div class="aw-item">
-          <div class="aw-num">4★</div>
-          <div class="aw-label">Superior</div>
-        </div>
-        <div class="aw-item">
-          <div class="aw-num">1936</div>
-          <div class="aw-label">Gegründet</div>
-        </div>
-      </div>
-      </div><!-- end z-index wrapper -->
+    <div class="hero-scroll">
+      <span class="scroll-label">Entdecken</span>
+      <div class="scroll-line"></div>
     </div>
   </section>
 
-  <!-- ── Section 2: Zimmer ──────────────────────────────── -->
-  <section class="zimmer">
-    <div class="zimmer-inner">
-      <div class="sec-eyebrow">Unterkünfte</div>
-      <h2 class="sec-title">Zwölf Zimmer.<br><em>Jedes ein Unikat.</em></h2>
+  <!-- ═══ STATS STRIP ══════════════════════════════════════ -->
+  <div class="stats-strip">
+    <div class="stat-item">
+      <div class="stat-num">1889</div>
+      <div class="stat-label">Gegründet</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">68</div>
+      <div class="stat-label">Suiten & Zimmer</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">5★</div>
+      <div class="stat-label">Superior</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">2.400 m²</div>
+      <div class="stat-label">Spa & Wellness</div>
+    </div>
+  </div>
 
-      <div class="zimmer-grid">
+  <!-- ═══ SECTION I: SUITEN ════════════════════════════════ -->
+  <section class="suiten">
+    <div class="suiten-inner">
+      <div class="suiten-header">
+        <div>
+          <div class="sec-numeral">I</div>
+          <div class="sec-eyebrow">Suiten & Zimmer</div>
+          <h2 class="sec-title">Opulenz auf<br><em>136 Quadratmetern.</em></h2>
+        </div>
+        <a href="#" class="suiten-see-all">Alle 68 Zimmer ansehen →</a>
+      </div>
 
-        <!-- Classic -->
-        <div class="zim-card">
-          <div class="ph zim-photo">
-            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&h=560&q=80" alt="Zimmer Classic Hotel zur Porta" loading="lazy" />
-            <div class="ph-overlay"></div>
+      <div class="suiten-grid">
+
+        <!-- Mosella Deluxe -->
+        <div class="suite-card">
+          <div class="ph suite-photo">
+            <img
+              src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=800&h=640&q=80"
+              alt="Mosella Deluxe Zimmer"
+              loading="lazy"
+            />
+            <div class="ph-grad" style="background:linear-gradient(to top,rgba(26,24,21,0.35) 0%,transparent 55%);"></div>
+            <div class="suite-badge">Deluxe</div>
           </div>
-          <div class="zim-body">
-            <div class="zim-cat">Classic</div>
-            <div class="zim-name">Zimmer Classic</div>
-            <div class="zim-desc">22 m² mit Blick auf den historischen Innenhof. Ruhig, warm und mit allem, was man für eine erholsame Nacht braucht.</div>
-            <div class="zim-amenities">
-              <div class="za-item">Frühstück inklusive</div>
-              <div class="za-item">Kostenfreies WLAN</div>
-              <div class="za-item">Regionale Pflegeprodukte</div>
+          <div class="suite-body">
+            <div class="suite-cat">Zimmer</div>
+            <div class="suite-name">Mosella Deluxe</div>
+            <div class="suite-desc">42 m² mit Naturstein-Marmorbad und Blick auf den Palaisgarten. Handgewobene Seidentapeten, King-Size-Bett, stille Eleganz.</div>
+            <div class="suite-amenities">
+              <div class="sa-item">Marmorbad mit Regendusche</div>
+              <div class="sa-item">King-Size-Bett · Frühstück inkl.</div>
+              <div class="sa-item">Butler-Service auf Anfrage</div>
             </div>
-            <div class="zim-footer">
-              <div class="zim-price">ab 148 € <span>/ Nacht</span></div>
-              <a href="#" class="zim-btn">Buchen</a>
+            <div class="suite-footer">
+              <div class="suite-price">ab 380 € <sub>/ Nacht</sub></div>
+              <a href="#" class="suite-btn">Buchen</a>
             </div>
           </div>
         </div>
 
-        <!-- Deluxe -->
-        <div class="zim-card">
-          <div class="ph zim-photo">
-            <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&h=560&q=80" alt="Zimmer Deluxe Hotel zur Porta" loading="lazy" />
-            <div class="ph-overlay"></div>
+        <!-- Junior Suite Mosel -->
+        <div class="suite-card">
+          <div class="ph suite-photo">
+            <img
+              src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=800&h=640&q=80"
+              alt="Junior Suite Mosel"
+              loading="lazy"
+            />
+            <div class="ph-grad" style="background:linear-gradient(to top,rgba(26,24,21,0.35) 0%,transparent 55%);"></div>
+            <div class="suite-badge">Suite</div>
           </div>
-          <div class="zim-body">
-            <div class="zim-cat">Deluxe</div>
-            <div class="zim-name">Zimmer Deluxe</div>
-            <div class="zim-desc">32 m² mit freistehender Badewanne und Blick auf die Porta Nigra. Für Gäste, die das Besondere suchen.</div>
-            <div class="zim-amenities">
-              <div class="za-item">Freistehende Badewanne</div>
-              <div class="za-item">Blick auf Porta Nigra</div>
-              <div class="za-item">Minibar & Nespresso</div>
+          <div class="suite-body">
+            <div class="suite-cat">Junior Suite</div>
+            <div class="suite-name">Junior Suite Mosel</div>
+            <div class="suite-desc">Separater Wohnbereich mit Panoramablick auf die Mosel. Carrara-Marmor, offener Kamin, Champagner-Welcome-Paket.</div>
+            <div class="suite-amenities">
+              <div class="sa-item">Separater Wohnbereich</div>
+              <div class="sa-item">Carrara-Marmorbad · Kamin</div>
+              <div class="sa-item">Champagner-Begrüßungspaket</div>
             </div>
-            <div class="zim-footer">
-              <div class="zim-price">ab 198 € <span>/ Nacht</span></div>
-              <a href="#" class="zim-btn">Buchen</a>
+            <div class="suite-footer">
+              <div class="suite-price">ab 680 € <sub>/ Nacht</sub></div>
+              <a href="#" class="suite-btn">Buchen</a>
             </div>
           </div>
         </div>
 
-        <!-- Suite -->
-        <div class="zim-card">
-          <div class="ph zim-photo">
-            <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=800&h=560&q=80" alt="Suite Porta Nigra Hotel zur Porta" loading="lazy" />
-            <div class="ph-overlay"></div>
+        <!-- Grand Suite Porta Nigra -->
+        <div class="suite-card">
+          <div class="ph suite-photo">
+            <img
+              src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=800&h=640&q=80"
+              alt="Grand Suite Porta Nigra"
+              loading="lazy"
+            />
+            <div class="ph-grad" style="background:linear-gradient(to top,rgba(26,24,21,0.35) 0%,transparent 55%);"></div>
+            <div class="suite-badge" style="background:var(--charcoal);color:var(--gold);">Grand Suite</div>
           </div>
-          <div class="zim-body">
-            <div class="zim-cat">Suite</div>
-            <div class="zim-name">Suite Porta Nigra</div>
-            <div class="zim-desc">55 m² auf zwei Ebenen — Wohnzimmer, Himmelbett und ein Badezimmer, das selbst Urlaub macht. Unser Flaggschiff.</div>
-            <div class="zim-amenities">
-              <div class="za-item">55 m² · Zwei Ebenen</div>
-              <div class="za-item">Himmelbett & Whirlpool</div>
-              <div class="za-item">Persönlicher Concierge</div>
+          <div class="suite-body">
+            <div class="suite-cat">Grand Suite</div>
+            <div class="suite-name">Suite Porta Nigra</div>
+            <div class="suite-desc">136 m² auf zwei Etagen. Privatbibliothek, Kaminzimmer, Ankleidezimmer, eigene Dachterrasse mit Mosel- und Altstadt-Panorama.</div>
+            <div class="suite-amenities">
+              <div class="sa-item">136 m² · Zwei Etagen</div>
+              <div class="sa-item">Privatbibliothek · Dachterrasse</div>
+              <div class="sa-item">Persönlicher Butler · 24 h</div>
             </div>
-            <div class="zim-footer">
-              <div class="zim-price">ab 320 € <span>/ Nacht</span></div>
-              <a href="#" class="zim-btn">Buchen</a>
+            <div class="suite-footer">
+              <div class="suite-price">ab 1.450 € <sub>/ Nacht</sub></div>
+              <a href="#" class="suite-btn">Buchen</a>
             </div>
           </div>
         </div>
@@ -684,54 +944,217 @@ export const prerender = true;
     </div>
   </section>
 
-  <!-- ── Section 3: Restaurant & Erlebnis ───────────────── -->
-  <section class="erlebnis">
-    <div class="erlebnis-inner">
+  <!-- ═══ SECTION II: DINING ══════════════════════════════ -->
+  <section class="dining">
+    <div class="dining-inner">
 
-      <div class="ph erl-photo">
-        <img src="https://images.unsplash.com/photo-1559339745-c2f0b2e92a82?auto=format&fit=crop&w=1200&h=1680&q=80" alt="Restaurant Hotel zur Porta Fine Dining" loading="lazy" />
-        <div class="ph-overlay"></div>
+      <div class="dining-photo-col">
+        <div class="ph dining-photo-main">
+          <img
+            src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=900&h=600&q=80"
+            alt="Restaurant Les Caves de Mosella"
+            loading="lazy"
+          />
+          <div class="ph-grad" style="background:linear-gradient(to top,rgba(17,15,12,0.45) 0%,transparent 55%);"></div>
+        </div>
+        <div class="dining-photo-row">
+          <div class="ph dining-photo-sm">
+            <img
+              src="https://images.unsplash.com/photo-1559339745-c2f0b2e92a82?auto=format&fit=crop&w=600&h=440&q=80"
+              alt="Fine Dining Küche"
+              loading="lazy"
+            />
+            <div class="ph-grad" style="background:rgba(17,15,12,0.2);"></div>
+          </div>
+          <div class="ph dining-photo-sm">
+            <img
+              src="https://images.unsplash.com/photo-1551024709-8f23befc416a?auto=format&fit=crop&w=600&h=440&q=80"
+              alt="Bar Mosella"
+              loading="lazy"
+            />
+            <div class="ph-grad" style="background:rgba(17,15,12,0.2);"></div>
+          </div>
+        </div>
       </div>
 
-      <div class="erl-right">
-        <div class="erl-eyebrow">Restaurant & Erlebnis</div>
-        <h2 class="erl-title">Küche, die<br>die Region <em>feiert.</em></h2>
-        <div class="erl-gold-rule"></div>
-        <p class="erl-body">
-          Unser Restaurant serviert regionale Küche auf Fine-Dining-Niveau.
-          Moselweine aus eigenem Keller, saisonale Menüs vom Markt,
-          und ein Frühstück, das Sie nicht vergessen werden.
+      <div>
+        <div class="dining-numeral">II</div>
+        <div class="dining-eyebrow">Restaurant & Bar</div>
+        <h2 class="dining-title">Les Caves<br>de <em>Mosella.</em></h2>
+        <div class="dining-rule"></div>
+        <p class="dining-body">
+          Zwei Michelin-Sterne. Saisonale Küche, die das Terroir des Moseltals
+          zelebriert. Unser Weinkeller umfasst 4.800 Positionen — darunter
+          Raritäten seit 1921.
         </p>
-
-        <div class="erl-features">
-          <div class="ef-item">
-            <div class="ef-num">I</div>
-            <div class="ef-info">
-              <div class="ef-name">Fine Dining Restaurant</div>
-              <div class="ef-desc">Täglich geöffnet · Menü ab 58 € · Reservierung empfohlen</div>
+        <div class="dining-features">
+          <div class="df-item">
+            <div class="df-num">I</div>
+            <div>
+              <div class="df-name">Restaurant Les Caves</div>
+              <div class="df-desc">2 Michelin-Sterne · Menü ab 168 € · Di–Sa ab 18 Uhr</div>
             </div>
           </div>
-          <div class="ef-item">
-            <div class="ef-num">II</div>
-            <div class="ef-info">
-              <div class="ef-name">Weinkellerführungen</div>
-              <div class="ef-desc">Freitags & samstags · Kostprobe inklusive · 18 € p.P.</div>
+          <div class="df-item">
+            <div class="df-num">II</div>
+            <div>
+              <div class="df-name">Bar Mosella</div>
+              <div class="df-desc">Täglich 12–2 Uhr · Apéritif · Cocktails · 120+ Whisky-Sorten</div>
             </div>
           </div>
-          <div class="ef-item">
-            <div class="ef-num">III</div>
-            <div class="ef-info">
-              <div class="ef-name">Stadtführungen ab Haus</div>
-              <div class="ef-desc">Täglich 10 Uhr · Porta Nigra, Dom & Kaiserthermen · kostenlos für Hotelgäste</div>
+          <div class="df-item">
+            <div class="df-num">III</div>
+            <div>
+              <div class="df-name">Palmengarten Breakfast</div>
+              <div class="df-desc">Täglich 7–11 Uhr · Inklusivleistung für alle Hotelgäste</div>
+            </div>
+          </div>
+          <div class="df-item">
+            <div class="df-num">IV</div>
+            <div>
+              <div class="df-name">Weinkeller-Degustationen</div>
+              <div class="df-desc">Fr & Sa ab 17 Uhr · Guided Tour + 6 Kostproben · 95 € p.P.</div>
             </div>
           </div>
         </div>
-
-        <a href="#" class="erl-cta">Tisch reservieren →</a>
+        <a href="#" class="dining-cta">Tisch reservieren →</a>
       </div>
 
     </div>
   </section>
+
+  <!-- ═══ SECTION III: SPA ═════════════════════════════════ -->
+  <section class="spa">
+    <div class="spa-inner">
+
+      <div>
+        <div class="spa-numeral">III</div>
+        <div class="spa-eyebrow">Spa & Wellness</div>
+        <h2 class="spa-title">L'Espace<br><em>Bien-Être.</em></h2>
+        <div class="spa-rule"></div>
+        <p class="spa-body">
+          2.400 Quadratmeter pure Stille. Thermalbäder aus Carrara-Marmor,
+          Hamam nach osmanischer Tradition, sieben Behandlungsräume — und ein
+          Innenpool, dessen Wasser den Goldton des Moseltals widerspiegelt.
+        </p>
+        <div class="spa-features">
+          <div class="sf-item">
+            <div class="sf-icon">Therme</div>
+            <div class="sf-name">Marmor-Thermalbad</div>
+            <div class="sf-desc">Carrara-Marmor · 34 °C · Gegenstromanlage</div>
+          </div>
+          <div class="sf-item">
+            <div class="sf-icon">Hamam</div>
+            <div class="sf-name">Osmanischer Hamam</div>
+            <div class="sf-desc">Keseöl-Behandlung · Ritualpackung</div>
+          </div>
+          <div class="sf-item">
+            <div class="sf-icon">Fitness</div>
+            <div class="sf-name">Fitness Atelier</div>
+            <div class="sf-desc">Technogym · Personal Training · 24 h</div>
+          </div>
+          <div class="sf-item">
+            <div class="sf-icon">Treatment</div>
+            <div class="sf-name">7 Behandlungsräume</div>
+            <div class="sf-desc">La Mer · Subtle Energies · Eigenmarke</div>
+          </div>
+        </div>
+        <a href="#" class="spa-cta">Spa-Angebote ansehen →</a>
+      </div>
+
+      <div class="spa-photo-col">
+        <div class="ph spa-photo-tall">
+          <img
+            src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=700&h=900&q=80"
+            alt="Spa L'Espace Bien-Être"
+            loading="lazy"
+          />
+          <div class="ph-grad" style="background:linear-gradient(to top,rgba(26,24,21,0.2) 0%,transparent 60%);"></div>
+        </div>
+        <div class="ph spa-photo-sm">
+          <img
+            src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=600&h=450&q=80"
+            alt="Innenpool Grand Palais Mosella"
+            loading="lazy"
+          />
+          <div class="ph-grad" style="background:linear-gradient(to top,rgba(26,24,21,0.2) 0%,transparent 60%);"></div>
+        </div>
+        <div class="ph spa-photo-sm">
+          <img
+            src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&h=450&q=80"
+            alt="Spa Behandlung"
+            loading="lazy"
+          />
+          <div class="ph-grad" style="background:linear-gradient(to top,rgba(26,24,21,0.2) 0%,transparent 60%);"></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══ SECTION IV: LAGE ═════════════════════════════════ -->
+  <section class="lage">
+    <div class="lage-inner">
+
+      <div>
+        <div class="lage-numeral">IV</div>
+        <div class="lage-eyebrow">Lage & Anreise</div>
+        <h2 class="lage-title">Im Herzen<br><em>des alten Trier.</em></h2>
+        <div class="lage-rule"></div>
+        <p class="lage-body">
+          Direkt am Ufer der Mosel, 200 Meter von der Porta Nigra —
+          dem meistbesuchten Baudenkmal Deutschlands. Mittelpunkt
+          einer Stadt, die älter ist als Rom.
+        </p>
+      </div>
+
+      <div class="landmarks-grid">
+        <div class="lm-item">
+          <div class="lm-dist">200 <span class="lm-unit">m</span></div>
+          <div class="lm-name">Porta Nigra</div>
+          <div class="lm-type">UNESCO-Welterbe</div>
+        </div>
+        <div class="lm-item">
+          <div class="lm-dist">350 <span class="lm-unit">m</span></div>
+          <div class="lm-name">Trierer Dom</div>
+          <div class="lm-type">Älteste Kirche Deutschlands</div>
+        </div>
+        <div class="lm-item">
+          <div class="lm-dist">600 <span class="lm-unit">m</span></div>
+          <div class="lm-name">Kaiserthermen</div>
+          <div class="lm-type">Röm. Thermenanlage, 4. Jh.</div>
+        </div>
+        <div class="lm-item">
+          <div class="lm-dist">50 <span class="lm-unit">m</span></div>
+          <div class="lm-name">Mosel-Promenade</div>
+          <div class="lm-type">Direkter Flusszugang</div>
+        </div>
+        <div class="lm-item">
+          <div class="lm-dist">1,2 <span class="lm-unit">km</span></div>
+          <div class="lm-name">Amphitheater</div>
+          <div class="lm-type">Röm. Amphitheater, 100 n. Chr.</div>
+        </div>
+        <div class="lm-item">
+          <div class="lm-dist">40 <span class="lm-unit">min</span></div>
+          <div class="lm-name">Flughafen Luxemburg</div>
+          <div class="lm-type">Internationaler Transfer-Service</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══ FOOTER ═══════════════════════════════════════════ -->
+  <footer>
+    <div class="footer-logo">Grand Palais Mosella</div>
+    <div class="footer-tag">Seit 1889 · Trier an der Mosel</div>
+    <ul class="footer-links">
+      <li><a href="#">Impressum</a></li>
+      <li><a href="#">Datenschutz</a></li>
+      <li><a href="#">AGB</a></li>
+      <li><a href="#">Presse</a></li>
+    </ul>
+  </footer>
 
 </body>
 </html>
