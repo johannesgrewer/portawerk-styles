@@ -1,1179 +1,983 @@
 ---
 export const prerender = true;
 ---
-
+<!DOCTYPE html>
 <html lang="de">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
-  <title>Chainforge — Blockchain Beratung, Trier</title>
+  <title>Chainforge — DeFi Infrastructure | Trier</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
   <style>
-    html { overflow-x: hidden; }
-    body { overflow-x: hidden; max-width: 100%; }
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { overflow-x: hidden; scroll-behavior: smooth; }
 
     :root {
-      --primary: #A855F7;
-      --secondary: #0F0B1E;
-      --accent: #22D3EE;
-      --bg: #0B0718;
-      --bg-card: rgba(15, 11, 30, 0.6);
-      --text: #E2E0F0;
-      --text-muted: #8B85A8;
-      --glow-purple: rgba(168, 85, 247, 0.5);
-      --glow-cyan: rgba(34, 211, 238, 0.5);
-      --font-display: "Space Mono", monospace;
-      --font-body: "Inter Tight", sans-serif;
+      --bg:       #07050F;
+      --bg2:      #0D0A1A;
+      --surface:  rgba(255,255,255,0.04);
+      --border:   rgba(255,255,255,0.08);
+      --primary:  #8B5CF6;
+      --primary-g:#A78BFA;
+      --cyan:     #06B6D4;
+      --cyan-g:   #22D3EE;
+      --amber:    #F59E0B;
+      --text:     #E2E8F0;
+      --muted:    #64748B;
+      --muted2:   #94A3B8;
+      --glow-p:   rgba(139,92,246,0.4);
+      --glow-c:   rgba(6,182,212,0.3);
+      --font-h:   "Space Grotesk", sans-serif;
+      --font-mono:"Space Mono", monospace;
     }
 
-    html {
+    body {
       background: var(--bg);
       color: var(--text);
-      font-family: var(--font-body);
+      font-family: var(--font-h);
       -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      scroll-behavior: smooth;
+      overflow-x: hidden;
     }
 
-    body { overflow-x: hidden; }
+    ::selection { background: var(--primary); color: #fff; }
 
-    ::selection { background: var(--primary); color: var(--bg); }
+    /* ── ATMOSPHERE ── */
+    .orbs {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+    }
+    .orb {
+      position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.32;
+    }
+    .orb-1 {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+      top: -200px; left: -100px;
+      animation: orbDrift1 20s ease-in-out infinite alternate;
+    }
+    .orb-2 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, var(--cyan) 0%, transparent 70%);
+      bottom: 80px; right: -80px;
+      animation: orbDrift2 25s ease-in-out infinite alternate;
+    }
+    .orb-3 {
+      width: 380px; height: 380px;
+      background: radial-gradient(circle, var(--amber) 0%, transparent 70%);
+      top: 45%; left: 50%; transform: translate(-50%,-50%);
+      opacity: 0.10;
+      animation: orbDrift3 18s ease-in-out infinite alternate;
+    }
+    @keyframes orbDrift1 {
+      0%   { transform: translate(0,0) scale(1); }
+      100% { transform: translate(80px,60px) scale(1.15); }
+    }
+    @keyframes orbDrift2 {
+      0%   { transform: translate(0,0) scale(1); }
+      100% { transform: translate(-60px,-80px) scale(1.1); }
+    }
+    @keyframes orbDrift3 {
+      0%   { transform: translate(-50%,-50%) scale(1); }
+      100% { transform: translate(-50%,-50%) scale(1.35); }
+    }
 
-    /* ═══════════════════════════════════════════
-       CRYPTO-REVEAL ANIMATION
-    ═══════════════════════════════════════════ */
-    .crypto-reveal {
+    .grid-bg {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(139,92,246,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(139,92,246,0.04) 1px, transparent 1px);
+      background-size: 80px 80px;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes shimmer {
+      from { transform: translateX(-200%); }
+      to   { transform: translateX(400%); }
+    }
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.45; transform: scale(0.75); }
+    }
+    @keyframes tickerScroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    @keyframes borderGlow {
+      0%, 100% { box-shadow: 0 0 24px rgba(139,92,246,0.25), inset 0 0 24px rgba(139,92,246,0.04); }
+      50%       { box-shadow: 0 0 40px rgba(6,182,212,0.22), inset 0 0 40px rgba(6,182,212,0.03); }
+    }
+
+    .reveal {
       opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.7s ease,
-                  transform 0.7s ease,
-                  box-shadow 0.7s ease;
+      transform: translateY(32px);
+      transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1),
+                  transform 0.8s cubic-bezier(0.16,1,0.3,1);
     }
+    .reveal.in { opacity: 1; transform: translateY(0); }
 
-    .crypto-reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* Glow variant for cards on reveal */
-    .crypto-reveal.glow-on-reveal.visible {
-      box-shadow: 0 0 32px rgba(168, 85, 247, 0.15), 0 0 8px rgba(34, 211, 238, 0.08);
-    }
-
-    /* ═══════════════════════════════════════════
-       MESH GRADIENT BACKGROUND
-    ═══════════════════════════════════════════ */
-    .mesh-bg {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      background:
-        radial-gradient(ellipse 80% 60% at 20% 30%, rgba(168, 85, 247, 0.15) 0%, transparent 60%),
-        radial-gradient(ellipse 60% 80% at 80% 70%, rgba(34, 211, 238, 0.1) 0%, transparent 60%),
-        radial-gradient(ellipse 90% 50% at 50% 50%, rgba(168, 85, 247, 0.05) 0%, transparent 70%);
-      animation: meshShift 12s ease-in-out infinite alternate;
-    }
-
-    @keyframes meshShift {
-      0% {
-        background:
-          radial-gradient(ellipse 80% 60% at 20% 30%, rgba(168, 85, 247, 0.15) 0%, transparent 60%),
-          radial-gradient(ellipse 60% 80% at 80% 70%, rgba(34, 211, 238, 0.1) 0%, transparent 60%),
-          radial-gradient(ellipse 90% 50% at 50% 50%, rgba(168, 85, 247, 0.05) 0%, transparent 70%);
-      }
-      50% {
-        background:
-          radial-gradient(ellipse 70% 70% at 40% 60%, rgba(34, 211, 238, 0.12) 0%, transparent 60%),
-          radial-gradient(ellipse 80% 60% at 60% 20%, rgba(168, 85, 247, 0.18) 0%, transparent 60%),
-          radial-gradient(ellipse 60% 80% at 30% 80%, rgba(34, 211, 238, 0.08) 0%, transparent 70%);
-      }
-      100% {
-        background:
-          radial-gradient(ellipse 90% 50% at 70% 40%, rgba(168, 85, 247, 0.12) 0%, transparent 60%),
-          radial-gradient(ellipse 50% 90% at 20% 60%, rgba(34, 211, 238, 0.15) 0%, transparent 60%),
-          radial-gradient(ellipse 80% 60% at 60% 80%, rgba(168, 85, 247, 0.06) 0%, transparent 70%);
-      }
-    }
-
-    /* ═══════════════════════════════════════════
-       SCANLINE OVERLAY ON HERO
-    ═══════════════════════════════════════════ */
-    .hero-scanline {
-      position: absolute;
-      inset: 0;
-      background: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 3px,
-        rgba(168, 85, 247, 0.018) 3px,
-        rgba(168, 85, 247, 0.018) 4px
-      );
-      pointer-events: none;
-      z-index: 1;
-      animation: scanlineScroll 8s linear infinite;
-    }
-
-    @keyframes scanlineScroll {
-      0%   { background-position: 0 0; }
-      100% { background-position: 0 400px; }
-    }
-
-    /* Subtle horizontal sweep gradient on hero */
-    .hero-sweep {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        105deg,
-        transparent 0%,
-        rgba(168, 85, 247, 0.04) 30%,
-        rgba(34, 211, 238, 0.04) 60%,
-        transparent 100%
-      );
-      background-size: 200% 200%;
-      pointer-events: none;
-      z-index: 1;
-      animation: sweepMove 6s ease-in-out infinite alternate;
-    }
-
-    @keyframes sweepMove {
-      0%   { background-position: 0% 50%; }
-      100% { background-position: 100% 50%; }
-    }
-
-    .content-wrapper {
-      position: relative;
-      z-index: 1;
-      max-width: 1600px;
-      margin: 0 auto;
-    }
-
-    /* ── PHOTO CONTAINERS ── */
-    .ph { cursor: default; }
-    .ph:hover img { transform: scale(1.05); }
-
-    .section-photo {
-      position: relative;
-      overflow: hidden;
-      height: 280px;
-      margin-bottom: 3rem;
-      border: 1px solid rgba(168, 85, 247, 0.15);
-      border-radius: 4px;
-    }
-
-    .section-photo img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.55s ease;
-      filter: brightness(0.55) saturate(0.7);
-    }
-
-    .section-photo:hover img { transform: scale(1.05); }
-
-    .section-photo-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(11,7,24,0.7) 0%, transparent 60%);
-      pointer-events: none;
-    }
-
-    .hero-visual-strip {
-      width: 100%;
-      max-width: 900px;
-      margin: 0 auto 2.5rem;
-      position: relative;
-      overflow: hidden;
-      height: 200px;
-      border: 1px solid rgba(34, 211, 238, 0.15);
-      border-radius: 4px;
-      z-index: 2;
-    }
-
-    .hero-visual-strip img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: brightness(0.35) saturate(0.5) hue-rotate(220deg);
-      transition: transform 0.55s ease;
-    }
-
-    .hero-visual-strip:hover img { transform: scale(1.05); }
-
-    .hero-visual-strip-overlay {
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(to top, rgba(11,7,24,0.9) 0%, transparent 50%),
-        linear-gradient(to bottom, rgba(11,7,24,0.9) 0%, transparent 50%);
-      pointer-events: none;
-    }
-
-    /* ═══════════════════════════════════════════
-       NAV
-    ═══════════════════════════════════════════ */
+    /* ── NAV ── */
     .nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      padding: 1.25rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(11, 7, 24, 0.8);
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 3rem; height: 68px;
+      background: rgba(7,5,15,0.72);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(168, 85, 247, 0.15);
+      border-bottom: 1px solid var(--border);
     }
-
     .nav-logo {
-      font-family: var(--font-display);
-      font-size: 0.875rem;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--text);
+      font-family: var(--font-mono); font-size: 0.88rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--text); text-decoration: none;
     }
-
-    .nav-logo span {
-      color: var(--accent);
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
-    }
-
+    .nav-logo .ac { color: var(--cyan); }
+    .nav-links { display: flex; align-items: center; gap: 2.5rem; list-style: none; }
     .nav-links a {
-      font-family: var(--font-display);
-      font-size: 0.75rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      text-decoration: none;
-      transition: color 0.3s;
+      font-size: 0.8rem; font-weight: 500; letter-spacing: 0.05em;
+      color: var(--muted2); text-decoration: none; transition: color 0.2s;
     }
-
-    .nav-links a:hover {
-      color: var(--accent);
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta {
+      font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: #fff; background: linear-gradient(135deg, var(--primary), var(--cyan));
+      padding: 0.6rem 1.4rem; border-radius: 5px; text-decoration: none;
+      transition: opacity 0.2s, transform 0.2s;
     }
+    .nav-cta:hover { opacity: 0.82; transform: translateY(-1px); }
 
-    /* ═══════════════════════════════════════════
-       HERO — TOKEN VISUALIZATION
-    ═══════════════════════════════════════════ */
+    /* ── HERO ── */
     .hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 6rem 2rem 4rem;
-      position: relative;
-      overflow: hidden;
+      position: relative; z-index: 1;
+      display: grid; grid-template-columns: 1fr 1fr;
+      align-items: center; gap: 4rem;
+      min-height: 100vh; padding: 8rem 6rem 5rem;
+      max-width: 1560px; margin: 0 auto;
     }
-
-    /* Hex shape with glowing border */
-    .hex-container {
-      position: relative;
-      width: 200px;
-      height: 230px;
-      margin-bottom: 3rem;
+    .hero-left { display: flex; flex-direction: column; gap: 2rem; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      background: rgba(139,92,246,0.1); border: 1px solid rgba(139,92,246,0.25);
+      border-radius: 100px; padding: 0.4rem 1rem 0.4rem 0.7rem;
+      width: fit-content;
+      animation: fadeUp 0.6s ease both;
     }
-
-    .hex-glow {
-      position: absolute;
-      inset: -4px;
-      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-      background: linear-gradient(135deg, var(--primary), var(--accent));
-      animation: hexPulse 3s ease-in-out infinite;
+    .badge-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--primary); box-shadow: 0 0 8px var(--primary);
+      animation: pulseDot 2s ease-in-out infinite;
     }
-
-    @keyframes hexPulse {
-      0%, 100% { opacity: 0.8; filter: blur(0px); }
-      50% { opacity: 1; filter: blur(2px); }
+    .badge-text {
+      font-family: var(--font-mono); font-size: 0.68rem;
+      letter-spacing: 0.12em; text-transform: uppercase; color: var(--primary-g);
     }
-
-    .hex-inner {
-      position: absolute;
-      inset: 3px;
-      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-      background: var(--secondary);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .hex-monogram {
-      font-family: var(--font-display);
-      font-size: 3.5rem;
-      font-weight: 700;
-      background: linear-gradient(135deg, var(--primary), var(--accent));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    /* Floating particles around hex */
-    .hex-container::before,
-    .hex-container::after {
-      content: "";
-      position: absolute;
-      border-radius: 50%;
-      animation: float 6s ease-in-out infinite;
-    }
-
-    .hex-container::before {
-      width: 6px;
-      height: 6px;
-      background: var(--primary);
-      top: -20px;
-      right: -30px;
-      box-shadow: 0 0 12px var(--glow-purple);
-      animation-delay: 0s;
-    }
-
-    .hex-container::after {
-      width: 4px;
-      height: 4px;
-      background: var(--accent);
-      bottom: -15px;
-      left: -25px;
-      box-shadow: 0 0 10px var(--glow-cyan);
-      animation-delay: -3s;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0) translateX(0); }
-      25% { transform: translateY(-12px) translateX(8px); }
-      50% { transform: translateY(-5px) translateX(-6px); }
-      75% { transform: translateY(10px) translateX(4px); }
-    }
-
-    .hero-title {
-      font-family: var(--font-display);
-      font-size: clamp(1.5rem, 4vw, 2.5rem);
-      font-weight: 700;
-      letter-spacing: 0.35em;
-      text-transform: uppercase;
+    .hero-h1 {
+      font-size: clamp(2.8rem, 4.8vw, 4.8rem);
+      font-weight: 700; line-height: 1.05; letter-spacing: -0.03em;
       color: var(--text);
-      text-align: center;
-      margin-bottom: 1rem;
+      animation: fadeUp 0.6s ease 0.1s both;
+    }
+    .hero-h1 .grad {
+      background: linear-gradient(135deg, var(--primary-g) 0%, var(--cyan) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hero-sub {
+      font-size: 1.05rem; font-weight: 400; line-height: 1.78;
+      color: var(--muted2); max-width: 48ch;
+      animation: fadeUp 0.6s ease 0.2s both;
+    }
+    .hero-ctas {
+      display: flex; align-items: center; gap: 1.25rem;
+      animation: fadeUp 0.6s ease 0.3s both;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-family: var(--font-mono); font-size: 0.78rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: #fff; background: linear-gradient(135deg, var(--primary), var(--cyan));
+      padding: 0.9rem 2rem; border-radius: 6px; text-decoration: none;
+      position: relative; overflow: hidden;
+      box-shadow: 0 0 32px rgba(139,92,246,0.35);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-primary::before {
+      content: ''; position: absolute; top: 0; left: 0;
+      width: 40%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transform: translateX(-200%);
+      animation: shimmer 3.5s ease-in-out infinite 1.5s;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 40px rgba(139,92,246,0.5); }
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.88rem; font-weight: 500;
+      color: var(--muted2); text-decoration: none;
+      transition: color 0.2s, gap 0.2s;
+    }
+    .btn-ghost:hover { color: var(--text); gap: 0.8rem; }
+
+    .hero-stats {
+      display: flex; gap: 2.5rem;
+      padding-top: 1.25rem; border-top: 1px solid var(--border);
+      animation: fadeUp 0.6s ease 0.4s both;
+    }
+    .stat-num {
+      font-family: var(--font-mono); font-size: 1.8rem; font-weight: 700;
+      line-height: 1;
+      background: linear-gradient(135deg, #fff 0%, var(--muted2) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .stat-label {
+      font-size: 0.72rem; font-weight: 500;
+      color: var(--muted); letter-spacing: 0.06em; margin-top: 0.3rem;
+    }
+
+    /* Hero right card */
+    .hero-right { position: relative; animation: fadeUp 0.8s ease 0.25s both; }
+    .hero-card {
       position: relative;
-      z-index: 2;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px; overflow: hidden;
+      backdrop-filter: blur(20px);
+      animation: borderGlow 4s ease-in-out infinite;
+    }
+    .hero-card-img { position: relative; height: 260px; overflow: hidden; }
+    .hero-card-img img {
+      width: 100%; height: 100%; object-fit: cover;
+      filter: brightness(0.55) saturate(0.65) hue-rotate(230deg);
+      transition: transform 0.6s ease;
+    }
+    .hero-card:hover .hero-card-img img { transform: scale(1.05); }
+    .hero-card-img-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent 30%, rgba(13,10,26,1) 100%);
+    }
+    .hero-card-live {
+      position: absolute; top: 1rem; right: 1rem;
+      background: rgba(7,5,15,0.85); backdrop-filter: blur(12px);
+      border: 1px solid var(--border); border-radius: 8px;
+      padding: 0.5rem 0.75rem;
+      display: flex; align-items: center; gap: 0.4rem;
+    }
+    .live-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: #10B981; box-shadow: 0 0 8px #10B981;
+      animation: pulseDot 1.5s ease-in-out infinite;
+    }
+    .live-text {
+      font-family: var(--font-mono); font-size: 0.62rem;
+      letter-spacing: 0.12em; text-transform: uppercase; color: #10B981;
+    }
+    .hero-card-body { padding: 1.75rem; }
+    .hero-card-ticker {
+      font-family: var(--font-mono); font-size: 0.62rem;
+      letter-spacing: 0.15em; color: var(--muted); text-transform: uppercase; margin-bottom: 0.5rem;
+    }
+    .hero-card-price {
+      font-family: var(--font-mono); font-size: 2.4rem; font-weight: 700;
+      color: var(--text); line-height: 1; margin-bottom: 0.6rem;
+    }
+    .hero-card-change {
+      display: inline-flex; align-items: center; gap: 0.3rem;
+      font-family: var(--font-mono); font-size: 0.78rem; font-weight: 700;
+      color: #10B981; background: rgba(16,185,129,0.1);
+      border: 1px solid rgba(16,185,129,0.25);
+      padding: 0.3rem 0.75rem; border-radius: 100px; margin-bottom: 1.25rem;
+    }
+    .hero-card-metrics {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;
+    }
+    .hero-metric {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border); border-radius: 8px; padding: 0.9rem;
+    }
+    .metric-lbl {
+      font-size: 0.62rem; font-weight: 500; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 0.3rem;
+    }
+    .metric-val {
+      font-family: var(--font-mono); font-size: 0.92rem; font-weight: 700; color: var(--text);
+    }
+    .metric-val.c { color: var(--cyan-g); }
+    .metric-val.p { color: var(--primary-g); }
+
+    /* ── TICKER ── */
+    .ticker-wrap {
+      position: relative; z-index: 1;
+      background: rgba(7,5,15,0.85);
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      overflow: hidden; padding: 0.8rem 0;
+    }
+    .ticker-track {
+      display: flex; gap: 3rem; white-space: nowrap;
+      animation: tickerScroll 28s linear infinite;
+      width: max-content;
+    }
+    .ticker-item {
+      font-family: var(--font-mono); font-size: 0.7rem;
+      letter-spacing: 0.07em; color: var(--muted2);
+      display: flex; align-items: center; gap: 0.55rem;
+    }
+    .t-name { color: var(--text); font-weight: 700; }
+    .t-up   { color: #10B981; }
+    .t-dn   { color: #EF4444; }
+    .t-sep  { width: 4px; height: 4px; border-radius: 50%; background: var(--primary); opacity: 0.4; }
+
+    /* ── LAYOUT ── */
+    .container { position: relative; z-index: 1; max-width: 1280px; margin: 0 auto; padding: 0 4rem; }
+    .section   { padding: 7rem 0; }
+
+    .sec-eye {
+      font-family: var(--font-mono); font-size: 0.67rem;
+      letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--cyan); margin-bottom: 0.75rem;
+    }
+    .sec-h2 {
+      font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 700;
+      letter-spacing: -0.03em; line-height: 1.15; color: var(--text); margin-bottom: 1rem;
+    }
+    .sec-h2 .grad {
+      background: linear-gradient(135deg, var(--primary-g), var(--cyan));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .sec-sub {
+      font-size: 1rem; font-weight: 400; line-height: 1.78;
+      color: var(--muted2); max-width: 56ch; margin-bottom: 4rem;
     }
 
-    .hero-tagline {
-      font-family: var(--font-body);
-      font-size: 1.125rem;
-      font-weight: 300;
-      color: var(--text-muted);
-      text-align: center;
-      margin-bottom: 2.5rem;
-      letter-spacing: 0.05em;
-      position: relative;
-      z-index: 2;
+    /* ── FEATURES ── */
+    .feat-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 4rem;
     }
-
-    /* ═══════════════════════════════════════════
-       BLOCK HEIGHT COUNTER
-    ═══════════════════════════════════════════ */
-    .block-height-display {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      margin-bottom: 2rem;
-      padding: 0.6rem 1.25rem;
-      border: 1px solid rgba(34, 211, 238, 0.25);
-      border-radius: 4px;
-      background: rgba(15, 11, 30, 0.6);
-      position: relative;
-      z-index: 2;
-    }
-
-    .block-height-label {
-      font-family: var(--font-display);
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-    }
-
-    .block-height-value {
-      font-family: var(--font-display);
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--accent);
-      min-width: 7ch;
-      text-align: right;
-      transition: color 0.2s ease;
-    }
-
-    .block-height-value.tick {
-      color: var(--primary);
-    }
-
-    .block-height-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--accent);
-      box-shadow: 0 0 8px var(--glow-cyan);
-      animation: pulse-dot 2s ease-in-out infinite;
-      flex-shrink: 0;
-    }
-
-    @keyframes pulse-dot {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.7); }
-    }
-
-    .hero-data {
-      display: flex;
-      gap: 2rem;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin-bottom: 3rem;
-      position: relative;
-      z-index: 2;
-    }
-
-    .data-point {
-      font-family: var(--font-display);
-      font-size: 0.75rem;
-      letter-spacing: 0.1em;
-      color: var(--text-muted);
-      padding: 0.5rem 1rem;
-      border: 1px solid rgba(168, 85, 247, 0.2);
-      border-radius: 2px;
-      background: rgba(15, 11, 30, 0.5);
-    }
-
-    .data-point strong {
-      color: var(--accent);
-      font-weight: 700;
-    }
-
-    .cta-button {
-      display: inline-block;
-      font-family: var(--font-display);
-      font-size: 0.875rem;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--text);
-      text-decoration: none;
-      padding: 1rem 2.5rem;
-      position: relative;
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      transition: all 0.3s;
-      z-index: 2;
-    }
-
-    .cta-button::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: 4px;
-      padding: 2px;
-      background: linear-gradient(135deg, var(--primary), var(--accent));
-      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor;
-      mask-composite: exclude;
-    }
-
-    .cta-button::after {
-      content: "";
-      position: absolute;
-      inset: -4px;
-      border-radius: 6px;
-      background: linear-gradient(135deg, var(--glow-purple), var(--glow-cyan));
-      filter: blur(12px);
-      opacity: 0;
-      transition: opacity 0.3s;
-      z-index: -1;
-    }
-
-    .cta-button:hover::after {
-      opacity: 0.6;
-    }
-
-    .cta-button:hover {
-      color: #fff;
-    }
-
-    /* ═══════════════════════════════════════════
-       SECTION SHARED
-    ═══════════════════════════════════════════ */
-    section {
-      padding: 6rem 2rem;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .section-label {
-      font-family: var(--font-display);
-      font-size: 0.7rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 0.75rem;
-    }
-
-    .section-title {
-      font-family: var(--font-display);
-      font-size: clamp(1.25rem, 3vw, 1.75rem);
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text);
-      margin-bottom: 3rem;
-    }
-
-    /* ═══════════════════════════════════════════
-       SERVICES — GLASS CARDS
-    ═══════════════════════════════════════════ */
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-      margin-bottom: 2.5rem;
-    }
-
-    .service-card {
-      background: var(--bg-card);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(168, 85, 247, 0.1);
-      border-radius: 4px;
-      padding: 2rem 1.75rem;
-      position: relative;
-      overflow: hidden;
+    .feat-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 2.25rem 2rem;
+      position: relative; overflow: hidden;
       transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
     }
-
-    .service-card:hover {
-      border-color: rgba(168, 85, 247, 0.4);
-      transform: translateY(-4px);
-      box-shadow: 0 8px 32px rgba(168, 85, 247, 0.2), 0 0 0 1px rgba(34, 211, 238, 0.08);
+    .feat-card::after {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--primary), transparent);
+      opacity: 0; transition: opacity 0.3s;
     }
-
-    .service-card::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 2px;
+    .feat-card:hover { border-color: rgba(139,92,246,0.35); transform: translateY(-6px); box-shadow: 0 20px 60px rgba(139,92,246,0.15); }
+    .feat-card:hover::after { opacity: 1; }
+    .feat-icon {
+      width: 46px; height: 46px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; margin-bottom: 1.5rem;
     }
-
-    .service-card:nth-child(1)::before {
-      background: linear-gradient(90deg, var(--primary), transparent);
+    .fi1 { background: rgba(139,92,246,0.14); }
+    .fi2 { background: rgba(6,182,212,0.14); }
+    .fi3 { background: rgba(245,158,11,0.14); }
+    .fi4 { background: rgba(16,185,129,0.14); }
+    .fi5 { background: rgba(236,72,153,0.14); }
+    .fi6 { background: rgba(139,92,246,0.14); }
+    .feat-num {
+      font-family: var(--font-mono); font-size: 0.62rem;
+      letter-spacing: 0.2em; color: var(--primary); margin-bottom: 0.55rem;
     }
+    .feat-h3 { font-size: 1.1rem; font-weight: 600; color: var(--text); margin-bottom: 0.7rem; letter-spacing: -0.01em; }
+    .feat-p  { font-size: 0.87rem; font-weight: 400; line-height: 1.72; color: var(--muted2); }
 
-    .service-card:nth-child(2)::before {
-      background: linear-gradient(90deg, var(--accent), transparent);
+    .feat-banner {
+      position: relative; height: 300px; border-radius: 12px; overflow: hidden;
+      border: 1px solid var(--border);
     }
-
-    .service-card:nth-child(3)::before {
-      background: linear-gradient(90deg, var(--primary), var(--accent));
+    .feat-banner img {
+      width: 100%; height: 100%; object-fit: cover;
+      filter: brightness(0.45) saturate(0.6) hue-rotate(200deg);
+      transition: transform 0.6s ease;
     }
-
-    .service-label {
-      font-family: var(--font-display);
-      font-size: 0.7rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 0.75rem;
+    .feat-banner:hover img { transform: scale(1.04); }
+    .feat-banner-ov {
+      position: absolute; inset: 0;
+      background: linear-gradient(to right, rgba(7,5,15,0.9) 0%, transparent 55%);
     }
-
-    .service-title {
-      font-family: var(--font-display);
-      font-size: 1.125rem;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 0.75rem;
-      letter-spacing: 0.05em;
+    .feat-banner-txt { position: absolute; left: 3rem; top: 50%; transform: translateY(-50%); }
+    .feat-banner-lbl {
+      font-family: var(--font-mono); font-size: 0.67rem; letter-spacing: 0.25em;
+      text-transform: uppercase; color: var(--cyan); margin-bottom: 0.6rem;
     }
+    .feat-banner-h { font-size: 2rem; font-weight: 700; letter-spacing: -0.02em; color: var(--text); line-height: 1.2; max-width: 16ch; }
 
-    .service-desc {
-      font-size: 0.9375rem;
-      line-height: 1.6;
-      color: var(--text-muted);
+    /* ── TOKENOMICS ── */
+    .tok-section { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .tok-layout  { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+
+    .tok-ring { width: 280px; height: 280px; position: relative; margin: 0 auto 2rem; }
+    .tok-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+    .tok-ring-center {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
     }
+    .ring-lbl  { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.25rem; }
+    .ring-val  { font-family: var(--font-mono); font-size: 1.7rem; font-weight: 700; color: var(--text); }
+    .ring-sub2 { font-size: 0.68rem; color: var(--muted); margin-top: 0.15rem; }
 
-    .services-note {
-      font-family: var(--font-display);
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      letter-spacing: 0.1em;
-      border-left: 2px solid var(--primary);
-      padding-left: 1rem;
+    .tok-legend { display: flex; flex-direction: column; gap: 1.1rem; }
+    .leg-row    { display: flex; align-items: center; justify-content: space-between; }
+    .leg-left   { display: flex; align-items: center; gap: 0.7rem; min-width: 200px; }
+    .leg-dot    { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+    .leg-name   { font-size: 0.85rem; font-weight: 500; color: var(--muted2); }
+    .leg-bar-w  { flex: 1; height: 3px; background: rgba(255,255,255,0.05); border-radius: 100px; overflow: hidden; margin: 0 1.5rem; }
+    .leg-bar    { height: 100%; border-radius: 100px; }
+    .leg-pct    { font-family: var(--font-mono); font-size: 0.78rem; font-weight: 700; color: var(--text); min-width: 3ch; text-align: right; }
+
+    .tok-stats  { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; margin-bottom: 1.75rem; }
+    .tok-stat   { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1.2rem; }
+    .tok-stat-lbl { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.45rem; }
+    .tok-stat-val { font-family: var(--font-mono); font-size: 1.05rem; font-weight: 700; color: var(--text); }
+    .tok-stat-val.c { color: var(--cyan-g); }
+    .tok-stat-val.p { color: var(--primary-g); }
+
+    /* ── ROADMAP ── */
+    .rm-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: start; }
+
+    .rm-track { position: relative; padding-left: 2.5rem; }
+    .rm-track::before {
+      content: ''; position: absolute; left: 0.5rem; top: 8px; bottom: 8px;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--primary), var(--cyan), transparent);
     }
-
-    /* ═══════════════════════════════════════════
-       TRACK RECORD — TERMINAL DISPLAY
-    ═══════════════════════════════════════════ */
-    .terminal {
-      background: rgba(15, 11, 30, 0.8);
-      border: 1px solid rgba(168, 85, 247, 0.2);
-      border-radius: 4px;
-      overflow: hidden;
-      margin-bottom: 3rem;
+    .rm-item    { position: relative; padding-bottom: 2.75rem; }
+    .rm-item:last-child { padding-bottom: 0; }
+    .rm-dot     { position: absolute; left: -2rem; top: 6px; width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--border); background: var(--bg); }
+    .rm-dot.done   { background: var(--primary); border-color: var(--primary); box-shadow: 0 0 12px var(--primary); }
+    .rm-dot.active { background: var(--cyan); border-color: var(--cyan); box-shadow: 0 0 16px var(--cyan); animation: pulseDot 2s ease-in-out infinite; }
+    .rm-q    { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.35rem; }
+    .rm-h    { font-size: 1.15rem; font-weight: 600; color: var(--text); margin-bottom: 0.55rem; letter-spacing: -0.01em; }
+    .rm-list { display: flex; flex-direction: column; gap: 0.35rem; }
+    .rm-task { display: flex; align-items: center; gap: 0.55rem; font-size: 0.84rem; color: var(--muted2); }
+    .rm-chk      { font-size: 0.7rem; flex-shrink: 0; color: var(--primary); }
+    .rm-chk.cur  { color: var(--cyan); }
+    .rm-chk.pend { color: var(--muted); }
+    .rm-status {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.28rem 0.7rem; border-radius: 100px; margin-top: 0.7rem;
     }
+    .rm-done { background: rgba(139,92,246,0.1); color: var(--primary-g); border: 1px solid rgba(139,92,246,0.25); }
+    .rm-act  { background: rgba(6,182,212,0.1); color: var(--cyan-g); border: 1px solid rgba(6,182,212,0.25); }
+    .rm-up   { background: rgba(255,255,255,0.04); color: var(--muted2); border: 1px solid var(--border); }
 
-    .terminal-header {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.75rem 1.25rem;
-      background: rgba(168, 85, 247, 0.08);
-      border-bottom: 1px solid rgba(168, 85, 247, 0.15);
+    .rm-photo { position: relative; height: 520px; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+    .rm-photo img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.42) saturate(0.65) hue-rotate(200deg); transition: transform 0.6s ease; }
+    .rm-photo:hover img { transform: scale(1.04); }
+    .rm-photo-ov { position: absolute; inset: 0; background: linear-gradient(to top, rgba(7,5,15,0.8) 0%, transparent 50%), linear-gradient(to bottom, rgba(7,5,15,0.5) 0%, transparent 30%); }
+
+    /* ── COMMUNITY ── */
+    .comm-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+    .comm-photos {
+      display: grid; grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto; gap: 1rem;
     }
-
-    .terminal-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
+    .comm-ph {
+      position: relative; border-radius: 10px; overflow: hidden; border: 1px solid var(--border);
     }
+    .comm-ph img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.58) saturate(0.7); transition: transform 0.6s ease, filter 0.4s; display: block; }
+    .comm-ph:hover img { transform: scale(1.06); filter: brightness(0.75) saturate(0.85); }
+    .comm-ph-ov { position: absolute; inset: 0; background: linear-gradient(to top, rgba(7,5,15,0.7) 0%, transparent 60%); }
+    .comm-ph-wide { grid-column: 1 / -1; height: 210px; }
+    .comm-ph-tall { height: 175px; }
 
-    .terminal-dot:nth-child(1) { background: #ff5f57; }
-    .terminal-dot:nth-child(2) { background: #ffbd2e; }
-    .terminal-dot:nth-child(3) { background: #28c840; }
-
-    .terminal-title {
-      font-family: var(--font-display);
-      font-size: 0.7rem;
-      letter-spacing: 0.15em;
-      color: var(--text-muted);
-      margin-left: 0.75rem;
-      text-transform: uppercase;
+    .comm-content { display: flex; flex-direction: column; gap: 2rem; }
+    .comm-stat-list { display: flex; flex-direction: column; gap: 0.9rem; }
+    .comm-stat {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 1.5rem; background: var(--surface);
+      border: 1px solid var(--border); border-radius: 10px; transition: border-color 0.3s;
     }
+    .comm-stat:hover { border-color: rgba(139,92,246,0.3); }
+    .comm-stat-l { display: flex; align-items: center; gap: 0.9rem; }
+    .comm-stat-icon { font-size: 1.2rem; }
+    .comm-stat-lbl  { font-size: 0.85rem; font-weight: 500; color: var(--muted2); }
+    .comm-stat-val  { font-family: var(--font-mono); font-size: 1.05rem; font-weight: 700; color: var(--text); }
 
-    .terminal-body {
-      padding: 1.5rem;
+    /* ── FOOTER ── */
+    .footer { position: relative; z-index: 1; background: var(--bg2); border-top: 1px solid var(--border); padding: 4rem 0 2.5rem; }
+    .footer-inner { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 4rem; margin-bottom: 3rem; }
+    .footer-logo { font-family: var(--font-mono); font-size: 0.95rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text); margin-bottom: 0.9rem; }
+    .footer-logo span { color: var(--cyan); }
+    .footer-tag  { font-size: 0.85rem; font-weight: 400; line-height: 1.72; color: var(--muted); max-width: 32ch; margin-bottom: 1.25rem; }
+    .footer-addr { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.07em; color: var(--muted); line-height: 1.9; }
+    .footer-addr a { color: var(--cyan); text-decoration: none; }
+    .footer-col-ttl { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; }
+    .footer-links { display: flex; flex-direction: column; gap: 0.55rem; list-style: none; }
+    .footer-links a { font-size: 0.84rem; font-weight: 400; color: var(--muted2); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--text); }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+    .footer-copy { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.1em; color: var(--muted); }
+    .footer-hash { font-family: var(--font-mono); font-size: 0.6rem; color: rgba(100,116,139,0.35); letter-spacing: 0.05em; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .hero       { grid-template-columns: 1fr; padding: 7rem 3rem 4rem; gap: 3rem; }
+      .hero-right { max-width: 480px; margin: 0 auto; }
+      .tok-layout { grid-template-columns: 1fr; gap: 3rem; }
+      .rm-layout  { grid-template-columns: 1fr; gap: 3rem; }
+      .rm-photo   { height: 280px; }
+      .comm-layout{ grid-template-columns: 1fr; gap: 3rem; }
+      .footer-inner{ grid-template-columns: 1fr 1fr; gap: 2.5rem; }
     }
-
-    .block-entry {
-      font-family: var(--font-display);
-      font-size: 0.8125rem;
-      line-height: 2.2;
-      color: var(--text-muted);
-      padding: 0.75rem 0;
-      border-bottom: 1px solid rgba(168, 85, 247, 0.08);
-    }
-
-    .block-entry:last-child {
-      border-bottom: none;
-    }
-
-    .block-hash {
-      color: var(--primary);
-      font-weight: 700;
-    }
-
-    .block-name {
-      color: var(--text);
-    }
-
-    .block-chain {
-      color: var(--accent);
-    }
-
-    .block-status {
-      display: inline-block;
-      font-size: 0.6875rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 0.2rem 0.6rem;
-      border-radius: 2px;
-      margin-left: 0.5rem;
-    }
-
-    .status-confirmed {
-      background: rgba(34, 211, 238, 0.1);
-      color: var(--accent);
-      border: 1px solid rgba(34, 211, 238, 0.3);
-    }
-
-    .status-deployed {
-      background: rgba(168, 85, 247, 0.1);
-      color: var(--primary);
-      border: 1px solid rgba(168, 85, 247, 0.3);
-    }
-
-    /* Founder */
-    .founder {
-      display: flex;
-      align-items: flex-start;
-      gap: 2rem;
-      padding: 2rem;
-      background: var(--bg-card);
-      border: 1px solid rgba(168, 85, 247, 0.1);
-      border-radius: 4px;
-      transition: border-color 0.3s, box-shadow 0.3s;
-    }
-
-    .founder:hover {
-      border-color: rgba(168, 85, 247, 0.3);
-      box-shadow: 0 4px 24px rgba(168, 85, 247, 0.12);
-    }
-
-    .founder-avatar {
-      width: 72px;
-      height: 72px;
-      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-      background: linear-gradient(135deg, var(--primary), var(--accent));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-
-    .founder-avatar-inner {
-      width: calc(100% - 4px);
-      height: calc(100% - 4px);
-      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-      background: var(--secondary);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .founder-initials {
-      font-family: var(--font-display);
-      font-size: 1.125rem;
-      font-weight: 700;
-      color: var(--primary);
-    }
-
-    .founder-name {
-      font-family: var(--font-display);
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 0.25rem;
-      letter-spacing: 0.05em;
-    }
-
-    .founder-role {
-      font-size: 0.875rem;
-      color: var(--text-muted);
-      margin-bottom: 0.75rem;
-    }
-
-    .founder-contact {
-      font-family: var(--font-display);
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      letter-spacing: 0.05em;
-      line-height: 1.8;
-    }
-
-    .founder-contact a {
-      color: var(--accent);
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-
-    .founder-contact a:hover {
-      color: var(--primary);
-    }
-
-    .pgp-note {
-      font-family: var(--font-display);
-      font-size: 0.6875rem;
-      color: var(--text-muted);
-      letter-spacing: 0.1em;
-      opacity: 0.6;
-      margin-top: 0.5rem;
-    }
-
-    /* ═══════════════════════════════════════════
-       MATRIX CANVAS
-    ═══════════════════════════════════════════ */
-    #matrix-canvas {
-      position: fixed;
-      bottom: 0;
-      right: 0;
-      width: 180px;
-      height: 240px;
-      opacity: 0.18;
-      pointer-events: none;
-      z-index: 0;
-      mask-image: linear-gradient(to top left, rgba(0,0,0,0.8) 0%, transparent 70%);
-      -webkit-mask-image: linear-gradient(to top left, rgba(0,0,0,0.8) 0%, transparent 70%);
-    }
-
-    /* ═══════════════════════════════════════════
-       FOOTER
-    ═══════════════════════════════════════════ */
-    .footer {
-      text-align: center;
-      padding: 3rem 2rem;
-      border-top: 1px solid rgba(168, 85, 247, 0.1);
-    }
-
-    .footer-text {
-      font-family: var(--font-display);
-      font-size: 0.6875rem;
-      letter-spacing: 0.2em;
-      color: var(--text-muted);
-      text-transform: uppercase;
-    }
-
-    .footer-hash {
-      font-family: var(--font-display);
-      font-size: 0.625rem;
-      color: rgba(139, 133, 168, 0.4);
-      letter-spacing: 0.05em;
-      margin-top: 0.5rem;
-    }
-
-    /* ═══════════════════════════════════════════
-       RESPONSIVE
-    ═══════════════════════════════════════════ */
     @media (max-width: 768px) {
-      .nav {
-        padding: 1rem 1.25rem;
-      }
-
-      .nav-links {
-        display: none;
-      }
-
-      .hero {
-        padding: 5rem 1.5rem 3rem;
-      }
-
-      .hex-container {
-        width: 150px;
-        height: 173px;
-        margin-bottom: 2rem;
-      }
-
-      .hex-monogram {
-        font-size: 2.5rem;
-      }
-
-      .hero-data {
-        gap: 0.75rem;
-      }
-
-      .data-point {
-        font-size: 0.6875rem;
-        padding: 0.4rem 0.75rem;
-      }
-
-      section {
-        padding: 4rem 1.5rem;
-      }
-
-      .services-grid {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-      }
-
-      .terminal-body {
-        padding: 1rem;
-      }
-
-      .block-entry {
-        font-size: 0.75rem;
-        line-height: 1.8;
-      }
-
-      .block-status {
-        display: block;
-        margin-left: 0;
-        margin-top: 0.25rem;
-        width: fit-content;
-      }
-
-      .founder {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        gap: 1.25rem;
-        padding: 1.5rem;
-      }
-
-      #matrix-canvas {
-        width: 100px;
-        height: 160px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .hero-title {
-        letter-spacing: 0.15em;
-      }
-
-      .hex-container {
-        width: 120px;
-        height: 138px;
-      }
-
-      .hex-monogram {
-        font-size: 2rem;
-      }
+      .nav        { padding: 0 1.5rem; }
+      .nav-links  { display: none; }
+      .hero       { padding: 6rem 1.5rem 3.5rem; }
+      .hero-h1    { font-size: 2.6rem; }
+      .hero-stats { gap: 1.5rem; }
+      .container  { padding: 0 1.5rem; }
+      .section    { padding: 5rem 0; }
+      .feat-grid  { grid-template-columns: 1fr; }
+      .tok-ring   { width: 220px; height: 220px; }
+      .footer-inner { grid-template-columns: 1fr; gap: 2rem; }
+      .footer-bottom { flex-direction: column; gap: 0.6rem; align-items: flex-start; }
     }
   </style>
 </head>
 <body>
 
-<canvas id="matrix-canvas"></canvas>
-<div class="mesh-bg"></div>
+<!-- Atmosphere -->
+<div class="orbs">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+</div>
+<div class="grid-bg"></div>
 
-<div class="content-wrapper">
+<!-- NAV -->
+<nav class="nav">
+  <a href="#" class="nav-logo">CHAIN<span class="ac">FORGE</span></a>
+  <ul class="nav-links">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#tokenomics">Tokenomics</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#community">Community</a></li>
+  </ul>
+  <a href="#community" class="nav-cta">Launch App →</a>
+</nav>
 
-  <!-- NAV -->
-  <nav class="nav">
-    <div class="nav-logo">CHAIN<span>FORGE</span></div>
-    <ul class="nav-links">
-      <li><a href="#services">Services</a></li>
-      <li><a href="#track-record">Track Record</a></li>
-      <li><a href="#kontakt">Kontakt</a></li>
-    </ul>
-  </nav>
-
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-scanline"></div>
-    <div class="hero-sweep"></div>
-
-    <div class="hex-container crypto-reveal">
-      <div class="hex-glow"></div>
-      <div class="hex-inner">
-        <span class="hex-monogram">CF</span>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      <span class="badge-text">DeFi Infrastructure &middot; Trier</span>
+    </div>
+    <h1 class="hero-h1">Build on the<br /><span class="grad">next-gen chain.</span></h1>
+    <p class="hero-sub">Chainforge entwickelt dezentrale Protokolle und Smart-Contract-Infrastruktur f&uuml;r die europ&auml;ische DeFi-Landschaft. Gebaut in Trier. Skaliert on-chain.</p>
+    <div class="hero-ctas">
+      <a href="#tokenomics" class="btn-primary">Token kaufen &rarr;</a>
+      <a href="#features" class="btn-ghost">Mehr erfahren &rsaquo;</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">$12.4M</div>
+        <div class="stat-label">TVL on-chain</div>
+      </div>
+      <div>
+        <div class="stat-num">47K</div>
+        <div class="stat-label">Wallet Holder</div>
+      </div>
+      <div>
+        <div class="stat-num">99.97%</div>
+        <div class="stat-label">Uptime</div>
       </div>
     </div>
+  </div>
 
-    <div class="hero-visual-strip crypto-reveal">
-      <img src="https://images.unsplash.com/photo-1542736667-069246bdbc6d?auto=format&fit=crop&w=1200&h=400&q=80" alt="Blockchain Netzwerk — abstrakte Technologie" loading="eager" />
-      <div class="hero-visual-strip-overlay"></div>
+  <div class="hero-right">
+    <div class="hero-card">
+      <div class="hero-card-live">
+        <span class="live-dot"></span>
+        <span class="live-text">Live</span>
+      </div>
+      <div class="hero-card-img">
+        <img src="https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&w=800&h=400&q=80" alt="Blockchain Netzwerk abstrakt" loading="eager" />
+        <div class="hero-card-img-overlay"></div>
+      </div>
+      <div class="hero-card-body">
+        <div class="hero-card-ticker">$CFG &middot; Chainforge Token</div>
+        <div class="hero-card-price">$0.4821</div>
+        <div class="hero-card-change">&#9650; +12.4% (24h)</div>
+        <div class="hero-card-metrics">
+          <div class="hero-metric">
+            <div class="metric-lbl">Market Cap</div>
+            <div class="metric-val c">$48.2M</div>
+          </div>
+          <div class="hero-metric">
+            <div class="metric-lbl">24h Volume</div>
+            <div class="metric-val p">$3.1M</div>
+          </div>
+          <div class="hero-metric">
+            <div class="metric-lbl">Total Supply</div>
+            <div class="metric-val">100M CFG</div>
+          </div>
+          <div class="hero-metric">
+            <div class="metric-lbl">Staked</div>
+            <div class="metric-val c">38.7%</div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
+</section>
 
-    <h1 class="hero-title crypto-reveal">Chainforge</h1>
-    <p class="hero-tagline crypto-reveal">Building trust. On chain.</p>
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-track">
+    <div class="ticker-item"><span class="t-name">$CFG</span> $0.4821 <span class="t-up">&#9650; +12.4%</span></div>
+    <div class="t-sep"></div>
+    <div class="ticker-item"><span class="t-name">ETH</span> $3,241 <span class="t-up">&#9650; +2.1%</span></div>
+    <div class="t-sep"></div>
+    <div class="ticker-item"><span class="t-name">BTC</span> $68,420 <span class="t-up">&#9650; +1.8%</span></div>
+    <div class="t-sep"></div>
+    <div class="ticker-item"><span class="t-name">SOL</span> $142.30 <span class="t-dn">&#9660; &minus;0.9%</span></div>
+    <div class="t-sep"></div>
+    <div class="ticker-item"><span class="t-name">ARB</span> $1.82 <span class="t-up">&#9650; +5.2%</span></div>
+    <div class="t-sep"></div>
+    <div class="ticker-item"><span class="t-name">MATIC</span> $0.92 <span class="t-dn">&#9660; &minus;1.2%</span></div>
+    <div class="t-sep"></div>
+    <div class="ticker-item"><span class="t-name">LINK</span> $18.40 <span class="t-up">&#9650; +3.6%</span></div>
+    <div class="t-sep"></div>
+    <!-- duplicate for seamless loop -->
+    <div class="ticker-item"><span class="t-name">$CFG</span> $0.4821 <span class="t-up">&#9650; +12.4%</span></div>
+    <div class="t-sep"></div>
+    <div class="ticker-item"><span class="t-name">ETH</span> $3,241 <span class="t-up">&#9650; +2.1%</span></div>
+    <div class="t-sep"></div>
+    <div class="ticker-item"><span class="t-name">BTC</span> $68,420 <span class="t-up">&#9650; +1.8%</span></div>
+    <div class="t-sep"></div>
+    <div class="ticker-item"><span class="t-name">SOL</span> $142.30 <span class="t-dn">&#9660; &minus;0.9%</span></div>
+    <div class="t-sep"></div>
+    <div class="ticker-item"><span class="t-name">ARB</span> $1.82 <span class="t-up">&#9650; +5.2%</span></div>
+    <div class="t-sep"></div>
+    <div class="ticker-item"><span class="t-name">MATIC</span> $0.92 <span class="t-dn">&#9660; &minus;1.2%</span></div>
+    <div class="t-sep"></div>
+    <div class="ticker-item"><span class="t-name">LINK</span> $18.40 <span class="t-up">&#9650; +3.6%</span></div>
+    <div class="t-sep"></div>
+  </div>
+</div>
 
-    <!-- Live Block Height Counter -->
-    <div class="block-height-display crypto-reveal">
-      <span class="block-height-dot"></span>
-      <span class="block-height-label">Block #</span>
-      <span class="block-height-value" id="block-height-counter">19847321</span>
+<!-- FEATURES -->
+<div class="container">
+  <section class="section" id="features">
+    <div class="reveal">
+      <p class="sec-eye">// 01 &mdash; Features</p>
+      <h2 class="sec-h2">Protokoll-Infrastruktur<br />auf <span class="grad">Enterprise-Niveau.</span></h2>
+      <p class="sec-sub">Von Smart-Contract-Audits bis hin zu vollst&auml;ndigen DeFi-Protokollen &mdash; Chainforge liefert End-to-End-L&ouml;sungen f&uuml;r die dezentrale Wirtschaft.</p>
     </div>
-
-    <div class="hero-data crypto-reveal">
-      <span class="data-point">Since <strong>2022</strong></span>
-      <span class="data-point"><strong>14</strong> Projects</span>
-      <span class="data-point">Smart Contract <strong>Audit</strong></span>
+    <div class="feat-grid">
+      <div class="feat-card reveal">
+        <div class="feat-icon fi1">&#128272;</div>
+        <p class="feat-num">// 01</p>
+        <h3 class="feat-h3">Smart Contract Audit</h3>
+        <p class="feat-p">Formale Verifikation, statische Analyse und manuelle Codereviews nach OWASP- und SWC-Registry-Standards. Zero-Exploit-Garantie.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-icon fi2">&#9889;</div>
+        <p class="feat-num">// 02</p>
+        <h3 class="feat-h3">Token Design &amp; Launch</h3>
+        <p class="feat-p">Tokenomics-Modellierung, ERC-20/721/1155-Entwicklung und vollautomatisiertes Deployment auf Ethereum, Polygon und Arbitrum.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-icon fi3">&#128202;</div>
+        <p class="feat-num">// 03</p>
+        <h3 class="feat-h3">DeFi Yield Protocols</h3>
+        <p class="feat-p">Liquidity Mining, Staking-Architekturen und Yield-Optimierungs-Protokolle. Cross-Chain kompatibel mit Chainlink-Oracle-Integration.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-icon fi4">&#127760;</div>
+        <p class="feat-num">// 04</p>
+        <h3 class="feat-h3">DAO Governance</h3>
+        <p class="feat-p">Dezentrale Governance-Systeme mit On-chain-Voting, Multi-Sig-Treasuries und automatisierten Proposals via Governor Bravo.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-icon fi5">&#128279;</div>
+        <p class="feat-num">// 05</p>
+        <h3 class="feat-h3">Cross-Chain Bridges</h3>
+        <p class="feat-p">Sichere Asset-Bridges zwischen EVM-kompatiblen Chains. Optimierte Gas-Kosten durch Layer-2-Routing und Zero-Knowledge-Proofs.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-icon fi6">&#128737;</div>
+        <p class="feat-num">// 06</p>
+        <h3 class="feat-h3">Security Monitoring</h3>
+        <p class="feat-p">24/7-Echtzeit-Monitoring via Forta Network. Automatische Anomalie-Erkennung mit Sub-Sekunden-Reaktionszeit auf On-Chain-Events.</p>
+      </div>
     </div>
-
-    <a href="#kontakt" class="cta-button crypto-reveal">Let's talk &rarr;</a>
+    <div class="feat-banner reveal">
+      <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1400&h=400&q=80" alt="Server-Infrastruktur" loading="lazy" />
+      <div class="feat-banner-ov"></div>
+      <div class="feat-banner-txt">
+        <p class="feat-banner-lbl">Auditiert &amp; verifiziert</p>
+        <h3 class="feat-banner-h">14 Protokolle. Kein Exploit.</h3>
+      </div>
+    </div>
   </section>
+</div>
 
-  <!-- SERVICES -->
-  <section id="services">
-    <p class="section-label crypto-reveal">// Services</p>
-    <h2 class="section-title crypto-reveal">Was wir bauen</h2>
+<!-- TOKENOMICS -->
+<div class="tok-section">
+  <div class="container">
+    <section class="section" id="tokenomics">
+      <div class="tok-layout">
+        <div>
+          <div class="reveal">
+            <p class="sec-eye">// 02 &mdash; Tokenomics</p>
+            <h2 class="sec-h2">$CFG Token<br /><span class="grad">Distribution.</span></h2>
+          </div>
+          <div class="reveal">
+            <div class="tok-ring">
+              <!-- circumference of r=80: ~502.65 -->
+              <svg viewBox="0 0 200 200">
+                <circle cx="100" cy="100" r="80" fill="none" stroke="#8B5CF6" stroke-width="26"
+                  stroke-dasharray="175.93 326.72" stroke-dashoffset="0" />
+                <circle cx="100" cy="100" r="80" fill="none" stroke="#06B6D4" stroke-width="26"
+                  stroke-dasharray="125.66 377.00" stroke-dashoffset="-175.93" />
+                <circle cx="100" cy="100" r="80" fill="none" stroke="#F59E0B" stroke-width="26"
+                  stroke-dasharray="75.40 427.25" stroke-dashoffset="-301.59" />
+                <circle cx="100" cy="100" r="80" fill="none" stroke="#10B981" stroke-width="26"
+                  stroke-dasharray="75.40 427.25" stroke-dashoffset="-376.99" />
+                <circle cx="100" cy="100" r="80" fill="none" stroke="#EC4899" stroke-width="26"
+                  stroke-dasharray="50.27 452.39" stroke-dashoffset="-452.39" />
+              </svg>
+              <div class="tok-ring-center">
+                <div class="ring-lbl">Total Supply</div>
+                <div class="ring-val">100M</div>
+                <div class="ring-sub2">$CFG Token</div>
+              </div>
+            </div>
+            <div class="tok-legend">
+              <div class="leg-row">
+                <div class="leg-left"><div class="leg-dot" style="background:#8B5CF6"></div><span class="leg-name">Community &amp; Staking</span></div>
+                <div class="leg-bar-w"><div class="leg-bar" style="width:35%;background:#8B5CF6"></div></div>
+                <span class="leg-pct">35%</span>
+              </div>
+              <div class="leg-row">
+                <div class="leg-left"><div class="leg-dot" style="background:#06B6D4"></div><span class="leg-name">Protocol Treasury</span></div>
+                <div class="leg-bar-w"><div class="leg-bar" style="width:25%;background:#06B6D4"></div></div>
+                <span class="leg-pct">25%</span>
+              </div>
+              <div class="leg-row">
+                <div class="leg-left"><div class="leg-dot" style="background:#F59E0B"></div><span class="leg-name">Team &amp; Advisors</span></div>
+                <div class="leg-bar-w"><div class="leg-bar" style="width:15%;background:#F59E0B"></div></div>
+                <span class="leg-pct">15%</span>
+              </div>
+              <div class="leg-row">
+                <div class="leg-left"><div class="leg-dot" style="background:#10B981"></div><span class="leg-name">Seed Investors</span></div>
+                <div class="leg-bar-w"><div class="leg-bar" style="width:15%;background:#10B981"></div></div>
+                <span class="leg-pct">15%</span>
+              </div>
+              <div class="leg-row">
+                <div class="leg-left"><div class="leg-dot" style="background:#EC4899"></div><span class="leg-name">Reserve</span></div>
+                <div class="leg-bar-w"><div class="leg-bar" style="width:10%;background:#EC4899"></div></div>
+                <span class="leg-pct">10%</span>
+              </div>
+            </div>
+          </div>
+        </div>
 
-    <div class="services-grid">
-      <div class="service-card crypto-reveal glow-on-reveal">
-        <p class="service-label">Audit</p>
-        <h3 class="service-title">Smart Contract Audit</h3>
-        <p class="service-desc">Sicherheit fuer deinen Code. Statische Analyse, manuelle Review und formale Verifikation deiner Contracts.</p>
+        <div>
+          <div class="reveal">
+            <div class="tok-stats">
+              <div class="tok-stat"><div class="tok-stat-lbl">Token Symbol</div><div class="tok-stat-val p">$CFG</div></div>
+              <div class="tok-stat"><div class="tok-stat-lbl">Network</div><div class="tok-stat-val c">Ethereum</div></div>
+              <div class="tok-stat"><div class="tok-stat-lbl">Standard</div><div class="tok-stat-val">ERC-20</div></div>
+              <div class="tok-stat"><div class="tok-stat-lbl">Vesting</div><div class="tok-stat-val">36 Monate</div></div>
+              <div class="tok-stat"><div class="tok-stat-lbl">APY Staking</div><div class="tok-stat-val c">14.2%</div></div>
+              <div class="tok-stat"><div class="tok-stat-lbl">Burn Rate</div><div class="tok-stat-val p">2% / Tx</div></div>
+            </div>
+          </div>
+          <div class="reveal">
+            <p class="sec-sub" style="margin-bottom:1.75rem;font-size:0.92rem;">Der $CFG-Token ist das Herzst&uuml;ck des Chainforge-&Ouml;kosystems. Er erm&ouml;glicht Governance-Abstimmungen, Staking-Rewards und den Zugang zu exklusiven Protokoll-Features. 38% aller Token sind bereits gestaked.</p>
+            <a href="#community" class="btn-primary" style="width:fit-content;">Token Whitepaper &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- ROADMAP -->
+<div class="container">
+  <section class="section" id="roadmap">
+    <div class="rm-layout">
+      <div>
+        <div class="reveal">
+          <p class="sec-eye">// 03 &mdash; Roadmap</p>
+          <h2 class="sec-h2">Der Weg zur<br /><span class="grad">dezentralen Zukunft.</span></h2>
+          <p class="sec-sub">Unsere Entwicklungs-Roadmap. Transparent, on-chain verifizierbar.</p>
+        </div>
+        <div class="rm-track reveal">
+          <div class="rm-item">
+            <div class="rm-dot done"></div>
+            <div class="rm-q">Q1 2024</div>
+            <div class="rm-h">Genesis &mdash; Protocol Launch</div>
+            <div class="rm-list">
+              <div class="rm-task"><span class="rm-chk">&#10003;</span> Smart Contract Deployment auf Ethereum</div>
+              <div class="rm-task"><span class="rm-chk">&#10003;</span> $CFG Token Generation Event</div>
+              <div class="rm-task"><span class="rm-chk">&#10003;</span> Audit durch Trail of Bits</div>
+              <div class="rm-task"><span class="rm-chk">&#10003;</span> DEX-Listing auf Uniswap v3</div>
+            </div>
+            <span class="rm-status rm-done">Abgeschlossen</span>
+          </div>
+          <div class="rm-item">
+            <div class="rm-dot done"></div>
+            <div class="rm-q">Q3 2024</div>
+            <div class="rm-h">Forge v1 &mdash; Staking &amp; DAO</div>
+            <div class="rm-list">
+              <div class="rm-task"><span class="rm-chk">&#10003;</span> Staking-Protokoll mit 14.2% APY</div>
+              <div class="rm-task"><span class="rm-chk">&#10003;</span> Governor Bravo DAO-Integration</div>
+              <div class="rm-task"><span class="rm-chk">&#10003;</span> Multi-Sig Treasury (5/7)</div>
+            </div>
+            <span class="rm-status rm-done">Abgeschlossen</span>
+          </div>
+          <div class="rm-item">
+            <div class="rm-dot active"></div>
+            <div class="rm-q">Q1 2025 &mdash; Jetzt</div>
+            <div class="rm-h">Forge v2 &mdash; Cross-Chain Bridge</div>
+            <div class="rm-list">
+              <div class="rm-task"><span class="rm-chk cur">&#9679;</span> Polygon-Bridge in Beta</div>
+              <div class="rm-task"><span class="rm-chk cur">&#9679;</span> Arbitrum-Deployment Q2 2025</div>
+              <div class="rm-task"><span class="rm-chk pend">&#9675;</span> ZK-Proof-Integration (geplant)</div>
+            </div>
+            <span class="rm-status rm-act">In Entwicklung</span>
+          </div>
+          <div class="rm-item">
+            <div class="rm-dot"></div>
+            <div class="rm-q">Q4 2025</div>
+            <div class="rm-h">Forge v3 &mdash; Institutional DeFi</div>
+            <div class="rm-list">
+              <div class="rm-task"><span class="rm-chk pend">&#9675;</span> KYC/AML-konforme Pool-Architektur</div>
+              <div class="rm-task"><span class="rm-chk pend">&#9675;</span> Institutional Yield Vaults</div>
+              <div class="rm-task"><span class="rm-chk pend">&#9675;</span> Regulatorisches Framework DE/EU</div>
+            </div>
+            <span class="rm-status rm-up">Geplant</span>
+          </div>
+        </div>
       </div>
 
-      <div class="service-card crypto-reveal glow-on-reveal">
-        <p class="service-label">Design</p>
-        <h3 class="service-title">Token Design</h3>
-        <p class="service-desc">Von der Idee zum Launch. Tokenomics, Smart Contract Development und Deployment auf der Chain deiner Wahl.</p>
+      <div class="rm-photo reveal">
+        <img src="https://images.unsplash.com/photo-1518186285589-2f7649de83e0?auto=format&fit=crop&w=700&h=900&q=80" alt="Datenvisualisierung Technologie" loading="lazy" />
+        <div class="rm-photo-ov"></div>
       </div>
-
-      <div class="service-card crypto-reveal glow-on-reveal">
-        <p class="service-label">Strategie</p>
-        <h3 class="service-title">DeFi Consulting</h3>
-        <p class="service-desc">Protokoll-Strategie und Integration. Yield-Optimierung, Liquidity Design und Cross-Chain-Architektur.</p>
-      </div>
-    </div>
-
-    <p class="services-note crypto-reveal">Alle Audits nach OWASP & SWC Registry Standards.</p>
-
-    <div class="section-photo crypto-reveal">
-      <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=1200&h=600&q=80" alt="Server und Technologie-Infrastruktur" loading="lazy" />
-      <div class="section-photo-overlay"></div>
     </div>
   </section>
+</div>
 
-  <!-- TRACK RECORD -->
-  <section id="track-record">
-    <p class="section-label crypto-reveal">// Track Record</p>
-    <h2 class="section-title crypto-reveal">On-Chain History</h2>
-
-    <div class="terminal crypto-reveal">
-      <div class="terminal-header">
-        <span class="terminal-dot"></span>
-        <span class="terminal-dot"></span>
-        <span class="terminal-dot"></span>
-        <span class="terminal-title">chainforge-explorer.log</span>
+<!-- COMMUNITY -->
+<div class="tok-section">
+  <div class="container">
+    <section class="section" id="community">
+      <div class="comm-layout">
+        <div class="comm-photos reveal">
+          <div class="comm-ph comm-ph-wide">
+            <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1200&h=500&q=80" alt="Tech Community Event" loading="lazy" />
+            <div class="comm-ph-ov"></div>
+          </div>
+          <div class="comm-ph comm-ph-tall">
+            <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=600&h=400&q=80" alt="Blockchain Developer" loading="lazy" />
+            <div class="comm-ph-ov"></div>
+          </div>
+          <div class="comm-ph comm-ph-tall">
+            <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=600&h=400&q=80" alt="Developer Team" loading="lazy" />
+            <div class="comm-ph-ov"></div>
+          </div>
+        </div>
+        <div class="comm-content">
+          <div class="reveal">
+            <p class="sec-eye">// 04 &mdash; Community</p>
+            <h2 class="sec-h2">47.000+ Holder.<br /><span class="grad">Eine Bewegung.</span></h2>
+            <p class="sec-sub" style="margin-bottom:0;">Die Chainforge-Community w&auml;chst rasant. Werde Teil des dezentralen Netzwerks aus Developern, Investoren und DeFi-Enthusiasten.</p>
+          </div>
+          <div class="comm-stat-list reveal">
+            <div class="comm-stat">
+              <div class="comm-stat-l"><span class="comm-stat-icon">&#128172;</span><span class="comm-stat-lbl">Discord Members</span></div>
+              <span class="comm-stat-val">12.4K</span>
+            </div>
+            <div class="comm-stat">
+              <div class="comm-stat-l"><span class="comm-stat-icon">&#128038;</span><span class="comm-stat-lbl">Twitter Follower</span></div>
+              <span class="comm-stat-val">38.2K</span>
+            </div>
+            <div class="comm-stat">
+              <div class="comm-stat-l"><span class="comm-stat-icon">&#9881;</span><span class="comm-stat-lbl">GitHub Contributors</span></div>
+              <span class="comm-stat-val">247</span>
+            </div>
+            <div class="comm-stat">
+              <div class="comm-stat-l"><span class="comm-stat-icon">&#128717;</span><span class="comm-stat-lbl">DAO Proposals voted</span></div>
+              <span class="comm-stat-val">1.8K</span>
+            </div>
+          </div>
+          <div class="reveal">
+            <a href="#" class="btn-primary" style="width:fit-content;">Discord beitreten &rarr;</a>
+          </div>
+        </div>
       </div>
-      <div class="terminal-body">
-        <div class="block-entry">
-          <span class="block-hash">Block #001</span> &mdash;
-          <span class="block-name">Weingut-Token</span> &mdash;
-          ERC-721 auf <span class="block-chain">Polygon</span>
-          <span class="block-status status-confirmed">Confirmed</span>
-        </div>
-        <div class="block-entry">
-          <span class="block-hash">Block #002</span> &mdash;
-          <span class="block-name">Community DAO</span> &mdash;
-          Governance Launch auf <span class="block-chain">Ethereum</span>
-          <span class="block-status status-deployed">Deployed</span>
-        </div>
-        <div class="block-entry">
-          <span class="block-hash">Block #003</span> &mdash;
-          <span class="block-name">DeFi Yield Protocol</span> &mdash;
-          Audit bestanden auf <span class="block-chain">Arbitrum</span>
-          <span class="block-status status-confirmed">Confirmed</span>
-        </div>
-      </div>
-    </div>
+    </section>
+  </div>
+</div>
 
-    <div class="section-photo crypto-reveal">
-      <img src="https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=1200&h=600&q=80" alt="Digitale Datenvisualisierung und Code" loading="lazy" />
-      <div class="section-photo-overlay"></div>
-    </div>
-
-    <div class="founder crypto-reveal glow-on-reveal" id="kontakt">
-      <div class="founder-avatar">
-        <div class="founder-avatar-inner">
-          <span class="founder-initials">AK</span>
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-logo">CHAIN<span>FORGE</span></div>
+        <p class="footer-tag">Dezentrale Infrastruktur aus Trier. Building trust &mdash; on chain.</p>
+        <div class="footer-addr">
+          Chainforge GmbH<br />
+          Simeonstra&szlig;e 14 &middot; 54290 Trier<br />
+          <a href="mailto:hello@chainforge.io">hello@chainforge.io</a>
         </div>
       </div>
       <div>
-        <p class="founder-name">Alex Krypto</p>
-        <p class="founder-role">Founder & Lead Auditor</p>
-        <div class="founder-contact">
-          <a href="mailto:alex@chainforge.dev">alex@chainforge.dev</a><br />
-          Trier, Deutschland
-        </div>
-        <p class="pgp-note">PGP Key available on request.</p>
+        <div class="footer-col-ttl">Protokoll</div>
+        <ul class="footer-links">
+          <li><a href="#">Whitepaper</a></li>
+          <li><a href="#">Audit Report</a></li>
+          <li><a href="#">DAO Governance</a></li>
+          <li><a href="#">Token Contract</a></li>
+          <li><a href="#">GitHub</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-ttl">Unternehmen</div>
+        <ul class="footer-links">
+          <li><a href="#">About</a></li>
+          <li><a href="#">Team</a></li>
+          <li><a href="#">Karriere</a></li>
+          <li><a href="#">Impressum</a></li>
+          <li><a href="#">Datenschutz</a></li>
+        </ul>
       </div>
     </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer class="footer">
-    <p class="footer-text">Chainforge &mdash; Trier &mdash; 2022&ndash;2026</p>
-    <p class="footer-hash">0x7a3f...c8e1 // Demo &mdash; keine echte Blockchain-Adresse</p>
-  </footer>
-
-</div>
+    <div class="footer-bottom">
+      <div class="footer-copy">&copy; 2026 Chainforge GmbH &middot; Trier &middot; Demo-Seite</div>
+      <div class="footer-hash">0x7a3f&hellip;c8e1 &middot; kein echtes Token &middot; keine echte Blockchain-Adresse</div>
+    </div>
+  </div>
+</footer>
 
 <script>
-  // ===== INTERSECTION OBSERVER — CRYPTO-REVEAL WITH STAGGER =====
-  (function initCryptoReveal() {
-    const elements = document.querySelectorAll('.crypto-reveal');
-
-    const observer = new IntersectionObserver((entries) => {
-      // Sort by vertical position for natural top-to-bottom stagger
-      const visible = entries.filter(e => e.isIntersecting);
-      visible
-        .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)
-        .forEach((entry, index) => {
-          setTimeout(() => {
-            entry.target.classList.add('visible');
-          }, index * 100);
-          observer.unobserve(entry.target);
+  // Reveal on scroll
+  (function() {
+    const els = document.querySelectorAll('.reveal');
+    const obs = new IntersectionObserver((entries) => {
+      entries
+        .filter(e => e.isIntersecting)
+        .sort((a,b) => a.boundingClientRect.top - b.boundingClientRect.top)
+        .forEach((entry, i) => {
+          setTimeout(() => entry.target.classList.add('in'), i * 110);
+          obs.unobserve(entry.target);
         });
-    }, {
-      threshold: 0.12,
-      rootMargin: '0px 0px -30px 0px'
-    });
-
-    elements.forEach(el => observer.observe(el));
-  })();
-
-  // ===== LIVE BLOCK HEIGHT COUNTER =====
-  (function initBlockCounter() {
-    const counterEl = document.getElementById('block-height-counter');
-    if (!counterEl) return;
-
-    let currentHeight = 19847321;
-
-    function incrementBlock() {
-      // Ethereum averages ~12s/block, simulate with occasional multi-block jumps
-      const jump = Math.random() < 0.3 ? 2 : 1;
-      currentHeight += jump;
-      counterEl.textContent = currentHeight.toLocaleString('en-US').replace(/,/g, '_');
-
-      // Flash color on update
-      counterEl.classList.add('tick');
-      setTimeout(() => counterEl.classList.remove('tick'), 300);
-    }
-
-    setInterval(incrementBlock, 2000);
-  })();
-
-  // ===== MATRIX RAIN CANVAS =====
-  (function initMatrixRain() {
-    const canvas = document.getElementById('matrix-canvas');
-    if (!canvas) return;
-
-    const ctx = canvas.getContext('2d');
-
-    function resize() {
-      canvas.width = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
-    }
-    resize();
-
-    const chars = '01アイウエオカキクケコABCDEF0123456789<>{}[]|#';
-    const fontSize = 10;
-    const columns = Math.floor(canvas.width / fontSize);
-    const drops = Array.from({ length: columns }, () => Math.random() * -50);
-
-    function drawMatrix() {
-      // Semi-transparent fade to create trail
-      ctx.fillStyle = 'rgba(11, 7, 24, 0.08)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      ctx.font = `${fontSize}px "Space Mono", monospace`;
-
-      drops.forEach((y, i) => {
-        const char = chars[Math.floor(Math.random() * chars.length)];
-
-        // Leading character is brighter (cyan), rest purple
-        if (y * fontSize < canvas.height * 0.15) {
-          ctx.fillStyle = '#22D3EE';
-        } else {
-          ctx.fillStyle = '#A855F7';
-        }
-
-        ctx.fillText(char, i * fontSize, y * fontSize);
-
-        // Reset drop when it goes off screen, with random delay
-        if (y * fontSize > canvas.height && Math.random() > 0.975) {
-          drops[i] = 0;
-        }
-        drops[i] += 0.5;
-      });
-    }
-
-    setInterval(drawMatrix, 50);
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    els.forEach(el => obs.observe(el));
   })();
 </script>
 
