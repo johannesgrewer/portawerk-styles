@@ -1,958 +1,943 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import { styles, categories } from "../data/styles";
+export const prerender = true
+
+const styles = [
+  // --- Externe SaaS-Seiten ---
+  { slug: 'ext-linear', name: 'Linear', category: 'Projektmanagement', tags: 'saas tech projektmanagement issue-tracking entwickler tools dark minimal schnell', url: 'https://linear.app' },
+  { slug: 'ext-raycast', name: 'Raycast', category: 'Produktivitäts-Tool', tags: 'saas tech produktivität launcher macos entwickler ki dark', url: 'https://raycast.com' },
+  { slug: 'ext-lemonsqueezy', name: 'Lemon Squeezy', category: 'Payment-Plattform', tags: 'saas tech payment checkout e-commerce abonnement bunt verspielt', url: 'https://www.lemonsqueezy.com' },
+  { slug: 'ext-pitch', name: 'Pitch', category: 'Präsentations-Tool', tags: 'saas tech präsentation kollaboration design team clean modern', url: 'https://pitch.com' },
+  { slug: 'ext-vercel', name: 'Vercel', category: 'Cloud-Plattform', tags: 'saas tech deployment hosting cloud entwickler frontend dark minimal', url: 'https://vercel.com' },
+  // --- Externe Restaurant-Seiten ---
+  { slug: 'ext-geranium', name: 'Geranium', category: 'Fine Dining', tags: 'fine-dining gastro restaurant minimalistisch elegant hell skandinavisch clean exklusiv michelin', url: 'https://www.geranium.dk/' },
+  { slug: 'ext-alinea', name: 'Alinea', category: 'Fine Dining', tags: 'fine-dining gastro restaurant dunkel künstlerisch modern immersiv avantgarde elegant michelin', url: 'https://www.alinearestaurant.com/' },
+  { slug: 'ext-gem', name: 'Restaurant GEM.', category: 'Fine Dining', tags: 'fine-dining gastro restaurant elegant dunkel historisch warm europäisch michelin', url: 'https://restaurantgem.com/' },
+  { slug: 'ext-ateliercrenn', name: 'Atelier Crenn', category: 'Fine Dining', tags: 'fine-dining gastro restaurant minimalistisch künstlerisch galerie immersiv poetisch michelin', url: 'https://www.ateliercrenn.com/' },
+  { slug: 'ext-emp', name: 'Eleven Madison Park', category: 'Fine Dining', tags: 'fine-dining gastro restaurant minimalistisch elegant hell clean luxus urban michelin', url: 'https://www.elevenmadisonpark.com/' },
+  // --- Externe Awwwards-Seiten ---
+  { slug: 'ext-joby', name: 'Joby Aviation', category: 'Aerospace', tags: 'aviation aerospace futuristisch cinematic dark video innovation', url: 'https://www.jobyaviation.com/' },
+  { slug: 'ext-vast', name: 'Vast', category: 'Space Tech', tags: 'space weltraum dark editorial monumental tech innovation', url: 'https://www.vastspace.com/' },
+  { slug: 'ext-scout', name: 'Scout Motors', category: 'Automotive', tags: 'auto ev elektro bold rugged outdoor clean', url: 'https://www.scoutmotors.com/' },
+  { slug: 'ext-aupale', name: 'Aupale Vodka', category: 'Spirituosen', tags: 'spirits getränke vodka elegant muted parallax premium', url: 'https://www.aupalevodka.com/en/' },
+  { slug: 'ext-fluidglass', name: 'Fluid Glass', category: 'Architektur-Material', tags: 'architektur glas bau minimal luminous premium b2b', url: 'https://fluid.glass/' },
+  { slug: 'ext-momoney', name: 'MoMoney Museum', category: 'Museum', tags: 'museum kultur playful interactive bold bunt', url: 'https://www.museumofmoney.com/' },
+  { slug: 'ext-borjomi', name: 'Museum of Borjomi', category: 'Heritage Museum', tags: 'museum heritage 3d immersive storytelling history', url: 'https://museum.borjomi.com/en' },
+  { slug: 'ext-aventura', name: 'Aventura Dental', category: 'Zahnarztpraxis', tags: 'dental zahnarzt gesundheit sleek clinical luxe warm premium', url: 'https://aventuradentalarts.com/' },
+  { slug: 'ext-kindred', name: 'Kindred Pet Care', category: 'Tierarztpraxis', tags: 'veterinär tiere haustier warm friendly modern', url: 'https://kindredpetcare.com/' },
+  { slug: 'ext-outsource', name: 'Outsource Consultants', category: 'B2B Consulting', tags: 'beratung consulting b2b structured confident urban', url: 'https://www.outsourceconsultants.com/' },
+  { slug: 'ext-foudre', name: 'Foudre', category: 'Social Media Agentur', tags: 'agentur social media video kreativ editorial electric', url: 'https://agencefoudre.com/' },
+  { slug: 'ext-artefakt', name: 'Artefakt', category: 'Filmproduktion', tags: 'film video produktion cinematic dark immersive', url: 'https://artefakt.mov/' },
+  { slug: 'ext-vangogh', name: 'Van Gogh Museum', category: 'Kunstmuseum', tags: 'museum kunst galerie colorful accessible editorial kultur', url: 'https://www.vangoghmuseum.nl/' },
+  { slug: 'ext-norris', name: 'Lando Norris', category: 'Sport / Personal Brand', tags: 'sport formel1 racing personal brand dynamic bold energy', url: 'https://landonorris.com/' },
+]
+
+// --- Branche Mapping ---
+const brancheMap: Record<string, string> = {
+  'Weinbar & Lounge': 'Gastronomie', 'Restaurant': 'Gastronomie', 'Cocktailbar': 'Gastronomie',
+  'Bäckerei & Café': 'Gastronomie', 'Bistro': 'Gastronomie', 'Café': 'Gastronomie',
+  'Weinstube': 'Gastronomie', 'Street Food': 'Gastronomie', 'Bio-Restaurant': 'Gastronomie',
+  'Brauerei': 'Gastronomie', 'American Diner': 'Gastronomie', 'Metzgerei': 'Gastronomie',
+  'Weinhandlung': 'Gastronomie', 'Mediterrane Küche': 'Gastronomie', 'Kaffeerösterei': 'Gastronomie',
+  'Griechisches Restaurant': 'Gastronomie', 'Sportbar': 'Gastronomie',
+  'Siebdruck-Werkstatt': 'Handwerk', 'Schreinerei': 'Handwerk', 'Druckerei': 'Handwerk',
+  'Barbershop': 'Beauty & Pflege', 'Friseursalon': 'Beauty & Pflege',
+  'Naturkosmetik': 'Beauty & Pflege', 'Tattoo-Studio': 'Beauty & Pflege',
+  'Floristik': 'Einzelhandel', 'Buchhandlung': 'Einzelhandel', 'Online-Shop': 'Einzelhandel',
+  'Antiquariat': 'Einzelhandel', 'Concept Store': 'Einzelhandel', 'Kinderladen': 'Einzelhandel',
+  'Nachhaltige Mode': 'Mode & Lifestyle', 'Fashion Conceptstore': 'Mode & Lifestyle', 'Juwelier': 'Mode & Lifestyle',
+  'Yoga & Meditation': 'Gesundheit & Wellness', 'Wellness & Spa': 'Gesundheit & Wellness',
+  'Day Spa': 'Gesundheit & Wellness', 'Tierarztpraxis': 'Gesundheit & Wellness',
+  'Arztpraxis': 'Gesundheit & Wellness', 'Apotheke': 'Gesundheit & Wellness',
+  'Grafikdesign': 'Kreativ & Agentur', 'Kreativagentur': 'Kreativ & Agentur',
+  'Filmproduktion': 'Kreativ & Agentur', 'Magazin & Editorial': 'Kreativ & Agentur',
+  'Lifestyle Magazin': 'Kreativ & Agentur', 'Kunstgalerie': 'Kreativ & Agentur',
+  'Fotostudio': 'Kreativ & Agentur', 'Fotografie': 'Kreativ & Agentur',
+  'Musikproduktion': 'Kreativ & Agentur', 'Typografie-Studio': 'Kreativ & Agentur',
+  'Design-Agentur': 'Kreativ & Agentur', 'Branding-Agentur': 'Kreativ & Agentur',
+  'Galerie': 'Kreativ & Agentur', 'Produktdesign': 'Kreativ & Agentur', 'Ateliervermietung': 'Kreativ & Agentur',
+  'Business Coaching': 'Business & Recht', 'Rechtsanwälte': 'Business & Recht',
+  'Immobilien': 'Business & Recht', 'Logistik': 'Business & Recht',
+  'Tech & Gaming': 'Tech & Digital', 'SaaS-Startup': 'Tech & Digital', 'Tech-Startup': 'Tech & Digital',
+  'Innovation Lab': 'Tech & Digital', 'VR-Studio': 'Tech & Digital', 'Gaming Café': 'Tech & Digital',
+  'Crypto Exchange': 'Tech & Digital', 'Innovation Hub': 'Tech & Digital', 'Retro-Gaming': 'Tech & Digital',
+  'Projektmanagement': 'Tech & Digital', 'Produktivitäts-Tool': 'Tech & Digital',
+  'Payment-Plattform': 'Tech & Digital', 'Präsentations-Tool': 'Tech & Digital', 'Cloud-Plattform': 'Tech & Digital',
+  'Fitness & Gym': 'Sport & Freizeit', 'Outdoor & Bergsport': 'Sport & Freizeit',
+  'Surfschule': 'Sport & Freizeit', 'Outdoor-Ausrüstung': 'Sport & Freizeit', 'Escape Room': 'Sport & Freizeit',
+  'Verein & Soziales': 'Bildung & Soziales', 'Musikschule': 'Bildung & Soziales',
+  'Sozialunternehmen': 'Bildung & Soziales', 'Familienzentrum': 'Bildung & Soziales',
+  'Kinderbetreuung': 'Bildung & Soziales', 'Planetarium': 'Bildung & Soziales',
+  'Boutique-Hotel': 'Hotellerie & Reisen', 'Luxushotel': 'Hotellerie & Reisen', 'Hostel': 'Hotellerie & Reisen',
+  'Club & Events': 'Events & Nightlife', 'Underground Club': 'Events & Nightlife',
+  'Konzerthaus': 'Events & Nightlife', 'Event-Location': 'Events & Nightlife', 'Hochzeitsplanung': 'Events & Nightlife',
+  'Architekturbüro': 'Architektur & Wohnen', 'Coworking Space': 'Architektur & Wohnen',
+  'Interior Design': 'Architektur & Wohnen', 'Architektur': 'Architektur & Wohnen',
+  'Scandinavian Design': 'Architektur & Wohnen',
+  'Aerospace': 'Tech & Digital', 'Space Tech': 'Tech & Digital',
+  'Automotive': 'Tech & Digital',
+  'Spirituosen': 'Gastronomie',
+  'Architektur-Material': 'Architektur & Wohnen',
+  'Museum': 'Bildung & Soziales', 'Heritage Museum': 'Bildung & Soziales', 'Kunstmuseum': 'Bildung & Soziales',
+  'Zahnarztpraxis': 'Gesundheit & Wellness',
+  'B2B Consulting': 'Business & Recht',
+  'Social Media Agentur': 'Kreativ & Agentur',
+  'Sport / Personal Brand': 'Sport & Freizeit',
+}
+
+function deriveStil(tags: string, slug: string): string[] {
+  const t = `${tags} ${slug}`.toLowerCase()
+  const s: string[] = []
+  if (t.includes('dunkel') || t.includes('moody') || t.includes('dark') || t.includes('noir') || t.includes('schwarz')) s.push('Dunkel & Moody')
+  if (t.includes('hell') || t.includes('clean') || t.includes('pastell') || t.includes('soft')) s.push('Hell & Clean')
+  if (t.includes('minimal') || t.includes('swiss') || t.includes('zen')) s.push('Minimal')
+  if (t.includes('bold') || t.includes('laut') || t.includes('grafik')) s.push('Bold & Grafisch')
+  if (t.includes('retro') || t.includes('vintage') || t.includes('nostalgisch') || t.includes('80er')) s.push('Retro & Vintage')
+  if (t.includes('editorial') || t.includes('magazin') || t.includes('typografie') || t.includes('schrift')) s.push('Editorial & Typografie')
+  if (t.includes('industrial') || t.includes('roh') || t.includes('beton') || t.includes('brutal') || t.includes('fabrik')) s.push('Industrial & Roh')
+  if (t.includes('verspielt') || t.includes('fröhlich') || t.includes('kinder') || t.includes('süß') || t.includes('candy') || t.includes('bunt')) s.push('Verspielt & Bunt')
+  if (t.includes('luxus') || t.includes('premium') || t.includes('edel') || t.includes('elegant') || t.includes('gold') || t.includes('marmor')) s.push('Luxus & Elegant')
+  if (t.includes('neon') || t.includes('tech') || t.includes('digital') || t.includes('futuristisch') || t.includes('cyber') || t.includes('synthwave') || t.includes('saas')) s.push('Neon & Tech')
+  if (t.includes('warm') || t.includes('mediterran') || t.includes('gemütlich')) s.push('Warm & Gemütlich')
+  if (t.includes('natur') || t.includes('bio') || t.includes('nachhaltig') || t.includes('grün') || t.includes('botanik')) s.push('Natur & Organisch')
+  if (s.length === 0) s.push('Modern')
+  return s
+}
+
+function deriveSpecials(tags: string, slug: string): string[] {
+  const t = `${tags} ${slug}`.toLowerCase()
+  const s: string[] = []
+  if (t.includes('3d') || t.includes('vr') || t.includes('spatial')) s.push('3D')
+  if (t.includes('gaming') || t.includes('interactive') || t.includes('spiel')) s.push('Interaktiv')
+  if (t.includes('gradient') || t.includes('glassmorphism') || t.includes('glas')) s.push('Glassmorphism')
+  if (t.includes('duotone') || t.includes('split')) s.push('Split-Design')
+  if (t.includes('oversized') || t.includes('groß')) s.push('Oversized Typo')
+  if (t.includes('maximalist') || t.includes('opulent')) s.push('Maximalistisch')
+  return s
+}
+
+const enrichedStyles = styles.map(s => ({
+  ...s,
+  branche: brancheMap[s.category] || 'Sonstige',
+  stil: deriveStil(s.tags, s.slug),
+  specials: deriveSpecials(s.tags, s.slug),
+}))
+
+const allBranchen = [...new Set(enrichedStyles.map(s => s.branche))].sort()
+const allStile = [...new Set(enrichedStyles.flatMap(s => s.stil))].sort()
+const allSpecials = [...new Set(enrichedStyles.flatMap(s => s.specials))].filter(Boolean).sort()
+
 ---
 
-<Layout>
-  <!-- Password Gate -->
-  <div id="password-gate" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-bg overflow-hidden">
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>90+ Webdesign-Stile &mdash; PortaWerk Style-Katalog</title>
+  <meta name="description" content="Über 90 individuelle Webdesign-Stile für jede Branche. Von Gastronomie bis Kanzlei, von minimalistisch bis bold." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
 
-    <!-- Background radial glow -->
-    <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 55% at 50% 60%, rgba(14,77,82,0.06) 0%, transparent 68%);pointer-events:none;"></div>
+<!-- Password Gate -->
+<div class="gal-pw" id="pw-gate">
+  <div class="gal-pw-card">
+    <div class="gal-pw-logo">p<svg xmlns="http://www.w3.org/2000/svg" viewBox="32 21 34 30" fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="6.9" aria-hidden="true"><path d="M40.9,46.6c-4.9-4.3-5.2-11.8-.8-16.5,4.4-4.8,11.9-5.2,16.7-.8,4.9,4.3,5.2,11.8.8,16.5-.3.3-.5.6-.8.8" stroke-width="6.7"/></svg>rtawerk</div>
+    <h1 class="gal-pw-title">Style-Katalog</h1>
+    <p class="gal-pw-sub">Exklusiver Zugang</p>
+    <div class="gal-pw-divider"></div>
+    <form id="pw-form">
+      <input type="password" id="pw-input" class="gal-pw-input" placeholder="Passwort" autocomplete="off" />
+      <button type="submit" class="gal-pw-btn">Zugang</button>
+      <p class="gal-pw-error" id="pw-error">Falsches Passwort</p>
+    </form>
+  </div>
+  <p class="gal-pw-footer">portawerk.de</p>
+</div>
 
-    <!-- Card -->
-    <div style="position:relative;width:100%;max-width:400px;margin:0 auto;padding:0 20px;">
-      <div style="background:#FFFFFF;border:1.5px solid #DDD7CE;border-radius:20px;padding:44px 40px 36px;box-shadow:0 8px 48px rgba(0,0,0,0.07),0 1px 2px rgba(0,0,0,0.04);">
+<!-- Gallery App -->
+<section class="gal" id="gal-app" style="display:none;">
+  <div class="gal-inner">
 
-        <!-- Logo + Headline -->
-        <div style="text-align:center;margin-bottom:32px;">
-          <div style="display:flex;justify-content:center;margin-bottom:20px;">
-            <img src="/images/portawerk-logo.svg" alt="PortaWerk" style="height:36px;width:auto;" />
-          </div>
-          <h1 style="font-family:var(--font-display);font-size:1.375rem;font-weight:700;letter-spacing:-0.03em;color:#1B1B1B;line-height:1.15;margin-bottom:5px;">Style Library</h1>
-          <p style="color:#6B6360;font-size:0.8rem;">Interner Zugang</p>
+    <!-- Hero -->
+    <div class="gal-hero">
+      <div class="gal-hero-grid" aria-hidden="true"></div>
+      <div class="gal-hero-glow" aria-hidden="true"></div>
+      <div class="gal-hero-content">
+        <div class="gal-hero-pills">
+          <span class="gal-pill">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/></svg>
+            Style-Katalog
+          </span>
+          <span class="gal-pill">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Exklusiver Zugang
+          </span>
         </div>
-
-        <!-- Divider -->
-        <div style="height:1px;background:#E8E2D8;margin-bottom:28px;"></div>
-
-        <!-- Form -->
-        <form id="password-form">
-          <div style="margin-bottom:10px;">
-            <input
-              type="password"
-              id="password-input"
-              placeholder="Passwort"
-              autocomplete="off"
-              style="width:100%;background:#F7F3EE;border:1.5px solid #DDD7CE;border-radius:10px;padding:13px 16px;font-size:0.9375rem;color:#1B1B1B;outline:none;transition:border-color 0.15s;font-family:var(--font-sans);"
-              onfocus="this.style.borderColor='#0E4D52'"
-              onblur="this.style.borderColor='#DDD7CE'"
-            />
+        <h1 class="gal-hero-title">
+          <span class="gal-hero-count" id="hero-count">0</span> Stile.<br/>
+          <span class="gal-hero-highlight">Kein Template.</span>
+        </h1>
+        <p class="gal-hero-sub">Jede Website individuell gestaltet. Finde den Stil,<br/>der zu deinem Unternehmen passt.</p>
+        <div class="gal-hero-stats">
+          <div class="gal-hero-stat">
+            <span class="gal-hero-stat-num">{allBranchen.length}</span>
+            <span class="gal-hero-stat-label">Branchen</span>
           </div>
-          <button
-            type="submit"
-            style="width:100%;background:#0E4D52;color:#FDFAF6;font-family:var(--font-sans);font-weight:600;font-size:0.9375rem;border:none;border-radius:10px;padding:13px 16px;cursor:pointer;transition:background 0.15s;letter-spacing:0.01em;"
-            onmouseover="this.style.background='#1A7A82'"
-            onmouseout="this.style.background='#0E4D52'"
-          >
-            Zugang
-          </button>
-          <p id="password-error" style="color:#C0392B;font-size:0.75rem;text-align:center;margin-top:10px;display:none;">Falsches Passwort — bitte nochmal versuchen.</p>
-        </form>
-
+          <div class="gal-hero-stat-divider"></div>
+          <div class="gal-hero-stat">
+            <span class="gal-hero-stat-num">{allStile.length}</span>
+            <span class="gal-hero-stat-label">Stile</span>
+          </div>
+          <div class="gal-hero-stat-divider"></div>
+          <div class="gal-hero-stat">
+            <span class="gal-hero-stat-num">100%</span>
+            <span class="gal-hero-stat-label">Individuell</span>
+          </div>
+        </div>
+      </div>
+      <div class="gal-hero-scroll-hint" id="scroll-hint">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
       </div>
     </div>
 
-    <!-- Footer -->
-    <p style="position:absolute;bottom:28px;color:#6B6360;font-size:0.6875rem;letter-spacing:0.04em;text-transform:uppercase;">portawerk.de</p>
+    <!-- Filter Bar -->
+    <div class="gal-header">
+      <!-- Tabs -->
+      <div class="gal-tabs" id="tabs">
+        <button class="gal-tab active" data-tab="branche">Branchen</button>
+        <button class="gal-tab" data-tab="stil">Stile</button>
+        <button class="gal-tab" data-tab="specials">Specials</button>
+      </div>
 
+      <!-- Filter Panels -->
+      <div class="gal-filters" id="filter-branche">
+        <button class="gal-filter active" data-value="all">Alle</button>
+        {allBranchen.map(b => <button class="gal-filter" data-value={b}>{b}</button>)}
+      </div>
+      <div class="gal-filters hidden" id="filter-stil">
+        <button class="gal-filter active" data-value="all">Alle</button>
+        {allStile.map(s => <button class="gal-filter" data-value={s}>{s}</button>)}
+      </div>
+      <div class="gal-filters hidden" id="filter-specials">
+        <button class="gal-filter active" data-value="all">Alle</button>
+        {allSpecials.map(s => <button class="gal-filter" data-value={s}>{s}</button>)}
+      </div>
+
+      <!-- Search -->
+      <div class="gal-search-wrap">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" class="gal-search" id="search" placeholder="Suche nach Branche, Stil oder Name&hellip;" />
+      </div>
+    </div>
+
+    <!-- Grid -->
+    <div class="gal-grid" id="grid">
+      {enrichedStyles.map(style => (
+        <div
+          class="gal-card"
+          data-branche={style.branche}
+          data-stil={style.stil.join(',')}
+          data-specials={style.specials.join(',')}
+          data-name={style.name.toLowerCase()}
+          data-slug={style.slug}
+          data-tags={style.tags}
+          data-url={style.url || ''}
+        >
+          <img
+            src={`/images/style-gallery/${style.slug}.jpg`}
+            alt={`${style.name} — ${style.category}`}
+            loading="lazy"
+            decoding="async"
+          />
+          <span class={`gal-card-badge ${style.url ? 'ext' : 'int'}`}>{style.url ? 'Extern' : 'PortaWerk'}</span>
+          <div class="gal-card-overlay">
+            <span class="gal-card-name">{style.name}</span>
+            <span class="gal-card-cat">{style.branche}</span>
+          </div>
+          <span class="gal-card-plus" aria-hidden="true">+</span>
+        </div>
+      ))}
+    </div>
+
+    <!-- Empty state -->
+    <div class="gal-empty" id="empty" style="display:none;">
+      <p>Kein Stil gefunden. Probiere einen anderen Filter.</p>
+    </div>
+
+    <!-- CTA -->
+    <div class="gal-cta">
+      <h2>Stil gefunden?</h2>
+      <p>Erz&auml;hl uns von deinem Unternehmen &mdash; wir machen den Rest.</p>
+      <a href="https://portawerk.de/anfrage" class="gal-cta-btn">Anfrage starten</a>
+    </div>
   </div>
+</section>
 
-  <!-- Main App -->
-  <div id="app" class="hidden min-h-screen">
-
-    <!-- Mobile Header -->
-    <div id="mobile-header" class="md:hidden fixed top-0 left-0 right-0 z-40 h-14 flex items-center gap-3 px-4 bg-surface border-b border-border">
-      <button id="hamburger-btn" class="flex items-center justify-center w-8 h-8 rounded-lg hover:bg-surface-hover transition-colors text-text-muted hover:text-text cursor-pointer">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+<!-- Overlay (dialog, PortaWerk-style) -->
+<dialog class="pf-overlay" id="pf-overlay" aria-label="Stil-Vorschau">
+  <div class="pf-overlay-bar">
+    <div class="pf-overlay-bar-left">
+      <span class="pf-overlay-title" id="pf-title">—</span>
+      <span class="pf-overlay-sep">&middot;</span>
+      <span class="pf-overlay-cat" id="pf-cat">—</span>
+    </div>
+    <div class="pf-overlay-bar-right">
+      <button class="pf-overlay-nav" id="pf-prev" aria-label="Vorheriger Stil">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
       </button>
-      <span class="font-display font-bold text-sm tracking-tight">Style Library</span>
-    </div>
-
-    <!-- Mobile Sidebar Overlay -->
-    <div id="mobile-overlay" class="hidden md:hidden fixed inset-0 z-30 bg-black/50"></div>
-
-    <!-- Sidebar -->
-    <aside id="sidebar" class="sidebar fixed left-0 top-0 bottom-0 z-40 overflow-x-hidden flex flex-col">
-      <!-- Logo area -->
-      <div class="sidebar-brand">
-        <div class="sidebar-icon">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-        </div>
-        <div class="sidebar-brand-text">
-          <span class="sidebar-title">Style Library</span>
-          <span class="sidebar-sub">PortaWerk</span>
-        </div>
-      </div>
-
-      <!-- Filter nav -->
-      <nav class="sidebar-nav">
-        <div class="sidebar-nav-label">Kategorien</div>
-        <button class="filter-btn active" data-category="all">
-          <span class="filter-label">Alle</span>
-          <span class="filter-count">{styles.length}</span>
-        </button>
-        {categories.map((cat) => {
-          const count = styles.filter((s) => s.category === cat).length;
-          return (
-            <button class="filter-btn" data-category={cat}>
-              <span class="filter-label">{cat}</span>
-              <span class="filter-count">{count}</span>
-            </button>
-          );
-        })}
-
-        <!-- Favoriten -->
-        <div class="sidebar-nav-sep"></div>
-        <div class="sidebar-nav-label">Favoriten</div>
-        <button class="filter-btn" data-category="__favs__">
-          <span class="filter-label">Shortlist</span>
-          <span id="fav-count" class="filter-count">0</span>
-        </button>
-        <button id="share-favs-btn" class="filter-btn" title="Favoriten-Link kopieren">
-          <span class="filter-label">Link teilen</span>
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-        </button>
-      </nav>
-
-      <!-- Bottom -->
-      <div class="sidebar-footer">
-        <div class="sidebar-icon">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-        </div>
-        <span class="sidebar-footer-text">v1.0</span>
-      </div>
-    </aside>
-
-    <!-- Content -->
-    <main class="main-content">
-      <div class="main-inner">
-        <header class="page-header">
-          <div class="page-header-line"></div>
-          <h2 id="category-title" class="page-header-title">Alle Stile</h2>
-          <p id="category-count" class="page-header-count">{styles.length} Stile</p>
-        </header>
-
-        <!-- Grid -->
-        <div id="styles-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-12">
-        {styles.map((style) => (
-          <div
-            class="style-card group cursor-pointer"
-            data-category={style.category}
-            data-slug={style.slug}
-            data-ready={style.ready ? "true" : "false"}
-          >
-            <!-- Preview -->
-            <div class="card-preview relative aspect-[16/9] overflow-hidden border border-border mb-3 transition-all duration-200 group-hover:border-accent/40 group-hover:shadow-[0_12px_48px_rgba(14,77,82,0.13)] group-hover:scale-[1.02]" style="clip-path:inset(0)">
-
-              {style.ready ? (
-                <>
-                  <div
-                    class="card-skeleton absolute inset-0 flex flex-col items-center justify-center"
-                    style={`background: ${style.colors.background};`}
-                  >
-                    <div class="skeleton-pulse w-16 h-1.5 rounded mb-3" style={`background: ${style.colors.primary}; opacity: 0.25;`}></div>
-                    <div class="skeleton-pulse w-24 h-2.5 rounded mb-2" style={`background: ${style.colors.primary}; opacity: 0.2;`}></div>
-                    <div class="skeleton-pulse w-16 h-1.5 rounded" style={`background: ${style.colors.primary}; opacity: 0.15;`}></div>
-                  </div>
-                  <iframe
-                    class="lazy-iframe pointer-events-none absolute top-0 opacity-0 transition-opacity duration-500"
-                    style="width:1920px;height:1080px;left:0;top:0;transform:scale(0.3);transform-origin:top left;"
-                    data-src={`/styles/${style.slug}`}
-                    tabindex="-1"
-                  />
-                </>
-              ) : (
-                <div
-                  class="w-full h-full flex items-center justify-center"
-                  style={`background: ${style.colors.background};`}
-                >
-                  <div class="text-center px-6">
-                    <div class="text-2xl font-bold mb-1.5" style={`color: ${style.colors.primary};`}>{style.business.name}</div>
-                    <div class="text-xs opacity-50" style={`color: ${style.colors.text};`}>{style.business.tagline}</div>
-                    <div class="mt-3 text-[9px] px-2 py-0.5 rounded bg-black/10 inline-block" style={`color: ${style.colors.text};`}>Coming Soon</div>
-                  </div>
-                </div>
-              )}
-
-              <!-- Fav button (always shown on card) -->
-              <button class="fav-btn" data-slug={style.slug} title="Favorisieren">
-                <svg class="fav-icon-empty" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-                <svg class="fav-icon-filled" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-              </button>
-
-            </div>
-
-            <!-- Meta -->
-            <div class="card-meta">
-              <div class="card-row">
-                <h3 class="card-title">{style.name}</h3>
-                <span class="card-category">{style.category}</span>
-              </div>
-            </div>
-          </div>
-        ))}
-        </div>
-      </div>
-    </main>
-  </div>
-
-  <!-- Modal -->
-  <div id="style-modal" class="fixed inset-0 z-50 hidden">
-    <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" id="modal-backdrop"></div>
-    <div id="modal-panel" class="absolute inset-0 md:inset-4 lg:inset-8 xl:inset-12 bg-surface rounded-none md:rounded-2xl overflow-hidden border-0 md:border border-border flex flex-col">
-      <div class="flex items-center justify-between px-4 md:px-6 py-3 md:py-4 border-b border-border shrink-0 gap-3">
-        <!-- Nav arrows + position -->
-        <div class="flex items-center gap-1.5 shrink-0">
-          <button id="modal-prev" class="modal-nav-btn" title="Vorheriger Stil (←)">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-          </button>
-          <button id="modal-next" class="modal-nav-btn" title="Nächster Stil (→)">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
-          <span id="modal-pos" class="text-xs text-text-muted font-mono tabular-nums select-none hidden sm:inline">1 / 90</span>
-        </div>
-        <!-- Title -->
-        <h3 id="modal-title" class="font-display font-bold flex-1 text-center text-sm md:text-base truncate"></h3>
-        <!-- Actions -->
-        <div class="flex items-center gap-0.5 shrink-0">
-          <button id="modal-fav-btn" class="modal-action-btn" title="Favorisieren">
-            <svg class="modal-fav-empty" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-            <svg class="modal-fav-filled" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-          </button>
-          <button id="modal-share-btn" class="modal-action-btn hidden sm:flex" title="Link kopieren">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-          </button>
-          <button id="modal-close" class="modal-action-btn" title="Schließen (Esc)">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-          </button>
-        </div>
-      </div>
-      <div id="modal-content" class="flex-1 overflow-hidden">
-      </div>
+      <button class="pf-overlay-nav" id="pf-next" aria-label="Nächster Stil">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+      <a class="pf-overlay-link" id="pf-link" href="" target="_blank" rel="noopener" style="display:none;">
+        Website besuchen
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </a>
+      <button class="pf-overlay-close" id="pf-close" aria-label="Schließen">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
     </div>
   </div>
+  <div class="pf-overlay-content">
+    <iframe id="pf-iframe" src="" title="Vorschau" sandbox="allow-scripts allow-same-origin allow-forms allow-pointer-lock"></iframe>
+    <div class="pf-overlay-img-scroll" id="pf-img-scroll" style="display:none;">
+      <img id="pf-scroll-img" src="" alt="" />
+    </div>
+  </div>
+</dialog>
 
-  <script is:inline>
-    const PASSWORD = 'portawerk2026';
-    const STORAGE_KEY = 'pw-styles-auth';
-    const FAV_KEY = 'pw-styles-favs';
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif; -webkit-font-smoothing: antialiased; }
+  ::selection { background: #10B981; color: #fff; }
+  .hidden { display: none !important; }
 
-    // ── State ──────────────────────────────────────────────
-    let currentModalSlug = null;
-    let favs = new Set(JSON.parse(localStorage.getItem(FAV_KEY) || '[]'));
+  /* Password Gate */
+  .gal-pw {
+    position: fixed; inset: 0; z-index: 100;
+    background: #FAFAFA;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+  }
+  .gal-pw.pw-hidden { display: none; }
+  .gal-pw-card {
+    background: #fff; border: 1px solid #E2E8F0; border-radius: 16px;
+    padding: 44px 40px 36px; width: 100%; max-width: 400px; margin: 0 20px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.06); text-align: center;
+  }
+  .gal-pw-logo {
+    font-size: 1.4rem; font-weight: 700; color: #10B981;
+    letter-spacing: -0.02em; margin-bottom: 20px;
+  }
+  .gal-pw-logo svg {
+    display: inline-block; width: 0.68em; height: 0.60em; margin: 0 0.02em;
+    position: relative; top: 0.03em; overflow: visible;
+  }
+  .gal-pw-title {
+    font-size: 1.375rem; font-weight: 700; color: #0F172A;
+    letter-spacing: -0.03em; margin: 0 0 5px;
+  }
+  .gal-pw-sub { color: #64748B; font-size: 0.8rem; margin: 0 0 24px; }
+  .gal-pw-divider { height: 1px; background: #E2E8F0; margin-bottom: 28px; }
+  .gal-pw-input {
+    width: 100%; background: #fff; border: 1px solid #E2E8F0; border-radius: 8px;
+    padding: 13px 16px; font-size: 0.9375rem; color: #0F172A; font-family: inherit;
+    margin-bottom: 10px; transition: border-color 0.15s;
+  }
+  .gal-pw-input:focus { outline: none; border-color: #10B981; }
+  .gal-pw-btn {
+    width: 100%; background: #10B981; color: #fff; font-family: inherit;
+    font-weight: 600; font-size: 0.9375rem; border: none; border-radius: 8px;
+    padding: 13px 16px; cursor: pointer; transition: background 0.15s;
+  }
+  .gal-pw-btn:hover { background: #059669; }
+  .gal-pw-error { color: #EF4444; font-size: 0.75rem; margin-top: 10px; display: none; }
+  .gal-pw-error.visible { display: block; }
+  .gal-pw-footer {
+    position: absolute; bottom: 28px; color: #64748B;
+    font-size: 0.6875rem; letter-spacing: 0.04em; text-transform: uppercase;
+  }
 
-    // ── Scale iframes to fill card width ───────────────────
-    function updateIframeScales() {
-      document.querySelectorAll('.card-preview').forEach(card => {
-        const iframe = card.querySelector('.lazy-iframe');
-        if (!iframe) return;
-        const scale = card.offsetWidth / 1920;
-        iframe.style.transform = `scale(${scale})`;
+  /* Gallery */
+  .gal { min-height: 100vh; background: #FAFAFA; padding: 0; }
+  .gal-inner { margin: 0 auto; }
+
+  /* Hero — light, PortaWerk-style */
+  .gal-hero {
+    position: relative; overflow: hidden;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    min-height: 80vh; padding: 120px 2rem 80px; text-align: center;
+    background: #FAFAFA;
+  }
+  .gal-hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 55% 65% at 50% 50%, black 40%, transparent 100%);
+    -webkit-mask-image: radial-gradient(ellipse 55% 65% at 50% 50%, black 40%, transparent 100%);
+  }
+  .gal-hero-glow {
+    position: absolute; top: 30%; left: 50%; transform: translate(-50%, -50%);
+    width: 700px; height: 700px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(16,185,129,0.08) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .gal-hero-content { position: relative; z-index: 1; }
+
+  /* Pills */
+  .gal-hero-pills {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    opacity: 0; animation: hero-fade-up 0.8s ease forwards 0.2s;
+  }
+  .gal-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 14px; font-size: 0.8125rem; font-weight: 500;
+    color: #10B981; background: rgba(16,185,129,0.08);
+    border: 1px solid rgba(16,185,129,0.2); border-radius: 9999px;
+  }
+
+  .gal-hero-title {
+    font-size: clamp(2.75rem, 8vw, 3.75rem); font-weight: 800;
+    color: #0F172A; letter-spacing: -0.03em; line-height: 1.05;
+    margin: 0 0 1.25rem;
+    opacity: 0; animation: hero-fade-up 0.8s ease forwards 0.4s;
+  }
+  .gal-hero-count {
+    background: linear-gradient(135deg, #10B981, #34D399);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .gal-hero-highlight {
+    background: linear-gradient(135deg, #10B981, #34D399);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .gal-hero-sub {
+    font-size: clamp(1.05rem, 1.5vw, 1.25rem); color: #64748B; line-height: 1.55;
+    max-width: 480px; margin: 0 auto 2.5rem;
+    opacity: 0; animation: hero-fade-up 0.8s ease forwards 0.6s;
+  }
+  .gal-hero-stats {
+    display: flex; align-items: center; justify-content: center; gap: 2rem;
+    opacity: 0; animation: hero-fade-up 0.8s ease forwards 0.8s;
+  }
+  .gal-hero-stat { display: flex; flex-direction: column; align-items: center; }
+  .gal-hero-stat-num { font-size: 1.5rem; font-weight: 700; color: #0F172A; }
+  .gal-hero-stat-label { font-size: 0.75rem; color: #94A3B8; margin-top: 0.25rem; text-transform: uppercase; letter-spacing: 0.06em; }
+  .gal-hero-stat-divider { width: 1px; height: 32px; background: #E2E8F0; }
+  .gal-hero-scroll-hint {
+    position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+    color: #94A3B8; animation: bounce-down 2s ease-in-out infinite 1.5s;
+  }
+  @keyframes hero-fade-up {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes bounce-down {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(8px); }
+  }
+
+  /* Filter Bar */
+  .gal-header {
+    padding: 2rem 2rem 1.5rem;
+    position: sticky; top: 0; z-index: 30;
+    background: rgba(250,250,250,0.85); backdrop-filter: blur(12px);
+    border-bottom: 1px solid #E2E8F0;
+  }
+  .gal-title {
+    font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 700; color: #fff;
+    letter-spacing: -0.03em; margin: 0 0 0.5rem;
+  }
+  .gal-sub { font-size: 1.0625rem; color: rgba(255,255,255,0.5); margin: 0 0 1.5rem; max-width: 560px; }
+
+  /* Tabs */
+  .gal-tabs { display: flex; gap: 0; margin-bottom: 1rem; border-bottom: 1px solid #E2E8F0; }
+  .gal-tab {
+    padding: 0.625rem 1.25rem; border: none; background: none;
+    font-family: inherit; font-size: 0.875rem; font-weight: 600; color: #94A3B8;
+    cursor: pointer; transition: color 0.15s; position: relative;
+  }
+  .gal-tab:hover { color: #0F172A; }
+  .gal-tab.active { color: #0F172A; }
+  .gal-tab.active::after {
+    content: ''; position: absolute; bottom: -1px; left: 0; right: 0;
+    height: 2px; background: #10B981; border-radius: 1px;
+  }
+
+  /* Filters */
+  .gal-filters { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+  .gal-filter {
+    padding: 0.375rem 0.875rem; border: 1px solid #E2E8F0; border-radius: 100px;
+    background: #fff; color: #64748B; font-size: 0.8125rem; font-weight: 500;
+    cursor: pointer; transition: all 0.15s; font-family: inherit; white-space: nowrap;
+  }
+  .gal-filter:hover { border-color: #10B981; color: #10B981; }
+  .gal-filter.active { background: #0F172A; color: #fff; border-color: #0F172A; }
+
+  /* Search */
+  .gal-search-wrap { position: relative; max-width: 400px; }
+  .gal-search-wrap svg {
+    position: absolute; left: 0.875rem; top: 50%; transform: translateY(-50%);
+    color: #94A3B8; pointer-events: none;
+  }
+  .gal-search {
+    width: 100%; padding: 0.625rem 0.875rem 0.625rem 2.75rem;
+    border: 1px solid #E2E8F0; border-radius: 10px; font-size: 0.9375rem;
+    color: #0F172A; background: #fff; font-family: inherit; transition: border-color 0.15s;
+  }
+  .gal-search::placeholder { color: #94A3B8; }
+  .gal-search:focus { outline: none; border-color: #10B981; }
+
+  /* Grid — 3 cols, small gaps */
+  .gal-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px;
+    padding: 0 4px;
+  }
+
+  /* Cards — 16:9 with overlay */
+  .gal-card {
+    position: relative; aspect-ratio: 16/9; overflow: hidden; cursor: pointer;
+    border-radius: 6px; background: #F1F5F9;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  .gal-card.card-hidden { display: none; }
+  .gal-card img {
+    width: 100%; height: 500%; object-fit: cover; object-position: top;
+    will-change: transform;
+    transition: transform 0.4s ease-out;
+  }
+
+  /* Overlay — appears on hover */
+  .gal-card-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.15) 40%, transparent 100%);
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 1.5rem;
+    opacity: 0; transition: opacity 0.35s ease;
+  }
+  .gal-card:hover .gal-card-overlay { opacity: 1; }
+  .gal-card-name {
+    font-size: 1.25rem; font-weight: 700; color: #fff;
+    letter-spacing: -0.02em;
+    transform: translateY(8px); transition: transform 0.35s ease;
+  }
+  .gal-card:hover .gal-card-name { transform: translateY(0); }
+  .gal-card-cat {
+    font-size: 0.8125rem; color: rgba(255,255,255,0.7); margin-top: 0.25rem;
+    transform: translateY(8px); transition: transform 0.35s ease 0.04s;
+  }
+  .gal-card:hover .gal-card-cat { transform: translateY(0); }
+
+  /* Plus icon */
+  .gal-card-plus {
+    position: absolute; bottom: 0.875rem; right: 0.875rem; z-index: 3;
+    width: 32px; height: 32px; border-radius: 50%;
+    background: rgba(255,255,255,0.9); color: #0F172A;
+    font-size: 1.25rem; font-weight: 300; line-height: 1;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transform: scale(0.7) rotate(-90deg);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+  .gal-card:hover .gal-card-plus {
+    opacity: 1; transform: scale(1) rotate(0deg);
+  }
+
+  /* Badge */
+  .gal-card-badge {
+    position: absolute; top: 0.75rem; left: 0.75rem; z-index: 2;
+    font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.03em;
+    padding: 0.2rem 0.6rem; border-radius: 100px;
+    backdrop-filter: blur(8px);
+  }
+  .gal-card-badge.int {
+    background: rgba(16,185,129,0.2); color: #10B981;
+    border: 1px solid rgba(16,185,129,0.3);
+  }
+  .gal-card-badge.ext {
+    background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.8);
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+
+  /* Empty */
+  .gal-empty { text-align: center; padding: 6rem 1rem; color: #64748B; font-size: 1rem; }
+
+  /* CTA */
+  .gal-cta {
+    text-align: center; margin: 3rem 1rem 2rem; padding: 3rem 2rem;
+    background: #0A0F1C; border-radius: 16px; color: #fff;
+  }
+  .gal-cta h2 { font-size: 1.5rem; font-weight: 700; margin: 0 0 0.5rem; letter-spacing: -0.02em; }
+  .gal-cta p { color: #94A3B8; margin: 0 0 1.5rem; font-size: 1rem; }
+  .gal-cta-btn {
+    display: inline-block; padding: 0.75rem 2rem; background: #10B981; color: #fff;
+    border-radius: 8px; font-weight: 600; font-size: 1rem; text-decoration: none;
+    transition: background 0.15s;
+  }
+  .gal-cta-btn:hover { background: #059669; }
+
+  /* Overlay (dialog) */
+  .pf-overlay {
+    position: fixed; inset: 1.5rem; width: auto; height: auto;
+    max-width: calc(100vw - 3rem); max-height: 100vh;
+    border: none; padding: 0; margin: 0;
+    background: #fff; z-index: 9999;
+    border-radius: 12px; overflow: hidden;
+  }
+  .pf-overlay::backdrop { background: rgba(0,0,0,0.55); }
+  .pf-overlay[open] { display: flex; flex-direction: column; position: fixed; }
+
+  .pf-overlay-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.75rem 1.25rem; background: #F8FAFC;
+    border-bottom: 1px solid #E2E8F0; flex-shrink: 0;
+  }
+  .pf-overlay-bar-left { display: flex; align-items: center; gap: 0.5rem; min-width: 0; }
+  .pf-overlay-title {
+    font-weight: 600; font-size: 0.875rem; color: #0F172A;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .pf-overlay-sep { color: #CBD5E1; font-size: 0.75rem; }
+  .pf-overlay-cat {
+    font-size: 0.7rem; color: #64748B;
+    text-transform: uppercase; letter-spacing: 0.08em; white-space: nowrap;
+  }
+  .pf-overlay-bar-right { display: flex; align-items: center; gap: 0.375rem; flex-shrink: 0; }
+  .pf-overlay-nav,
+  .pf-overlay-close {
+    background: none; border: 1px solid #E2E8F0; border-radius: 6px;
+    color: #64748B; width: 36px; height: 36px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: background 0.15s, color 0.15s, border-color 0.15s;
+  }
+  .pf-overlay-nav:hover,
+  .pf-overlay-close:hover { background: #F1F5F9; color: #0F172A; border-color: #CBD5E1; }
+  .pf-overlay-close { margin-left: 0.5rem; }
+
+  .pf-overlay-content {
+    flex: 1; overflow: hidden; position: relative; scrollbar-width: none;
+  }
+  .pf-overlay-content::-webkit-scrollbar { display: none; }
+  .pf-overlay-content iframe {
+    width: 100%; height: 100%; border: none; background: #fff; scrollbar-width: none;
+  }
+  .pf-overlay-img-scroll {
+    width: 100%; height: 100%; overflow-y: auto; background: #fff;
+    scrollbar-width: thin; scrollbar-color: #E2E8F0 transparent;
+  }
+  .pf-overlay-img-scroll img { width: 100%; display: block; }
+  .pf-overlay-link {
+    display: inline-flex; align-items: center; gap: 0.375rem;
+    padding: 0.4rem 0.875rem; background: #10B981; color: #fff; border-radius: 6px;
+    font-size: 0.75rem; font-weight: 600; text-decoration: none;
+    transition: background 0.15s; white-space: nowrap;
+  }
+  .pf-overlay-link:hover { background: #059669; }
+
+  /* Tablet — 2 cols */
+  @media (max-width: 1024px) {
+    .gal-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* Mobile — 1 col */
+  @media (max-width: 640px) {
+    .gal-hero { min-height: 70vh; padding: 100px 1.5rem 3rem; }
+    .gal-hero-sub br { display: none; }
+    .gal-hero-stats { gap: 1.25rem; }
+    .gal-hero-stat-num { font-size: 1.25rem; }
+    .gal-header { padding: 1.25rem 1rem 1rem; }
+    .gal-grid { grid-template-columns: 1fr; gap: 3px; padding: 0 3px; }
+    .gal-card-overlay { opacity: 1; }
+    .gal-card-name { transform: translateY(0); font-size: 1.0625rem; }
+    .gal-card-cat { transform: translateY(0); }
+    .gal-filters { gap: 0.375rem; }
+    .gal-filter { font-size: 0.75rem; padding: 0.3rem 0.625rem; }
+    .gal-tab { padding: 0.5rem 0.75rem; font-size: 0.8125rem; }
+    .pf-overlay { inset: 0.5rem; border-radius: 8px; }
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #E2E8F0; border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
+</style>
+
+<script>
+  // --- Password Gate ---
+  const PW = 'portawerk2026';
+  const gate = document.getElementById('pw-gate')!;
+  const app = document.getElementById('gal-app')!;
+  const pwForm = document.getElementById('pw-form')!;
+  const pwInput = document.getElementById('pw-input') as HTMLInputElement;
+  const pwError = document.getElementById('pw-error')!;
+
+  function unlock() {
+    gate.classList.add('pw-hidden');
+    app.style.display = '';
+    animateCount();
+  }
+
+  // Count-up animation
+  function animateCount() {
+    const el = document.getElementById('hero-count');
+    if (!el) return;
+    const target = document.querySelectorAll('.gal-card').length;
+    const duration = 1600;
+    const start = performance.now();
+    function tick(now: number) {
+      const t = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - t, 3); // ease-out cubic
+      el.textContent = Math.round(eased * target).toString();
+      if (t < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  if (sessionStorage.getItem('gal-unlocked') === '1') unlock();
+  if (window.location.hostname === 'localhost') unlock();
+
+  if (new URLSearchParams(window.location.search).get('token') === 'unlocked') {
+    sessionStorage.setItem('gal-unlocked', '1');
+    unlock();
+    history.replaceState(null, '', window.location.pathname);
+  }
+
+  pwForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (pwInput.value === PW) {
+      sessionStorage.setItem('gal-unlocked', '1');
+      unlock();
+    } else {
+      pwError.classList.add('visible');
+      pwInput.value = '';
+      pwInput.focus();
+    }
+  });
+
+  // --- Tab + Filter Logic ---
+  const grid = document.getElementById('grid')!;
+  const cards = Array.from(grid.querySelectorAll('.gal-card')) as HTMLElement[];
+  const search = document.getElementById('search') as HTMLInputElement;
+  const empty = document.getElementById('empty')!;
+  const tabs = document.querySelectorAll('.gal-tab');
+  const filterPanels = {
+    branche: document.getElementById('filter-branche')!,
+    stil: document.getElementById('filter-stil')!,
+    specials: document.getElementById('filter-specials')!,
+  } as Record<string, HTMLElement>;
+
+  let activeTab = 'branche';
+  let activeValue = 'all';
+
+  // Switch tabs
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const newTab = (tab as HTMLElement).dataset.tab || 'branche';
+      if (newTab === activeTab) return;
+
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+
+      // Hide all filter panels, show active one
+      Object.values(filterPanels).forEach(p => p.classList.add('hidden'));
+      filterPanels[newTab].classList.remove('hidden');
+
+      // Reset filter selection in new panel
+      activeTab = newTab;
+      activeValue = 'all';
+      filterPanels[newTab].querySelectorAll('.gal-filter').forEach((f, i) => {
+        f.classList.toggle('active', i === 0);
       });
-    }
-    window.addEventListener('resize', updateIframeScales);
 
-    // ── Init ───────────────────────────────────────────────
-    function initApp() {
-      updateAllFavBtns();
-      updateFavCount();
-      updateIframeScales();
-      initLazyLoad();
-      initCards();
-      initFilter();
-      initMobile();
-      handleUrlParams();
-    }
+      filterCards();
+    });
+  });
 
-    if (sessionStorage.getItem(STORAGE_KEY) === 'true') {
-      document.getElementById('password-gate').style.display = 'none';
-      document.getElementById('app').classList.remove('hidden');
-      initApp();
-    }
+  // Filter buttons within each panel
+  Object.entries(filterPanels).forEach(([tabName, panel]) => {
+    panel.querySelectorAll('.gal-filter').forEach(btn => {
+      btn.addEventListener('click', () => {
+        panel.querySelectorAll('.gal-filter').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeValue = (btn as HTMLElement).dataset.value || 'all';
+        filterCards();
+      });
+    });
+  });
 
-    document.getElementById('password-form')?.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const input = document.getElementById('password-input');
-      const errorEl = document.getElementById('password-error');
-      if (input.value === PASSWORD) {
-        sessionStorage.setItem(STORAGE_KEY, 'true');
-        document.getElementById('password-gate').style.display = 'none';
-        document.getElementById('app').classList.remove('hidden');
-        initApp();
-      } else {
-        errorEl.style.display = 'block';
-        input.value = '';
-        input.focus();
+  function filterCards() {
+    const q = search.value.toLowerCase().trim();
+    const terms = q.split(/\s+/).filter(Boolean);
+    let visible = 0;
+
+    cards.forEach(card => {
+      const name = card.dataset.name || '';
+      const slug = card.dataset.slug || '';
+      const tags = card.dataset.tags || '';
+      const branche = card.dataset.branche || '';
+      const stil = card.dataset.stil || '';
+      const specials = card.dataset.specials || '';
+      const haystack = `${branche} ${stil} ${specials} ${name} ${slug} ${tags}`.toLowerCase();
+
+      // Tab filter
+      let matchFilter = activeValue === 'all';
+      if (!matchFilter) {
+        if (activeTab === 'branche') matchFilter = branche === activeValue;
+        else if (activeTab === 'stil') matchFilter = stil.split(',').includes(activeValue);
+        else if (activeTab === 'specials') matchFilter = specials.split(',').includes(activeValue);
       }
+
+      // Search filter
+      const matchSearch = !terms.length || terms.every(t => haystack.includes(t));
+      const show = matchFilter && matchSearch;
+      card.classList.toggle('card-hidden', !show);
+      if (show) visible++;
     });
 
-    // ── Favs ───────────────────────────────────────────────
-    function saveFavs() {
-      localStorage.setItem(FAV_KEY, JSON.stringify([...favs]));
-      updateFavCount();
-      updateAllFavBtns();
-      if (currentModalSlug) updateModalFavBtn(currentModalSlug);
+    empty.style.display = visible === 0 ? '' : 'none';
+  }
+
+  search.addEventListener('input', filterCards);
+
+  // --- Hover Scroll Animation (wave/breathing speed) ---
+  // Continuous scroll with sine-wave speed: accelerate, decelerate, repeat
+  cards.forEach(card => {
+    const img = card.querySelector('img') as HTMLImageElement;
+    let raf = 0;
+    let hovering = false;
+    let start = 0;
+
+    const totalDuration = 8000; // ms to scroll from top to bottom
+    const maxY = 80;            // max translateY% (img is 500% height)
+    const waveCycles = 4;       // how many speed waves over the full scroll
+    // Wave function: integrating sin gives a smooth progress curve
+    // that speeds up and slows down cyclically
+
+    function tick(now: number) {
+      if (!hovering) return;
+      const elapsed = now - start;
+      const t = Math.min(elapsed / totalDuration, 1); // 0..1 linear time
+
+      // Sine-wave progress: speeds up and slows down in waves
+      // progress = t - (1/(2π*n)) * sin(2π*n*t)
+      // This creates a smooth oscillating speed around the average
+      const wave = t - Math.sin(2 * Math.PI * waveCycles * t) / (2 * Math.PI * waveCycles);
+      // Normalize: wave at t=1 equals 1
+      const progress = wave; // already normalized since sin(2πn) = 0
+
+      const y = progress * maxY;
+      img.style.transform = `scale(1.02) translateY(${-y}%)`;
+      if (t < 1) raf = requestAnimationFrame(tick);
     }
 
-    function toggleFav(slug) {
-      if (favs.has(slug)) favs.delete(slug);
-      else favs.add(slug);
-      saveFavs();
+    card.addEventListener('mouseenter', () => {
+      hovering = true;
+      start = performance.now();
+      raf = requestAnimationFrame(tick);
+    });
+
+    card.addEventListener('mouseleave', () => {
+      hovering = false;
+      cancelAnimationFrame(raf);
+      img.style.transform = '';
+    });
+  });
+
+  // --- Overlay (dialog) ---
+  const overlay = document.getElementById('pf-overlay') as HTMLDialogElement;
+  const pfTitle = document.getElementById('pf-title')!;
+  const pfCat = document.getElementById('pf-cat')!;
+  const pfIframe = document.getElementById('pf-iframe') as HTMLIFrameElement;
+  const pfImgScroll = document.getElementById('pf-img-scroll')!;
+  const pfScrollImg = document.getElementById('pf-scroll-img') as HTMLImageElement;
+  const pfLink = document.getElementById('pf-link') as HTMLAnchorElement;
+  const pfClose = document.getElementById('pf-close')!;
+  const pfPrev = document.getElementById('pf-prev')!;
+  const pfNext = document.getElementById('pf-next')!;
+
+  function visibleCards() {
+    return cards.filter(c => !c.classList.contains('card-hidden'));
+  }
+
+  let currentIdx = 0;
+
+  function openOverlay(idx: number) {
+    const vis = visibleCards();
+    if (idx < 0 || idx >= vis.length) return;
+    currentIdx = idx;
+    const card = vis[idx];
+    const name = card.querySelector('.gal-card-name')?.textContent || '';
+    const cat = card.querySelector('.gal-card-cat')?.textContent || '';
+    const slug = card.dataset.slug || '';
+    const url = card.dataset.url || '';
+
+    pfTitle.textContent = name;
+    pfCat.textContent = cat;
+
+    if (url) {
+      // External: scrollable screenshot + link
+      pfIframe.style.display = 'none';
+      pfIframe.src = '';
+      pfImgScroll.style.display = '';
+      pfScrollImg.src = `/images/style-gallery/${slug}.jpg`;
+      pfScrollImg.alt = `${name} — ${cat}`;
+      pfImgScroll.scrollTop = 0;
+      pfLink.href = url;
+      pfLink.style.display = '';
+    } else {
+      // Internal: iframe
+      pfImgScroll.style.display = 'none';
+      pfScrollImg.src = '';
+      pfIframe.style.display = '';
+      pfIframe.src = `/styles/${slug}`;
+      pfLink.style.display = 'none';
     }
 
-    function updateFavCount() {
-      const el = document.getElementById('fav-count');
-      if (el) el.textContent = favs.size;
-    }
-
-    function updateAllFavBtns() {
-      document.querySelectorAll('.fav-btn').forEach((btn) => {
-        btn.classList.toggle('is-fav', favs.has(btn.dataset.slug));
-      });
-    }
-
-    function updateModalFavBtn(slug) {
-      const btn = document.getElementById('modal-fav-btn');
-      if (btn) btn.classList.toggle('is-fav', favs.has(slug));
-    }
-
-    // ── Filter ─────────────────────────────────────────────
-    let activeCategory = 'all';
-
-    function initFilter() {
-      document.querySelectorAll('.filter-btn[data-category]').forEach((btn) => {
-        btn.addEventListener('click', () => {
-          document.querySelectorAll('.filter-btn[data-category]').forEach((b) => b.classList.remove('active'));
-          btn.classList.add('active');
-          activeCategory = btn.dataset.category;
-          filterCards();
-        });
-      });
-    }
-
-    function filterCards() {
-      const title = document.getElementById('category-title');
-      const count = document.getElementById('category-count');
-      const cards = document.querySelectorAll('.style-card');
-      let visible = 0;
-
-      cards.forEach((card) => {
-        let show = false;
-        if (activeCategory === 'all') show = true;
-        else if (activeCategory === '__favs__') show = favs.has(card.dataset.slug);
-        else show = card.dataset.category === activeCategory;
-
-        card.style.display = show ? '' : 'none';
-        if (show) visible++;
-      });
-
-      if (activeCategory === 'all') title.textContent = 'Alle Stile';
-      else if (activeCategory === '__favs__') title.textContent = 'Favoriten';
-      else title.textContent = activeCategory;
-
-      count.textContent = visible + (visible === 1 ? ' Stil' : ' Stile');
-    }
-
-    // ── Lazy Load with concurrency queue ───────────────────
-    function initLazyLoad() {
-      const loadQueue = [];
-      let activeLoads = 0;
-      const MAX_CONCURRENT = 4;
-
-      function revealIframe(iframe) {
-        iframe.style.opacity = '1';
-        const skeleton = iframe.previousElementSibling;
-        if (skeleton?.classList.contains('card-skeleton')) {
-          skeleton.style.opacity = '0';
-          skeleton.style.transition = 'opacity 0.4s';
-        }
-      }
-
-      function processQueue() {
-        while (activeLoads < MAX_CONCURRENT && loadQueue.length > 0) {
-          const iframe = loadQueue.shift();
-          const src = iframe.dataset.src;
-          if (!src || iframe.src) continue;
-          activeLoads++;
-          iframe.src = src;
-          iframe.addEventListener('load', () => {
-            revealIframe(iframe);
-            activeLoads--;
-            processQueue();
-          }, { once: true });
-          // Fallback timeout in case load event misfires
-          setTimeout(() => { revealIframe(iframe); activeLoads--; processQueue(); }, 8000);
-        }
-      }
-
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          const iframe = entry.target;
-          if (!iframe.dataset.src || iframe.src) return;
-          observer.unobserve(iframe);
-          loadQueue.push(iframe);
-          processQueue();
-        });
-      }, { rootMargin: '400px' });
-
-      document.querySelectorAll('.lazy-iframe').forEach((iframe) => observer.observe(iframe));
-    }
-
-    // ── Preload Cache ──────────────────────────────────────
-    const preloadContainer = document.createElement('div');
-    preloadContainer.style.cssText = 'position:fixed;top:-9999px;left:-9999px;width:1px;height:1px;visibility:hidden;pointer-events:none;';
-    document.body.appendChild(preloadContainer);
-    const preloadCache = {};
-
-    function preloadStyle(slug) {
-      if (preloadCache[slug]) return;
-      const iframe = document.createElement('iframe');
-      iframe.src = '/styles/' + slug;
-      iframe.tabIndex = -1;
-      preloadContainer.appendChild(iframe);
-      preloadCache[slug] = iframe;
-    }
-
-    // ── Cards ──────────────────────────────────────────────
-    function initCards() {
-      document.querySelectorAll('.style-card').forEach((card) => {
-        const slug = card.dataset.slug;
-
-        // Fav button on card (works for all cards, ready or not)
-        const favBtn = card.querySelector('.fav-btn');
-        if (favBtn) {
-          favBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            toggleFav(slug);
-          });
-        }
-
-        if (card.dataset.ready !== 'true') return;
-
-        // Hover → preload in background + replay card animations
-        card.addEventListener('mouseenter', () => {
-          preloadStyle(slug);
-          const iframe = card.querySelector('.lazy-iframe');
-          if (!iframe?.contentDocument) return;
-          try {
-            iframe.contentDocument.querySelectorAll('*').forEach(el => {
-              el.style.animation = 'none';
-              void el.offsetHeight;
-              el.style.animation = '';
-            });
-          } catch (e) {}
-        });
-
-        // Click → open modal
-        card.addEventListener('click', () => openModal(slug));
-      });
-    }
-
-    // ── Modal ──────────────────────────────────────────────
-    const modal = document.getElementById('style-modal');
-    const modalTitle = document.getElementById('modal-title');
-    const modalPos = document.getElementById('modal-pos');
-    const modalContent = document.getElementById('modal-content');
-
-    function getVisibleCards() {
-      return Array.from(document.querySelectorAll('.style-card')).filter((c) => c.style.display !== 'none');
-    }
-
-    function openModal(slug) {
-      const card = document.querySelector(`.style-card[data-slug="${slug}"]`);
-      if (!card || card.dataset.ready !== 'true') return;
-
-      currentModalSlug = slug;
-
-      // Title
-      const titleEl = card.querySelector('h3');
-      modalTitle.textContent = titleEl ? titleEl.textContent : slug;
-
-      // Position indicator
-      const visibleCards = getVisibleCards();
-      const idx = visibleCards.findIndex((c) => c.dataset.slug === slug);
-      if (modalPos) modalPos.textContent = `${idx + 1} / ${visibleCards.length}`;
-
-      // Fav state
-      updateModalFavBtn(slug);
-
-      // Load iframe (reuse preloaded if available)
-      while (modalContent.firstChild) modalContent.removeChild(modalContent.firstChild);
-      let iframe;
-      if (preloadCache[slug]) {
-        iframe = preloadCache[slug];
-        delete preloadCache[slug];
-      } else {
-        iframe = document.createElement('iframe');
-        iframe.src = '/styles/' + slug;
-      }
-      iframe.style.cssText = 'width:100%;height:100%;border:none;display:block;';
-      modalContent.appendChild(iframe);
-
-      modal.classList.remove('hidden');
+    if (!overlay.open) {
+      overlay.showModal();
       document.body.style.overflow = 'hidden';
-
-      // Update URL
-      const url = new URL(window.location);
-      url.searchParams.set('style', slug);
-      history.replaceState(null, '', url);
     }
+  }
 
-    function closeModal() {
-      modal.classList.add('hidden');
-      document.body.style.overflow = '';
-      while (modalContent.firstChild) modalContent.removeChild(modalContent.firstChild);
-      currentModalSlug = null;
-
-      // Remove style param from URL
-      const url = new URL(window.location);
-      url.searchParams.delete('style');
-      history.replaceState(null, '', url);
-    }
-
-    function navigateModal(dir) {
-      if (!currentModalSlug) return;
-      const visibleCards = getVisibleCards();
-      const idx = visibleCards.findIndex((c) => c.dataset.slug === currentModalSlug);
-      if (idx === -1) return;
-      const next = visibleCards[(idx + dir + visibleCards.length) % visibleCards.length];
-      if (next) openModal(next.dataset.slug);
-    }
-
-    // ── Modal Event Listeners ──────────────────────────────
-    document.getElementById('modal-close')?.addEventListener('click', closeModal);
-    document.getElementById('modal-backdrop')?.addEventListener('click', closeModal);
-    document.getElementById('modal-prev')?.addEventListener('click', () => navigateModal(-1));
-    document.getElementById('modal-next')?.addEventListener('click', () => navigateModal(1));
-
-    document.getElementById('modal-fav-btn')?.addEventListener('click', () => {
-      if (currentModalSlug) toggleFav(currentModalSlug);
+  cards.forEach(card => {
+    card.addEventListener('click', () => {
+      const vis = visibleCards();
+      const idx = vis.indexOf(card);
+      if (idx >= 0) openOverlay(idx);
     });
+  });
 
-    document.getElementById('modal-share-btn')?.addEventListener('click', () => {
-      if (!currentModalSlug) return;
-      const url = new URL(window.location);
-      url.searchParams.set('style', currentModalSlug);
-      url.searchParams.delete('favs');
-      navigator.clipboard.writeText(url.toString()).then(() => {
-        const btn = document.getElementById('modal-share-btn');
-        const prev = btn.title;
-        btn.title = '✓ Kopiert!';
-        setTimeout(() => { btn.title = prev; }, 2000);
-      });
-    });
+  pfPrev.addEventListener('click', () => {
+    const vis = visibleCards();
+    openOverlay((currentIdx - 1 + vis.length) % vis.length);
+  });
+  pfNext.addEventListener('click', () => {
+    const vis = visibleCards();
+    openOverlay((currentIdx + 1) % vis.length);
+  });
+  function closeOverlay() {
+    overlay.close();
+    pfIframe.src = '';
+    document.body.style.overflow = '';
+  }
+  pfClose.addEventListener('click', closeOverlay);
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) closeOverlay();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (!overlay.open) return;
+    if (e.key === 'Escape') { closeOverlay(); e.preventDefault(); }
+    if (e.key === 'ArrowLeft') pfPrev.click();
+    if (e.key === 'ArrowRight') pfNext.click();
+  });
+</script>
 
-    document.addEventListener('keydown', (e) => {
-      if (modal.classList.contains('hidden')) return;
-      if (e.key === 'Escape') closeModal();
-      if (e.key === 'ArrowLeft') navigateModal(-1);
-      if (e.key === 'ArrowRight') navigateModal(1);
-    });
-
-    // ── Share Favs ─────────────────────────────────────────
-    document.getElementById('share-favs-btn')?.addEventListener('click', () => {
-      if (favs.size === 0) {
-        alert('Noch keine Favoriten gespeichert.');
-        return;
-      }
-      const url = new URL(window.location);
-      url.searchParams.set('favs', [...favs].join(','));
-      url.searchParams.delete('style');
-      navigator.clipboard.writeText(url.toString()).then(() => {
-        const btn = document.getElementById('share-favs-btn');
-        const label = btn.querySelector('.filter-label');
-        const prev = label.textContent;
-        label.textContent = '✓ Kopiert!';
-        setTimeout(() => { label.textContent = prev; }, 2000);
-      });
-    });
-
-    // ── Mobile ─────────────────────────────────────────────
-    function initMobile() {
-      const hamburger = document.getElementById('hamburger-btn');
-      const sidebar = document.getElementById('sidebar');
-      const overlay = document.getElementById('mobile-overlay');
-
-      hamburger?.addEventListener('click', () => {
-        sidebar.classList.toggle('mobile-open');
-        overlay.classList.toggle('hidden');
-      });
-
-      overlay?.addEventListener('click', () => {
-        sidebar.classList.remove('mobile-open');
-        overlay.classList.add('hidden');
-      });
-
-      // Close sidebar when a filter is selected on mobile
-      document.querySelectorAll('.filter-btn[data-category]').forEach((btn) => {
-        btn.addEventListener('click', () => {
-          if (window.innerWidth < 768) {
-            sidebar.classList.remove('mobile-open');
-            overlay.classList.add('hidden');
-          }
-        });
-      });
-    }
-
-    // ── URL Params ─────────────────────────────────────────
-    function handleUrlParams() {
-      const params = new URLSearchParams(window.location.search);
-
-      // Load favs from URL (?favs=slug1,slug2)
-      const favsParam = params.get('favs');
-      if (favsParam) {
-        favsParam.split(',').forEach((s) => { if (s.trim()) favs.add(s.trim()); });
-        saveFavs();
-      }
-
-      // Auto-open style from URL (?style=slug)
-      const styleParam = params.get('style');
-      if (styleParam) {
-        setTimeout(() => openModal(styleParam), 150);
-      }
-    }
-  </script>
-
-  <style>
-    /* ═══ SIDEBAR ═══ */
-    .sidebar {
-      width: 52px;
-      background: var(--color-surface);
-      border-right: 1px solid var(--color-border);
-      transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      overflow-y: auto;
-    }
-    .sidebar:hover {
-      width: 220px;
-      box-shadow: 4px 0 24px rgba(0,0,0,0.06);
-    }
-
-    /* Brand */
-    .sidebar-brand {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      padding: 1.25rem 0.875rem;
-      border-bottom: 1px solid var(--color-border);
-      min-height: 56px;
-    }
-
-    .sidebar-icon {
-      flex-shrink: 0;
-      width: 28px;
-      height: 28px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--color-accent);
-    }
-
-    .sidebar-brand-text {
-      display: flex;
-      flex-direction: column;
-      opacity: 0;
-      transition: opacity 0.2s ease;
-      white-space: nowrap;
-    }
-    .sidebar:hover .sidebar-brand-text {
-      opacity: 1;
-      transition: opacity 0.25s ease 0.08s;
-    }
-
-    .sidebar-title {
-      font-family: var(--font-display);
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: var(--color-text);
-      letter-spacing: -0.01em;
-    }
-
-    .sidebar-sub {
-      font-size: 0.6rem;
-      color: var(--color-text-muted);
-      margin-top: 1px;
-    }
-
-    /* Nav */
-    .sidebar-nav {
-      flex: 1;
-      padding: 0.75rem 0.5rem;
-      overflow-y: auto;
-    }
-
-    .sidebar-nav-label {
-      font-size: 0.55rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--color-text-muted);
-      padding: 0.5rem 0.625rem 0.5rem;
-      opacity: 0;
-      transition: opacity 0.2s ease;
-      white-space: nowrap;
-    }
-    .sidebar:hover .sidebar-nav-label {
-      opacity: 1;
-      transition: opacity 0.25s ease 0.08s;
-    }
-
-    .sidebar-nav-sep {
-      height: 1px;
-      background: var(--color-border);
-      margin: 0.5rem 0.5rem;
-      opacity: 0;
-      transition: opacity 0.2s ease;
-    }
-    .sidebar:hover .sidebar-nav-sep {
-      opacity: 1;
-      transition: opacity 0.25s ease 0.08s;
-    }
-
-    .filter-btn {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
-      text-align: left;
-      padding: 0.4rem 0.625rem;
-      border-radius: 6px;
-      font-size: 0.75rem;
-      color: var(--color-text-muted);
-      cursor: pointer;
-      border: none;
-      background: none;
-      font-family: var(--font-sans);
-      transition: background 0.15s, color 0.15s;
-      white-space: nowrap;
-      opacity: 0;
-    }
-    .sidebar:hover .filter-btn {
-      opacity: 1;
-      transition: opacity 0.25s ease 0.08s, background 0.15s, color 0.15s;
-    }
-
-    .filter-btn:hover {
-      background: var(--color-surface-hover);
-      color: var(--color-text);
-    }
-    .filter-btn.active {
-      background: var(--color-accent);
-      color: white;
-    }
-    .filter-btn.active .filter-count {
-      color: rgba(255,255,255,0.6);
-    }
-
-    .filter-label { flex: 1; }
-
-    .filter-count {
-      font-size: 0.65rem;
-      color: var(--color-border);
-      font-variant-numeric: tabular-nums;
-    }
-
-    /* Footer */
-    .sidebar-footer {
-      display: flex;
-      align-items: center;
-      gap: 0.625rem;
-      padding: 0.75rem 0.875rem;
-      border-top: 1px solid var(--color-border);
-      min-height: 44px;
-    }
-
-    .sidebar-footer .sidebar-icon {
-      color: var(--color-text-muted);
-      width: 28px;
-      height: 28px;
-    }
-
-    .sidebar-footer-text {
-      font-size: 0.6rem;
-      color: var(--color-border);
-      opacity: 0;
-      white-space: nowrap;
-      transition: opacity 0.2s ease;
-    }
-    .sidebar:hover .sidebar-footer-text {
-      opacity: 1;
-      transition: opacity 0.25s ease 0.08s;
-    }
-
-    /* ═══ PAGE HEADER ═══ */
-    .page-header {
-      margin-bottom: 3.5rem;
-      padding-top: 0.5rem;
-    }
-
-    .page-header-line {
-      width: 2rem;
-      height: 2px;
-      background: var(--color-accent);
-      margin-bottom: 1.25rem;
-    }
-
-    .page-header-title {
-      font-family: var(--font-display);
-      font-size: 1.75rem;
-      font-weight: 700;
-      letter-spacing: -0.025em;
-      color: var(--color-text);
-      line-height: 1.1;
-    }
-
-    .page-header-count {
-      font-size: 0.75rem;
-      color: var(--color-text-muted);
-      margin-top: 0.5rem;
-      letter-spacing: 0.02em;
-    }
-
-    /* ═══ CARDS ═══ */
-    .card-meta {
-      padding-top: 0.125rem;
-    }
-
-    .card-row {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 0.75rem;
-    }
-
-    .card-category {
-      flex-shrink: 0;
-      font-size: 0.575rem;
-      font-weight: 500;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--color-text-muted);
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
-      padding: 0.15rem 0.5rem;
-      border-radius: 3px;
-    }
-
-    .card-title {
-      font-family: var(--font-display);
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: var(--color-text);
-      letter-spacing: -0.01em;
-      line-height: 1.2;
-    }
-
-    /* ═══ FAV BUTTON (on card) ═══ */
-    .fav-btn {
-      position: absolute;
-      bottom: 8px;
-      right: 8px;
-      z-index: 20;
-      width: 28px;
-      height: 28px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(0,0,0,0.45);
-      backdrop-filter: blur(4px);
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      color: rgba(255,255,255,0.55);
-      opacity: 0;
-      transition: opacity 0.2s, color 0.15s, background 0.15s;
-    }
-    .group:hover .fav-btn,
-    .fav-btn.is-fav {
-      opacity: 1;
-    }
-    .fav-btn.is-fav {
-      color: #ef4444;
-      background: rgba(239,68,68,0.2);
-    }
-    .fav-btn:hover:not(.is-fav) {
-      color: #fff;
-      background: rgba(0,0,0,0.65);
-    }
-    .fav-icon-empty { display: block; }
-    .fav-icon-filled { display: none; }
-    .fav-btn.is-fav .fav-icon-empty { display: none; }
-    .fav-btn.is-fav .fav-icon-filled { display: block; }
-
-    /* ═══ MODAL BUTTONS ═══ */
-    .modal-nav-btn,
-    .modal-action-btn {
-      width: 30px;
-      height: 30px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: none;
-      border-radius: 6px;
-      background: none;
-      color: var(--color-text-muted);
-      cursor: pointer;
-      transition: background 0.15s, color 0.15s;
-      flex-shrink: 0;
-    }
-    .modal-nav-btn:hover,
-    .modal-action-btn:hover {
-      background: var(--color-surface-hover);
-      color: var(--color-text);
-    }
-    .modal-fav-filled { display: none; }
-    .modal-fav-empty { display: block; }
-    #modal-fav-btn.is-fav {
-      color: #ef4444;
-    }
-    #modal-fav-btn.is-fav .modal-fav-filled { display: block; }
-    #modal-fav-btn.is-fav .modal-fav-empty { display: none; }
-
-    /* ═══ SKELETON ═══ */
-    @keyframes skeletonPulse {
-      0%, 100% { opacity: 0.15; }
-      50% { opacity: 0.35; }
-    }
-    .skeleton-pulse {
-      animation: skeletonPulse 1.6s ease-in-out infinite;
-    }
-
-    /* ═══ MAIN CONTENT ═══ */
-    .main-content {
-      margin-left: 52px;
-      min-height: 100vh;
-      transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .main-inner {
-      padding: 2.5rem clamp(1.25rem, 2.5vw, 2.5rem) 4rem;
-    }
-
-    /* ═══ MOBILE ═══ */
-    @media (max-width: 767px) {
-      .sidebar {
-        transform: translateX(-100%);
-        width: 220px !important;
-        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      }
-      .sidebar.mobile-open {
-        transform: translateX(0);
-        box-shadow: 4px 0 24px rgba(0,0,0,0.25);
-      }
-      /* Show all sidebar text immediately when open on mobile */
-      .sidebar.mobile-open .sidebar-brand-text,
-      .sidebar.mobile-open .sidebar-nav-label,
-      .sidebar.mobile-open .filter-btn,
-      .sidebar.mobile-open .sidebar-nav-sep,
-      .sidebar.mobile-open .sidebar-footer-text {
-        opacity: 1;
-      }
-      .main-content {
-        margin-left: 0;
-        padding-top: 56px;
-      }
-    }
-  </style>
-</Layout>
+</body>
+</html>

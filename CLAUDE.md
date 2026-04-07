@@ -1,92 +1,118 @@
-# PortaWerk Style Library
+# PortaWerk Style-Katalog
 
 ## Projektübersicht
-Passwortgeschützte Style Library mit Demo-Websites für den PortaWerk Stil-Katalog.
-Jeder Stil bekommt eine fiktive, authentische Demo-Website (Hero + 2 Sektionen).
+Passwortgeschützter Style-Katalog mit externen Referenz-Websites als Inspiration für Kunden.
+Screenshots (Full-Page) werden im Katalog als scrollbare Vorschau angezeigt.
+Klick öffnet Overlay mit iframe der echten Website + Prev/Next Navigation.
 
 ## Tech Stack
 - **Framework:** Astro 6 (statischer Output)
-- **CSS:** Tailwind CSS 4 via Vite Plugin
-- **Hosting:** Vercel (styles.portawerk.de)
-- **Fonts:** Google Fonts (Bricolage Grotesque + Plus Jakarta Sans fuer UI)
+- **CSS:** Tailwind CSS 4 via Vite Plugin + Inline Styles
+- **Hosting:** Vercel (geplant: styles.portawerk.de)
+- **Fonts:** Space Grotesk (Google Fonts)
+
+## Flow
+1. User gibt E-Mail auf portawerk.de ein (Style-Lead unter Portfolio-Grid)
+2. API `/api/style-leads.ts` speichert Lead in Supabase + sendet E-Mail via Resend
+3. E-Mail enthält Link `styles.portawerk.de/?token=unlocked` (Auto-Unlock) + Passwort als Fallback
+4. Follow-up Cron nach 2-3 Tagen (`/api/style-leads-followup.ts`)
 
 ## Zugang
 - Passwortschutz: clientseitig, sessionStorage
-- Passwort in `.env` (STYLE_PASSWORD)
+- Passwort: `portawerk2026`
+- Auto-Unlock via URL-Parameter `?token=unlocked`
+- Auto-Unlock auf localhost (Dev)
 - noindex, nofollow
 
-## Design System (Library UI)
-- Dark Theme (#0A0A0A Hintergrund)
-- Sidebar links mit Kategorie-Filtern
-- 3-Spalten Grid mit Style-Karten
-- Modal fuer Detail-Ansicht (Hero + 2 Sektionen)
+## Katalog-Struktur
+### Drei Filter-Dimensionen (Tabs)
+- **Branchen** — Gastronomie, Tech & Digital, Kreativ & Agentur, etc.
+- **Stile** — Dunkel & Moody, Minimal, Bold & Grafisch, Neon & Tech, etc.
+- **Specials** — 3D, Interaktiv, Glassmorphism, etc.
 
-## Photo-Pattern (Unsplash)
-Alle Stil-Seiten bekommen echte Unsplash-Fotos statt CSS-Art oder Emojis.
-
-**URL-Format:** `https://images.unsplash.com/photo-{ID}?auto=format&fit=crop&w=800&h=600&q=80`
-
-**Photo-Container-Pattern:**
-```html
-<div style="position:relative; overflow:hidden;">
-  <img style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" />
-  <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(...) 0%,transparent 55%);"></div>
-</div>
+### Datenmodell (index.astro Frontmatter)
+Jeder Eintrag:
 ```
+{ slug: 'ext-xxx', name: 'Name', category: 'Anzeige-Kategorie',
+  tags: 'suchbegriffe für freitext-suche',
+  url: 'https://example.com' }
+```
+- `slug` bestimmt Screenshot-Dateiname: `/images/style-gallery/{slug}.jpg`
+- `url` = externe Website (Pflicht für alle Einträge)
+- `category` = Anzeige-Text auf der Karte
+- `tags` = Freitext-Suche + automatische Stil/Branchen/Specials-Ableitung
 
-**Hover-Zoom:** `transition: transform 0.55s ease` + `:hover { transform: scale(1.05) }`
+### Branchen/Stile/Specials werden automatisch abgeleitet:
+- `brancheMap` mappt `category` → Branche
+- `deriveStil()` leitet Stile aus Tags/Slug ab
+- `deriveSpecials()` leitet Specials aus Tags/Slug ab
 
-**Seiten mit nur 1 Sektion (Hero):** 2 neue Sektionen hinzufügen — 3-col Fotogrid + atmosphärische Split-Sektion
-**Seiten mit 3 Sektionen + CSS-Art:** CSS-Art in-place durch Foto-Container ersetzen
+## UI-Komponenten
+- **Passwort-Gate** — Zentrale Login-Card, Emerald/Space Grotesk Design
+- **Hero** — Titel + Stats (Anzahl Stile / Branchen / Externe)
+- **Tab-Filter** — Branchen | Stile | Specials, mit Pill-Buttons pro Tab
+- **Freitext-Suche** — Sucht über alle Felder
+- **Karten-Grid** — 16:9 Thumbnails, Hero-Crop (object-position: top), Hover scrollt nach unten
+- **Overlay** — `<dialog>` mit iframe der echten Website, Prev/Next Navigation, Escape/Backdrop-Close
+- **CTA** — "Stil gefunden?" → portawerk.de/anfrage
 
-## Aktueller Fortschritt (Stand 2026-03-28)
-**Seiten MIT Unsplash-Fotos (48):**
-airy-editorial, anti-web, apothecary, athletic-bold, agentur-portfolio, alpine-rugged,
-architektur-raum, barbershop, berliner-roh, bistro-chalkboard, brauerei, buchhandlung,
-business-coaching, cafehaus, cinematic, cocktailbar, coffee-specialty, community-people,
-cyberpunk, dark-luxury, diner-americana, ecommerce, editorial, experimentell, farm-to-table,
-fine-dining, florist-botanik, handwerk-authentisch, hochzeitsplanung, hostel-traveler,
-human-social, immobilien, letterpress, logistik-b2b, mediterranean-warm, mode-fashion,
-naturkosmetik, produkt-showcase, purple-haze, quiet-luxury, retro-vintage, scandinavian-soft,
-street-food, tattoo-studio, tierarzt, weinstube-moselromantik, wellness, bold-graphic,
-bakery-cafe, fotostudio
+## Screenshots
+- Full-Page JPEG Screenshots (1440×900 Viewport, 1.5× DPR)
+- Gespeichert in `public/images/style-gallery/{slug}.jpg`
+- Capture-Script: `scripts/capture-all.mjs` (für eigene Demo-Seiten)
+- Externe Seiten: manuell via Playwright MCP oder Script
 
-**Noch ohne Fotos (~48 Seiten):**
-art-deco, brutalist, candy-pop, duotone, escape-room, factory-chic,
-friseursalon, futuristisch, gaming-interactive, glassmorphism, gradient-farbe,
-japandi, kids-family, law-firm, loft-studio, luxury-hotel, marble-gold, maximalist,
-mediterranean-blue, metzgerei, monochrome, musik-entertainment, musikschule,
-neo-futurism, neon-chain, nordic-dark, noir-minimal, outdoor-gear, oversized-type,
-photographer-light, playful-kreativ, rave-underground, saas-tech,
-space-cosmic, spa-serene, split-screen, surf-coast, sustainable-brand, swiss-minimal,
-synthwave-retrowave, typografie-zentriert, vintage-print, web3-crypto, weinhandlung,
-arztpraxis
+## Eigene Demo-Seiten (geparkt)
+Die 97 selbstgebauten Stil-Demos existieren weiterhin:
+- **Seiten:** `src/pages/styles/*.astro` (97 Dateien)
+- **Screenshots:** `public/images/style-gallery/*.jpg` (97 Screenshots, ohne ext- Prefix)
+- **Daten:** `src/data/styles.ts` (Farben, Fonts, Business-Info pro Stil)
+- Nicht mehr im Katalog-Grid referenziert, aber über `/styles/{slug}` weiterhin erreichbar
+- Können jederzeit wieder eingeblendet werden
+
+## Aktuelle externe Einträge
+### SaaS / Tech
+- Linear (linear.app)
+- Raycast (raycast.com)
+- Lemon Squeezy (lemonsqueezy.com)
+- Pitch (pitch.com)
+- Vercel (vercel.com)
+
+### Fine Dining / Gastronomie
+- Geranium (geranium.dk) — 3 Michelin Sterne, Kopenhagen
+- Alinea (alinearestaurant.com) — 3 Michelin Sterne, Chicago
+- Restaurant GEM. (restaurantgem.com) — 2 Michelin Sterne, Kasteel Gemert
+- Atelier Crenn (ateliercrenn.com) — 3 Michelin Sterne, San Francisco
+- Eleven Madison Park (elevenmadisonpark.com) — NYC
+
+### Awwwards / Diverse
+- Joby Aviation, Vast, Scout Motors, Aupale Vodka, Fluid Glass
+- MoMoney Museum, Museum of Borjomi, Aventura Dental
+- Kindred Pet Care, Outsource Consultants, Foudre, Artefakt
 
 ## Key Files
-- `src/data/styles.ts` — Zentrale Stil-Daten (Farben, Fonts, Business-Info)
-- `src/pages/index.astro` — Hauptseite (Passwort-Gate + Grid + Modal)
-- `src/styles/globals.css` — Dark Theme Design Tokens
-- `src/layouts/Layout.astro` — Basis-Layout
-- `src/pages/styles/*.astro` — Eine Datei pro Stil-Demo
+- `src/pages/index.astro` — Hauptseite (Passwort-Gate + Tabs + Grid + Overlay)
+- `src/data/styles.ts` — Zentrale Stil-Daten (für eigene Demos, aktuell geparkt)
+- `src/pages/styles/*.astro` — Eigene Stil-Demo-Seiten (geparkt)
+- `scripts/capture-all.mjs` — Playwright Screenshot-Script für eigene Demos
+- `public/images/style-gallery/` — Alle Screenshots
 
-## Zuletzt bearbeitet (2026-03-28)
-- **cyberpunk:** Hero-Hintergrundbild (Circuit-Board, gedimmt + grünlich gefiltert) + 2 neue Sektionen: 3-col City-Grid mit Workspace-Fotos + Split-Sektion mit Matrix-Foto und Feature-Liste
-- **purple-haze:** Foto im Hero-Right (Mixing-Board) + 2 neue Sektionen mit CSS vorbereitet aber fehlendem HTML: 3-col Studio-Grid mit Studio-Fotos + Booking-Sektion mit Konzert-Foto rechts
-
-## Nächste Seiten (Reihenfolge aus Eval-Batch 4)
-Zuletzt bewertet (eval-batch-4.md): escape-room, experimentell, factory-chic, farm-to-table, fine-dining, florist-botanik, fotostudio, friseursalon, futuristisch, gaming-interactive
-- **escape-room** (13/18): Keine Fotos — 3-4 Dunkelraum-Fotos als Hintergrund-Layer ergänzen
-- **factory-chic** (10/18): Keine Fotos, nur Hero — Fotos + 2 neue Sektionen (Haupthalle + 3-col Fotogrid)
-- **fine-dining** (12/18): Nur Hero, feste px-Fontgrößen → 2 Sektionen + clamp() fixes
-- **florist-botanik** (14/18): Nur Hero → 4-col Fotogrid + Kontakt/Öffnungszeiten-Split
-- **fotostudio** (13/18): Nur Hero → Portfolio-Grid (3x2) + Studio-Foto-Sektion
+## Neue externe Seite hinzufügen
+1. Eintrag in `styles[]` Array in `index.astro` Frontmatter:
+   ```js
+   { slug: 'ext-name', name: 'Sitename', category: 'Branche',
+     tags: 'relevante suchbegriffe', url: 'https://example.com' }
+   ```
+2. Screenshot capturen und als `public/images/style-gallery/ext-name.jpg` speichern
+3. `brancheMap` erweitern falls neue Kategorie
 
 ## Offene Punkte
-- [ ] Unsplash-Fotos zu allen ~50 verbleibenden Seiten hinzufügen
-- [ ] Modal mit iframe/embed fuer fertige Stile
 - [ ] Vercel Deployment + Domain styles.portawerk.de
+- [ ] Mehr externe Referenzen sammeln (Ziel: 50+)
+- [ ] Screenshot-Qualität: einige externe Seiten laden lazy/video — ggf. manuell nachbessern
+- [ ] Cookie-Banner/Popups vor Screenshot entfernen (EMP, etc.)
 
 ## Hinweise
 - PostToolUse-Hook empfiehlt next/font nach jedem .astro-Edit — ignorieren, ist Astro nicht Next.js
-- Jede Stilseite ist selbstständiges HTML mit inline CSS im `<style>`-Block
-- `export const prerender = true` oben in jeder Datei (Astro-Frontmatter)
+- Jede eigene Stilseite ist selbstständiges HTML mit inline CSS im `<style>`-Block
+- `export const prerender = true` oben in jeder eigenen Stil-Datei
