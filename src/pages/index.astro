@@ -181,6 +181,7 @@ const allSpecials = [...new Set(enrichedStyles.flatMap(s => s.specials))].filter
           <span class="gal-hero-highlight">Kein Template.</span>
         </h1>
         <p class="gal-hero-sub">Jede Website individuell gestaltet. Finde den Stil,<br/>der zu deinem Unternehmen passt.</p>
+        <p class="gal-hero-hint">💻 Am besten auf dem Desktop ansehen</p>
         <div class="gal-hero-stats">
           <div class="gal-hero-stat">
             <span class="gal-hero-stat-num">{allBranchen.length}</span>
@@ -210,6 +211,10 @@ const allSpecials = [...new Set(enrichedStyles.flatMap(s => s.specials))].filter
         <button class="gal-tab active" data-tab="branche">Branchen</button>
         <button class="gal-tab" data-tab="stil">Stile</button>
         <button class="gal-tab" data-tab="specials">Specials</button>
+        <button class="gal-tab gal-tab-fav" data-tab="favoriten">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          Favoriten
+        </button>
       </div>
 
       <!-- Filter Panels -->
@@ -257,6 +262,9 @@ const allSpecials = [...new Set(enrichedStyles.flatMap(s => s.specials))].filter
             <span class="gal-card-name">{style.name}</span>
             <span class="gal-card-cat">{style.branche}</span>
           </div>
+          <button class="gal-card-fav" aria-label="Favorit" data-slug={style.slug}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </button>
           <span class="gal-card-plus" aria-hidden="true">+</span>
         </div>
       ))}
@@ -418,8 +426,12 @@ const allSpecials = [...new Set(enrichedStyles.flatMap(s => s.specials))].filter
   }
   .gal-hero-sub {
     font-size: clamp(1.05rem, 1.5vw, 1.25rem); color: #64748B; line-height: 1.55;
-    max-width: 480px; margin: 0 auto 2.5rem;
+    max-width: 480px; margin: 0 auto 1rem;
     opacity: 0; animation: hero-fade-up 0.8s ease forwards 0.6s;
+  }
+  .gal-hero-hint {
+    font-size: 0.8125rem; color: #94A3B8; margin: 0 auto 2rem;
+    opacity: 0; animation: hero-fade-up 0.8s ease forwards 0.7s;
   }
   .gal-hero-stats {
     display: flex; align-items: center; justify-content: center; gap: 2rem;
@@ -549,6 +561,28 @@ const allSpecials = [...new Set(enrichedStyles.flatMap(s => s.specials))].filter
     opacity: 1; transform: scale(1) rotate(0deg);
   }
 
+  /* Favoriten Heart Button */
+  .gal-card-fav {
+    position: absolute; top: 0.75rem; right: 0.75rem; z-index: 4;
+    width: 30px; height: 30px; border-radius: 50%; border: none;
+    background: rgba(255,255,255,0.9); color: #94A3B8;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+    opacity: 0; transform: scale(0.8);
+  }
+  .gal-card:hover .gal-card-fav { opacity: 1; transform: scale(1); }
+  .gal-card-fav:hover { color: #F43F5E; transform: scale(1.15); }
+  .gal-card-fav.active {
+    opacity: 1; transform: scale(1);
+    color: #F43F5E; background: rgba(255,255,255,0.95);
+  }
+  .gal-card-fav.active svg { fill: #F43F5E; }
+
+  /* Favoriten Tab */
+  .gal-tab-fav { display: inline-flex; align-items: center; gap: 5px; }
+  .gal-tab-fav.active svg { fill: #F43F5E; stroke: #F43F5E; }
+
   /* Badge */
   .gal-card-badge {
     position: absolute; top: 0.75rem; left: 0.75rem; z-index: 2;
@@ -628,10 +662,14 @@ const allSpecials = [...new Set(enrichedStyles.flatMap(s => s.specials))].filter
     width: 100%; height: 100%; border: none; background: #fff; scrollbar-width: none;
   }
   .pf-overlay-img-scroll {
-    width: 100%; height: 100%; overflow-y: auto; background: #fff;
+    width: 100%; height: 100%; overflow-y: auto; background: #F1F5F9;
     scrollbar-width: thin; scrollbar-color: #E2E8F0 transparent;
+    display: flex; justify-content: center;
   }
-  .pf-overlay-img-scroll img { width: 100%; display: block; }
+  .pf-overlay-img-scroll img {
+    display: block; width: 100%; max-width: 1440px;
+    height: fit-content; align-self: flex-start;
+  }
   .pf-overlay-link {
     display: inline-flex; align-items: center; gap: 0.375rem;
     padding: 0.4rem 0.875rem; background: #10B981; color: #fff; border-radius: 6px;
@@ -736,6 +774,40 @@ const allSpecials = [...new Set(enrichedStyles.flatMap(s => s.specials))].filter
   let activeTab = 'branche';
   let activeValue = 'all';
 
+  // --- Favorites ---
+  const FAV_KEY = 'gal-favs';
+  const favs: Set<string> = new Set(JSON.parse(localStorage.getItem(FAV_KEY) || '[]'));
+
+  function saveFavs() {
+    localStorage.setItem(FAV_KEY, JSON.stringify([...favs]));
+  }
+
+  function applyFavClasses() {
+    cards.forEach(card => {
+      const slug = card.dataset.slug || '';
+      const btn = card.querySelector('.gal-card-fav');
+      btn?.classList.toggle('active', favs.has(slug));
+    });
+    // Update tab icon fill
+    const favTab = document.querySelector('.gal-tab-fav');
+    favTab?.classList.toggle('has-favs', favs.size > 0);
+  }
+
+  cards.forEach(card => {
+    const btn = card.querySelector('.gal-card-fav') as HTMLButtonElement;
+    btn?.addEventListener('click', (e) => {
+      e.stopPropagation(); // don't open overlay
+      const slug = card.dataset.slug || '';
+      if (favs.has(slug)) favs.delete(slug);
+      else favs.add(slug);
+      saveFavs();
+      applyFavClasses();
+      if (activeTab === 'favoriten') filterCards();
+    });
+  });
+
+  applyFavClasses();
+
   // Switch tabs
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
@@ -745,16 +817,20 @@ const allSpecials = [...new Set(enrichedStyles.flatMap(s => s.specials))].filter
       tabs.forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
 
-      // Hide all filter panels, show active one
+      // Hide all filter panels
       Object.values(filterPanels).forEach(p => p.classList.add('hidden'));
-      filterPanels[newTab].classList.remove('hidden');
 
-      // Reset filter selection in new panel
-      activeTab = newTab;
-      activeValue = 'all';
-      filterPanels[newTab].querySelectorAll('.gal-filter').forEach((f, i) => {
-        f.classList.toggle('active', i === 0);
-      });
+      if (newTab === 'favoriten') {
+        // No filter panel for favorites tab
+        activeTab = newTab;
+      } else {
+        filterPanels[newTab].classList.remove('hidden');
+        activeTab = newTab;
+        activeValue = 'all';
+        filterPanels[newTab].querySelectorAll('.gal-filter').forEach((f, i) => {
+          f.classList.toggle('active', i === 0);
+        });
+      }
 
       filterCards();
     });
@@ -787,11 +863,16 @@ const allSpecials = [...new Set(enrichedStyles.flatMap(s => s.specials))].filter
       const haystack = `${branche} ${stil} ${specials} ${name} ${slug} ${tags}`.toLowerCase();
 
       // Tab filter
-      let matchFilter = activeValue === 'all';
-      if (!matchFilter) {
-        if (activeTab === 'branche') matchFilter = branche === activeValue;
-        else if (activeTab === 'stil') matchFilter = stil.split(',').includes(activeValue);
-        else if (activeTab === 'specials') matchFilter = specials.split(',').includes(activeValue);
+      let matchFilter: boolean;
+      if (activeTab === 'favoriten') {
+        matchFilter = favs.has(slug);
+      } else {
+        matchFilter = activeValue === 'all';
+        if (!matchFilter) {
+          if (activeTab === 'branche') matchFilter = branche === activeValue;
+          else if (activeTab === 'stil') matchFilter = stil.split(',').includes(activeValue);
+          else if (activeTab === 'specials') matchFilter = specials.split(',').includes(activeValue);
+        }
       }
 
       // Search filter
