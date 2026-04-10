@@ -907,7 +907,7 @@ const allSpecials = [...new Set(enrichedStyles.flatMap(s => s.specials))].filter
     let hovering = false;
     let start = 0;
 
-    const totalDuration = 8000; // ms to scroll from top to bottom
+    const totalDuration = 2500; // ms to scroll from top to bottom
     const maxY = 18;            // max translateY% (img is 125% height, ~20% overflow)
     const waveCycles = 4;       // how many speed waves over the full scroll
     // Wave function: integrating sin gives a smooth progress curve
