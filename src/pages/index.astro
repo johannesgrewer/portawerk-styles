@@ -309,8 +309,7 @@ const allSpecials = [...new Set(enrichedStyles.flatMap(s => s.specials))].filter
     </div>
   </div>
   <div class="pf-overlay-content">
-    <iframe id="pf-iframe" src="" title="Vorschau" sandbox="allow-scripts allow-same-origin allow-forms allow-pointer-lock"></iframe>
-    <div class="pf-overlay-img-scroll" id="pf-img-scroll" style="display:none;">
+    <div class="pf-overlay-img-scroll" id="pf-img-scroll">
       <img id="pf-scroll-img" src="" alt="" />
     </div>
   </div>
@@ -658,9 +657,6 @@ const allSpecials = [...new Set(enrichedStyles.flatMap(s => s.specials))].filter
     flex: 1; overflow: hidden; position: relative; scrollbar-width: none;
   }
   .pf-overlay-content::-webkit-scrollbar { display: none; }
-  .pf-overlay-content iframe {
-    width: 100%; height: 100%; border: none; background: #fff; scrollbar-width: none;
-  }
   .pf-overlay-img-scroll {
     width: 100%; height: 100%; overflow-y: auto; background: #F1F5F9;
     scrollbar-width: thin; scrollbar-color: #E2E8F0 transparent;
@@ -935,7 +931,6 @@ const allSpecials = [...new Set(enrichedStyles.flatMap(s => s.specials))].filter
   const overlay = document.getElementById('pf-overlay') as HTMLDialogElement;
   const pfTitle = document.getElementById('pf-title')!;
   const pfCat = document.getElementById('pf-cat')!;
-  const pfIframe = document.getElementById('pf-iframe') as HTMLIFrameElement;
   const pfImgScroll = document.getElementById('pf-img-scroll')!;
   const pfScrollImg = document.getElementById('pf-scroll-img') as HTMLImageElement;
   const pfLink = document.getElementById('pf-link') as HTMLAnchorElement;
@@ -962,22 +957,14 @@ const allSpecials = [...new Set(enrichedStyles.flatMap(s => s.specials))].filter
     pfTitle.textContent = name;
     pfCat.textContent = cat;
 
+    pfScrollImg.src = `/images/style-gallery/${slug}.jpg`;
+    pfScrollImg.alt = `${name} — ${cat}`;
+    pfImgScroll.scrollTop = 0;
+
     if (url) {
-      // External: scrollable screenshot + link
-      pfIframe.style.display = 'none';
-      pfIframe.src = '';
-      pfImgScroll.style.display = '';
-      pfScrollImg.src = `/images/style-gallery/${slug}.jpg`;
-      pfScrollImg.alt = `${name} — ${cat}`;
-      pfImgScroll.scrollTop = 0;
       pfLink.href = url;
       pfLink.style.display = '';
     } else {
-      // Internal: iframe
-      pfImgScroll.style.display = 'none';
-      pfScrollImg.src = '';
-      pfIframe.style.display = '';
-      pfIframe.src = `/styles/${slug}`;
       pfLink.style.display = 'none';
     }
 
