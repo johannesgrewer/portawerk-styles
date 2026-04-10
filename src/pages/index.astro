@@ -614,6 +614,7 @@ const allSpecials = [...new Set(enrichedStyles.flatMap(s => s.specials))].filter
 
   /* Overlay — kompaktes Modal */
   .pf-overlay {
+    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
     width: 420px; max-width: calc(100vw - 2rem);
     border: none; padding: 0;
     background: #fff; border-radius: 16px;
