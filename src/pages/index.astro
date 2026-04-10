@@ -614,15 +614,13 @@ const allSpecials = [...new Set(enrichedStyles.flatMap(s => s.specials))].filter
 
   /* Overlay — kompaktes Modal */
   .pf-overlay {
-    position: fixed; inset: 0; margin: auto;
-    width: 420px; height: auto;
+    width: 420px; max-width: calc(100vw - 2rem);
     border: none; padding: 0;
     background: #fff; border-radius: 16px;
     box-shadow: 0 24px 64px rgba(0,0,0,0.18);
-    overflow: hidden; z-index: 9999;
+    overflow: hidden;
   }
   .pf-overlay::backdrop { background: rgba(0,0,0,0.5); }
-  .pf-overlay[open] { display: block; }
 
   .pf-close {
     position: absolute; top: 0.75rem; right: 0.75rem; z-index: 10;
