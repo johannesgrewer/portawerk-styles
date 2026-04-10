@@ -28,6 +28,18 @@ const styles = [
   { slug: 'ext-artefakt', name: 'Artefakt', category: 'Filmproduktion', tags: 'film video produktion cinematic dark immersive', url: 'https://artefakt.mov/' },
   { slug: 'ext-vangogh', name: 'Van Gogh Museum', category: 'Kunstmuseum', tags: 'museum kunst galerie colorful accessible editorial kultur', url: 'https://www.vangoghmuseum.nl/' },
   { slug: 'ext-norris', name: 'Lando Norris', category: 'Sport / Personal Brand', tags: 'sport formel1 racing personal brand dynamic bold energy', url: 'https://landonorris.com/' },
+
+  // Sport & Freizeit
+  { slug: 'ext-nike', name: 'Nike', category: 'Sportbekleidung', tags: 'sport fashion minimal bold typografisch schwarz weiss athletic', url: 'https://www.nike.com/' },
+  { slug: 'ext-arcteryx', name: "Arc'teryx", category: 'Outdoor', tags: 'outdoor alpine dunkel premium technisch minimalistisch', url: 'https://arcteryx.com/us/en' },
+  { slug: 'ext-rapha', name: 'Rapha', category: 'Radsport', tags: 'sport fahrrad radsport editorial premium hell clean luxus', url: 'https://www.rapha.cc/' },
+  { slug: 'ext-yetibikes', name: 'Yeti Cycles', category: 'Mountainbike', tags: 'sport mountainbike outdoor adventure action video dunkel bold', url: 'https://www.yetibikes.com/' },
+  { slug: 'ext-blackdiamond', name: 'Black Diamond', category: 'Klettern & Outdoor', tags: 'sport klettern outdoor dunkel technisch action abenteuer', url: 'https://www.blackdiamondequipment.com/' },
+  { slug: 'ext-specialized', name: 'Specialized', category: 'Radsport', tags: 'sport fahrrad radsport technisch modern dunkel performance', url: 'https://www.specialized.com/us/en' },
+  { slug: 'ext-patagonia', name: 'Patagonia', category: 'Outdoor', tags: 'outdoor nachhaltig natur storytelling editorial hell clean authentisch', url: 'https://www.patagonia.com/' },
+  { slug: 'ext-gymshark', name: 'Gymshark', category: 'Fitness', tags: 'sport fitness gym dunkel bold modern jung', url: 'https://www.gymshark.com/' },
+  { slug: 'ext-on', name: 'On Running', category: 'Laufsport', tags: 'sport laufen running minimalistisch clean hell swiss premium', url: 'https://www.on.com/' },
+  { slug: 'ext-redbull', name: 'Red Bull', category: 'Extremsport', tags: 'sport extremsport action video editorial bold energetisch dunkel', url: 'https://www.redbull.com/int-en' },
 ]
 
 // --- Branche Mapping ---
@@ -63,6 +75,9 @@ const brancheMap: Record<string, string> = {
   'Payment-Plattform': 'Tech & Digital', 'Präsentations-Tool': 'Tech & Digital', 'Cloud-Plattform': 'Tech & Digital',
   'Fitness & Gym': 'Sport & Freizeit', 'Outdoor & Bergsport': 'Sport & Freizeit',
   'Surfschule': 'Sport & Freizeit', 'Outdoor-Ausrüstung': 'Sport & Freizeit', 'Escape Room': 'Sport & Freizeit',
+  'Sportbekleidung': 'Sport & Freizeit', 'Outdoor': 'Sport & Freizeit', 'Radsport': 'Sport & Freizeit',
+  'Mountainbike': 'Sport & Freizeit', 'Klettern & Outdoor': 'Sport & Freizeit', 'Fitness': 'Sport & Freizeit',
+  'Laufsport': 'Sport & Freizeit', 'Extremsport': 'Sport & Freizeit', 'Sport / Personal Brand': 'Sport & Freizeit',
   'Verein & Soziales': 'Bildung & Soziales', 'Musikschule': 'Bildung & Soziales',
   'Sozialunternehmen': 'Bildung & Soziales', 'Familienzentrum': 'Bildung & Soziales',
   'Kinderbetreuung': 'Bildung & Soziales', 'Planetarium': 'Bildung & Soziales',
@@ -631,10 +646,22 @@ const allSpecials = [...new Set(enrichedStyles.flatMap(s => s.specials))].filter
   }
   .pf-close:hover { background: rgba(0,0,0,0.6); }
 
-  .pf-thumb {
-    width: 100%; aspect-ratio: 16/9; overflow: hidden; background: #F1F5F9;
+  @keyframes shimmer {
+    0% { background-position: -400px 0; }
+    100% { background-position: 400px 0; }
   }
-  .pf-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+  .pf-thumb {
+    width: 100%; aspect-ratio: 16/9; overflow: hidden;
+    background: linear-gradient(90deg, #E2E8F0 25%, #F1F5F9 50%, #E2E8F0 75%);
+    background-size: 800px 100%;
+    animation: shimmer 1.4s infinite linear;
+  }
+  .pf-thumb.loaded { animation: none; background: #F1F5F9; }
+  .pf-thumb img {
+    width: 100%; height: 100%; object-fit: cover; object-position: top; display: block;
+    opacity: 0; transition: opacity 0.25s ease;
+  }
+  .pf-thumb.loaded img { opacity: 1; }
 
   .pf-body {
     padding: 1.25rem 1.25rem 1.375rem;
@@ -907,6 +934,9 @@ const allSpecials = [...new Set(enrichedStyles.flatMap(s => s.specials))].filter
       hovering = true;
       start = performance.now();
       raf = requestAnimationFrame(tick);
+      // Preload modal image
+      const slug = card.dataset.slug;
+      if (slug) { const pre = new Image(); pre.src = `/images/style-gallery/${slug}.jpg`; }
     });
 
     card.addEventListener('mouseleave', () => {
@@ -945,8 +975,12 @@ const allSpecials = [...new Set(enrichedStyles.flatMap(s => s.specials))].filter
     pfTitle.textContent = name;
     pfCat.textContent = cat;
 
+    const thumb = pfScrollImg.parentElement!;
+    thumb.classList.remove('loaded');
     pfScrollImg.src = `/images/style-gallery/${slug}.jpg`;
     pfScrollImg.alt = `${name} — ${cat}`;
+    pfScrollImg.onload = () => thumb.classList.add('loaded');
+    if (pfScrollImg.complete) thumb.classList.add('loaded');
 
     if (url) {
       pfLink.href = url;

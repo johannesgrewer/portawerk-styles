@@ -37,6 +37,18 @@ const sites = [
   { slug: 'ext-artefakt',     url: 'https://artefakt.mov/' },
   { slug: 'ext-vangogh',      url: 'https://www.vangoghmuseum.nl/' },
   { slug: 'ext-norris',       url: 'https://landonorris.com/' },
+
+  // Sport & Freizeit
+  { slug: 'ext-nike',         url: 'https://www.nike.com/' },
+  { slug: 'ext-arcteryx',     url: 'https://arcteryx.com/us/en' },
+  { slug: 'ext-rapha',        url: 'https://www.rapha.cc/' },
+  { slug: 'ext-yetibikes',    url: 'https://www.yetibikes.com/' },
+  { slug: 'ext-blackdiamond', url: 'https://www.blackdiamondequipment.com/' },
+  { slug: 'ext-specialized',  url: 'https://www.specialized.com/us/en' },
+  { slug: 'ext-patagonia',    url: 'https://www.patagonia.com/' },
+  { slug: 'ext-gymshark',     url: 'https://www.gymshark.com/' },
+  { slug: 'ext-on',           url: 'https://www.on.com/' },
+  { slug: 'ext-redbull',      url: 'https://www.redbull.com/int-en' },
 ];
 
 // Filter to specific slugs if passed as CLI args
@@ -147,36 +159,45 @@ async function run() {
       });
 
       // Give JS time to boot
-      await page.waitForTimeout(2000);
-
-      // Try to dismiss cookie banners early
-      await dismissCookieBanners(page);
-
-      // Wait a bit more for initial animations (hero videos, intros)
-      await page.waitForTimeout(2000);
-
-      // Scroll through to trigger lazy-loaded content + scroll animations
-      await scrollAndTriggerContent(page);
-
-      // Wait for any newly triggered animations/images to settle
       await page.waitForTimeout(1500);
 
-      // Try to dismiss any banners that appeared after scroll
+      // Disable all CSS animations/transitions + force-show scroll-hidden elements
+      await page.addStyleTag({ content: `
+        *, *::before, *::after {
+          animation-duration: 0.001ms !important;
+          animation-delay: 0.001ms !important;
+          transition-duration: 0.001ms !important;
+          transition-delay: 0.001ms !important;
+        }
+        [data-aos], [data-sal], [data-scroll] {
+          opacity: 1 !important;
+          transform: none !important;
+          visibility: visible !important;
+        }
+        .aos-init, .aos-animate { opacity: 1 !important; transform: none !important; }
+        [class*="gsap-"], [class*="is-hidden"], [class*="fade-up"], [class*="fade-in"] {
+          opacity: 1 !important; transform: none !important; visibility: visible !important;
+        }
+      ` });
+
+      // Dismiss cookie banners
       await dismissCookieBanners(page);
 
-      // Wait for images to finish loading
-      await page.waitForFunction(() => {
-        const imgs = Array.from(document.querySelectorAll('img'));
-        return imgs.every(img => img.complete);
-      }, { timeout: 10000 }).catch(() => {
-        // Non-fatal: some images may be broken or blocked
+      // Quick scroll to trigger IntersectionObserver-based lazy loaders
+      await page.evaluate(async () => {
+        const delay = (ms) => new Promise(r => setTimeout(r, ms));
+        const h = document.body.scrollHeight;
+        for (let y = 0; y < h; y += window.innerHeight * 2) {
+          window.scrollTo(0, y);
+          await delay(80);
+        }
+        window.scrollTo(0, 0);
       });
 
-      // Final settle before screenshot
-      await page.waitForTimeout(1000);
+      await page.waitForTimeout(800);
 
       const screenshot = await page.screenshot({
-        fullPage: false,
+        fullPage: true,
         type: 'jpeg',
         quality: 75,
       });
