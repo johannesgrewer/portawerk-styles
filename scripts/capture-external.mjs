@@ -28,7 +28,6 @@ const sites = [
   { slug: 'ext-vast',         url: 'https://www.vastspace.com/' },
   { slug: 'ext-scout',        url: 'https://www.scoutmotors.com/' },
   { slug: 'ext-aupale',       url: 'https://www.aupalevodka.com/en/' },
-  { slug: 'ext-fluidglass',   url: 'https://fluid.glass/' },
   { slug: 'ext-momoney',      url: 'https://www.museumofmoney.com/' },
   { slug: 'ext-borjomi',      url: 'https://museum.borjomi.com/en' },
   { slug: 'ext-aventura',     url: 'https://aventuradentalarts.com/' },
@@ -120,7 +119,7 @@ async function run() {
   const browser = await chromium.launch({ headless: true });
   const context = await browser.newContext({
     viewport: { width: 1440, height: 900 },
-    deviceScaleFactor: 1.5,
+    deviceScaleFactor: 1,
     // Realistic user agent to avoid bot blocks
     userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
     // Accept common languages / locales
@@ -177,9 +176,9 @@ async function run() {
       await page.waitForTimeout(1000);
 
       const screenshot = await page.screenshot({
-        fullPage: true,
+        fullPage: false,
         type: 'jpeg',
-        quality: 85,
+        quality: 75,
       });
 
       writeFileSync(outFile, screenshot);
