@@ -130,7 +130,7 @@ async function scrollAndTriggerContent(page) {
 async function run() {
   const browser = await chromium.launch({ headless: true });
   const context = await browser.newContext({
-    viewport: { width: 1440, height: 900 },
+    viewport: { width: 1920, height: 1080 },
     deviceScaleFactor: 1,
     // Realistic user agent to avoid bot blocks
     userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
@@ -152,14 +152,14 @@ async function run() {
     console.log(`[${done + 1}/${total}] → ${slug} (${url})`);
 
     try {
-      // Navigate — use domcontentloaded first to not wait forever on heavy sites
+      // Navigate — wait for load (all resources incl. images)
       await page.goto(url, {
-        waitUntil: 'domcontentloaded',
-        timeout: 30000,
+        waitUntil: 'load',
+        timeout: 45000,
       });
 
-      // Give JS time to boot
-      await page.waitForTimeout(1500);
+      // Give JS + fonts + late-loading content time to settle
+      await page.waitForTimeout(3000);
 
       // Disable all CSS animations/transitions + force-show scroll-hidden elements
       await page.addStyleTag({ content: `
@@ -183,18 +183,24 @@ async function run() {
       // Dismiss cookie banners
       await dismissCookieBanners(page);
 
-      // Quick scroll to trigger IntersectionObserver-based lazy loaders
+      // Scroll to trigger IntersectionObserver-based lazy loaders
       await page.evaluate(async () => {
         const delay = (ms) => new Promise(r => setTimeout(r, ms));
         const h = document.body.scrollHeight;
-        for (let y = 0; y < h; y += window.innerHeight * 2) {
+        for (let y = 0; y < h; y += window.innerHeight) {
           window.scrollTo(0, y);
-          await delay(80);
+          await delay(150);
         }
         window.scrollTo(0, 0);
       });
 
-      await page.waitForTimeout(800);
+      // Wait for lazy-loaded images to finish
+      await page.waitForFunction(() => {
+        const imgs = Array.from(document.querySelectorAll('img'));
+        return imgs.every(img => img.complete);
+      }, { timeout: 8000 }).catch(() => {});
+
+      await page.waitForTimeout(1000);
 
       const screenshot = await page.screenshot({
         fullPage: false,
