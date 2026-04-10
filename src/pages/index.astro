@@ -529,9 +529,9 @@ const allSpecials = [...new Set(enrichedStyles.flatMap(s => s.specials))].filter
   }
   .gal-card.card-hidden { display: none; }
   .gal-card img {
-    width: 100%; height: 125%; object-fit: cover; object-position: top;
+    width: 100%; height: 200%; object-fit: cover; object-position: top;
     will-change: transform;
-    transition: transform 0.4s ease-out;
+    transition: transform 0.75s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   /* Overlay — appears on hover */
@@ -899,49 +899,34 @@ const allSpecials = [...new Set(enrichedStyles.flatMap(s => s.specials))].filter
 
   search.addEventListener('input', filterCards);
 
-  // --- Hover Scroll Animation (wave/breathing speed) ---
-  // Continuous scroll with sine-wave speed: accelerate, decelerate, repeat
+  // --- Hover Scroll Animation (step-based: top → middle → bottom) ---
   cards.forEach(card => {
     const img = card.querySelector('img') as HTMLImageElement;
-    let raf = 0;
-    let hovering = false;
-    let start = 0;
+    let timer: ReturnType<typeof setTimeout> | null = null;
+    let stepIdx = 0;
 
-    const totalDuration = 2500; // ms to scroll from top to bottom
-    const maxY = 18;            // max translateY% (img is 125% height, ~20% overflow)
-    const waveCycles = 4;       // how many speed waves over the full scroll
-    // Wave function: integrating sin gives a smooth progress curve
-    // that speeds up and slows down cyclically
+    // img height: 200% → translateY(-50%) = very bottom
+    const steps = [0, -25, -50];
+    const viewMs = 900;     // ms to view each section before sliding to next
+    const slideMs = 750;    // matches CSS transition duration
 
-    function tick(now: number) {
-      if (!hovering) return;
-      const elapsed = now - start;
-      const t = Math.min(elapsed / totalDuration, 1); // 0..1 linear time
-
-      // Sine-wave progress: speeds up and slows down in waves
-      // progress = t - (1/(2π*n)) * sin(2π*n*t)
-      // This creates a smooth oscillating speed around the average
-      const wave = t - Math.sin(2 * Math.PI * waveCycles * t) / (2 * Math.PI * waveCycles);
-      // Normalize: wave at t=1 equals 1
-      const progress = wave; // already normalized since sin(2πn) = 0
-
-      const y = progress * maxY;
-      img.style.transform = `scale(1.02) translateY(${-y}%)`;
-      if (t < 1) raf = requestAnimationFrame(tick);
+    function advance() {
+      stepIdx++;
+      if (stepIdx >= steps.length) return;
+      img.style.transform = `translateY(${steps[stepIdx]}%)`;
+      timer = setTimeout(advance, viewMs + slideMs);
     }
 
     card.addEventListener('mouseenter', () => {
-      hovering = true;
-      start = performance.now();
-      raf = requestAnimationFrame(tick);
-      // Preload modal image
+      stepIdx = 0;
+      img.style.transform = 'translateY(0%)';
       const slug = card.dataset.slug;
       if (slug) { const pre = new Image(); pre.src = `/images/style-gallery/${slug}.jpg`; }
+      timer = setTimeout(advance, viewMs);
     });
 
     card.addEventListener('mouseleave', () => {
-      hovering = false;
-      cancelAnimationFrame(raf);
+      if (timer) { clearTimeout(timer); timer = null; }
       img.style.transform = '';
     });
   });
