@@ -197,7 +197,7 @@ async function run() {
       await page.waitForTimeout(800);
 
       const screenshot = await page.screenshot({
-        fullPage: true,
+        fullPage: false,
         type: 'jpeg',
         quality: 75,
       });
